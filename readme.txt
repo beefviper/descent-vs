@@ -6,7 +6,7 @@ Converted file and directory names to lowercase
 Removed unprintable SUB control character form hundreds of files
 Added missing return types, removed extra semicolons, other minor fixes
 Compiled with MASM32 and WATCOM11, produces some warnings
-700K dos4gw exe shows splash screens crashes loading data or graphics
+700K dos4gw exe shows splash screens, crashes loading data or graphics
 
 Still need to fix more to compile with Open Watcom
 Should probably use MASM provided by Visual Studio
