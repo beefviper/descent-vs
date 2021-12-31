@@ -1,0 +1,9 @@
+.vs/
+build/
+out/
+Debug/
+Release/
+*.obj
+*.lib
+*.err
+*.bak
