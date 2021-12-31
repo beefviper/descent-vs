@@ -270,6 +270,7 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 	}
 }
 
+/*
 //"		jmp 	aligned4				"	\
 //"		mov	eax, edi				"	\
 //"		and	eax, 11b				"	\
@@ -285,6 +286,7 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 //"		dec	ebx					"	\
 //"		jne	alignstart			"	\
 //"aligned4:							"	\
+*/
 
 void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels );
 #pragma aux modex_copy_scanline parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \

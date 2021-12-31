@@ -232,12 +232,13 @@ extern vms_matrix vmd_identity_matrix;
 //}
 //#pragma on (unreferenced)
 
-
+/*
 ////macro to fill in elements of a matrix, also for Mike
 //#define vm_mat_make(m,_m1,_m2,_m3,_m4,_m5,_m6,_m7,_m8,_m9) \
 //	 do {	(m)->m1=(_m1); (m)->m2=(_m2); (m)->m3=(_m3); \
 //			(m)->m4=(_m4); (m)->m5=(_m5); (m)->m6=(_m6); \
 //			(m)->m7=(_m7); (m)->m8=(_m8); (m)->m9=(_m9);} while (0)
+*/
 
 #if 0	//kill this, since bogus with new matrix ordering
 

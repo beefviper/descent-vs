@@ -89,7 +89,9 @@ do { 																\
 		piggy_bitmap_page_in( bmp ); 						\
 	}																\
 } while(0)
+/*
 //		mprintf(( 0, "Paging in '%s' from file '%s', line %d\n", #bmp, __FILE__,__LINE__ ));	\
+*/
 
 	extern void piggy_bitmap_page_in( bitmap_index bmp );
 	extern void piggy_bitmap_page_out_all();

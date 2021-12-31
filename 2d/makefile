@@ -28,8 +28,8 @@ PROGS = testg
 
 # What object files for the lib
 GR_OBJS = linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-	gpixel.obj palette.obj line.obj lbitblt.obj        \
+	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
+	gpixel.obj palette.obj line.obj lbitblt.obj \
 	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
 #effects.obj roller.obj 
 
@@ -44,13 +44,13 @@ TESTG_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 #VESATEST_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
 
 gr.lib: linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-	gpixel.obj palette.obj line.obj lbitblt.obj        \
+	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
+	gpixel.obj palette.obj line.obj lbitblt.obj \
 	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
 
 	wlib gr.lib linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-		bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-		gpixel.obj palette.obj line.obj lbitblt.obj        \
+		bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
+		gpixel.obj palette.obj line.obj lbitblt.obj \
 		scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
 	copy *.lib $(LIBDIR)
 

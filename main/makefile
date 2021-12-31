@@ -14,7 +14,9 @@ DESCENT_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
         	 	ui.lib \
-				div0.lib misc.lib texmap.lib editor.lib
+				div0.lib misc.lib texmap.lib
+				
+#				editor.lib
 
 #		sosdigi.lib #sosmidi.lib \
 		#iglasses.lib gclfr32.lib loadpats.lib
@@ -146,9 +148,9 @@ inferno.obj: inferno.c
 info.obj: info.c
 	wcc386 $(CCFLAGS) info.c
 int3hand.obj: psmacros.inc types.inc
-	ml /c int3hand.asm int3hand.obj;
+	ml /c int3hand.asm int3hand.obj
 ipx_esr.obj: psmacros.inc types.inc
-	ml /c ipx_esr.asm ipx_esr.obj;
+	ml /c ipx_esr.asm ipx_esr.obj
 joydefs.obj: joydefs.c
 	wcc386 $(CCFLAGS) joydefs.c
 kbuild.obj: 
@@ -266,7 +268,7 @@ slew.obj:
 songs.obj: 
 	wcc386 $(CCFLAGS) songs.c
 soscodec.obj: soscodec.asm
-	ml /c soscodec.asm soscodec.obj;
+	ml /c soscodec.asm soscodec.obj
 state.obj: 
 	wcc386 $(CCFLAGS) state.c
 switch.obj:

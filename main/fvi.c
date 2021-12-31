@@ -723,6 +723,7 @@ int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_
 		return 0;
 }
 
+/*
 //$$fix get_sphere_int_dist(vms_vector *w,fix dist,fix rad);
 //$$
 //$$#pragma aux get_sphere_int_dist parm [esi] [ebx] [ecx] value [eax] modify exact [eax ebx ecx edx] = \
@@ -829,6 +830,7 @@ int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_
 //$$	else
 //$$		return 0;       //no intersection
 //$$}
+*/
 
 //determine if a vector intersects with an object
 //if no intersects, returns 0, else fills in intp and returns dist
@@ -1309,6 +1311,7 @@ quit_looking:
 
 }
 
+/*
 //--unused-- //compute the magnitude of a 2d vector
 //--unused-- fix mag2d(vec2d *v);
 //--unused-- #pragma aux mag2d parm [esi] value [eax] modify exact [eax ebx ecx edx] = \
@@ -1334,6 +1337,7 @@ quit_looking:
 //--unused-- 
 //--unused-- 	return mag;
 //--unused-- }
+*/
 
 #include "textures.h"
 #include "texmerge.h"

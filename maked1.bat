@@ -4,49 +4,49 @@ call d1vars.bat
 set CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
 cd misc
-make
+nmake
 cd..
 cd includes
-make
+nmake
 cd ..
 cd fix
-make
+nmake
 cd ..
 cd cfile
-make
+nmake
 cd ..
 cd 2d
-make
+nmake
 cd ..
 cd bios
-make
+nmake
 cd ..
 cd iff
-make
+nmake
 cd ..
 cd div
-make
+nmake
 cd ..
 cd mem
-make
+nmake
 cd ..
 cd vecmat
-make
+nmake
 cd ..
 cd 3d
-make
+nmake
 cd ..
 cd texmap
-make
+nmake
 cd ..
 cd ui
-make
+nmake
 cd ..
 cd main
 rem cd editor
-rem make
+rem nmake
 rem cd ..
-make
+nmake
 cd ..
-Echo Make complete.
+Echo nmake complete.
 
