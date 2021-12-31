@@ -1,7 +1,8 @@
 rem d1vars sets up compiler variables
 call d1vars.bat
-set LIBDIR = d:\dev\d1\main
+
 set CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
 cd misc
 make
 cd..
@@ -42,9 +43,9 @@ cd ui
 make
 cd ..
 cd main
-cd editor
-make
-cd ..
+rem cd editor
+rem make
+rem cd ..
 make
 cd ..
 Echo Make complete.
