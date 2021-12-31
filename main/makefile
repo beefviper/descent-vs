@@ -66,7 +66,7 @@ centers.obj: centers.c
 cntrlcen.obj: cntrlcen.c 
 	wcc386 $(CCFLAGS) cntrlcen.c
 cockpit.obj: cockpit.asm
-	masm /i$INCLUDE cockpit.asm cockpit.obj
+	ml /c /i$INCLUDE cockpit.asm cockpit.obj
 #cockpit.inc psmacros.inc types.inc
 
 coindev.obj: coindev.c coindev.h 
@@ -146,9 +146,9 @@ inferno.obj: inferno.c
 info.obj: info.c
 	wcc386 $(CCFLAGS) info.c
 int3hand.obj: psmacros.inc types.inc
-	masm int3hand.asm int3hand.obj;
+	ml /c int3hand.asm int3hand.obj;
 ipx_esr.obj: psmacros.inc types.inc
-	masm ipx_esr.asm ipx_esr.obj;
+	ml /c ipx_esr.asm ipx_esr.obj;
 joydefs.obj: joydefs.c
 	wcc386 $(CCFLAGS) joydefs.c
 kbuild.obj: 
@@ -266,7 +266,7 @@ slew.obj:
 songs.obj: 
 	wcc386 $(CCFLAGS) songs.c
 soscodec.obj: soscodec.asm
-	masm soscodec.asm soscodec.obj;
+	ml /c soscodec.asm soscodec.obj;
 state.obj: 
 	wcc386 $(CCFLAGS) state.c
 switch.obj:

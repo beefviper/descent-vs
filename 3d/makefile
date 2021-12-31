@@ -39,43 +39,43 @@ TEST_PROGS = 3dtest
 	wcc386 $(CCFLAGS) 3dtest.c
 
 clipper.obj: clipper.asm
-	masm clipper.asm clipper.obj
+	ml /c clipper.asm clipper.obj
 draw.obj: draw.asm
-	masm draw.asm draw.obj
+	ml /c draw.asm draw.obj
 globvars.obj: globvars.asm
-	masm globvars.asm globvars.obj
+	ml /c globvars.asm globvars.obj
 horizon.obj: horizon.asm
-	masm horizon.asm horizon.obj
+	ml /c horizon.asm horizon.obj
 instance.obj: instance.asm 
-	masm instance.asm instance.obj
+	ml /c instance.asm instance.obj
 
 interp.obj: interp.asm
-	masm interp.asm interp.obj
+	ml /c interp.asm interp.obj
 matrix.obj: matrix.asm
-	masm matrix.asm matrix.obj
+	ml /c matrix.asm matrix.obj
 
 objects.obj: objects.asm
-	masm objects.asm objects.obj
+	ml /c objects.asm objects.obj
 
 out.obj: out.asm
-	masm out.asm out.obj
+	ml /c out.asm out.obj
 
 points.obj: points.asm
-	masm points.asm points.obj
+	ml /c points.asm points.obj
 
 rod.obj: rod.asm
-	masm rod.asm rod.obj
+	ml /c rod.asm rod.obj
 
 segment.obj: segment.asm
-	masm segment.asm segment.obj
+	ml /c segment.asm segment.obj
 
 setup.obj: setup.asm
-	masm setup.asm setup.obj
+	ml /c setup.asm setup.obj
 
 #trakball.obj: trackball.asm
 
 upvecs.obj: upvecs.asm
-	masm upvecs.asm upvecs.obj
+	ml /c upvecs.asm upvecs.obj
 
 upvecs2.obj: fix.h types.h vecmat.h
 

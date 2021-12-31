@@ -83,17 +83,17 @@ inv_cmap.obj: inv_cmap.c
 l.obj:   l.obj
 	wcc386 $(CCFLAGS) l.c
 lbitblt.obj: lbitblt.asm
-	masm lbitblt.asm
+	ml /c lbitblt.asm
 line.obj: line.c
 	wcc386 $(CCFLAGS) line.c
 linear.obj: linear.asm
-	masm linear.asm linear.obj
+	ml /c linear.asm linear.obj
 median.obj: median.c
 	wcc386 $(CCFLAGS) median.c
 mspeed.obj: mspeed.c
 	wcc386 $(CCFLAGS) mspeed.c
 modex.obj: modex.asm
-	masm modex.asm
+	ml /c modex.asm
 palette.obj: palette.c
 	wcc386 $(CCFLAGS) palette.c
 pcx.obj: pcx.c
@@ -111,13 +111,13 @@ roller.obj: roller.c
 scale.obj: scale.c
 	wcc386 $(CCFLAGS) scale.c
 scalea.obj: scalea.asm
-	masm scalea.asm scalea.obj 
+	ml /c scalea.asm scalea.obj 
 scanline.obj: scanline.c
 	wcc386 $(CCFLAGS) scanline.c
 testg.obj: testg.c
 	wcc386 $(CCFLAGS) testg.c
 vesa.obj: vesa.asm
-	masm vesa.asm
+	ml /c vesa.asm
 vesalib.obj: vesalib.c
 	wcc386 $(CCFLAGS) vesalib.c
 vesatest.obj: vesatest.c
