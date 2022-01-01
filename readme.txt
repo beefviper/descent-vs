@@ -10,7 +10,7 @@ Compiled with MASM32 and WATCOM11, produces warnings, 700K dos4gw exe
 Compiled with MASM32 and Open Watcom 2, produces warnings, 663K dos4gw exe
 Both versions show two splash screens, crashes loading data or graphics
 
-Still need to fix more to compile with Open Watcom
+Still need to fix more warnings when compiling with Watcom and Open Watcom
 Should probably use MASM provided by Visual Studio
 
 Then need to make Visual Studio solution and project files.
