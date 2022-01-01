@@ -40,7 +40,7 @@ TESTG_LFLAGS = option stack=50k
 
 ui.lib: $(UI_OBJS)
 	wlib ui.lib $(UI_OBJS)
-	copy *.lib $(LIBDIR)
+	copy ui.lib $(LIBDIR)
 barbox.obj: barbox.c
 	wcc386 $(CCFLAGS) barbox.c
 button.obj: button.c

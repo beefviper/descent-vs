@@ -32,7 +32,7 @@ VECTEST_SRCS = vectest.c
 VECTEST_LIBS = vecmat.lib io.lib fix.lib
 vecmat.lib: $(VECMAT_OBJS)
 	wlib vecmat.lib $(VECMAT_OBJS)
-	copy *.lib $(LIBDIR)
+	copy vecmat.lib $(LIBDIR)
 vecmat.obj: vecmat.inc vecmat.asm
 	ml /c vecmat.asm
 

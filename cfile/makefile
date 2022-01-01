@@ -19,10 +19,10 @@ CFILE_OBJS = cfile.obj
 
 cfile.lib: $(CFILE_OBJS)
 	wlib cfile.lib $(CFILE_OBJS)
-	copy *.lib $(LIBDIR)
+	copy cfile.lib $(LIBDIR)
+
 cfile.obj: cfile.h cfile.c
 	wcc386 $(CCFLAGS) cfile.c
 
 test.obj: test.c
 	wcc386 $(CCFLAGS) test.c
-

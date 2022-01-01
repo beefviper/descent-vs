@@ -34,10 +34,9 @@ DEMO_LIBS = io.lib
 
 io.lib: $(IO_OBJS)
 	wlib io.lib $(IO_OBJS)
-	copy *.lib $(LIBDIR)
+	copy io.lib $(LIBDIR)
 cdrom.obj: cdrom.c
 	wcc386 $(CCFLAGS) cdrom.c
-
 demo.obj: demo.c
 	wcc386 $(CCFLAGS) demo.c
 dpmi.obj: dpmi.c
@@ -68,4 +67,3 @@ testt.obj: testt.c
 	wcc386 $(CCFLAGS) testt.c
 timer.obj: timer.asm
 	ml /c timer.asm
-
