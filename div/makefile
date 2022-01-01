@@ -33,7 +33,7 @@ TESTD_LIBS = div0.lib
 
 div0.lib: $(DIV0_OBJS)
 	wlib div0.lib $(DIV0_OBJS)
-	copy *.lib $(LIBDIR)
+	copy div0.lib $(LIBDIR)
 div0.obj: div0.asm
 	ml /c div0.asm
 

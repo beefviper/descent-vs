@@ -47,12 +47,11 @@ gr.lib: linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
 	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
 	gpixel.obj palette.obj line.obj lbitblt.obj \
 	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-
 	wlib gr.lib linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
 		bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
 		gpixel.obj palette.obj line.obj lbitblt.obj \
 		scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-	copy *.lib $(LIBDIR)
+	copy gr.lib $(LIBDIR)
 
 bitblt.obj: bitblt.c
 	wcc386 $(CCFLAGS) bitblt.c

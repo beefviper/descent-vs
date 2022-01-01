@@ -386,7 +386,7 @@ init_endlevel()
 
 	generate_starfield();
 
-	atexit(free_endlevel_data);
+	atexit((void*)free_endlevel_data);
 
 	terrain_bm_instance.bm_data = satellite_bm_instance.bm_data = NULL;
 }

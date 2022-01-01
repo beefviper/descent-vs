@@ -315,6 +315,8 @@ int gr_check_mode(int mode);
 extern int gr_save_mode();
 extern void gr_restore_mode();
 
+extern void gr_sync_display();
+
 //=========================================================================
 // Canvas functions:
 
@@ -363,10 +365,10 @@ grs_bitmap *gr_create_bitmap_raw(int w, int h, unsigned char * raw_data );
 grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm,int x,int y,int w, int h);
 
 // Free the bitmap and its pixel data
-gr_free_bitmap(grs_bitmap *bm);
+void gr_free_bitmap(grs_bitmap *bm);
 
 // Free the bitmap, but not the pixel data buffer
-gr_free_sub_bitmap(grs_bitmap *bm);
+void gr_free_sub_bitmap(grs_bitmap *bm);
 
 void gr_bm_pixel( grs_bitmap * bm, int x, int y, unsigned char color );
 void gr_bm_upixel( grs_bitmap * bm, int x, int y, unsigned char color );

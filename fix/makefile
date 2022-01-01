@@ -33,7 +33,8 @@ FIXTEST_LIBS = fix.lib io.lib
 
 fix.lib: $(FIX_OBJS)
 	wlib fix.lib $(FIX_OBJS)
-	copy *.lib $(LIBDIR)
+	copy fix.lib $(LIBDIR)
+
 asingen.obj: math.h stdio.h
 
 fix.obj: fix.inc fix.asm

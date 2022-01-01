@@ -37,7 +37,7 @@ ERRTEST_LIBS = misc.lib
 
 misc.lib: $(MISC_OBJS)
 	wlib misc.lib $(MISC_OBJS)
-	copy *.lib $(LIBDIR)
+	copy misc.lib $(LIBDIR)
 
 error.obj: error.c error.h 
 	wcc386 $(CCFLAGS) error.c
@@ -46,10 +46,7 @@ errtest.obj: errtest.c error.h
 	wcc386 $(CCFLAGS) errtest.c
 
 parsarg.obj: parsarg.c parsarg.h
-
 	wcc386 $(CCFLAGS) parsarg.c
 
 parstest.obj: parstest.c parsarg.h 
-
 	wcc386 $(CCFLAGS) parstest.c
-
