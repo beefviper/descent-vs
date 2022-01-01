@@ -9,9 +9,13 @@
 
 LIBDIR = ..\main
 
-#
-
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install, and where to install it
 INSTALL_TARGS = effect2d.h gr.h gr.lib grdef.h gr.inc palette.h ibitblt.h rle.h pcx.h
@@ -43,81 +47,108 @@ TESTG_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 #VESATEST_OBJS = vesatest.obj
 #VESATEST_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
 
-gr.lib: linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
-	gpixel.obj palette.obj line.obj lbitblt.obj \
-	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-	wlib gr.lib linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-		bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
-		gpixel.obj palette.obj line.obj lbitblt.obj \
-		scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
+gr.lib: $(GR_OBJS)
+	wlib gr.lib $(GR_OBJS)
 	copy gr.lib $(LIBDIR)
 
 bitblt.obj: bitblt.c
-	wcc386 $(CCFLAGS) bitblt.c
+	$(CC) $(CCFLAGS) bitblt.c
+
 bitmap.obj: bitmap.c
-	wcc386 $(CCFLAGS) bitmap
+	$(CC) $(CCFLAGS) bitmap
+
 box.obj: box.c
-	wcc386 $(CCFLAGS) box
+	$(CC) $(CCFLAGS) box
+
 canvas.obj: canvas.c
-	wcc386 $(CCFLAGS) canvas.c
+	$(CC) $(CCFLAGS) canvas.c
+
 circle.obj: circle.c
-	wcc386 $(CCFLAGS) circle.c
+	$(CC) $(CCFLAGS) circle.c
+
 disc.obj: disc.c
-	wcc386 $(CCFLAGS) disc.c
+	$(CC) $(CCFLAGS) disc.c
+
 effects.obj: effects.c
-	wcc386 $(CCFLAGS) effects.c
+	$(CC) $(CCFLAGS) effects.c
+
 fdraw.obj: fdraw.c
-	wcc386 $(CCFLAGS) fdraw.c
+	$(CC) $(CCFLAGS) fdraw.c
+
 font.obj: font.c
-	wcc386 $(CCFLAGS) font.c
+	$(CC) $(CCFLAGS) font.c
+
 gpixel.obj: gpixel.c
-	wcc386 $(CCFLAGS) gpixel.c
-gr.obj:  gr.c
-	wcc386 $(CCFLAGS) gr.c
+	$(CC) $(CCFLAGS) gpixel.c
+
+gr.obj: gr.c
+	$(CC) $(CCFLAGS) gr.c
+
 ibitblt.obj: ibitblt.c
-	wcc386 $(CCFLAGS) ibitblt.c
+	$(CC) $(CCFLAGS) ibitblt.c
+
 inv_cmap.obj: inv_cmap.c
-	wcc386 $(CCFLAGS) inv_cmap.c
-l.obj:   l.obj
-	wcc386 $(CCFLAGS) l.c
+	$(CC) $(CCFLAGS) inv_cmap.c
+
+l.obj: l.obj
+	$(CC) $(CCFLAGS) l.c
+
 lbitblt.obj: lbitblt.asm
-	ml /c lbitblt.asm
+	$(ASM) $(ASMFLAGS) lbitblt.asm
+
 line.obj: line.c
-	wcc386 $(CCFLAGS) line.c
+	$(CC) $(CCFLAGS) line.c
+
 linear.obj: linear.asm
-	ml /c linear.asm linear.obj
+	$(ASM) $(ASMFLAGS) linear.asm linear.obj
+
 median.obj: median.c
-	wcc386 $(CCFLAGS) median.c
+	$(CC) $(CCFLAGS) median.c
+
 mspeed.obj: mspeed.c
-	wcc386 $(CCFLAGS) mspeed.c
+	$(CC) $(CCFLAGS) mspeed.c
+
 modex.obj: modex.asm
-	ml /c modex.asm
+	$(ASM) $(ASMFLAGS) modex.asm
+
 palette.obj: palette.c
-	wcc386 $(CCFLAGS) palette.c
+	$(CC) $(CCFLAGS) palette.c
+
 pcx.obj: pcx.c
-	wcc386 $(CCFLAGS) pcx.c
+	$(CC) $(CCFLAGS) pcx.c
+
 pixel.obj: pixel.c
-	wcc386 $(CCFLAGS) pixel.c
+	$(CC) $(CCFLAGS) pixel.c
+
 poly.obj: poly.c
-	wcc386 $(CCFLAGS) poly.c
+	$(CC) $(CCFLAGS) poly.c
+
 rect.obj: rect.c
-	wcc386 $(CCFLAGS) rect.c
+	$(CC) $(CCFLAGS) rect.c
+
 rle.obj: rle.c
-	wcc386 $(CCFLAGS) rle.c
+	$(CC) $(CCFLAGS) rle.c
+
 roller.obj: roller.c
-	wcc386 $(CCFLAGS) roller.c
+	$(CC) $(CCFLAGS) roller.c
+
 scale.obj: scale.c
-	wcc386 $(CCFLAGS) scale.c
+	$(CC) $(CCFLAGS) scale.c
+
 scalea.obj: scalea.asm
-	ml /c scalea.asm scalea.obj 
+	$(ASM) $(ASMFLAGS) scalea.asm scalea.obj 
+
 scanline.obj: scanline.c
-	wcc386 $(CCFLAGS) scanline.c
+	$(CC) $(CCFLAGS) scanline.c
+
 testg.obj: testg.c
-	wcc386 $(CCFLAGS) testg.c
+	$(CC) $(CCFLAGS) testg.c
+
 vesa.obj: vesa.asm
-	ml /c vesa.asm
+	$(ASM) $(ASMFLAGS) vesa.asm
+
 vesalib.obj: vesalib.c
-	wcc386 $(CCFLAGS) vesalib.c
+	$(CC) $(CCFLAGS) vesalib.c
+
 vesatest.obj: vesatest.c
-	wcc386 $(CCFLAGS) vesatest.c
+	$(CC) $(CCFLAGS) vesatest.c

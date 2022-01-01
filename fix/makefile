@@ -8,9 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install, and where to install it
 INSTALL_TARGS = fix.lib fix.h fix.inc
@@ -38,7 +43,7 @@ fix.lib: $(FIX_OBJS)
 asingen.obj: math.h stdio.h
 
 fix.obj: fix.inc fix.asm
-	ml /c fix.asm
+	$(ASM) $(ASMFLAGS) fix.asm
 
 fixtest.obj: conio.h fix.h graph.h stdio.h stdlib.h types.h
 

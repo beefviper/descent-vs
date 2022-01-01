@@ -8,10 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install
 INSTALL_TARGS = 3d.lib 3d.h 3d.inc
@@ -35,47 +39,53 @@ TEST_PROGS = 3dtest
 3d.lib: $(3D_OBJS)
 	wlib 3d.lib $(3D_OBJS)
 	copy 3d.lib $(LIBDIR)
+
 3dtest.obj: 3dtest.c
-	wcc386 $(CCFLAGS) 3dtest.c
+	$(CC) $(CCFLAGS) 3dtest.c
 
 clipper.obj: clipper.asm
-	ml /c clipper.asm clipper.obj
+	$(ASM) $(ASMFLAGS) clipper.asm clipper.obj
+
 draw.obj: draw.asm
-	ml /c draw.asm draw.obj
+	$(ASM) $(ASMFLAGS) draw.asm draw.obj
+
 globvars.obj: globvars.asm
-	ml /c globvars.asm globvars.obj
+	$(ASM) $(ASMFLAGS) globvars.asm globvars.obj
+
 horizon.obj: horizon.asm
-	ml /c horizon.asm horizon.obj
+	$(ASM) $(ASMFLAGS) horizon.asm horizon.obj
+
 instance.obj: instance.asm 
-	ml /c instance.asm instance.obj
+	$(ASM) $(ASMFLAGS) instance.asm instance.obj
 
 interp.obj: interp.asm
-	ml /c interp.asm interp.obj
+	$(ASM) $(ASMFLAGS) interp.asm interp.obj
+
 matrix.obj: matrix.asm
-	ml /c matrix.asm matrix.obj
+	$(ASM) $(ASMFLAGS) matrix.asm matrix.obj
 
 objects.obj: objects.asm
-	ml /c objects.asm objects.obj
+	$(ASM) $(ASMFLAGS) objects.asm objects.obj
 
 out.obj: out.asm
-	ml /c out.asm out.obj
+	$(ASM) $(ASMFLAGS) out.asm out.obj
 
 points.obj: points.asm
-	ml /c points.asm points.obj
+	$(ASM) $(ASMFLAGS) points.asm points.obj
 
 rod.obj: rod.asm
-	ml /c rod.asm rod.obj
+	$(ASM) $(ASMFLAGS) rod.asm rod.obj
 
 segment.obj: segment.asm
-	ml /c segment.asm segment.obj
+	$(ASM) $(ASMFLAGS) segment.asm segment.obj
 
 setup.obj: setup.asm
-	ml /c setup.asm setup.obj
+	$(ASM) $(ASMFLAGS) setup.asm setup.obj
 
 #trakball.obj: trackball.asm
 
 upvecs.obj: upvecs.asm
-	ml /c upvecs.asm upvecs.obj
+	$(ASM) $(ASMFLAGS) upvecs.asm upvecs.obj
 
 upvecs2.obj: fix.h types.h vecmat.h
 

@@ -8,9 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install
 INSTALL_TARGS = iff.lib iff.h
@@ -34,8 +39,9 @@ IFFTESTV_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
 iff.lib: $(IFF_OBJS)
 	wlib iff.lib $(IFF_OBJS)
 	copy iff.lib $(LIBDIR)
+
 iff.obj: iff.c
-	wcc386 $(CCFLAGS) iff.c
+	$(CC) $(CCFLAGS) iff.c
 
 ifftest.obj: conio.h fix.h gr.h iff.h stdio.h stdlib.h types.h
 

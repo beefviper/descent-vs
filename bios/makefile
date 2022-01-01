@@ -8,9 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install, and where to install it
 INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h swift.h dpmi.h ipx.h
@@ -35,35 +40,51 @@ DEMO_LIBS = io.lib
 io.lib: $(IO_OBJS)
 	wlib io.lib $(IO_OBJS)
 	copy io.lib $(LIBDIR)
+
 cdrom.obj: cdrom.c
-	wcc386 $(CCFLAGS) cdrom.c
+	$(CC) $(CCFLAGS) cdrom.c
+
 demo.obj: demo.c
-	wcc386 $(CCFLAGS) demo.c
+	$(CC) $(CCFLAGS) demo.c
+
 dpmi.obj: dpmi.c
-	wcc386 $(CCFLAGS) dpmi.c
+	$(CC) $(CCFLAGS) dpmi.c
+
 ipx.obj: ipx.c
-	wcc386 $(CCFLAGS) ipx.c
+	$(CC) $(CCFLAGS) ipx.c
+
 joyc.obj: joyc.c
-	wcc386 $(CCFLAGS) joyc.c
+	$(CC) $(CCFLAGS) joyc.c
+
 joy.obj: joy.asm
-	ml /c joy.asm
+	$(ASM) $(ASMFLAGS) joy.asm
+
 key.obj: key.c
-	wcc386 $(CCFLAGS) key.c
+	$(CC) $(CCFLAGS) key.c
+
 mono.obj: mono.c
-	wcc386 $(CCFLAGS) mono.c
+	$(CC) $(CCFLAGS) mono.c
+
 mouse.obj: mouse.c
-	wcc386 $(CCFLAGS) mouse.c
+	$(CC) $(CCFLAGS) mouse.c
+
 testj.obj: testj.c
-	wcc386 $(CCFLAGS) testj.c
+	$(CC) $(CCFLAGS) testj.c
+
 testk.obj: testk.c
-	wcc386 $(CCFLAGS) testk.c
+	$(CC) $(CCFLAGS) testk.c
+
 testm.obj: testm.c
-	wcc386 $(CCFLAGS) testm.c
+	$(CC) $(CCFLAGS) testm.c
+
 testmem.obj: testmem.c
-	wcc386 $(CCFLAGS) testmem.c
+	$(CC) $(CCFLAGS) testmem.c
+
 testms.obj: testms.c
-	wcc386 $(CCFLAGS) testms.c
+	$(CC) $(CCFLAGS) testms.c
+
 testt.obj: testt.c
-	wcc386 $(CCFLAGS) testt.c
+	$(CC) $(CCFLAGS) testt.c
+
 timer.obj: timer.asm
-	ml /c timer.asm
+	$(ASM) $(ASMFLAGS) timer.asm

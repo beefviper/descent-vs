@@ -8,10 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 # What to install, and where to install it
 INSTALL_TARGS = ui.lib ui.h func.h
@@ -41,53 +45,78 @@ TESTG_LFLAGS = option stack=50k
 ui.lib: $(UI_OBJS)
 	wlib ui.lib $(UI_OBJS)
 	copy ui.lib $(LIBDIR)
+
 barbox.obj: barbox.c
-	wcc386 $(CCFLAGS) barbox.c
+	$(CC) $(CCFLAGS) barbox.c
+
 button.obj: button.c
-	wcc386 $(CCFLAGS) button.c
+	$(CC) $(CCFLAGS) button.c
+
 checkbox.obj: checkbox.c
-	wcc386 $(CCFLAGS) checkbox.c
+	$(CC) $(CCFLAGS) checkbox.c
+
 file.obj: file.c
-	wcc386 $(CCFLAGS) file.c
+	$(CC) $(CCFLAGS) file.c
+
 func.obj: func.c
-	wcc386 $(CCFLAGS) func.c
+	$(CC) $(CCFLAGS) func.c
+
 gadget.obj: gadget.c
-	wcc386 $(CCFLAGS) gadget.c
+	$(CC) $(CCFLAGS) gadget.c
+
 harderr.obj: harderr.c
-	wcc386 $(CCFLAGS) harderr.c
+	$(CC) $(CCFLAGS) harderr.c
+
 icon.obj: icon.c
-	wcc386 $(CCFLAGS) icon.c
+	$(CC) $(CCFLAGS) icon.c
+
 inputbox.obj: inputbox.c
-	wcc386 $(CCFLAGS) inputbox.c
+	$(CC) $(CCFLAGS) inputbox.c
+
 keypad.obj: keypad.c
-	wcc386 $(CCFLAGS) keypad.c
+	$(CC) $(CCFLAGS) keypad.c
+
 keypress.obj: keypress.c
-	wcc386 $(CCFLAGS) keypress.c
+	$(CC) $(CCFLAGS) keypress.c
+
 keytrap.obj: keytrap.c
-	wcc386 $(CCFLAGS) keytrap.c
+	$(CC) $(CCFLAGS) keytrap.c
+
 listbox.obj: listbox.c
-	wcc386 $(CCFLAGS) listbox.c
+	$(CC) $(CCFLAGS) listbox.c
+
 menu.obj: menu.c
-	wcc386 $(CCFLAGS) menu.c
+	$(CC) $(CCFLAGS) menu.c
+
 menubar.obj: menubar.c
-	wcc386 $(CCFLAGS) menubar.c
+	$(CC) $(CCFLAGS) menubar.c
+
 message.obj: message.c
-	wcc386 $(CCFLAGS) message.c
+	$(CC) $(CCFLAGS) message.c
+
 mouse.obj: mouse.c
-	wcc386 $(CCFLAGS) mouse.c
+	$(CC) $(CCFLAGS) mouse.c
+
 number.obj: number.c
-	wcc386 $(CCFLAGS) number.c
+	$(CC) $(CCFLAGS) number.c
+
 popup.obj: popup.c
-	wcc386 $(CCFLAGS) popup.c
+	$(CC) $(CCFLAGS) popup.c
+
 radio.obj: radio.c
-	wcc386 $(CCFLAGS) radio.c
+	$(CC) $(CCFLAGS) radio.c
+
 scroll.obj: scroll.c
-	wcc386 $(CCFLAGS) scroll.c
+	$(CC) $(CCFLAGS) scroll.c
+
 ui.obj:	 ui.c
-	wcc386 $(CCFLAGS) ui.c
+	$(CC) $(CCFLAGS) ui.c
+
 uidraw.obj: uidraw.c
-	wcc386 $(CCFLAGS) uidraw.c
+	$(CC) $(CCFLAGS) uidraw.c
+
 userbox.obj: userbox.c
-	wcc386 $(CCFLAGS) userbox.c
+	$(CC) $(CCFLAGS) userbox.c
+
 window.obj: window.c
-	wcc386 $(CCFLAGS) window.c
+	$(CC) $(CCFLAGS) window.c

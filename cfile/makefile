@@ -1,13 +1,21 @@
 #
-# Master makefile for Miner source
+# $Source: f:/miner/source/cfile/rcs/makefile $
+# $Revision: 1.00 $
+# $Author: beefviper $
+# $Date: 2022/01/01 12:34:56 $
 #
-# Makes all the executable by visiting subdirs and making there
+# Makefile for cfile functions
 #
 
 LIBDIR = ..\main
-#
 
+# What compiler and flags to use
+CC = wcc386
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+
+# What assembler and flags to use
+ASM = ml
+ASMFLAGS = /c
 
 CLEAN_TARGS = $(OBJDIR)\*.obj
 
@@ -22,7 +30,7 @@ cfile.lib: $(CFILE_OBJS)
 	copy cfile.lib $(LIBDIR)
 
 cfile.obj: cfile.h cfile.c
-	wcc386 $(CCFLAGS) cfile.c
+	$(CC) $(CCFLAGS) cfile.c
 
 test.obj: test.c
-	wcc386 $(CCFLAGS) test.c
+	$(CC) $(CCFLAGS) test.c
