@@ -217,13 +217,13 @@ char gr_pal_default[768];
 
 int gr_installed = 0;
 
-ubyte * pVideoMode =  (volatile ubyte *)0x449;
-ushort * pNumColumns = (volatile ushort *)0x44a;
-ubyte * pNumRows = (volatile ubyte *)0x484;
-ushort * pCharHeight = (volatile ushort *)0x485;
-ushort * pCursorPos = (volatile ushort *)0x450;
-ushort * pCursorType = (volatile ushort *)0x460;
-ushort * pTextMemory = (volatile ushort *)0xb8000;
+volatile ubyte * pVideoMode =  (volatile ubyte *)0x449;
+volatile ushort * pNumColumns = (volatile ushort *)0x44a;
+volatile ubyte * pNumRows = (volatile ubyte *)0x484;
+volatile ushort * pCharHeight = (volatile ushort *)0x485;
+volatile ushort * pCursorPos = (volatile ushort *)0x450;
+volatile ushort * pCursorType = (volatile ushort *)0x460;
+volatile ushort * pTextMemory = (volatile ushort *)0xb8000;
 
 typedef struct screen_save {
 	ubyte 	video_mode;
@@ -670,7 +670,7 @@ int gr_init(int mode)
 
 	// Set flags indicating that this is installed.
 	gr_installed = 1;
-	atexit(gr_close);
+	atexit((void*)gr_close);
 
 	return 0;
 }

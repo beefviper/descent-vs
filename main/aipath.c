@@ -1164,7 +1164,7 @@ void ai_path_garbage_collect(void)
 		}
 	}
 
-	qsort(object_list, num_path_objects, sizeof(object_list[0]), path_index_compare);
+	qsort(object_list, num_path_objects, sizeof(object_list[0]), (void*)path_index_compare);
 
 	for (objind=0; objind < num_path_objects; objind++) {
 		object		*objp;

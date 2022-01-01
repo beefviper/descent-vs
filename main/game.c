@@ -2690,7 +2690,7 @@ void game()
 	keys_override = FindArg("-keys");
 	#endif
 
-	set_warn_func(game_show_warning);
+	set_warn_func((void*)game_show_warning);
 
 	init_cockpit();
 	init_gauges();
@@ -2823,7 +2823,7 @@ void game()
 
 	//_MARK_("end of game");//Commented out -KRB
 
-	clear_warn_func(game_show_warning);     //don't use this func anymore
+	clear_warn_func((void*)game_show_warning);     //don't use this func anymore
 
 	game_disable_cheats();
 }
@@ -2853,7 +2853,7 @@ void close_game()
 	if (background_bitmap.bm_data)
 		free(background_bitmap.bm_data);
 
-	clear_warn_func(game_show_warning);     //don't use this func anymore
+	clear_warn_func((void*)game_show_warning);     //don't use this func anymore
 }
 
 grs_canvas * get_current_game_screen()

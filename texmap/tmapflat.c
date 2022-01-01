@@ -249,7 +249,8 @@ void texture_map_flat(g3ds_tmap *t, int color)
 //	(ie, avoids cracking) edge/delta computation.
 void gr_upoly_tmap(int nverts, int *vert )
 {
-	gr_upoly_tmap_ylr(nverts, vert, tmap_scanline_flat);
+	// added (void*) to get rid of error, probably broke something?
+	gr_upoly_tmap_ylr(nverts, vert, (void*)tmap_scanline_flat);
 }
 
 #include "3d.h"
@@ -316,7 +317,8 @@ void gr_upoly_tmap_ylr(int nverts, int *vert, void *ylr_func() )
 		my_tmap.verts[i].y2d = *vert++;
 	}
 
-	scanline_func = ylr_func;
+	// added (void*) to get rid of error, probably broke something?
+	scanline_func = (void*)ylr_func;
 
 	texture_map_flat(&my_tmap, COLOR);
 }
