@@ -5,8 +5,10 @@ Added .gitinore
 Converted file and directory names to lowercase
 Removed unprintable SUB control character form hundreds of files
 Added missing return types, removed extra semicolons, other minor fixes
-Compiled with MASM32 and WATCOM11, produces some warnings
-700K dos4gw exe shows splash screens, crashes loading data or graphics
+
+Compiled with MASM32 and WATCOM11, produces warnings, 700K dos4gw exe
+Compiled with MASM32 and Open Watcom 2, produces warnings, 663K dos4gw exe
+Both versions show two splash screens, crashes loading data or graphics
 
 Still need to fix more to compile with Open Watcom
 Should probably use MASM provided by Visual Studio
