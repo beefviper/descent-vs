@@ -34,7 +34,7 @@ TEST_PROGS = 3dtest
 
 3d.lib: $(3D_OBJS)
 	wlib 3d.lib $(3D_OBJS)
-	copy *.lib $(LIBDIR)
+	copy 3d.lib $(LIBDIR)
 3dtest.obj: 3dtest.c
 	wcc386 $(CCFLAGS) 3dtest.c
 

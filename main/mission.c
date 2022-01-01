@@ -335,7 +335,7 @@ int build_mission_list(int anarchy_mode)
 #endif
 
 	if (count>1)
-		qsort(&Mission_list[1],count-1,sizeof(*Mission_list),ml_sort_func);
+		qsort(&Mission_list[1],count-1,sizeof(*Mission_list),(void*)ml_sort_func);
 
 	load_mission(0);			//set built-in mission as default
 

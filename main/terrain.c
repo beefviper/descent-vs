@@ -401,7 +401,7 @@ void load_terrain(char *filename)
 	if (height_array)
 		free(height_array);
 	else
-		atexit(free_height_array);		//first time
+		atexit((void*)free_height_array);		//first time
 
 	grid_w = height_bitmap.bm_w;
 	grid_h = height_bitmap.bm_h;
@@ -493,7 +493,7 @@ build_light_table()
 	if (light_array)
 		free(light_array);
 	else
-		atexit(free_light_table);		//first time
+		atexit((void*)free_light_table);		//first time
 
 	//MALLOC(light_array,ubyte,grid_w*grid_h); //Won't comile -KRB
 	light_array = (ubyte *)malloc(grid_w*grid_h+(sizeof(ubyte))); //my hack -KRB

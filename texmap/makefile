@@ -48,7 +48,7 @@ TEXTEST_LIBS = TEXMAP.lib
 
 texmap.lib: $(TEXMAP_OBJS)
 	wlib texmap.lib $(TEXMAP_OBJS)
-	copy *.lib $(LIBDIR)
+	copy texmap.lib $(LIBDIR)
 lightabs.obj: lightabs.asm
 	ml /c lightabs.asm
 

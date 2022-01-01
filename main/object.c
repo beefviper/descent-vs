@@ -414,7 +414,7 @@ int print_object_info = 0;
 //--unused-- int Player_controller_type = 0;
 
 //	List of objects rendered last frame in order.  Created at render time, used by homing missiles in laser.c
-short ordered_rendered_object_list[MAX_RENDERED_OBJECTS];
+short Ordered_rendered_object_list[MAX_RENDERED_OBJECTS];
 int	Num_rendered_objects = 0;
 
 #ifndef NDEBUG
@@ -602,7 +602,7 @@ draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix clo
 	}
 	else {
 		Gr_scanline_darkening_level = cloak_value;
-		g3_set_special_render(draw_tmap_flat,NULL,NULL);		//use special flat drawer
+		g3_set_special_render((void*)draw_tmap_flat,NULL,NULL);		//use special flat drawer
 		draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,glow, alt_textures );
 		g3_set_special_render(NULL,NULL,NULL);
 		Gr_scanline_darkening_level = GR_FADE_LEVELS;

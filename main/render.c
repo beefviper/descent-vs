@@ -1644,7 +1644,7 @@ build_object_lists(int n_segs)
 
 			//now call qsort
 
-			qsort(sort_list,n_sort_items,sizeof(*sort_list),sort_func);
+			qsort(sort_list,n_sort_items,sizeof(*sort_list),(void*)sort_func);
 
 			//now copy back into list
 

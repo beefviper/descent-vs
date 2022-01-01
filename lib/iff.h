@@ -67,7 +67,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 //Prototypes for IFF library functions
  
-int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,ubyte *palette);
+int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,byte *palette);
 	//reads an IFF file into a grs_bitmap structure. fills in palette if not null
 	//returns error codes - see IFF.H.  see GR.H for bitmap_type
 	//MEM DETAILS:  This routines assumes that you already have the grs_bitmap
@@ -93,7 +93,7 @@ int iff_read_animbrush(char *ifilename,grs_bitmap **bm,int max_bitmaps,int *n_bi
 extern ubyte iff_transparent_color;
 extern ubyte iff_has_transparency;	// 0=no transparency, 1=iff_transparent_color is valid
 
-int iff_write_bitmap(char *ofilename,grs_bitmap *bm,ubyte *palette);
+int iff_write_bitmap(char *ofilename,grs_bitmap *bm,byte *palette);
 	//writes an IFF file from a grs_bitmap structure. writes palette if not null
 	//returns error codes - see IFF.H.
 
