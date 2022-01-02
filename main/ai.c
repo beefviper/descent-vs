@@ -540,6 +540,11 @@ ubyte	john_cheats_2[2*JOHN_CHEATS_SIZE_2] = { 	KEY_P ^ 0x00 ^ 0x43, 0x66,
 																KEY_Y ^ 0x40 ^ 0x43, 0x0, 
 																KEY_S ^ 0x50 ^ 0x43 };
 
+// Function Prototypes
+void init_boss_segments(short segptr[], int* num_segs, int size_check);
+void ai_multi_send_robot_position(int objnum, int force);
+
+
 // ---------------------------------------------------------
 //	On entry, N_robot_types had darn sure better be set.
 //	Mallocs N_robot_types robot_info structs into global Robot_info.

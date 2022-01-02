@@ -542,6 +542,22 @@ kc_item kc_mouse[NUM_OTHER_CONTROLS] = {
 	{ 26, 25, 70, 85, 26,  4,  2,  7,  8,TNUM_DROP_BOMB, BT_MOUSE_BUTTON, 255 },
 };
 
+
+// Function Prototypes
+void kc_drawitem(kc_item* item, int is_current);
+void kc_change_key(kc_item* item);
+void kc_change_mousebutton(kc_item* item);
+void kc_change_mouseaxis(kc_item* item);
+void kc_change_joybutton(kc_item* item);
+void kc_change_joyaxis(kc_item* item);
+void kc_change_invert(kc_item* item);
+void kconfig_read_fcs(int raw_axis);
+int SenseGetData(int function, int cls, fix* yaw, fix* pitch, fix* roll, int* buttons);
+int SenseSetZero(int function, int cls);
+void kconfig_set_fcs_button(int btn, int button);
+
+
+
 int kconfig_is_axes_used(int axis)
 {
 	int i;
@@ -1392,7 +1408,7 @@ extern int			VR_sensitivity;
 						
 int VR_sense_range[3] = { 25, 50, 75 };
 
-read_head_tracker()
+void read_head_tracker()
 {
 	fix yaw, pitch, roll;
 	int buttons;

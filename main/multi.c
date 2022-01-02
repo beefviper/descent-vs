@@ -65,6 +65,7 @@ static char rcsid[] = "$Id: multi.c 2.10 1995/05/29 16:18:26 john Exp $";
 #include "kmatrix.h"
 //#include "glfmodem.h"//This and the next file aren't part of the public release -KRB
 //#include "commlib.h"
+#include "nocomlib.h"
 #include "multibot.h"
 #include "gameseq.h"
 #include "physics.h"
@@ -78,6 +79,7 @@ typedef struct  {
 	unsigned char read_index;
 } BUFFER;
 
+/*
 typedef struct  {
 	void (interrupt far * old_vector)();
 	int uart_base;
@@ -86,6 +88,8 @@ typedef struct  {
 	BUFFER in;
 	BUFFER out;
 } PORT; //I added this from serial.c, it will compile, but I doubt it works. -KRB
+*/
+
 //*******************************************
 //
 // Local macros and prototypes
@@ -246,6 +250,15 @@ int message_length[MULTI_MAX_TYPE+1] = {
 	1+1, 	// MULTI_REQ_PLAYER
 	sizeof(netplayer_stats),			// MULTI_SEND_PLAYER
 };
+
+
+// Function Prototypes
+void multi_reset_player_object(object* objp);
+void multi_save_game(ubyte slot, uint id, char* desc);
+void multi_restore_game(ubyte slot, uint id);
+void extract_netplayer_stats(netplayer_stats* ps, player* pd);
+void multi_set_robot_ai(void);
+
 
 //
 //  Functions that replace what used to be macros
@@ -1884,8 +1897,7 @@ multi_reset_stuff(void)
 	reset_rear_view();
 }
 
-void
-multi_reset_player_object(object *objp)
+void multi_reset_player_object(object *objp)
 {
 	int i;
 	int id;

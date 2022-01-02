@@ -83,7 +83,7 @@ char *text;
 
 char *Text_string[N_TEXT_STRINGS];
 
-free_text()
+void free_text()
 {
 	free(text);
 }
@@ -124,7 +124,7 @@ void load_text()
 
 		//MALLOC(text,char,len);//Won't compile... working on it..-KRB
 		text=malloc(len*sizeof(char));//my hack -KRB
-		atexit((void*)free_text);
+		atexit(free_text);
 
 		cfread(text,1,len,ifile);
 
@@ -139,7 +139,7 @@ void load_text()
 		//MALLOC(text,char,len);//Won't compile... working on it..-KRB
 		text=malloc(len*sizeof(char));//my hack -KRB
 
-		atexit((void*)free_text);
+		atexit(free_text);
 
 		//fread(text,1,len,tfile);
 		p = text;

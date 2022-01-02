@@ -149,6 +149,21 @@ extern obj_position Player_init[MAX_PLAYERS];
 #define DUMP_CONNECTED 5
 #define DUMP_LEVEL 6
 
+// Function Prototypes
+void network_flush();
+void network_listen();
+void network_send_endlevel_sub(int player_num);
+void network_update_netgame(void);
+void network_dump_player(ubyte* server, ubyte* node, int why);
+void network_send_objects(void);
+void network_send_rejoin_sync(int player_num);
+void network_send_game_info(sequence_packet* their);
+void network_read_sync_packet(netgame_info* sp);
+void network_read_pdata_packet(frame_info* pd);
+void network_read_object_packet(ubyte* data);
+void network_read_endlevel_packet(ubyte* data);
+
+
 int network_wait_for_snyc();
 
 void
@@ -892,7 +907,7 @@ void network_send_objects(void)
 
 			Assert(loc <= IPX_MAX_DATA_SIZE);
 
-			ipx_send_internetwork_packet_data( object_buffer, loc, Network_player_rejoining.player.server, Network_player_rejoining.player.node );
+			ipx_send_internetwork_packet_data((ubyte*)object_buffer, loc, Network_player_rejoining.player.server, Network_player_rejoining.player.node );
 			// OLD ipx_send_packet_data(object_buffer, loc, &Network_player_rejoining.player.node);
 		}
 
@@ -917,7 +932,7 @@ void network_send_objects(void)
 				*(short *)(object_buffer+3) = -2;	
 				*(short *)(object_buffer+6) = obj_count;
 				//OLD ipx_send_packet_data(object_buffer, 8, &Network_player_rejoining.player.node);
-				ipx_send_internetwork_packet_data(object_buffer, 8, Network_player_rejoining.player.server, Network_player_rejoining.player.node);
+				ipx_send_internetwork_packet_data((ubyte*)object_buffer, 8, Network_player_rejoining.player.server, Network_player_rejoining.player.node);
 			
 				// Send sync packet which tells the player who he is and to start!
 				network_send_rejoin_sync(player_num);
@@ -1066,8 +1081,7 @@ void network_remove_player(sequence_packet *p)
 
 }
 
-void
-network_dump_player(ubyte * server, ubyte *node, int why)
+void network_dump_player(ubyte * server, ubyte *node, int why)
 {
 	// Inform player that he was not chosen for the netgame
 
@@ -1095,8 +1109,7 @@ network_send_game_list_request(void)
 	ipx_send_broadcast_packet_data( (ubyte *)&me, sizeof(sequence_packet) );
 }
 
-void
-network_update_netgame(void)
+void network_update_netgame(void)
 {
 	// Update the netgame struct with current game variables
 
@@ -1126,8 +1139,7 @@ network_update_netgame(void)
 	Netgame.levelnum = Current_level_num;
 }
 
-void
-network_send_endlevel_sub(int player_num)
+void network_send_endlevel_sub(int player_num)
 {
 	endlevel_info end;
 	int i;
@@ -1155,16 +1167,14 @@ network_send_endlevel_sub(int player_num)
 	}
 }
 
-void
-network_send_endlevel_packet(void)
+void network_send_endlevel_packet(void)
 {
 	// Send an updated endlevel status to other hosts
 
 	network_send_endlevel_sub(Player_num);
 }
 
-void
-network_send_game_info(sequence_packet *their)
+void network_send_game_info(sequence_packet *their)
 {
  	// Send game info to someone who requested it
 
@@ -1369,8 +1379,7 @@ void dump_segments()
 }
 #endif
 
-void
-network_read_endlevel_packet( ubyte *data )
+void network_read_endlevel_packet( ubyte *data )
 {
 	// Special packet for end of level syncing
 
@@ -1436,8 +1445,7 @@ network_verify_objects(int remote, int local)
 	return(1);
 }
 	
-void
-network_read_object_packet( ubyte *data )
+void network_read_object_packet( ubyte *data )
 {
 	// Object from another net player we need to sync with
 

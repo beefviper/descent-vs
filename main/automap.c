@@ -289,6 +289,11 @@ static fix Automap_farthest_dist = (F1_0 * 20 * 50);		// 50 segments away
 static vms_matrix	ViewMatrix;
 static fix ViewDist=0;
 
+// Function Prototypes
+void draw_all_edges();
+void automap_build_edge_list();
+void adjust_segment_limit(int SegmentLimit);
+
 void automap_clear_visited()	
 {
 	int i;
@@ -449,7 +454,7 @@ grs_canvas *print_to_canvas(char *s,grs_font *font, int fc, int bc)
 }
 
 //print to buffer, double heights, and blit bitmap to screen
-modex_printf(int x,int y,char *s,int fontnum)
+void modex_printf(int x,int y,char *s,int fontnum)
 {
 	grs_canvas *temp_canv;
 
@@ -460,7 +465,7 @@ modex_printf(int x,int y,char *s,int fontnum)
 	gr_free_canvas(temp_canv);
 }
 
-create_name_canv()
+void create_name_canv()
 {
 	char	name_level[128];
 
@@ -745,7 +750,7 @@ void adjust_segment_limit(int SegmentLimit)
 	
 }
 
-void draw_all_edges()	
+void draw_all_edges()
 {
 	g3s_codes cc;
 	int i,j,nbright;

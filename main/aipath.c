@@ -166,7 +166,12 @@ static char rcsid[] = "$Id: aipath.c 2.0 1995/02/27 11:30:48 john Exp $";
 //	Length in segments of avoidance path
 #define	AVOID_SEG_LENGTH	7
 
-create_random_xlate(byte *xt)
+// Function Prototypes
+void maybe_ai_path_garbage_collect(void);
+void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
+
+
+void create_random_xlate(byte *xt)
 {
 	int	i;
 

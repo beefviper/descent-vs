@@ -18,7 +18,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 PORT * PortOpenGreenleafFast(int port, int baud,char parity,int databits, int stopbits)
 {
 	return 0;
-
 }
 
 void SetDtr(PORT *port,int state)
@@ -56,40 +55,46 @@ int Change8259Priority(int a)
 	return 0;
 }
 
-int FastSetPortHardware(PORT *port,int IRQ, int baseaddr)
+int FastSetPortHardware(int port,int IRQ, int baseaddr)
 {
 	return 0;
 }
+
 void FastSet16550TriggerLevel(int a)
 {
 	return;
 }
+
 void FastSet16550UseTXFifos(int a)
 {
 	return;
 }
 
-
-FastSavePortParameters(PORT *port)
+void FastSavePortParameters(int port)
 {
 	return;
 }
+
 int PortClose(PORT *port)
 {
 	return 0;
 }
+
 void FastRestorePortParameters(int num)
 {
 	return;
 }
+
 int GetCd(PORT *port)
 {
 	return 0;
 }
+
 int ReadCharTimed(PORT *port, int blah)
 {
 	return 0;
 }
+
 int ReadChar(PORT *port)
 {
 	return 0;
@@ -99,43 +104,48 @@ void ClearLineStatus(PORT *port)
 {
 	return;
 }
+
 int HMInputLine(PORT *port, int a, char *buf, int b)
 {
 	return 0;
 }
-void HMWaitForOK(int a, int b)
+
+void HMWaitForOK(int a, void* b)
 {
 	return;
 }
-HMSendString(PORT *port, char *msg)
+
+int HMSendString(PORT *port, char *msg)
 {
-	return;
+	return 0;
 }
+
 void HMReset(PORT *port)
 {	
 	return;
 }
+
 void HMDial(PORT *port, char *pPhoneNum)
 {
 	return;
 }
+
 void HMSendStringNoWait(PORT *port, char *pbuf,int a)
 {
 	return;
 }
+
 void HMAnswer(PORT *port)
 {
 	return;
 }
+
 void ClearTXBuffer(PORT *port)
 {
 	return;
 }
+
 void WriteBuffer(PORT *port, char *pbuff, int len)
 {
 	return;
 }
-
-
-
-

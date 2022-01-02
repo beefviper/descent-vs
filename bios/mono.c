@@ -75,6 +75,10 @@ static char rcsid[] = "$Id: mono.c 1.12 1995/02/23 11:59:57 john Exp $";
 
 #include "key.h"
 
+// Function Prototypes
+void msetcursor(short row, short col);
+
+
 void mono_int_3();
 #pragma aux mono_int_3 = "int 3";
 

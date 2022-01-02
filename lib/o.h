@@ -514,6 +514,6 @@ extern int update_object_seg(object * obj );
 
 //go through all objects and make sure they have the correct segment numbers
 //used when debugging is on
-fix_object_segs();
+void fix_object_segs();
 
 #endif

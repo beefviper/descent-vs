@@ -206,26 +206,26 @@ RegisterPlayer();
 RegisterPlayerSub(int allow_abort_flag);
 
 //starts a new game on the given level
-StartNewGame(int start_level);
+void StartNewGame(int start_level);
 
 //starts the next level
-StartNewLevel(int level_num);
+void StartNewLevel(int level_num);
 
 // Actually does the work to start new level
-StartNewLevelSub(int level_num, int page_in_textures);
+void StartNewLevelSub(int level_num, int page_in_textures);
 
-InitPlayerObject();				//make sure player's object set up
+void InitPlayerObject();				//make sure player's object set up
 void init_player_stats_game();		//clear all stats
 
 //starts a resumed game loaded from disk
-ResumeSavedGame(int start_level);
+void ResumeSavedGame(int start_level);
 
 //called when the player has finished a level
 //if secret flag is true, advance to secret level, else next normal level
-PlayerFinishedLevel(int secret_flag);
+void PlayerFinishedLevel(int secret_flag);
 
 //called when the player has died
-DoPlayerDead();
+void DoPlayerDead();
 
 //load a level off disk. level numbers start at 1.  
 //Secret levels are -1,-2,-3

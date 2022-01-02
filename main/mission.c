@@ -150,7 +150,7 @@ int istok(char *buf,char *tok)
 }
 
 //adds a terminating 0 after a string at the first white space
-add_term(char *s)
+void add_term(char *s)
 {
 	while (*s && !isspace(*s)) s++;
 

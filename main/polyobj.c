@@ -212,7 +212,7 @@ short pof_read_short(ubyte *bufp)
 //	return s;
 }
 
-pof_read_string(char *buf,int max, ubyte *bufp)
+void pof_read_string(char *buf,int max, ubyte *bufp)
 {
 	int	i;
 
@@ -225,7 +225,7 @@ pof_read_string(char *buf,int max, ubyte *bufp)
 
 }
 
-pof_read_vecs(vms_vector *vecs,int n,ubyte *bufp)
+void pof_read_vecs(vms_vector *vecs,int n,ubyte *bufp)
 {
 //	cfread(vecs,sizeof(vms_vector),n,f);
 
@@ -250,7 +250,7 @@ vms_angvec anim_angs[N_ANIM_STATES][MAX_SUBMODELS];
 
 //set the animation angles for this robot.  Gun fields of robot info must
 //be filled in.
-robot_set_angles(robot_info *r,polymodel *pm,vms_angvec angs[N_ANIM_STATES][MAX_SUBMODELS]);
+void robot_set_angles(robot_info *r,polymodel *pm,vms_angvec angs[N_ANIM_STATES][MAX_SUBMODELS]);
 #endif
 
 //reads a binary file containing a 3d model
@@ -516,7 +516,7 @@ int read_model_guns(char *filename,vms_vector *gun_points, vms_vector *gun_dirs,
 }
 
 //free up a model, getting rid of all its memory
-free_model(polymodel *po)
+void free_model(polymodel *po)
 {
 	free(po->model_data);
 }
@@ -614,7 +614,7 @@ void draw_polygon_model(vms_vector *pos,vms_matrix *orient,vms_angvec *anim_angl
 
 }
 
-free_polygon_models()
+void free_polygon_models()
 {
 	int i;
 
@@ -624,7 +624,7 @@ free_polygon_models()
 
 }
 
-polyobj_find_min_max(polymodel *pm)
+void polyobj_find_min_max(polymodel *pm)
 {
 	ushort nverts;
 	vms_vector *vp;
@@ -732,11 +732,11 @@ int load_polygon_model(char *filename,int n_textures,grs_bitmap ***textures)
 }
 
 
-init_polygon_models()
+void init_polygon_models()
 {
 	N_polygon_models = 0;
 
-	atexit((void*)free_polygon_models);
+	atexit(free_polygon_models);
 
 }
 
@@ -749,7 +749,7 @@ init_polygon_models()
 //more-or-less fill the canvas.  Note that this routine actually renders
 //into an off-screen canvas that it creates, then copies to the current
 //canvas.
-draw_model_picture(int mn,vms_angvec *orient_angles)
+void draw_model_picture(int mn,vms_angvec *orient_angles)
 {
 	vms_vector	temp_pos=ZERO_VECTOR;
 	vms_matrix	temp_orient = IDENTITY_MATRIX;

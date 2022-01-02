@@ -352,6 +352,14 @@ int NumNetPlayerPositions = -1;
 extern int last_drawn_cockpit;
 extern int Last_level_path_created;
 
+// Function Prototypes
+void init_player_stats_new_ship();
+int AdvanceLevel(int secret_flag);
+void StartLevel(int random);
+extern void init_cockpit();
+void copy_defaults_to_robot_all(void);
+
+
 void HUD_clear_messages(); // From hud.c
 
 
@@ -720,7 +728,7 @@ void update_player_stats()
 }
 
 //go through this level and start any eclip sounds
-set_sound_sources()
+void set_sound_sources()
 {
 	int segnum,sidenum;
 	segment *seg;
@@ -971,7 +979,7 @@ void LoadLevel(int level_num)
 }
 
 //sets up Player_num & ConsoleObject  
-InitPlayerObject()
+void InitPlayerObject()
 {
 	Assert(Player_num>=0 && Player_num<MAX_PLAYERS);
 
@@ -993,7 +1001,7 @@ InitPlayerObject()
 extern void game_disable_cheats();
 
 //starts a new game on the given level
-StartNewGame(int start_level)
+void StartNewGame(int start_level)
 {
 	Game_mode = GM_NORMAL;
 	Function_mode = FMODE_GAME;
@@ -1017,7 +1025,7 @@ StartNewGame(int start_level)
 }
 
 //starts a resumed game loaded from disk
-ResumeSavedGame(int start_level)
+void ResumeSavedGame(int start_level)
 {
 	Game_mode = GM_NORMAL;
 	Function_mode = FMODE_GAME;
@@ -1133,7 +1141,7 @@ void DoEndLevelScoreGlitz(int network)
 }
 
 //give the player the opportunity to save his game
-DoEndlevelMenu()
+void DoEndlevelMenu()
 {
 #ifdef SHAREWARE
 	if (!Cheats_enabled)
@@ -1144,7 +1152,7 @@ DoEndlevelMenu()
 }
 
 //called when the player has finished a level
-PlayerFinishedLevel(int secret_flag)
+void PlayerFinishedLevel(int secret_flag)
 {
 	int	rval;
 	int 	was_multi = 0;
@@ -1302,7 +1310,7 @@ died_in_mine_message(void)
 }
 
 //called when the player has died
-DoPlayerDead()
+void DoPlayerDead()
 {
 	reset_palette_add();
 
@@ -1394,7 +1402,7 @@ DoPlayerDead()
 }
 
 //called when the player is starting a new level for normal game mode and restore state
-StartNewLevelSub(int level_num, int page_in_textures)
+void StartNewLevelSub(int level_num, int page_in_textures)
 {
 	if (!(Game_mode & GM_MULTI)) {
 		last_drawn_cockpit = -1;
@@ -1513,7 +1521,7 @@ StartNewLevelSub(int level_num, int page_in_textures)
 }
 
 //called when the player is starting a new level for normal game model
-StartNewLevel(int level_num)
+void StartNewLevel(int level_num)
 {
 	if (!(Game_mode & GM_MULTI)) {
 		do_briefing_screens(level_num);
@@ -1523,7 +1531,7 @@ StartNewLevel(int level_num)
 }
 
 //initialize the player object position & orientation (at start of game, or new ship)
-InitPlayerPosition(int random)
+void InitPlayerPosition(int random)
 {
 	int NewPlayer;
 
@@ -1627,7 +1635,7 @@ extern void vr_reset_display();
 
 //	-----------------------------------------------------------------------------------------------------
 //called when the player is starting a level (new game or new ship)
-StartLevel(int random)
+void StartLevel(int random)
 {
 	Assert(!Player_is_dead);
 

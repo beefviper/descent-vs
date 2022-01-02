@@ -244,7 +244,7 @@ extern byte	Primary_weapon, Secondary_weapon;
 extern ubyte Primary_weapon_to_weapon_info[MAX_PRIMARY_WEAPONS];
 extern ubyte Secondary_weapon_to_weapon_info[MAX_SECONDARY_WEAPONS];
 extern void auto_select_weapon(int weapon_type);		//parm is primary or secondary
-extern select_weapon(int weapon_num, int secondary_flag, int print_message,int wait_for_rearm);
+extern void select_weapon(int weapon_num, int secondary_flag, int print_message,int wait_for_rearm);
 
 extern char	*Primary_weapon_names_short[];
 extern char	*Secondary_weapon_names_short[];

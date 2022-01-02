@@ -593,7 +593,7 @@ gauge_box gauge_boxes[] = {
 int	Color_0_31_0 = -1;
 
 //copy a box from the off-screen buffer to the visible page
-copy_gauge_box(gauge_box *box,grs_bitmap *bm)
+void copy_gauge_box(gauge_box *box,grs_bitmap *bm)
 {
 
 	if (box->spanlist) {
@@ -614,7 +614,7 @@ copy_gauge_box(gauge_box *box,grs_bitmap *bm)
 }
 
 //fills in the coords of the hostage video window
-get_hostage_window_coords(int *x,int *y,int *w,int *h)
+void get_hostage_window_coords(int *x,int *y,int *w,int *h)
 {
 	if (Cockpit_mode == CM_STATUS_BAR) {
 		*x = SB_SECONDARY_W_BOX_LEFT;
@@ -1067,7 +1067,7 @@ void hud_show_shield(void)
 }
 
 //draw the icons for number of lives
-hud_show_lives()
+void hud_show_lives()
 {
 	if ((HUD_nmessages > 0) && (strlen(HUD_messages[hud_first]) > 38))
 		return;
@@ -1087,7 +1087,7 @@ hud_show_lives()
 
 }
 
-sb_show_lives()
+void sb_show_lives()
 {
 	int x,y;
 	grs_bitmap * bm = &GameBitmaps[Gauges[GAUGE_LIVES].index];
@@ -1470,7 +1470,7 @@ void draw_keys()
 }
 
 
-draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char *name,int text_x,int text_y)
+void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char *name,int text_x,int text_y)
 {
 	grs_bitmap *bm;
 	char *p;
@@ -1514,7 +1514,7 @@ draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char *nam
 }
 
 
-draw_weapon_info(int weapon_type,int weapon_num)
+void draw_weapon_info(int weapon_type,int weapon_num)
 {
 #ifdef SHAREWARE
 	if (Newdemo_state==ND_STATE_RECORDING )
@@ -1549,7 +1549,7 @@ draw_weapon_info(int weapon_type,int weapon_num)
 				SECONDARY_W_TEXT_X,SECONDARY_W_TEXT_Y);
 }
 
-draw_ammo_info(int x,int y,int ammo_count,int primary)
+void draw_ammo_info(int x,int y,int ammo_count,int primary)
 {
 	int w;
 
@@ -1565,7 +1565,7 @@ draw_ammo_info(int x,int y,int ammo_count,int primary)
 	gr_printf(x,y,"%03d",ammo_count);
 }
 
-draw_primary_ammo_info(int ammo_count)
+void draw_primary_ammo_info(int ammo_count)
 {
 	if (Cockpit_mode == CM_STATUS_BAR)
 		draw_ammo_info(SB_PRIMARY_AMMO_X,SB_PRIMARY_AMMO_Y,ammo_count,1);
@@ -1573,7 +1573,7 @@ draw_primary_ammo_info(int ammo_count)
 		draw_ammo_info(PRIMARY_AMMO_X,PRIMARY_AMMO_Y,ammo_count,1);
 }
 
-draw_secondary_ammo_info(int ammo_count)
+void draw_secondary_ammo_info(int ammo_count)
 {
 	if (Cockpit_mode == CM_STATUS_BAR)
 		draw_ammo_info(SB_SECONDARY_AMMO_X,SB_SECONDARY_AMMO_Y,ammo_count,0);
@@ -1643,7 +1643,7 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 
 }
 
-draw_weapon_boxes()
+void draw_weapon_boxes()
 {
 	int boxofs = (Cockpit_mode==CM_STATUS_BAR)?2:0;
 	int drew;
@@ -1680,7 +1680,7 @@ draw_weapon_boxes()
 }
 
 
-sb_draw_energy_bar(energy)
+void sb_draw_energy_bar(energy)
 {
 	int erase_height;
 
@@ -1704,7 +1704,7 @@ sb_draw_energy_bar(energy)
 					  
 }
 
-sb_draw_shield_num(int shield)
+void sb_draw_shield_num(int shield)
 {
 	grs_bitmap *bm = &GameBitmaps[cockpit_bitmap[Cockpit_mode].index];
 
@@ -1721,7 +1721,7 @@ sb_draw_shield_num(int shield)
 	gr_printf((shield>99)?SB_SHIELD_NUM_X:((shield>9)?SB_SHIELD_NUM_X+2:SB_SHIELD_NUM_X+4),SB_SHIELD_NUM_Y,"%d",shield);
 }
 
-sb_draw_shield_bar(int shield)
+void sb_draw_shield_bar(int shield)
 {
 	int bm_num = shield>=100?9:(shield / 10);
 
@@ -1732,7 +1732,7 @@ sb_draw_shield_bar(int shield)
 
 }
 
-sb_draw_keys()
+void sb_draw_keys()
 {
 	grs_bitmap * bm;
 	int flags = Players[Player_num].flags;
@@ -1819,7 +1819,7 @@ rgb player_rgb[] = {
 
 
 //draw the reticle
-show_reticle(int force_big_one)
+void show_reticle(int force_big_one)
 {
 	int x,y;
 	int laser_ready,missile_ready,laser_ammo,missile_ammo;
@@ -1938,7 +1938,7 @@ show_reticle(int force_big_one)
 }
 
 #ifdef NETWORK
-hud_show_kill_list()
+void hud_show_kill_list()
 {
 	int n_players,player_list[MAX_NUM_NET_PLAYERS];
 	int n_left,i,x0,x1,y,save_y,fth;

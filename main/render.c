@@ -353,6 +353,10 @@ int	N_render_segs;
 
 fix Render_zoom = 0x9000;							//the player's zoom factor
 
+// Function Prototypes
+void render_mine(int start_seg_num, fix eye_offset);
+
+
 #ifndef NDEBUG
 ubyte object_rendered[MAX_OBJECTS];
 #endif
@@ -512,7 +516,7 @@ fix flash_scale;
 fix flash_rate = FLASH_CYCLE_RATE;
 
 //cycle the flashing light for when mine destroyed
-flash_frame()
+void flash_frame()
 {
 	static fixang flash_ang=0;
 
@@ -806,7 +810,7 @@ render_object_search(object *obj)
 }
 #endif
 
-do_render_object(int objnum)
+void do_render_object(int objnum)
 {
 	#ifdef EDITOR
 	int save_3d_outline;
@@ -1179,7 +1183,7 @@ int Window_clip_left,Window_clip_top,Window_clip_right,Window_clip_bot;
 
 //Given two sides of segment, tell the two verts which form the 
 //edge between them
-Two_sides_to_edge[6][6][2] = {
+int Two_sides_to_edge[6][6][2] = {
 	{ {-1,-1}, {3,7}, {-1,-1}, {2,6}, {6,7}, {2,3} },
 	{ {3,7}, {-1,-1}, {0,4}, {-1,-1}, {4,7}, {0,3} },
 	{ {-1,-1}, {0,4}, {-1,-1}, {1,5}, {4,5}, {0,1} },
@@ -1189,7 +1193,7 @@ Two_sides_to_edge[6][6][2] = {
 };
 
 //given an edge specified by two verts, give the two sides on that edge
-Edge_to_sides[8][8][2] = {
+int Edge_to_sides[8][8][2] = {
 	{ {-1,-1}, {2,5}, {-1,-1}, {1,5}, {1,2}, {-1,-1}, {-1,-1}, {-1,-1} },
 	{ {2,5}, {-1,-1}, {3,5}, {-1,-1}, {-1,-1}, {2,3}, {-1,-1}, {-1,-1} },
 	{ {-1,-1}, {3,5}, {-1,-1}, {0,5}, {-1,-1}, {-1,-1}, {0,3}, {-1,-1} },
@@ -1438,7 +1442,7 @@ int sort_seg_children(segment *seg,int n_children,short *child_list)
 	return count;
 }
 
-add_obj_to_seglist(int objnum,int listnum)
+void add_obj_to_seglist(int objnum,int listnum)
 {
 	int i,checkn,marker;
 
@@ -1540,7 +1544,7 @@ int sort_func(sort_item *a,sort_item *b)
 	return delta_dist;	//return distance
 }
 
-build_object_lists(int n_segs)
+void build_object_lists(int n_segs)
 {
 	int nn;
 
@@ -1767,7 +1771,7 @@ int first_terminal_seg;
 
 //build a list of segments to be rendered
 //fills in Render_list & N_render_segs
-build_segment_list(int start_seg_num)
+void build_segment_list(int start_seg_num)
 {
 	int	lcnt,scnt,ecnt;
 	int	l,c;

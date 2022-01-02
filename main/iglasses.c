@@ -74,21 +74,22 @@ static char rcsid[] = "$Id: iglasses.c 2.8 1995/03/30 16:36:31 mike Exp $";
 #include "key.h"
 //#include "commlib.h" //nien - These aren't included -KRB
 //#include "fast.h"
+#include "nocomlib.h"
 #include "timer.h"
 
 int iglasses_headset_installed=0;
 
 void iglasses_close_tracking();
 
+/*
 //*******************************************
-
 typedef struct  {
 	int status;
 	int count;
 	
 } PORT; //I added this it will compile, but I doubt it works. -KRB
 //*******************************************
-
+*/
 
 PORT * Iport = NULL;
 

@@ -575,7 +575,7 @@ int Gamesave_num_players=0;
 int N_save_pof_names=25;
 char Save_pof_names[MAX_POLYGON_MODELS][13];
 
-check_and_fix_matrix(vms_matrix *m);
+void check_and_fix_matrix(vms_matrix *m);
 
 void verify_object( object * obj )	{
 
@@ -824,7 +824,7 @@ static void gs_write_angvec(vms_angvec *v,FILE *file)
 #endif
 
 //reads one object of the given version from the given file
-read_object(object *obj,CFILE *f,int version)
+void read_object(object *obj,CFILE *f,int version)
 {
 	obj->type				= read_byte(f);
 	obj->id					= read_byte(f);

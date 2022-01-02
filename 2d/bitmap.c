@@ -211,6 +211,19 @@ void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count 
 	"dec	ecx"					\
 	"jne	again_ddn"
 
+void build_colormap_good(ubyte* palette, ubyte* colormap, int* freq)
+{
+	int i, r, g, b;
+
+	for (i = 0; i < 256; i++) {
+		r = *palette++;
+		g = *palette++;
+		b = *palette++;
+		*colormap++ = gr_find_closest_color(r, g, b);
+		*freq++ = 0;
+	}
+}
+
 void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {
 	ubyte colormap[256];
@@ -233,20 +246,6 @@ void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, 
 	if ( (super_transparent_color>=0) && (super_transparent_color<=255) && (freq[super_transparent_color]>0) )
 		bmp->bm_flags |= BM_FLAG_SUPER_TRANSPARENT;
 }
-
-void build_colormap_good( ubyte * palette, ubyte * colormap, int * freq )
-{
-	int i, r, g, b;
-
-	for (i=0; i<256; i++ )	{
-		r = *palette++;		
-		g = *palette++;		
-		b = *palette++;		
- 		*colormap++ = gr_find_closest_color( r, g, b );
-		*freq++ = 0;
-	}
-}
-
 
 void gr_remap_bitmap_good( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {

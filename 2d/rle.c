@@ -111,6 +111,9 @@ static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
 #define RLE_CODE 			0xE0
 #define NOT_RLE_CODE		31
 
+// Function Prototypes
+void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
+
 int gr_rle_decode_asm( ubyte * src, ubyte * dest );
 #pragma aux gr_rle_decode_asm parm [esi] [edi] value [edi] modify exact [eax ebx ecx edx esi edi] = \
 "  cld					"\

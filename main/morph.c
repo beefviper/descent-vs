@@ -169,7 +169,7 @@ morph_data *find_morph_data(object *obj)
 
 
 //takes pm, fills in min & max
-find_min_max(polymodel *pm,int submodel_num,vms_vector *minv,vms_vector *maxv)
+void find_min_max(polymodel *pm,int submodel_num,vms_vector *minv,vms_vector *maxv)
 {
 	ushort nverts;
 	vms_vector *vp;
@@ -208,7 +208,7 @@ find_min_max(polymodel *pm,int submodel_num,vms_vector *minv,vms_vector *maxv)
 
 fix morph_rate = MORPH_RATE;
 
-init_points(polymodel *pm,vms_vector *box_size,int submodel_num,morph_data *md)
+void init_points(polymodel *pm,vms_vector *box_size,int submodel_num,morph_data *md)
 {
 	ushort nverts;
 	vms_vector *vp;
@@ -277,7 +277,7 @@ init_points(polymodel *pm,vms_vector *box_size,int submodel_num,morph_data *md)
 
 }
 
-update_points(polymodel *pm,int submodel_num,morph_data *md)
+void update_points(polymodel *pm,int submodel_num,morph_data *md)
 {
 	ushort nverts;
 	vms_vector *vp;
@@ -323,7 +323,7 @@ update_points(polymodel *pm,int submodel_num,morph_data *md)
 
 
 //process the morphing object for one frame
-do_morph_frame(object *obj)
+void do_morph_frame(object *obj)
 {
 	int i;
 	polymodel *pm;
@@ -384,7 +384,7 @@ do_morph_frame(object *obj)
 
 vms_vector morph_rotvel = {0x4000,0x2000,0x1000};
 
-init_morphs()
+void init_morphs()
 {
 	int i;
 
@@ -452,7 +452,7 @@ void morph_start(object *obj)
 
 }
 
-draw_model(polymodel *pm,int submodel_num,vms_angvec *anim_angles,fix light,morph_data *md)
+void draw_model(polymodel *pm,int submodel_num,vms_angvec *anim_angles,fix light,morph_data *md)
 {
 	int i,mn;
 	int facing;

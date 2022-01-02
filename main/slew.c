@@ -115,6 +115,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "physics.h"
 #include "joydefs.h"
 #include "kconfig.h"
+//#include "slew.h"
 
 #pragma off (unreferenced)
 static char rcsid[] = "$Id: slew.c 2.0 1995/02/27 11:29:32 john Exp $";
@@ -130,8 +131,11 @@ object *slew_obj=NULL;	//what object is slewing, or NULL if none
 
 short old_joy_x,old_joy_y;	//position last time around
 
+// Function Prototypes
+int slew_stop();
+
 //say start slewing with this object
-slew_init(object *obj)
+void slew_init(object *obj)
 {
 	slew_obj = obj;
 

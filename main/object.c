@@ -437,6 +437,12 @@ char	Object_type_names[MAX_OBJECT_TYPES][9] = {
 };
 #endif
 
+// Function Prototypes
+void obj_detach_one(object* sub);
+void obj_detach_all(object* parent);
+
+
+
 #ifndef RELEASE
 //set viewer object to next object in array
 void object_goto_next_viewer()
@@ -529,7 +535,7 @@ fix	Cloak_fadein_duration;
 fix	Cloak_fadeout_duration;
 
 //do special cloaked render
-draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
+void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
 {
 	fix cloak_delta_time,total_cloaked_time;
 	fix light_scale;
@@ -964,7 +970,7 @@ void render_object(object *obj)
 //--unused-- }
 
 
-check_and_fix_matrix(vms_matrix *m);
+void check_and_fix_matrix(vms_matrix *m);
 
 #define vm_angvec_zero(v) (v)->p=(v)->b=(v)->h=0
 
@@ -1760,8 +1766,8 @@ void dead_player_frame(void)
 	}
 }
 
-Killed_in_frame = -1;
-Killed_objnum = -1;
+int Killed_in_frame = -1;
+int Killed_objnum = -1;
 
 //	------------------------------------------------------------------------------------------------------------------
 void start_player_death_sequence(object *player)
@@ -1877,7 +1883,7 @@ void obj_relink(int objnum,int newsegnum)
 }
 
 //process a continuously-spinning object
-spin_object(object *obj)
+void spin_object(object *obj)
 {
 	vms_angvec rotangs;
 	vms_matrix rotmat, new_pm;
@@ -2169,7 +2175,7 @@ int update_object_seg(object * obj )
 
 
 //go through all objects and make sure they have the correct segment numbers
-fix_object_segs()
+void fix_object_segs()
 {
 	int i;
 

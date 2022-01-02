@@ -157,6 +157,10 @@ int Num_open_doors;						// Number of open doors
 //#define BM_FLAG_TRANSPARENT			1
 //#define BM_FLAG_SUPER_TRANSPARENT	2
 
+// Function Prototypes
+void kill_stuck_objects(int wallnum);
+
+
 #ifdef EDITOR
 char	Wall_names[7][10] = {
 	"NORMAL   ",

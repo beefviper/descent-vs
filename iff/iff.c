@@ -248,6 +248,10 @@ typedef struct fake_file {
 //}
 #endif
 
+// Function Prototypes
+int put_byte(unsigned char c, FILE* f);
+
+
 long get_sig(FFILE *f)
 {
 	char s[4];
@@ -279,7 +283,6 @@ int put_sig(long sig,FILE *f)
 	return fputc(s[0],f);
 
 }
-	
 
 int get_word(FFILE *f)
 {
@@ -738,12 +741,12 @@ int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,i
 int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
 {
 	int x,y,p;
-	byte *new_data,*destptr,*rowptr;
+	ubyte *new_data,*destptr,*rowptr;
 	int bytes_per_row,byteofs;
 	ubyte checkmask,newbyte,setbit;
 
 	//MALLOC( new_data, byte, bmheader->w * bmheader->h );//hack by KRB
-	new_data = (byte *)malloc((bmheader->w * bmheader->h)*sizeof(byte));
+	new_data = (ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
 	if (new_data == NULL) return IFF_NO_MEM;
 
 	destptr = new_data;
@@ -844,7 +847,7 @@ int open_fake_file(char *ifilename,FFILE *ffile)
 	return ret;
 }
 
-close_fake_file(FFILE *f)
+void close_fake_file(FFILE *f)
 {
 	if (f->data)
 		free(f->data);
@@ -853,7 +856,7 @@ close_fake_file(FFILE *f)
 }
 
 //copy an iff header structure to a grs_bitmap structure
-copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
+void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 {
 	bm->bm_x = bm->bm_y = 0;
 	bm->bm_w = bmheader->w;
@@ -867,7 +870,7 @@ copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 
 //if bm->bm_data is set, use it (making sure w & h are correct), else
 //allocate the memory
-int iff_parse_bitmap(FFILE *ifile,grs_bitmap *bm,int bitmap_type,byte *palette,grs_bitmap *prev_bm)
+int iff_parse_bitmap(FFILE *ifile,grs_bitmap *bm,int bitmap_type,ubyte *palette,grs_bitmap *prev_bm)
 {
 	int ret;			//return code
 	iff_bitmap_header bmheader;
@@ -932,7 +935,7 @@ done:
 }
 
 //returns error codes - see IFF.H.  see GR.H for bitmap_type
-int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,byte *palette)
+int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,ubyte *palette)
 {
 	int ret;			//return code
 	FFILE ifile;
@@ -957,7 +960,7 @@ done:
 
 //like iff_read_bitmap(), but reads into a bitmap that already exists,
 //without allocating memory for the bitmap. 
-int iff_read_into_bitmap(char *ifilename,grs_bitmap *bm,byte *palette)
+int iff_read_into_bitmap(char *ifilename,grs_bitmap *bm,ubyte *palette)
 {
 	int ret;			//return code
 	FFILE ifile;
@@ -1235,7 +1238,7 @@ int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)		
 
 //writes an IFF file from a grs_bitmap structure. writes palette if not null
 //returns error codes - see IFF.H.
-int iff_write_bitmap(char *ofilename,grs_bitmap *bm,byte *palette)
+int iff_write_bitmap(char *ofilename,grs_bitmap *bm,ubyte *palette)
 {
 	FILE *ofile;
 	iff_bitmap_header bmheader;

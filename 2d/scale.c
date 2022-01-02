@@ -92,6 +92,13 @@ extern int scale_ydelta_minus_1;
 extern int scale_whole_step;
 extern ubyte * scale_source_ptr;
 extern ubyte * scale_dest_ptr;
+
+// Function Prototypes
+void scale_bitmap_cc_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_cc_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+
 extern void rls_stretch_scanline_asm();
 
 extern void scale_do_cc_scanline();

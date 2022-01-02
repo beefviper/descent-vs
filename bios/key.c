@@ -593,7 +593,7 @@ void key_init()
 		printf( "Error locking keyboard handler!\n" );
 		exit(1);
 	}
-	if (!dpmi_lock_region (&key_data, sizeof(keyboard)))	{
+	if (!dpmi_lock_region ((void*)&key_data, sizeof(keyboard)))	{
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
@@ -609,19 +609,19 @@ void key_init()
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
-	if (!dpmi_lock_region (&keyd_last_pressed, sizeof(char)))	{
+	if (!dpmi_lock_region ((void*)&keyd_last_pressed, sizeof(char)))	{
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
-	if (!dpmi_lock_region (&keyd_last_released, sizeof(char)))	{
+	if (!dpmi_lock_region ((void*)&keyd_last_released, sizeof(char)))	{
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
-	if (!dpmi_lock_region (&keyd_pressed, sizeof(char)*256))	{
+	if (!dpmi_lock_region ((void*)&keyd_pressed, sizeof(char)*256))	{
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
-	if (!dpmi_lock_region (&keyd_time_when_last_pressed, sizeof(int)))	{
+	if (!dpmi_lock_region ((void*)&keyd_time_when_last_pressed, sizeof(int)))	{
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}

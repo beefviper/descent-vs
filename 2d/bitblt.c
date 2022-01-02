@@ -120,6 +120,11 @@ int gr_bitblt_dest_step_shift = 0;
 int gr_bitblt_double = 0;
 ubyte *gr_bitblt_fade_table=NULL;
 
+// Function Prototypes
+void gr_bm_ubitblt00_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap* src, grs_bitmap* dest);
+void gr_bm_ubitblt00m_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap* src, grs_bitmap* dest);
+void gr_bm_ubitblt0x_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap* src, grs_bitmap* dest);
+
 extern void gr_vesa_bitmap( grs_bitmap * source, grs_bitmap * dest, int x, int y );
 
 // This code aligns edi so that the destination is aligned to a dword boundry before rep movsd

@@ -118,13 +118,16 @@ extern fix g3_get_surface_dotprod(g3s_point **list);
 
 int terrain_outline=0;
 
+// Function Prototypes
+void build_light_table();
+
 void render_mine(int start_seg_num,fix eye_offset);
 
 int org_i,org_j;
 
 int mine_tiles_drawn;		//flags to tell if all 4 tiles under mine have drawn
 
-draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
+void draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
 {
 	g3s_point *pointlist[3];
 
@@ -380,7 +383,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 
 }
 
-free_height_array()
+void free_height_array()
 {
 	free(height_array);
 }
@@ -401,7 +404,7 @@ void load_terrain(char *filename)
 	if (height_array)
 		free(height_array);
 	else
-		atexit((void*)free_height_array);		//first time
+		atexit(free_height_array);		//first time
 
 	grid_w = height_bitmap.bm_w;
 	grid_h = height_bitmap.bm_h;
@@ -437,7 +440,7 @@ void load_terrain(char *filename)
 }
 
 
-get_pnt(vms_vector *p,int i,int j)
+void get_pnt(vms_vector *p,int i,int j)
 {
 	p->x = GRID_SCALE*i;
 	p->z = GRID_SCALE*j;
@@ -477,14 +480,14 @@ fix get_avg_light(int i,int j)
 	return sum/6;
 }
 
-free_light_table()
+void free_light_table()
 {
 	if (light_array)
 		free(light_array);
 
 }
 
-build_light_table()
+void build_light_table()
 {
 	int i,j;
 	fix l,l2,min_l=0x7fffffff,max_l=0;
@@ -493,7 +496,7 @@ build_light_table()
 	if (light_array)
 		free(light_array);
 	else
-		atexit((void*)free_light_table);		//first time
+		atexit(free_light_table);		//first time
 
 	//MALLOC(light_array,ubyte,grid_w*grid_h); //Won't comile -KRB
 	light_array = (ubyte *)malloc(grid_w*grid_h+(sizeof(ubyte))); //my hack -KRB

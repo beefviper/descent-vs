@@ -163,6 +163,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern int gr_installed;
 
+// Function Prototypes
+void gr_palette_load(ubyte* pal);
+
 ubyte gr_palette[256*3];
 ubyte gr_current_pal[256*3];
 ubyte gr_fade_table[256*34];
