@@ -13,7 +13,15 @@ Compiled with MASM32 and WATCOM11, produces warnings, 700K dos4gw exe
 Compiled with MASM32 and Open Watcom 2, produces warnings, 663K dos4gw exe
 Both versions show two splash screens, crashes loading data or graphics
 
-Still need to fix more warnings when compiling with Watcom and Open Watcom
+Most warnings fixed, mostly missing function prototype or return type
+Remaining warnings:
+	fvi.c(889): Warning! W126: Constant must be zero for pointer compare
+	multi.c(1875): Warning! W124: Comparison result always 1
+	digi.c(434): Warning! W106: Constant out of range - truncated
+	digi.c(435): Warning! W106: Constant out of range - truncated
+	digi.c(436): Warning! W106: Constant out of range - truncated
+	digi.c(459): Warning! W106: Constant out of range - truncated
+
 Should probably use MASM provided by Visual Studio
 
 Then need to make Visual Studio solution and project files.
