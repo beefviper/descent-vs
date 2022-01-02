@@ -432,3 +432,6 @@ weapon.obj:
 
 nocomlib.obj: nocomlib.c
 	$(CC) $(CCFLAGS) nocomlib.c
+
+clean:
+	erase /s /q *.obj *.lib *.err

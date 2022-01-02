@@ -34,3 +34,6 @@ mem.lib: $(MEM_OBJS)
 
 mem.obj: mem.h mem.c
 	$(CC) $(CCFLAGS) mem.c
+
+clean:
+	erase /s /q *.obj *.lib *.err

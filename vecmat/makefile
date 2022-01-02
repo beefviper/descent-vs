@@ -44,3 +44,6 @@ vecmat.obj: vecmat.inc vecmat.asm
 	$(ASM) $(ASMFLAGS) vecmat.asm
 
 vectest.obj: fix.h stdio.h types.h vecmat.h
+
+clean:
+	erase /s /q *.obj *.lib *.err

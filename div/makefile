@@ -44,3 +44,6 @@ div0.obj: div0.asm
 	$(ASM) $(ASMFLAGS) div0.asm
 
 testd.obj: 
+
+clean:
+	erase /s /q *.obj *.lib *.err

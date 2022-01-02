@@ -89,3 +89,5 @@ upvecs.obj: upvecs.asm
 
 upvecs2.obj: fix.h types.h vecmat.h
 
+clean:
+	erase /s /q *.obj *.lib *.err

@@ -54,3 +54,6 @@ parsarg.obj: parsarg.c parsarg.h
 
 parstest.obj: parstest.c parsarg.h 
 	$(CC) $(CCFLAGS) parstest.c
+
+clean:
+	erase /s /q *.obj *.lib *.err

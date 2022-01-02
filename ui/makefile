@@ -120,3 +120,6 @@ userbox.obj: userbox.c
 
 window.obj: window.c
 	$(CC) $(CCFLAGS) window.c
+
+clean:
+	erase /s /q *.obj *.lib *.err

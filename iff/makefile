@@ -46,3 +46,6 @@ iff.obj: iff.c
 ifftest.obj: conio.h fix.h gr.h iff.h stdio.h stdlib.h types.h
 
 ifftestv.obj: conio.h fix.h gr.h iff.h stdio.h types.h vesa.h
+
+clean:
+	erase /s /q *.obj *.lib *.err

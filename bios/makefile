@@ -88,3 +88,6 @@ testt.obj: testt.c
 
 timer.obj: timer.asm
 	$(ASM) $(ASMFLAGS) timer.asm
+
+clean:
+	erase /s /q *.obj *.lib *.err

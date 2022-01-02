@@ -34,3 +34,6 @@ cfile.obj: cfile.h cfile.c
 
 test.obj: test.c
 	$(CC) $(CCFLAGS) test.c
+
+clean:
+	erase /s /q *.obj *.lib *.err

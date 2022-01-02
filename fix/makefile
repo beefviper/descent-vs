@@ -50,3 +50,6 @@ fixtest.obj: conio.h fix.h graph.h stdio.h stdlib.h types.h
 singen.obj: math.h
 
 test.obj: psmacros.inc
+
+clean:
+	erase /s /q *.obj *.lib *.err

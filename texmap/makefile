@@ -138,3 +138,5 @@ tmapv.obj: tmapv.asm
 tmapz.obj: tmapz.asm
 	$(ASM) $(ASMFLAGS) tmapz.asm
 
+clean:
+	erase /s /q *.obj *.lib *.err

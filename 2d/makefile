@@ -4,7 +4,7 @@
 # $Author: john $
 # $Date: 1995/01/29 17:08:57 $
 #
-# Makefile for bios functions
+# Makefile for 2D graphics functions
 #
 
 LIBDIR = ..\main
@@ -152,3 +152,6 @@ vesalib.obj: vesalib.c
 
 vesatest.obj: vesatest.c
 	$(CC) $(CCFLAGS) vesatest.c
+
+clean:
+	erase /s /q *.obj *.lib *.err
