@@ -5,6 +5,9 @@ Added .gitinore
 Converted file and directory names to lowercase
 Removed unprintable SUB control character form hundreds of files
 Added missing return types, removed extra semicolons, other minor fixes
+Fixed top-level Makefile, other minor fixes for rest of makefiles
+	(still need to run d1vars.bat first, in order to set
+	 PATH and INCLUDE to only use the MASM and WATCOM files)
 
 Compiled with MASM32 and WATCOM11, produces warnings, 700K dos4gw exe
 Compiled with MASM32 and Open Watcom 2, produces warnings, 663K dos4gw exe
