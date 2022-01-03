@@ -365,9 +365,17 @@ void mrefresh(short n)
 
 }
 
-
 int mono_present();		//return true if mono monitor in system
-
+#pragma aux mono_present value [eax] modify [bx] = \
+	"mov	ax,1a00h"	\
+	"int	10h"			\	
+"mov	eax,-1"		\
+"cmp	bl,1"			\
+"je	got_it"		\
+"cmp	bh,1"			\
+"je	got_it"		\
+"xor	eax,eax"		\
+"got_it:";
 
 void mopen( short n, short row, short col, short width, short height, char * title )
 {
@@ -398,18 +406,6 @@ void mopen( short n, short row, short col, short width, short height, char * tit
 	msetcursor( ROW+CROW, COL+CCOL );
 
 }
-
-#pragma aux mono_present value [eax] modify [bx] = \
-	"mov	ax,1a00h"	\
-	"int	10h"			\	
-	"mov	eax,-1"		\	
-	"cmp	bl,1"			\
-	"je	got_it"		\
-	"cmp	bh,1"			\
-	"je	got_it"		\
-	"xor	eax,eax"		\	
-"got_it:";
-
 
 int minit()
 {
