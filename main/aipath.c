@@ -1061,11 +1061,14 @@ typedef struct {
 	short	path_start, objnum;
 } obj_path;
 
-int path_index_compare(obj_path *i1, obj_path *i2)
+int path_index_compare(const void* i1, const void* i2)
 {
-	if (i1->path_start < i2->path_start)
+	const obj_path* ii1 = i1;
+	const obj_path* ii2 = i2;
+
+	if (ii1->path_start < ii2->path_start)
 		return -1;
-	else if (i1->path_start == i2->path_start)
+	else if (ii1->path_start == ii2->path_start)
 		return 0;
 	else
 		return 1;
@@ -1169,7 +1172,7 @@ void ai_path_garbage_collect(void)
 		}
 	}
 
-	qsort(object_list, num_path_objects, sizeof(object_list[0]), (void*)path_index_compare);
+	qsort(object_list, num_path_objects, sizeof(object_list[0]), path_index_compare);
 
 	for (objind=0; objind < num_path_objects; objind++) {
 		object		*objp;

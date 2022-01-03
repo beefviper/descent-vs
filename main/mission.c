@@ -189,10 +189,12 @@ char *get_parm_value(char *parm,FILE *f)
 		return NULL;
 }
 
-ml_sort_func(mle *e0,mle *e1)
+ml_sort_func(const void* e0, const void* e1)
 {
-	return strcmp(e0->mission_name,e1->mission_name);
+	const mle* ee0 = e0;
+	const mle* ee1 = e1;
 
+	return strcmp(ee0->mission_name,ee1->mission_name);
 }
 
 
@@ -335,7 +337,7 @@ int build_mission_list(int anarchy_mode)
 #endif
 
 	if (count>1)
-		qsort(&Mission_list[1],count-1,sizeof(*Mission_list),(void*)ml_sort_func);
+		qsort(&Mission_list[1],count-1,sizeof(*Mission_list),ml_sort_func);
 
 	load_mission(0);			//set built-in mission as default
 

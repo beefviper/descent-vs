@@ -1515,8 +1515,11 @@ sort_item sort_list[SORT_LIST_SIZE];
 int n_sort_items;
 
 //compare function for object sort. 
-int sort_func(sort_item *a,sort_item *b)
+int sort_func(const void *aa,const void *bb)
 {
+	const sort_item* a = aa;
+	const sort_item* b = bb;
+
 	fix delta_dist;
 	object *obj_a,*obj_b;
 
@@ -1648,7 +1651,7 @@ void build_object_lists(int n_segs)
 
 			//now call qsort
 
-			qsort(sort_list,n_sort_items,sizeof(*sort_list),(void*)sort_func);
+			qsort(sort_list,n_sort_items,sizeof(*sort_list),sort_func);
 
 			//now copy back into list
 
