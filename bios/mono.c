@@ -446,4 +446,19 @@ int minit()
 	return -1;	//everything ok
 }
 
+// mprintf() that outputs to a file - beefviper
+void file_mprintf(int n, char* format, ...)
+{
+	char temp_fm_buffer[1000];
+	FILE* pFile;
+	pFile = fopen("debug.txt", "a");
 
+	if (pFile != NULL)
+	{
+		va_list args;
+		va_start(args, format);
+		vsprintf(temp_fm_buffer, format, args);
+		fputs(temp_fm_buffer, pFile);
+		fclose(pFile);
+	}
+}

@@ -98,13 +98,18 @@ void mrefresh(short n);
 
 #else			//null versions for when debugging turned off
 
+#include <stdio.h>
+#include <stdarg.h>
+
+void file_mprintf(int n, char* format, ...);
+
 #define minit()
 #define mclose(n)
 #define mopen( n, row, col, width, height, title )
 #define mDumpD(window, int_var) 
 #define mDumpX(window, int_var) 
 #define mclear( n )
-#define mprintf(args) 
+#define mprintf(args) file_mprintf args
 #define mprintf_at(args)
 #define mputc( n, c )
 #define mputc_at( n, row, col, c )
@@ -113,5 +118,3 @@ void mrefresh(short n);
 
 #endif
 #endif
-
-
