@@ -574,16 +574,22 @@ void init_game()
 
 	atexit(close_game);             //for cleanup
 
+	mprintf((0, "\nCalling init_objects()..."));
 	init_objects();
 
+	mprintf((0, "\nCalling hostage_init()..."));
 	hostage_init();
 
+	mprintf((0, "\nCalling init_special_effects()..."));
 	init_special_effects();
 
+	mprintf((0, "\nCalling init_ai_system()..."));
 	init_ai_system();
 
+	mprintf((0, "\nCalling init_gauge_canvases()..."));
 	init_gauge_canvases();
 
+	mprintf((0, "\nCalling init_exploding_walls()..."));
 	init_exploding_walls();
 
 	background_bitmap.bm_data=NULL;
