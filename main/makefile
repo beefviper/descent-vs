@@ -45,7 +45,7 @@ DESCENT_OBJS = inferno.obj game.obj gauges.obj mglobal.obj \
 # Files to link for Descent
 
 DESCENTR.EXE: 	$(DESCENT_OBJS)
-	wcl386 /fe=descentr.exe /l=dos4g /k50000 $(DESCENT_OBJS) $(DESCENT_LIBS)
+	wcl386 /zq /fe=descentr.exe /l=dos4g /k50000 $(DESCENT_OBJS) $(DESCENT_LIBS)
 
 ai.obj:	 ai.c ai.h
 	$(CC) $(CCFLAGS) ai.c
