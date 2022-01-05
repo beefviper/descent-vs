@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install
 INSTALL_TARGS = vecmat.lib vecmat.h vecmat.inc
@@ -37,7 +37,7 @@ VECTEST_SRCS = vectest.c
 VECTEST_LIBS = vecmat.lib io.lib fix.lib
 
 vecmat.lib: $(VECMAT_OBJS)
-	wlib vecmat.lib $(VECMAT_OBJS)
+	wlib /q vecmat.lib $(VECMAT_OBJS)
 	copy vecmat.lib $(LIBDIR)
 
 vecmat.obj: vecmat.inc vecmat.asm

@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h swift.h dpmi.h ipx.h
@@ -38,7 +38,7 @@ DEMO_SRCS = demo.c
 DEMO_LIBS = io.lib 
 
 io.lib: $(IO_OBJS)
-	wlib io.lib $(IO_OBJS)
+	wlib /q io.lib $(IO_OBJS)
 	copy io.lib $(LIBDIR)
 
 cdrom.obj: cdrom.c

@@ -10,7 +10,7 @@
 LIBDIR = ..\main
 #
 
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 EDITOR_OBJS = med.obj einit.obj eglobal.obj mine.obj curves.obj kcurve.obj \
 	khelp.obj ksegsel.obj kbuild.obj kview.obj kmine.obj seguvs.obj ksegsize.obj \
 	ksegmove.obj ktmap.obj kfuncs.obj autosave.obj group.obj texture.obj \
@@ -19,7 +19,7 @@ EDITOR_OBJS = med.obj einit.obj eglobal.obj mine.obj curves.obj kcurve.obj \
 	segment.obj ehostage.obj centers.obj func.obj
 
 EDITOR: $(EDITOR_OBJS)
-	wlib editor.lib $(EDITOR_OBJS)
+	wlib /q editor.lib $(EDITOR_OBJS)
 	copy *.lib ..
 	
 # Editor data files to check out with source

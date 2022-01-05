@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install
 INSTALL_TARGS = 3d.lib 3d.h 3d.inc
@@ -37,7 +37,7 @@ TEST_PROGS = 3dtest
 #rules and targets common to all Miner makefiles
 
 3d.lib: $(3D_OBJS)
-	wlib 3d.lib $(3D_OBJS)
+	wlib /q 3d.lib $(3D_OBJS)
 	copy 3d.lib $(LIBDIR)
 
 3dtest.obj: 3dtest.c

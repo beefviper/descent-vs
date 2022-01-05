@@ -10,7 +10,7 @@
 LIBDIR = ..\main
 #
 
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 
 # What to install, and where to install it
@@ -31,7 +31,7 @@ PROGS = pslib
 TEST_PROGS = cftest cftest2
 
 cflib.lib: $(CFLIB_OBJS)
-	wlib cflib.lib $(CFLIB_OBJS)
+	wlib /q cflib.lib $(CFLIB_OBJS)
 	copy *.lib $(LIBDIR)
 
 # What object files and libs for the test programs

@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = fix.lib fix.h fix.inc
@@ -37,7 +37,7 @@ FIXTEST_SRCS = fixtest.c
 FIXTEST_LIBS = fix.lib io.lib
 
 fix.lib: $(FIX_OBJS)
-	wlib fix.lib $(FIX_OBJS)
+	wlib /q fix.lib $(FIX_OBJS)
 	copy fix.lib $(LIBDIR)
 
 asingen.obj: math.h stdio.h

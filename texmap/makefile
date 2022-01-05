@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 #Uncomment the following 3 lines if you want to build with only C code.
 #NASM = 1
@@ -51,7 +51,7 @@ TEXTEST_SRCS = TEXTEST.obj
 TEXTEST_LIBS = TEXMAP.lib
 
 texmap.lib: $(TEXMAP_OBJS)
-	wlib texmap.lib $(TEXMAP_OBJS)
+	wlib /q texmap.lib $(TEXMAP_OBJS)
 	copy texmap.lib $(LIBDIR)
 
 lightabs.obj: lightabs.asm
