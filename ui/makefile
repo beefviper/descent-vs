@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = ui.lib ui.h func.h
@@ -43,7 +43,7 @@ TESTG_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib readfile.lib iff.lib func.lib
 TESTG_LFLAGS = option stack=50k
 
 ui.lib: $(UI_OBJS)
-	wlib ui.lib $(UI_OBJS)
+	wlib /q ui.lib $(UI_OBJS)
 	copy ui.lib $(LIBDIR)
 
 barbox.obj: barbox.c

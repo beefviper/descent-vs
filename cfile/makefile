@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 CLEAN_TARGS = $(OBJDIR)\*.obj
 
@@ -26,7 +26,7 @@ LIBS = cfile
 CFILE_OBJS = cfile.obj
 
 cfile.lib: $(CFILE_OBJS)
-	wlib cfile.lib $(CFILE_OBJS)
+	wlib /q cfile.lib $(CFILE_OBJS)
 	copy cfile.lib $(LIBDIR)
 
 cfile.obj: cfile.h cfile.c

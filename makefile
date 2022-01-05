@@ -16,52 +16,56 @@ SUBTARGETS = clean optimize no_mono no_debug linstall
 CLEAN_TARGS = 
 #lib\*.lib lib\*.h lib\*.inc
 
+# What make flags to use
+NMAKECMD = nmake
+NMAKEFLAGS = /nologo
+
 #all Miner makefiles should include this
 #%include $(INIT)\makefile.def
 
 all: FORCE $(SUBSYSTEMS)
 
 misc: FORCE
-	cd misc && $(MAKE)
+	cd misc && $(NMAKECMD) $(NMAKEFLAGS)
 
 includes: FORCE
-	cd includes && $(MAKE)
+	cd includes && $(NMAKECMD) $(NMAKEFLAGS)
 
 fix: FORCE
-	cd fix && $(MAKE)
+	cd fix && $(NMAKECMD) $(NMAKEFLAGS)
 
 cfile: FORCE
-	cd cfile && $(MAKE)
+	cd cfile && $(NMAKECMD) $(NMAKEFLAGS)
 
 2d: FORCE
-	cd 2d && $(MAKE)
+	cd 2d && $(NMAKECMD) $(NMAKEFLAGS)
 
 bios: FORCE
-	cd bios && $(MAKE)
+	cd bios && $(NMAKECMD) $(NMAKEFLAGS)
 
 iff: FORCE
-	cd iff && $(MAKE)
+	cd iff && $(NMAKECMD) $(NMAKEFLAGS)
 
 div: FORCE
-	cd div && $(MAKE)
+	cd div && $(NMAKECMD) $(NMAKEFLAGS)
 
 mem: FORCE
-	cd mem && $(MAKE)
+	cd mem && $(NMAKECMD) $(NMAKEFLAGS)
 
 vecmat: FORCE
-	cd vecmat && $(MAKE)
+	cd vecmat && $(NMAKECMD) $(NMAKEFLAGS)
 
 3d: FORCE
-	cd 3d && $(MAKE)
+	cd 3d && $(NMAKECMD) $(NMAKEFLAGS)
 
 texmap: FORCE
-	cd texmap && $(MAKE)
+	cd texmap && $(NMAKECMD) $(NMAKEFLAGS)
 
 ui: FORCE
-	cd ui && $(MAKE)
+	cd ui && $(NMAKECMD) $(NMAKEFLAGS)
 
 main: FORCE
-	cd main && $(MAKE)
+	cd main && $(NMAKECMD) $(NMAKEFLAGS)
 
 clean:
 	erase /s /q *.obj *.lib *.err main\descentr.exe

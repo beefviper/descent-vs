@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install
 INSTALL_TARGS = misc.lib parsarg.h error.h
@@ -40,7 +40,7 @@ ERRTEST_SRCS = errtest.c
 ERRTEST_LIBS = misc.lib
 
 misc.lib: $(MISC_OBJS)
-	wlib misc.lib $(MISC_OBJS)
+	wlib /q misc.lib $(MISC_OBJS)
 	copy misc.lib $(LIBDIR)
 
 error.obj: error.c error.h 

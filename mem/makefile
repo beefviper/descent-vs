@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = mem.lib mem.h
@@ -29,7 +29,7 @@ LIBS = mem
 MEM_OBJS = mem.obj
 
 mem.lib: $(MEM_OBJS)
-	wlib mem.lib $(MEM_OBJS)
+	wlib /q mem.lib $(MEM_OBJS)
 	copy mem.lib $(LIBDIR)
 
 mem.obj: mem.h mem.c

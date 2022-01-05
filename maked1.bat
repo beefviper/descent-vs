@@ -1,7 +1,7 @@
 rem d1vars sets up compiler variables
 call d1vars.bat
 
-set CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+set CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 cd misc
 nmake

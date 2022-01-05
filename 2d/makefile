@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = effect2d.h gr.h gr.lib grdef.h gr.inc palette.h ibitblt.h rle.h pcx.h
@@ -48,7 +48,7 @@ TESTG_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 #VESATEST_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
 
 gr.lib: $(GR_OBJS)
-	wlib gr.lib $(GR_OBJS)
+	wlib /q gr.lib $(GR_OBJS)
 	copy gr.lib $(LIBDIR)
 
 bitblt.obj: bitblt.c

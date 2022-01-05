@@ -11,11 +11,11 @@ LIBDIR = ..\main
 
 # What compiler and flags to use
 CC = wcc386
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 # What assembler and flags to use
 ASM = ml
-ASMFLAGS = /c
+ASMFLAGS = /c /nologo
 
 # What to install, and where to install it
 INSTALL_TARGS = div0.lib div0.h div0.inc
@@ -37,7 +37,7 @@ TESTD_SRCS = testd.c testda.asm
 TESTD_LIBS = div0.lib
 
 div0.lib: $(DIV0_OBJS)
-	wlib div0.lib $(DIV0_OBJS)
+	wlib /q div0.lib $(DIV0_OBJS)
 	copy div0.lib $(LIBDIR)
 
 div0.obj: div0.asm

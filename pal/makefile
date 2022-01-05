@@ -10,7 +10,7 @@
 LIBDIR = ..\main
 #
 
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 
 
 # What to install, and where to install it
