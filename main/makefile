@@ -1,8 +1,13 @@
 #
+# $Source: f:/miner/source/main/rcs/makefile $
+# $Revision: 1.8 $
+# $Author: matt $
+# $Date: 1994/11/27 14:53:50 $
+#
 # Makefile for DESCENT execuable
 #
 
-LIBDIR = c:\dev\d1src\main
+LIBDIR = ..\lib
 
 # What compiler and flags to use
 CC = wcc386
@@ -12,164 +17,158 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-#
+# What to install
+INSTALL_TARGS = main.lib
 
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err descentr.exe
+
+# What libs to build
+LIBS = main
+
+# What libs in the exe
 DESCENT_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
-        	 	cfile.lib \
-        	 	mem.lib \
-        	 	ui.lib \
-				div0.lib misc.lib texmap.lib
-				
-#				editor.lib
+	cfile.lib mem.lib ui.lib div0.lib misc.lib texmap.lib
 
-#		sosdigi.lib #sosmidi.lib \
-		#iglasses.lib gclfr32.lib loadpats.lib
-		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
-
+# What objs in the lib
 DESCENT_OBJS = inferno.obj game.obj gauges.obj mglobal.obj \
-			 scores.obj object.obj laser.obj physics.obj bm.obj \
- 			 menu.obj gamesave.obj switch.obj effects.obj texmerge.obj polyobj.obj \
-			 gamemine.obj fireball.obj ai.obj aipath.obj hostage.obj \
-			 powerup.obj fuelcen.obj digi.obj render.obj hash.obj piggy.obj args.obj \
-			 gameseg.obj wall.obj collide.obj lighting.obj \
-			 robot.obj morph.obj vclip.obj weapon.obj fvi.obj newdemo.obj titles.obj \
-			 vfx.obj gameseq.obj controls.obj automap.obj text.obj \
-			 network.obj newmenu.obj netmisc.obj victor.obj\
-			 gamefont.obj joydefs.obj hud.obj playsave.obj \
-			 endlevel.obj terrain.obj kconfig.obj modem.obj  \
-			 multi.obj cntrlcen.obj credits.obj config.obj soscodec.obj kmatrix.obj	\
-			 paging.obj mission.obj iglasses.obj songs.obj bmread.obj state.obj multibot.obj nocomlib.obj slew.obj dumpmine.obj 
-#demo.obj garage.obj radar.obj coindev.obj serial.obj vfxread.obj victor.obj
+	scores.obj object.obj laser.obj physics.obj bm.obj \
+	menu.obj gamesave.obj switch.obj effects.obj texmerge.obj polyobj.obj \
+	gamemine.obj fireball.obj ai.obj aipath.obj hostage.obj \
+	powerup.obj fuelcen.obj digi.obj render.obj hash.obj piggy.obj args.obj \
+	gameseg.obj wall.obj collide.obj lighting.obj \
+	robot.obj morph.obj vclip.obj weapon.obj fvi.obj newdemo.obj titles.obj \
+	vfx.obj gameseq.obj controls.obj automap.obj text.obj \
+	network.obj newmenu.obj netmisc.obj victor.obj \
+	gamefont.obj joydefs.obj hud.obj playsave.obj \
+	endlevel.obj terrain.obj kconfig.obj modem.obj \
+	multi.obj cntrlcen.obj credits.obj config.obj soscodec.obj kmatrix.obj \
+	paging.obj mission.obj iglasses.obj songs.obj bmread.obj state.obj multibot.obj nocomlib.obj slew.obj dumpmine.obj
 
-
-# Files to link for Descent
-
-DESCENTR.EXE: 	$(DESCENT_OBJS)
+DESCENTR.EXE: $(DESCENT_OBJS)
 	wcl386 /zq /fe=descentr.exe /l=dos4g /k50000 $(DESCENT_OBJS) $(DESCENT_LIBS)
 
-ai.obj:	 ai.c ai.h
+ai.obj: ai.c ai.h
 	$(CC) $(CCFLAGS) ai.c
 
 aipath.obj: aipath.c
 	$(CC) $(CCFLAGS) aipath.c
 
-arcade.obj: arcade.c 
+arcade.obj: arcade.c
 	$(CC) $(CCFLAGS) arcade.c
 
 args.obj: args.c args.h
 	$(CC) $(CCFLAGS) args.c
 
-automap.obj: automap.c 
+automap.obj: automap.c
 	$(CC) $(CCFLAGS) automap.c
 	
-autosave.obj: autosave.c 
+autosave.obj: autosave.c
 	$(CC) $(CCFLAGS) autosave.c
 	
-bm.obj:	 bm.c 
+bm.obj: bm.c
 	$(CC) $(CCFLAGS) bm.c
 
-bmread.obj: bmread.c 
+bmread.obj: bmread.c
 	$(CC) $(CCFLAGS) bmread.c
 	
-centers.obj: centers.c 
+centers.obj: centers.c
 	$(CC) $(CCFLAGS) centers.c
 	
-cntrlcen.obj: cntrlcen.c 
+cntrlcen.obj: cntrlcen.c
 	$(CC) $(CCFLAGS) cntrlcen.c
 
 cockpit.obj: cockpit.asm
-	$(ASM) $(ASMFLAGS) /i$INCLUDE cockpit.asm cockpit.obj
+	$(ASM) $(ASMFLAGS) cockpit.asm
 
-#cockpit.inc psmacros.inc types.inc
-
-coindev.obj: coindev.c coindev.h 
+coindev.obj: coindev.c coindev.h
 	$(CC) $(CCFLAGS) coindev.c
 
 collide.obj: collide.c collide.h
 	$(CC) $(CCFLAGS) collide.c
 
-config.obj: config.c 
+config.obj: config.c
 	$(CC) $(CCFLAGS) config.c
 
-controls.obj: controls.c 
+controls.obj: controls.c
 	$(CC) $(CCFLAGS) controls.c
 
-credits.obj: credits.c 
+credits.obj: credits.c
 	$(CC) $(CCFLAGS) credits.c
 
-curves.obj: curves.c 
+curves.obj: curves.c
 	$(CC) $(CCFLAGS) curves.c
 
-demo.obj: demo.c 
+demo.obj: demo.c
 	$(CC) $(CCFLAGS) demo.c
 
-digi.obj: digi.c 
+digi.obj: digi.c
 	$(CC) $(CCFLAGS) digi.c
 
-dumpmine.obj: dumpmine.c 
+dumpmine.obj: dumpmine.c
 	$(CC) $(CCFLAGS) dumpmine.c
 
-effects.obj: effects.c 
+effects.obj: effects.c
 	$(CC) $(CCFLAGS) effects.c
 
-eglobal.obj: eglobal.c 
+eglobal.obj: eglobal.c
 	$(CC) $(CCFLAGS) eglobal.c
 
-ehostage.obj: ehostage.c 
+ehostage.obj: ehostage.c
 	$(CC) $(CCFLAGS) ehostage.c
 
-einit.obj: einit.c 
+einit.obj: einit.c
 	$(CC) $(CCFLAGS) einit.c
 
-elight.obj: elight.c 
+elight.obj: elight.c
 	$(CC) $(CCFLAGS) elight.c
 
-endlevel.obj: endlevel.c 
+endlevel.obj: endlevel.c
 	$(CC) $(CCFLAGS) endlevel.c
 
-eobject.obj: eobject.c 
+eobject.obj: eobject.c
 	$(CC) $(CCFLAGS) eobject.c
 
-eswitch.obj: eswitch.c 
+eswitch.obj: eswitch.c
 	$(CC) $(CCFLAGS) eswitch.c
 
-fireball.obj: fireball.c 
+fireball.obj: fireball.c
 	$(CC) $(CCFLAGS) fireball.c
 
-fixseg.obj: fixseg.c 
+fixseg.obj: fixseg.c
 	$(CC) $(CCFLAGS) fixseg.c
 
-flyby.obj: flyby.c 
+flyby.obj: flyby.c
 	$(CC) $(CCFLAGS) flyby.c
 
-fuelcen.obj: fuelcen.c 
+fuelcen.obj: fuelcen.c
 	$(CC) $(CCFLAGS) fuelcen.c
 
-func.obj: func.c 
+func.obj: func.c
 	$(CC) $(CCFLAGS) func.c
 
-fvi.obj: fvi.c 
+fvi.obj: fvi.c
 	$(CC) $(CCFLAGS) fvi.c
 
-game.obj: game.c 
+game.obj: game.c
 	$(CC) $(CCFLAGS) game.c
 
 gamefont.obj: gamefont.c
 	$(CC) $(CCFLAGS) gamefont.c
 
-gamemine.obj: gamemine.c 
+gamemine.obj: gamemine.c
 	$(CC) $(CCFLAGS) gamemine.c
 
-gamesave.obj: gamesave.c 
+gamesave.obj: gamesave.c
 	$(CC) $(CCFLAGS) gamesave.c
 
-gameseg.obj: gameseg.c 
+gameseg.obj: gameseg.c
 	$(CC) $(CCFLAGS) gameseg.c
 
 gameseq.obj: gameseq.c
 	$(CC) $(CCFLAGS) gameseq.c
 
-garage.obj: garage.c 
+garage.obj: garage.c
 	$(CC) $(CCFLAGS) garage.c
 
 gauges.obj: gauges.c
@@ -196,34 +195,34 @@ inferno.obj: inferno.c
 info.obj: info.c
 	$(CC) $(CCFLAGS) info.c
 
-int3hand.obj: psmacros.inc types.inc
-	$(ASM) $(ASMFLAGS) int3hand.asm int3hand.obj
+int3hand.obj: int3hand.asm psmacros.inc types.inc
+	$(ASM) $(ASMFLAGS) int3hand.asm
 
-ipx_esr.obj: psmacros.inc types.inc
-	$(ASM) $(ASMFLAGS) ipx_esr.asm ipx_esr.obj
+ipx_esr.obj: ipx_esr.asm psmacros.inc types.inc
+	$(ASM) $(ASMFLAGS) ipx_esr.asm
 
 joydefs.obj: joydefs.c
 	$(CC) $(CCFLAGS) joydefs.c
 
-kbuild.obj: 
+kbuild.obj:
 	$(CC) $(CCFLAGS) kbuild.c
 
-kconfig.obj: 
+kconfig.obj:
 	$(CC) $(CCFLAGS) kconfig.c
 
-kcurve.obj: 
+kcurve.obj:
 	$(CC) $(CCFLAGS) kcurve.c
 
-kfuncs.obj: 
+kfuncs.obj:
 	$(CC) $(CCFLAGS) kfuncs.c
 
-kgame.obj: 
+kgame.obj:
 	$(CC) $(CCFLAGS) kgame.c
 
-khelp.obj: 
+khelp.obj:
 	$(CC) $(CCFLAGS) khelp.c
 
-kmatrix.obj: 
+kmatrix.obj:
 	$(CC) $(CCFLAGS) kmatrix.c
 
 kmine.obj:
@@ -247,148 +246,148 @@ laser.obj:
 lighting.obj:
 	$(CC) $(CCFLAGS) lighting.c
 
-macro.obj: 
+macro.obj:
 	$(CC) $(CCFLAGS) macro.c
 
-mcockpit.obj: 
+mcockpit.obj:
 	$(CC) $(CCFLAGS) mcockpit.c
 
-med.obj: 
+med.obj:
 	$(CC) $(CCFLAGS) med.c
 
-meddraw.obj: 
+meddraw.obj:
 	$(CC) $(CCFLAGS) meddraw.c
 
-medmisc.obj: 
+medmisc.obj:
 	$(CC) $(CCFLAGS) medmisc.c
 
-medrobot.obj: 
+medrobot.obj:
 	$(CC) $(CCFLAGS) medrobot.c
 
-medsel.obj: 
+medsel.obj:
 	$(CC) $(CCFLAGS) medsel.c
 
-medwall.obj: 
+medwall.obj:
 	$(CC) $(CCFLAGS) medwall.c
 
-menu.obj: 
+menu.obj:
 	$(CC) $(CCFLAGS) menu.c
 
-mglobal.obj: 
+mglobal.obj:
 	$(CC) $(CCFLAGS) mglobal.c
 
-mine.obj: 
+mine.obj:
 	$(CC) $(CCFLAGS) mine.c
 
-mission.obj: 
+mission.obj:
 	$(CC) $(CCFLAGS) mission.c
 
-modem.obj: 
+modem.obj:
 	$(CC) $(CCFLAGS) modem.c
 
-morph.obj: 
+morph.obj:
 	$(CC) $(CCFLAGS) morph.c
 
-multi.obj: 
+multi.obj:
 	$(CC) $(CCFLAGS) multi.c
 
 multibot.obj:
 	$(CC) $(CCFLAGS) multibot.c
 
-netmisc.obj: 
+netmisc.obj:
 	$(CC) $(CCFLAGS) netmisc.c
 
-netware.obj: 
+netware.obj:
 	$(CC) $(CCFLAGS) netware.c
 
-network.obj: 
+network.obj:
 	$(CC) $(CCFLAGS) network.c
 
-newdemo.obj: 
+newdemo.obj:
 	$(CC) $(CCFLAGS) newdemo.c
 
 newdemo1.obj:
 	$(CC) $(CCFLAGS) newdemo1.c
 
-newmenu.obj: 
+newmenu.obj:
 	$(CC) $(CCFLAGS) newmenu.c
 
-object.obj: 
+object.obj:
 	$(CC) $(CCFLAGS) object.c
 
-objfly.obj: 
+objfly.obj:
 	$(CC) $(CCFLAGS) objfly.c
 
-objpage.obj: 
+objpage.obj:
 	$(CC) $(CCFLAGS) objpage.c
 
-ourcom.obj: 
+ourcom.obj:
 	$(CC) $(CCFLAGS) ourcom.c
 
-paging.obj: 
+paging.obj:
 	$(CC) $(CCFLAGS) paging.c
 
-photos.obj: 
+photos.obj:
 	$(CC) $(CCFLAGS) photos.c
 
 physics.obj:
 	$(CC) $(CCFLAGS) physics.c
 
-piggy.obj: 
+piggy.obj:
 	$(CC) $(CCFLAGS) piggy.c
 
-playsave.obj: 
+playsave.obj:
 	$(CC) $(CCFLAGS) playsave.c
 
-polyobj.obj: 
+polyobj.obj:
 	$(CC) $(CCFLAGS) polyobj.c
 
-powerup.obj: 
+powerup.obj:
 	$(CC) $(CCFLAGS) powerup.c
 
-radar.obj: 
+radar.obj:
 	$(CC) $(CCFLAGS) radar.c
 
-render.obj: 
+render.obj:
 	$(CC) $(CCFLAGS) render.c
 
-robot.obj: 
+robot.obj:
 	$(CC) $(CCFLAGS) robot.c
 
-scores.obj: 
+scores.obj:
 	$(CC) $(CCFLAGS) scores.c
 
-segment.obj: 
+segment.obj:
 	$(CC) $(CCFLAGS) segment.c
 
-seguvs.obj: 
+seguvs.obj:
 	$(CC) $(CCFLAGS) seguvs.c
 
-serial.obj: 
+serial.obj:
 	$(CC) $(CCFLAGS) serial.c
 
-ship.obj: 
+ship.obj:
 	$(CC) $(CCFLAGS) ship.c
 
-slew.obj: 
+slew.obj:
 	$(CC) $(CCFLAGS) slew.c
 
-songs.obj: 
+songs.obj:
 	$(CC) $(CCFLAGS) songs.c
 
 soscodec.obj: soscodec.asm
-	$(ASM) $(ASMFLAGS) soscodec.asm soscodec.obj
+	$(ASM) $(ASMFLAGS) soscodec.asm
 
-state.obj: 
+state.obj:
 	$(CC) $(CCFLAGS) state.c
 
 switch.obj:
 	$(CC) $(CCFLAGS) switch.c
 
-tempgame.obj: 
+tempgame.obj:
 	$(CC) $(CCFLAGS) tempgame.c
 
-terrain.obj: 
+terrain.obj:
 	$(CC) $(CCFLAGS) terrain.c
 
 test1.obj:
@@ -400,38 +399,38 @@ testgaug.obj:
 texmerge.obj:
 	$(CC) $(CCFLAGS) texmerge.c
 
-texpage.obj: 
+texpage.obj:
 	$(CC) $(CCFLAGS) texpage.c
 
-text.obj: 
+text.obj:
 	$(CC) $(CCFLAGS) text.c
 
-texture.obj: 
+texture.obj:
 	$(CC) $(CCFLAGS) texture.c
 
-titles.obj: 
+titles.obj:
 	$(CC) $(CCFLAGS) titles.c
 
-vclip.obj: 
+vclip.obj:
 	$(CC) $(CCFLAGS) vclip.c
 
-vfx.obj: 
+vfx.obj:
 	$(CC) $(CCFLAGS) vfx.c
 
-#vfxread.obj: 
+#vfxread.obj:
 #	$(CC) $(CCFLAGS) vfxread.c
 
-victor.obj: 
+victor.obj:
 	$(CC) $(CCFLAGS) victor.c
 
-wall.obj: 
+wall.obj:
 	$(CC) $(CCFLAGS) wall.c
 
-weapon.obj: 
+weapon.obj:
 	$(CC) $(CCFLAGS) weapon.c
 
 nocomlib.obj: nocomlib.c
 	$(CC) $(CCFLAGS) nocomlib.c
 
 clean:
-	erase /s /q *.obj *.lib *.err descentr.exe
+	erase /s /q $(CLEAN_TARGS)

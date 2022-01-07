@@ -17,30 +17,21 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = ui.lib ui.h func.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = ui
 
-# What programs to make
-TEST_PROGS = testg
-
-# What object files for the lib
+# What object in the lib
 UI_OBJS = ui.obj mouse.obj window.obj uidraw.obj button.obj \
 		  gadget.obj listbox.obj message.obj popup.obj scroll.obj \
 		  radio.obj checkbox.obj inputbox.obj userbox.obj menu.obj \
 		  harderr.obj file.obj keytrap.obj icon.obj keypress.obj \
-		  menubar.obj keypad.obj 
-#func.obj #Couldn't find func.c - where are the functions??
-
-# What object files and libs for the test programs
-TESTG_SRCS = testg.c
-TESTG_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib readfile.lib iff.lib func.lib cflib.lib cfile.lib
-TESTG_LFLAGS = option stack=50k
+		  menubar.obj keypad.obj
 
 ui.lib: $(UI_OBJS)
 	wlib /q ui.lib $(UI_OBJS)
@@ -122,4 +113,4 @@ window.obj: window.c
 	$(CC) $(CCFLAGS) window.c
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

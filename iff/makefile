@@ -20,21 +20,14 @@ ASMFLAGS = /c /nologo
 # What to install
 INSTALL_TARGS = iff.lib iff.h
 
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
+
 # What libs to build
 LIBS = iff
 
-# What objs in the iff lib
+# What objs in the lib
 IFF_OBJS = iff.obj
-
-# What test programs to make
-TEST_PROGS = ifftest ifftestv
-
-# What object files and libs for the test programs
-IFFTEST_SRCS = ifftest.c
-IFFTEST_LIBS = iff.lib gr.lib mem.lib bm.lib misc.lib cflib.lib cfile.lib
-
-IFFTESTV_SRCS = ifftestv.c
-IFFTESTV_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
 
 iff.lib: $(IFF_OBJS)
 	wlib /q iff.lib $(IFF_OBJS)
@@ -43,9 +36,5 @@ iff.lib: $(IFF_OBJS)
 iff.obj: iff.c
 	$(CC) $(CCFLAGS) iff.c
 
-ifftest.obj: conio.h fix.h gr.h iff.h stdio.h stdlib.h types.h
-
-ifftestv.obj: conio.h fix.h gr.h iff.h stdio.h types.h vesa.h
-
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

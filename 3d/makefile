@@ -20,21 +20,15 @@ ASMFLAGS = /c /nologo
 # What to install
 INSTALL_TARGS = 3d.lib 3d.h 3d.inc
 
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
+
 # What libs to build
 LIBS = 3d
 
 # What objs in the lib
 3D_OBJS = globvars.obj setup.obj matrix.obj points.obj draw.obj clipper.obj \
 	horizon.obj instance.obj rod.obj interp.obj
-
-# What test programs to make
-TEST_PROGS = 3dtest
-
-# What object files and libs for the test programs
-3DTEST_SRCS = 3dtest.c segment.c trakball.c
-3DTEST_LIBS = 3d.lib vecmat.lib gr.lib io.lib fix.lib div0.lib texmap.lib misc.lib bm.lib
-
-#rules and targets common to all Miner makefiles
 
 3d.lib: $(3D_OBJS)
 	wlib /q 3d.lib $(3D_OBJS)
@@ -55,7 +49,7 @@ globvars.obj: globvars.asm
 horizon.obj: horizon.asm
 	$(ASM) $(ASMFLAGS) horizon.asm horizon.obj
 
-instance.obj: instance.asm 
+instance.obj: instance.asm
 	$(ASM) $(ASMFLAGS) instance.asm instance.obj
 
 interp.obj: interp.asm
@@ -90,4 +84,4 @@ upvecs.obj: upvecs.asm
 upvecs2.obj: fix.h types.h vecmat.h
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

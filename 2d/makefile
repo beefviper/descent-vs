@@ -17,35 +17,20 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = effect2d.h gr.h gr.lib grdef.h gr.inc palette.h ibitblt.h rle.h pcx.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = gr
 
-# What test programs to make
-#TEST_PROGS = testg testp vesatest
-PROGS = testg
-
-# What object files for the lib
+# What objs in the lib
 GR_OBJS = linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
 	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj \
 	gpixel.obj palette.obj line.obj lbitblt.obj \
 	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-#effects.obj roller.obj 
-
-# What object files and libs for the test programs
-TESTG_SRCS = testg.c tmapbits.c
-TESTG_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
-
-#TESTP_OBJS = testp.obj
-#TESTP_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
-
-#VESATEST_OBJS = vesatest.obj
-#VESATEST_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
 
 gr.lib: $(GR_OBJS)
 	wlib /q gr.lib $(GR_OBJS)
@@ -55,10 +40,10 @@ bitblt.obj: bitblt.c
 	$(CC) $(CCFLAGS) bitblt.c
 
 bitmap.obj: bitmap.c
-	$(CC) $(CCFLAGS) bitmap
+	$(CC) $(CCFLAGS) bitmap.c
 
 box.obj: box.c
-	$(CC) $(CCFLAGS) box
+	$(CC) $(CCFLAGS) box.c
 
 canvas.obj: canvas.c
 	$(CC) $(CCFLAGS) canvas.c
@@ -100,16 +85,16 @@ line.obj: line.c
 	$(CC) $(CCFLAGS) line.c
 
 linear.obj: linear.asm
-	$(ASM) $(ASMFLAGS) linear.asm linear.obj
+	$(ASM) $(ASMFLAGS) linear.asm
 
 median.obj: median.c
 	$(CC) $(CCFLAGS) median.c
 
-mspeed.obj: mspeed.c
-	$(CC) $(CCFLAGS) mspeed.c
-
 modex.obj: modex.asm
 	$(ASM) $(ASMFLAGS) modex.asm
+
+mspeed.obj: mspeed.c
+	$(CC) $(CCFLAGS) mspeed.c
 
 palette.obj: palette.c
 	$(CC) $(CCFLAGS) palette.c
@@ -136,7 +121,7 @@ scale.obj: scale.c
 	$(CC) $(CCFLAGS) scale.c
 
 scalea.obj: scalea.asm
-	$(ASM) $(ASMFLAGS) scalea.asm scalea.obj 
+	$(ASM) $(ASMFLAGS) scalea.asm
 
 scanline.obj: scanline.c
 	$(CC) $(CCFLAGS) scanline.c
@@ -154,4 +139,4 @@ vesatest.obj: vesatest.c
 	$(CC) $(CCFLAGS) vesatest.c
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

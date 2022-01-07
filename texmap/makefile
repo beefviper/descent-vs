@@ -17,38 +17,20 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-#Uncomment the following 3 lines if you want to build with only C code.
-#NASM = 1
-#GLOBAL_CFLAGS+=/dNASM
-#GLOBAL_AFLAGS+=/DNASM
-
 # What to install
 INSTALL_TARGS = texmap.lib texmap.h
+
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
 
 # What libs to build
 LIBS = texmap
 
-# What objs in the TEXMAP lib
+# What objs in the lib
+TEXMAP_OBJS = ntmap.obj tmapflat.obj tmap_per.obj tmap_lin.obj \
+	tmap_ll.obj tmap_flt.obj tmapfade.obj tmap_fl1.obj scanline.obj
 #TEXMAP_OBJS = ntmap.obj tmapsky.obj tmapv.obj tmapflat.obj tmap_per.obj tmap_p2.obj tmap_lin.obj tmap_ll.obj tmap_kl.obj\
-#		tmap_ld.obj tmap_flt.obj tmap_sky.obj tmap_skv.obj tmap_fl1.obj tmapz.obj tmap_z.obj tmapfade.obj tmap_mul.obj
-
-TEXMAP_OBJS = 	ntmap.obj tmapflat.obj  
-
-#%if !%defined(NASM)
-TEXMAP_OBJS +=	tmap_per.obj tmap_lin.obj tmap_ll.obj tmap_flt.obj tmapfade.obj tmap_fl1.obj
-#%else
-TEXMAP_OBJS += scanline.obj
-#%endif
-
-# What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
-
-# What test programs to make
-TEST_PROGS = textest
-
-# What object files and libs for the test programs
-TEXTEST_SRCS = TEXTEST.obj
-TEXTEST_LIBS = TEXMAP.lib
+#	tmap_ld.obj tmap_flt.obj tmap_sky.obj tmap_skv.obj tmap_fl1.obj tmapz.obj tmap_z.obj tmapfade.obj tmap_mul.obj
 
 texmap.lib: $(TEXMAP_OBJS)
 	wlib /q texmap.lib $(TEXMAP_OBJS)
@@ -139,4 +121,4 @@ tmapz.obj: tmapz.asm
 	$(ASM) $(ASMFLAGS) tmapz.asm
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

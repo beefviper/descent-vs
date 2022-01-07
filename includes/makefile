@@ -21,15 +21,5 @@ ASMFLAGS = /c /nologo
 INSTALL_TARGS = types.h types.inc psmacros.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What test programs to make
-TEST_PROGS = test
-
-# What object files and libs for the test programs
-TEST_SRCS = test.c mactest.c
-TEST_LIBS = io.lib
-
-mactest.obj: psmacros.inc
-
-test.obj: mono.h

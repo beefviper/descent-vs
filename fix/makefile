@@ -17,39 +17,24 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = fix.lib fix.h fix.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = fix
 
-# What test programs to make
-TEST_PROGS = fixtest
-
-# What object files for the lib
-FIX_OBJS = fix.obj
-
-# What object files and libs for the test programs
-FIXTEST_SRCS = fixtest.c
-FIXTEST_LIBS = fix.lib io.lib
+# What objs in the lib
+FIX_OBJS = fix.obj 
 
 fix.lib: $(FIX_OBJS)
 	wlib /q fix.lib $(FIX_OBJS)
 	copy fix.lib $(LIBDIR)
 
-asingen.obj: math.h stdio.h
-
-fix.obj: fix.inc fix.asm
+fix.obj: fix.asm fix.inc
 	$(ASM) $(ASMFLAGS) fix.asm
 
-fixtest.obj: conio.h fix.h graph.h stdio.h stdlib.h types.h
-
-singen.obj: math.h
-
-test.obj: psmacros.inc
-
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)
