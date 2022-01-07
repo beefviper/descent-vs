@@ -17,23 +17,24 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-CLEAN_TARGS = $(OBJDIR)\*.obj
-
+# What to install
 INSTALL_TARGS = cfile.lib cfile.h nocfile.h
 
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
+
+# What libs to build
 LIBS = cfile
 
+# What objs in the lib
 CFILE_OBJS = cfile.obj
 
 cfile.lib: $(CFILE_OBJS)
 	wlib /q cfile.lib $(CFILE_OBJS)
 	copy cfile.lib $(LIBDIR)
 
-cfile.obj: cfile.h cfile.c
+cfile.obj: cfile.c cfile.h
 	$(CC) $(CCFLAGS) cfile.c
 
-test.obj: test.c
-	$(CC) $(CCFLAGS) test.c
-
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

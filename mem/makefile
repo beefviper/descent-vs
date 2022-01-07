@@ -17,23 +17,24 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = mem.lib mem.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = mem
 
+# What objs in the lib
 MEM_OBJS = mem.obj
 
 mem.lib: $(MEM_OBJS)
 	wlib /q mem.lib $(MEM_OBJS)
 	copy mem.lib $(LIBDIR)
 
-mem.obj: mem.h mem.c
+mem.obj: mem.c mem.h
 	$(CC) $(CCFLAGS) mem.c
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

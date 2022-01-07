@@ -1,73 +1,66 @@
 #
-# Master makefile for Miner source
+# $Source: f:/miner/source/rcs/makefile $
+# $Revision: 1.1 $
+# $Author: beefviper $
+# $Date: 2022/01/07 22:27:23 $
 #
-# Makes all the executable by visiting subdirs and making there
+# Makefile for Descent executable 
 #
 
-# The only thing to make is the subdirs
+# What subsystems to make 
 SUBSYSTEMS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap ui main
-#sosdigi sosmidi
 
-# What to make in the subdirs if nothing specified
-SUBTARGETS = clean optimize no_mono no_debug linstall
-#SUBTARGETS = update linstall
-
-# When making clean here, delete libs
-CLEAN_TARGS = 
-#lib\*.lib lib\*.h lib\*.inc
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err main\descentr.exe
 
 # What make flags to use
-NMAKECMD = nmake
-NMAKEFLAGS = /nologo
-
-#all Miner makefiles should include this
-#%include $(INIT)\makefile.def
+MFLAGS = /nologo
 
 all: FORCE $(SUBSYSTEMS)
-
+	
 misc: FORCE
-	cd misc && $(NMAKECMD) $(NMAKEFLAGS)
+	cd misc && $(MAKE) $(MFLAGS)
 
 includes: FORCE
-	cd includes && $(NMAKECMD) $(NMAKEFLAGS)
+	cd includes && $(MAKE) $(MFLAGS)
 
 fix: FORCE
-	cd fix && $(NMAKECMD) $(NMAKEFLAGS)
+	cd fix && $(MAKE) $(MFLAGS)
 
 cfile: FORCE
-	cd cfile && $(NMAKECMD) $(NMAKEFLAGS)
+	cd cfile && $(MAKE) $(MFLAGS)
 
 2d: FORCE
-	cd 2d && $(NMAKECMD) $(NMAKEFLAGS)
+	cd 2d && $(MAKE) $(MFLAGS)
 
 bios: FORCE
-	cd bios && $(NMAKECMD) $(NMAKEFLAGS)
+	cd bios && $(MAKE) $(MFLAGS)
 
 iff: FORCE
-	cd iff && $(NMAKECMD) $(NMAKEFLAGS)
+	cd iff && $(MAKE) $(MFLAGS)
 
 div: FORCE
-	cd div && $(NMAKECMD) $(NMAKEFLAGS)
+	cd div && $(MAKE) $(MFLAGS)
 
 mem: FORCE
-	cd mem && $(NMAKECMD) $(NMAKEFLAGS)
+	cd mem && $(MAKE) $(MFLAGS)
 
 vecmat: FORCE
-	cd vecmat && $(NMAKECMD) $(NMAKEFLAGS)
+	cd vecmat && $(MAKE) $(MFLAGS)
 
 3d: FORCE
-	cd 3d && $(NMAKECMD) $(NMAKEFLAGS)
+	cd 3d && $(MAKE) $(MFLAGS)
 
 texmap: FORCE
-	cd texmap && $(NMAKECMD) $(NMAKEFLAGS)
+	cd texmap && $(MAKE) $(MFLAGS)
 
 ui: FORCE
-	cd ui && $(NMAKECMD) $(NMAKEFLAGS)
+	cd ui && $(MAKE) $(MFLAGS)
 
 main: FORCE
-	cd main && $(NMAKECMD) $(NMAKEFLAGS)
+	cd main && $(MAKE) $(MFLAGS)
 
 clean:
-	erase /s /q *.obj *.lib *.err main\descentr.exe
+	erase /s /q $(CLEAN_TARGS)
 
 FORCE:

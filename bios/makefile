@@ -17,25 +17,17 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h swift.h dpmi.h ipx.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = io
 
-# What test programs to make
-TEST_PROGS = demo
-# testj testk testm testms
-
-# What object files for the lib
+# What objs in the lib
 IO_OBJS = key.obj joy.obj mouse.obj timer.obj mono.obj joyc.obj dpmi.obj ipx.obj
-
-# What object files and libs for the test programs
-DEMO_SRCS = demo.c
-DEMO_LIBS = io.lib 
 
 io.lib: $(IO_OBJS)
 	wlib /q io.lib $(IO_OBJS)
@@ -90,4 +82,4 @@ timer.obj: timer.asm
 	$(ASM) $(ASMFLAGS) timer.asm
 
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

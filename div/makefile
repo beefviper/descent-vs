@@ -17,24 +17,17 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG /zq
 ASM = ml
 ASMFLAGS = /c /nologo
 
-# What to install, and where to install it
+# What to install
 INSTALL_TARGS = div0.lib div0.h div0.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What libs to make
+# What libs to build
 LIBS = div0
 
-# What test programs to make
-TEST_PROGS = testd
-
-# What object files for the lib
+# What objs in the lib
 DIV0_OBJS =  div0.obj
-
-# What object files and libs for the test programs
-TESTD_SRCS = testd.c testda.asm
-TESTD_LIBS = div0.lib
 
 div0.lib: $(DIV0_OBJS)
 	wlib /q div0.lib $(DIV0_OBJS)
@@ -43,7 +36,5 @@ div0.lib: $(DIV0_OBJS)
 div0.obj: div0.asm
 	$(ASM) $(ASMFLAGS) div0.asm
 
-testd.obj: 
-
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)

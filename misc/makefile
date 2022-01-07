@@ -20,40 +20,24 @@ ASMFLAGS = /c /nologo
 # What to install
 INSTALL_TARGS = misc.lib parsarg.h error.h
 
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
+
 # What libs to build
 LIBS = misc
 
 # What objs in the lib
 MISC_OBJS = parsarg.obj error.obj
 
-# What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
-
-# What test programs to make
-TEST_PROGS = errtest parstest
-
-# What object files and libs for the test programs
-PARSTEST_SRCS = parstest.c
-PARSTEST_LIBS = misc.lib
-
-ERRTEST_SRCS = errtest.c
-ERRTEST_LIBS = misc.lib
-
 misc.lib: $(MISC_OBJS)
 	wlib /q misc.lib $(MISC_OBJS)
 	copy misc.lib $(LIBDIR)
 
-error.obj: error.c error.h 
+error.obj: error.c error.h
 	$(CC) $(CCFLAGS) error.c
-
-errtest.obj: errtest.c error.h 
-	$(CC) $(CCFLAGS) errtest.c
 
 parsarg.obj: parsarg.c parsarg.h
 	$(CC) $(CCFLAGS) parsarg.c
 
-parstest.obj: parstest.c parsarg.h 
-	$(CC) $(CCFLAGS) parstest.c
-
 clean:
-	erase /s /q *.obj *.lib *.err
+	erase /s /q $(CLEAN_TARGS)
