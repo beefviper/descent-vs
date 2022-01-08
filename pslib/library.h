@@ -175,5 +175,6 @@ int AppendFile( char *filename, void *data, int length );
 // AppendFile appends 'length' bytes of 'data' to 'filename'
 //  returns an error code != 0 if there is an error.
 
-
-
+int ReadFileBuf( char *filename, byte *buf, int bufsize );
+// ReadFileBuf reads bufize bytes of 'filename' into the address of 'buf'
+//  returns an error code < 0 if there is an error.

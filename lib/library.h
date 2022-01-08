@@ -168,6 +168,3 @@ int AppendFile( char *filename, void *data, int length );
 int ReadFileBuf( char *filename, byte *buf, int bufsize );
 // ReadFileBuf reads bufize bytes of 'filename' into the address of 'buf'
 //  returns an error code < 0 if there is an error.
-
-
-
