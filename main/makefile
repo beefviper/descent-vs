@@ -31,7 +31,7 @@ DESCENT_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
 	cfile.lib mem.lib ui.lib div0.lib misc.lib texmap.lib
 
 # What objs in the lib
-DESCENT_OBJS = inferno.obj game.obj gauges.obj mglobal.obj \
+DESCENT_OBJS = game.obj gauges.obj mglobal.obj \
 	scores.obj object.obj laser.obj physics.obj bm.obj \
 	menu.obj gamesave.obj switch.obj effects.obj texmerge.obj polyobj.obj \
 	gamemine.obj fireball.obj ai.obj aipath.obj hostage.obj \
@@ -44,9 +44,10 @@ DESCENT_OBJS = inferno.obj game.obj gauges.obj mglobal.obj \
 	endlevel.obj terrain.obj kconfig.obj modem.obj \
 	multi.obj cntrlcen.obj credits.obj config.obj soscodec.obj kmatrix.obj \
 	paging.obj mission.obj iglasses.obj songs.obj bmread.obj state.obj multibot.obj nocomlib.obj slew.obj dumpmine.obj
+	# inferno.obj left out, needed obj file to pass to wcl386, didn't like just libs
 
-DESCENTR.EXE: $(DESCENT_OBJS)
-	wcl386 /zq /fe=descentr.exe /l=dos4g /k50000 $(DESCENT_OBJS) $(DESCENT_LIBS)
+main.lib: inferno.obj $(DESCENT_OBJS)
+	wlib /q main.lib $(DESCENT_OBJS)
 
 ai.obj: ai.c ai.h
 	$(CC) $(CCFLAGS) ai.c

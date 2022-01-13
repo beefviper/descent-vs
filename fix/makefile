@@ -31,7 +31,6 @@ FIX_OBJS = fix.obj
 
 fix.lib: $(FIX_OBJS)
 	wlib /q fix.lib $(FIX_OBJS)
-	copy fix.lib $(LIBDIR)
 
 fix.obj: fix.asm fix.inc
 	$(ASM) $(ASMFLAGS) fix.asm

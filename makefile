@@ -7,8 +7,15 @@
 # Makefile for Descent executable 
 #
 
+# What dir to build in
+BUILD_DIR = build
+
 # What subsystems to make 
-SUBSYSTEMS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap ui main
+SUBSYSTEMS = $(BUILD_DIR)\misc.lib $(BUILD_DIR)\fix.lib \
+	$(BUILD_DIR)\cfile.lib $(BUILD_DIR)\gr.lib $(BUILD_DIR)\io.lib $(BUILD_DIR)\iff.lib \
+	$(BUILD_DIR)\div0.lib $(BUILD_DIR)\mem.lib $(BUILD_DIR)\vecmat.lib $(BUILD_DIR)\3d.lib \
+	$(BUILD_DIR)\texmap.lib $(BUILD_DIR)\ui.lib $(BUILD_DIR)\main.lib $(BUILD_DIR)\inferno.obj
+	# readd $(BUILD_DIR)\incudes later
 
 # What to clean
 CLEAN_TARGS = *.obj *.lib *.err main\descentr.exe
@@ -16,51 +23,96 @@ CLEAN_TARGS = *.obj *.lib *.err main\descentr.exe
 # What make flags to use
 MFLAGS = /nologo
 
-all: FORCE $(SUBSYSTEMS)
+$(BUILD_DIR)\descentr.exe: makebuilddir $(SUBSYSTEMS)
+	cd $(BUILD_DIR) && wcl386 /zq /fe=descentr.exe /l=dos4g /k50000 inferno.obj main.lib 3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
+	cfile.lib mem.lib ui.lib div0.lib misc.lib texmap.lib
 	
-misc: FORCE
+makebuilddir:
+	@mkdir $(BUILD_DIR)
+
+$(BUILD_DIR)\misc.lib: misc\misc.lib
+	copy misc\misc.lib $(BUILD_DIR)
+
+misc\misc.lib:
 	cd misc && $(MAKE) $(MFLAGS)
 
-includes: FORCE
+includes:
 	cd includes && $(MAKE) $(MFLAGS)
 
-fix: FORCE
+$(BUILD_DIR)\fix.lib: fix\fix.lib
+	copy fix\fix.lib $(BUILD_DIR)
+
+fix\fix.lib:
 	cd fix && $(MAKE) $(MFLAGS)
 
-cfile: FORCE
+$(BUILD_DIR)\cfile.lib: cfile\cfile.lib
+	copy cfile\cfile.lib $(BUILD_DIR)
+
+cfile\cfile.lib:
 	cd cfile && $(MAKE) $(MFLAGS)
 
-2d: FORCE
+$(BUILD_DIR)\gr.lib: 2d\gr.lib
+	copy 2d\gr.lib $(BUILD_DIR)
+
+2d\gr.lib:
 	cd 2d && $(MAKE) $(MFLAGS)
 
-bios: FORCE
+$(BUILD_DIR)\io.lib: bios\io.lib
+	copy bios\io.lib $(BUILD_DIR)
+
+bios\io.lib:
 	cd bios && $(MAKE) $(MFLAGS)
 
-iff: FORCE
+$(BUILD_DIR)\iff.lib: iff\iff.lib
+	copy iff\iff.lib $(BUILD_DIR)
+
+iff\iff.lib:
 	cd iff && $(MAKE) $(MFLAGS)
 
-div: FORCE
+$(BUILD_DIR)\div0.lib: div\div0.lib
+	copy div\div0.lib $(BUILD_DIR)
+
+div\div0.lib:
 	cd div && $(MAKE) $(MFLAGS)
 
-mem: FORCE
+$(BUILD_DIR)\mem.lib: mem\mem.lib
+	copy mem\mem.lib $(BUILD_DIR)
+
+mem\mem.lib:
 	cd mem && $(MAKE) $(MFLAGS)
 
-vecmat: FORCE
+$(BUILD_DIR)\vecmat.lib: vecmat\vecmat.lib
+	copy vecmat\vecmat.lib $(BUILD_DIR)
+
+vecmat\vecmat.lib:
 	cd vecmat && $(MAKE) $(MFLAGS)
 
-3d: FORCE
+$(BUILD_DIR)\3d.lib: 3d\3d.lib
+	copy 3d\3d.lib $(BUILD_DIR)
+
+3d\3d.lib:
 	cd 3d && $(MAKE) $(MFLAGS)
 
-texmap: FORCE
+$(BUILD_DIR)\texmap.lib: texmap\texmap.lib
+	copy texmap\texmap.lib $(BUILD_DIR)
+
+texmap\texmap.lib:
 	cd texmap && $(MAKE) $(MFLAGS)
 
-ui: FORCE
+$(BUILD_DIR)\ui.lib: ui\ui.lib
+	copy ui\ui.lib $(BUILD_DIR)
+
+ui\ui.lib:
 	cd ui && $(MAKE) $(MFLAGS)
 
-main: FORCE
+$(BUILD_DIR)\main.lib: main\main.lib
+	copy main\main.lib $(BUILD_DIR)
+
+main\main.lib:
 	cd main && $(MAKE) $(MFLAGS)
+
+$(BUILD_DIR)\inferno.obj: main\inferno.obj
+	copy main\inferno.obj $(BUILD_DIR)
 
 clean:
 	erase /s /q $(CLEAN_TARGS)
-
-FORCE:

@@ -31,7 +31,6 @@ DIV0_OBJS =  div0.obj
 
 div0.lib: $(DIV0_OBJS)
 	wlib /q div0.lib $(DIV0_OBJS)
-	copy div0.lib $(LIBDIR)
 
 div0.obj: div0.asm
 	$(ASM) $(ASMFLAGS) div0.asm

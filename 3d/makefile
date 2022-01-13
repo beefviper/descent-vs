@@ -32,56 +32,51 @@ LIBS = 3d
 
 3d.lib: $(3D_OBJS)
 	wlib /q 3d.lib $(3D_OBJS)
-	copy 3d.lib $(LIBDIR)
 
 3dtest.obj: 3dtest.c
 	$(CC) $(CCFLAGS) 3dtest.c
 
 clipper.obj: clipper.asm
-	$(ASM) $(ASMFLAGS) clipper.asm clipper.obj
+	$(ASM) $(ASMFLAGS) clipper.asm
 
 draw.obj: draw.asm
-	$(ASM) $(ASMFLAGS) draw.asm draw.obj
+	$(ASM) $(ASMFLAGS) draw.asm
 
 globvars.obj: globvars.asm
-	$(ASM) $(ASMFLAGS) globvars.asm globvars.obj
+	$(ASM) $(ASMFLAGS) globvars.asm
 
 horizon.obj: horizon.asm
-	$(ASM) $(ASMFLAGS) horizon.asm horizon.obj
+	$(ASM) $(ASMFLAGS) horizon.asm
 
 instance.obj: instance.asm
-	$(ASM) $(ASMFLAGS) instance.asm instance.obj
+	$(ASM) $(ASMFLAGS) instance.asm
 
 interp.obj: interp.asm
-	$(ASM) $(ASMFLAGS) interp.asm interp.obj
+	$(ASM) $(ASMFLAGS) interp.asm
 
 matrix.obj: matrix.asm
-	$(ASM) $(ASMFLAGS) matrix.asm matrix.obj
+	$(ASM) $(ASMFLAGS) matrix.asm
 
 objects.obj: objects.asm
-	$(ASM) $(ASMFLAGS) objects.asm objects.obj
+	$(ASM) $(ASMFLAGS) objects.asm
 
 out.obj: out.asm
-	$(ASM) $(ASMFLAGS) out.asm out.obj
+	$(ASM) $(ASMFLAGS) out.asm
 
 points.obj: points.asm
-	$(ASM) $(ASMFLAGS) points.asm points.obj
+	$(ASM) $(ASMFLAGS) points.asm
 
 rod.obj: rod.asm
-	$(ASM) $(ASMFLAGS) rod.asm rod.obj
+	$(ASM) $(ASMFLAGS) rod.asm
 
 segment.obj: segment.asm
-	$(ASM) $(ASMFLAGS) segment.asm segment.obj
+	$(ASM) $(ASMFLAGS) segment.asm
 
 setup.obj: setup.asm
-	$(ASM) $(ASMFLAGS) setup.asm setup.obj
-
-#trakball.obj: trackball.asm
+	$(ASM) $(ASMFLAGS) setup.asm
 
 upvecs.obj: upvecs.asm
-	$(ASM) $(ASMFLAGS) upvecs.asm upvecs.obj
-
-upvecs2.obj: fix.h types.h vecmat.h
+	$(ASM) $(ASMFLAGS) upvecs.asm
 
 clean:
 	erase /s /q $(CLEAN_TARGS)

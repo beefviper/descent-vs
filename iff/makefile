@@ -31,7 +31,6 @@ IFF_OBJS = iff.obj
 
 iff.lib: $(IFF_OBJS)
 	wlib /q iff.lib $(IFF_OBJS)
-	copy iff.lib $(LIBDIR)
 
 iff.obj: iff.c
 	$(CC) $(CCFLAGS) iff.c

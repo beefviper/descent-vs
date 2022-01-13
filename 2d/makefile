@@ -34,7 +34,6 @@ GR_OBJS = linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
 
 gr.lib: $(GR_OBJS)
 	wlib /q gr.lib $(GR_OBJS)
-	copy gr.lib $(LIBDIR)
 
 bitblt.obj: bitblt.c
 	$(CC) $(CCFLAGS) bitblt.c

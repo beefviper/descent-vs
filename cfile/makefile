@@ -31,7 +31,6 @@ CFILE_OBJS = cfile.obj
 
 cfile.lib: $(CFILE_OBJS)
 	wlib /q cfile.lib $(CFILE_OBJS)
-	copy cfile.lib $(LIBDIR)
 
 cfile.obj: cfile.c cfile.h
 	$(CC) $(CCFLAGS) cfile.c

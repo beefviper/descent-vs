@@ -35,7 +35,6 @@ UI_OBJS = ui.obj mouse.obj window.obj uidraw.obj button.obj \
 
 ui.lib: $(UI_OBJS)
 	wlib /q ui.lib $(UI_OBJS)
-	copy ui.lib $(LIBDIR)
 
 barbox.obj: barbox.c
 	$(CC) $(CCFLAGS) barbox.c

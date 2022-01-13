@@ -31,7 +31,6 @@ MEM_OBJS = mem.obj
 
 mem.lib: $(MEM_OBJS)
 	wlib /q mem.lib $(MEM_OBJS)
-	copy mem.lib $(LIBDIR)
 
 mem.obj: mem.c mem.h
 	$(CC) $(CCFLAGS) mem.c

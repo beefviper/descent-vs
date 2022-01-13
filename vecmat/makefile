@@ -31,7 +31,6 @@ VECMAT_OBJS = vecmat.obj
 
 vecmat.lib: $(VECMAT_OBJS)
 	wlib /q vecmat.lib $(VECMAT_OBJS)
-	copy vecmat.lib $(LIBDIR)
 
 vecmat.obj: vecmat.asm vecmat.inc
 	$(ASM) $(ASMFLAGS) vecmat.asm

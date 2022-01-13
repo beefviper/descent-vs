@@ -34,7 +34,6 @@ TEXMAP_OBJS = ntmap.obj tmapflat.obj tmap_per.obj tmap_lin.obj \
 
 texmap.lib: $(TEXMAP_OBJS)
 	wlib /q texmap.lib $(TEXMAP_OBJS)
-	copy texmap.lib $(LIBDIR)
 
 lightabs.obj: lightabs.asm
 	$(ASM) $(ASMFLAGS) lightabs.asm

@@ -31,7 +31,6 @@ IO_OBJS = key.obj joy.obj mouse.obj timer.obj mono.obj joyc.obj dpmi.obj ipx.obj
 
 io.lib: $(IO_OBJS)
 	wlib /q io.lib $(IO_OBJS)
-	copy io.lib $(LIBDIR)
 
 cdrom.obj: cdrom.c
 	$(CC) $(CCFLAGS) cdrom.c

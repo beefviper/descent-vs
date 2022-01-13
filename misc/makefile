@@ -31,7 +31,6 @@ MISC_OBJS = parsarg.obj error.obj
 
 misc.lib: $(MISC_OBJS)
 	wlib /q misc.lib $(MISC_OBJS)
-	copy misc.lib $(LIBDIR)
 
 error.obj: error.c error.h
 	$(CC) $(CCFLAGS) error.c
