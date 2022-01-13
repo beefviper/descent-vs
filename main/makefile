@@ -21,7 +21,7 @@ ASMFLAGS = /c /nologo
 INSTALL_TARGS = main.lib
 
 # What to clean
-CLEAN_TARGS = *.obj *.lib *.err descentr.exe
+CLEAN_TARGS = *.obj *.lib *.err
 
 # What libs to build
 LIBS = main

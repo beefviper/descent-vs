@@ -18,7 +18,7 @@ SUBSYSTEMS = $(BUILD_DIR)\misc.lib $(BUILD_DIR)\fix.lib \
 	# readd $(BUILD_DIR)\incudes later
 
 # What to clean
-CLEAN_TARGS = *.obj *.lib *.err main\descentr.exe
+CLEAN_TARGS = *.obj *.lib *.err build\descentr.exe
 
 # What make flags to use
 MFLAGS = /nologo
