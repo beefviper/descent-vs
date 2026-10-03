@@ -74,10 +74,10 @@ The game needs SDL2, and libADLMIDI for the music. The easiest way to get
 them is vcpkg, which comes with Visual Studio 2022: the `vcpkg.json`
 manifest makes CMake fetch and build both automatically.
 
-    cmake -S . -B build -G "Visual Studio 17 2022" -A Win32 ^
+    cmake -S . -B build -G "Visual Studio 17 2022" ^
         -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake
 
-Use `-A x64` for a 64-bit build. Without vcpkg, download the SDL2 VC
+That makes a 64-bit build; add `-A Win32` for a 32-bit one. Without vcpkg, download the SDL2 VC
 development package from https://github.com/libsdl-org/SDL/releases and
 pass `-DSDL2_DIR=<path>/cmake` instead of the toolchain file; build
 libADLMIDI (https://github.com/Wohlstand/libADLMIDI) and pass
