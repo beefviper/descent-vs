@@ -111,7 +111,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 // Function Prototypes
 static void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 );
-static void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
 
 // Decodes one scanline of rle data from src into dest.  Returns a pointer
 // to the byte after the last one written.

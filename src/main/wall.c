@@ -156,7 +156,6 @@ int Num_open_doors;						// Number of open doors
 
 // Function Prototypes
 static void kill_stuck_objects(int wallnum);
-static void kill_stuck_objects(int wallnum);
 
 
 #ifdef EDITOR
@@ -183,7 +182,7 @@ static int check_transparency( segment * seg, int side )
 			return 0;
 		}
 
-	if (GameBitmaps[Textures[seg->sides[side].tmap_num2 & 0x3FFF ].index].bm_flags & BM_FLAG_SUPER_TRANSPARENT )
+	if (GameBitmaps[Textures[TMAP2_INDEX(seg->sides[side].tmap_num2)].index].bm_flags & BM_FLAG_SUPER_TRANSPARENT )
 		return 1;
 	else
 		return 0;

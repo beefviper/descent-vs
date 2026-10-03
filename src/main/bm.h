@@ -257,9 +257,10 @@ extern int TmapList[MAX_TEXTURES];
 extern tmap_info TmapInfo[MAX_TEXTURES];
 
 // The low 14 bits of a side's tmap_num2 pick its overlay texture (the top
-// two bits are the overlay's rotation). Clamped, so a bad value in a level
-// file can't index past the texture tables.
-#define TMAP2_INDEX(tmap_num2)	((((tmap_num2) & 0x3fff) < MAX_TEXTURES) ? ((tmap_num2) & 0x3fff) : 0)
+// two bits are the overlay's rotation). Wrapped into range, so a bad value in
+// a level file can't index past the texture tables; every valid index is
+// already below MAX_TEXTURES and comes through unchanged.
+#define TMAP2_INDEX(tmap_num2)	((int)(((unsigned)(tmap_num2) & 0x3fff) % MAX_TEXTURES))
 
 //for each model, a model number for dying & dead variants, or -1 if none
 extern int Dying_modelnums[];

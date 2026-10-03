@@ -165,9 +165,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 // Function Prototypes
 static void maybe_ai_path_garbage_collect(void);
-static void maybe_ai_path_garbage_collect(void);
 static void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point);
-static void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
 
 
 static void create_random_xlate(byte *xt)

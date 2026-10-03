@@ -148,29 +148,17 @@ extern obj_position Player_init[MAX_PLAYERS];
 
 // Function Prototypes
 static void network_flush(void);
-static void network_flush(void);
-static void network_listen(void);
 static void network_listen(void);
 static void network_send_endlevel_sub(int player_num);
-static void network_send_endlevel_sub(int player_num);
-static void network_update_netgame(void);
 static void network_update_netgame(void);
 static void network_dump_player(ubyte * server, ubyte *node, int why);
-static void network_dump_player(ubyte* server, ubyte* node, int why);
 static void network_send_objects(void);
-static void network_send_objects(void);
-static void network_send_rejoin_sync(int player_num);
 static void network_send_rejoin_sync(int player_num);
 static void network_send_game_info(sequence_packet *their);
-static void network_send_game_info(sequence_packet* their);
 static void network_read_sync_packet( netgame_info * sp );
-static void network_read_sync_packet(netgame_info* sp);
 static void network_read_pdata_packet(frame_info *pd );
-static void network_read_pdata_packet(frame_info* pd);
 static void network_read_object_packet( ubyte *data );
-static void network_read_object_packet(ubyte* data);
 static void network_read_endlevel_packet( ubyte *data );
-static void network_read_endlevel_packet(ubyte* data);
 
 
 
@@ -2604,17 +2592,17 @@ void network_join_game(void)
 	m[0].text = menu_text[0];
 	m[0].type = NM_TYPE_TEXT;
 	if (Network_allow_socket_changes)
-		sprintf( m[0].text, "Current IPX Socket is default%+d", Network_socket );
+		sprintf( menu_text[0], "Current IPX Socket is default%+d", Network_socket );
 	else
-		sprintf( m[0].text, "" );
+		menu_text[0][0] = '\0';
 
 	for (i = 0; i < MAX_ACTIVE_NETGAMES; i++) {
 		m[2*i+1].text = menu_text[2*i+1];
 		m[2*i+2].text = menu_text[2*i+2];
 		m[2*i+1].type = NM_TYPE_MENU;
 		m[2*i+2].type = NM_TYPE_TEXT;
-		sprintf(m[(2*i)+1].text, "%d.                                       ", i+1);
-		sprintf(m[(2*i)+2].text, " \n");
+		sprintf(menu_text[(2*i)+1], "%d.                                       ", i+1);
+		sprintf(menu_text[(2*i)+2], " \n");
 		m[(2*i)+1].redraw = 1;
 		m[(2*i)+2].redraw = 1;
 	}

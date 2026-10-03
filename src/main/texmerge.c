@@ -148,9 +148,7 @@ static int cache_misses = 0;
 
 // Function Prototypes
 static void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data );
-static void merge_textures_super_xparent(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
 static void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data );
-static void merge_textures_new(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
 
 void texmerge_close(void);
 
@@ -222,7 +220,7 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 //		info_printed = 0;
 //	}
 
-	bitmap_top = &GameBitmaps[Textures[tmap_top&0x3FFF].index];
+	bitmap_top = &GameBitmaps[Textures[TMAP2_INDEX(tmap_top)].index];
 	bitmap_bottom = &GameBitmaps[Textures[tmap_bottom].index];
 
 	orient = ((tmap_top&0xC000)>>14) & 3;
@@ -249,12 +247,12 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 #ifdef PIGGY_USE_PAGING
 	piggy_page_flushed = 0;
 
-	PIGGY_PAGE_IN(Textures[tmap_top&0x3FFF]);
+	PIGGY_PAGE_IN(Textures[TMAP2_INDEX(tmap_top)]);
 	PIGGY_PAGE_IN(Textures[tmap_bottom]);
 	if (piggy_page_flushed)	{
 		// If cache got flushed, re-read 'em.
 		piggy_page_flushed = 0;
-		PIGGY_PAGE_IN(Textures[tmap_top&0x3FFF]);
+		PIGGY_PAGE_IN(Textures[TMAP2_INDEX(tmap_top)]);
 		PIGGY_PAGE_IN(Textures[tmap_bottom]);
 	}
 	Assert( piggy_page_flushed == 0 );

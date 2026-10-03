@@ -149,8 +149,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define BITS_TO_BYTES(x)    (((x)+7)>>3)
 
 static int gr_internal_string_clipped(int x, int y, char *s );
-static int gr_internal_string_clipped(int x, int y, char *s );
-static int gr_internal_string_clipped_m(int x, int y, char *s );
 static int gr_internal_string_clipped_m(int x, int y, char *s );
 
 static char *find_kern_entry(grs_font *font,char first,char second)

@@ -121,6 +121,5 @@ extern ubyte tmap_flat_shade_value;
 extern fix fix_recip[];
 
 extern void init_interface_vars_to_assembler(void);
-extern int prevmod(int val,int modulus);
 
 #define FIX_RECIP_TABLE_SIZE	321

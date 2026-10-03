@@ -80,7 +80,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define UNUSED                     -1
 
 static unsigned int find_child_node( int parent_code, int child_character );
-static unsigned int find_child_node( int parent_code, int child_character );
 static unsigned int decode_string( unsigned int count, unsigned int code );
 static unsigned int decode_string( unsigned int offset, unsigned int code );
 

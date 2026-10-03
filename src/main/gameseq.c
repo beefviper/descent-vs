@@ -351,12 +351,9 @@ extern int Last_level_path_created;
 
 // Function Prototypes
 static void init_player_stats_new_ship(void);
-static void init_player_stats_new_ship(void);
 static int AdvanceLevel(int secret_flag);
-static int AdvanceLevel(int secret_flag);
-void StartLevel(int random);
+static void StartLevel(int random);
 extern void init_cockpit(void);
-static void copy_defaults_to_robot_all(void);
 static void copy_defaults_to_robot_all(void);
 
 
@@ -1640,7 +1637,7 @@ extern void vr_reset_display(void);
 
 //	-----------------------------------------------------------------------------------------------------
 //called when the player is starting a level (new game or new ship)
-void StartLevel(int random)
+static void StartLevel(int random)
 {
 	Assert(!Player_is_dead);
 

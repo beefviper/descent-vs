@@ -326,30 +326,20 @@ fix  SerialLastMessage = 0;
 /* Function prototypes for functions not exported through modem.h */
 
 static void com_param_setup(void);
-static void com_param_setup(void);
 static void com_start_game();
 static void com_start_game(void);
 static void modem_dialout(void);
-static void modem_dialout(void);
 static void modem_answer(void);
-static void modem_answer(void);
-static int com_sync(int id);
 static int com_sync(int id);
 static void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem);
 static void com_sync_poll(int nitem, newmenu_item *menus, int *key, int citem);
 
 static void com_send_choice(int choice);
-static void com_send_choice(int choice);
-static void serial_sync_abort(int val);
 static void serial_sync_abort(int val);
 static void com_send_ptr(char *ptr, int len);
-static void com_send_ptr(char* ptr, int len);
 static void com_process_sync(char *buf, int len);
-static void com_process_sync(char* buf, int len);
-static void serial_link_start(void);
 static void serial_link_start(void);
 static void add_phone_number( char * src, char * num );
-static void add_phone_number(char* src, char* num);
 
 
 

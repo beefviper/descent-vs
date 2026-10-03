@@ -271,7 +271,12 @@ void set_dynamic_light(void)
 		}
 	}
 
-	for (vertnum=FrameCount&1; vertnum<n_render_vertices && vertnum<(int)(sizeof(render_vertices)/sizeof(render_vertices[0])); vertnum+=2) {
+	if (n_render_vertices > MAX_VERTICES)
+		n_render_vertices = MAX_VERTICES;
+
+	for (vertnum=FrameCount&1; vertnum<n_render_vertices; vertnum+=2) {
+		if (vertnum < 0 || vertnum >= MAX_VERTICES)
+			break;
 		Assert(render_vertices[vertnum]>=0 && render_vertices[vertnum]<=Highest_vertex_index);
 		Dynamic_light[render_vertices[vertnum]] = 0;
 	}

@@ -83,12 +83,8 @@ byte robot_fire_buf[MAX_ROBOTS_CONTROLLED][18+3];
 
 // Function Prototypes
 static int multi_add_controlled_robot(int objnum, int agitation);
-static int multi_add_controlled_robot(int objnum, int agitation);
-static void multi_send_release_robot(int objnum);
 static void multi_send_release_robot(int objnum);
 static void multi_delete_controlled_robot(int objnum);
-static void multi_delete_controlled_robot(int objnum);
-static void multi_send_robot_position_sub(int objnum);
 static void multi_send_robot_position_sub(int objnum);
 
 

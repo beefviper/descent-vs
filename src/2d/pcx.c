@@ -72,9 +72,7 @@ typedef struct	{
 
 //Function Prototypes
 static int pcx_encode_line(ubyte *inBuff, int inLen, FILE * fp);
-static int pcx_encode_line(ubyte* inBuff, int inLen, FILE* fp);
 static int pcx_encode_byte(ubyte byt, ubyte cnt, FILE * fid);
-static int pcx_encode_byte(ubyte byt, ubyte cnt, FILE* fid);
 
 
 int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * palette )

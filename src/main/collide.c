@@ -687,8 +687,6 @@ static void collide_player_and_wall( object * player, fix hitspeed, short hitseg
 fix	Last_volatile_scrape_sound_time = 0;
 
 static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
-static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
-static void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
 static void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
 
 //this gets called when an object is scraping along the wall
@@ -887,7 +885,7 @@ static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg
 	wall_type = wall_hit_process( seg, hitwall, weapon->shields, playernum, weapon );
 
 	// Wall is volatile if either tmap 1 or 2 is volatile
-	if ((TmapInfo[seg->sides[hitwall].tmap_num].flags & TMI_VOLATILE) || (seg->sides[hitwall].tmap_num2 && (TmapInfo[seg->sides[hitwall].tmap_num2&0x3fff].flags & TMI_VOLATILE))) {
+	if ((TmapInfo[seg->sides[hitwall].tmap_num].flags & TMI_VOLATILE) || (seg->sides[hitwall].tmap_num2 && (TmapInfo[TMAP2_INDEX(seg->sides[hitwall].tmap_num2)].flags & TMI_VOLATILE))) {
 		weapon_info *wi = &Weapon_info[weapon->id];
 
 		//we've hit a volatile wall

@@ -211,7 +211,7 @@ static void propagate_light_intensity(segment *segp, int sidenum)
 	intensity = 0;
 	texmap = segp->sides[sidenum].tmap_num;
 	intensity += TmapInfo[texmap].lighting;
-	texmap = (segp->sides[sidenum].tmap_num2) & 0x3fff;
+	texmap = TMAP2_INDEX(segp->sides[sidenum].tmap_num2);
 	intensity += TmapInfo[texmap].lighting;
 
 	if (intensity > 0) {

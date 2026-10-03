@@ -98,7 +98,6 @@ typedef struct  {
 
 void reset_player_object(void); // In object.c but not in object.h
 void drop_player_eggs(object *player); // from collide.c
-void StartLevel(void); // From gameseq.c
 void GameLoop(int, int); // From game.c
 
 //
@@ -251,14 +250,9 @@ int message_length[MULTI_MAX_TYPE+1] = {
 
 // Function Prototypes
 static void multi_reset_player_object(object *objp);
-static void multi_reset_player_object(object* objp);
 static void multi_save_game(ubyte slot, uint id, char *desc);
-static void multi_save_game(ubyte slot, uint id, char* desc);
-static void multi_restore_game(ubyte slot, uint id);
 static void multi_restore_game(ubyte slot, uint id);
 static void extract_netplayer_stats( netplayer_stats *ps, player * pd );
-static void extract_netplayer_stats(netplayer_stats* ps, player* pd);
-static void multi_set_robot_ai(void);
 static void multi_set_robot_ai(void);
 
 
@@ -1346,6 +1340,8 @@ multi_do_player_explode(char *buf)
 //	objp->pos = *(vms_vector *)(buf+28);                // 12 bytes
 
 	remote_created = buf[count++]; // How many did the other guy create?
+	if (remote_created < 0)
+		remote_created = 0;
 
 	Net_create_loc = 0;
 
@@ -1375,6 +1371,8 @@ multi_do_player_explode(char *buf)
 		count += 2;
 	}
 	for (i = remote_created; i < Net_create_loc && i < MAX_NET_CREATE_OBJECTS; i++) {
+		if (i < 0)
+			continue;
 		mprintf((0, "WARNING: I Created more powerups than player %d, deleting.\n", pnum));
 		Objects[Net_create_objnums[i]].flags |= OF_SHOULD_BE_DEAD;
 	}

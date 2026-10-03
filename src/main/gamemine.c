@@ -174,9 +174,6 @@ struct me mine_editor;
 
 // Function Prototypes
 static int load_mine_data_compiled_new(CFILE *LoadFile);
-static int load_mine_data_compiled_new(CFILE* LoadFile);
-
-int CreateDefaultNewSegment(void);
 
 #ifdef EDITOR
 

@@ -539,8 +539,6 @@ ubyte	john_cheats_2[2*JOHN_CHEATS_SIZE_2] = { 	KEY_P ^ 0x00 ^ 0x43, 0x66,
 
 // Function Prototypes
 static void init_boss_segments(short segptr[], int *num_segs, int size_check);
-static void init_boss_segments(short segptr[], int* num_segs, int size_check);
-static void ai_multi_send_robot_position(int objnum, int force);
 static void ai_multi_send_robot_position(int objnum, int force);
 
 

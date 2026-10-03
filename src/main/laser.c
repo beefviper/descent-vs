@@ -60,7 +60,6 @@ int Laser_rapid_fire = 0;
 
 // Function Prototypes
 static int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_obj_type1, int track_obj_type2);
-static int find_homing_object_complete(vms_vector* curpos, object* tracker, int track_obj_type1, int track_obj_type2);
 
 //---------------------------------------------------------------------------------
 // Called by render code.... determines if the laser is from a robot or the

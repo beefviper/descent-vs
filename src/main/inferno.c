@@ -730,12 +730,10 @@ int Inferno_is_800x600_available = 0;
 
 // Function Prototypes
 static void check_joystick_calibration(void);
-static void check_joystick_calibration(void);
 void show_order_form(void);
 
 
 static int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, unsigned __far * devhdr );
-static int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
 
 #ifndef NDEBUG
 static void do_heap_check(void)

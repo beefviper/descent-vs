@@ -553,7 +553,6 @@ extern	void med_extract_matrix_from_segment(segment *sp,vms_matrix *rotmat);
 extern	void assign_default_uvs_to_segment(segment *segp);
 extern	void assign_default_uvs_to_side(segment *segp, int side);
 
-extern	void assign_default_uvs_to_side(segment *segp,int side);
 
 //	Assign u,v coordinates to con_seg, con_common_side from base_seg, base_common_side
 //	They are connected at the edge defined by the vertices abs_id1, abs_id2.
@@ -685,7 +684,6 @@ extern editor_view RightView;
 extern void set_view_target_from_segment(segment *sp);
 extern int SafetyCheck(void);
 
-extern void editor_status( const char *format, ...);
 
 extern int MacroNumEvents;
 extern int MacroStatus;

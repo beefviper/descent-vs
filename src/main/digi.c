@@ -576,11 +576,8 @@ int digi_sounds_initialized=0;
 
 
 static void * testLoadFile( char * szFileName, int * length );
-static void * testLoadFile( char * szFileName, int * length );
 
 static VOID _far sosMIDICallback( WORD PassedSongHandle );
-static VOID _far sosMIDICallback( WORD PassedSongHandle );
-static VOID sosEndMIDICallback(void);
 static VOID sosEndMIDICallback(void);
 
 //NOT_MIDI_CHECKushort MIDI_CRC;

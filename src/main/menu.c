@@ -126,12 +126,8 @@ int Menu_draw_copyright = 0;
 
 // Function Prototypes
 static void do_option ( int select);
-static void do_option(int select);
-static void do_new_game_menu(void);
 static void do_new_game_menu(void);
 static void do_multi_player_menu(void);
-static void do_multi_player_menu(void);
-static void do_detail_level_menu_custom(void);
 static void do_detail_level_menu_custom(void);
 
 

@@ -435,9 +435,7 @@ char	Object_type_names[MAX_OBJECT_TYPES][9] = {
 
 // Function Prototypes
 static void obj_detach_one(object *sub);
-static void obj_detach_one(object* sub);
 static void obj_detach_all(object *parent);
-static void obj_detach_all(object* parent);
 
 
 #ifndef RELEASE

@@ -808,9 +808,9 @@ extern int descent_critical_error;
 extern unsigned descent_critical_deverror;
 extern unsigned descent_critical_errcode;
 
-char * crit_errors[13] = { "Write Protected", "Unknown Unit", "Drive Not Ready", "Unknown Command", "CRC Error", \
+char * crit_errors[16] = { "Write Protected", "Unknown Unit", "Drive Not Ready", "Unknown Command", "CRC Error", \
 "Bad struct length", "Seek Error", "Unknown media type", "Sector not found", "Printer out of paper", "Write Fault", \
-"Read fault", "General Failure" };
+"Read fault", "General Failure", "Unknown error", "Unknown error", "Unknown error" };	//16, so any 4-bit code is in range
 
 static void piggy_critical_error(void)
 {
@@ -820,7 +820,7 @@ static void piggy_critical_error(void)
 	save_canv = grd_curcanv;
 	save_font = grd_curcanv->cv_font;
 	gr_palette_load( gr_palette );
-	i = nm_messagebox( "Disk Error", 2, "Retry", "Exit", "%s\non drive %c:", ((descent_critical_errcode&0xf) < (int)(sizeof(crit_errors)/sizeof(crit_errors[0])) ? crit_errors[descent_critical_errcode&0xf] : "Unknown error"), (descent_critical_deverror&0xf)+'A'  );
+	i = nm_messagebox( "Disk Error", 2, "Retry", "Exit", "%s\non drive %c:", crit_errors[descent_critical_errcode&0xf], (descent_critical_deverror&0xf)+'A'  );
 	if ( i == 1 )
 		exit(1);
 	gr_set_current_canvas(save_canv);

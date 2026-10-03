@@ -116,7 +116,6 @@ int terrain_outline=0;
 
 // Function Prototypes
 static void build_light_table(void);
-static void build_light_table(void);
 
 void render_mine(int start_seg_num,fix eye_offset);
 

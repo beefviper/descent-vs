@@ -118,6 +118,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "editor.h"
 #include "mono.h"
 #include "kdefs.h"
+#include "bm.h"
 
 //	Assign CurrentTexture to Curside in *Cursegp
 int AssignTexture(void)
@@ -144,7 +145,7 @@ int AssignTexture2(void)
    autosave_mine( mine_filename );
    strcpy(undo_status[Autosave_count], "Assign Texture 2 UNDONE.");
 
-	texnum = Cursegp->sides[Curside].tmap_num2 & 0x3FFF;
+	texnum = TMAP2_INDEX(Cursegp->sides[Curside].tmap_num2);
 	orient = ((Cursegp->sides[Curside].tmap_num2 & 0xC000) >> 14) & 3;
 	ctexnum = CurrentTexture;
 

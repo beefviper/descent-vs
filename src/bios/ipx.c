@@ -269,9 +269,7 @@ int lastlen=0;
 
 // Function Prototypes
 static void got_new_packet( ecb_header * ecb );
-static void got_new_packet(ecb_header* ecb);
 static void ipx_listen_for_packet(ecb_header * ecb );
-static void ipx_listen_for_packet(ecb_header* ecb);
 
 
 static void free_packet( int id )

@@ -146,7 +146,6 @@ int out_of_memory = 0;
 void mem_display_blocks(void);
 
 static void mem_init(void);
-static void mem_init(void);
 static void mem_init(void)
 {
 	int i;
@@ -390,7 +389,6 @@ void mem_validate_heap(void)
 			mem_check_integrity( i );
 }
 
-static void mem_print_all(void);
 static void mem_print_all(void);
 static void mem_print_all(void)
 {

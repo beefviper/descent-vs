@@ -508,9 +508,7 @@ int Game_aborted;
 
 // Function Prototypes
 static void fill_background(int x,int y,int w,int h,int dx,int dy);
-static void fill_background(int x, int y, int w, int h, int dx, int dy);
 static void game_init_render_sub_buffers( int x, int y, int w, int h );
-static void game_init_render_sub_buffers(int x, int y, int w, int h);
 void draw_centered_text(int y, char* s);
 void GameLoop(int RenderFlag, int ReadControlsFlag);
 int create_special_path(void);

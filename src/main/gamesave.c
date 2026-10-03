@@ -454,7 +454,6 @@ struct {
 
 #ifdef EDITOR
 extern char mine_filename[];
-extern int save_mine_data_compiled(FILE * SaveFile);
 //--unused-- #else
 //--unused-- char mine_filename[128];
 #endif
@@ -1896,8 +1895,6 @@ static int save_game_data(FILE * SaveFile)
 
 	return 0;
 }
-
-int save_mine_data(FILE * SaveFile);
 
 // -----------------------------------------------------------------------------
 // Save game

@@ -220,7 +220,6 @@ int	Erase_color;
 
 // Function Prototypes
 static void title_save_game(void);
-static void title_save_game(void);
 
 
 static int local_key_inkey(void)

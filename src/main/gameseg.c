@@ -1889,7 +1889,6 @@ void validate_segment_side(segment *sp, int sidenum)
 //		sp->sides[sidenum].render_flag = 0;
 }
 
-extern int check_for_degenerate_segment(segment *sp);
 
 // -------------------------------------------------------------------------------
 //	Make a just-modified segment valid.

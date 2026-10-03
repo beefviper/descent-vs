@@ -99,7 +99,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifdef __WATCOMC__
 
 static int dpmi_find_dos_memory(void);
-static int dpmi_find_dos_memory(void);
 static int dpmi_find_dos_memory(void)
 {
 	union REGS r = {0};
@@ -328,7 +327,6 @@ int dpmi_allocate_selector( void * address, int size, ushort * selector )
 static void * dpmi_dos_buffer = NULL;
 static ushort dpmi_dos_selector = 0;
 
-static void dpmi_close(void);
 static void dpmi_close(void);
 static void dpmi_close(void)
 {

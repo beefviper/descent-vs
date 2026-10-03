@@ -330,7 +330,6 @@ n *
 int     sense_function1=0;
 int	  vfx1_installed=0;
 static int SenseStatus1( void );
-static int     SenseStatus1( void );
 
 // Array used to 'blink' the cursor while waiting for a keypress.
 byte fades[64] = { 1,1,1,2,2,3,4,4,5,6,8,9,10,12,13,15,16,17,19,20,22,23,24,26,27,28,28,29,30,30,31,31,31,31,31,30,30,29,28,28,27,26,24,23,22,20,19,17,16,15,13,12,10,9,8,6,5,4,4,3,2,2,1,1 };
@@ -543,27 +542,16 @@ kc_item kc_mouse[NUM_OTHER_CONTROLS] = {
 
 // Function Prototypes
 static void kc_drawitem( kc_item *item, int is_current );
-static void kc_drawitem(kc_item* item, int is_current);
 static void kc_change_key( kc_item * item );
-static void kc_change_key(kc_item* item);
 static void kc_change_mousebutton( kc_item * item );
-static void kc_change_mousebutton(kc_item* item);
 static void kc_change_mouseaxis( kc_item * item );
-static void kc_change_mouseaxis(kc_item* item);
 static void kc_change_joybutton( kc_item * item );
-static void kc_change_joybutton(kc_item* item);
 static void kc_change_joyaxis( kc_item * item );
-static void kc_change_joyaxis(kc_item* item);
 static void kc_change_invert( kc_item * item );
-static void kc_change_invert(kc_item* item);
 static void kconfig_read_fcs( int raw_axis );
-static void kconfig_read_fcs(int raw_axis);
 static int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons );
-static int SenseGetData(int function, int cls, fix* yaw, fix* pitch, fix* roll, int* buttons);
 static int SenseSetZero( int function, int cls );
-static int SenseSetZero(int function, int cls);
 static void kconfig_set_fcs_button( int btn, int button );
-static void kconfig_set_fcs_button(int btn, int button);
 
 
 int kconfig_is_axes_used(int axis)

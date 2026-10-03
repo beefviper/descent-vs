@@ -247,7 +247,6 @@ typedef struct fake_file {
 
 // Function Prototypes
 static int put_byte(unsigned char c,FILE *f);
-static int put_byte(unsigned char c, FILE* f);
 
 
 static long get_sig(FFILE *f)

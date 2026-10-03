@@ -288,10 +288,7 @@ static fix ViewDist=0;
 
 // Function Prototypes
 static void draw_all_edges(void);
-static void draw_all_edges(void);
 static void automap_build_edge_list(void);
-static void automap_build_edge_list(void);
-static void adjust_segment_limit(int SegmentLimit);
 static void adjust_segment_limit(int SegmentLimit);
 
 void automap_clear_visited(void)

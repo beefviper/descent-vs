@@ -328,14 +328,9 @@ int outside_mine;
 
 // Function Prototypes
 static void generate_starfield(void);
-static void generate_starfield(void);
 static int find_exit_side(object *obj);
-static int find_exit_side(object* obj);
-static void start_endlevel_flythrough(int n,object *obj,fix speed);
 static void start_endlevel_flythrough(int n,object *obj,fix speed);
 static void do_endlevel_flythrough(int n);
-static void do_endlevel_flythrough(int n);
-static void draw_stars(void);
 static void draw_stars(void);
 
 
