@@ -1453,7 +1453,7 @@ control_info	*kc_external_control = NULL;
 ubyte				*kc_external_name = NULL;
 ubyte				kc_external_version = 0;
 
-void kconfig_init_external_controls(int intno, int address)
+void kconfig_init_external_controls(int intno, uintptr_t address)
 {
 	int i;
 	kc_external_intno = intno;
@@ -1471,7 +1471,7 @@ void kconfig_init_external_controls(int intno, int address)
 	if ( i )
 		kc_external_version = atoi(Args[i+1]);
 
-	printf( "%s int: 0x%x, data: 0x%x, ver:%d\n", kc_external_name, kc_external_intno, kc_external_control, kc_external_version );
+	printf( "%s int: 0x%x, data: %p, ver:%d\n", kc_external_name, kc_external_intno, (void *)kc_external_control, kc_external_version );
 
 }
 

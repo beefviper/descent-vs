@@ -542,7 +542,7 @@ void key_init()
 	atexit( key_close );
 }
 
-void key_close()
+void key_close(void)
 {
 	if (!Installed) return;
 	Installed = 0;

@@ -574,7 +574,7 @@ int piggy_find_sound( char * name )
 
 CFILE * Piggy_fp = NULL;
 
-void piggy_close_file()
+void piggy_close_file(void)
 {
 	if ( Piggy_fp )	{
 		cfclose( Piggy_fp );

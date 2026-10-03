@@ -388,7 +388,7 @@ int mouse_init(int enable_cyberman)
 }
 
 
-void mouse_close()
+void mouse_close(void)
 {
 	struct SREGS sregs;
 	union REGS inregs, outregs;

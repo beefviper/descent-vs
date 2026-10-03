@@ -156,7 +156,7 @@ void timer_set_joyhandler( void (*joy_handler)() )
 	TimerData.joystick_poller = joy_handler;
 }
 
-void timer_close()
+void timer_close(void)
 {
 	TimerData.Installed = 0;
 }

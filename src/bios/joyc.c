@@ -443,7 +443,7 @@ ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 		if ( joystick.slow_read & JOY_POLLED_READINGS )
 			num_channels = joy_read_stick_polled( mask, buffer, 65536 );
 		else if ( joystick.slow_read & JOY_BIOS_READINGS )
-			num_channels = joy_read_stick_bios( (1 << c), buffer, 65536 );
+			num_channels = joy_read_stick_bios( mask, buffer, 65536 );
 		else if ( joystick.slow_read & JOY_FRIENDLY_READINGS )
 			num_channels = joy_read_stick_friendly( mask, buffer, (1193180/100) );
 		else

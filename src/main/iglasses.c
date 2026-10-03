@@ -79,7 +79,7 @@ static char rcsid[] = "$Id: iglasses.c 2.8 1995/03/30 16:36:31 mike Exp $";
 
 int iglasses_headset_installed=0;
 
-void iglasses_close_tracking();
+void iglasses_close_tracking(void);
 
 /*
 //*******************************************
@@ -124,7 +124,7 @@ void iglasses_init_tracking(int serial_port)
 	printf( "%s\n", TXT_PRESS_ESC_TO_ABORT);
 	Iport = PortOpenGreenleafFast(serial_port-1, 9600, 'N', 8, 1 );
 	if ( !Iport )	{
-		printf( "%s\n", TXT_SERIAL_FAILURE, Iport->status );
+		printf( "%s (%d)\n", TXT_SERIAL_FAILURE, Iport->status );
 		return;
 	}
 
@@ -194,7 +194,7 @@ TrackerOK2:
 
 }
 
-void iglasses_close_tracking()	{
+void iglasses_close_tracking(void)	{
 	if ( iglasses_headset_installed )	{
 		iglasses_headset_installed = 0;
 		PortClose(Iport);

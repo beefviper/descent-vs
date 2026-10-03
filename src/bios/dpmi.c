@@ -317,7 +317,7 @@ int dpmi_allocate_selector( void * address, int size, ushort * selector )
 static void * dpmi_dos_buffer = NULL;
 static ushort dpmi_dos_selector = 0;
 
-void dpmi_close()
+void dpmi_close(void)
 {
 	if (dpmi_dos_selector!=0)	{
 		dpmi_dos_buffer = NULL;
@@ -536,7 +536,7 @@ int dpmi_allocate_selector( void * address, int size, ushort * selector )
 static void * dpmi_dos_buffer = NULL;
 static ushort dpmi_dos_selector = 0;
 
-void dpmi_close()
+void dpmi_close(void)
 {
 	if (dpmi_dos_selector!=0)	{
 		dpmi_real_free( dpmi_dos_selector );

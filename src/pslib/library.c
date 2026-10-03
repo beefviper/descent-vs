@@ -535,7 +535,7 @@ int lib_init( char *init_lib_name ) {
     return LI_NO_ERROR;
 }
 
-void lib_close() {
+void lib_close(void) {
 
     fclose( InputLibInitFile );
 	 free (LibHeaderList);

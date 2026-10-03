@@ -1202,7 +1202,7 @@ int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)		
 {
 	int ret;
 	long raw_size = EVEN(bitmap_header->w) * bitmap_header->h;
-	long body_size,tiny_size,pbm_size = 4 + BMHD_SIZE + 8 + EVEN(raw_size) + sizeof(pal_entry)*(1<<bitmap_header->nplanes)+8;
+	long body_size,tiny_size,pbm_size = 4 + BMHD_SIZE + 8 + EVEN(raw_size) + (long)sizeof(pal_entry)*(1L<<bitmap_header->nplanes)+8;
 	long save_pos;
 
 //printf("write_pbm\n");
@@ -1226,7 +1226,7 @@ int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)		
 
 	body_size = write_body(ofile,bitmap_header,compression_on);
 
-	pbm_size = 4 + BMHD_SIZE + body_size + tiny_size + sizeof(pal_entry)*(1<<bitmap_header->nplanes)+8;
+	pbm_size = 4 + BMHD_SIZE + body_size + tiny_size + (long)sizeof(pal_entry)*(1L<<bitmap_header->nplanes)+8;
 
 	Assert(fseek(ofile,save_pos,SEEK_SET)==0);
 	put_long(pbm_size+8,ofile);

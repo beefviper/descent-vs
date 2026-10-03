@@ -52,7 +52,7 @@ extern int Victor_headset_installed;		// Set to one if init_tracking has been ca
 // Initializes VictorMaxx headset tracking on serial port 1 or 2
 extern void victor_init_tracking(int serial_port);
 // Stops reading victormaxx
-extern void victor_close_tracking();
+extern void victor_close_tracking(void);
 
 // Reads headset... Returns 3 values, yaw=0-360, roll & pitch=-45 to 45
 extern void victor_read_headset( fix *yaw, fix *pitch, fix *roll );

@@ -81,8 +81,6 @@ void dofile( char * filename )
 void main(int argc, char * argv[])	{
 	int numfiles = 0;
  	struct find_t find;
-	char * cp;
-	char * cp1;
 
 	argv++; argc--;
 	for (;argc--;argv++)

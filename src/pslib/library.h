@@ -63,7 +63,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "time.h"
 #include "types.h"
 
-#define TICKER (*(volatile int *)0x46C)
 #define USECS_PER_READING( start, stop, frames ) (((stop-start)*54945)/frames)
 #define MSECS_TOTAL_TIME( start, stop ) ((stop - start)*55)
 

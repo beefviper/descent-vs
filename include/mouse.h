@@ -85,7 +85,7 @@ extern void mouse_flush();	// clears all mice events...
 
 //========================================================================
 // Shutdowns mouse system.
-extern void mouse_close();
+extern void mouse_close(void);
 
 //========================================================================
 extern void mouse_get_pos( int *x, int *y);

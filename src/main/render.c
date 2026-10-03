@@ -435,7 +435,7 @@ draw_outline(int nverts,g3s_point **pointlist)
 
 grs_canvas * reticle_canvas = NULL;
 
-void free_reticle_canvas()
+void free_reticle_canvas(void)
 {
 	if (reticle_canvas)	{
 		free( reticle_canvas->cv_bitmap.bm_data );
@@ -973,7 +973,7 @@ void render_segment(int segnum)
 
 	Assert(segnum!=-1 && segnum<=Highest_segment_index);
 
-	cc=rotate_list(8,&seg->verts);
+	cc=rotate_list(8,seg->verts);
 
 	if (! cc.and) {		//all off screen?
 
@@ -1013,7 +1013,7 @@ void render_segment(int segnum)
 // -- 	g3s_codes cc;
 // -- 	short vertnum_list[4];
 // --
-// -- 	cc=g3_rotate_list(8,&seg->verts);
+// -- 	cc=g3_rotate_list(8,seg->verts);
 // --
 // -- 	if (! cc.and) {		//all off screen?
 // -- 		int fn,pn,i;
@@ -1054,7 +1054,7 @@ outline_seg_side(segment *seg,int _side,int edge,int vert)
 {
 	g3s_codes cc;
 
-	cc=rotate_list(8,&seg->verts);
+	cc=rotate_list(8,seg->verts);
 
 	if (! cc.and) {		//all off screen?
 		side *s;
@@ -1853,7 +1853,7 @@ void build_segment_list(int start_seg_num)
 						ubyte codes_and=0xff;
 						int i;
 
-						rotate_list(8,&seg->verts);
+						rotate_list(8,seg->verts);
 						rotated=1;
 
 						for (i=0;i<4;i++)
@@ -1889,8 +1889,8 @@ void build_segment_list(int start_seg_num)
 
 						if (rotated<2) {
 							if (!rotated)
-								rotate_list(8,&seg->verts);
-							project_list(8,&seg->verts);
+								rotate_list(8,seg->verts);
+							project_list(8,seg->verts);
 							rotated=2;
 						}
 
@@ -2015,7 +2015,9 @@ done_list:
 //renders onto current canvas
 void render_mine(int start_seg_num,fix eye_offset)
 {
+#ifndef NDEBUG
 	int		i;
+#endif
 	int		nn;
 
 	//	Initialize number of objects (actually, robots!) rendered this frame.

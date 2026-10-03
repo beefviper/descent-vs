@@ -117,7 +117,7 @@ void _Assert(int expr,char *expr_text,char *filename,int linenum)
 
 }
 
-void print_exit_message()
+void print_exit_message(void)
 {
 	if (*exit_message)
 		printf("%s\n",exit_message);

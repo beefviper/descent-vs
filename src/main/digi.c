@@ -763,8 +763,9 @@ int digi_init_digi()
 
 int digi_init()
 {
-	int i;
 /*
+	int i;
+
 #ifdef USE_CD
 	{
 		FILE * fp;

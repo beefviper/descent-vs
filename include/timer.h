@@ -70,7 +70,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define TIMER_FREQUENCY 1193180
 
 extern void timer_init();
-extern void timer_close();
+extern void timer_close(void);
 extern void timer_set_rate(int count_val);
 extern void timer_set_function( void _far * function );
 extern void timer_set_joyhandler( void (*joy_handler)() );

@@ -620,7 +620,7 @@ int load_briefing_screen( int screen_num )
 {
 	int	pcx_error;
 
-	if ((pcx_error=pcx_read_bitmap( &Briefing_screens[screen_num].bs_name, &grd_curcanv->cv_bitmap, grd_curcanv->cv_bitmap.bm_type, New_pal ))!=PCX_ERROR_NONE)	{
+	if ((pcx_error=pcx_read_bitmap( Briefing_screens[screen_num].bs_name, &grd_curcanv->cv_bitmap, grd_curcanv->cv_bitmap.bm_type, New_pal ))!=PCX_ERROR_NONE)	{
 		printf( "File '%s', PCX load error: %s\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error));
 		printf(0, "File '%s', PCX load error: %s (%i)\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error), pcx_error);
 		Int3();
@@ -1041,7 +1041,7 @@ int show_briefing_screen( int screen_num, int allow_keys)
 	}
 
 	briefing_bm.bm_data=NULL;
-	if ((pcx_error=pcx_read_bitmap( &Briefing_screens[screen_num].bs_name, &briefing_bm, BM_LINEAR, New_pal ))!=PCX_ERROR_NONE)	{
+	if ((pcx_error=pcx_read_bitmap( Briefing_screens[screen_num].bs_name, &briefing_bm, BM_LINEAR, New_pal ))!=PCX_ERROR_NONE)	{
 		printf( "PCX load error: %s.  File '%s'\n\n", pcx_errormsg(pcx_error), Briefing_screens[screen_num].bs_name);
 		mprintf((0, "File '%s', PCX load error: %s (%i)\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error), pcx_error));
 		Int3();

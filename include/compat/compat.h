@@ -13,6 +13,9 @@
 
 #ifndef __WATCOMC__
 
+#include <stddef.h>
+#include <stdint.h>		/* uintptr_t for code that stores pointers in integers */
+
 /* Segmented-memory and calling-convention keywords: meaningless in a flat
    32/64-bit address space. */
 #define far

@@ -127,7 +127,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 int lib_init( char *lib_name );
 
-void lib_close();
+void lib_close(void);
 
 ubyte *ReadFile( char *filename, int *length );
 

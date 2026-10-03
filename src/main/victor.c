@@ -240,7 +240,7 @@ void victor_init_tracking(int serial_port)
 
 }
 
-void victor_close_tracking()	{
+void victor_close_tracking(void)	{
 	if ( Victor_headset_installed )	{
 		Victor_headset_installed = 0;
 		VictorPort	 =  NULL;

@@ -88,7 +88,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // This installs the int9 vector and initializes the keyboard in buffered
 // ASCII mode. key_close simply undoes that.
 extern void key_init();
-extern void key_close();
+extern void key_close(void);
 
 //==========================================================================
 // These are configuration parameters to setup how the buffer works.

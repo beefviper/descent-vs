@@ -360,7 +360,7 @@ int matt_find_connect_side(int seg0,int seg1)
 	return -1;
 }
 
-void free_endlevel_data()
+void free_endlevel_data(void)
 {
 	if (terrain_bm_instance.bm_data)
 		free(terrain_bm_instance.bm_data);

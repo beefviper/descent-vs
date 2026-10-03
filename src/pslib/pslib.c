@@ -201,9 +201,6 @@ void header_count( char *argv ) {
 }
 
 void cfr_test( char *input, char *output ) {
-    ubyte *outputbuf;
-    int size;
-
     //outputbuf = cfreadfile( input, &size );
     //if (WriteFile ( output, outputbuf, size ))
     //    printf("WriteFile Error\n");
@@ -212,10 +209,6 @@ void cfr_test( char *input, char *output ) {
 
 
 void cfw_test( char *input, char *output ) {
-    ubyte *inputbuf;
-    int length;
-    int success;
-
     //inputbuf = ( ubyte * ) ReadFileRaw( input, &length );
     //if (success = cfwrite( output, inputbuf, length ) )
     //    printf("    CFWRITE '%s' -> '%s' successful!\n", input, output);
@@ -264,7 +257,7 @@ void process_arg( char *argv ) {
     file_header Header;
     int length, i;
 
-    _splitpath ( argv, NULL, NULL, &filename, &ext );
+    _splitpath ( argv, NULL, NULL, filename, ext );
     strcat( filename, ext );
 
     if ( strcmp( argv, lib_name ) )    // Don't want to write library twice.
@@ -302,7 +295,7 @@ void process_arg( char *argv ) {
         MALLOC(FileList[file_count], char, 13);
         strcpy ( FileList[file_count++], filename );
 		  if (file_count >= MAX_FILES-1) {
-				printf("\n    ERROR: MAX_FILES exceeded by file_count\n", file_count);
+				printf("\n    ERROR: MAX_FILES exceeded by file_count (%d)\n", file_count);
 				for (i=0;i<file_count;i++)
 					free( FileList[i] );
 				free( lib_name );

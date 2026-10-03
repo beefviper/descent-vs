@@ -382,7 +382,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 
 }
 
-void free_height_array()
+void free_height_array(void)
 {
 	free(height_array);
 }
@@ -479,7 +479,7 @@ fix get_avg_light(int i,int j)
 	return sum/6;
 }
 
-void free_light_table()
+void free_light_table(void)
 {
 	if (light_array)
 		free(light_array);

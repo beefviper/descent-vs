@@ -603,12 +603,12 @@ void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fi
 
 		new_light = fixmul(light,light_scale);
 		new_glow = fixmul(*glow,light_scale);
-		draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,new_light,&new_glow, alt_textures );
+		draw_polygon_model(&obj->pos,&obj->orient,obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,new_light,&new_glow, alt_textures );
 	}
 	else {
 		Gr_scanline_darkening_level = cloak_value;
 		g3_set_special_render((void*)draw_tmap_flat,NULL,NULL);		//use special flat drawer
-		draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,glow, alt_textures );
+		draw_polygon_model(&obj->pos,&obj->orient,obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,glow, alt_textures );
 		g3_set_special_render(NULL,NULL,NULL);
 		Gr_scanline_darkening_level = GR_FADE_LEVELS;
 	}
@@ -653,7 +653,7 @@ void draw_polygon_object(object *obj)
 		for (i=0;i<pm->n_textures;i++)
 			bm_ptrs[i] = Textures[obj->rtype.pobj_info.tmap_override];
 
-		draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,bm_ptrs);
+		draw_polygon_model(&obj->pos,&obj->orient,obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,bm_ptrs);
 	}
 	else {
 		bitmap_index * alt_textures = NULL;
@@ -671,11 +671,11 @@ void draw_polygon_object(object *obj)
 			else
 				draw_cloaked_object(obj,light,&engine_glow_value, GameTime-F1_0*10, GameTime+F1_0*10,alt_textures);
 		} else {
-			draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,alt_textures);
+			draw_polygon_model(&obj->pos,&obj->orient,obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,alt_textures);
 			if (obj->type == OBJ_WEAPON && (Weapon_info[obj->id].model_num_inner > -1 )) {
 				fix dist_to_eye = vm_vec_dist_quick(&Viewer->pos, &obj->pos);
 				if (dist_to_eye < Simple_model_threshhold_scale * F1_0*2)
-					draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,Weapon_info[obj->id].model_num_inner,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,alt_textures);
+					draw_polygon_model(&obj->pos,&obj->orient,obj->rtype.pobj_info.anim_angles,Weapon_info[obj->id].model_num_inner,obj->rtype.pobj_info.subobj_flags,light,&engine_glow_value,alt_textures);
 			}
 		}
 	}

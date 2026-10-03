@@ -140,7 +140,7 @@ static int LargestIndex = 0;
 
 int out_of_memory = 0;
 
-void mem_display_blocks();
+void mem_display_blocks(void);
 
 void mem_init()
 {
@@ -342,7 +342,7 @@ void mem_free( void * buffer )
 	free_list[ --num_blocks ] = id;
 }
 
-void mem_display_blocks()
+void mem_display_blocks(void)
 {
 	int i, numleft;
 
@@ -409,7 +409,7 @@ static uintptr_t SmallestAddress = 0xFFFFFFF;
 static uintptr_t LargestAddress = 0x0;
 static unsigned int BytesMalloced = 0;
 
-void mem_display_blocks();
+void mem_display_blocks(void);
 
 // Size of a heap block. The original read the size word Watcom's heap
 // keeps in front of each block; ask the C runtime instead.
@@ -501,7 +501,7 @@ void mem_free( void * buffer )
 	free( buffer );
 }
 
-void mem_display_blocks()
+void mem_display_blocks(void)
 {
 	if (Initialized==0) return;
 

@@ -212,7 +212,7 @@ int file_chdir( char * dir )
 	int e;
 	char OriginalDirectory[100];
 	char * Drive, * Path;
-	char NoDir[] = "\.";
+	char NoDir[] = ".";
 
 	getcwd( OriginalDirectory, 100 );
 
@@ -398,8 +398,8 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 	ui_wprintf_at( wnd, 20, 86,"&Files" );
 	ui_wprintf_at( wnd, 210, 86,"&Dirs" );
 
-	ListBox1 = ui_add_gadget_listbox( wnd,  20, 110, 125, 200, NumFiles, filename_list, 13 );
-	ListBox2 = ui_add_gadget_listbox( wnd, 210, 110, 100, 200, NumDirs, directory_list, 13 );
+	ListBox1 = ui_add_gadget_listbox( wnd,  20, 110, 125, 200, NumFiles, filename_list[0], 13 );
+	ListBox2 = ui_add_gadget_listbox( wnd, 210, 110, 100, 200, NumDirs, directory_list[0], 13 );
 
 	Button1 = ui_add_gadget_button( wnd,     20, 330, 60, 25, "Ok", NULL );
 	Button2 = ui_add_gadget_button( wnd,    100, 330, 60, 25, "Cancel", NULL );
@@ -531,8 +531,8 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 
 				NumDirs = file_getdirlist( 100, directory_list );
 
-				ui_listbox_change( wnd, ListBox1, NumFiles, filename_list, 13 );
-				ui_listbox_change( wnd, ListBox2, NumDirs, directory_list, 13 );
+				ui_listbox_change( wnd, ListBox1, NumFiles, filename_list[0], 13 );
+				ui_listbox_change( wnd, ListBox2, NumDirs, directory_list[0], 13 );
 				new_listboxes = 0;
 
 				getcwd( CurDir, 35 );

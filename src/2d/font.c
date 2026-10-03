@@ -1081,7 +1081,7 @@ grs_font * gr_init_font( char * fontname )
 
 		cfread(palette,3,256,fontfile);		//read the palette
 
-		build_colormap_good( &palette, colormap, freq );
+		build_colormap_good( palette, colormap, freq );
 
 		colormap[255] = 255;
 

@@ -94,8 +94,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "player.h"
 #include "mission.h"
 
+#ifdef __WATCOMC__					// Structure layout and stack checking for SOS
 #pragma pack (4);						// Use 32-bit packing!
 #pragma off (check_stack);			// No stack checking!
+#endif
 //#include "sos.h"//These sos headers are part of a commercial library, and aren't included-KRB
 //#include "sosm.h"
 
@@ -158,7 +160,7 @@ ubyte CrystalLakeReadMCP( ushort mc_addr )
 	return value;
 }
 
-void CrystalLakeSetSB()
+void CrystalLakeSetSB(void)
 {
 	ubyte tmp;
 	tmp = CrystalLakeReadMCP( CL_MC1 );
@@ -166,7 +168,7 @@ void CrystalLakeSetSB()
 	CrystalLakeWriteMCP( CL_MC1, tmp );
 }
 
-void CrystalLakeSetWSS()
+void CrystalLakeSetWSS(void)
 {
 	ubyte tmp;
 	tmp = CrystalLakeReadMCP( CL_MC1 );

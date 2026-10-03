@@ -612,7 +612,7 @@ void bump_this_object(object *objp, object *other_objp, vms_vector *force, int d
 //the collision.
 void bump_two_objects(object *obj0,object *obj1,int damage_flag)
 {
-	vms_vector	dv, force;
+	vms_vector	force;
 	object		*t=NULL;
 
 	if (obj0->movement_type != MT_PHYSICS)
@@ -1073,8 +1073,6 @@ void collide_robot_and_player( object * robot, object * player, vms_vector *coll
 void net_destroy_controlcen(object *controlcen)
 {
 	if (Fuelcen_control_center_destroyed != 1) {
-		int i;
-
 		do_controlcen_destroyed_stuff(controlcen);
 
 		if ((controlcen != NULL) && !(controlcen->flags&(OF_EXPLODING|OF_DESTROYED))) {
@@ -1122,8 +1120,6 @@ void apply_damage_to_controlcen(object *controlcen, fix damage, short who)
 		controlcen->shields -= damage;
 
 	if ( (controlcen->shields < 0) && !(controlcen->flags&(OF_EXPLODING|OF_DESTROYED)) ) {
-		int i;
-
 		do_controlcen_destroyed_stuff(controlcen);
 
 		#ifdef NETWORK

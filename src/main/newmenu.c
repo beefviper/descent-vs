@@ -547,7 +547,7 @@ grs_bitmap nm_background;
 
 extern void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest);
 
-void newmenu_close()	{
+void newmenu_close(void)	{
 	if ( nm_background.bm_data )
 		free(nm_background.bm_data);
 	Newmenu_first_time = 1;

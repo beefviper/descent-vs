@@ -641,7 +641,7 @@ try_again:
 
 		strcpy(num_text,"1");
 
-		choice = newmenu_do( NULL, TXT_SELECT_START_LEV, 2, &m, NULL );
+		choice = newmenu_do( NULL, TXT_SELECT_START_LEV, 2, m, NULL );
 
 		if (choice==-1 || m[1].text[0]==0)
 			return;

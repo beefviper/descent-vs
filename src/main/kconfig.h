@@ -174,7 +174,7 @@ extern void reset_cruise(void);
 
 extern int kconfig_is_axes_used(int axis);
 
-extern void kconfig_init_external_controls(int intno, int address);
+extern void kconfig_init_external_controls(int intno, uintptr_t address);
 
 
 #endif

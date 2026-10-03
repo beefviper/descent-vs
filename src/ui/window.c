@@ -602,7 +602,7 @@ void ui_mega_process()
 				{
 					next_frame = EventBuffer[ui_event_counter].frame;
 
-					if ( (FrameCount+PlaybackSpeed) < next_frame )
+					if ( (FrameCount+PlaybackSpeed) < (unsigned int)next_frame )
 						FrameCount = next_frame - PlaybackSpeed;
 					else
 						FrameCount++;

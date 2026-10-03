@@ -110,7 +110,7 @@ void ui_init()
 
 }
 
-void ui_close()
+void ui_close(void)
 {
 	if (Initialized)
 	{

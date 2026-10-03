@@ -196,7 +196,7 @@ typedef struct  {
 	int             fake_size;
 	UI_GADGET_BUTTON * up_button;
 	UI_GADGET_BUTTON * down_button;
-	unsigned int    last_scrolled;
+	int             last_scrolled;	// TICKER value
 	short           drag_x, drag_y;
 	int             drag_starting;
 	int             dragging;
@@ -215,7 +215,7 @@ typedef struct  {
 	int             current_item;
 	int             selected_item;
 	int             old_current_item;
-	unsigned int    last_scrolled;
+	int             last_scrolled;	// TICKER value
 	int             dragging;
 	int             textheight;
 	UI_GADGET_SCROLLBAR * scrollbar;
@@ -252,7 +252,7 @@ typedef struct  {
 	short           bg_saved;
 	grs_bitmap *    background;
 	grs_bitmap *    pointer;
-	unsigned int    time_lastpressed;
+	int             time_lastpressed;	// TICKER value
 	short           moved;
 } UI_MOUSE;
 
@@ -288,7 +288,7 @@ extern void ui_draw_line_in( short x1, short y1, short x2, short y2 );
 
 
 void ui_init();
-void ui_close();
+void ui_close(void);
 int MessageBox( short x, short y, int NumButtons, char * text, ... );
 void ui_string_centered( short x, short y, char * s );
 int PopupMenu( int NumItems, char * text[] );

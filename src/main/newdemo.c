@@ -916,12 +916,12 @@ int newdemo_write( void *buffer, int elsize, int nelem )
 	frame_bytes_written += total_size;
 	Newdemo_num_written += total_size;
 	num_written = fwrite( buffer, elsize, nelem, outfile );
-//	if ((Newdemo_num_written > Newdemo_size) && !Newdemo_no_space) {
+//	if (((unsigned int)Newdemo_num_written > Newdemo_size) && !Newdemo_no_space) {
 //		Newdemo_no_space=1;
 //		newdemo_stop_recording();
 //		return -1;
 //	}
-	if ((Newdemo_num_written > Newdemo_size) && !Newdemo_no_space)
+	if (((unsigned int)Newdemo_num_written > Newdemo_size) && !Newdemo_no_space)
 		Newdemo_no_space=1;
 	if (num_written == nelem)
 		return num_written;
@@ -3597,7 +3597,7 @@ void newdemo_start_playback(char * filename)
 		if( !_dos_findfirst( "*.DEM", _A_NORMAL, &find ) )	{
 			do	{
 				if ( NumFiles==RandFileNum )	{
-					filename = &find.name;
+					filename = find.name;
 					break;
 				}
 				NumFiles++;
@@ -3611,7 +3611,7 @@ void newdemo_start_playback(char * filename)
 			if( !_dos_findfirst( temp_spec, _A_NORMAL, &find ) )	{
 				do	{
 					if ( NumFiles==RandFileNum )	{
-						filename = &find.name;
+						filename = find.name;
 						break;
 					}
 					NumFiles++;

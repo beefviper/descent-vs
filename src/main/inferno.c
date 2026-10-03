@@ -894,7 +894,7 @@ void check_dos_version()
 	minor = regs.h.ah;
 
 	if ( major < 5 )	{
-		printf( "%s %d.d\n%s", TXT_DOS_VERSION_1, major, minor, TXT_DOS_VERSION_2);
+		printf( "%s %d.%d\n%s", TXT_DOS_VERSION_1, major, minor, TXT_DOS_VERSION_2);
 		exit(1);
 	}
 	//printf( "\nUsing MS-DOS %d.%d...\n", major, minor );
@@ -1565,7 +1565,7 @@ int main(int argc,char **argv)
 
 	i = FindArg( "-xcontrol" );
 	if ( i > 0 )	{
-		kconfig_init_external_controls( strtol(Args[i+1], NULL, 0), strtol(Args[i+2], NULL, 0) );
+		kconfig_init_external_controls( strtol(Args[i+1], NULL, 0), (uintptr_t)strtoul(Args[i+2], NULL, 0) );
 	}
 
 	if (Inferno_verbose) printf( "\n%s\n\n", TXT_INITIALIZING_GRAPHICS);
