@@ -335,6 +335,14 @@ void modem_answer(void);
 int com_sync(int id);
 void com_sync_poll(int nitem, newmenu_item *menus, int *key, int citem);
 
+void com_send_choice(int choice);
+void serial_sync_abort(int val);
+void com_send_ptr(char* ptr, int len);
+void com_process_sync(char* buf, int len);
+void serial_link_start(void);
+void add_phone_number(char* src, char* num);
+
+
 #if 0
 #define	codex(name_start, name_end)	\
 void name_start(void)	\
@@ -654,7 +662,7 @@ codex(code_05s, code_05e)
 extern ubyte cockpit_mode_save; // From object.c
 extern int old_cockpit_mode; // From game.c
 
-com_reset_game(void)
+void com_reset_game(void)
 {
 	int i;
 
@@ -877,7 +885,7 @@ com_send_data(char *ptr, int len, int repeat)
 			com_send_ptr(ptr, len);
 }
 
-com_send_ptr(char *ptr, int len)
+void com_send_ptr(char *ptr, int len)
 {
 	register	int count;
 	register char dat;
@@ -1075,7 +1083,7 @@ com_check_message(char *checkbuf, int len)
 	return 0;
 
 error:
-	mprintf((1,"Line status: %d.\n", GetLineStatus(com_port)));
+	// mprintf((1,"Line status: %d.\n", GetLineStatus(com_port)));
 	ClearLineStatus(com_port);
 	return -1;
 }
@@ -1270,8 +1278,7 @@ com_menu_poll(int nitems, newmenu_item *menus, int *key, int citem)
 		*key = -2;
 }
 
-void
-com_send_choice(int choice)
+void com_send_choice(int choice)
 {
 	sendbuf[0] = (char)MULTI_MENU_CHOICE;
 	sendbuf[1] = (char)choice;
@@ -2378,8 +2385,7 @@ void serial_link_start(void)
 // Syncronization functions
 //
 
-void
-serial_sync_abort(int val)
+void serial_sync_abort(int val)
 {
 	// Send "I got Sync but it was no good!" packet
 
@@ -2531,15 +2537,14 @@ com_process_end_sync(byte *buf)
 		other_got_sync = 1;
 }
 
-void
-com_process_sync(char *buf, int len)
+void com_process_sync(char *buf, int len)
 {
 	len = len;
 	switch(buf[0])
 	{
 		case MULTI_END_SYNC:
 		{
-			com_process_end_sync(buf);
+			com_process_end_sync((byte*)buf);
 			break;
 		}
 		case MULTI_BEGIN_SYNC:

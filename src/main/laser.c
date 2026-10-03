@@ -61,6 +61,9 @@ static char rcsid[] = "$Id: laser.c 2.6 1995/04/05 13:18:31 mike Exp $";
 
 int Laser_rapid_fire = 0;
 
+// Function Prototypes
+int find_homing_object_complete(vms_vector* curpos, object* tracker, int track_obj_type1, int track_obj_type2);
+
 //---------------------------------------------------------------------------------
 // Called by render code.... determines if the laser is from a robot or the
 // player and calls the appropriate routine.

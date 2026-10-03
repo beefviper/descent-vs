@@ -733,6 +733,10 @@ int Inferno_is_800x600_available = 0;
 
 //--unused-- int Cyberman_installed=0;			// SWIFT device present
 
+// Function Prototypes
+void check_joystick_calibration();
+void show_order_form();
+
 void install_int3_handler(void);
 
 int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );

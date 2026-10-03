@@ -282,7 +282,7 @@ void draw_powerup(object *obj)
 //}
 //}
 
-powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...)
+void powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...)
 {
 	char		text[120];
 	va_list	args;

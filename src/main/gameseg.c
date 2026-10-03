@@ -288,7 +288,7 @@ int get_num_faces(side *sidep)
 }
 
 // Fill in array with four absolute point numbers for a given side
-get_side_verts(short *vertlist,int segnum,int sidenum)
+void get_side_verts(short *vertlist,int segnum,int sidenum)
 {
 	int	i;
 	byte  *sv = Side_to_verts[sidenum];
@@ -1460,7 +1460,7 @@ void add_side_as_quad(segment *sp, int sidenum, vms_vector *normal)
 //	Return v0, v1, v2 = 3 vertices with smallest numbers.  If *negate_flag set, then negate normal after computation.
 //	Note, you cannot just compute the normal by treating the points in the opposite direction as this introduces
 //	small differences between normals which should merely be opposites of each other.
-get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, int *v3, int *negate_flag)
+void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, int *v3, int *negate_flag)
 {
 	int	i,j;
 	int	v[4],w[4];
@@ -1501,7 +1501,7 @@ get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, 
 void add_side_as_2_triangles(segment *sp, int sidenum)
 {
 	vms_vector	norm;
-	char			*vs = Side_to_verts[sidenum];
+	byte			*vs = Side_to_verts[sidenum];
 	fix			dot;
 	vms_vector	vec_13;		//	vector from vertex 1 to vertex 3
 

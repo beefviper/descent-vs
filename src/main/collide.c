@@ -514,7 +514,7 @@ int apply_damage_to_clutter(object *clutter, fix damage)
 
 
 //given the specified force, apply damage from that force to an object
-apply_force_damage(object *obj,fix force,object *other_obj)
+void apply_force_damage(object *obj,fix force,object *other_obj)
 {
 	int	result;
 	fix damage;
@@ -698,7 +698,7 @@ void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short
 void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
 
 //this gets called when an object is scraping along the wall
-scrape_object_on_wall(object *obj, short hitseg, short hitside, vms_vector * hitpt )
+void scrape_object_on_wall(object *obj, short hitseg, short hitside, vms_vector * hitpt )
 {
 	switch (obj->type) {
 

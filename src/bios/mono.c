@@ -75,6 +75,10 @@ static char rcsid[] = "$Id: mono.c 1.12 1995/02/23 11:59:57 john Exp $";
 
 #include "key.h"
 
+// Function Prototypes
+void msetcursor(short row, short col);
+
+
 void mono_int_3();
 #pragma aux mono_int_3 = "int 3";
 
@@ -361,9 +365,17 @@ void mrefresh(short n)
 
 }
 
-
 int mono_present();		//return true if mono monitor in system
-
+#pragma aux mono_present value [eax] modify [bx] = \
+	"mov	ax,1a00h"	\
+	"int	10h"			\
+"mov	eax,-1"		\
+"cmp	bl,1"			\
+"je	got_it"		\
+"cmp	bh,1"			\
+"je	got_it"		\
+"xor	eax,eax"		\
+"got_it:";
 
 void mopen( short n, short row, short col, short width, short height, char * title )
 {
@@ -394,18 +406,6 @@ void mopen( short n, short row, short col, short width, short height, char * tit
 	msetcursor( ROW+CROW, COL+CCOL );
 
 }
-
-#pragma aux mono_present value [eax] modify [bx] = \
-	"mov	ax,1a00h"	\
-	"int	10h"			\
-	"mov	eax,-1"		\
-	"cmp	bl,1"			\
-	"je	got_it"		\
-	"cmp	bh,1"			\
-	"je	got_it"		\
-	"xor	eax,eax"		\
-"got_it:";
-
 
 int minit()
 {
@@ -444,4 +444,21 @@ int minit()
 	}
 
 	return -1;	//everything ok
+}
+
+// mprintf() that outputs to a file - beefviper
+void file_mprintf(int n, char* format, ...)
+{
+	char temp_fm_buffer[1000];
+	FILE* pFile;
+	pFile = fopen("debug.txt", "a");
+
+	if (pFile != NULL)
+	{
+		va_list args;
+		va_start(args, format);
+		vsprintf(temp_fm_buffer, format, args);
+		fputs(temp_fm_buffer, pFile);
+		fclose(pFile);
+	}
 }

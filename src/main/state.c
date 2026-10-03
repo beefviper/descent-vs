@@ -254,6 +254,7 @@ static char rcsid[] = "$Id: state.c 2.14 1995/05/26 16:16:10 john Exp $";
 #include "mem.h"
 #include "network.h"
 #include "args.h"
+#include "state.h"
 
 #ifndef SHAREWARE
 

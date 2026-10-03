@@ -168,7 +168,7 @@ char *find_kern_entry(grs_font *font,char first,char second)
 #define INFONT(_c) ((_c >= 0) && (_c <= FMAXCHAR-FMINCHAR))
 
 //takes the character BEFORE being offset into current font
-get_char_width(int c,int c2,int *width,int *spacing)
+void get_char_width(int c,int c2,int *width,int *spacing)
 {
 	int letter;
 

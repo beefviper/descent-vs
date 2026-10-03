@@ -83,7 +83,7 @@ char *text;
 
 char *Text_string[N_TEXT_STRINGS];
 
-free_text()
+void free_text()
 {
 	free(text);
 }

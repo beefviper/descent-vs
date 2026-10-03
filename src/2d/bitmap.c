@@ -155,7 +155,7 @@ grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm, int x, int y, int w, int h )
 }
 
 
-gr_free_bitmap(grs_bitmap *bm )
+void gr_free_bitmap(grs_bitmap *bm )
 {
 	if (bm->bm_data!=NULL)
     free(bm->bm_data);
@@ -164,12 +164,13 @@ gr_free_bitmap(grs_bitmap *bm )
     free(bm);
 }
 
-gr_free_sub_bitmap(grs_bitmap *bm )
+void gr_free_sub_bitmap(grs_bitmap *bm )
 {
 	if (bm!=NULL)
     free(bm);
 }
 
+/*
 //NO_INVERSE_TABLE void build_colormap_asm( ubyte * palette, ubyte * cmap, int * count );
 //NO_INVERSE_TABLE #pragma aux build_colormap_asm parm [esi] [edi] [edx] modify exact [eax ebx ecx edx esi edi] = \
 //NO_INVERSE_TABLE 	"mov  ecx, 256"			\
@@ -196,6 +197,7 @@ gr_free_sub_bitmap(grs_bitmap *bm )
 //NO_INVERSE_TABLE 	"add	edx, 4"					\
 //NO_INVERSE_TABLE 	"dec	ecx"					\
 //NO_INVERSE_TABLE 	"jne	again2x"				\
+*/
 
 void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
 #pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
@@ -208,6 +210,19 @@ void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count 
 	"inc	esi"					\
 	"dec	ecx"					\
 	"jne	again_ddn"
+
+void build_colormap_good(ubyte* palette, ubyte* colormap, int* freq)
+{
+	int i, r, g, b;
+
+	for (i = 0; i < 256; i++) {
+		r = *palette++;
+		g = *palette++;
+		b = *palette++;
+		*colormap++ = gr_find_closest_color(r, g, b);
+		*freq++ = 0;
+	}
+}
 
 void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {
@@ -231,20 +246,6 @@ void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, 
 	if ( (super_transparent_color>=0) && (super_transparent_color<=255) && (freq[super_transparent_color]>0) )
 		bmp->bm_flags |= BM_FLAG_SUPER_TRANSPARENT;
 }
-
-void build_colormap_good( ubyte * palette, ubyte * colormap, int * freq )
-{
-	int i, r, g, b;
-
-	for (i=0; i<256; i++ )	{
-		r = *palette++;
-		g = *palette++;
-		b = *palette++;
- 		*colormap++ = gr_find_closest_color( r, g, b );
-		*freq++ = 0;
-	}
-}
-
 
 void gr_remap_bitmap_good( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {

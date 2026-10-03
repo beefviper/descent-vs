@@ -109,8 +109,11 @@ ushort				ObjBitmapPtrs[MAX_OBJ_BITMAPS];		// These point back into ObjBitmaps, 
 // Initializes all bitmaps from BITMAPS.TBL file.
 int bm_init()
 {
+	mprintf((0, "\nCalling init_polygon_models()..."));
 	init_polygon_models();
+	mprintf((0, "\nCalling piggy_init()..."));
 	piggy_init();				// This calls bm_read_all
+	mprintf((0, "\nCalling piggy_read_sounds()..."));
 	piggy_read_sounds();
 	return 0;
 }

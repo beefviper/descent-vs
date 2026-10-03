@@ -297,6 +297,10 @@ char scores_filename[128];
 #define XX  (7)
 #define YY  (-3)
 
+// Function Prototypes
+void scores_view(int citem);
+
+
 char * get_scores_filename()
 {
 #ifndef RELEASE

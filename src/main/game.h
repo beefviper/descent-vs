@@ -365,10 +365,10 @@ void palette_restore(void);
 void do_show_help();
 
 //show a message in a nice little box
-show_boxed_message(char *msg);
+void show_boxed_message(char *msg);
 
 //erases message drawn with show_boxed_message()
-clear_boxed_message();
+void clear_boxed_message();
 
 //turns off rear view & rear view cockpit
 void reset_rear_view(void);

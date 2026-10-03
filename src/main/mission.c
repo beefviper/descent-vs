@@ -150,7 +150,7 @@ int istok(char *buf,char *tok)
 }
 
 //adds a terminating 0 after a string at the first white space
-add_term(char *s)
+void add_term(char *s)
 {
 	while (*s && !isspace(*s)) s++;
 
@@ -189,10 +189,12 @@ char *get_parm_value(char *parm,FILE *f)
 		return NULL;
 }
 
-ml_sort_func(mle *e0,mle *e1)
+ml_sort_func(const void* e0, const void* e1)
 {
-	return strcmp(e0->mission_name,e1->mission_name);
+	const mle* ee0 = e0;
+	const mle* ee1 = e1;
 
+	return strcmp(ee0->mission_name,ee1->mission_name);
 }
 
 

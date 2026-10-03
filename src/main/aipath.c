@@ -166,7 +166,12 @@ static char rcsid[] = "$Id: aipath.c 2.0 1995/02/27 11:30:48 john Exp $";
 //	Length in segments of avoidance path
 #define	AVOID_SEG_LENGTH	7
 
-create_random_xlate(byte *xt)
+// Function Prototypes
+void maybe_ai_path_garbage_collect(void);
+void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
+
+
+void create_random_xlate(byte *xt)
 {
 	int	i;
 
@@ -1056,11 +1061,14 @@ typedef struct {
 	short	path_start, objnum;
 } obj_path;
 
-int path_index_compare(obj_path *i1, obj_path *i2)
+int path_index_compare(const void* i1, const void* i2)
 {
-	if (i1->path_start < i2->path_start)
+	const obj_path* ii1 = i1;
+	const obj_path* ii2 = i2;
+
+	if (ii1->path_start < ii2->path_start)
 		return -1;
-	else if (i1->path_start == i2->path_start)
+	else if (ii1->path_start == ii2->path_start)
 		return 0;
 	else
 		return 1;

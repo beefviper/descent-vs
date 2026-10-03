@@ -505,6 +505,14 @@ grs_bitmap background_bitmap;
 
 int Game_aborted;
 
+// Function Prototypes
+void fill_background(int x, int y, int w, int h, int dx, int dy);
+void game_init_render_sub_buffers(int x, int y, int w, int h);
+void draw_centered_text(int y, char* s);
+void GameLoop(int RenderFlag, int ReadControlsFlag);
+int create_special_path(void);
+void powerup_grab_cheat_all(void);
+
 extern void newdemo_strip_frames(char *, int);
 
 #define BACKGROUND_NAME "statback.pcx"
@@ -566,16 +574,22 @@ void init_game()
 
 	atexit(close_game);             //for cleanup
 
+	mprintf((0, "\nCalling init_objects()..."));
 	init_objects();
 
+	mprintf((0, "\nCalling hostage_init()..."));
 	hostage_init();
 
+	mprintf((0, "\nCalling init_special_effects()..."));
 	init_special_effects();
 
+	mprintf((0, "\nCalling init_ai_system()..."));
 	init_ai_system();
 
+	mprintf((0, "\nCalling init_gauge_canvases()..."));
 	init_gauge_canvases();
 
+	mprintf((0, "\nCalling init_exploding_walls()..."));
 	init_exploding_walls();
 
 	background_bitmap.bm_data=NULL;
@@ -597,7 +611,7 @@ void reset_palette_add()
 }
 
 
-game_show_warning(char *s)
+void game_show_warning(char *s)
 {
 
 	if (!((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME)))
@@ -769,7 +783,7 @@ void reset_cockpit()
 
 void HUD_clear_messages();
 
-toggle_cockpit()
+void toggle_cockpit()
 {
 	int new_mode;
 
@@ -805,7 +819,7 @@ toggle_cockpit()
 
 #define WINDOW_MIN_W		160
 
-grow_window()
+void grow_window()
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -849,7 +863,7 @@ grow_window()
 
 grs_bitmap background_bitmap;
 
-copy_background_rect(int left,int top,int right,int bot)
+void copy_background_rect(int left,int top,int right,int bot)
 {
 	grs_bitmap *bm = &background_bitmap;
 	int x,y;
@@ -893,7 +907,7 @@ copy_background_rect(int left,int top,int right,int bot)
 
 }
 
-fill_background(int x,int y,int w,int h,int dx,int dy)
+void fill_background(int x,int y,int w,int h,int dx,int dy)
 {
 	gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
 	copy_background_rect(x-dx,y-dy,x-1,y+h+dy-1);
@@ -902,7 +916,7 @@ fill_background(int x,int y,int w,int h,int dx,int dy)
 	copy_background_rect(x,y+h,x+w-1,y+h+dy-1);
 }
 
-shrink_window()
+void shrink_window()
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -1575,7 +1589,7 @@ extern int gr_wait_for_retrace;
 extern int gr_bitblt_double;
 
 //render a frame for the game in stereo
-game_render_frame_stereo_vfx()
+void game_render_frame_stereo_vfx()
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
@@ -1643,7 +1657,7 @@ game_render_frame_stereo_vfx()
 
 
 //render a frame for the game in stereo
-game_render_frame_stereo_interlaced()
+void game_render_frame_stereo_interlaced()
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
@@ -1994,7 +2008,7 @@ void save_screen_shot(int automap_flag)
 }
 
 //initialize flying
-fly_init(object *obj)
+void fly_init(object *obj)
 {
 	obj->control_type = CT_FLYING;
 	obj->movement_type = MT_PHYSICS;
@@ -2013,14 +2027,14 @@ int sound_nums[] = {10,11,20,21,30,31,32,33,40,41,50,51,60,61,62,70,80,81,82,83,
 
 int test_sound_num=0;
 
-play_test_sound()
+void play_test_sound()
 {
 
 	digi_play_sample(sound_nums[test_sound_num], F1_0);
 }
 
 //	------------------------------------------------------------------------------------
-advance_sound()
+void advance_sound()
 {
 	if (++test_sound_num == N_TEST_SOUNDS)
 		test_sound_num=0;
@@ -2311,7 +2325,7 @@ typedef struct bkg {
 bkg bg = {0,0,0,0,NULL};
 
 //show a message in a nice little box
-show_boxed_message(char *msg)
+void show_boxed_message(char *msg)
 {
 	int w,h,aw;
 	int x,y;
@@ -2342,7 +2356,7 @@ show_boxed_message(char *msg)
 
 }
 
-clear_boxed_message()
+void clear_boxed_message()
 {
 
 	if (bg.bmp) {
@@ -2502,7 +2516,7 @@ void arcade_frame_info()
 extern void temp_reset_stuff_on_level();
 
 //deal with rear view - switch it on, or off, or whatever
-check_rear_view()
+void check_rear_view()
 {
 
 	#define LEAVE_TIME 0x4000		//how long until we decide key is down	(Used to be 0x4000)

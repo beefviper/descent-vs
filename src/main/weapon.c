@@ -303,7 +303,7 @@ int player_has_weapon(int weapon_num, int secondary_flag)
 
 //	------------------------------------------------------------------------------------
 //if message flag set, print message saying selected
-select_weapon(int weapon_num, int secondary_flag, int print_message, int wait_for_rearm)
+void select_weapon(int weapon_num, int secondary_flag, int print_message, int wait_for_rearm)
 {
 	char	*weapon_name;
 

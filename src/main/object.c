@@ -414,7 +414,7 @@ int print_object_info = 0;
 //--unused-- int Player_controller_type = 0;
 
 //	List of objects rendered last frame in order.  Created at render time, used by homing missiles in laser.c
-short ordered_rendered_object_list[MAX_RENDERED_OBJECTS];
+short Ordered_rendered_object_list[MAX_RENDERED_OBJECTS];
 int	Num_rendered_objects = 0;
 
 #ifndef NDEBUG
@@ -436,6 +436,11 @@ char	Object_type_names[MAX_OBJECT_TYPES][9] = {
 	"COOP    ",
 };
 #endif
+
+// Function Prototypes
+void obj_detach_one(object* sub);
+void obj_detach_all(object* parent);
+
 
 #ifndef RELEASE
 //set viewer object to next object in array
@@ -529,7 +534,7 @@ fix	Cloak_fadein_duration;
 fix	Cloak_fadeout_duration;
 
 //do special cloaked render
-draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
+void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
 {
 	fix cloak_delta_time,total_cloaked_time;
 	fix light_scale;
@@ -602,7 +607,7 @@ draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix clo
 	}
 	else {
 		Gr_scanline_darkening_level = cloak_value;
-		g3_set_special_render(draw_tmap_flat,NULL,NULL);		//use special flat drawer
+		g3_set_special_render((void*)draw_tmap_flat,NULL,NULL);		//use special flat drawer
 		draw_polygon_model(&obj->pos,&obj->orient,&obj->rtype.pobj_info.anim_angles,obj->rtype.pobj_info.model_num,obj->rtype.pobj_info.subobj_flags,light,glow, alt_textures );
 		g3_set_special_render(NULL,NULL,NULL);
 		Gr_scanline_darkening_level = GR_FADE_LEVELS;
@@ -964,7 +969,7 @@ void render_object(object *obj)
 //--unused-- }
 
 
-check_and_fix_matrix(vms_matrix *m);
+void check_and_fix_matrix(vms_matrix *m);
 
 #define vm_angvec_zero(v) (v)->p=(v)->b=(v)->h=0
 
@@ -1760,8 +1765,8 @@ void dead_player_frame(void)
 	}
 }
 
-Killed_in_frame = -1;
-Killed_objnum = -1;
+int Killed_in_frame = -1;
+int Killed_objnum = -1;
 
 //	------------------------------------------------------------------------------------------------------------------
 void start_player_death_sequence(object *player)
@@ -1877,7 +1882,7 @@ void obj_relink(int objnum,int newsegnum)
 }
 
 //process a continuously-spinning object
-spin_object(object *obj)
+void spin_object(object *obj)
 {
 	vms_angvec rotangs;
 	vms_matrix rotmat, new_pm;
@@ -2169,7 +2174,7 @@ int update_object_seg(object * obj )
 
 
 //go through all objects and make sure they have the correct segment numbers
-fix_object_segs()
+void fix_object_segs()
 {
 	int i;
 

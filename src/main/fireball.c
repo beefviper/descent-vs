@@ -916,7 +916,7 @@ int get_explosion_vclip(object *obj,int stage)
 }
 
 //blow up a polygon model
-explode_model(object *obj)
+void explode_model(object *obj)
 {
 	Assert(obj->render_type == RT_POLYOBJ);
 
@@ -935,7 +935,7 @@ explode_model(object *obj)
 }
 
 //if the object has a destroyed model, switch to it.  Otherwise, delete it.
-maybe_delete_object(object *del_obj)
+void maybe_delete_object(object *del_obj)
 {
 	if (Dead_modelnums[del_obj->rtype.pobj_info.model_num] != -1) {
 		del_obj->rtype.pobj_info.model_num = Dead_modelnums[del_obj->rtype.pobj_info.model_num];

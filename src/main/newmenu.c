@@ -743,7 +743,7 @@ void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 #include "timer.h"
 
 //for text items, constantly redraw cursor (to achieve flash)
-update_cursor( newmenu_item *item)
+void update_cursor( newmenu_item *item)
 {
 	int w,h,aw;
 	fix time = timer_get_approx_seconds();

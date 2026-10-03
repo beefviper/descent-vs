@@ -219,6 +219,10 @@ int	Briefing_foreground_colors[MAX_BRIEFING_COLORS], Briefing_background_colors[
 int	Current_color = 0;
 int	Erase_color;
 
+// Function Prototypes
+void title_save_game();
+
+
 int local_key_inkey(void)
 {
 	int	rval;

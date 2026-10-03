@@ -73,6 +73,10 @@ typedef struct	{
 	ubyte		filler[60];
 } PCXHeader;
 
+//Function Prototypes
+int pcx_encode_line(ubyte* inBuff, int inLen, FILE* fp);
+int pcx_encode_byte(ubyte byt, ubyte cnt, FILE* fid);
+
 
 int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * palette )
 {

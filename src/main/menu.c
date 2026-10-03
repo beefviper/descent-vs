@@ -126,6 +126,13 @@ int Player_default_difficulty; // Last difficulty level chosen by the player
 int Auto_leveling_on = 0;
 int Menu_draw_copyright = 0;
 
+// Function Prototypes
+void do_option(int select);
+void do_new_game_menu();
+void do_multi_player_menu();
+void do_detail_level_menu_custom(void);
+
+
 void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int citem )
 {
 	int curtime;
@@ -580,7 +587,7 @@ void do_detail_level_menu_custom(void)
 	set_custom_detail_vars();
 }
 
-do_new_game_menu()
+void do_new_game_menu()
 {
 	int n_missions,new_level_num,player_highest_level;
 
@@ -668,7 +675,7 @@ try_again:
 
 }
 
-do_load_game_menu()
+void do_load_game_menu()
 {
 	newmenu_item m[N_SAVE_SLOTS];
 	char *saved_text[N_SAVE_SLOTS];
@@ -708,7 +715,7 @@ do_load_game_menu()
 	}
 }
 
-do_save_game_menu()
+void do_save_game_menu()
 {
 	newmenu_item m[N_SAVE_SLOTS];
 	char *saved_text_ptrs[N_SAVE_SLOTS];

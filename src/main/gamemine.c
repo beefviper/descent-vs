@@ -175,6 +175,9 @@ struct mfi mine_fileinfo;
 struct mh mine_header;
 struct me mine_editor;
 
+// Function Prototypes
+int load_mine_data_compiled_new(CFILE* LoadFile);
+
 int CreateDefaultNewSegment();
 
 #ifdef EDITOR
