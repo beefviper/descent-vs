@@ -37,9 +37,12 @@ if(NOT DESCENT_EDITOR)
     add_compile_definitions(RELEASE)
 endif()
 
-# Watcom's char is unsigned; the code relies on it.
+# Watcom's char is unsigned, and it packed structures on byte boundaries
+# by default; the code relies on both (the game reads its data files
+# straight into structures).
 if(MSVC)
     add_compile_options($<$<COMPILE_LANGUAGE:C>:/J>)
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:/Zp1>)
 else()
     add_compile_options($<$<COMPILE_LANGUAGE:C>:-funsigned-char>)
 endif()
@@ -166,6 +169,19 @@ descent_add_library(cflib pslib
 descent_add_library(readfile pslib
     readfile.c)
 
+# Dependencies between the libraries, so linkers that resolve static
+# libraries in order (GNU ld) see them in a workable sequence.
+target_link_libraries(misc   PUBLIC io)
+target_link_libraries(mem    PUBLIC misc io)
+target_link_libraries(cfile  PUBLIC mem misc)
+target_link_libraries(vecmat PUBLIC fix)
+target_link_libraries(io     PUBLIC fix mem misc)
+target_link_libraries(gr     PUBLIC texmap iff cfile fix mem misc io)
+target_link_libraries(iff    PUBLIC gr cfile mem misc)
+target_link_libraries(texmap PUBLIC 3d gr vecmat fix mem misc)
+target_link_libraries(3d     PUBLIC texmap gr vecmat fix div0)
+target_link_libraries(ui     PUBLIC gr iff cfile io mem misc)
+
 # ---------------------------------------------------------------------------
 # Level editor
 # ---------------------------------------------------------------------------
@@ -182,6 +198,7 @@ if(DESCENT_EDITOR)
     # The editor and the game include each other's headers.
     target_include_directories(editor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main)
     target_compile_definitions(editor PUBLIC EDITOR)
+    target_link_libraries(editor PUBLIC ui 3d texmap gr iff vecmat fix io cfile mem misc)
 endif()
 
 # ---------------------------------------------------------------------------
