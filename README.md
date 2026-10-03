@@ -51,8 +51,9 @@ pass `-DSDL2_DIR=<path>/cmake` instead of the toolchain file. The build
 copies `SDL2.dll` next to `descent.exe`.
 
 Run `descent.exe` from the directory holding the game data
-(`descent.hog`, `descent.pig`). In Visual Studio, set the debugger's
-working directory to that folder.
+(`descent.hog`, `descent.pig`): it opens them from the current directory.
+For Visual Studio, pass `-DDESCENT_DATA_DIR=<that folder>` when generating
+the solution and the debugger will start the game there.
 
 Options:
 
@@ -60,3 +61,5 @@ Options:
   builds define `EDITOR` and leave `RELEASE` and `NDEBUG` off, as the
   original editor variant did.
 - `DESCENT_TOOLS` (ON): build the data tools.
+- `DESCENT_DATA_DIR` (empty): the game data folder, used as the Visual
+  Studio debugger's working directory.

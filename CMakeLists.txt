@@ -11,6 +11,8 @@ project(Descent
 
 option(DESCENT_EDITOR "Build the level editor into the game (defines EDITOR)" OFF)
 option(DESCENT_TOOLS  "Build the hogfile, pslib, lbmcomp and xcolor tools"     ON)
+set(DESCENT_DATA_DIR "" CACHE PATH
+    "Folder with descent.hog and descent.pig; Visual Studio starts the game there")
 
 
 # ---------------------------------------------------------------------------
@@ -220,6 +222,10 @@ target_link_libraries(descent PRIVATE
     3d gr fix io iff vecmat cfile mem ui div0 misc texmap
     $<$<BOOL:${DESCENT_EDITOR}>:editor>)
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT descent)
+# The game opens its data files from the current directory.
+if(DESCENT_DATA_DIR)
+    set_target_properties(descent PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${DESCENT_DATA_DIR}")
+endif()
 
 # descent is a console program: the console shows the debug output (the
 # old mono screen, see src/bios/mono.c) while SDL opens the game window.
