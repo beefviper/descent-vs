@@ -1,50 +1,61 @@
 # Porting notes
 
-What stands between this tree and a working Visual Studio build.
+Where the port stands and what is left before the game runs on Windows.
 
-## Missing from the source release
+## Current state
 
-Parallax removed code it did not own the copyright to. Kevin Bentley added
-stand-in headers so the rest would compile, but none of it works:
+- **It compiles and links.** The game, the editor and the tools build
+  for 32-bit and 64-bit Windows. This was checked with MinGW-w64 GCC as a
+  stand-in for MSVC; it has not been built in Visual Studio yet.
+- **No assembly is left.** The 28 `.asm` files and all Watcom `#pragma aux`
+  inline assembly have been rewritten in C:
+  - fixed-point and vector math (`src/fix`, `src/vecmat`), checked against
+    the assembly on millions of inputs
+  - the 3D pipeline and polygon model interpreter (`src/3d`)
+  - the texture mappers (`src/texmap`)
+  - the 2D blitters and scalers (`src/2d`)
+  - the timer (`src/bios/timer.c`)
+- **DOS services are stubbed.** `include/compat/` replaces `dos.h`,
+  `i86.h` and `bios.h`, and `compat.h` is force-included everywhere to
+  neutralize Watcom keywords. Interrupts, port I/O and DPMI report failure
+  or succeed harmlessly. The file search functions (`_dos_findfirst` and
+  friends) work on top of the C runtime.
+- **Watcom conventions kept:** `char` is unsigned (`/J`), and structures
+  are byte-packed (`/Zp1`) because the game reads data files straight
+  into them.
 
+## What still has to be written
+
+- **Display.** `src/2d/vesa.c` and `src/2d/modex.c` are stubs, and
+  `gr_set_mode()` still points the screen at the VGA window at absolute
+  address 0xA0000, which crashes on Windows. The game needs a backend
+  (for example SDL or Win32 GDI/DirectDraw) that gives `gr_set_mode()` a
+  real framebuffer and presents it. A few SVGA paths in `pixel.c`,
+  `gpixel.c`, `bitblt.c` and `gr.c` still cast pointers to `int`; they
+  only matter for the banked SVGA modes.
+- **Input.** The keyboard (`src/bios/key.c`) and mouse
+  (`src/bios/mouse.c`) drivers hook DOS interrupts 9 and 33h, which are
+  never installed now, so no input arrives. The joystick reports "not
+  present".
 - **Sound and music.** `src/main/digi.c` was written against the Human
-  Machine Interfaces SOS sound library. Its headers (`sos.h`, `sosm.h`,
-  `soscomp.h`) are gone; `include/no_sos.h` only declares enough types for
-  the file to compile. Digital sound and MIDI need a new backend.
-- **Modem and serial play.** `src/main/modem.c` used the Greenleaf CommLib
-  (`commlib.h`, `fast.h`, `glfmodem.h`), which is not included;
-  `src/main/nocomlib.h` holds dummy values.
-- **The Watcom build include `makefile.def`** and the generator for
-  `vers_id.h`. The generated `src/main/vers_id.h` for the registered build is
-  kept as is.
+  Machine Interfaces SOS library, which Parallax removed from the release.
+  Its calls are commented out and the game runs silently. Digital sound
+  and MIDI need a new backend.
+- **Networking.** IPX goes through real-mode interrupts and reports
+  "no IPX". Modem and serial play used the Greenleaf CommLib, which is not
+  in the release; `src/main/nocomlib.h` only has dummy values.
+- **Timer interrupt.** The function set with `timer_set_function()`
+  (used by the sound code) and the joystick poller are never called.
 - **Game data.** The release contains no `descent.hog` or `descent.pig`; a
   copy of the registered game is needed to run anything.
 
-## Written for DOS, Watcom and MASM
+## Other loose ends
 
-- **DOS and hardware access.** About 40 files include `<dos.h>` or
-  `<conio.h>`, several use `<i86.h>`, `int386()` and DPMI calls, and the
-  graphics code programs VGA, Mode X and VESA registers directly. The
-  keyboard, mouse, joystick and timer drivers in `src/bios/` hook DOS
-  interrupts. All of it needs replacing (for example with SDL or Win32).
-- **Watcom inline assembly.** 136 `#pragma aux` directives in 20 files define
-  inline assembly and register calling conventions MSVC does not understand,
-  notably the fixed-point helpers in `include/fix.h` and `include/vecmat.h`.
-  They need C or MSVC `__asm` replacements.
-- **Assembly modules.** 28 `.asm` files (fixed-point math, the 3D pipeline,
-  the texture mappers, low-level 2D blitters and drivers) are written for
-  MASM 5.1 with the flat model and expect arguments in registers, matching
-  the `#pragma aux` declarations. They assemble only with 32-bit MASM and
-  must be called through matching prototypes, or rewritten in C.
-- **Watcom C extensions.** About 150 files use `#pragma off (unreferenced)`
-  around their RCS id strings, and about two dozen use `far`/`_far`
-  pointers. Expect these among the first compile errors.
-- **Debug macros.** `include/error.h` declares `Assert()` and `Int3()` as
-  functions (Kevin Bentley's workaround); the debug branch still relies on
-  Watcom pragmas.
-
-## Build variants
-
-The original makefiles built a registered game, rental, Destination Saturn
-and editor variants from `.ini` settings; see
-[build-variants.md](build-variants.md).
+- About 150 files keep Watcom's `#pragma off (unreferenced)` around their
+  RCS id strings. Other compilers ignore it (MSVC warning C4068 is turned
+  off).
+- Some functions still rely on implicit `int` return types and implicit
+  declarations; they compile with warnings.
+- `src/main/vers_id.h` was generated by the original build from the
+  `.ini` settings files and is kept as generated for the registered
+  build. See [build-variants.md](build-variants.md).

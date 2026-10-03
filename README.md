@@ -6,9 +6,10 @@ Studio project. The original release notes and license are in
 [docs/readme.txt](docs/readme.txt); the code may only be used for
 non-commercial purposes.
 
-**The code does not compile yet.** It is DOS code written for Watcom C and
-MASM; see [docs/porting-notes.md](docs/porting-notes.md) for what is missing
-and what has to change.
+The code compiles and links for 32-bit and 64-bit Windows, with all of the
+original assembly rewritten in C, but it does not run yet: it still needs a
+display, input and sound backend in place of the DOS hardware code. See
+[docs/porting-notes.md](docs/porting-notes.md).
 
 ## Layout
 
@@ -25,6 +26,7 @@ and what has to change.
 | `src/cfile/`, `src/iff/`, `src/mem/`, `src/misc/` | File access, IFF images, memory and error helpers |
 | `src/ui/`       | The editor's user interface toolkit (`ui`)                      |
 | `src/pslib/`    | Compressed library archiver and its `cflib`/`readfile` libraries |
+| `src/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
 | `src/tools/`    | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
 | `data/`         | `editdata.exe`, a self-extracting archive of the editor's data files |
 | `docs/`         | Original readme, build variant notes, porting notes             |
@@ -34,14 +36,13 @@ produced. Headers used by only one module live next to its sources.
 
 ## Generating a Visual Studio solution
 
-The assembly sources are 32-bit x86, so generate a Win32 solution:
-
     cmake -S . -B build -G "Visual Studio 17 2022" -A Win32
+
+Use `-A x64` for a 64-bit build.
 
 Options:
 
-- `DESCENT_EDITOR` (OFF): build the level editor and define `EDITOR`.
+- `DESCENT_EDITOR` (OFF): build the level editor into the game. Editor
+  builds define `EDITOR` and leave `RELEASE` and `NDEBUG` off, as the
+  original editor variant did.
 - `DESCENT_TOOLS` (ON): build the data tools.
-
-With any other generator or a 64-bit target the `.asm` files are still listed
-in the project but are not assembled.
