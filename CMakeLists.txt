@@ -118,13 +118,13 @@ descent_add_library(misc misc
     error.c parsarg.c)
 
 descent_add_library(fix fix
-    fix.asm)
+    fix.c)
 
 descent_add_library(div0 div
     div0.asm)
 
 descent_add_library(vecmat vecmat
-    vecmat.asm)
+    vecmat.c)
 
 descent_add_library(mem mem
     mem.c)

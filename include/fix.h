@@ -67,6 +67,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _FIX_H
 #define _FIX_H
 
+#include <stdint.h>
 #include "types.h"
 
 typedef long fix;				//16 bits int, 16 bits frac
@@ -104,23 +105,33 @@ typedef short fixang;		//angles
 #define F0_5 	f0_5
 #define F0_1 	f0_1
 
-fix fixmul(fix a,fix b);
-#pragma aux fixmul parm [eax] [edx] = \
-	"imul	edx"				\
-	"shrd	eax,edx,16";
+//Portable inline keyword for the small, hot fixed-point helpers
+#ifndef FIX_INLINE
+#ifdef _MSC_VER
+#define FIX_INLINE static __inline
+#else
+#define FIX_INLINE static inline
+#endif
+#endif
 
+//multiply two fixes, returning a fix.  The 64-bit product is shifted down
+//and truncated to 32 bits (like imul/shrd)
+FIX_INLINE fix fixmul(fix a,fix b)
+{
+	return (fix) (((int64_t) a * b) >> 16);
+}
 
-fix fixdiv(fix a,fix b);
-#pragma aux fixdiv parm [eax] [ebx] modify exact [eax edx] = \
-	"mov	edx,eax"	\
-	"sar	edx,16"	\
-	"shl	eax,16"	\
-	"idiv	ebx";
+//divide two fixes, returning a fix.  Truncates toward zero (like idiv)
+FIX_INLINE fix fixdiv(fix a,fix b)
+{
+	return (fix) (((int64_t) a * 65536) / b);
+}
 
-fix fixmuldiv(fix a,fix b,fix c);
-#pragma aux fixmuldiv parm [eax] [edx] [ebx] modify exact [eax edx] = \
-	"imul	edx"	\
-	"idiv	ebx";
+//multiply two fixes, then divide by a third, using a 64-bit intermediate
+FIX_INLINE fix fixmuldiv(fix a,fix b,fix c)
+{
+	return (fix) (((int64_t) a * b) / c);
+}
 
 //computes the square root of a long, returning a short
 ushort long_sqrt(long a);
@@ -146,15 +157,5 @@ fixang fix_acos(fix v);
 //need not be the actual cos & sin.
 //NOTE: this is different from the standard C atan2, since it is left-handed.
 fixang fix_atan2(fix cos,fix sin);
-
-#pragma aux fix_fastsincos parm [eax] [esi] [edi] modify exact [eax ebx];
-#pragma aux fix_sincos parm [eax] [esi] [edi] modify exact [eax ebx];
-
-#pragma aux fix_acos "*" parm [eax] value [ax] modify exact [eax];
-#pragma aux fix_atan2 "*" parm [eax] [ebx] value [ax] modify exact [eax ebx];
-
-#pragma aux long_sqrt "*" parm [eax] value [ax] modify [];
-#pragma aux fix_sqrt "*" parm [eax] value [eax] modify [];
-#pragma aux quad_sqrt "*" parm [eax] [edx] value [eax] modify [];
 
 #endif
