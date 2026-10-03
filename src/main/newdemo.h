@@ -201,7 +201,8 @@ extern void newdemo_record_sound( int soundno );
 extern void newdemo_record_wall_hit_process( int segnum, int side, int damage, int playernum );
 extern void newdemo_record_trigger( int segnum, int side, int objnum );
 extern void newdemo_record_hostage_rescued( int hostage_num );
-extern void newdemo_record_morph_frame();
+struct morph_data;
+extern void newdemo_record_morph_frame(struct morph_data *md);
 extern void newdemo_record_player_stats(int shields, int energy, int score );
 extern void newdemo_record_wall_toggle(int segnum, int side );
 extern void newdemo_record_control_center_destroyed();
@@ -254,7 +255,7 @@ extern void newdemo_stop_playback();
 extern void newdemo_start_recording();
 extern void newdemo_stop_recording();
 
-extern newdemo_get_percent_done();
+extern int newdemo_get_percent_done(void);
 
 #endif
 

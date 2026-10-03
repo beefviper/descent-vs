@@ -224,7 +224,7 @@ extern int polyobj_lighting;
 
 //canvas set
 //	Type is optional.  If you pass -1, type is determined, else type is used, and id is not xlated through ObjId.
-draw_robot_picture(int id, vms_angvec *orient_angles, int type)
+void draw_robot_picture(int id, vms_angvec *orient_angles, int type)
 {
 
 	if (id >= Num_total_object_types)

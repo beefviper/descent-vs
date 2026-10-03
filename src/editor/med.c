@@ -968,7 +968,7 @@ void init_editor_screen()
 }
 
 //shutdown ui on the editor screen
-close_editor_screen()
+void close_editor_screen(void)
 {
 	if (!editor_screen_open) return;
 

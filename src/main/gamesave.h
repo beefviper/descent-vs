@@ -83,7 +83,7 @@ extern int load_level(char *filename);
 extern int save_level(char *filename);
 
 //called in place of load_game() to only load the .min data
-extern load_mine_only(char * filename);
+
 
 extern char Gamesave_current_filename[];
 

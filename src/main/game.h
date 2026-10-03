@@ -283,7 +283,6 @@ void close_game(void);
 
 void calc_frame_time(void);
 
-do_flythrough(object *obj,int first_time);
 
 extern jmp_buf LeaveGame;					// Do a long jump to this when game is over.
 extern int	Difficulty_level;				//	Difficulty level in 0..NDL-1, 0 = easiest, NDL-1 = hardest

@@ -783,10 +783,10 @@ extern UI_GADGET_USERBOX * GameViewBox;
 extern UI_GADGET_USERBOX * LargeViewBox;
 extern UI_GADGET_USERBOX * GroupViewBox;
 
-extern med_point_2_vec(grs_canvas *canv,vms_vector *v,short sx,short sy);
+extern void med_point_2_vec(grs_canvas *canv,vms_vector *v,short sx,short sy);
 
 //shutdown ui on the editor screen
-close_editor_screen(void);
+void close_editor_screen(void);
 
 //	From eobject.c
 extern int place_object(segment *segp, vms_vector *object_pos, int object_type);

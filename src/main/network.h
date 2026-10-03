@@ -330,6 +330,7 @@ void network_join_game();
 void network_rejoin_game();
 void network_leave_game();
 int network_endlevel(int *secret);
+struct newmenu_item;
 void network_endlevel_poll2( int nitems, struct newmenu_item * menus, int * key, int citem );
 
 

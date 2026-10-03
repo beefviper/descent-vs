@@ -100,8 +100,8 @@ extern void close_wall_window();
 
 extern void do_wall_window();
 
-extern wall_link_doors();
-extern wall_unlink_door();
+extern int wall_link_doors(void);
+extern int wall_unlink_door(void);
 extern void copy_group_walls(int old_group, int new_group);
 
 void check_wall_validity(void);

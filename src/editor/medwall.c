@@ -1120,7 +1120,7 @@ int bind_wall_to_control_center() {
 }
 
 //link two doors, curseg/curside and markedseg/markedside
-wall_link_doors()
+int wall_link_doors(void)
 {
 	wall *w1=NULL,*w2=NULL;
 
@@ -1152,7 +1152,7 @@ wall_link_doors()
 	return 1;
 }
 
-wall_unlink_door()
+int wall_unlink_door(void)
 {
 	wall *w1=NULL;
 

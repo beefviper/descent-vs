@@ -856,7 +856,7 @@ byte playback_style;
 FILE *infile;
 FILE *outfile;
 
-int newdemo_get_percent_done()	{
+int newdemo_get_percent_done(void)	{
 	if ( Newdemo_state == ND_STATE_PLAYBACK )	{
 		return (ftell(infile)*100)/Newdemo_size;
 	}

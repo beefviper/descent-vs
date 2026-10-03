@@ -419,7 +419,7 @@ if (!render_3d_in_big_window)
 	return 1;
 }
 
-med_point_2_vec(grs_canvas *canv,vms_vector *v,short sx,short sy)
+void med_point_2_vec(grs_canvas *canv,vms_vector *v,short sx,short sy)
 {
 	gr_set_current_canvas(canv);
 

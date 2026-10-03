@@ -127,8 +127,8 @@ extern void close_gauge_canvases();
 
 extern void show_score();
 extern void show_score_added();
-extern void add_points_to_score();
-extern void add_bonus_points_to_score();
+extern void add_points_to_score(int points);
+extern void add_bonus_points_to_score(int points);
 
 void render_gauges(void);
 void init_gauges(void);

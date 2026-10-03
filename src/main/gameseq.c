@@ -846,7 +846,7 @@ try_again:
 }
 
 //Inputs the player's name, without putting up the background screen
-RegisterPlayer()
+int RegisterPlayer(void)
 {
 	int i,j;
 	char filename[14];

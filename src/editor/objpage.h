@@ -63,6 +63,6 @@ void objpage_init( UI_WINDOW *win );
 void objpage_close();
 void objpage_do();
 
-extern draw_robot_picture(int id, vms_angvec *orient_angles, int type);
+extern void draw_robot_picture(int id, vms_angvec *orient_angles, int type);
 
 #endif
