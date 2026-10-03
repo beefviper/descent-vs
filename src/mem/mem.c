@@ -102,6 +102,7 @@ static char rcsid[] = "$Id: mem.c 1.18 1995/01/24 20:49:18 matt Exp $";
 #include <string.h>
 #include <dos.h>
 #include <malloc.h>
+#include <stdint.h>
 
 #include "mono.h"
 #include "error.h"
@@ -404,11 +405,23 @@ void mem_print_all()
 #else
 
 static int Initialized = 0;
-static unsigned int SmallestAddress = 0xFFFFFFF;
-static unsigned int LargestAddress = 0x0;
+static uintptr_t SmallestAddress = 0xFFFFFFF;
+static uintptr_t LargestAddress = 0x0;
 static unsigned int BytesMalloced = 0;
 
 void mem_display_blocks();
+
+// Size of a heap block. The original read the size word Watcom's heap
+// keeps in front of each block; ask the C runtime instead.
+static unsigned int block_size( void * ptr )
+{
+#ifdef _WIN32
+	return (unsigned int)_msize( ptr );
+#else
+	(void)ptr;
+	return 0;
+#endif
+}
 
 #define CHECKSIZE 16
 #define CHECKBYTE 0xFC
@@ -427,9 +440,8 @@ void mem_init()
 
 void * mem_malloc( unsigned int size, char * var, char * filename, int line, int fill_zero )
 {
-	unsigned int base;
+	uintptr_t base;
 	void *ptr;
-	int * psize;
 
 	if (Initialized==0)
 		mem_init();
@@ -450,14 +462,11 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 		Int3();
 	}
 
-	base = (unsigned int)ptr;
+	base = (uintptr_t)ptr;
 	if ( base < SmallestAddress ) SmallestAddress = base;
 	if ( (base+size) > LargestAddress ) LargestAddress = base+size;
 
-
-	psize = (int *)ptr;
-	psize--;
-	BytesMalloced += *psize;
+	BytesMalloced += block_size(ptr);
 
 	if (fill_zero)
 		memset( ptr, 0, size );
@@ -468,8 +477,6 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 void mem_free( void * buffer )
 {
 	int ErrorCount;
-	int * psize = (int *)buffer;
-	psize--;
 
 	if (Initialized==0)
 		mem_init();
@@ -485,11 +492,11 @@ void mem_free( void * buffer )
 
 	if (ErrorCount)	{
 		fprintf( stderr, "\nMEM_OVERWRITE: Memory after the end of allocated block overwritten.\n" );
-		fprintf( stderr, "\tBlock at 0x%x, size %d\n", buffer, *psize );
+		fprintf( stderr, "\tBlock at %p, size %u\n", buffer, block_size(buffer) );
 		fprintf( stderr, "\t%d/%d check bytes were overwritten.\n", ErrorCount, CHECKSIZE );
 	}
 
-	BytesMalloced -= *psize;
+	BytesMalloced -= block_size(buffer);
 
 	free( buffer );
 }
@@ -504,10 +511,7 @@ void mem_display_blocks()
 
 	if (show_mem_info)	{
 		fprintf( stderr, "\n\nMEMORY USAGE:\n" );
-		fprintf( stderr, "  %u Kbytes dynamic data\n", (LargestAddress-SmallestAddress+512)/1024 );
-		fprintf( stderr, "  %u Kbytes code/static data.\n", (SmallestAddress-(4*1024*1024)+512)/1024 );
-		fprintf( stderr, "  ---------------------------\n" );
-		fprintf( stderr, "  %u Kbytes required.\n", 	(LargestAddress-(4*1024*1024)+512)/1024 );
+		fprintf( stderr, "  %u Kbytes dynamic data\n", (unsigned)((LargestAddress-SmallestAddress+512)/1024) );
 	}
 }
 

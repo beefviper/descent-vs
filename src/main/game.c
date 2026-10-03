@@ -1760,9 +1760,9 @@ void game_render_frame_stereo_interlaced()
 		// black out left-hand side of left page
 
 		// draw registration code for left eye
-		drawptr = (void*)((int)pixptr + width*(height-1) - VR_eye_offset);
+		drawptr = (void*)((ubyte *)pixptr + width*(height-1) - VR_eye_offset);
 		memset(drawptr, svr_white, quarter);
-		drawptr = (void*)((int)drawptr + quarter);
+		drawptr = (void*)((ubyte *)drawptr + quarter);
 		if (VR_eye_offset < 0) // stay within buffer limit
 			memset(drawptr, svr_black, 3*quarter - nibble);
 		else
@@ -1773,9 +1773,9 @@ void game_render_frame_stereo_interlaced()
 
 
 		// draw registration code for right eye
-		drawptr = (void*)((int)pixptr + width*(height-1) + VR_eye_offset);
+		drawptr = (void*)((ubyte *)pixptr + width*(height-1) + VR_eye_offset);
 		memset(drawptr, svr_white, 3*quarter);
-		drawptr = (void*)((int)drawptr + 3*quarter);
+		drawptr = (void*)((ubyte *)drawptr + 3*quarter);
 		if (VR_eye_offset > 0) // stay within buffer limit
 			memset(drawptr, svr_black, quarter - nibble);
 		else

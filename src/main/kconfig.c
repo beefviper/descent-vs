@@ -1518,14 +1518,14 @@ void kconfig_read_external_controls()
 			vms_angvec * Kconfig_abs_movement;
 			char * oem_message;
 
-			Kconfig_abs_movement = (vms_angvec *)((uint)kc_external_control + sizeof(control_info));
+			Kconfig_abs_movement = (vms_angvec *)((ubyte *)kc_external_control + sizeof(control_info));
 
 			if ( Kconfig_abs_movement->p || Kconfig_abs_movement->b || Kconfig_abs_movement->h )	{
 				vm_angles_2_matrix(&tempm,Kconfig_abs_movement);
 				vm_matrix_x_matrix(&ViewMatrix,&Objects[Players[Player_num].objnum].orient,&tempm);
 				Objects[Players[Player_num].objnum].orient = ViewMatrix;
 			}
-			oem_message = (char *)((uint)Kconfig_abs_movement + sizeof(vms_angvec));
+			oem_message = (char *)((ubyte *)Kconfig_abs_movement + sizeof(vms_angvec));
 			if (oem_message[0] != '\0' )
 				HUD_init_message( oem_message );
 		}
