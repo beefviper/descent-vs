@@ -379,6 +379,12 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #include "editor.h"
 #endif
 
+#ifndef __WATCOMC__
+#include "platform.h"
+
+#define MAX_FPS	60		// frame rate cap; see calc_frame_time()
+#endif
+
 //#define _MARK_ON 1
 //#include <wsample.h>            //should come after inferno.h to get mark setting
 //Above file is missing in the release version of the source. -KRB
@@ -1272,6 +1278,22 @@ void calc_frame_time()
 	#endif
 
 	timer_value = timer_get_fixed_seconds();
+
+	#ifndef __WATCOMC__
+	// The game clamps FrameTime to at least 1/150 second (below), so on a
+	// machine that loops faster than that, game time runs ahead of real
+	// time: everything speeds up and the ship's wiggle turns into violent
+	// shaking. DOS machines never got near that; wait out the frame here.
+	for (;;) {
+		fix elapsed = timer_value - last_timer_value;
+		if (elapsed < 0 || elapsed >= F1_0/MAX_FPS)
+			break;
+		if (F1_0/MAX_FPS - elapsed > F1_0/500)
+			plat_delay(1);
+		timer_value = timer_get_fixed_seconds();
+	}
+	#endif
+
 	FrameTime = timer_value - last_timer_value;
 
 	#if defined(TIMER_TEST) && !defined(NDEBUG)
@@ -1939,6 +1961,10 @@ void game_render_frame()
 	stop_time();
 	gr_palette_fade_in( gr_palette, 32, 0 );
 	start_time();
+
+	#ifndef __WATCOMC__
+	plat_video_present();		// show the finished frame
+	#endif
 
 }
 

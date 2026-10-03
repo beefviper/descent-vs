@@ -252,6 +252,11 @@ void read_flying_controls( object * obj )
 	if (obj->mtype.phys_info.flags & PF_WIGGLE) {
 		fix swiggle;
 		fix_fastsincos(GameTime, &swiggle, NULL);
+		#ifndef __WATCOMC__
+		// The wiggle is added to the velocity once per frame, so its size
+		// grew with the frame rate. Scale it to what it was at 30 fps.
+		swiggle = fixmul(swiggle*30, FrameTime);
+		#endif
 		vm_vec_scale_add2(&obj->mtype.phys_info.velocity,&obj->orient.uvec,fixmul(swiggle,Player_ship->wiggle));
 	}
 

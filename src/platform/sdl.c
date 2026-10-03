@@ -240,6 +240,11 @@ void plat_video_sync(void)
 	plat_pump_events();
 }
 
+void plat_delay(int ms)
+{
+	SDL_Delay(ms > 0 ? (Uint32)ms : 0);
+}
+
 // SDL scancodes to DOS keycodes. 0 = no equivalent.
 static unsigned char dos_keycode(SDL_Scancode sc)
 {

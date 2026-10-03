@@ -29,6 +29,9 @@ void plat_video_present(void);
 // Waits for the next emulated vertical retrace (70 Hz) and presents.
 void plat_video_sync(void);
 
+// Sleeps for about `ms` milliseconds.
+void plat_delay(int ms);
+
 // Processes pending window and input events. Called from the timer and
 // keyboard routines, which the game polls constantly; also presents the
 // screen at about 60 Hz so drawing shows up without explicit flips.
