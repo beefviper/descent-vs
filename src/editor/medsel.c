@@ -112,6 +112,8 @@ void sort_seg_list(int n_segs,short *segnumlist,vms_vector *pos)
 	sort_element *sortlist;
 
 	sortlist = calloc(n_segs,sizeof(*sortlist));
+	if (sortlist == NULL)
+		Error("Out of memory");
 
 	for (i=0;i<n_segs;i++) {
 		sortlist[i].segnum = segnumlist[i];

@@ -44,6 +44,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "types.h"
 #include "gr.h"
 #include "ui.h"
+#include "error.h"
 
 
 #define MENU_BORDER 2
@@ -63,7 +64,11 @@ int MenuX( int x, int y, int NumButtons, char * text[] )
 	int choice;
 
 	ButtonG = (UI_GADGET_BUTTON **)malloc( sizeof(UI_GADGET_BUTTON *)*NumButtons );
+	if (ButtonG == NULL)
+		Error("Out of memory");
 	Button = (char **)malloc( sizeof(char *)*NumButtons );
+	if (Button == NULL)
+		Error("Out of memory");
 
 	button_width = button_height = 0;
 

@@ -72,8 +72,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern char *Shareware_level_names[NUM_SHAREWARE_LEVELS];
 extern char *Registered_level_names[NUM_REGISTERED_LEVELS];
 
-void LoadGame(void);
-void SaveGame(void);
 int get_level_name(void);
 
 //extern int load_game(char *filename);

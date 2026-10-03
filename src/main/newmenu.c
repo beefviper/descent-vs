@@ -815,7 +815,7 @@ static void draw_item( bkg * b, newmenu_item *item, int is_current )
 		}
 		sprintf( item->saved_text, "%s%s", item->saved_text,SLIDER_RIGHT );
 
-		item->saved_text[item->value+1+strlen(item->text)+1] = SLIDER_MARKER[0];
+		item->saved_text[(size_t)item->value+1+strlen(item->text)+1] = SLIDER_MARKER[0];
 
 		nm_string_slider( b, item->w, item->x, item->y, item->saved_text );
 		}
@@ -1601,6 +1601,7 @@ ReadFileNames:
 
 	if (player_mode)	{
 		strncpy( &filenames[NumFiles*14], TXT_CREATE_NEW, 13 );
+		filenames[NumFiles*14+13] = '\0';
 		NumFiles++;
 	}
 
@@ -1608,6 +1609,7 @@ ReadFileNames:
 		do	{
 			if (NumFiles<MAX_FILES)	{
 				strncpy( &filenames[NumFiles*14], find.name, 13 );
+				filenames[NumFiles*14+13] = '\0';
 				if ( player_mode )	{
 					char * p;
 					p = strchr(&filenames[NumFiles*14],'.');
@@ -1638,6 +1640,7 @@ ReadFileNames:
 					if ( i < NumFiles ) continue;		// Don't use same demo twice!
 
 					strncpy( &filenames[NumFiles*14], find.name, 13 );
+					filenames[NumFiles*14+13] = '\0';
 					if ( player_mode )	{
 						char * p;
 						p = strchr(&filenames[NumFiles*14],'.');
@@ -1723,7 +1726,7 @@ ReadFileNames:
  				if (x==0)	{
 					char * p;
 					int ret;
-					p = &filenames[(citem*14)+strlen(&filenames[citem*14])];
+					p = &filenames[((size_t)citem*14)+strlen(&filenames[citem*14])];
 					if (player_mode)
 						*p = '.';
 					ret = unlink( &filenames[citem*14] );
@@ -1873,6 +1876,7 @@ ReadFileNames:
 ExitFileMenuEarly:
 	if ( citem > -1 )	{
 		strncpy( filename, (&filenames[citem*14])+((player_mode && filenames[citem*14]=='$')?1:0), 13 );
+		filename[13] = '\0';
 		exit_value = 1;
 	} else {
 		exit_value = 0;
@@ -2133,6 +2137,7 @@ int newmenu_filelist( char * title, char * filespec, char * filename )
 		do	{
 			if (NumFiles<MAX_FILES)	{
 				strncpy( FilenameText[NumFiles], find.name, 13 );
+				FilenameText[NumFiles][13] = '\0';
 				Filenames[NumFiles] = FilenameText[NumFiles];
 				NumFiles++;
 			} else {
@@ -2142,7 +2147,7 @@ int newmenu_filelist( char * title, char * filespec, char * filename )
 	}
 
 	i = newmenu_listbox( title, NumFiles, Filenames, 1, NULL );
-	if ( i > -1 )	{
+	if ( i > -1 && Filenames[i] )	{
 		strcpy( filename, Filenames[i] );
 		return 1;
 	}

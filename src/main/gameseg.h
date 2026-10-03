@@ -111,7 +111,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "segment.h"
 
 //figure out what seg the given point is in, tracing through segments
-int get_new_seg(vms_vector *p0,int startseg);
 
 typedef struct segmasks {
    short facemask;     //which faces sphere pokes through (12 bits)
@@ -174,7 +173,6 @@ int find_point_seg(vms_vector *p,int segnum);
 
 //	Sort of makes sure create_local_segment_data has been called for the currently executing mine.
 //	Returns 1 if Lsegments appears valid, 0 if not.
-int check_lsegments_validity(void);
 
 //	----------------------------------------------------------------------------------------------------------
 //	Determine whether seg0 and seg1 are reachable using wid_flag to go through walls.

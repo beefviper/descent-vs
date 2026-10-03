@@ -318,7 +318,6 @@ extern int PaletteRedAdd, PaletteGreenAdd, PaletteBlueAdd;
 
 extern int draw_gauges_on;
 
-extern void init_game_screen(void);
 
 extern void game_flush_inputs(void);		// clear all inputs
 

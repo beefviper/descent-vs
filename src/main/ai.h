@@ -169,24 +169,16 @@ extern vms_vector	Believed_player_pos;
 
 extern void move_towards_segment_center(object *objp);
 extern int gate_in_robot(int type, int segnum);
-extern void do_ai_movement(object *objp);
-extern void ai_move_to_new_segment( object * obj, short newseg, int first_time );
 // extern void ai_follow_path( object * obj, short newseg, int first_time );
-extern void ai_recover_from_wall_hit(object *obj, int segnum);
-extern void ai_move_one(object *objp);
 extern void do_ai_frame(object *objp);
 extern void init_ai_object(int objnum, int initial_mode, int hide_segment);
-extern void update_player_awareness(object *objp, fix new_awareness);
 extern void create_awareness_event(object *objp, int type);			// object *objp can create awareness of player, amount based on "type"
 extern void do_ai_frame_all(void);
 extern void init_ai_system(void);
-extern void reset_ai_states(object *objp);
 extern int create_path_points(object *objp, int start_seg, int end_seg, point_seg *point_segs, short *num_points, int max_depth, int random_flag, int safety_flag, int avoid_seg);
-extern void create_all_paths(void);
 extern void create_path_to_station(object *objp, int max_length);
 extern void ai_follow_path(object *objp, int player_visibility);
 extern void ai_turn_towards_vector(vms_vector *vec_to_player, object *obj, fix rate);
-extern void ai_turn_towards_vel_vec(object *objp, fix rate);
 extern void init_ai_objects(void);
 extern void do_ai_robot_hit(object *robot, int type);
 extern void create_n_segment_path(object *objp, int path_length, int avoid_seg);
@@ -203,7 +195,6 @@ extern void attempt_to_resume_path(object *objp);
 
 //	When a robot and a player collide, some robots attack!
 extern void do_ai_robot_hit_attack(object *robot, object *player, vms_vector *collision_point);
-extern void ai_open_doors_in_segment(object *robot);
 extern int ai_door_is_openable(object *objp, segment *segp, int sidenum);
 extern int player_is_visible_from_object(object *objp, vms_vector *pos, fix field_of_view, vms_vector *vec_to_player);
 extern void ai_reset_all_paths(void);	//	Reset all paths.  Call at the start of a level.

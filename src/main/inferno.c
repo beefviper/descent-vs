@@ -645,7 +645,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <string.h>
 #include <conio.h>
 #include <time.h>
-#include <dos.h>
 #include <direct.h>
 
 #include "gr.h"
@@ -730,12 +729,13 @@ int Inferno_is_800x600_available = 0;
 //--unused-- int Cyberman_installed=0;			// SWIFT device present
 
 // Function Prototypes
-void check_joystick_calibration(void);
+static void check_joystick_calibration(void);
+static void check_joystick_calibration(void);
 void show_order_form(void);
 
-void install_int3_handler(void);
 
-int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
+static int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, unsigned __far * devhdr );
+static int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
 
 #ifndef NDEBUG
 static void do_heap_check(void)
@@ -908,9 +908,21 @@ static void change_to_dir(char *cmd_line)
 		if (cur_drive != (drive[0] - 'A' + 1))
 			_dos_setdrive(drive[0] - 'A' + 1, &total);
 	}
-	getcwd(curdir, _MAX_DIR);
+	if (getcwd(curdir, _MAX_DIR) == NULL)
+		curdir[0] = '\0';
 	if (stricmp(&(curdir[2]), dir))
-		chdir(dir);
+		if (chdir(dir) != 0)
+			mprintf((0, "Couldn't change to directory %s\n", dir));
+}
+
+//wait for a key press on the console
+static void wait_for_any_key(void)
+{
+	int c = getch();
+
+	if ((c == 0 || c == 0xe0) && kbhit())
+		c = getch();		//extended keys come in two parts
+	(void)c;
 }
 
 static void dos_check_file_handles(int num_required)
@@ -1067,7 +1079,7 @@ unsigned descent_critical_errcode = 0;
 
 
 #pragma off (check_stack)
-int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, unsigned __far * devhdr )
+static int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, unsigned __far * devhdr )
 {
 	(void)devhdr;
 	descent_critical_error++;
@@ -1191,7 +1203,7 @@ int main(int argc,char **argv)
 		printf( "%s\n", TXT_COMMAND_LINE_8 );
 //		printf( "\n");
 		printf( "\n%s\n",TXT_PRESS_ANY_KEY3);
-		getch();
+		wait_for_any_key();
 		printf( "\n" );
 		printf( "%s\n", TXT_COMMAND_LINE_9);
 		printf( "%s\n", TXT_COMMAND_LINE_10);
@@ -1257,7 +1269,7 @@ int main(int argc,char **argv)
 	if (!Inferno_is_800x600_available)	{
 		printf( "The editor will not be available, press any key to start game...\n" );
 		Function_mode = FMODE_MENU;
-		getch();
+		wait_for_any_key();
 	}
 	#endif
 
@@ -1724,7 +1736,7 @@ int main(int argc,char **argv)
 }
 
 
-void check_joystick_calibration(void)	{
+static void check_joystick_calibration(void)	{
 	int x1, y1, x2, y2, c;
 	fix t1;
 
@@ -1793,12 +1805,7 @@ void show_order_form(void)
 
 #ifdef USE_CD
 
-#include <dos.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "dpmi.h"
 
 typedef struct {
 	char unit;

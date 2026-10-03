@@ -153,7 +153,6 @@ extern struct mh mine_header;
 extern struct me mine_editor;
 
 // returns 1 if error, else 0
-int game_load_mine(char * filename);
 
 extern short tmap_xlate_table[];
 

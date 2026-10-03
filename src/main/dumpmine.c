@@ -775,9 +775,9 @@ static void determine_used_textures_level(int load_level_flag, int shareware_fla
 
 			if ((sidep->tmap_num2 & 0x3fff) != 0) {
 				if ((sidep->tmap_num2 & 0x3fff) < max_tmap) {
-					tmap_buf[sidep->tmap_num2 & 0x3fff]++;
-					if (level_tmap_buf[sidep->tmap_num2 & 0x3fff] == -1)
-						level_tmap_buf[sidep->tmap_num2 & 0x3fff] = level_num + (!shareware_flag) * NUM_SHAREWARE_LEVELS;
+					tmap_buf[TMAP2_INDEX(sidep->tmap_num2)]++;
+					if (level_tmap_buf[TMAP2_INDEX(sidep->tmap_num2)] == -1)
+						level_tmap_buf[TMAP2_INDEX(sidep->tmap_num2)] = level_num + (!shareware_flag) * NUM_SHAREWARE_LEVELS;
 				} else
 					Int3();	//	Error, bogus texture map.  Should not be greater than max_tmap.
 			}

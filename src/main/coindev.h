@@ -107,9 +107,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //#define JOY_PARALLEL  1
 //#define JOY_IODEV     2
 
-int coindev_init(int CoinMechNumber);
-unsigned int coindev_read(int CoinMechNumber);
-unsigned int coindev_count(int CoinMechNumber);
 
 #define ARCADE_FIRST_SECONDS 		120
 #define ARCADE_CONTINUE_SECONDS	60

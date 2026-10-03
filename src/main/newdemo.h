@@ -196,14 +196,12 @@ extern void newdemo_record_render_object(object * obj);
 extern void newdemo_record_viewer_object(object * obj);
 extern void newdemo_record_sound_3d( int soundno, int angle, int volume );
 extern void newdemo_record_sound_3d_once( int soundno, int angle, int volume );
-extern void newdemo_record_sound_once( int soundno );
 extern void newdemo_record_sound( int soundno );
 extern void newdemo_record_wall_hit_process( int segnum, int side, int damage, int playernum );
 extern void newdemo_record_trigger( int segnum, int side, int objnum );
 extern void newdemo_record_hostage_rescued( int hostage_num );
 struct morph_data;
 extern void newdemo_record_morph_frame(struct morph_data *md);
-extern void newdemo_record_player_stats(int shields, int energy, int score );
 extern void newdemo_record_wall_toggle(int segnum, int side );
 extern void newdemo_record_control_center_destroyed(void);
 extern void newdemo_record_hud_message(char *s);
@@ -244,7 +242,6 @@ extern void newdemo_record_laser_level(byte old_level, byte new_level);
 #endif
 
 // Functions called during playback process...
-extern void newdemo_object_move_all(void);
 extern void newdemo_playback_one_frame(void);
 extern void newdemo_goto_end(void);
 extern void newdemo_goto_beginning(void);

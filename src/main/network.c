@@ -147,21 +147,32 @@ extern obj_position Player_init[MAX_PLAYERS];
 #define DUMP_LEVEL 6
 
 // Function Prototypes
-void network_flush(void);
-void network_listen(void);
-void network_send_endlevel_sub(int player_num);
-void network_update_netgame(void);
-void network_dump_player(ubyte* server, ubyte* node, int why);
-void network_send_objects(void);
-void network_send_rejoin_sync(int player_num);
-void network_send_game_info(sequence_packet* their);
-void network_read_sync_packet(netgame_info* sp);
-void network_read_pdata_packet(frame_info* pd);
-void network_read_object_packet(ubyte* data);
-void network_read_endlevel_packet(ubyte* data);
+static void network_flush(void);
+static void network_flush(void);
+static void network_listen(void);
+static void network_listen(void);
+static void network_send_endlevel_sub(int player_num);
+static void network_send_endlevel_sub(int player_num);
+static void network_update_netgame(void);
+static void network_update_netgame(void);
+static void network_dump_player(ubyte * server, ubyte *node, int why);
+static void network_dump_player(ubyte* server, ubyte* node, int why);
+static void network_send_objects(void);
+static void network_send_objects(void);
+static void network_send_rejoin_sync(int player_num);
+static void network_send_rejoin_sync(int player_num);
+static void network_send_game_info(sequence_packet *their);
+static void network_send_game_info(sequence_packet* their);
+static void network_read_sync_packet( netgame_info * sp );
+static void network_read_sync_packet(netgame_info* sp);
+static void network_read_pdata_packet(frame_info *pd );
+static void network_read_pdata_packet(frame_info* pd);
+static void network_read_object_packet( ubyte *data );
+static void network_read_object_packet(ubyte* data);
+static void network_read_endlevel_packet( ubyte *data );
+static void network_read_endlevel_packet(ubyte* data);
 
 
-int network_wait_for_snyc(void);
 
 static void
 network_init(void)
@@ -345,16 +356,16 @@ newmenu:
 	{
 		m[i].type = NM_TYPE_TEXT;
 		m[i].text = menu_text[i];
-		sprintf(m[i].text, "%s %s", Players[i].callsign, CONNECT_STATES(Players[i].connected));
+		sprintf(menu_text[i], "%s %s", Players[i].callsign, CONNECT_STATES(Players[i].connected));
 		LastPacketTime[i] = timer_get_approx_seconds();
 	}
 	m[N_players].type = NM_TYPE_TEXT;
 	m[N_players].text = menu_text[N_players];
 
 	if (Fuelcen_seconds_left < 0)
-		sprintf(m[N_players].text, TXT_REACTOR_EXPLODED);
+		sprintf(menu_text[N_players], TXT_REACTOR_EXPLODED);
 	else
-		sprintf(m[N_players].text, "%s: %d %s  ", TXT_TIME_REMAINING, Fuelcen_seconds_left, TXT_SECONDS);
+		sprintf(menu_text[N_players], "%s: %d %s  ", TXT_TIME_REMAINING, Fuelcen_seconds_left, TXT_SECONDS);
 
 menu:
 	sprintf(text, "%s\n%s", TXT_WAITING, TXT_ESC_ABORT);
@@ -718,7 +729,7 @@ static void network_process_monitor_vector(int vector)
 		for (j = 0; j < 6; j++)
 		{
 			if ( ((tm = seg->sides[j].tmap_num2) != 0) &&
-				  ((ec = TmapInfo[tm&0x3fff].eclip_num) != -1) &&
+				  ((ec = TmapInfo[TMAP2_INDEX(tm)].eclip_num) != -1) &&
  				  ((bm = Effects[ec].dest_bm_num) != -1) )
 			{
 				if (vector & (1 << count))
@@ -768,7 +779,7 @@ static int network_create_monitor_vector(void)
 		{
 			if ((tm = seg->sides[j].tmap_num2) != 0)
 			{
-				if ( ((ec = TmapInfo[tm&0x3fff].eclip_num) != -1) &&
+				if ( ((ec = TmapInfo[TMAP2_INDEX(tm)].eclip_num) != -1) &&
  					  (Effects[ec].dest_bm_num != -1) )
 				{
 					mprintf((0, "Monitor %d intact.\n", monitor_num));
@@ -811,7 +822,7 @@ static void network_stop_resync(sequence_packet *their)
 
 byte object_buffer[IPX_MAX_DATA_SIZE];
 
-void network_send_objects(void)
+static void network_send_objects(void)
 {
 	short remote_objnum;
 	byte owner;
@@ -938,7 +949,7 @@ void network_send_objects(void)
 	} // For PACKETS_PER_FRAME
 }
 
-void network_send_rejoin_sync(int player_num)
+static void network_send_rejoin_sync(int player_num)
 {
 	int i, j;
 
@@ -1072,7 +1083,7 @@ static void network_remove_player(sequence_packet *p)
 
 }
 
-void network_dump_player(ubyte * server, ubyte *node, int why)
+static void network_dump_player(ubyte * server, ubyte *node, int why)
 {
 	// Inform player that he was not chosen for the netgame
 
@@ -1100,7 +1111,7 @@ network_send_game_list_request(void)
 	ipx_send_broadcast_packet_data( (ubyte *)&me, sizeof(sequence_packet) );
 }
 
-void network_update_netgame(void)
+static void network_update_netgame(void)
 {
 	// Update the netgame struct with current game variables
 
@@ -1130,7 +1141,7 @@ void network_update_netgame(void)
 	Netgame.levelnum = Current_level_num;
 }
 
-void network_send_endlevel_sub(int player_num)
+static void network_send_endlevel_sub(int player_num)
 {
 	endlevel_info end = {0};
 	int i;
@@ -1165,7 +1176,7 @@ void network_send_endlevel_packet(void)
 	network_send_endlevel_sub(Player_num);
 }
 
-void network_send_game_info(sequence_packet *their)
+static void network_send_game_info(sequence_packet *their)
 {
  	// Send game info to someone who requested it
 
@@ -1362,13 +1373,13 @@ static void dump_segments(void)
 	FILE * fp;
 
 	fp = fopen( "TEST.DMP", "wb" );
-	fwrite( Segments, sizeof(segment)*(Highest_segment_index+1),1, fp );
+	fwrite( Segments, sizeof(segment)*((size_t)Highest_segment_index+1),1, fp );
 	fclose(fp);
 	mprintf( (0, "SS=%d\n", sizeof(segment) ));
 }
 #endif
 
-void network_read_endlevel_packet( ubyte *data )
+static void network_read_endlevel_packet( ubyte *data )
 {
 	// Special packet for end of level syncing
 
@@ -1434,7 +1445,7 @@ network_verify_objects(int remote, int local)
 	return(1);
 }
 
-void network_read_object_packet( ubyte *data )
+static void network_read_object_packet( ubyte *data )
 {
 	// Object from another net player we need to sync with
 
@@ -1881,7 +1892,7 @@ network_find_game(void)
 	return 1;
 }
 
-void network_read_sync_packet( netgame_info * sp )
+static void network_read_sync_packet( netgame_info * sp )
 {
 	int i, j;
 
@@ -2563,9 +2574,9 @@ network_level_sync(void)
 void network_join_game(void)
 {
 	int choice, i;
-	char menu_text[(MAX_ACTIVE_NETGAMES*2)+1][70];
+	char menu_text[(MAX_ACTIVE_NETGAMES*2)+1][70] = {0};
 
-	newmenu_item m[((MAX_ACTIVE_NETGAMES)*2)+1];
+	newmenu_item m[((MAX_ACTIVE_NETGAMES)*2)+1] = {0};
 
 	if ( !Network_active )
 	{
@@ -2690,7 +2701,7 @@ void network_leave_game(void)
 	network_flush();
 }
 
-void network_flush(void)
+static void network_flush(void)
 {
 	ubyte packet[IPX_MAX_DATA_SIZE] = {0};
 
@@ -2701,7 +2712,7 @@ void network_flush(void)
 		;
 }
 
-void network_listen(void)
+static void network_listen(void)
 {
 	int size;
 	ubyte packet[IPX_MAX_DATA_SIZE] = {0};
@@ -2892,7 +2903,7 @@ static void network_consistency_error(void)
 	multi_reset_stuff();
 }
 
-void network_read_pdata_packet(frame_info *pd )
+static void network_read_pdata_packet(frame_info *pd )
 {
 	int TheirPlayernum = pd->playernum;
 #ifdef SHAREWARE

@@ -62,7 +62,7 @@ extern int gr_find_closest_color_15bpp(int rgb);	//in the 2d library
 #define UVLP(p)	((g3s_uvl *) (p))			//uvl list
 
 //size of the point number list of a polygon, including the pad
-#define POINTLIST_SIZE(nv)	((((nv) & ~1) + 1) * 2)
+#define POINTLIST_SIZE(nv)	((((size_t)(nv) & ~(size_t)1) + 1) * 2)
 
 static grs_bitmap **bitmap_ptr;
 static vms_angvec *anim_angles;		//pointer to angle data

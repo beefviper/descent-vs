@@ -87,7 +87,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define MIN_LIGHTING_VALUE	(F1_0/NUM_LIGHTING_LEVELS)
 
 // -------------------------------------------------------------------------------------------------------
-extern fix compute_lighting_value(g3s_point *vertptr);
 
 // -------------------------------------------------------------------------------------------------------
 // This is the main texture mapper call.
@@ -138,9 +137,6 @@ extern	grs_bitmap Texmap_ptrs[];
 extern	grs_bitmap Texmap4_ptrs[];
 
 // Interface for sky renderer
-extern void texture_map_lin_lin_sky(grs_bitmap *srcb, g3ds_tmap *t);
-extern void texture_map_lin_lin_sky_v(grs_bitmap *srcb, g3ds_tmap *t);
-extern void texture_map_hyp_lin_v(grs_bitmap *srcb, g3ds_tmap *t);
 
 extern void ntexture_map_lighted_linear(grs_bitmap *srcb, g3ds_tmap *t);
 

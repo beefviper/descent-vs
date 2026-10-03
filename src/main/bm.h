@@ -256,6 +256,11 @@ extern int TmapList[MAX_TEXTURES];
 
 extern tmap_info TmapInfo[MAX_TEXTURES];
 
+// The low 14 bits of a side's tmap_num2 pick its overlay texture (the top
+// two bits are the overlay's rotation). Clamped, so a bad value in a level
+// file can't index past the texture tables.
+#define TMAP2_INDEX(tmap_num2)	((((tmap_num2) & 0x3fff) < MAX_TEXTURES) ? ((tmap_num2) & 0x3fff) : 0)
+
 //for each model, a model number for dying & dead variants, or -1 if none
 extern int Dying_modelnums[];
 extern int Dead_modelnums[];
@@ -267,7 +272,6 @@ void bm_write_all(FILE *fp);
 void bm_close(void);
 
 // Initializes the Texture[] array of bmd_bitmap structures.
-void init_textures(void);
 
 #define OL_ROBOT 				1
 #define OL_HOSTAGE 			2

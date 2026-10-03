@@ -379,8 +379,6 @@ int file_getfilelist( int MaxNum, char list[][13], char * filespec );
 int ui_get_filename( char * filename, char * Filespec, char * message  );
 
 
-void * ui_malloc( int size );
-void ui_free( void * buffer );
 
 UI_GADGET_KEYTRAP * ui_add_gadget_keytrap( UI_WINDOW * wnd, int key_to_trap, int (*function_to_call)(void)  );
 void ui_keytrap_do( UI_GADGET_KEYTRAP * keytrap, int keypress );
@@ -432,9 +430,6 @@ void ui_pad_goto_prev(void);
 void ui_pad_read( int n, char * filename );
 int ui_pad_get_current(void);
 
-void ui_barbox_open( char * text, int length );
-int ui_barbox_update( int position );
-void ui_barbox_close(void);
 
 void ui_reset_idle_seconds(void);
 int ui_get_idle_seconds(void);

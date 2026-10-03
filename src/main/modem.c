@@ -325,53 +325,34 @@ fix  SerialLastMessage = 0;
 
 /* Function prototypes for functions not exported through modem.h */
 
-void com_param_setup(void);
-void com_start_game(void);
-void modem_dialout(void);
-void modem_answer(void);
-int com_sync(int id);
-void com_sync_poll(int nitem, newmenu_item *menus, int *key, int citem);
+static void com_param_setup(void);
+static void com_param_setup(void);
+static void com_start_game();
+static void com_start_game(void);
+static void modem_dialout(void);
+static void modem_dialout(void);
+static void modem_answer(void);
+static void modem_answer(void);
+static int com_sync(int id);
+static int com_sync(int id);
+static void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem);
+static void com_sync_poll(int nitem, newmenu_item *menus, int *key, int citem);
 
-void com_send_choice(int choice);
-void serial_sync_abort(int val);
-void com_send_ptr(char* ptr, int len);
-void com_process_sync(char* buf, int len);
-void serial_link_start(void);
-void add_phone_number(char* src, char* num);
+static void com_send_choice(int choice);
+static void com_send_choice(int choice);
+static void serial_sync_abort(int val);
+static void serial_sync_abort(int val);
+static void com_send_ptr(char *ptr, int len);
+static void com_send_ptr(char* ptr, int len);
+static void com_process_sync(char *buf, int len);
+static void com_process_sync(char* buf, int len);
+static void serial_link_start(void);
+static void serial_link_start(void);
+static void add_phone_number( char * src, char * num );
+static void add_phone_number(char* src, char* num);
 
 
-#if 0
-#define	codex(name_start, name_end)	\
-void name_start(void)	\
-{	\
-	int	a,b,i;	\
-	\
-	a = 3;	\
-	b = a + 4;	\
-	\
-	for (i=0; i<123; i++)	\
-		a += i;	\
-	\
-	if (a < b)	\
-		b += a;	\
-	else if (a == b)	\
-		a += b;	\
-	else	\
-		a += a + b;	\
-	\
-	while (a < b)	\
-		a = b;	\
-	\
-}	\
-	\
-void name_end(void)	\
-{	\
-}
-#else
-#define codex(name_start, name_end)
-#endif
 
-codex(code_01s, code_01e)
 
 static int detect_UART(unsigned baseaddr, int * loc, int * code )
 {
@@ -419,14 +400,13 @@ static int detect_UART(unsigned baseaddr, int * loc, int * code )
    return 4;
 }
 
-codex(code_02s, code_02e)
 
 static int
 com_type_detect()
 {
 //	static long port;
 //	short *ptr;
-	int loc, code;
+	int loc = 0, code = 0;
 
 	long port_addr[4] = { 0x3f8, 0x2f8, 0x3e8, 0x2e8 };
 	long portaddr;
@@ -468,7 +448,7 @@ com_type_detect()
 }
 
 #if !defined(NDEBUG) && !defined(NMONO)
-void
+static void
 com_dump_string(char *string)
 {
 	mprintf((0, "%s\n", string));
@@ -477,7 +457,6 @@ com_dump_string(char *string)
 #define com_dump_string()
 #endif
 
-codex(code_03s, code_03e)
 
 int
 com_enable()
@@ -608,7 +587,6 @@ com_disable()
 	#endif
 }
 
-codex(code_04s, code_04e)
 
 void
 com_abort(void)
@@ -654,7 +632,6 @@ com_carrier_lost(void)
 	com_abort();
 }
 
-codex(code_05s, code_05e)
 
 extern ubyte cockpit_mode_save; // From object.c
 extern int old_cockpit_mode; // From game.c
@@ -690,7 +667,6 @@ static void com_reset_game(void)
 	}
 }
 
-codex(code_06s, code_06e)
 
 static void
 com_save_settings(void)
@@ -740,7 +716,6 @@ error:
 	return;
 }
 
-codex(code_07s, code_07e)
 
 static void
 com_load_settings(void)
@@ -849,7 +824,6 @@ serial_leave_game(void)
 	Function_mode = FMODE_MENU;
 }
 
-codex(code_08s, code_08e)
 
 void
 com_send_data(char *ptr, int len, int repeat)
@@ -882,7 +856,7 @@ com_send_data(char *ptr, int len, int repeat)
 			com_send_ptr(ptr, len);
 }
 
-void com_send_ptr(char *ptr, int len)
+static void com_send_ptr(char *ptr, int len)
 {
 	register	int count;
 	register char dat;
@@ -898,7 +872,6 @@ void com_send_ptr(char *ptr, int len)
 	chars_sent += len;
 }
 
-codex(code_09s, code_09e)
 
 static void
 com_flush()
@@ -969,7 +942,6 @@ com_getchar()
 
 #define SERIAL_IDLE_TIMEOUT F1_0*10
 
-codex(code_10s, code_10e)
 
 void
 com_do_frame(void)
@@ -1085,7 +1057,6 @@ error:
 	return -1;
 }
 
-codex(code_11s, code_11e)
 
 static void
 com_process_menu(char *buf, int len)
@@ -1247,7 +1218,6 @@ com_connect()
 #define MENU_SERIAL_GAME_START	5
 #define MENU_SEND_MESSAGE			6
 
-codex(code_12s, code_12e)
 
 static void
 com_menu_poll(int nitems, newmenu_item *menus, int *key, int citem)
@@ -1275,7 +1245,7 @@ com_menu_poll(int nitems, newmenu_item *menus, int *key, int citem)
 		*key = -2;
 }
 
-void com_send_choice(int choice)
+static void com_send_choice(int choice)
 {
 	sendbuf[0] = (char)MULTI_MENU_CHOICE;
 	sendbuf[1] = (char)choice;
@@ -1469,7 +1439,6 @@ newmenu:
 	}
 }
 
-codex(code_13s, code_13e)
 
 static void com_custom_param_setup(void)
 {
@@ -1572,7 +1541,7 @@ static void com_param_setup_poll(int nitems, newmenu_item *menus, int *key, int 
 
 }
 
-void com_param_setup(void)
+static void com_param_setup(void)
 {
 	int mmn;
 	int was_enabled = 0;
@@ -1671,7 +1640,6 @@ setupmenu:
 
 }
 
-codex(code_14s, code_14e)
 
 extern int opt_cinvul;
 extern int last_cinvul;
@@ -1843,9 +1811,8 @@ menu:
 	goto menu;
 }
 
-codex(code_15s, code_15e)
 
-void
+static void
 com_start_game()
 {
 	// Start a serial game after being linked
@@ -1983,9 +1950,8 @@ edit:
 }
 
 
-codex(code_16s, code_16e)
 
-void add_phone_number( char * src, char * num )
+static void add_phone_number( char * src, char * num )
 {
 	char p;
 	int l;
@@ -2012,8 +1978,8 @@ menu:
 	for (i = 0; i < NUM_PHONE_NUM; i++)
 	{
 		m[i].text = menu_text[i];
-		sprintf(m[i].text, "%d. %s \t", i+1, phone_name[i]);
-		add_phone_number(m[i].text, phone_num[i] );
+		sprintf(menu_text[i], "%d. %s \t", i+1, phone_name[i]);
+		add_phone_number(menu_text[i], phone_num[i] );
 		m[i].type = NM_TYPE_MENU;
 	}
 
@@ -2112,7 +2078,9 @@ com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 		return; // some other string.  Not an error, but not a connect
 	}
 
-	sscanf(input_buffer, "CONNECT %d", &baud);
+	if (sscanf(input_buffer, "CONNECT %d", &baud) != 1) {
+		// malformed input: leave the values as they were
+	}
 
 	mprintf((0, "Connect at %d baud.\n", baud));
 
@@ -2129,7 +2097,6 @@ com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 	return;
 }
 
-codex(code_17s, code_17e)
 
 static void
 com_wait_for_ring(int nitems, newmenu_item *menus, int *key, int citem)
@@ -2177,7 +2144,7 @@ static int modem_verify(void)
 	return(1);
 }
 
-void modem_dialout(void)
+static void modem_dialout(void)
 {
 	newmenu_item m[5] = {0};
 	char text[50] = {0};
@@ -2263,9 +2230,8 @@ main:
 	}
 }
 
-codex(code_18s, code_18e)
 
-void modem_answer(void)
+static void modem_answer(void)
 {
 	int choice;
 	newmenu_item m[3] = {0};
@@ -2345,7 +2311,7 @@ repeat:
 	}
 }
 
-void serial_link_start(void)
+static void serial_link_start(void)
 {
 	if (!serial_active)
 	{
@@ -2381,7 +2347,7 @@ void serial_link_start(void)
 // Syncronization functions
 //
 
-void serial_sync_abort(int val)
+static void serial_sync_abort(int val)
 {
 	// Send "I got Sync but it was no good!" packet
 
@@ -2409,7 +2375,7 @@ com_level_sync(void)
 	// been removed
 
 	my_sync.level_num = Current_level_num;
-	my_sync.seg_checksum = netmisc_calc_checksum(Segments, (Highest_segment_index+1) * sizeof(segment));
+	my_sync.seg_checksum = netmisc_calc_checksum(Segments, ((size_t)Highest_segment_index+1) * sizeof(segment));
 	my_sync.kills[0] = kill_matrix[Player_num][0];
 	my_sync.kills[1] = kill_matrix[Player_num][1];
 	my_sync.proto_version = MULTI_PROTO_VERSION;
@@ -2460,6 +2426,9 @@ com_level_sync(void)
 		my_sync.difficulty = (my_sync.difficulty+1) % MAX_NUM_NET_PLAYERS;
 	}
 
+	if ((unsigned char)other_sync.difficulty >= MAX_PLAYERS)
+		other_sync.difficulty = 0;		//from the other machine, so check it
+
 	Objects[Players[OtherPlayer].objnum].pos = Player_init[other_sync.difficulty].pos;
 	Objects[Players[OtherPlayer].objnum].orient = Player_init[other_sync.difficulty].orient;
 	obj_relink(Players[OtherPlayer].objnum,Player_init[other_sync.difficulty].segnum);
@@ -2492,7 +2461,6 @@ com_level_sync(void)
 	return(0);
 }
 
-codex(code_19s, code_19e)
 
 static void
 com_send_end_sync(void)
@@ -2533,7 +2501,7 @@ com_process_end_sync(byte *buf)
 		other_got_sync = 1;
 }
 
-void com_process_sync(char *buf, int len)
+static void com_process_sync(char *buf, int len)
 {
 	(void)len;
 	switch(buf[0])
@@ -2591,9 +2559,8 @@ com_send_sync(void)
 	}
 }
 
-codex(code_20s, code_20e)
 
-void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem)
+static void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	static fix t1 = 0;
 
@@ -2633,7 +2600,7 @@ void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem)
 	return;
 }
 
-int
+static int
 com_sync(int id)
 {
 	// How to handle the end of the level and start of the next level
@@ -2716,6 +2683,5 @@ com_endlevel(int *secret)
 	return;
 }
 
-codex(code_21s, code_21e)
 
 #endif

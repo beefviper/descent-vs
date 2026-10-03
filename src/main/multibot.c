@@ -82,10 +82,14 @@ byte robot_fire_buf[MAX_ROBOTS_CONTROLLED][18+3];
 //}
 
 // Function Prototypes
-int multi_add_controlled_robot(int objnum, int agitation);
-void multi_send_release_robot(int objnum);
-void multi_delete_controlled_robot(int objnum);
-void multi_send_robot_position_sub(int objnum);
+static int multi_add_controlled_robot(int objnum, int agitation);
+static int multi_add_controlled_robot(int objnum, int agitation);
+static void multi_send_release_robot(int objnum);
+static void multi_send_release_robot(int objnum);
+static void multi_delete_controlled_robot(int objnum);
+static void multi_delete_controlled_robot(int objnum);
+static void multi_send_robot_position_sub(int objnum);
+static void multi_send_robot_position_sub(int objnum);
 
 
 int
@@ -227,7 +231,7 @@ multi_dump_robots(void)
 	}
 }
 
-int multi_add_controlled_robot(int objnum, int agitation)
+static int multi_add_controlled_robot(int objnum, int agitation)
 {
 	int i;
 	int lowest_agitation = 0x7fffffff; // MAX POSITIVE INT
@@ -296,7 +300,7 @@ int multi_add_controlled_robot(int objnum, int agitation)
 	return(1);
 }
 
-void multi_delete_controlled_robot(int objnum)
+static void multi_delete_controlled_robot(int objnum)
 {
 	int i;
 
@@ -349,7 +353,7 @@ multi_send_claim_robot(int objnum)
 	multi_send_data(multibuf, 5, 1);
 }
 
-void multi_send_release_robot(int objnum)
+static void multi_send_release_robot(int objnum)
 {
 	if ((objnum < 0) || (objnum > Highest_object_index))
 	{
@@ -410,7 +414,7 @@ multi_send_robot_frame(int sent)
 	return(rval);
 }
 
-void multi_send_robot_position_sub(int objnum)
+static void multi_send_robot_position_sub(int objnum)
 {
 	int loc = 0;
 

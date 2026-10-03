@@ -257,14 +257,11 @@ void g3_done_instance(void);
 //Misc utility functions:
 
 //get current field of view.  Fills in angle for x & y
-void g3_get_FOV(fixang *fov_x,fixang *fov_y);
 
 //get zoom.  For a given window size, return the zoom which will achieve
 //the given FOV along the given axis.
-fix g3_get_zoom(char axis,fixang fov,short window_width,short window_height);
 
 //returns the normalized, unscaled view vectors
-void g3_get_view_vectors(vms_vector *forward,vms_vector *up,vms_vector *right);
 
 //returns true if a plane is facing the viewer. takes the unrotated surface
 //normal of the plane, and a point on it.  The normal need not be normalized
@@ -278,7 +275,6 @@ bool g3_check_normal_facing(vms_vector *v,vms_vector *norm);
 //void g3_set_points(g3s_point *points,vms_vector *vecs);
 
 //returns codes_and & codes_or of a list of points numbers
-g3s_codes g3_check_codes(int nv,g3s_point **pointlist);
 
 //rotates a point. returns codes.  does not check if already rotated
 ubyte g3_rotate_point(g3s_point *dest,vms_vector *src);

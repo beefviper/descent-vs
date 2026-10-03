@@ -285,15 +285,8 @@ typedef struct _grs_screen {     // This is a video screen
 
 int gr_init(int mode);
 int gr_set_mode(int mode);
-void gr_enable_default_palette_loading(void);
-void gr_disable_default_palette_loading(void);
 
 // These 4 functions actuall change screen colors.
-extern void gr_pal_fade_out(unsigned char * pal);
-extern void gr_pal_fade_in(unsigned char * pal);
-extern void gr_pal_clear(void);
-extern void gr_pal_setblock( int start, int number, unsigned char * pal );
-extern void gr_pal_getblock( int start, int number, unsigned char * pal );
 
 extern int gr_init_A0000(void);         // Initializes _A0000. Returns true if failed.
 extern unsigned short _A0000;       // Selector for screen segment
@@ -422,8 +415,6 @@ int gr_line(fix x0,fix y0,fix x1,fix y1);
 int gr_uline(fix x0,fix y0,fix x1,fix y1);
 
 // Draws an anti-aliased line into the current canvas in the current color and drawmode.
-int gr_aaline(fix x0,fix y0,fix x1,fix y1);
-int gr_uaaline(fix x0,fix y0,fix x1,fix y1);
 
 // Draw the bitmap into the current canvas at the specified location.
 void gr_bitmap(int x,int y,grs_bitmap *bm);
@@ -467,7 +458,6 @@ void gr_get_string_size(char *s, int *string_width, int *string_height, int *ave
 
 
 //	From roller.c
-void rotate_bitmap(grs_bitmap *bp, grs_point *vertbuf, int light_value);
 
 // From scale.c
 void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf );
@@ -478,7 +468,6 @@ extern grs_canvas *grd_curcanv;             //active canvas
 extern grs_screen *grd_curscreen;           //active screen
 extern unsigned char Test_bitmap_data[64*64];
 
-extern unsigned int FixDivide( unsigned int x, unsigned int y );
 
 extern void gr_show_canvas( grs_canvas *canv );
 extern void gr_set_current_canvas( grs_canvas *canv );
@@ -491,10 +480,7 @@ extern void gr_set_current_canvas( grs_canvas *canv );
 extern void gr_vesa_update( grs_bitmap * source1, grs_bitmap * dest, grs_bitmap * source2 );
 
 // Special effects
-extern void gr_snow_out(int num_dots);
 
-extern void test_rotate_bitmap(void);
-extern void rotate_bitmap(grs_bitmap *bp, grs_point *vertbuf, int light_value);
 
 extern ubyte gr_palette[256*3];
 extern ubyte gr_fade_table[256*GR_FADE_LEVELS];
@@ -527,7 +513,6 @@ extern void gr_bitmap_check_transparency( grs_bitmap * bmp );
 // Allocates a selector that has a base address at 'address' and length 'size'.
 // Returns 0 if successful... BE SURE TO CHECK the return value since there
 // is a limited number of selectors available!!!
-extern int get_selector( void * address, int size, unsigned int * selector );
 
 // Assigns a selector to a bitmap. Returns 0 if successful.  BE SURE TO CHECK
 // this return value since there is a limited number of selectors!!!!!!!

@@ -164,8 +164,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define	AVOID_SEG_LENGTH	7
 
 // Function Prototypes
-void maybe_ai_path_garbage_collect(void);
-void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
+static void maybe_ai_path_garbage_collect(void);
+static void maybe_ai_path_garbage_collect(void);
+static void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point);
+static void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
 
 
 static void create_random_xlate(byte *xt)
@@ -287,8 +289,8 @@ if ((objp->type == OBJ_ROBOT) && (objp->ctype.ai_info.behavior == AIB_RUN_FROM))
 //		visited[i] = 0;
 //		depth[i] = 0;
 //	}
-	memset(visited, 0, sizeof(visited[0])*(Highest_segment_index+1));
-	memset(depth, 0, sizeof(depth[0])*(Highest_segment_index+1));
+	memset(visited, 0, sizeof(visited[0])*((size_t)Highest_segment_index+1));
+	memset(depth, 0, sizeof(depth[0])*((size_t)Highest_segment_index+1));
 
 	//	If there is a segment we're not allowed to visit, mark it.
 	if (avoid_seg != -1) {
@@ -352,13 +354,15 @@ cpp_done1: ;
 	}	//	while (cur_seg ...
 
 	//	Set qtail to the segment which ends at the goal.
-	while (seg_queue[--qtail].end != end_seg)
-		if (qtail < 0) {
+	//	(The original read seg_queue[-1] before noticing it had run out.)
+	do {
+		if (--qtail < 0) {
 			// mprintf((0, "\nNo path!\n"));
 			// printf("UNABLE TO FORM PATH");
 			// Int3();
 			return -1;
 		}
+	} while (seg_queue[qtail].end != end_seg);
 
 	#ifdef EDITOR
 	N_selected_segs = 0;
@@ -381,8 +385,10 @@ cpp_done1: ;
 		if (parent_seg == start_seg)
 			break;
 
-		while (seg_queue[--qtail].end != parent_seg)
-			Assert(qtail >= 0);
+		do {
+			--qtail;
+		} while (qtail >= 0 && seg_queue[qtail].end != parent_seg);
+		Assert(qtail >= 0);
 	}
 
 	psegs->segnum = start_seg;
@@ -861,7 +867,7 @@ void ai_follow_path(object *objp, int player_visibility)
 			create_path(objp);
 	}
 
-if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (aip->path_length>0)) {
+if (((ptrdiff_t)aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (aip->path_length>0)) {
 	//Int3();	//	Contact Mike: Bad.  Path goes into what is believed to be free space.
 	//force_dump_ai_objects_all("Error in ai_follow_path");
 	ai_reset_all_paths();
@@ -1082,7 +1088,7 @@ static int path_index_compare(const void* i1, const void* i2)
 
 //	----------------------------------------------------------------------------------------------------------
 //	Set orientation matrix and velocity for objp based on its desire to get to a point.
-void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
+static void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
 {
 	vms_vector	cur_vel = objp->mtype.phys_info.velocity;
 	vms_vector	norm_cur_vel = {0};
@@ -1210,7 +1216,7 @@ static void ai_path_garbage_collect(void)
 		ai_static	*aip = &Objects[i].ctype.ai_info;
 
 		if ((Objects[i].type == OBJ_ROBOT) && (Objects[i].control_type == CT_AI))
-			if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (aip->path_length>0))
+			if (((ptrdiff_t)aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (aip->path_length>0))
 				Int3();		//	Contact Mike: Debug trap for nasty, elusive bug.
 	}
 
@@ -1222,7 +1228,7 @@ static void ai_path_garbage_collect(void)
 
 //	-----------------------------------------------------------------------------
 //	Do garbage collection if not been done for awhile, or things getting really critical.
-void maybe_ai_path_garbage_collect(void)
+static void maybe_ai_path_garbage_collect(void)
 {
 	if (Point_segs_free_ptr - Point_segs > MAX_POINT_SEGS - MAX_PATH_LENGTH) {
 		if (Last_frame_garbage_collected+1 >= FrameCount) {

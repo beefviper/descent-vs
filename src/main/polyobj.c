@@ -256,7 +256,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 	CFILE *ifile;
 	short version;
 	int id,len, next_chunk;
-	ubyte	model_buf[MODEL_BUF_SIZE] = {0};
+	static ubyte	model_buf[MODEL_BUF_SIZE];	//static: too big for the stack
 
 	if ((ifile=cfopen(filename,"rb"))==NULL)
 		Error("Can't open file <%s>",filename);
@@ -416,6 +416,8 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 				//mprintf(0,"Got chunk IDTA, len=%d\n",len);
 
 				pm->model_data = malloc(len);
+				if (pm->model_data == NULL)
+					Error("Out of memory");
 				pm->model_data_size = len;
 
 				pof_cfread(pm->model_data,1,len,model_buf);
@@ -453,7 +455,7 @@ int read_model_guns(char *filename,vms_vector *gun_points, vms_vector *gun_dirs,
 	short version;
 	int id,len;
 	int n_guns=0;
-	ubyte	model_buf[MODEL_BUF_SIZE] = {0};
+	static ubyte	model_buf[MODEL_BUF_SIZE];	//static: too big for the stack
 
 	if ((ifile=cfopen(filename,"rb"))==NULL)
 		Error("Can't open file <%s>",filename);

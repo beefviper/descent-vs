@@ -686,8 +686,10 @@ static void collide_player_and_wall( object * player, fix hitspeed, short hitseg
 
 fix	Last_volatile_scrape_sound_time = 0;
 
-void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
-void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
+static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
+static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
+static void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
+static void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt);
 
 //this gets called when an object is scraping along the wall
 void scrape_object_on_wall(object *obj, short hitseg, short hitside, vms_vector * hitpt )
@@ -760,13 +762,13 @@ int check_effect_blowup(segment *seg,int side,vms_vector *pnt)
 	int tm,ec,db;
 
 	if ((tm=seg->sides[side].tmap_num2) != 0)
-		if ((ec=TmapInfo[tm&0x3fff].eclip_num)!=-1)
+		if ((ec=TmapInfo[TMAP2_INDEX(tm)].eclip_num)!=-1)
    		if ((db=Effects[ec].dest_bm_num)!=-1 && !(Effects[ec].flags&EF_ONE_SHOT)) {
 				fix u,v;
-				grs_bitmap *bm = &GameBitmaps[Textures[tm&0x3fff].index];
+				grs_bitmap *bm = &GameBitmaps[Textures[TMAP2_INDEX(tm)].index];
 				int x,y,t;
 
-				PIGGY_PAGE_IN(Textures[tm&0x3fff]);
+				PIGGY_PAGE_IN(Textures[TMAP2_INDEX(tm)]);
 
 				//this can be blown up...did we hit it?
 
@@ -851,7 +853,7 @@ int check_effect_blowup(segment *seg,int side,vms_vector *pnt)
 
 // int Show_seg_and_side = 0;
 
-void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt)
+static void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt)
 {
 	segment *seg = &Segments[hitseg];
 	int blew_up;
@@ -973,7 +975,7 @@ void collide_weapon_and_wall( object * weapon, fix hitspeed, short hitseg, short
 //##	return;
 //##}
 
-void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt)	{
+static void collide_debris_and_wall( object * debris, fix hitspeed, short hitseg, short hitwall, vms_vector * hitpt)	{
 	explode_object(debris,0);
 	return;
 }

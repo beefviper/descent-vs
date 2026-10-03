@@ -181,7 +181,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "mono.h"
 #include "gamefont.h"
 #include "cfile.h"
-#include "mem.h"
 #include "error.h"
 #include "polyobj.h"
 #include "textures.h"
@@ -220,7 +219,8 @@ int	Current_color = 0;
 int	Erase_color;
 
 // Function Prototypes
-void title_save_game(void);
+static void title_save_game(void);
+static void title_save_game(void);
 
 
 static int local_key_inkey(void)
@@ -651,7 +651,7 @@ static int get_message_num(char **message)
 	return num;
 }
 
-void title_save_game(void)
+static void title_save_game(void)
 {
 	grs_canvas * save_canv;
 	grs_canvas * save_canv_data;
@@ -981,12 +981,16 @@ static void load_screen_text(char *filename, char **buf)
 		len = cfilelength(ifile);
 		//MALLOC(*buf,char, len);//Unable to get this to compile...is it a case issue? -KRB
 		*buf=(char *)malloc(len*sizeof(char));//My hack -KRB
+		if (*buf == NULL)
+			Error("Out of memory");
 		cfread(*buf, 1, len, ifile);
 		cfclose(ifile);
 	} else {
 		len = cfilelength(tfile);
 		//MALLOC(*buf, char, len);-KRB
 		*buf=(char *)malloc(len*sizeof(char));//-KRB
+		if (*buf == NULL)
+			Error("Out of memory");
 		cfread(*buf, 1, len, tfile);
 		cfclose(tfile);
 	}
@@ -1125,6 +1129,8 @@ static void do_registered_end_game(void)
 
 		//MALLOC(Briefing_text, char, len);//Unable to compile -KRB
 		Briefing_text=(char *)malloc(len*sizeof(char));//my hack -KRB
+		if (Briefing_text == NULL)
+			Error("Out of memory");
 		sprintf(Briefing_text, "Test");
 	}
 
@@ -1162,6 +1168,8 @@ static void do_shareware_end_game(void)
 //
 		//MALLOC(Briefing_text, char, 4); // Dummy //Can't compile -KRB
 		Briefing_text=(char *)malloc(4*sizeof(char));//my hack -KRB
+		if (Briefing_text == NULL)
+			Error("Out of memory");
 //		sprintf(Briefing_text, "$S1\n$C1\n\n%s!\n\n%s has won with %d kills.\n\n$S2\n", TXT_SHAREWARE_DONE,Players[winner].callsign, Players[winner].net_kills_total);
 
 		kmatrix_view(1);

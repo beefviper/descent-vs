@@ -287,9 +287,12 @@ static vms_matrix	ViewMatrix;
 static fix ViewDist=0;
 
 // Function Prototypes
-void draw_all_edges(void);
-void automap_build_edge_list(void);
-void adjust_segment_limit(int SegmentLimit);
+static void draw_all_edges(void);
+static void draw_all_edges(void);
+static void automap_build_edge_list(void);
+static void automap_build_edge_list(void);
+static void adjust_segment_limit(int SegmentLimit);
+static void adjust_segment_limit(int SegmentLimit);
 
 void automap_clear_visited(void)
 {
@@ -727,7 +730,7 @@ void do_automap( int key_code )	{
 		start_time();
 }
 
-void adjust_segment_limit(int SegmentLimit)
+static void adjust_segment_limit(int SegmentLimit)
 {
 	int i,e1;
 	Edge_info * e;
@@ -747,7 +750,7 @@ void adjust_segment_limit(int SegmentLimit)
 
 }
 
-void draw_all_edges(void)
+static void draw_all_edges(void)
 {
 	g3s_codes cc = {0};
 	int i,j,nbright;
@@ -1119,7 +1122,7 @@ static void add_unknown_segment_edges(segment *seg)
 
 }
 
-void automap_build_edge_list(void)
+static void automap_build_edge_list(void)
 {
 	int	i,e1,e2,s;
 	Edge_info * e;

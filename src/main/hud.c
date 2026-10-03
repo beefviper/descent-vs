@@ -144,7 +144,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "wall.h"
 #include "arcade.h"
-#include "screens.h"
 #include "text.h"
 
 int hud_first = 0;
@@ -249,8 +248,10 @@ void HUD_render_message_frame(void)
 
 		  	for (i=0; i<HUD_nmessages; i++ )	{
 				n = (hud_first+i) % HUD_MAX_NUM;
-				if ((n < 0) || (n >= HUD_MAX_NUM))
+				if ((n < 0) || (n >= HUD_MAX_NUM)) {
 					Int3(); // Get Rob!!
+					continue;
+				}
 				if (!strcmp(HUD_messages[n], "This is a bug."))
 					Int3(); // Get Rob!!
 				gr_get_string_size(&HUD_messages[n][0], &w, &h, &aw );
@@ -271,8 +272,10 @@ void HUD_init_message(char * format, ... )
 	char *message = NULL;
 	char *last_message=NULL;
 
-	if ( (hud_last < 0) || (hud_last >= HUD_MAX_NUM))
+	if ( (hud_last < 0) || (hud_last >= HUD_MAX_NUM)) {
 		Int3(); // Get Rob!!
+		hud_last = 0;
+	}
 
 		va_start(args, format );
 		message = &HUD_messages[hud_last][0];

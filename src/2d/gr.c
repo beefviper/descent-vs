@@ -337,6 +337,8 @@ int gr_init(int mode)
 
 	//MALLOC( grd_curscreen,grs_screen,1 );//Hack by KRB
 	grd_curscreen=(grs_screen*)malloc(1*sizeof(grs_screen));
+	if (grd_curscreen == NULL)
+		Error("Out of memory");
 	memset( grd_curscreen, 0, sizeof(grs_screen));
 
 	// Set the mode.

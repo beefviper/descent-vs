@@ -268,7 +268,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "endlevel.h"
 
 #include "wall.h"
-#include "text.h"
 #include "render.h"
 #include "piggy.h"
 
@@ -1779,7 +1778,7 @@ static void draw_invulnerable_ship(void)
 }
 
 #ifdef HOSTAGE_FACES
-draw_hostage_gauge()
+static int draw_hostage_gauge(void)
 {
 	int drew;
 

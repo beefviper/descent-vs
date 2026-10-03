@@ -360,7 +360,6 @@ int objnum_local_to_remote(int local_obj, byte *owner);
 void map_objnum_local_to_remote(int local, int remote, int owner);
 void map_objnum_local_to_local(int objnum);
 
-void multi_init_objects(void);
 void multi_show_player_list(void);
 void multi_do_frame(void);
 

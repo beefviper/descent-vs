@@ -54,9 +54,6 @@ extern void gr_modex_setplane(short plane);
 extern void gr_modex_setstart(short x, short y, int wait_for_retrace);
 extern void gr_modex_uscanline( short x1, short x2, short y, unsigned char color );
 
-extern void gr_pal_setblock( int start, int n, unsigned char * palette );
-extern void gr_pal_getblock( int start, int n, unsigned char * palette );
-extern void gr_pal_setone( int index, unsigned char red, unsigned char green, unsigned char blue );
 
 extern int  gr_vesa_setmodea(int mode);
 extern int  gr_vesa_checkmode(int mode);
@@ -68,8 +65,6 @@ extern int  gr_vesa_setlogical(int pixels_per_scanline);
 extern void gr_vesa_bitblt( unsigned char * source_ptr, unsigned int vesa_address, int height, int width );
 extern void gr_vesa_pixel( unsigned char color, unsigned int offset );
 
-void gr_linear_movsb( void * source, void * dest, unsigned short nbytes);
-void gr_linear_movsw( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsd(ubyte* src, ubyte* dest, int num_pixels);
 void gr_linear_stosd( void * source, unsigned char color, unsigned short nbytes);
 extern unsigned int gr_var_color;
@@ -96,4 +91,3 @@ extern unsigned char * gr_video_memory;
 #define COLOR   ((ubyte)grd_curcanv->cv_color)	// as a pixel value
 
 
-void order( int *x1, int *x2 );

@@ -255,7 +255,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "menu.h"
 #include "player.h"
 #include "screens.h"
-#include "gamefont.h"
 #include "mouse.h"
 #include "joy.h"
 #include "timer.h"
@@ -463,6 +462,7 @@ void scores_maybe_add_player(int abort_flag)
 			m[1].type = NM_TYPE_INPUT; m[1].text = text1; m[1].text_len = COOL_MESSAGE_LEN-5;
 			newmenu_do( TXT_HIGH_SCORE, TXT_YOU_PLACED_1ST, 2, m, NULL );
 			strncpy( Scores.cool_saying, text1, COOL_MESSAGE_LEN );
+			Scores.cool_saying[COOL_MESSAGE_LEN-1] = '\0';
 			if (strlen(Scores.cool_saying)<1)
 				sprintf( Scores.cool_saying, "No Comment" );
 		} else {

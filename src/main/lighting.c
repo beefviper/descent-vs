@@ -244,7 +244,7 @@ void set_dynamic_light(void)
 	if (!Do_dynamic_light)
 		return;
 
-	memset(render_vertex_flags, 0, Highest_vertex_index+1);
+	memset(render_vertex_flags, 0, (size_t)Highest_vertex_index+1);
 
 	//	Create list of vertices that need to be looked at for setting of ambient light.
 	n_render_vertices = 0;
@@ -271,7 +271,7 @@ void set_dynamic_light(void)
 		}
 	}
 
-	for (vertnum=FrameCount&1; vertnum<n_render_vertices; vertnum+=2) {
+	for (vertnum=FrameCount&1; vertnum<n_render_vertices && vertnum<(int)(sizeof(render_vertices)/sizeof(render_vertices[0])); vertnum+=2) {
 		Assert(render_vertices[vertnum]>=0 && render_vertices[vertnum]<=Highest_vertex_index);
 		Dynamic_light[render_vertices[vertnum]] = 0;
 	}
@@ -311,7 +311,7 @@ void set_dynamic_light(void)
 						obj_intensity = 2* (min(obj_intensity, obj->lifeleft) + ((GameTime ^ Obj_light_xlate[objnum&0x0f]) & 0x3fff));
 					break;
 				case OBJ_POWERUP:
-					obj_intensity = Powerup_info[obj->id].light;
+					obj_intensity = (obj->id < MAX_POWERUP_TYPES) ? Powerup_info[obj->id].light : 0;
 					break;
 				case OBJ_DEBRIS:
 					obj_intensity = F1_0/4;

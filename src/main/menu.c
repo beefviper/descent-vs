@@ -125,10 +125,14 @@ int Auto_leveling_on = 0;
 int Menu_draw_copyright = 0;
 
 // Function Prototypes
-void do_option(int select);
-void do_new_game_menu(void);
-void do_multi_player_menu(void);
-void do_detail_level_menu_custom(void);
+static void do_option ( int select);
+static void do_option(int select);
+static void do_new_game_menu(void);
+static void do_new_game_menu(void);
+static void do_multi_player_menu(void);
+static void do_multi_player_menu(void);
+static void do_detail_level_menu_custom(void);
+static void do_detail_level_menu_custom(void);
 
 
 static void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int citem )
@@ -268,7 +272,7 @@ extern void show_order_form(void);	// John didn't want this in inferno.h so I ju
 
 //returns flag, true means quit menu
 static void do_load_game_menu(void);
-void do_option ( int select)
+static void do_option ( int select)
 {
 	switch (select) {
 		case MENU_NEW_GAME:
@@ -535,7 +539,7 @@ void set_custom_detail_vars(void)
 }
 
 //	-----------------------------------------------------------------------------
-void do_detail_level_menu_custom(void)
+static void do_detail_level_menu_custom(void)
 {
 	int	s=0;
 	newmenu_item m[7] = {0};
@@ -586,7 +590,7 @@ void do_detail_level_menu_custom(void)
 	set_custom_detail_vars();
 }
 
-void do_new_game_menu(void)
+static void do_new_game_menu(void)
 {
 	int n_missions,new_level_num,player_highest_level;
 
@@ -684,7 +688,7 @@ static void do_load_game_menu(void)
 
 	for (i=0;i<N_SAVE_SLOTS;i++) {
 
-		if (saved_text[i][0]) {
+		if (saved_text[i] && saved_text[i][0]) {
 			m[i].type = NM_TYPE_MENU;
 			m[i].text = saved_text[i];
 		}
@@ -725,7 +729,8 @@ void do_save_game_menu(void)
 
 	for (i=0;i<N_SAVE_SLOTS;i++) {
 
-		strcpy(menu_text[i],saved_text_ptrs[i]);
+		if (saved_text_ptrs[i])
+			strcpy(menu_text[i],saved_text_ptrs[i]);
 
 		m[i].type = NM_TYPE_INPUT_MENU;
 		m[i].text_len = GAME_NAME_LEN;
@@ -817,7 +822,7 @@ void do_options_menu(void)
 	write_player_file();
 }
 
-void do_multi_player_menu(void)
+static void do_multi_player_menu(void)
 {
 	int menu_choice[3] = {0};
 	newmenu_item m[3] = {0};

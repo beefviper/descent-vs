@@ -111,12 +111,12 @@ vms_vector start_point;
 
 grs_bitmap *terrain_bm;
 
-extern fix g3_get_surface_dotprod(g3s_point **list);
 
 int terrain_outline=0;
 
 // Function Prototypes
-void build_light_table(void);
+static void build_light_table(void);
+static void build_light_table(void);
 
 void render_mine(int start_seg_num,fix eye_offset);
 
@@ -255,6 +255,13 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 	vm_vec_sub(&tv,&Viewer->pos,&start_point);
 	viewer_i = vm_vec_dot(&tv,&surface_orient.rvec) / GRID_SCALE;
 	viewer_j = vm_vec_dot(&tv,&surface_orient.fvec) / GRID_SCALE;
+
+	//keep the split point inside the grid, so the loops below can't run
+	//off either end of save_row or the height map
+	if (viewer_i < low_i) viewer_i = low_i;
+	if (viewer_i > high_i) viewer_i = high_i;
+	if (viewer_j < low_j) viewer_j = low_j;
+	if (viewer_j > high_j) viewer_j = high_j;
 
 //mprintf((0,"viewer_i,j = %d,%d\n",viewer_i,viewer_j));
 
@@ -484,7 +491,7 @@ static void free_light_table(void)
 
 }
 
-void build_light_table(void)
+static void build_light_table(void)
 {
 	int i,j;
 	fix l,l2,min_l=0x7fffffff,max_l=0;
@@ -496,7 +503,9 @@ void build_light_table(void)
 		atexit(free_light_table);		//first time
 
 	//MALLOC(light_array,ubyte,grid_w*grid_h); //Won't comile -KRB
-	light_array = (ubyte *)malloc(grid_w*grid_h+(sizeof(ubyte))); //my hack -KRB
+	light_array = (ubyte *)malloc((size_t)grid_w*grid_w+grid_h);	//LIGHT(i,j) indexes i*grid_w+j
+	if (light_array == NULL)
+		Error("Out of memory");
 	for (i=1;i<grid_w;i++)
 		for (j=1;j<grid_h;j++) {
 			l = get_avg_light(i,j);

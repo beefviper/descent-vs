@@ -93,18 +93,24 @@ extern ubyte * scale_source_ptr;
 extern ubyte * scale_dest_ptr;
 
 // Function Prototypes
-void scale_bitmap_cc_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
-void scale_bitmap_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
-void scale_bitmap_cc_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
-void scale_bitmap_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+static void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  );
+static void scale_bitmap_cc_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+static void scale_bitmap_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  );
+static void scale_bitmap_asm_rle(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+static void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  );
+static void scale_bitmap_cc_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+static void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  );
+static void scale_bitmap_asm(grs_bitmap* source_bmp, grs_bitmap* dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
 
 extern void rls_stretch_scanline_asm(void);
 
 extern void scale_do_cc_scanline(void);
 extern void rls_do_cc_setup_asm(void);
 
-void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta );
-void rls_stretch_scanline_setup( int XDelta, int YDelta );
+static void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta );
+static void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta );
+static void rls_stretch_scanline_setup( int XDelta, int YDelta );
+static void rls_stretch_scanline_setup( int XDelta, int YDelta );
 
 static void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 {
@@ -268,7 +274,7 @@ static void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0,
 	}
 }
 
-void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
+static void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix du, dv, v;
 	int y;
@@ -295,7 +301,7 @@ static void decode_row( grs_bitmap * bmp, int y )
 	gr_rle_decode( &bmp->bm_data[offset], scale_rle_data );
 }
 
-void scale_bitmap_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
+static void scale_bitmap_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix du, dv, v;
 	int y, last_row=-1;
@@ -316,7 +322,7 @@ void scale_bitmap_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, 
 }
 
 
-void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
+static void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix dv, v;
 	int y;
@@ -337,7 +343,7 @@ void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, i
 	}
 }
 
-void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
+static void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix dv, v;
 	int y, last_row = -1;
@@ -379,7 +385,7 @@ static void rep_stosb(char *ScreenPtr, int RunLength, int Color)
 	memset( ScreenPtr, Color, RunLength );
 }
 
-void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
+static void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
 {
 	   int AdjUp, AdjDown, ErrorTerm;
    	int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;
@@ -456,7 +462,7 @@ void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
 }
 
 
-void rls_stretch_scanline_setup( int XDelta, int YDelta )
+static void rls_stretch_scanline_setup( int XDelta, int YDelta )
 {
 		scale_trans_color = Transparency_color & 0xFF;
 		scale_ydelta_minus_1 = YDelta - 1;

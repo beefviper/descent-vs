@@ -1125,8 +1125,8 @@ fix find_connected_distance(vms_vector *p0, int seg0, vms_vector *p1, int seg1, 
 //		visited[i] = 0;
 //		depth[i] = 0;
 //	}
-memset(visited, 0, Highest_segment_index+1);
-memset(depth, 0, Highest_segment_index+1);
+memset(visited, 0, (size_t)Highest_segment_index+1);
+memset(depth, 0, (size_t)Highest_segment_index+1);
 
 	cur_seg = seg0;
 	visited[cur_seg] = 1;
@@ -1141,6 +1141,9 @@ memset(depth, 0, Highest_segment_index+1);
 
 			if (WALL_IS_DOORWAY(segp, snum) & wid_flag) {
 				int	this_seg = segp->children[snum];
+
+				if (this_seg < 0 || this_seg >= MAX_SEGMENTS || qtail >= MAX_SEGMENTS)
+					continue;
 
 				if (!visited[this_seg]) {
 					seg_queue[qtail].start = cur_seg;
@@ -1700,7 +1703,7 @@ int ncache_hits = 0;
 int ncache_misses = 0;
 #endif
 
-void ncache_init(void)
+static void ncache_init(void)
 {
 	ncache_flush();
 	ncache_initialized = 1;
@@ -1716,7 +1719,9 @@ void ncache_flush(void)
 
 
 // -------------------------------------------------------------------------------
-int find_ncache_element( int segnum, int sidenum, int face_flags )
+static void uncached_get_side_normal(segment *sp, int sidenum, int face_num, vms_vector * vm );
+static void uncached_get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_vector * vm2 );
+static int find_ncache_element( int segnum, int sidenum, int face_flags )
 {
 	uint i;
 
@@ -1799,7 +1804,7 @@ void get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_vector * v
 
 }
 
-void uncached_get_side_normal(segment *sp, int sidenum, int face_num, vms_vector * vm )
+static void uncached_get_side_normal(segment *sp, int sidenum, int face_num, vms_vector * vm )
 {
 	int	vm0, vm1, vm2, vm3, negate_flag;
 	char	*vs = Side_to_verts[sidenum];
@@ -1826,7 +1831,7 @@ void uncached_get_side_normal(segment *sp, int sidenum, int face_num, vms_vector
 	}
 }
 
-void uncached_get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_vector * vm2 )
+static void uncached_get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_vector * vm2 )
 {
 	int	vvm0, vvm1, vvm2, vvm3, negate_flag;
 	char	*vs = Side_to_verts[sidenum];

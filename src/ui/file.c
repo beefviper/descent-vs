@@ -66,6 +66,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "mem.h"
 
 #include "timer.h"			// TICKER (the BIOS ticker at 0x46C)
+#include "error.h"
 
 char filename_list[300][13];
 char directory_list[100][13];
@@ -225,7 +226,8 @@ int file_chdir( char * dir )
 	char * Drive, * Path;
 	char NoDir[] = ".";
 
-	getcwd( OriginalDirectory, 100 );
+	if (getcwd(OriginalDirectory, 100) == NULL)
+		OriginalDirectory[0] = '\0';
 
 	file_capitalize( dir );
 
@@ -271,7 +273,8 @@ int file_getdirlist( int MaxNum, char list[][13] )
 	char cwd[129] = {0};
 	(void)MaxNum;
 
-	getcwd(cwd, 128 );
+	if (getcwd(cwd, 128) == NULL)
+		cwd[0] = '\0';
 
 	if (strlen(cwd) >= 4)
 	{
@@ -283,8 +286,10 @@ int file_getdirlist( int MaxNum, char list[][13] )
 	if( !_dos_findfirst( "*.", _A_SUBDIR, &find ) )
 	{
 		if ( find.attrib & _A_SUBDIR )	{
-			if (strcmp( "..", find.name) && strcmp( ".", find.name))
+			if (strcmp( "..", find.name) && strcmp( ".", find.name)) {
 				strncpy(list[NumDirs++], find.name, 13 );
+				list[NumDirs-1][12] = '\0';
+			}
 		}
 
 		while( !_dos_findnext( &find ) )
@@ -298,6 +303,7 @@ int file_getdirlist( int MaxNum, char list[][13] )
 						break;
 					} else {
 						strncpy(list[NumDirs++], find.name, 13 );
+						list[NumDirs-1][12] = '\0';
 					}
 				}
 			}
@@ -329,6 +335,7 @@ int file_getfilelist( int MaxNum, char list[][13], char * filespec )
 	{
 		//if ( !(find.attrib & _A_SUBDIR) )
 			strncpy(list[NumFiles++], find.name, 13 );
+			list[NumFiles-1][12] = '\0';
 
 		while( !_dos_findnext( &find ) )
 		{
@@ -340,6 +347,7 @@ int file_getfilelist( int MaxNum, char list[][13], char * filespec )
 					break;
 				} else {
 					strncpy(list[NumFiles++], find.name, 13 );
+					list[NumFiles-1][12] = '\0';
 				}
 			//}
 
@@ -378,10 +386,12 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 
 	char OrgDir[128] = {0};
 
-	getcwd( OrgDir, 128 );
+	if (getcwd(OrgDir, 128) == NULL)
+		OrgDir[0] = '\0';
 
 	if (FirstTime)
-		getcwd( CurDir, 128 );
+		if (getcwd(CurDir, 128) == NULL)
+			CurDir[0] = '\0';
 	FirstTime=0;
 
 	file_chdir( CurDir );
@@ -546,7 +556,8 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 				ui_listbox_change( wnd, ListBox2, NumDirs, directory_list[0], 13 );
 				new_listboxes = 0;
 
-				getcwd( CurDir, 35 );
+				if (getcwd(CurDir, 35) == NULL)
+					CurDir[0] = '\0';
 				ui_wprintf_at( wnd, 20, 60, "%s", Spaces );
 				ui_wprintf_at( wnd, 20, 60, "%s", CurDir );
 
@@ -576,7 +587,8 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 	if ( strlen(fulldir) > 1 )
 		file_chdir( fulldir );
 
-	getcwd( CurDir, 35 );
+	if (getcwd(CurDir, 35) == NULL)
+		CurDir[0] = '\0';
 
 	if ( strlen(CurDir) > 0 )
 	{
@@ -606,6 +618,8 @@ int ui_get_file( char * filename, char * Filespec  )
 	{
 		//MALLOC( text[i], char, 15 );//Another compile hack -KRB
 		text[i]=(char *)malloc(15*sizeof(char));
+		if (text[i] == NULL)
+			Error("Out of memory");
 		strcpy(text[i], filename_list[i] );
 	}
 

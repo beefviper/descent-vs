@@ -273,7 +273,6 @@ void init_interface_vars_to_assembler(void)
 		init_fix_recip_table();
 }
 
-int tmap_set_selector(int selector, void *buffer, unsigned int size);
 
 // -------------------------------------------------------------------------------------
 //                             VARIABLES

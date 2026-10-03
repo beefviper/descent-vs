@@ -246,7 +246,8 @@ typedef struct fake_file {
 #endif
 
 // Function Prototypes
-int put_byte(unsigned char c, FILE* f);
+static int put_byte(unsigned char c,FILE *f);
+static int put_byte(unsigned char c, FILE* f);
 
 
 static long get_sig(FFILE *f)
@@ -328,7 +329,7 @@ static char get_byte(FFILE *f)
 	return f->data[f->position++];
 }
 
-int put_byte(unsigned char c,FILE *f)
+static int put_byte(unsigned char c,FILE *f)
 {
 	return fputc(c,f);
 }
@@ -496,7 +497,7 @@ static int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 			if ((p-bmheader->raw_data) % width == 0)
 					row_count++;
 
-			Assert((p-bmheader->raw_data) - (width*row_count) < width);
+			Assert((p-bmheader->raw_data) - ((ptrdiff_t)width*row_count) < width);
 			#endif
 
 		}
@@ -659,7 +660,7 @@ static int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmh
 						else {
 
 							//MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );//Hack by KRB
-							bmheader->raw_data=(ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
+							bmheader->raw_data=(ubyte *)malloc(((size_t)bmheader->w * bmheader->h)*sizeof(ubyte));
 							if (!bmheader->raw_data)
 								return IFF_NO_MEM;
 						}
@@ -677,9 +678,11 @@ static int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmh
 						bmheader->type = prev_bm->bm_type;
 
 						//MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );//Hack by KRB
-						bmheader->raw_data=(ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
+						bmheader->raw_data=(ubyte *)malloc(((size_t)bmheader->w * bmheader->h)*sizeof(ubyte));
+						if (bmheader->raw_data == NULL)
+							Error("Out of memory");
 
-						memcpy(bmheader->raw_data, prev_bm->bm_data, bmheader->w * bmheader->h );
+						memcpy(bmheader->raw_data, prev_bm->bm_data, (size_t)bmheader->w * bmheader->h );
 						skip_chunk(ifile,len);
 
 						break;
@@ -745,7 +748,7 @@ static int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
 	ubyte checkmask,newbyte,setbit;
 
 	//MALLOC( new_data, byte, bmheader->w * bmheader->h );//hack by KRB
-	new_data = (ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
+	new_data = (ubyte *)malloc(((size_t)bmheader->w * bmheader->h)*sizeof(ubyte));
 	if (new_data == NULL) return IFF_NO_MEM;
 
 	destptr = new_data;
@@ -797,7 +800,7 @@ static int convert_rgb15(grs_bitmap *bm,iff_bitmap_header *bmheader)
 //        if ((new_data = malloc(bm->bm_w * bm->bm_h * 2)) == NULL)
 //            {ret=IFF_NO_MEM; goto done;}
        //MALLOC(new_data, ushort, bm->bm_w * bm->bm_h * 2);//hack by KRB also a bug I believe. It is allocating twice the needed memory.
-		new_data = malloc(bm->bm_w * bm->bm_h * 2);//I left it as previously done, thinking the *2 means sizeof(ushort)
+		new_data = malloc((size_t)bm->bm_w * bm->bm_h * 2);//I left it as previously done, thinking the *2 means sizeof(ushort)
        if (new_data == NULL)
            return IFF_NO_MEM;
 
@@ -833,6 +836,8 @@ static int open_fake_file(char *ifilename,FFILE *ffile)
 
 	//MALLOC(ffile->data,ubyte,ffile->length);//Hack by KRB
 	ffile->data = (ubyte *)malloc(ffile->length*sizeof(ubyte));
+	if (ffile->data == NULL)
+		Error("Out of memory");
 
 	if (cfread(ffile->data, 1, ffile->length, ifile) < (size_t)ffile->length)
 		ret = IFF_READ_ERROR;
@@ -1116,7 +1121,7 @@ static int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compressi
 
     //if (! (new_span = malloc(bitmap_header->w+(bitmap_header->w/128+2)*2))) return IFF_NO_MEM;
    // MALLOC( new_span, ubyte, bitmap_header->w + (bitmap_header->w/128+2)*2);//hack by KRB, also allocating twice the needed memory, probably a bug
-	new_span = malloc(bitmap_header->w+(bitmap_header->w/128+2)*2);//left it alone, as in 2 lines above -KRB
+	new_span = malloc((size_t)bitmap_header->w+((size_t)bitmap_header->w/128+2)*2);//left it alone, as in 2 lines above -KRB
     if (new_span == NULL) return IFF_NO_MEM;
 
 	for (y=bitmap_header->h;y--;) {
@@ -1126,7 +1131,7 @@ static int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compressi
 			fwrite(new_span,newlen,1,ofile);
 		}
 		else
-			fwrite(p,bitmap_header->w+odd,1,ofile);
+			fwrite(p,(size_t)bitmap_header->w+odd,1,ofile);
 
 		p+=bitmap_header->row_size;	//bitmap_header->w;
 	}
@@ -1146,7 +1151,7 @@ static int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compressi
 
 #if WRITE_TINY
 //write a small representation of a bitmap. returns size
-int write_tiny(CFILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
+static int write_tiny(CFILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 {
 	int skip;
 	int new_w,new_h;
@@ -1328,6 +1333,8 @@ int iff_read_animbrush(char *ifilename,grs_bitmap **bm_list,int max_bitmaps,int 
 
 		   //MALLOC(bm_list[*n_bitmaps] , grs_bitmap, 1 );//hack by KRB
 			bm_list[*n_bitmaps]=(grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+			if (bm_list[*n_bitmaps] == NULL)
+				Error("Out of memory");
 			bm_list[*n_bitmaps]->bm_data = NULL;
 
 			ret = iff_parse_bitmap(&ifile,bm_list[*n_bitmaps],form_type,*n_bitmaps>0?NULL:palette,prev_bm);

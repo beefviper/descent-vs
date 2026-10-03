@@ -117,7 +117,6 @@ extern int key_peekkey(void);   // Same as inkey, but doesn't remove key from bu
 
 extern char key_to_ascii(int keycode );
 
-extern void key_debug(void);    // Does an INT3
 
 //==========================================================================
 // These are the unbuffered routines. Index by the keyboard scancode.

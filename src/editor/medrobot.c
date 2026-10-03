@@ -757,18 +757,18 @@ void do_robot_window(void)
 		switch (Cur_goody_type) {
 			case OBJ_ROBOT:
 				strcpy(type_text, "Robot  ");
-				strncpy(id_text, Robot_names[Cur_goody_id], strlen(Robot_names[Cur_goody_id]));
+				memcpy(id_text, Robot_names[Cur_goody_id], strlen(Robot_names[Cur_goody_id]));
 				break;
 			case OBJ_POWERUP:
 				strcpy(type_text, "Powerup");
-				strncpy(id_text, Powerup_names[Cur_goody_id], strlen(Powerup_names[Cur_goody_id]));
+				memcpy(id_text, Powerup_names[Cur_goody_id], strlen(Powerup_names[Cur_goody_id]));
 				break;
 			default:
 				editor_status("Illegal contained object type (%i), changing to powerup.", Cur_goody_type);
 				Cur_goody_type = OBJ_POWERUP;
 				Cur_goody_id = 0;
 				strcpy(type_text, "Powerup");
-				strncpy(id_text, Powerup_names[Cur_goody_id], strlen(Powerup_names[Cur_goody_id]));
+				memcpy(id_text, Powerup_names[Cur_goody_id], strlen(Powerup_names[Cur_goody_id]));
 				break;
 		}
 
@@ -785,7 +785,7 @@ void do_robot_window(void)
 				id_text[i] = ' ';
 			id_text[i] = 0;
 
-			strncpy(id_text, Robot_names[id], strlen(Robot_names[id]));
+			memcpy(id_text, Robot_names[id], strlen(Robot_names[id]));
 
 			ui_wprintf_at( MainWindow, 12,  6, "Robot: %3d ", Cur_object_index );
 			ui_wprintf_at( MainWindow, 12, 22, "   Id: %3d", id);

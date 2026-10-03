@@ -10,9 +10,5 @@ CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
 AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
-int     medlisp_init(void);
-void    medlisp_go(void);
-void    medlisp_do_string( char * s, int length, int show_results );
-void    medlisp_close(void);
 int     medlisp_attach_function( char * LispFuncName, double (* Cfunction)(void), int NumArgs );
 extern  double medlisp_args[];

@@ -242,7 +242,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gauges.h"
 #include "newdemo.h"
 #include "automap.h"
-#include "piggy.h"
 #include "paging.h"
 #include "titles.h"
 #include "text.h"
@@ -479,6 +478,7 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 
 //Save description
 	strncpy( desc, sg_name, DESC_LENGTH );
+	desc[DESC_LENGTH] = '\0';
 	fwrite( desc, sizeof(char)*DESC_LENGTH, 1, fp );
 
 // Save the current screen shot...
@@ -687,7 +687,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 			if ( (Objects[i].type != OBJ_NONE) && (Objects[i].render_type==RT_MORPH))	{
 				morph_data *md;
 				md = find_morph_data(&Objects[i]);
-				if (md) {
+				if (md && md->obj) {
 					md->obj->control_type = md->morph_save_control_type;
 					md->obj->movement_type = md->morph_save_movement_type;
 					md->obj->render_type = RT_POLYOBJ;
@@ -995,11 +995,15 @@ RetryObjectLoading:
 
 		//Restore door info
 		fread( &i, sizeof(int), 1, fp );
+		if (i < 0 || i > MAX_DOORS)
+			Error("Saved game is corrupt (%d open doors)", i);
 		Num_open_doors = i;
 		fread( ActiveDoors, sizeof(active_door)*Num_open_doors, 1, fp );
 
 		//Restore trigger info
 		fread( &Num_triggers, sizeof(int), 1, fp );
+		if (Num_triggers < 0 || Num_triggers > MAX_TRIGGERS)
+			Error("Saved game is corrupt (%d triggers)", Num_triggers);
 		fread( Triggers, sizeof(trigger)*Num_triggers, 1, fp );
 
 		//Restore tmap info
@@ -1015,9 +1019,13 @@ RetryObjectLoading:
 		fread( &Fuelcen_control_center_destroyed, sizeof(int), 1, fp );
 		fread( &Fuelcen_seconds_left, sizeof(int), 1, fp );
 		fread( &Num_robot_centers, sizeof(int), 1, fp );
+		if (Num_robot_centers < 0 || Num_robot_centers > MAX_ROBOT_CENTERS)
+			Error("Saved game is corrupt (%d robot centers)", Num_robot_centers);
 		fread( RobotCenters, sizeof(matcen_info)*Num_robot_centers, 1, fp );
 		fread( &ControlCenterTriggers, sizeof(control_center_triggers), 1, fp );
 		fread( &Num_fuelcenters, sizeof(int), 1, fp );
+		if (Num_fuelcenters < 0 || Num_fuelcenters > MAX_NUM_FUELCENS)
+			Error("Saved game is corrupt (%d fuel centers)", Num_fuelcenters);
 		fread( Station, sizeof(FuelCenter)*Num_fuelcenters, 1, fp );
 
 		// Restore the control cen info

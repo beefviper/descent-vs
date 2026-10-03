@@ -327,11 +327,16 @@ vms_matrix mine_exit_orient;
 int outside_mine;
 
 // Function Prototypes
-void generate_starfield(void);
-int find_exit_side(object* obj);
-void start_endlevel_flythrough(int n,object *obj,fix speed);
-void do_endlevel_flythrough(int n);
-void draw_stars(void);
+static void generate_starfield(void);
+static void generate_starfield(void);
+static int find_exit_side(object *obj);
+static int find_exit_side(object* obj);
+static void start_endlevel_flythrough(int n,object *obj,fix speed);
+static void start_endlevel_flythrough(int n,object *obj,fix speed);
+static void do_endlevel_flythrough(int n);
+static void do_endlevel_flythrough(int n);
+static void draw_stars(void);
+static void draw_stars(void);
 
 
 grs_bitmap terrain_bm_instance;
@@ -634,6 +639,7 @@ static void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *c
 	vm_extract_angles_vector(av,&tv);
 }
 
+static int _do_slew_movement(object *obj, int check_keys, int check_joy );
 void do_endlevel_frame(void)
 {
 	static fix timer;
@@ -1000,7 +1006,7 @@ void do_endlevel_frame(void)
 #define MIN_D 0x100
 
 //find which side to fly out of
-int find_exit_side(object *obj)
+static int find_exit_side(object *obj)
 {
 	int i;
 	vms_vector prefvec = {0},segcenter = {0},sidevec = {0};
@@ -1121,7 +1127,7 @@ void render_external_scene(fix eye_offset)
 
 vms_vector stars[MAX_STARS];
 
-void generate_starfield(void)
+static void generate_starfield(void)
 {
 	int i;
 
@@ -1134,7 +1140,7 @@ void generate_starfield(void)
 	}
 }
 
-void draw_stars(void)
+static void draw_stars(void)
 {
 	int i;
 	int intensity=31;
@@ -1255,14 +1261,13 @@ int matt_find_connect_side(int seg0,int seg1);
 void compute_segment_center(vms_vector *vp,segment *sp);
 
 fixang delta_ang(fixang a,fixang b);
-fixang interp_angle(fixang dest,fixang src,fixang step);
 
 #define DEFAULT_SPEED i2f(16)
 
 #define MIN_D 0x100
 
 //if speed is zero, use default speed
-void start_endlevel_flythrough(int n,object *obj,fix speed)
+static void start_endlevel_flythrough(int n,object *obj,fix speed)
 {
 	flydata = &fly_objects[n];
 
@@ -1288,7 +1293,7 @@ static vms_angvec *angvec_add2_scale(vms_angvec *dest,vms_vector *src,fix s)
 
 #define MAX_SLIDE_PER_SEGMENT 0x10000
 
-void do_endlevel_flythrough(int n)
+static void do_endlevel_flythrough(int n)
 {
 	object *obj;
 	segment *pseg;
@@ -1433,7 +1438,7 @@ extern short old_joy_x,old_joy_y;	//position last time around
 #include "joy.h"
 
 #ifdef SLEW_ON		//this is a special routine for slewing around external scene
-int _do_slew_movement(object *obj, int check_keys, int check_joy )
+static int _do_slew_movement(object *obj, int check_keys, int check_joy )
 {
 	int moved = 0;
 	vms_vector svel = {0}, movement = {0};				//scaled velocity (per this frame)
@@ -1621,7 +1626,9 @@ try_again:
 
 			case 2:
 
-				sscanf(p,"%d,%d",&exit_point_bmx,&exit_point_bmy);
+				if (sscanf(p,"%d,%d",&exit_point_bmx,&exit_point_bmy) != 2) {
+					// malformed input: leave the values as they were
+				}
 				break;
 
 			case 3:							//exit heading
@@ -1654,7 +1661,9 @@ try_again:
 				vms_angvec ta = {0};
 				int pitch,head;
 
-				sscanf(p,"%d,%d",&head,&pitch);
+				if (sscanf(p,"%d,%d",&head,&pitch) != 2) {
+					// malformed input: leave the values as they were
+				}
 
 				ta.h = i2f(head)/360;
 				ta.p = -i2f(pitch)/360;

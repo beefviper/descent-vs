@@ -99,8 +99,6 @@ do { 																\
 	#define PIGGY_PAGE_IN(bmp)
 #endif
 
-void piggy_read_bitmap_data(grs_bitmap * bmp);
-void piggy_read_sound_data(digi_sound	*snd);
 
 void piggy_load_level_data(void);
 

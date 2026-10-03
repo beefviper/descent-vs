@@ -507,8 +507,10 @@ grs_bitmap background_bitmap;
 int Game_aborted;
 
 // Function Prototypes
-void fill_background(int x, int y, int w, int h, int dx, int dy);
-void game_init_render_sub_buffers(int x, int y, int w, int h);
+static void fill_background(int x,int y,int w,int h,int dx,int dy);
+static void fill_background(int x, int y, int w, int h, int dx, int dy);
+static void game_init_render_sub_buffers( int x, int y, int w, int h );
+static void game_init_render_sub_buffers(int x, int y, int w, int h);
 void draw_centered_text(int y, char* s);
 void GameLoop(int RenderFlag, int ReadControlsFlag);
 int create_special_path(void);
@@ -908,7 +910,7 @@ void copy_background_rect(int left,int top,int right,int bot)
 
 }
 
-void fill_background(int x,int y,int w,int h,int dx,int dy)
+static void fill_background(int x,int y,int w,int h,int dx,int dy)
 {
 	gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
 	copy_background_rect(x-dx,y-dy,x-1,y+h+dy-1);
@@ -959,7 +961,7 @@ static void shrink_window(void)
 
 }
 
-void game_init_render_sub_buffers( int x, int y, int w, int h )
+static void game_init_render_sub_buffers( int x, int y, int w, int h )
 {
 	gr_init_sub_canvas( &VR_render_sub_buffer[0], &VR_render_buffer[0], x, y, w, h );
 	gr_init_sub_canvas( &VR_render_sub_buffer[1], &VR_render_buffer[1], x, y, w, h );
@@ -1765,7 +1767,7 @@ static void game_render_frame_stereo_interlaced(void)
 
 	// Draws white and black registration encoding lines
 	// and Accounts for pixel-shift adjustment in upcoming bitblts
-	if (Game_simuleyes_flag)	{
+	if (Game_simuleyes_flag && RenderCanvas[0].cv_bitmap.bm_data)	{
 		int width, height, quarter, nibble;
 		void *pixptr, *drawptr;
 
@@ -1782,9 +1784,9 @@ static void game_render_frame_stereo_interlaced(void)
 		memset(drawptr, svr_white, quarter);
 		drawptr = (void*)((ubyte *)drawptr + quarter);
 		if (VR_eye_offset < 0) // stay within buffer limit
-			memset(drawptr, svr_black, 3*quarter - nibble);
+			memset(drawptr, svr_black, (size_t)3*quarter - nibble);
 		else
-			memset(drawptr, svr_black, 3*quarter);
+			memset(drawptr, svr_black, (size_t)3*quarter);
 
 		// black out right-hand side of right page
 		pixptr = RenderCanvas[1].cv_bitmap.bm_data;
@@ -1792,10 +1794,10 @@ static void game_render_frame_stereo_interlaced(void)
 
 		// draw registration code for right eye
 		drawptr = (void*)((ubyte *)pixptr + width*(height-1) + VR_eye_offset);
-		memset(drawptr, svr_white, 3*quarter);
+		memset(drawptr, svr_white, (size_t)3*quarter);
 		drawptr = (void*)((ubyte *)drawptr + 3*quarter);
 		if (VR_eye_offset > 0) // stay within buffer limit
-			memset(drawptr, svr_black, quarter - nibble);
+			memset(drawptr, svr_black, (size_t)quarter - nibble);
 		else
 			memset(drawptr, svr_black, quarter);
    }
@@ -1964,8 +1966,6 @@ static void game_render_frame(void)
 
 }
 
-void do_photos(void);
-void level_with_floor(void);
 
 void save_screen_shot(int automap_flag)
 {
@@ -2533,7 +2533,6 @@ void arcade_frame_info(void)
 #endif
 
 //temp function until Matt cleans up game sequencing
-extern void temp_reset_stuff_on_level(void);
 
 //deal with rear view - switch it on, or off, or whatever
 static void check_rear_view(void)
@@ -4002,10 +4001,6 @@ player_follow_path(ConsoleObject);
 
 //		mprintf(0,"Velocity %2.2f\n", f2fl(vm_vec_mag(&ConsoleObject->phys_info.velocity)));
 
-#if 0
-mem_fill();
-mem_check();
-#endif
 
 		calc_frame_time();
 
@@ -4307,110 +4302,4 @@ static void show_free_objects(void)
 
 }
 
-#define	FILL_VAL	0xcc		//	int 3 opcode value
-
-
-extern void code_01s(void), code_01e(void);
-extern void code_02s(void), code_02e(void);
-extern void code_03s(void), code_03e(void);
-extern void code_04s(void), code_04e(void);
-extern void code_05s(void), code_05e(void);
-extern void code_06s(void), code_06e(void);
-extern void code_07s(void), code_07e(void);
-extern void code_08s(void), code_08e(void);
-extern void code_09s(void), code_09e(void);
-extern void code_10s(void), code_10e(void);
-extern void code_11s(void), code_11e(void);
-extern void code_12s(void), code_12e(void);
-extern void code_13s(void), code_13e(void);
-extern void code_14s(void), code_14e(void);
-extern void code_15s(void), code_15e(void);
-extern void code_16s(void), code_16e(void);
-extern void code_17s(void), code_17e(void);
-extern void code_18s(void), code_18e(void);
-extern void code_19s(void), code_19e(void);
-extern void code_20s(void), code_20e(void);
-extern void code_21s(void), code_21e(void);
-
-int	Mem_filled = 0;
-
-static void fill_func(char *start, char *end, char value)
-{
-	char	*i;
-
-	mprintf((0, "Filling from %8x to %8x\n", start, end));
-
-	for (i=start; i<end; i++)
-		*i = value;
-
-}
-
-static void check_func(char *start, char *end, char value)
-{
-	char	*i;
-
-	for (i=start; i<end; i++)
-		if (*i != value) {
-			Int3();		//	The nast triple aught six bug...we can smell it...contact Mike!
-			Error("Oops, the nasty triple aught six bug.  Address == %8x\n", i);
-		}
-
-}
-
-#if 0
-void mem_fill(void)
-{
-	if (Mem_filled)
-		return;
-
-	Mem_filled = 1;
-
-	fill_func((char *) code_01s, (char *) code_01e, FILL_VAL);
-	fill_func((char *) code_02s, (char *) code_02e, FILL_VAL);
-	fill_func((char *) code_03s, (char *) code_03e, FILL_VAL);
-	fill_func((char *) code_04s, (char *) code_04e, FILL_VAL);
-	fill_func((char *) code_05s, (char *) code_05e, FILL_VAL);
-	fill_func((char *) code_06s, (char *) code_06e, FILL_VAL);
-	fill_func((char *) code_07s, (char *) code_07e, FILL_VAL);
-	fill_func((char *) code_08s, (char *) code_08e, FILL_VAL);
-	fill_func((char *) code_09s, (char *) code_09e, FILL_VAL);
-	fill_func((char *) code_10s, (char *) code_10e, FILL_VAL);
-	fill_func((char *) code_11s, (char *) code_11e, FILL_VAL);
-	fill_func((char *) code_12s, (char *) code_12e, FILL_VAL);
-	fill_func((char *) code_13s, (char *) code_13e, FILL_VAL);
-	fill_func((char *) code_14s, (char *) code_14e, FILL_VAL);
-	fill_func((char *) code_15s, (char *) code_15e, FILL_VAL);
-	fill_func((char *) code_16s, (char *) code_16e, FILL_VAL);
-	fill_func((char *) code_17s, (char *) code_17e, FILL_VAL);
-	fill_func((char *) code_18s, (char *) code_18e, FILL_VAL);
-	fill_func((char *) code_19s, (char *) code_19e, FILL_VAL);
-	fill_func((char *) code_20s, (char *) code_20e, FILL_VAL);
-	fill_func((char *) code_21s, (char *) code_21e, FILL_VAL);
-}
-
-void mem_check(void)
-{
-	check_func((char *) code_01s, (char *) code_01e, FILL_VAL);
-	check_func((char *) code_02s, (char *) code_02e, FILL_VAL);
-	check_func((char *) code_03s, (char *) code_03e, FILL_VAL);
-	check_func((char *) code_04s, (char *) code_04e, FILL_VAL);
-	check_func((char *) code_05s, (char *) code_05e, FILL_VAL);
-	check_func((char *) code_06s, (char *) code_06e, FILL_VAL);
-	check_func((char *) code_07s, (char *) code_07e, FILL_VAL);
-	check_func((char *) code_08s, (char *) code_08e, FILL_VAL);
-	check_func((char *) code_09s, (char *) code_09e, FILL_VAL);
-	check_func((char *) code_10s, (char *) code_10e, FILL_VAL);
-	check_func((char *) code_11s, (char *) code_11e, FILL_VAL);
-	check_func((char *) code_12s, (char *) code_12e, FILL_VAL);
-	check_func((char *) code_13s, (char *) code_13e, FILL_VAL);
-	check_func((char *) code_14s, (char *) code_14e, FILL_VAL);
-	check_func((char *) code_15s, (char *) code_15e, FILL_VAL);
-	check_func((char *) code_16s, (char *) code_16e, FILL_VAL);
-	check_func((char *) code_17s, (char *) code_17e, FILL_VAL);
-	check_func((char *) code_18s, (char *) code_18e, FILL_VAL);
-	check_func((char *) code_19s, (char *) code_19e, FILL_VAL);
-	check_func((char *) code_20s, (char *) code_20e, FILL_VAL);
-	check_func((char *) code_21s, (char *) code_21e, FILL_VAL);
-}
-#endif
 #endif

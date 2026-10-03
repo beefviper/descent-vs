@@ -329,7 +329,8 @@ n *
 
 int     sense_function1=0;
 int	  vfx1_installed=0;
-int     SenseStatus1( void );
+static int SenseStatus1( void );
+static int     SenseStatus1( void );
 
 // Array used to 'blink' the cursor while waiting for a keypress.
 byte fades[64] = { 1,1,1,2,2,3,4,4,5,6,8,9,10,12,13,15,16,17,19,20,22,23,24,26,27,28,28,29,30,30,31,31,31,31,31,30,30,29,28,28,27,26,24,23,22,20,19,17,16,15,13,12,10,9,8,6,5,4,4,3,2,2,1,1 };
@@ -541,17 +542,28 @@ kc_item kc_mouse[NUM_OTHER_CONTROLS] = {
 
 
 // Function Prototypes
-void kc_drawitem(kc_item* item, int is_current);
-void kc_change_key(kc_item* item);
-void kc_change_mousebutton(kc_item* item);
-void kc_change_mouseaxis(kc_item* item);
-void kc_change_joybutton(kc_item* item);
-void kc_change_joyaxis(kc_item* item);
-void kc_change_invert(kc_item* item);
-void kconfig_read_fcs(int raw_axis);
-int SenseGetData(int function, int cls, fix* yaw, fix* pitch, fix* roll, int* buttons);
-int SenseSetZero(int function, int cls);
-void kconfig_set_fcs_button(int btn, int button);
+static void kc_drawitem( kc_item *item, int is_current );
+static void kc_drawitem(kc_item* item, int is_current);
+static void kc_change_key( kc_item * item );
+static void kc_change_key(kc_item* item);
+static void kc_change_mousebutton( kc_item * item );
+static void kc_change_mousebutton(kc_item* item);
+static void kc_change_mouseaxis( kc_item * item );
+static void kc_change_mouseaxis(kc_item* item);
+static void kc_change_joybutton( kc_item * item );
+static void kc_change_joybutton(kc_item* item);
+static void kc_change_joyaxis( kc_item * item );
+static void kc_change_joyaxis(kc_item* item);
+static void kc_change_invert( kc_item * item );
+static void kc_change_invert(kc_item* item);
+static void kconfig_read_fcs( int raw_axis );
+static void kconfig_read_fcs(int raw_axis);
+static int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons );
+static int SenseGetData(int function, int cls, fix* yaw, fix* pitch, fix* roll, int* buttons);
+static int SenseSetZero( int function, int cls );
+static int SenseSetZero(int function, int cls);
+static void kconfig_set_fcs_button( int btn, int button );
+static void kconfig_set_fcs_button(int btn, int button);
 
 
 int kconfig_is_axes_used(int axis)
@@ -565,7 +577,7 @@ int kconfig_is_axes_used(int axis)
 }
 
 #ifdef TABLE_CREATION
-int find_item_at( kc_item * items, int nitems, int x, int y )
+static int find_item_at( kc_item * items, int nitems, int x, int y )
 {
 	int i;
 
@@ -576,7 +588,7 @@ int find_item_at( kc_item * items, int nitems, int x, int y )
 	return -1;
 }
 
-int find_next_item_up( kc_item * items, int nitems, int citem )
+static int find_next_item_up( kc_item * items, int nitems, int citem )
 {
 	int x, y, i;
 
@@ -598,7 +610,7 @@ int find_next_item_up( kc_item * items, int nitems, int citem )
 	return i;
 }
 
-int find_next_item_down( kc_item * items, int nitems, int citem )
+static int find_next_item_down( kc_item * items, int nitems, int citem )
 {
 	int x, y, i;
 
@@ -620,7 +632,7 @@ int find_next_item_down( kc_item * items, int nitems, int citem )
 	return i;
 }
 
-int find_next_item_right( kc_item * items, int nitems, int citem )
+static int find_next_item_right( kc_item * items, int nitems, int citem )
 {
 	int x, y, i;
 
@@ -642,7 +654,7 @@ int find_next_item_right( kc_item * items, int nitems, int citem )
 	return i;
 }
 
-int find_next_item_left( kc_item * items, int nitems, int citem )
+static int find_next_item_left( kc_item * items, int nitems, int citem )
 {
 	int x, y, i;
 
@@ -933,7 +945,7 @@ static void kconfig_sub(kc_item * items,int nitems, char * title)
 }
 
 
-void kc_drawitem( kc_item *item, int is_current )
+static void kc_drawitem( kc_item *item, int is_current )
 {
 	int x, w, h, aw;
 	char btext[10] = {0};
@@ -965,6 +977,7 @@ void kc_drawitem( kc_item *item, int is_current )
 			case BT_INVERT:
 				strncpy( btext, Text_string[invert_text[item->value]], 10 ); break;
 		}
+		btext[sizeof(btext)-1] = '\0';
 	}
 	gr_get_string_size(btext, &w, &h, &aw  );
 
@@ -1005,7 +1018,7 @@ static void kc_drawquestion( kc_item *item )
 	gr_string( x, item->y, "?" );
 }
 
-void kc_change_key( kc_item * item )
+static void kc_change_key( kc_item * item )
 {
 	int i,n,f,k;
 	ubyte keycode;
@@ -1059,7 +1072,7 @@ void kc_change_key( kc_item * item )
 
 }
 
-void kc_change_joybutton( kc_item * item )
+static void kc_change_joybutton( kc_item * item )
 {
 	int n,i,k;
 	ubyte code;
@@ -1127,7 +1140,7 @@ void kc_change_joybutton( kc_item * item )
 	game_flush_inputs();
 }
 
-void kc_change_mousebutton( kc_item * item )
+static void kc_change_mousebutton( kc_item * item )
 {
 	int n,i,b,k;
 	ubyte code;
@@ -1176,7 +1189,7 @@ void kc_change_mousebutton( kc_item * item )
 
 }
 
-void kc_change_joyaxis( kc_item * item )
+static void kc_change_joyaxis( kc_item * item )
 {
 	int axis[4] = {0};
 	int old_axis[4] = {0};
@@ -1234,7 +1247,7 @@ void kc_change_joyaxis( kc_item * item )
 
 }
 
-void kc_change_mouseaxis( kc_item * item )
+static void kc_change_mouseaxis( kc_item * item )
 {
 	int i,n,k;
 	ubyte code;
@@ -1286,7 +1299,7 @@ void kc_change_mouseaxis( kc_item * item )
 }
 
 
-void kc_change_invert( kc_item * item )
+static void kc_change_invert( kc_item * item )
 {
 	game_flush_inputs();
 
@@ -1335,7 +1348,7 @@ void kconfig(int n, char * title)
 }
 
 
-void kconfig_read_fcs( int raw_axis )
+static void kconfig_read_fcs( int raw_axis )
 {
 	int raw_button, button, axis_min[4] = {0}, axis_center[4] = {0}, axis_max[4] = {0};
 
@@ -1366,7 +1379,7 @@ void kconfig_read_fcs( int raw_axis )
 }
 
 
-void kconfig_set_fcs_button( int btn, int button )
+static void kconfig_set_fcs_button( int btn, int button )
 {
 	int state,time_down,upcount,downcount;
 	state = time_down = upcount = downcount = 0;
@@ -2158,7 +2171,7 @@ void kc_set_controls(void)
 }
 
 
-int SenseStatus1( void )
+static int SenseStatus1( void )
 {
 	union  REGS     regs = {0};
 	struct SREGS    sregs = {0};
@@ -2184,7 +2197,7 @@ int SenseStatus1( void )
 	return( 0 );
 }
 
-int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons )
+static int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons )
 {
 	union  REGS     regs = {0};
 	struct SREGS    sregs = {0};
@@ -2232,7 +2245,7 @@ void kconfig_center_headset(void)
 
 }
 
-int SenseSetZero( int function, int cls )
+static int SenseSetZero( int function, int cls )
 {
 	union  REGS     regs = {0};
 	struct SREGS    sregs = {0};

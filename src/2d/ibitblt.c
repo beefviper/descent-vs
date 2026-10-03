@@ -354,7 +354,7 @@ static void gr_ibitblt_do_asm(char *start_si, char *start_di, ubyte * code)
 			break;
 		case OPCODE_REP:			// rep movsd
 			code++;
-			memcpy( edi, esi, ecx*4 );
+			memcpy( edi, esi, (size_t)ecx*4 );
 			esi += ecx*4;
 			edi += ecx*4;
 			ecx = 0;

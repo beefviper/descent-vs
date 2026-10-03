@@ -226,6 +226,7 @@ int build_mission_list(int anarchy_mode)
 			*t = 0;			//kill extension
 
 			strncpy( Mission_list[count].filename, temp, 9 );
+			Mission_list[count].filename[8] = '\0';
 			Mission_list[count].anarchy_only_flag = is_anarchy = 0;
 
 			mfile = fopen(find.name,"rt");
@@ -242,6 +243,7 @@ int build_mission_list(int anarchy_mode)
 					t = p + strlen(p)-1;
 					while (isspace(*t)) t--;
 					strncpy(Mission_list[count].mission_name,p,MISSION_NAME_LEN);
+					Mission_list[count].mission_name[MISSION_NAME_LEN] = '\0';
 				}
 				else {
 					fclose(mfile);
@@ -288,6 +290,7 @@ int build_mission_list(int anarchy_mode)
 				if ( i < count ) continue;		// Don't use same mission twice!
 
 				strncpy( Mission_list[count].filename, temp, 9 );
+				Mission_list[count].filename[8] = '\0';
 				Mission_list[count].anarchy_only_flag = is_anarchy = 0;
 
 				mfile = fopen(find.name,"rt");
@@ -308,6 +311,7 @@ int build_mission_list(int anarchy_mode)
 						t = p + strlen(p)-1;
 						while (isspace(*t)) t--;
 						strncpy(Mission_list[count].mission_name,p,MISSION_NAME_LEN);
+						Mission_list[count].mission_name[MISSION_NAME_LEN] = '\0';
 					}
 					else {
 						fclose(mfile);
@@ -334,7 +338,7 @@ int build_mission_list(int anarchy_mode)
 #endif
 
 	if (count>1)
-		qsort(&Mission_list[1],count-1,sizeof(*Mission_list),ml_sort_func);
+		qsort(&Mission_list[1],(size_t)count-1,sizeof(*Mission_list),ml_sort_func);
 
 	load_mission(0);			//set built-in mission as default
 

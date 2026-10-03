@@ -45,6 +45,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "ui.h"
 #include "key.h"
+#include "error.h"
 
 #define Middle(x) ((2*(x)+1)/4)
 
@@ -92,6 +93,8 @@ UI_GADGET_CHECKBOX * ui_add_gadget_checkbox( UI_WINDOW * wnd, short x, short y, 
 	checkbox = (UI_GADGET_CHECKBOX *)ui_gadget_add( wnd, 5, x, y, x+w-1, y+h-1 );
 
 	checkbox->text = malloc(strlen(text)+5);
+	if (checkbox->text == NULL)
+		Error("Out of memory");
 	strcpy(checkbox->text,text);
 	checkbox->width = w;
 	checkbox->height = h;

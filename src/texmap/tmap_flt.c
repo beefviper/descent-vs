@@ -59,7 +59,7 @@ void asm_tmap_scanline_flat(void)
 
 	if (tmap_flat_cthru_table == NULL) {
 		// solid color: count+1 pixels
-		memset(dest, tmap_flat_color, count + 1);
+		memset(dest, tmap_flat_color, (size_t)count + 1);
 	} else {
 		// color through: count pixels
 		for (; count > 0; count--, dest++)

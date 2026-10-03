@@ -86,7 +86,6 @@ void do_physics_sim(object *obj);
 //returns fate, fills in hit time.  If fate==HIT_NONE, hit_time undefined
 //	Stuff hit_info with fvi data as set by find_vector_intersection.
 //for fvi_flags, refer to fvi.h for the fvi query flags
-int physics_lookahead(object *obj,fix t,int fvi_flags,fix *hit_time, fvi_info *hit_info);
 
 //Applies an instantaneous force on an object, resulting in an instantaneous
 //change in velocity.

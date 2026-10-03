@@ -179,7 +179,7 @@ int	Do_duplicate_vertex_check = 0;		// Gets set to 1 in med_create_duplicate_ver
 
 //	Remap all vertices in polygons in a segment through translation table xlate_verts.
 #if BOTTOM_STUFF
-void remap_vertices(segment *segp, int *xlate_verts)
+static void remap_vertices(segment *segp, int *xlate_verts)
 {
 	int	sidenum, facenum, polynum, v;
 
@@ -193,7 +193,7 @@ void remap_vertices(segment *segp, int *xlate_verts)
 }
 
 //	Copy everything from sourceside to destside except sourceside->faces[xx].polys[xx].verts
-void copy_side_except_vertex_ids(side *destside, side *sourceside)
+static void copy_side_except_vertex_ids(side *destside, side *sourceside)
 {
 	int	facenum, polynum, v;
 
@@ -235,7 +235,7 @@ byte xlate_previous[6][4][2] = {
 { {4, 0}, {0, 1}, {3, 2}, {7, 3} },		// remapping top to front
 };
 
-void remap_vertices_previous(segment *segp, int sidenum)
+static void remap_vertices_previous(segment *segp, int sidenum)
 {
 	int	v, w, facenum, polynum;
 
@@ -265,7 +265,7 @@ byte xlate_previous_right[6][4][2] = {
 { {3, 2}, {0, 3}, {1, 0}, {2, 1} },		// front to front
 };
 
-void remap_vertices_previous_right(segment *segp, int sidenum)
+static void remap_vertices_previous_right(segment *segp, int sidenum)
 {
 	int	v, w, facenum, polynum;
 
@@ -289,7 +289,7 @@ void remap_vertices_previous_right(segment *segp, int sidenum)
 
 // -----------------------------------------------------------------------------------
 //	Takes top to front
-void med_rotate_segment_forward(segment *segp)
+static void med_rotate_segment_forward(segment *segp)
 {
 	segment	seg_copy = {0};
 	int		i;
@@ -323,7 +323,7 @@ void med_rotate_segment_forward(segment *segp)
 
 // -----------------------------------------------------------------------------------
 //	Takes top to right
-void med_rotate_segment_right(segment *segp)
+static void med_rotate_segment_right(segment *segp)
 {
 	segment	seg_copy = {0};
 	int		i;
@@ -712,7 +712,7 @@ int check_for_degenerate_segment(segment *sp)
 //	We should also have the functions:
 //		mat_a = mat_b * scalar;				// we now have mat_a = mat_a * scalar;
 //		mat_a = mat_b + mat_c * scalar;	// or maybe not, maybe this is not primitive
-void make_orthogonal(vms_matrix *rmat,vms_matrix *smat)
+static void make_orthogonal(vms_matrix *rmat,vms_matrix *smat)
 {
 	vms_matrix		tmat = {0};
 	vms_vector		tvec1 = {0},tvec2 = {0};

@@ -158,6 +158,8 @@ void close_autosave(void) {
 
         //MALLOC(delname, char, 128);//Hack by KRB
         delname = (char *)malloc(128*sizeof(char));
+        if (delname == NULL)
+        	Error("Out of memory");
 
         strcpy ( delname, mine_filename );
         strupr( delname );
@@ -181,6 +183,8 @@ void autosave_mine(char *name) {
 
 	    //MALLOC(savename, char, 128);//Hack by KRB
 	    savename = (char *)malloc(128*sizeof(char));
+	    if (savename == NULL)
+	    	Error("Out of memory");
 
 
 	    strcpy ( savename, name );

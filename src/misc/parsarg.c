@@ -70,7 +70,7 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 			char *p=ab_ptr,c;
 
 			if ((argfile=fopen(*argv+1,"rt"))==0) perror_exit(10,*argv+1);
-			if ((len=(int)fread(ab_ptr,1,ARGBUF_SIZE-((int) (ab_ptr-arg_buf)),argfile))==ARGBUF_SIZE-(ab_ptr-arg_buf)) error_exit(20,"Argument buffer not big enough\n");
+			if ((len=(int)fread(ab_ptr,1,(size_t)ARGBUF_SIZE-((int) (ab_ptr-arg_buf)),argfile))==ARGBUF_SIZE-(ab_ptr-arg_buf)) error_exit(20,"Argument buffer not big enough\n");
 			fclose(argfile);
 			ab_ptr[len++]=0;		/* write terminating null */
 

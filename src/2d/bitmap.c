@@ -84,12 +84,15 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "grdef.h"
 #include "dpmi.h"
+#include "error.h"
 
 grs_bitmap *gr_create_bitmap(int w, int h )
 {
     grs_bitmap *new;
 
     new = (grs_bitmap *)malloc( sizeof(grs_bitmap) );
+	if (new == NULL)
+		Error("Out of memory");
 	new->bm_x = 0;
 	new->bm_y = 0;
     new->bm_w = w;
@@ -99,7 +102,9 @@ grs_bitmap *gr_create_bitmap(int w, int h )
 	new->bm_rowsize = w;
 	new->bm_selector = 0;
 
-    new->bm_data = (unsigned char *)malloc( w*h );
+    new->bm_data = (unsigned char *)malloc( (size_t)w*h );
+    if (new->bm_data == NULL)
+        Error("Out of memory");
 
     return new;
 }
@@ -109,6 +114,8 @@ grs_bitmap *gr_create_bitmap_raw(int w, int h, unsigned char * raw_data )
 	grs_bitmap *new;
 
 	new = (grs_bitmap *)malloc( sizeof(grs_bitmap) );
+	if (new == NULL)
+		Error("Out of memory");
 	new->bm_x = 0;
 	new->bm_y = 0;
 	new->bm_w = w;
@@ -141,6 +148,8 @@ grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm, int x, int y, int w, int h )
     grs_bitmap *new;
 
     new = (grs_bitmap *)malloc( sizeof(grs_bitmap) );
+	if (new == NULL)
+		Error("Out of memory");
 	new->bm_x = x+bm->bm_x;
 	new->bm_y = y+bm->bm_y;
 	new->bm_w = w;

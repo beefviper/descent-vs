@@ -156,7 +156,9 @@ void vfx_init(void)
 
 	vipport = getenv( "VIPPORT" );
 	if ( vipport )	{
-		sscanf( vipport, "%x", &vfx_base_port );
+		if (sscanf( vipport, "%x", &vfx_base_port ) != 1) {
+			// malformed input: leave the values as they were
+		}
 	} else {
 		Error( "Couldn't find VIPPORT environment variable.\n" );
 	}

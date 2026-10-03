@@ -212,6 +212,9 @@ static fix average_connectivity(void)
 		}
 	}
 
+	if (total_sides == 0)
+		return 0;
+
 	return 6 * fixdiv(total_mapped_sides, total_sides);
 }
 
@@ -1523,7 +1526,7 @@ static void calim_process_all_lights(int quick_light)
 				side	*sidep = &segp->sides[sidenum];
 				fix	light_intensity;
 
-				light_intensity = TmapInfo[sidep->tmap_num].lighting + TmapInfo[sidep->tmap_num2 & 0x3fff].lighting;
+				light_intensity = TmapInfo[sidep->tmap_num].lighting + TmapInfo[TMAP2_INDEX(sidep->tmap_num2)].lighting;
 
 //				if (segp->sides[sidenum].wall_num != -1) {
 //					int	wall_num, bitmap_num, effect_num;

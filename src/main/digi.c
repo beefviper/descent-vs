@@ -475,9 +475,9 @@ static void sosDIGISetPanLocation( WORD hDriver, WORD hSample, uint wLocation )
 #define sosMIDIStopSong(h)			((void)(h))
 #define sosMIDIUnInitSong(h)		((void)(h))
 
-void digi_reset_digi_sounds(void);
+static void digi_reset_digi_sounds(void);
 #ifndef NDEBUG
-int verify_sound_channel_free( int channel );
+static int verify_sound_channel_free( int channel );
 #endif
 //*************************************************
 #include "kconfig.h"
@@ -575,10 +575,13 @@ int digi_sounds_initialized=0;
 //this block commented out by KRB
 
 
-void * testLoadFile( char * szFileName, int * length );
+static void * testLoadFile( char * szFileName, int * length );
+static void * testLoadFile( char * szFileName, int * length );
 
-VOID _far sosMIDICallback( WORD PassedSongHandle );
-VOID sosEndMIDICallback(void);
+static VOID _far sosMIDICallback( WORD PassedSongHandle );
+static VOID _far sosMIDICallback( WORD PassedSongHandle );
+static VOID sosEndMIDICallback(void);
+static VOID sosEndMIDICallback(void);
 
 //NOT_MIDI_CHECKushort MIDI_CRC;
 //NOT_MIDI_CHECKubyte MIDI_SAVED_DATA[100*1024];
@@ -691,7 +694,6 @@ void digi_close(void)
 */
 }
 
-extern int loadpats( char * filename );
 
 static int digi_load_fm_banks( char * melodic_file, char * drum_file )
 {
@@ -840,6 +842,7 @@ static int digi_init_digi(void)
 	return 0;
 }
 
+static void digi_reset_digi_sounds(void);
 int digi_init(void)
 {
 	int i;
@@ -1000,7 +1003,7 @@ static WORD SampleHandles[32] = { 0xffff, 0xffff, 0xffff,0xffff,0xffff,0xffff,0x
 static int SoundNums[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 static uint SoundVolumes[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 
-void digi_reset_digi_sounds(void)
+static void digi_reset_digi_sounds(void)
 {
 	int i;
 
@@ -1066,8 +1069,9 @@ int digi_get_max_channels(void)
 }
 
 
-static WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
+static int verify_sound_channel_free( int channel );
 
+static WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
 {
 	int i, ntries;
 	WORD sHandle;
@@ -1342,7 +1346,7 @@ void digi_set_volume( int dvolume, int mvolume )
 
 // allocate memory for file, load file, create far pointer
 // with DS in selector.
-void * testLoadFile( char * szFileName, int * length )
+static void * testLoadFile( char * szFileName, int * length )
 {
 /*
    PSTR  pDataPtr;
@@ -1371,13 +1375,13 @@ void * testLoadFile( char * szFileName, int * length )
 
 
 // ALL VARIABLES IN HERE MUST BE LOCKED DOWN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-VOID _far sosMIDICallback( WORD PassedSongHandle )
+static VOID _far sosMIDICallback( WORD PassedSongHandle )
 {
 	//sosMIDIStartSong(PassedSongHandle);
 	return;//KRB comment out
 }
 
-VOID sosEndMIDICallback(void)		// Used to mark the end of sosMIDICallBack
+static VOID sosEndMIDICallback(void)		// Used to mark the end of sosMIDICallBack
 {
 }
 
@@ -1995,7 +1999,7 @@ void digi_stop_all(void)
 }
 
 #ifndef NDEBUG
-int verify_sound_channel_free( int channel )
+static int verify_sound_channel_free( int channel )
 {
 	int i;
 	if (digi_driver_board>0)	{

@@ -148,8 +148,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define BITS_TO_BYTES(x)    (((x)+7)>>3)
 
-int gr_internal_string_clipped(int x, int y, char *s );
-int gr_internal_string_clipped_m(int x, int y, char *s );
+static int gr_internal_string_clipped(int x, int y, char *s );
+static int gr_internal_string_clipped(int x, int y, char *s );
+static int gr_internal_string_clipped_m(int x, int y, char *s );
+static int gr_internal_string_clipped_m(int x, int y, char *s );
 
 static char *find_kern_entry(grs_font *font,char first,char second)
 {
@@ -1028,9 +1030,13 @@ grs_font * gr_init_font( char * fontname )
 	// Read the header field by field: grs_font itself has native pointers,
 	// so it is larger than the file's header on 64-bit builds.
 	filedata = (ubyte *) malloc(datasize);
+	if (filedata == NULL)
+		Error("Out of memory");
 	cfread(filedata,1,datasize,fontfile);
 
 	font = (grs_font *) malloc(sizeof(grs_font));
+	if (font == NULL)
+		Error("Out of memory");
 	font->ft_filedata = filedata;
 	font->ft_w        = *(short *) (filedata + 0);
 	font->ft_h        = *(short *) (filedata + 2);
@@ -1049,6 +1055,8 @@ grs_font * gr_init_font( char * fontname )
 		font->ft_data = filedata + *(int *) (filedata + FONT_DATA_OFFSET);
 
 		font->ft_chars = (unsigned char **)malloc( nchars * sizeof(unsigned char *));
+		if (font->ft_chars == NULL)
+			Error("Out of memory");
 
 		ptr = font->ft_data;
 
@@ -1114,7 +1122,7 @@ void gr_set_curfont( grs_font * new )
 }
 
 
-int gr_internal_string_clipped(int x, int y, char *s )
+static int gr_internal_string_clipped(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
@@ -1200,7 +1208,7 @@ int gr_internal_string_clipped(int x, int y, char *s )
 	return 0;
 }
 
-int gr_internal_string_clipped_m(int x, int y, char *s )
+static int gr_internal_string_clipped_m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;

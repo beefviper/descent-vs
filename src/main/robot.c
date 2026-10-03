@@ -252,7 +252,6 @@ static void set_robot_state(object *obj,int state)
 	}
 }
 
-#include "mono.h"
 
 //--unused-- int cur_state=0;
 

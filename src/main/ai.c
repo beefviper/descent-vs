@@ -538,8 +538,10 @@ ubyte	john_cheats_2[2*JOHN_CHEATS_SIZE_2] = { 	KEY_P ^ 0x00 ^ 0x43, 0x66,
 																KEY_S ^ 0x50 ^ 0x43 };
 
 // Function Prototypes
-void init_boss_segments(short segptr[], int* num_segs, int size_check);
-void ai_multi_send_robot_position(int objnum, int force);
+static void init_boss_segments(short segptr[], int *num_segs, int size_check);
+static void init_boss_segments(short segptr[], int* num_segs, int size_check);
+static void ai_multi_send_robot_position(int objnum, int force);
+static void ai_multi_send_robot_position(int objnum, int force);
 
 
 // ---------------------------------------------------------
@@ -552,6 +554,8 @@ void init_ai_system(void)
 
 	mprintf((0, "Trying to malloc %i bytes for Robot_info.\n", N_robot_types * sizeof(*Robot_info)));
 	Robot_info = (robot_info *) malloc( N_robot_types * sizeof(*Robot_info) );
+	if (Robot_info == NULL)
+		Error("Out of memory");
 	mprintf((0, "Robot_info = %i\n", Robot_info));
 
 	for (i=0; i<N_robot_types; i++) {
@@ -2269,7 +2273,7 @@ static int boss_fits_in_seg(object *boss_objp, int segnum)
 //	Boss is allowed to teleport to segments he fits in (calls object_intersects_wall) and
 //	he can reach from his initial position (calls find_connected_distance).
 //	If size_check is set, then only add segment if boss can fit in it, else any segment is legal.
-void init_boss_segments(short segptr[], int *num_segs, int size_check)
+static void init_boss_segments(short segptr[], int *num_segs, int size_check)
 {
 	int			boss_objnum=-1;
 	int			i;
@@ -2600,7 +2604,7 @@ static void do_super_boss_stuff(object *objp, fix dist_to_player, int player_vis
 //}
 
 #ifndef SHAREWARE
-void ai_multi_send_robot_position(int objnum, int force)
+static void ai_multi_send_robot_position(int objnum, int force)
 {
 #ifndef SHAREWARE
 #ifdef NETWORK

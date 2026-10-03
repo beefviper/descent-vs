@@ -245,12 +245,9 @@ extern void med_get_vertex_list(segment *s,int *nv,short **vp);
 
 //	Return a pointer to the list of vertex indices for face facenum in vp and
 //	the number of vertices in *nv.
-extern void med_get_face_vertex_list(segment *s,int side, int facenum,int *nv,short **vp);
 
 //	Set *nf = number of faces in segment s.
-extern void med_get_num_faces(segment *s,int *nf);
 
-void med_validate_segment_side(segment *sp,int side);
 
 // Delete segment function added for curves.c
 extern int med_delete_segment(segment *sp);

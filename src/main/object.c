@@ -340,7 +340,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "vclip.h"
 #include "polyobj.h"
 #include "fireball.h"
-#include "laser.h"
 #include "error.h"
 #include "ai.h"
 #include "hostage.h"
@@ -435,8 +434,10 @@ char	Object_type_names[MAX_OBJECT_TYPES][9] = {
 #endif
 
 // Function Prototypes
-void obj_detach_one(object* sub);
-void obj_detach_all(object* parent);
+static void obj_detach_one(object *sub);
+static void obj_detach_one(object* sub);
+static void obj_detach_all(object *parent);
+static void obj_detach_all(object* parent);
 
 
 #ifndef RELEASE
@@ -2228,7 +2229,6 @@ void clear_transient_objects(int clear_all)
 		if (((obj->type == OBJ_WEAPON) && (clear_all || obj->id != PROXIMITY_ID)) ||
 			 obj->type == OBJ_FIREBALL ||
 			 obj->type == OBJ_DEBRIS ||
-			 obj->type == OBJ_DEBRIS ||
 			 (obj->type!=OBJ_NONE && obj->flags & OF_EXPLODING)) {
 
 			#ifndef NDEBUG
@@ -2269,7 +2269,7 @@ void obj_attach(object *parent,object *sub)
 }
 
 //dettaches one object
-void obj_detach_one(object *sub)
+static void obj_detach_one(object *sub)
 {
 	Assert(sub->flags & OF_ATTACHED);
 	Assert(sub->ctype.expl_info.attach_parent != -1);
@@ -2300,7 +2300,7 @@ void obj_detach_one(object *sub)
 }
 
 //dettaches all objects from this object
-void obj_detach_all(object *parent)
+static void obj_detach_all(object *parent)
 {
 	while (parent->attached_obj != -1)
 		obj_detach_one(&Objects[parent->attached_obj]);

@@ -190,8 +190,10 @@ int save_mine_data(CFILE * SaveFile)
 	med_compress_mine();
 	warn_if_concave_segments();
 
-	for (i=0;i<NumTextures;i++)
+	for (i=0;i<NumTextures;i++) {
 		strncpy(current_tmap_list[i], TmapInfo[i].filename, 13);
+		current_tmap_list[i][12] = '\0';
+	}
 
 	//=================== Calculate offsets into file ==================
 

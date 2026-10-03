@@ -65,6 +65,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "library.h"
 #include "mem.h"
+#include "error.h"
 
 //#define DEBUG_ON 1
 //#include "error.h"
@@ -78,8 +79,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define FIRST_CODE                 259
 #define UNUSED                     -1
 
-unsigned int find_child_node( int parent_code, int child_character );
-unsigned int decode_string( unsigned int offset, unsigned int code );
+static unsigned int find_child_node( int parent_code, int child_character );
+static unsigned int find_child_node( int parent_code, int child_character );
+static unsigned int decode_string( unsigned int count, unsigned int code );
+static unsigned int decode_string( unsigned int offset, unsigned int code );
 
 char *CompressionName = "LZW 15 Bit Variable Rate Encoder";
 char *Usage           = "in-file out-file";
@@ -114,7 +117,11 @@ static void InitializeStorage(void)
 	//MALLOC( dict, DICTIONARY, TABLE_SIZE );//won't compile, hack below -KRB
 	//MALLOC( decode_stack, char, TABLE_SIZE );
 	dict = (DICTIONARY *)malloc(TABLE_SIZE*sizeof(DICTIONARY));
+	if (dict == NULL)
+		Error("Out of memory");
 	decode_stack = (char *)malloc(TABLE_SIZE*sizeof(char));
+	if (decode_stack == NULL)
+		Error("Out of memory");
 }
 
 
@@ -207,6 +214,8 @@ ubyte *lzw_expand( ubyte *inputbuf, ubyte *outputbuf, int length ) {
 	if ( outputbuf == NULL )
 		//MALLOC(outputbuf, ubyte, length);//Another hack for compiling -KRB
 		outputbuf = (ubyte *)malloc(length*sizeof(ubyte));
+	if (outputbuf == NULL)
+		Error("Out of memory");
     InitializeStorage();
     counter = 0;
     for ( ; ; ) {
@@ -273,7 +282,7 @@ ubyte *lzw_expand( ubyte *inputbuf, ubyte *outputbuf, int length ) {
 }
 
 
-unsigned int find_child_node( int parent_code, int child_character ) {
+static unsigned int find_child_node( int parent_code, int child_character ) {
     unsigned int index;
     int offset;
 
@@ -296,7 +305,7 @@ unsigned int find_child_node( int parent_code, int child_character ) {
 }
 
 
-unsigned int decode_string( unsigned int count, unsigned int code ) {
+static unsigned int decode_string( unsigned int count, unsigned int code ) {
     while ( code > 255 ) {
 		decode_stack[ count++ ] = dict[ code ].character;
 		code = dict[ code ].parent_code;

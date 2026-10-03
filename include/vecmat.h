@@ -370,12 +370,10 @@ fix vm_vec_normalized_dir_quick(vms_vector *dest,vms_vector *end,vms_vector *sta
 
 //returns dot product of two vectors.  On overflow, returns a saturated value
 fix vm_vec_dotprod(vms_vector *v0,vms_vector *v1);
-fix vm_vec_dot(vms_vector *v0,vms_vector *v1);
 
 //computes cross product of two vectors. returns ptr to dest
 //dest CANNOT equal either source
 vms_vector *vm_vec_crossprod(vms_vector *dest,vms_vector *src0,vms_vector *scr1);
-vms_vector *vm_vec_cross(vms_vector *dest,vms_vector *src0,vms_vector *scr1);
 
 //computes surface normal from three points. result is normalized
 //returns ptr to dest
@@ -420,12 +418,10 @@ vms_vector *vm_vec_rotate(vms_vector *dest,vms_vector *src,vms_matrix *m);
 
 //transpose a matrix in place. returns ptr to matrix
 vms_matrix *vm_transpose_matrix(vms_matrix *m);
-vms_matrix *vm_transpose(vms_matrix *m);	//same as vm_transpose_matrix()
 
 //copy and transpose a matrix. returns ptr to matrix
 //dest CANNOT equal source. use vm_transpose_matrix() if this is the case
 vms_matrix *vm_copy_transpose_matrix(vms_matrix *dest,vms_matrix *src);
-vms_matrix *vm_copy_transpose(vms_matrix *dest,vms_matrix *src);
 
 //mulitply 2 matrices, fill in dest.  returns ptr to dest
 //dest CANNOT equal either source

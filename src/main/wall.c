@@ -155,7 +155,8 @@ int Num_open_doors;						// Number of open doors
 //#define BM_FLAG_SUPER_TRANSPARENT	2
 
 // Function Prototypes
-void kill_stuck_objects(int wallnum);
+static void kill_stuck_objects(int wallnum);
+static void kill_stuck_objects(int wallnum);
 
 
 #ifdef EDITOR
@@ -1026,7 +1027,7 @@ void remove_obsolete_stuck_objects(void)
 
 //	----------------------------------------------------------------------------------------------------
 //	Door with wall index wallnum is opening, kill all objects stuck in it.
-void kill_stuck_objects(int wallnum)
+static void kill_stuck_objects(int wallnum)
 {
 	int	i;
 

@@ -1558,7 +1558,7 @@ static void build_object_lists(int n_segs)
 
 		if (segnum != -1) {
 			int objnum;
-			object *obj;
+			object *obj = NULL;
 
 			for (objnum=Segments[segnum].objects;objnum!=-1;objnum = obj->next) {
 				int new_segnum,did_migrate,list_pos;
@@ -1773,13 +1773,13 @@ static void build_segment_list(int start_seg_num)
 	int	l,c;
 	int	ch;
 
-	memset(visited, 0, sizeof(visited[0])*(Highest_segment_index+1));
-	memset(render_pos, -1, sizeof(render_pos[0])*(Highest_segment_index+1));
+	memset(visited, 0, sizeof(visited[0])*((size_t)Highest_segment_index+1));
+	memset(render_pos, -1, sizeof(render_pos[0])*((size_t)Highest_segment_index+1));
 	//memset(no_render_flag, 0, sizeof(no_render_flag[0])*(MAX_RENDER_SEGS));
 	memset(processed, 0, sizeof(processed));
 
 	#ifndef NDEBUG
-	memset(visited2, 0, sizeof(visited2[0])*(Highest_segment_index+1));
+	memset(visited2, 0, sizeof(visited2[0])*((size_t)Highest_segment_index+1));
 	#endif
 
 	lcnt = scnt = 0;

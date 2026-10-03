@@ -327,7 +327,6 @@ typedef struct frame_info {
 
 void network_start_game(void);
 void network_join_game(void);
-void network_rejoin_game(void);
 void network_leave_game(void);
 int network_endlevel(int *secret);
 struct newmenu_item;
@@ -337,8 +336,6 @@ void network_endlevel_poll2( int nitems, struct newmenu_item * menus, int * key,
 int network_level_sync(void);
 void network_send_endlevel_packet(void);
 
-int network_delete_extra_objects(void);
-int network_find_max_net_players(void);
 int network_objnum_is_past(int objnum);
 char * network_get_player_name( int objnum );
 

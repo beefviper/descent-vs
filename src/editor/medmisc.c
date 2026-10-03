@@ -494,7 +494,7 @@ static int ForceTotalRedraw(void)
 
 
 #if ORTHO_VIEWS
-int SyncLargeView(void)
+static int SyncLargeView(void)
 {
 	// Make large view be same as one of the orthogonal views.
 	Large_view_index = (Large_view_index + 1) % 3;  // keep in 0,1,2 for top, front, right

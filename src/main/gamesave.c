@@ -1580,6 +1580,7 @@ extern void ncache_flush(void);
 #endif
 
 //loads a level (.LVL) file from disk
+static void load_hostage_data(CFILE * fp,int do_read);
 int load_level(char * filename_passed)
 {
 	#ifdef EDITOR
@@ -1900,6 +1901,7 @@ int save_mine_data(FILE * SaveFile);
 
 // -----------------------------------------------------------------------------
 // Save game
+static void save_hostage_data(FILE * fp);
 static int save_level_sub(char * filename, int compiled_version)
 {
 	FILE * SaveFile;
@@ -2022,7 +2024,7 @@ int save_level(char * filename)
 
 
 #ifdef HOSTAGE_FACES
-void save_hostage_data(FILE * fp)
+static void save_hostage_data(FILE * fp)
 {
 	int i,num_hostages=0;
 
@@ -2107,7 +2109,7 @@ static void dump_mine_info(void)
 #endif
 
 #ifdef HOSTAGE_FACES
-void load_hostage_data(CFILE * fp,int do_read)
+static void load_hostage_data(CFILE * fp,int do_read)
 {
 	int version,i,num,num_hostages;
 

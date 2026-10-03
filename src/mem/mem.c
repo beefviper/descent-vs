@@ -146,7 +146,8 @@ int out_of_memory = 0;
 void mem_display_blocks(void);
 
 static void mem_init(void);
-void mem_init(void)
+static void mem_init(void);
+static void mem_init(void)
 {
 	int i;
 
@@ -174,7 +175,7 @@ void mem_init(void)
 
 }
 
-void PrintInfo( int id )
+static void PrintInfo( int id )
 {
 	fprintf( stderr, "\tBlock '%s' created in %s, line %d.\n", Varname[id], Filename[id], Line[id] );
 }
@@ -259,7 +260,7 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 
 }
 
-int mem_find_id( void * buffer )
+static int mem_find_id( void * buffer )
 {
 	int i;
 
@@ -272,7 +273,7 @@ int mem_find_id( void * buffer )
 	return -1;
 }
 
-int mem_check_integrity( int block_number )
+static int mem_check_integrity( int block_number )
 {
 	int * data;
 	int i, ErrorCount;
@@ -390,7 +391,8 @@ void mem_validate_heap(void)
 }
 
 static void mem_print_all(void);
-void mem_print_all(void)
+static void mem_print_all(void);
+static void mem_print_all(void)
 {
 	FILE * ef;
 	int i, size = 0;
@@ -458,7 +460,7 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 		Int3();
 	}
 
-	ptr = malloc( size + CHECKSIZE );
+	ptr = malloc( (size_t)size + CHECKSIZE );
 
 	if (ptr==NULL)	{
 		fprintf( stderr, "\nMEM_OUT_OF_MEMORY: Malloc returned NULL\n" );

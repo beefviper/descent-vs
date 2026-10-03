@@ -125,14 +125,11 @@ extern bitmap_index Gauges[MAX_GAUGE_BMS];   // Array of all gauge bitmaps.
 extern void init_gauge_canvases(void);
 extern void close_gauge_canvases(void);
 
-extern void show_score(void);
-extern void show_score_added(void);
 extern void add_points_to_score(int points);
 extern void add_bonus_points_to_score(int points);
 
 void render_gauges(void);
 void init_gauges(void);
-extern void check_erase_message(void);
 
 // Call to flash a message on the HUD
 extern void HUD_render_message_frame(void);
@@ -151,7 +148,6 @@ void get_hostage_window_coords(int *x,int *y,int *w,int *h);
 
 //from testgaug.c
 
-void gauge_frame(void);
 extern void update_laser_weapon_info(void);
 extern void play_homing_warning(void);
 

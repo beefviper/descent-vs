@@ -230,7 +230,6 @@ int do_powerup(object *obj);
 void do_powerup_frame(object *obj);
 
 //	Diminish shields and energy towards max in case they exceeded it.
-extern void diminish_towards_max(void);
 
 extern void do_megawow_powerup(int quantity);
 

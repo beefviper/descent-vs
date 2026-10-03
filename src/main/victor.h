@@ -55,7 +55,6 @@ extern void victor_init_tracking(int serial_port);
 extern void victor_close_tracking(void);
 
 // Reads headset... Returns 3 values, yaw=0-360, roll & pitch=-45 to 45
-extern void victor_read_headset( fix *yaw, fix *pitch, fix *roll );
 extern void victor_read_headset_filtered( fix *yaw, fix *pitch, fix *roll );
 
 #endif

@@ -76,7 +76,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 int iglasses_headset_installed=0;
 
-void iglasses_close_tracking(void);
+static void iglasses_close_tracking(void);
 
 #if 0
 //*******************************************
@@ -101,8 +101,8 @@ typedef struct filter {
   fix * hCurrent,* hEnd,* hRestart;
 } filter;
 
-void initFIR(filter * f);
-fix filterFIR(filter * f,fix newval);
+static void initFIR(filter * f);
+static fix filterFIR(filter * f,fix newval);
 static filter X_filter, Y_filter, Z_filter;
 #endif
 
@@ -191,7 +191,7 @@ TrackerOK2:
 
 }
 
-void iglasses_close_tracking(void)	{
+static void iglasses_close_tracking(void)	{
 	if ( iglasses_headset_installed )	{
 		iglasses_headset_installed = 0;
 		PortClose(Iport);
@@ -351,14 +351,14 @@ static void initHistory(filter * f)
 	f->hRestart = f->history - 1;
 }
 
-void initFIR(filter * f)
+static void initFIR(filter * f)
 {
   f->len = FILTER_LENGTH;
   initWeights(f);
   initHistory(f);
 }
 
-fix filterFIR(filter * f,fix newval)
+static fix filterFIR(filter * f,fix newval)
 {
 	fix * currp,* last;
 	fix * weightp;

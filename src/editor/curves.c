@@ -428,16 +428,24 @@ void main(void) {
 
     key_init();
     printf("Enter p1 (x,y,z): ");
-    scanf("%f %f %f", &x, &y, &z);
+    if (scanf("%f %f %f", &x, &y, &z) != 3) {
+    	// malformed input: leave the values as they were
+    }
     p1.x = x*F1_0; p1.y = y*F1_0; p1.z = z*F1_0;
     printf("Enter p4 (x,y,z): ");
-    scanf("%f %f %f", &x, &y, &z);
+    if (scanf("%f %f %f", &x, &y, &z) != 3) {
+    	// malformed input: leave the values as they were
+    }
     p4.x = x*F1_0; p4.y = y*F1_0; p4.z = z*F1_0;
     printf("Enter r1 <x,y,z>: ");
-    scanf("%f %f %f", &x, &y, &z);
+    if (scanf("%f %f %f", &x, &y, &z) != 3) {
+    	// malformed input: leave the values as they were
+    }
     r1.x = x*F1_0; r1.y = y*F1_0; r1.z = z*F1_0;
     printf("Enter r4 <x,y,z>: ");
-    scanf("%f %f %f", &x, &y, &z);
+    if (scanf("%f %f %f", &x, &y, &z) != 3) {
+    	// malformed input: leave the values as they were
+    }
     r4.x = x*F1_0; r4.y = y*F1_0; r4.z = z*F1_0;
 
     create_curve( &p1, &p4, &r1, &r4, &coeffs );
@@ -456,10 +464,14 @@ void main(void) {
 
     printf("\nChecking distance function.\n");
     printf("Enter a distance: ");
-    scanf("%f", &x);
+    if (scanf("%f", &x) != 1) {
+    	// malformed input: leave the values as they were
+    }
     distance = x*F1_0;
     printf("Enter a (0<t<1) value: ");
-    scanf("%f", &y);
+    if (scanf("%f", &y) != 1) {
+    	// malformed input: leave the values as they were
+    }
     t0 = y*F1_0;
 
     gr_init(15);  // 800x600 mode

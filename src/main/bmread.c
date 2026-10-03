@@ -236,6 +236,8 @@ static bitmap_index bm_load_sub( char * filename )
 
 	//MALLOC( new, grs_bitmap, 1 );//hack KRB
 	new = (grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+	if (new == NULL)
+		Error("Out of memory");
 	iff_error = iff_read_bitmap(filename,new,BM_LINEAR,newpal);
 	new->bm_selector=0;
 	if (iff_error != IFF_NO_ERROR)		{
@@ -344,6 +346,8 @@ static int ds_load( char * filename )	{
 		new.length	= cfilelength( cfp );
 		//MALLOC( new.data, ubyte, new.length );//hack by KRB
 		new.data = (ubyte *)malloc(new.length*sizeof(ubyte));
+		if (new.data == NULL)
+			Error("Out of memory");
 		cfread( new.data, 1, new.length, cfp );
 		cfclose(cfp);
 		mprintf( (0, "S" ));
@@ -484,7 +488,7 @@ int bm_init_use_tbl(void)
 			}
 		} else {
 			while (inputline[(l=strlen(inputline))-2]=='\\') {
-				cfgets(inputline+l-2,LINEBUF_SIZE-(l-2), InfoFile);
+				cfgets(inputline+l-2,(size_t)(LINEBUF_SIZE-(l-2)), InfoFile);
 				linenum++;
 			}
 		}

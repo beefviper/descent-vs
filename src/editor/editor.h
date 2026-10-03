@@ -400,7 +400,6 @@ extern	int med_rotate_segment_ang(segment *seg, vms_angvec *ang);
 // The vector *svp contains the x,y,z scale factors.  The x,y,z directions are relative
 // to the segment.  x scales in the dimension of the right vector, y of the up vector, z of the forward vector.
 // The dimension of the vectors is determined by averaging appropriate sets of 4 of the 8 points.
-extern void med_scale_segment(segment *sp);
 
 //	Create a wall which can be removed.
 //	Creates wall at sp->sides[side], making it part of segment sp
@@ -416,15 +415,12 @@ extern void create_removable_wall(segment *sp, int side, int tmap_num);
 // Returns:
 //  0 = successfully loaded.
 //  1 = unable to load.
-extern	int med_load_mine(char *name);
 
 // Loads game *name from disk.
 // This function automatically loads mine with name.MIN
-extern	int med_load_game(char *name);
 
 
 // Loads a previous generation mine.  Needs to be updated in code.
-extern	int med_load_pmine(char *name);
 
 // Saves mine contained in Segments[] and Vertices[].
 // Num_segments = number of segments in mine.
@@ -462,7 +458,6 @@ extern   int medlisp_update_screen(void);
 extern	int create_new_mine(void);
 
 // extern	void med_create_segment(segment *sp, vms_vector *scale);
-extern	void old_med_attach_segment(segment *sp,int main_side,int branch_side,fix cx, fix cy, fix cz, fix length, fix width, fix height, vms_matrix *mp);
 
 // Copy a segment from *ssp to *dsp.  Do not simply copy the struct.  Use *dsp's vertices, copying in
 //	just the values, not the indices.
@@ -470,7 +465,6 @@ extern	void med_copy_segment(segment *dsp,segment *ssp);
 
 //	Create a default segment.
 //	Useful for when user creates a garbage segment.
-extern	void med_create_default_segment(segment *sp);
 
 //	Create New_segment with sizes found in *scale.
 extern	void med_create_new_segment(vms_vector *scale);
@@ -479,10 +473,8 @@ extern	void med_create_new_segment(vms_vector *scale);
 extern void med_create_new_segment_from_cursegp(void);
 
 //	Update New_segment using scale factors.
-extern	void med_update_new_segment(void);
 
 //	Replace *sp with New_segment.
-extern	void med_update_segment(segment *sp);
 
 //	Create a new segment and use it to form a bridge between two existing segments.
 //	Specify two segment:side pairs.  If either segment:side is not open (ie, segment->children[side] != -1)
@@ -502,27 +494,22 @@ extern	void med_compress_mine(void);
 //	Extract the forward vector from segment *sp, return in *vp.
 //	The forward vector is defined to be the vector from the the center of the front face of the segment
 // to the center of the back face of the segment.
-extern	void med_extract_forward_vector_from_segment(segment *sp,vms_vector *vp);
 
 //	Extract the right vector from segment *sp, return in *vp.
 //	The forward vector is defined to be the vector from the the center of the left face of the segment
 // to the center of the right face of the segment.
-extern	void med_extract_right_vector_from_segment(segment *sp,vms_vector *vp);
 
 //	Extract the up vector from segment *sp, return in *vp.
 //	The forward vector is defined to be the vector from the the center of the bottom face of the segment
 // to the center of the top face of the segment.
-extern	void med_extract_up_vector_from_segment(segment *sp,vms_vector *vp);
 
 // Compute the center point of a side of a segment.
 //	The center point is defined to be the average of the 4 points defining the side.
-extern	void med_compute_center_point_on_side(vms_vector *vp,segment *sp,int side);
 
 extern void	set_matrix_based_on_side(vms_matrix *rotmat,int destside);
 
 // Given a forward vector, compute and return an angvec triple.
 //	[ THIS SHOULD BE MOVED TO THE VECTOR MATRIX LIBRARY ]
-extern	vms_angvec *vm_vec_to_angles(vms_angvec *result, vms_vector *forvec);
 
 
 // Curves stuff.
@@ -576,13 +563,11 @@ extern	void med_assign_uvs_to_side(segment *con_seg, int con_common_side, segmen
 //	type: 0 --> mprintf, 1 --> printf
 //	*s = string to display
 //	*mp = matrix to display
-extern	void show_matrix(char *s,vms_matrix *mp,int type);
 
 //	Create coordinate axes in orientation of specified segment, stores vertices at *vp.
 extern	void create_coordinate_axes_from_segment(segment *sp,short *vertnums);
 
 //	Scale a segment.  Then, if it is connected to something, rotate it.
-extern	int med_scale_and_rotate_segment(segment *seg, vms_angvec *rot);
 
 //	Set Vertex_active to number of occurrences of each vertex.
 //	Set Num_vertices.
@@ -668,8 +653,6 @@ extern int get_free_segment_number(void);
 extern void diagnostic_message(const char *format, ... );
 
 //      Status Icon.
-extern void print_status_icon( char icon[1], int position );
-extern void clear_status_icon( char icon[1], int position );
 
 //      Editor status message.
 extern void editor_status(const char *format, ... );
@@ -754,7 +737,6 @@ void free_vert(int vert_num);
 extern int Cur_robot_type;
 
 //	From med.c
-extern int DisplayCurrentRobotType(void);
 extern short			Cur_object_index;
 
 extern int render_3d_in_big_window;
@@ -794,7 +776,6 @@ extern int place_object(segment *segp, vms_vector *object_pos, int object_type);
 // from ksegsize.c
 extern void med_extract_up_vector_from_segment_side(segment *sp, int sidenum, vms_vector *vp);
 extern void med_extract_right_vector_from_segment_side(segment *sp, int sidenum, vms_vector *vp);
-extern void med_extract_forward_vector_from_segment_side(segment *sp, int sidenum, vms_vector *vp);
 
 //	In medmisc.c
 extern void draw_world_from_game(void);

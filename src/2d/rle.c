@@ -110,7 +110,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define NOT_RLE_CODE		31
 
 // Function Prototypes
-void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
+static void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 );
+static void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
 
 // Decodes one scanline of rle data from src into dest.  Returns a pointer
 // to the byte after the last one written.
@@ -364,7 +365,7 @@ int gr_bitmap_rle_compress( grs_bitmap * bmp )
 	int doffset;
 	ubyte *rle_data;
 
-	rle_data=malloc( (bmp->bm_w+1)* bmp->bm_h );
+	rle_data=malloc( ((size_t)bmp->bm_w+1)* bmp->bm_h );
 	if (rle_data==NULL) return 0;
 	doffset = 4 + bmp->bm_h;
 	for (y=0; y<bmp->bm_h; y++ )	{
@@ -483,7 +484,7 @@ grs_bitmap * rle_expand_texture( grs_bitmap * bmp )
 	return rle_cache[least_recently_used].expanded_bitmap;
 }
 
-void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
+static void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 {
 	unsigned char * dbits;
 	unsigned char * sbits;

@@ -421,8 +421,8 @@ static int pick_connected_segment(object *objp, int max_depth)
 	tail = 0;
 	seg_queue[head++] = start_seg;
 
-	memset(visited, 0, Highest_segment_index+1);
-	memset(depth, 0, Highest_segment_index+1);
+	memset(visited, 0, (size_t)Highest_segment_index+1);
+	memset(depth, 0, (size_t)Highest_segment_index+1);
 	cur_depth = 0;
 
 	for (i=0; i<MAX_SIDES_PER_SEGMENT; i++)

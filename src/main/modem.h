@@ -99,7 +99,6 @@ void com_disable(void);
 void com_do_frame(void);
 void com_process_input(void);
 void serial_leave_game(void);
-void modem_start_game(void);
 void com_main_menu(void);
 void com_endlevel(int *secret);
 void com_abort(void);

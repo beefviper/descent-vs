@@ -268,8 +268,10 @@ ecb_header * last_ecb=NULL;
 int lastlen=0;
 
 // Function Prototypes
-void got_new_packet(ecb_header* ecb);
-void ipx_listen_for_packet(ecb_header* ecb);
+static void got_new_packet( ecb_header * ecb );
+static void got_new_packet(ecb_header* ecb);
+static void ipx_listen_for_packet(ecb_header * ecb );
+static void ipx_listen_for_packet(ecb_header* ecb);
 
 
 static void free_packet( int id )
@@ -322,7 +324,7 @@ static unsigned int swap_short( unsigned int x )
 	return (x & 0xFFFF0000u) | ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);
 }
 
-void got_new_packet( ecb_header * ecb )
+static void got_new_packet( ecb_header * ecb )
 {
 	ipx_packet * p;
 	int id;
@@ -373,7 +375,7 @@ ubyte * ipx_get_my_server_address(void)
 	return (ubyte *)&ipx_network;
 }
 
-void ipx_listen_for_packet(ecb_header * ecb )
+static void ipx_listen_for_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs = {0};
 	ecb->in_use = 0x1d;

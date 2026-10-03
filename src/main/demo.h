@@ -65,12 +65,7 @@ typedef struct _demorec {
 
 extern int Demo_mode, Auto_demo, demo_loaded;
 
-extern void start_demo_playback(void);
-extern void start_demo_recording(void);
-extern void record_demo_frame(void);
 
-extern int get_demo_data(fix curtime, vms_vector *pos, vms_angvec *pbh, short *segnum, int *do_fire);
 
-extern void demo_startup(void);
 
 #endif

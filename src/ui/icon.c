@@ -40,6 +40,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "ui.h"
 #include "key.h"
+#include "error.h"
 
 #define Middle(x) ((2*(x)+1)/4)
 
@@ -109,6 +110,8 @@ UI_GADGET_ICON * ui_add_gadget_icon( UI_WINDOW * wnd, char * text, short x, shor
 	icon->height = h;
 	//MALLOC( icon->text, char, strlen( text )+2);//Hack by KRB
 	icon->text=(char *)malloc((strlen( text )+2)*sizeof(char));
+	if (icon->text == NULL)
+		Error("Out of memory");
 	strcpy( icon->text, text );
 	icon->trap_key = k;
 	icon->user_function = f;

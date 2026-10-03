@@ -861,7 +861,8 @@ int fvi_hit_side_seg;// what seg the hitside is in
 vms_vector wall_norm;	//ptr to surface normal of hit wall
 int fvi_hit_seg2;		// what segment the hit point is in
 
-int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p1,fix rad,short thisobjnum,int *ignore_obj_list,int flags,int *seglist,int *n_segs,int entry_seg);
+static int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p1,fix rad,short thisobjnum,int *ignore_obj_list,int flags,int *seglist,int *n_segs,int entry_seg);
+static int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p1,fix rad,short thisobjnum,int *ignore_obj_list,int flags,int *seglist,int *n_segs,int entry_seg);
 
 //What the hell is fvi_hit_seg for???
 
@@ -1013,9 +1014,10 @@ static int obj_in_list(int objnum,int *obj_list)
 
 }
 
-int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum);
+static int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum);
+static int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum);
 
-int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p1,fix rad,short thisobjnum,int *ignore_obj_list,int flags,int *seglist,int *n_segs,int entry_seg)
+static int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p1,fix rad,short thisobjnum,int *ignore_obj_list,int flags,int *seglist,int *n_segs,int entry_seg)
 {
 	segment *seg;				//the segment we're looking at
 	int startmask,endmask;	//mask of faces
@@ -1427,7 +1429,7 @@ void find_hitpoint_uv(fix *u,fix *v,vms_vector *pnt,segment *seg,int sidenum,int
 
 //check if a particular point on a wall is a transparent pixel
 //returns 1 if can pass though the wall, else 0
-int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum)
+static int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum)
 {
 	grs_bitmap *bm;
 	side *side = &seg->sides[sidenum];

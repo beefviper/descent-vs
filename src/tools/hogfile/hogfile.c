@@ -113,7 +113,9 @@ int main(int argc, char * argv[] )
 		REMOVE_EOL(inputline);
 		REMOVE_COMMENTS(inputline);
 
-		sscanf( inputline, " %s ", filename );
+		if (sscanf( inputline, " %s ", filename ) != 1) {
+			// malformed input: leave the values as they were
+		}
 
 		if ( strlen( inputline ) > 0 )	{
 			//printf( "Adding '%s'...", filename );

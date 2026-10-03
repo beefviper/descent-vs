@@ -1285,8 +1285,10 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 
 	texture_offset = ftell(SaveFile);
 
-	for (i=0;i<NumTextures;i++)
+	for (i=0;i<NumTextures;i++) {
 		strncpy(current_tmap_list[i], TmapInfo[i].filename, 13);
+		current_tmap_list[i][12] = '\0';
+	}
 
 	fwrite( current_tmap_list, 13, NumTextures, SaveFile );
 

@@ -76,6 +76,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "grdef.h"
 #include "platform.h"
+#include "error.h"
 
 grs_canvas * grd_curcanv;    //active canvas
 grs_screen * grd_curscreen;  //active screen
@@ -86,7 +87,11 @@ grs_canvas *gr_create_canvas(int w, int h)
 	grs_canvas *new;
 
 	new = (grs_canvas *)malloc( sizeof(grs_canvas) );
-	data = (unsigned char *)malloc(w*h);
+	if (new == NULL)
+		Error("Out of memory");
+	data = (unsigned char *)malloc((size_t)w*h);
+	if (data == NULL)
+		Error("Out of memory");
 
 	new->cv_bitmap.bm_x = 0;
 	new->cv_bitmap.bm_y = 0;
@@ -110,6 +115,8 @@ grs_canvas *gr_create_sub_canvas(grs_canvas *canv, int x, int y, int w, int h)
     grs_canvas *new;
 
     new = (grs_canvas *)malloc( sizeof(grs_canvas) );
+	if (new == NULL)
+		Error("Out of memory");
 
 	new->cv_bitmap.bm_x = x+canv->cv_bitmap.bm_x;
 	new->cv_bitmap.bm_y = y+canv->cv_bitmap.bm_y;

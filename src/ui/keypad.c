@@ -317,11 +317,15 @@ void ui_pad_read( int n, char * filename )
 
 	//MALLOC( KeyPad[n], UI_KEYPAD, 1 );//Hack by KRB
 	KeyPad[n]=(UI_KEYPAD *)malloc(1*sizeof(UI_KEYPAD));
+	if (KeyPad[n] == NULL)
+		Error("Out of memory");
 
 
 	for (i=0; i < 17; i++ ) {
 		//MALLOC( KeyPad[n]->buttontext[i], char, 100 );//Hack by KRB
 		KeyPad[n]->buttontext[i]=(char *)malloc(100*sizeof(char));
+		if (KeyPad[n]->buttontext[i] == NULL)
+			Error("Out of memory");
 	}
 
 	KeyPad[n]->numkeys = 0;
@@ -341,6 +345,7 @@ void ui_pad_read( int n, char * filename )
 		{
 		case 1:
 			strncpy( KeyPad[n]->description, buffer, 100 );
+			KeyPad[n]->description[99] = '\0';
 			break;
 		//===================== ROW 0 ==============================
 		case 3:

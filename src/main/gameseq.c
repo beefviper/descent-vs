@@ -350,11 +350,14 @@ extern int last_drawn_cockpit;
 extern int Last_level_path_created;
 
 // Function Prototypes
-void init_player_stats_new_ship(void);
-int AdvanceLevel(int secret_flag);
+static void init_player_stats_new_ship(void);
+static void init_player_stats_new_ship(void);
+static int AdvanceLevel(int secret_flag);
+static int AdvanceLevel(int secret_flag);
 void StartLevel(int random);
 extern void init_cockpit(void);
-void copy_defaults_to_robot_all(void);
+static void copy_defaults_to_robot_all(void);
+static void copy_defaults_to_robot_all(void);
 
 
 void HUD_clear_messages(void); // From hud.c
@@ -582,7 +585,7 @@ void init_player_stats_level(void)
 }
 
 // Setup player for a brand-new ship
-void init_player_stats_new_ship(void)
+static void init_player_stats_new_ship(void)
 {
 	int	i;
 
@@ -736,7 +739,7 @@ static void set_sound_sources(void)
 			int tm,ec,sn;
 
 			if ((tm=seg->sides[sidenum].tmap_num2) != 0)
-				if ((ec=TmapInfo[tm&0x3fff].eclip_num)!=-1)
+				if ((ec=TmapInfo[TMAP2_INDEX(tm)].eclip_num)!=-1)
 					if ((sn=Effects[ec].sound_num)!=-1) {
 						vms_vector pnt = {0};
 
@@ -797,6 +800,7 @@ int MakeNewPlayerFile(int allow_abort)
 	FILE *fp;
 
 	strncpy(text, Players[Player_num].callsign,CALLSIGN_LEN);
+	text[CALLSIGN_LEN] = '\0';
 
 try_again:
 	m.type=NM_TYPE_INPUT; m.text_len = 8; m.text = text;
@@ -834,6 +838,7 @@ try_again:
 		goto try_again;			// They hit Esc during New player config
 
 	strncpy(Players[Player_num].callsign, text, CALLSIGN_LEN);
+	Players[Player_num].callsign[CALLSIGN_LEN] = '\0';
 
 	init_game_list();				//init to defaults
 
@@ -863,6 +868,7 @@ int RegisterPlayer(void)
 
 		// Read the last player's name from config file, not lastplr.txt
 		strncpy( Players[Player_num].callsign, config_last_player, CALLSIGN_LEN );
+		Players[Player_num].callsign[CALLSIGN_LEN] = '\0';
 
 		if (config_last_player[0]==0)
 			allow_abort_flag = 0;
@@ -882,6 +888,7 @@ do_menu_again:
 			goto do_menu_again;
 	} else {
 		strncpy(Players[Player_num].callsign,filename, CALLSIGN_LEN);
+		Players[Player_num].callsign[CALLSIGN_LEN] = '\0';
 	}
 
 	read_player_file();
@@ -955,7 +962,7 @@ void LoadLevel(int level_num)
 		Current_level_num=level_num;
 
 	#ifdef NETWORK
-	my_segments_checksum = netmisc_calc_checksum(Segments, sizeof(segment)*(Highest_segment_index+1));
+	my_segments_checksum = netmisc_calc_checksum(Segments, sizeof(segment)*((size_t)Highest_segment_index+1));
 	#endif
 
 	load_endlevel_data(level_num);
@@ -1218,7 +1225,7 @@ int Secret_level_table[MAX_SECRET_LEVELS_PER_MISSION];
 //called to go to the next level (if there is one)
 //if secret_flag is true, advance to secret level, else next normal one
 //	Return true if game over.
-int AdvanceLevel(int secret_flag)
+static int AdvanceLevel(int secret_flag)
 {
 
 	int result;
@@ -1617,7 +1624,7 @@ static void copy_defaults_to_robot(object *objp)
 //	Copy all values from the robot info structure to all instances of robots.
 //	This allows us to change bitmaps.tbl and have these changes manifested in existing robots.
 //	This function should be called at level load time.
-void copy_defaults_to_robot_all(void)
+static void copy_defaults_to_robot_all(void)
 {
 	int	i;
 

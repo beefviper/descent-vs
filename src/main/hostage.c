@@ -238,7 +238,7 @@ static int			N_hostage_clips=0;
 #define RESCUED_SOUND_NUM	91
 
 //starts next clip in queue
-void start_hostage_clip(void)
+static void start_hostage_clip(void)
 {
 	int i,vclip_num,hostage_number;
 
@@ -274,7 +274,7 @@ void start_hostage_clip(void)
 }
 
 //add this hostage's clip to the queue
-void queue_hostage_clip(int hostage_num)
+static void queue_hostage_clip(int hostage_num)
 {
 	if ((Cockpit_mode!=CM_FULL_COCKPIT && Cockpit_mode!=CM_STATUS_BAR) || N_hostage_clips>=MAX_HOSTAGE_CLIPS)
 		return;		//no cockpit, or queue is full
@@ -289,7 +289,7 @@ void queue_hostage_clip(int hostage_num)
 }
 
 //current clip is done, stop it
-void stop_hostage_clip(void)
+static void stop_hostage_clip(void)
 {
 	get_hostage_window_coords(&Hostage_monitor_x,&Hostage_monitor_y,&Hostage_monitor_w,&Hostage_monitor_h);
 

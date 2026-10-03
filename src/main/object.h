@@ -487,14 +487,12 @@ void init_objects(void);
 
 //returns segment number object is in.  Searches out from object's current
 //seg, so this shouldn't be called if the object has "jumped" to a new seg
-int obj_get_new_seg(object *obj);
 
 //when an object has moved into a new segment, this function unlinks it
 //from its old segment, and links it into the new segment
 void obj_relink(int objnum,int newsegnum);
 
 //move an object from one segment to another. unlinks & relinks
-void obj_set_new_seg(int objnum,int newsegnum);
 
 //links an object into a segment's list of objects.
 //takes object number and segment number
@@ -534,7 +532,6 @@ void draw_object_tmap_rod(object *obj,bitmap_index bitmap,int lighted);
 void obj_delete_all_that_should_be_dead(void);
 
 // Toggles whether or not lock-boxes draw.
-void object_toggle_lock_targets(void);
 
 //move all objects for the current frame
 void object_move_all(void);		// moves all objects
@@ -543,7 +540,6 @@ void object_move_all(void);		// moves all objects
 void object_goto_next_viewer(void);
 
 //draw target boxes for nearby robots
-void object_render_targets(void);
 
 //move an object for the current frame
 void object_move_one( object * obj );

@@ -36,6 +36,5 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _MACRO_H
 #define _MACRO_H
 
-void macro_free_buffer(void);
 
 #endif

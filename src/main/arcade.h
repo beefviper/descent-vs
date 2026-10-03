@@ -50,8 +50,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern int Arcade_mode;
 extern fix Arcade_timer;
 
-extern void arcade_init(void);
-extern void arcade_read_controls(void);
 
 #else
 

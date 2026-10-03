@@ -87,7 +87,7 @@ void gr_linear_line( int x0, int y0, int x1, int y1 )
 	if ( ydelta == 0 )	{
 		if ( xadvance < 0 )
 			dest -= xdelta;		// point to left end so we can go left to right
-		memset( dest, color, xdelta + 1 );
+		memset( dest, color, (size_t)xdelta + 1 );
 		return;
 	}
 

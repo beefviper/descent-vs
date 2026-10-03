@@ -250,11 +250,16 @@ int message_length[MULTI_MAX_TYPE+1] = {
 
 
 // Function Prototypes
-void multi_reset_player_object(object* objp);
-void multi_save_game(ubyte slot, uint id, char* desc);
-void multi_restore_game(ubyte slot, uint id);
-void extract_netplayer_stats(netplayer_stats* ps, player* pd);
-void multi_set_robot_ai(void);
+static void multi_reset_player_object(object *objp);
+static void multi_reset_player_object(object* objp);
+static void multi_save_game(ubyte slot, uint id, char *desc);
+static void multi_save_game(ubyte slot, uint id, char* desc);
+static void multi_restore_game(ubyte slot, uint id);
+static void multi_restore_game(ubyte slot, uint id);
+static void extract_netplayer_stats( netplayer_stats *ps, player * pd );
+static void extract_netplayer_stats(netplayer_stats* ps, player* pd);
+static void multi_set_robot_ai(void);
+static void multi_set_robot_ai(void);
 
 
 //
@@ -1356,7 +1361,7 @@ multi_do_player_explode(char *buf)
 
 	for (i = 0; i < remote_created; i++)
 	{
-		if ((i < Net_create_loc) && (*(short *)(buf+count) > 0))
+		if ((i < Net_create_loc) && (i < MAX_NET_CREATE_OBJECTS) && (*(short *)(buf+count) > 0))
 			map_objnum_local_to_remote((short)Net_create_objnums[i], *(short *)(buf+count), pnum);
 		else if (*(short *)(buf+count) <= 0)
 		{
@@ -1369,7 +1374,7 @@ multi_do_player_explode(char *buf)
 //		Assert(*(short *)(buf+count) > 0);
 		count += 2;
 	}
-	for (i = remote_created; i < Net_create_loc; i++) {
+	for (i = remote_created; i < Net_create_loc && i < MAX_NET_CREATE_OBJECTS; i++) {
 		mprintf((0, "WARNING: I Created more powerups than player %d, deleting.\n", pnum));
 		Objects[Net_create_objnums[i]].flags |= OF_SHOULD_BE_DEAD;
 	}
@@ -1893,7 +1898,7 @@ multi_reset_stuff(void)
 	reset_rear_view();
 }
 
-void multi_reset_player_object(object *objp)
+static void multi_reset_player_object(object *objp)
 {
 	int i;
 	int id;
@@ -2690,7 +2695,7 @@ multi_prep_level(void)
 	reset_player_object();
 }
 
-void multi_set_robot_ai(void)
+static void multi_set_robot_ai(void)
 {
 	// Go through the objects array looking for robots and setting
 	// them to certain supported types of NET AI behavior.
@@ -2815,7 +2820,7 @@ void multi_initiate_restore_game(void)
 	multi_restore_game(slot,state_game_id);
 }
 
-void multi_save_game(ubyte slot, uint id, char *desc)
+static void multi_save_game(ubyte slot, uint id, char *desc)
 {
 	char filename[128] = {0};
 
@@ -2830,7 +2835,7 @@ void multi_save_game(ubyte slot, uint id, char *desc)
 	state_save_all_sub(filename, desc, 0 );
 }
 
-void multi_restore_game(ubyte slot, uint id)
+static void multi_restore_game(ubyte slot, uint id)
 {
 	char filename[128] = {0};
 	player saved_player = {0};
@@ -2860,7 +2865,7 @@ void multi_restore_game(ubyte slot, uint id)
 }
 
 
-void extract_netplayer_stats( netplayer_stats *ps, player * pd )
+static void extract_netplayer_stats( netplayer_stats *ps, player * pd )
 {
 	ps->flags = pd->flags;							// Powerup flags, see below...
 	ps->energy = pd->energy;							// Amount of energy remaining.

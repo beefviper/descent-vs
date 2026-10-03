@@ -50,6 +50,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "ui.h"
 #include "key.h"
+#include "error.h"
 
 // insert character c into string s at position p.
 static void strcins(char *s, int p, char c)
@@ -115,8 +116,11 @@ UI_GADGET_INPUTBOX * ui_add_gadget_inputbox( UI_WINDOW * wnd, short x, short y, 
 
 	inputbox = (UI_GADGET_INPUTBOX *)ui_gadget_add( wnd, 6, x, y, x+aw*slength-1, y+h-1+4 );
 
-	inputbox->text = malloc( length + 1);
+	inputbox->text = malloc( (size_t)length + 1);
+	if (inputbox->text == NULL)
+		Error("Out of memory");
 	strncpy( inputbox->text, text, length );
+	inputbox->text[length] = '\0';
 	inputbox->position = (short)strlen(inputbox->text);
 	inputbox->oldposition = inputbox->position;
 	inputbox->width = aw*slength;

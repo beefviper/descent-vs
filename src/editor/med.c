@@ -456,7 +456,9 @@ static void ReadLispMacro( FILE * file, char * buffer )
 //	char text[100];
 //	int i=0;
 
-	fscanf( file, " { %s } ", buffer );
+	if (fscanf( file, " { %s } ", buffer ) != 1) {
+		// malformed input: leave the values as they were
+	}
 
 /*
 	while (1)
@@ -486,6 +488,8 @@ static void medkey_init(void)
 
 	//MALLOC( LispCommand, char, DIAGNOSTIC_MESSAGE_MAX );//hacked by KRB
 	LispCommand = (char *)malloc(DIAGNOSTIC_MESSAGE_MAX*sizeof(char));
+	if (LispCommand == NULL)
+		Error("Out of memory");
 
 	for (i=0; i<2048; i++ )
 		KeyFunction[i] = NULL;

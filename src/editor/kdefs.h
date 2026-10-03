@@ -120,10 +120,8 @@ int SetCurve(void);
 
 // In kmine.c
 int SaveMine(void);
-int LoadMine(void);
 int MineMenu(void);
 int CreateNewMine(void);
-int LoadOldMine(void);
 
 int SaveSituation(void);
 int LoadSituation(void);
@@ -132,7 +130,6 @@ int LoadSituation(void);
 int SetPlayerPosition(void);
 int SaveGameData(void);
 int LoadGameData(void);
-int LoadMineOnly(void);
 void ResetFilename(void);
 
 // In group.c
@@ -247,7 +244,6 @@ int medlisp_scale_segment(void);
 int medlisp_rotate_segment(void);
 int medlisp_add_segment(void);
 int AttachSegment(void);
-int DeleteSegment(void);
 int DosShell(void);
 int CallLisp(void);
 int ExitEditor(void);
@@ -256,8 +252,6 @@ int ExchangeMarkAndCurseg(void);
 int med_keypad_goto_prev(void);
 int med_keypad_goto_next(void);
 int med_keypad_goto(void);
-int med_increase_tilings(void);
-int med_decrease_tilings(void);
 int ToggleAutosave(void);
 int MarkStart(void);
 int MarkEnd(void);
@@ -300,7 +294,6 @@ int	ObjectMoveUp(void);
 int	ObjectMoveNearer(void);
 int	ObjectMoveFurther(void);
 int	ObjectSelectNextinSegment(void);
-int	ObjectSelectNextType();
 int	ObjectDecreaseBank(void);
 int	ObjectIncreaseBank(void);
 int	ObjectDecreasePitch(void);
@@ -350,12 +343,10 @@ int SetPlayerFromCursegMinusOne(void);
 int FindConcaveSegs(void);
 int SelectNextFoundSeg(void);
 int SelectPreviousFoundSeg(void);
-int do_reset_orient(void);
 int GameZoomOut(void);
 int GameZoomIn(void);
 
 // John's temp page stuff
-int medtmp_set_page(void);
 
 // In objpage.c
 int objpage_goto_next_object(void);
@@ -377,14 +368,6 @@ extern int wall_deautomate_door(void);
 extern int wall_add_illusion(void);
 extern int wall_remove(void);
 extern int wall_restore_all(void);
-extern int wall_assign_door_1(void);
-extern int wall_assign_door_2(void);
-extern int wall_assign_door_3(void);
-extern int wall_assign_door_4(void);
-extern int wall_assign_door_5(void);
-extern int wall_assign_door_6(void);
-extern int wall_assign_door_7(void);
-extern int wall_assign_door_8(void);
 extern int do_wall_dialog(void);
 extern int do_trigger_dialog(void);
 extern int check_walls(void);
@@ -401,7 +384,6 @@ extern int do_centers_dialog(void);
 //extern int trigger_control(void);
 //extern int trigger_remove(void);
 //extern int trigger_add_if_control_center_dead(void);
-extern int bind_wall_to_control_trigger(void);
 
 // In med.c
 extern int fuelcen_create_from_curseg(void);

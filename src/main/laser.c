@@ -59,7 +59,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 int Laser_rapid_fire = 0;
 
 // Function Prototypes
-int find_homing_object_complete(vms_vector* curpos, object* tracker, int track_obj_type1, int track_obj_type2);
+static int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_obj_type1, int track_obj_type2);
+static int find_homing_object_complete(vms_vector* curpos, object* tracker, int track_obj_type1, int track_obj_type2);
 
 //---------------------------------------------------------------------------------
 // Called by render code.... determines if the laser is from a robot or the
@@ -611,7 +612,7 @@ static int find_homing_object(vms_vector *curpos, object *tracker)
 //	Find object to home in on.
 //	Scan list of objects rendered last frame, find one that satisfies function of nearness to center and distance.
 //	Can track two kinds of objects.  If you are only interested in one type, set track_obj_type2 to NULL
-int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_obj_type1, int track_obj_type2)
+static int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_obj_type1, int track_obj_type2)
 {
 	int	objnum;
 	fix	max_dot = -F1_0*2;

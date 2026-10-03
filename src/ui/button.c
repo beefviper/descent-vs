@@ -63,6 +63,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "ui.h"
 #include "key.h"
 #include "mono.h"
+#include "error.h"
 
 #define Middle(x) ((2*(x)+1)/4)
 
@@ -146,6 +147,8 @@ UI_GADGET_BUTTON * ui_add_gadget_button( UI_WINDOW * wnd, short x, short y, shor
 	{
 		//MALLOC( button->text, char, strlen(text)+1 );//Yet another hack -KRB
 		button->text = (char *)malloc((strlen(text)+1)*sizeof(char));
+		if (button->text == NULL)
+			Error("Out of memory");
 		strcpy( button->text, text );
 	} else {
 		button->text = NULL;

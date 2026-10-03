@@ -147,8 +147,10 @@ static int cache_hits = 0;
 static int cache_misses = 0;
 
 // Function Prototypes
-void merge_textures_super_xparent(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
-void merge_textures_new(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
+static void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data );
+static void merge_textures_super_xparent(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
+static void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data );
+static void merge_textures_new(int type, grs_bitmap* bottom_bmp, grs_bitmap* top_bmp, ubyte* dest_data);
 
 void texmerge_close(void);
 
@@ -276,7 +278,7 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 	return Cache[least_recently_used].bitmap;
 }
 
-void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data )
+static void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data )
 {
 //	ubyte c;
 //	int x,y;
@@ -338,7 +340,7 @@ void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp
 	}
 }
 
-void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data )
+static void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp, ubyte * dest_data )
 {
 	ubyte c;
 	int x,y;

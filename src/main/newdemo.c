@@ -701,7 +701,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "inferno.h"
 #include "game.h"
 #include "gr.h"
-#include "stdlib.h"
 #include "bm.h"
 //#include "error.h"
 #include "mono.h"
@@ -720,7 +719,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "vclip.h"
 #include "polyobj.h"
 #include "fireball.h"
-#include "laser.h"
 #include "error.h"
 #include "ai.h"
 #include "hostage.h"
@@ -3068,7 +3066,7 @@ static void interpolate_frame(fix d_play, fix d_recorded)
 		factor = F1_0;
 
 	num_cur_objs = Highest_object_index;
-	cur_objs = (object *)malloc(sizeof(object) * (num_cur_objs + 1));
+	cur_objs = (object *)malloc(sizeof(object) * ((size_t)num_cur_objs + 1));
 	if (cur_objs == NULL) {
 		mprintf((0,"Couldn't get %d bytes for cur_objs in interpolate_frame\n", sizeof(object) * num_cur_objs));
 		Int3();
@@ -3320,7 +3318,7 @@ void newdemo_playback_one_frame(void)
 					int i, j, num_objs, level;
 
 					num_objs = Highest_object_index;
-					cur_objs = (object *)malloc(sizeof(object) * (num_objs + 1));
+					cur_objs = (object *)malloc(sizeof(object) * ((size_t)num_objs + 1));
 					if (cur_objs == NULL) {
 						Warning ("Couldn't get %d bytes for objects in interpolate playback\n", sizeof(object) * num_objs);
 						break;
@@ -3532,7 +3530,8 @@ try_again:
 		} else
 			sprintf (save_file, "tmp%d.dem", tmpcnt++);
 		remove(save_file);
-		rename(DEMO_FILENAME, save_file);
+		if (rename(DEMO_FILENAME, save_file) != 0)
+			mprintf((0, "Couldn't save demo as %s\n", save_file));
 		return;
 	}
 	if (exit == -1) {					// pressed ESC
@@ -3550,13 +3549,11 @@ try_again:
 			goto try_again;
 		}
 
-	if (Newdemo_no_space)
-		strcpy(fullname, m[1].text);
-	else
-		strcpy(fullname, m[0].text);
+	strcpy(fullname, filename);		//the input item's text is filename either way
 	strcat(fullname, ".dem");
 	remove(fullname);
-	rename(DEMO_FILENAME, fullname);
+	if (rename(DEMO_FILENAME, fullname) != 0)
+		mprintf((0, "Couldn't save demo as %s\n", fullname));
 }
 
 void newdemo_start_playback(char * filename)
@@ -3644,6 +3641,7 @@ void newdemo_start_playback(char * filename)
 	change_playernum_to(0);						// force playernum to 0
 	#endif
 	strncpy(nd_save_callsign, Players[Player_num].callsign, CALLSIGN_LEN);
+	nd_save_callsign[CALLSIGN_LEN] = '\0';
 	Viewer = ConsoleObject = &Objects[0];	// play properly as if console player
 	if (newdemo_read_demo_start(rnd_demo)) {
 		fclose(infile);
@@ -3673,6 +3671,7 @@ void newdemo_stop_playback(void)
 	change_playernum_to(0);						//this is reality
 	#endif
 	strncpy(Players[Player_num].callsign, nd_save_callsign, CALLSIGN_LEN);
+	Players[Player_num].callsign[CALLSIGN_LEN] = '\0';
 	Cockpit_mode = Newdemo_old_cockpit;
 	Game_mode = GM_GAME_OVER;
 	Function_mode = FMODE_MENU;

@@ -35,6 +35,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "iff.h"
 #include "mem.h"
+#include "error.h"
 
 ubyte palette[768];
 
@@ -46,6 +47,8 @@ static void dofile( char * filename )
 
 	//MALLOC( bitmap, grs_bitmap, 1 );//Hack by KRB
 	bitmap = (grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+	if (bitmap == NULL)
+		Error("Out of memory");
 
 	printf( "Reading %s...", filename );
 	iff_read_bitmap( filename, bitmap, BM_LINEAR, palette );

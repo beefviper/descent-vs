@@ -443,7 +443,7 @@ FILE * count_file = NULL;
 int num_good=0,num_bad=0;
 int num_good64=0,num_bad64=0;
 
-void close_count_file(void)
+static void close_count_file(void)
 {
  	if ( count_file )	{
 		fprintf( count_file,"Good = %d\n", num_good );
@@ -455,7 +455,7 @@ void close_count_file(void)
 	}
 }
 
-void count_colors( int bnum, grs_bitmap * bmp )
+static void count_colors( int bnum, grs_bitmap * bmp )
 {
 	int i,colors;
 	ushort n[256] = {0};
@@ -508,6 +508,7 @@ bitmap_index piggy_register_bitmap( grs_bitmap * bmp, char * name, int in_file )
 	}
 
 	strncpy( AllBitmaps[Num_bitmap_files].name, name, 12 );
+	AllBitmaps[Num_bitmap_files].name[12] = '\0';
 	hashtable_insert( &AllBitmapsNames, AllBitmaps[Num_bitmap_files].name, Num_bitmap_files );
 	GameBitmaps[Num_bitmap_files] = *bmp;
 	if ( !in_file )	{
@@ -526,6 +527,7 @@ int piggy_register_sound( digi_sound * snd, char * name, int in_file )
 	Assert( Num_sound_files < MAX_SOUND_FILES );
 
 	strncpy( AllSounds[Num_sound_files].name, name, 12 );
+	AllSounds[Num_sound_files].name[12] = '\0';
 	hashtable_insert( &AllDigiSndNames, AllSounds[Num_sound_files].name, Num_sound_files );
 	GameSounds[Num_sound_files] = *snd;
 	if ( !in_file )	{
@@ -711,7 +713,7 @@ int piggy_init(void)
 		if ( bmh.flags & BM_FLAG_NO_LIGHTING ) GameBitmapFlags[i+1] |= BM_FLAG_NO_LIGHTING;
 		if ( bmh.flags & BM_FLAG_RLE ) GameBitmapFlags[i+1] |= BM_FLAG_RLE;
 
-		GameBitmapOffset[i+1] = bmh.offset + header_size + (sizeof(int)*2) + Pigdata_start;
+		GameBitmapOffset[i+1] = bmh.offset + header_size + (int)(sizeof(int)*2) + Pigdata_start;
 		Assert( (i+1) == Num_bitmap_files );
 		piggy_register_bitmap( &temp_bitmap, temp_name, 1 );
 	}
@@ -720,8 +722,8 @@ int piggy_init(void)
 		cfread( &sndh, sizeof(DiskSoundHeader), 1, Piggy_fp );
 		//size -= sizeof(DiskSoundHeader);
 		temp_sound.length = sndh.length;
-		temp_sound.data = (ubyte *)(sndh.offset + header_size + (sizeof(int)*2)+Pigdata_start);
-		SoundOffset[Num_sound_files] = sndh.offset + header_size + (sizeof(int)*2)+Pigdata_start;
+		temp_sound.data = (ubyte *)(size_t)(sndh.offset + header_size + (int)(sizeof(int)*2)+Pigdata_start);
+		SoundOffset[Num_sound_files] = sndh.offset + header_size + (int)(sizeof(int)*2)+Pigdata_start;
 		memcpy( temp_name_read, sndh.name, 8 );
 		temp_name_read[8] = 0;
 		piggy_register_sound( &temp_sound, temp_name_read, 1 );
@@ -729,7 +731,7 @@ int piggy_init(void)
 		//mprintf(( 0, "%d bytes of sound\n", sbytes ));
 	}
 
-	SoundBits = malloc( sbytes + 16 );
+	SoundBits = malloc( (size_t)sbytes + 16 );
 	if ( SoundBits == NULL )
 		Error( "Not enough memory to load DESCENT.PIG sounds\n" );
 
@@ -768,7 +770,7 @@ static int piggy_is_needed(int soundnum)
 	if ( !digi_lomem ) return 1;
 
 	for (i=0; i<MAX_SOUNDS; i++ )	{
-		if ( (AltSounds[i] < 255) && (Sounds[AltSounds[i]] == soundnum) )
+		if ( (AltSounds[i] < MAX_SOUNDS) && (Sounds[AltSounds[i]] == soundnum) )
 			return 1;
 	}
 	return 0;
@@ -818,7 +820,7 @@ static void piggy_critical_error(void)
 	save_canv = grd_curcanv;
 	save_font = grd_curcanv->cv_font;
 	gr_palette_load( gr_palette );
-	i = nm_messagebox( "Disk Error", 2, "Retry", "Exit", "%s\non drive %c:", crit_errors[descent_critical_errcode&0xf], (descent_critical_deverror&0xf)+'A'  );
+	i = nm_messagebox( "Disk Error", 2, "Retry", "Exit", "%s\non drive %c:", ((descent_critical_errcode&0xf) < (int)(sizeof(crit_errors)/sizeof(crit_errors[0])) ? crit_errors[descent_critical_errcode&0xf] : "Unknown error"), (descent_critical_deverror&0xf)+'A'  );
 	if ( i == 1 )
 		exit(1);
 	gr_set_current_canvas(save_canv);
@@ -880,7 +882,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			memcpy( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], &zsize, sizeof(int) );
 			Piggy_bitmap_cache_next += sizeof(int);
 			descent_critical_error = 0;
-			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, zsize-4, Piggy_fp );
+			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, (size_t)zsize-4, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -894,7 +896,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 				goto ReDoIt;
 			}
 			descent_critical_error = 0;
-			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, bmp->bm_h*bmp->bm_w, Piggy_fp );
+			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, (size_t)bmp->bm_h*bmp->bm_w, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -1049,7 +1051,7 @@ void piggy_dump_all(void)
 	fwrite( &Num_sound_files, sizeof(int), 1, fp );
 
 	header_offset = ftell(fp);
-	header_offset += ((Num_bitmap_files-1)*sizeof(DiskBitmapHeader)) + (Num_sound_files*sizeof(DiskSoundHeader));
+	header_offset += (((size_t)Num_bitmap_files-1)*sizeof(DiskBitmapHeader)) + (Num_sound_files*sizeof(DiskSoundHeader));
 	data_offset = header_offset;
 
 	for (i=1; i < Num_bitmap_files; i++ )	{
@@ -1101,7 +1103,7 @@ void piggy_dump_all(void)
 			fprintf( fp1, ", and is already compressed to %d bytes.\n", *size );
 #endif
 		} else {
-			fwrite( bmp->bm_data, sizeof(ubyte), bmp->bm_rowsize * bmp->bm_h, fp );
+			fwrite( bmp->bm_data, sizeof(ubyte), (size_t)bmp->bm_rowsize * bmp->bm_h, fp );
 			data_offset += bmp->bm_rowsize * bmp->bm_h;
 			//bmh.data_length = bmp->bm_rowsize * bmp->bm_h;
 #ifndef RELEASE

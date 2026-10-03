@@ -111,7 +111,7 @@ unsigned char *plat_video_set_mode(int w, int h, int pages)
 
 	free(framebuffer);
 	// One spare row: some code addresses its second page one row down.
-	framebuffer = (unsigned char *)calloc((size_t)w * (h * pages + 1), 1);
+	framebuffer = (unsigned char *)calloc((size_t)w * ((size_t)h * pages + 1), 1);
 	if (!framebuffer)
 		return NULL;
 

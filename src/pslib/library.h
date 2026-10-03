@@ -117,7 +117,6 @@ int InputBit( BIT_BUF *bit_file );
 unsigned int InputBits( BIT_BUF *bit_file, int bit_count );
 void CloseInputBitBuf( BIT_BUF *bit_file );
 void CloseOutputBitBuf( BIT_BUF *bit_file );
-void FilePrintBinary( FILE *file, unsigned int code, int bits );
 
 #define LISTING 1       // listing the library
 #define BUILDING 1      // building the library
