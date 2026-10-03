@@ -147,6 +147,7 @@ typedef struct g3s_codes {
 #define PF_OVERFLOW		2	//can't project
 #define PF_TEMP_POINT	4	//created during clip
 #define PF_UVS				8	//has uv values set
+#define PF_LVS				16	//has lighting values set
 
 //clipping codes flags
 
@@ -184,6 +185,32 @@ typedef struct g3s_object {
 	//this will be filled in later
 
 } g3s_object;
+
+//Global variables (defined in globvars.c)
+
+#define MAX_POINTS_IN_POLY 100
+
+extern vms_vector View_position;
+extern fix View_zoom;
+
+extern vms_matrix Unscaled_matrix;	//before scaling
+extern vms_matrix View_matrix;
+
+extern vms_vector Window_scale;		//scaling for window aspect
+extern vms_vector Matrix_scale;		//how the matrix is scaled, window_scale * zoom
+
+extern int Canvas_width;			//the actual width
+extern int Canvas_height;			//the actual height
+
+extern fix Canv_w2;					//fixed-point width/2
+extern fix Canv_h2;					//fixed-point height/2
+
+//vertex buffers for polygon drawing and clipping
+extern g3s_point *Vbuf0[MAX_POINTS_IN_POLY];
+extern g3s_point *Vbuf1[MAX_POINTS_IN_POLY];
+
+//list of 2d coords
+extern fix Vertex_list[MAX_POINTS_IN_POLY*2];
 
 //Functions in library
 
@@ -225,7 +252,7 @@ void g3_start_instance_matrix(vms_vector *pos,vms_matrix *orient);
 void g3_start_instance_angles(vms_vector *pos,vms_angvec *angles);
 
 //pops the old context
-void g3_done_instance();
+void g3_done_instance(void);
 
 //Misc utility functions:
 
@@ -287,7 +314,7 @@ bool g3_draw_tmap(int nv,g3s_point **pointlist,g3s_uvl *uvl_list,grs_bitmap *bm)
 
 //draw a sortof sphere - i.e., the 2d radius is proportional to the 3d
 //radius, but not to the distance from the eye
-g3_draw_sphere(g3s_point *pnt,fix rad);
+void g3_draw_sphere(g3s_point *pnt,fix rad);
 
 //@@//return ligting value for a point
 //@@fix g3_compute_lighting_value(g3s_point *rotated_point,fix normval);
@@ -306,17 +333,17 @@ bool g3_check_and_draw_tmap(int nv,g3s_point **pointlist,g3s_uvl *uvl_list,grs_b
 bool g3_draw_line(g3s_point *p0,g3s_point *p1);
 
 //draw a polygon that is always facing you
-g3_draw_rod_flat(g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width);
+void g3_draw_rod_flat(g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width);
 
 //draw a bitmap object that is always facing you
-g3_draw_rod_tmap(grs_bitmap *bitmap,g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width,fix light);
+void g3_draw_rod_tmap(grs_bitmap *bitmap,g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width,fix light);
 
 //draws a bitmap with the specified 3d width & height
-g3_draw_bitmap(vms_vector *pos,fix width,fix height,grs_bitmap *bm);
+void g3_draw_bitmap(vms_vector *pos,fix width,fix height,grs_bitmap *bm);
 
 //specifies 2d drawing routines to use instead of defaults.  Passing
 //NULL for either or both restores defaults
-g3_set_special_render(void *tmap_drawer(),void *flat_drawer(),void *line_drawer());
+void g3_set_special_render(void *tmap_drawer(),void *flat_drawer(),void *line_drawer());
 
 //Object functions:
 
@@ -332,62 +359,5 @@ void g3_init_polygon_model(void *model_ptr);
 
 //alternate interpreter for morphing object
 bool g3_draw_morphing_model(void *model_ptr,grs_bitmap **model_bitmaps,vms_angvec *anim_angles,fix light,vms_vector *new_points);
-
-//Pragmas
-
-#pragma aux g3_init "*" modify exact [eax edx];
-#pragma aux g3_close "*" parm [] modify exact [];
-#pragma aux g3_start_frame "*" parm [] modify exact [];
-#pragma aux g3_end_frame "*" parm [] modify exact [];
-
-#pragma aux g3_set_view_angles "*" parm [edi] [esi] [eax] modify exact [];
-#pragma aux g3_set_view_matrix "*" parm [edi] [esi] [eax] modify exact [];
-
-#pragma aux g3_rotate_point "*" parm [edi] [esi] value [bl] modify exact [ebx];
-#pragma aux g3_project_point "*" parm [esi] modify exact [];
-
-#pragma aux g3_calc_point_depth "*" parm [esi] value [eax] modify exact [eax];
-
-#pragma aux g3_point_2_vec "*" parm [esi] [eax] [ebx] modify exact [eax ebx];
-
-#pragma aux g3_draw_line "*" parm [esi] [edi] value [al] modify exact [eax];
-#pragma aux g3_draw_poly "*" parm [ecx] [esi] value [al] modify exact [eax ecx esi edx];
-#pragma aux g3_check_and_draw_poly "*" parm [ecx] [esi] [edi] [ebx] value [al] modify exact [eax ecx esi edx edi];
-#pragma aux g3_draw_tmap "*" parm [ecx] [esi] [ebx] [edx] value [al] modify exact [eax ecx esi edx];
-#pragma aux g3_check_and_draw_tmap "*" parm [ecx] [esi] [ebx] [edx] [edi] [eax] value [al] modify exact [eax ecx esi edx];
-#pragma aux g3_check_normal_facing "*" parm [esi] [edi] value [al] modify exact [eax esi edi];
-
-#pragma aux g3_draw_object "*" parm [ebx] [esi] [edi] [eax] modify exact [];
-
-#pragma aux g3_draw_horizon "*" parm [eax] [edx] modify exact [];
-#pragma aux g3_compute_sky_polygon "*" parm [ebx] [ecx] value [eax] modify exact [eax];
-
-#pragma aux g3_start_instance_matrix "*" parm [esi] [edi] modify exact [esi edi];
-#pragma aux g3_start_instance_angles "*" parm [esi] [edi] modify exact [esi edi];
-#pragma aux g3_done_instance "*" modify exact [];
-#pragma aux g3_new_points "*" parm [esi] [edi] modify exact [];
-#pragma aux g3_restore_points "*" modify exact [];
-
-//@@#pragma aux g3_compute_lighting_value "*" parm [esi] [ecx] value [ecx] modify exact [ecx];
-#pragma aux g3_draw_rod_tmap "*" parm [ebx] [esi] [eax] [edi] [edx] [ecx] modify exact [];
-#pragma aux g3_draw_rod_flat "*" parm [esi] [eax] [edi] [edx] modify exact [];
-#pragma aux g3_draw_bitmap "*" parm [esi] [ebx] [ecx] [eax] modify exact [esi ecx eax];
-#pragma aux g3_draw_sphere "*" parm [esi] [ecx] modify exact [];
-
-#pragma aux g3_code_point "*" parm [eax] value [bl] modify exact [bl];
-
-//delta rotation functions
-#pragma aux g3_rotate_delta_x "*" parm [edi] [ebx] value [edi] modify exact [];
-#pragma aux g3_rotate_delta_y "*" parm [edi] [ebx] value [edi] modify exact [];
-#pragma aux g3_rotate_delta_z "*" parm [edi] [ebx] value [edi] modify exact [];
-#pragma aux g3_rotate_delta_vec "*" parm [edi] [esi] value [edi] modify exact [];
-#pragma aux g3_add_delta_vec "*" parm [eax] [esi] [edi] value [bl] modify exact [bl];
-
-#pragma aux g3_set_interp_points "*" parm [eax] modify exact [];
-#pragma aux g3_draw_polygon_model "*" parm [esi] [edi] [eax] [edx] [ebx] value [al] modify exact [];
-#pragma aux g3_init_polygon_model "*" parm [esi] modify exact [];
-#pragma aux g3_draw_morphing_model "*" parm [esi] [edi] [eax] [edx] [ebx] value [al] modify exact [];
-
-#pragma aux g3_set_special_render "*" parm [eax] [edx] [ebx] modify exact [eax edx ebx];
 
 #endif

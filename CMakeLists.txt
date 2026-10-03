@@ -143,8 +143,8 @@ descent_add_library(gr 2d
 
 # 3d rendering pipeline
 descent_add_library(3d 3d
-    globvars.asm setup.asm matrix.asm points.asm draw.asm clipper.asm
-    horizon.asm instance.asm rod.asm interp.asm)
+    globvars.c setup.c matrix.c points.c draw.c clipper.c horizon.c
+    instance.c rod.c interp.c)
 
 # Keyboard, joystick, mouse, timer, DPMI and IPX
 descent_add_library(io bios
