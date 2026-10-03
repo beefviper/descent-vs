@@ -985,6 +985,7 @@ void gr_close_font( grs_font * font )
 	{
 		if ( font->ft_chars )
 			free( font->ft_chars );
+		free( font->ft_filedata );
 		free( font );
 	}
 }
@@ -992,6 +993,12 @@ void gr_close_font( grs_font * font )
 void build_colormap_good( ubyte * palette, ubyte * colormap, int * freq );
 void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );	// in bitmap.c
 
+
+// Layout of the grs_font header in font files (32-bit pointers)
+#define FONT_DATA_OFFSET		12
+#define FONT_WIDTHS_OFFSET		20
+#define FONT_KERNDATA_OFFSET	24
+#define FONT_HEADER_SIZE		28
 
 grs_font * gr_init_font( char * fontname )
 {
@@ -1002,6 +1009,7 @@ grs_font * gr_init_font( char * fontname )
 	CFILE *fontfile;
 	int file_id;
 	int datasize;		//size up to (but not including) palette
+	ubyte *filedata;
 
 	fontfile = cfopen(fontname, "rb");
 
@@ -1014,17 +1022,30 @@ grs_font * gr_init_font( char * fontname )
 	if (file_id != 'NFSP')
 		Error( "File %s is not a font file", fontname );
 
-	font = (grs_font *) malloc(datasize);
+	// The file holds a grs_font header whose pointer fields are 32-bit
+	// offsets from the start of the header, followed by the font data.
+	// Read the header field by field: grs_font itself has native pointers,
+	// so it is larger than the file's header on 64-bit builds.
+	filedata = (ubyte *) malloc(datasize);
+	cfread(filedata,1,datasize,fontfile);
 
-	cfread(font,1,datasize,fontfile);
+	font = (grs_font *) malloc(sizeof(grs_font));
+	font->ft_filedata = filedata;
+	font->ft_w        = *(short *) (filedata + 0);
+	font->ft_h        = *(short *) (filedata + 2);
+	font->ft_flags    = *(short *) (filedata + 4);
+	font->ft_baseline = *(short *) (filedata + 6);
+	font->ft_minchar  = filedata[8];
+	font->ft_maxchar  = filedata[9];
+	font->ft_bytewidth= *(short *) (filedata + 10);
 
 	nchars = font->ft_maxchar-font->ft_minchar+1;
 
 	if (font->ft_flags & FT_PROPORTIONAL) {
 
-		font->ft_widths = (short *) (((int) font->ft_widths) + ((ubyte *) font));
+		font->ft_widths = (short *) (filedata + *(int *) (filedata + FONT_WIDTHS_OFFSET));
 
-		font->ft_data = ((int) font->ft_data) + ((ubyte *) font);
+		font->ft_data = filedata + *(int *) (filedata + FONT_DATA_OFFSET);
 
 		font->ft_chars = (unsigned char **)malloc( nchars * sizeof(unsigned char *));
 
@@ -1040,7 +1061,7 @@ grs_font * gr_init_font( char * fontname )
 
 	} else  {
 
-		font->ft_data = ((unsigned char *) font) + sizeof(*font);
+		font->ft_data = filedata + FONT_HEADER_SIZE;
 
 		font->ft_chars	= NULL;
 		font->ft_widths = NULL;
@@ -1049,8 +1070,9 @@ grs_font * gr_init_font( char * fontname )
 	}
 
 	if (font->ft_flags & FT_KERNED)
-		font->ft_kerndata = ((int) font->ft_kerndata) + ((ubyte *) font);
-
+		font->ft_kerndata = filedata + *(int *) (filedata + FONT_KERNDATA_OFFSET);
+	else
+		font->ft_kerndata = NULL;
 
 	if (font->ft_flags & FT_COLOR) {		//remap palette
 		ubyte palette[256*3];

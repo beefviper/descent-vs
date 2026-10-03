@@ -182,6 +182,7 @@ typedef struct _grs_font {
 	ubyte	**	ft_chars;		// Ptrs to data for each char (required for prop font)
 	short	*	ft_widths;		// Array of widths (required for prop font)
 	ubyte *  ft_kerndata;	// Array of kerning triplet data
+	ubyte *	ft_filedata;	// Font file contents the pointers above point into
 } grs_font;
 
 #define BM_LINEAR   0
