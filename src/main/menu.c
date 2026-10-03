@@ -116,7 +116,8 @@ static char rcsid[] = "$Id: menu.c 2.5 1995/10/07 13:19:09 john Exp $";
 
 extern int last_joy_time;		//last time the joystick was used
 #ifndef NDEBUG
-extern int speedtest_on;
+extern int Speedtest_on;
+#define speedtest_on Speedtest_on
 #else
 #define speedtest_on 0
 #endif

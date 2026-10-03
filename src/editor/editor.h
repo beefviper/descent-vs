@@ -326,8 +326,8 @@ extern	grs_canvas *Pad_text_canvas;		// Keypad text
 extern 	group		GroupList[MAX_GROUPS+1];
 extern 	segment  *Groupsegp[MAX_GROUPS+1];
 extern 	int		Groupside[MAX_GROUPS+1];
-extern	int 		current_group;
-extern	int 		num_groups;
+extern	int 		Current_group;
+extern	int 		Num_groups;
 extern	int		Current_group;
 
 extern	short		Found_segs[];			// List of segment numbers "found" under cursor click

@@ -726,7 +726,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 
 	// Breaking connections between segments in the current group and segments not in the group.
 	for (s=0; s<GroupList[new_current_group].num_segments; s++) {
-		mprintf((0, "[%3i %3i] ", GroupList[new_current_group].segments[s], GroupList[current_group].segments[s]));
+		mprintf((0, "[%3i %3i] ", GroupList[new_current_group].segments[s], GroupList[Current_group].segments[s]));
 		segp = &Segments[GroupList[new_current_group].segments[s]];
 		for (c=0; c<MAX_SIDES_PER_SEGMENT; c++)
 			if (IS_CHILD(segp->children[c])) {

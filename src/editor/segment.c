@@ -872,7 +872,7 @@ void change_vertex_occurrences(int dest, int src)
 	int	g,s,v;
 
 	// Fix vertices in groups
-	for (g=0;g<num_groups;g++)
+	for (g=0;g<Num_groups;g++)
 		for (v=0; v<GroupList[g].num_vertices; v++)
 			if (GroupList[g].vertices[v] == src)
 				GroupList[g].vertices[v] = dest;
@@ -949,7 +949,7 @@ void compress_segments(void)
 					Markedsegp = &Segments[hole];
 
 				// Fix segments in groups
-				for (g=0;g<num_groups;g++)
+				for (g=0;g<Num_groups;g++)
 					for (s=0; s<GroupList[g].num_segments; s++)
 						if (GroupList[g].segments[s] == seg)
 							GroupList[g].segments[s] = hole;
@@ -1357,7 +1357,7 @@ int med_delete_segment(segment *sp)
 		Markedsegp = 0;
 
 	//	If deleted segment = a Group segment ptr, then wipe it out.
-	for (s=0;s<num_groups;s++)
+	for (s=0;s<Num_groups;s++)
 		if (sp == Groupsegp[s])
 			Groupsegp[s] = 0;
 
@@ -1928,8 +1928,8 @@ int create_new_mine(void)
 	Cur_object_index = -1;
 	reset_objects(1);		//just one object, the player
 
-	num_groups = 0;
-	current_group = -1;
+	Num_groups = 0;
+	Current_group = -1;
 
 	Num_vertices = 0;		// Number of vertices in global array.
 	Num_segments = 0;		// Number of segments in global array, will get increased in med_create_segment

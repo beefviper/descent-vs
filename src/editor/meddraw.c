@@ -618,7 +618,7 @@ void draw_mine_sub(int segnum,int depth)
 	}
 }
 
-draw_edges(int automap_flag)
+static void draw_mine_edges(int automap_flag)
 {
 	int i,type;
 	seg_edge *e;
@@ -656,7 +656,7 @@ void draw_mine(segment *mine_ptr,int depth)
 
 	draw_mine_sub(SEG_PTR_2_NUM(mine_ptr),depth);
 
-	draw_edges(0);
+	draw_mine_edges(0);
 
 }
 
@@ -696,7 +696,7 @@ void draw_mine_all(segment *sp, int automap_flag)
 			}
 		}
 
-	draw_edges(automap_flag);
+	draw_mine_edges(automap_flag);
 
 }
 
@@ -734,11 +734,11 @@ void draw_group_segments(void)
 {
 	int	s;
 
-	if (current_group > -1) {
+	if (Current_group > -1) {
 		gr_setcolor(GROUP_COLOR);
-		for (s=0; s<GroupList[current_group].num_segments; s++)
-			if (Segments[GroupList[current_group].segments[s]].segnum != -1)
-				draw_segment(&Segments[GroupList[current_group].segments[s]]);
+		for (s=0; s<GroupList[Current_group].num_segments; s++)
+			if (Segments[GroupList[Current_group].segments[s]].segnum != -1)
+				draw_segment(&Segments[GroupList[Current_group].segments[s]]);
 		}
 }
 
@@ -925,13 +925,13 @@ void draw_world(grs_canvas *screen_canvas,editor_view *v,segment *mine_ptr,int d
 		draw_special_segments();
 
 		// Highlight group segment and side.
-		if (current_group > -1)
-		if (Groupsegp[current_group]) {
+		if (Current_group > -1)
+		if (Groupsegp[Current_group]) {
 			gr_setcolor(GROUPSEG_COLOR);
-			draw_segment(Groupsegp[current_group]);
+			draw_segment(Groupsegp[Current_group]);
 
 			gr_setcolor(GROUPSIDE_COLOR);
-			draw_seg_side(Groupsegp[current_group],Groupside[current_group]);
+			draw_seg_side(Groupsegp[Current_group],Groupside[Current_group]);
 		}
 
 		// Highlight marked segment and side.
