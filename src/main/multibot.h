@@ -94,6 +94,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _MULTIBOT_H
 #define _MULTIBOT_H
 
+#include "object.h"
+
 #ifndef SHAREWARE
 
 #define MAX_ROBOTS_CONTROLLED 3
@@ -130,7 +132,7 @@ void multi_dump_robots(void);
 void multi_strip_robots(int playernum);
 void multi_check_robot_timeout(void);
 
-void multi_robot_request_change(struct object *robot, int playernum);
+void multi_robot_request_change(object *robot, int playernum);
 #endif
 #endif
 #endif

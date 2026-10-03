@@ -325,11 +325,11 @@ int	LightIncreaseLightSegment();
 int	LightSetMaximum();
 int	LightSetDefault();
 int	LightSetDefaultAll();
-int	LightAmbientLighting();
+void	LightAmbientLighting();
 
 // seguvs.c
-int fix_bogus_uvs_on_side();
-int fix_bogus_uvs_all();
+void fix_bogus_uvs_on_side();
+void fix_bogus_uvs_all();
 void set_average_light_on_curside(void);
 void set_average_light_on_all(void);
 void set_average_light_on_all_quick(void);

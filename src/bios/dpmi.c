@@ -341,8 +341,10 @@ unsigned int dpmi_available_memory=0;
 unsigned int dpmi_physical_memory=0;
 unsigned int dpmi_dos_memory = 0;
 
+#ifdef __WATCOMC__
 extern void cdecl _GETDS();
 extern void cdecl cstart_();
+#endif
 
 int dpmi_init(int verbose)
 {
@@ -395,6 +397,7 @@ int dpmi_init(int verbose)
 		dpmi_available_memory = 16*1024*1024;		// Assume 16 MB
 	}
 
+#ifdef __WATCOMC__		// Watcom runtime code called from interrupt handlers
 	if (!dpmi_lock_region( _GETDS, 4096 ))	{
 		printf( "Error locking _GETDS" );
 		exit(1);
@@ -403,6 +406,7 @@ int dpmi_init(int verbose)
 		printf( "Error locking cstart" );
 		exit(1);
 	}
+#endif
 	if (!dpmi_lock_region( _chain_intr, 4096 ))	{
 		printf( "Error locking _chain_intr" );
 		exit(1);

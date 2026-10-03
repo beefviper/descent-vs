@@ -354,7 +354,7 @@ void clear_editor_status(void)
 }
 
 
-void diagnostic_message( char *format, ... )
+void diagnostic_message( const char *format, ... )
 {
 	char diag_line[DIAGNOSTIC_MESSAGE_MAX];
 

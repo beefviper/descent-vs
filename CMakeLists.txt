@@ -29,8 +29,20 @@ endif()
 # Compiler settings
 # ---------------------------------------------------------------------------
 
-# Every library and the game were built with these definitions.
-add_compile_definitions(NETWORK RELEASE NDEBUG)
+# Every library and the game were built with these definitions. RELEASE
+# compiles out the debugging aids the editor depends on (slew mode), so it
+# is left off for editor builds, as the original editor variant did.
+add_compile_definitions(NETWORK NDEBUG)
+if(NOT DESCENT_EDITOR)
+    add_compile_definitions(RELEASE)
+endif()
+
+# Watcom's char is unsigned; the code relies on it.
+if(MSVC)
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:/J>)
+else()
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:-funsigned-char>)
+endif()
 
 if(MSVC)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
@@ -43,6 +55,17 @@ endif()
 # here as well, so the same path serves C and MASM.
 set(DESCENT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${DESCENT_INCLUDE_DIR})
+
+# Stand-ins for the Watcom/DOS headers (dos.h, i86.h, bios.h) and a header,
+# force-included everywhere, that neutralizes Watcom keywords such as far.
+include_directories(BEFORE ${DESCENT_INCLUDE_DIR}/compat)
+if(MSVC)
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:/FIcompat.h>)
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:/wd4068>)    # unknown pragma
+else()
+    add_compile_options("$<$<COMPILE_LANGUAGE:C>:SHELL:-include compat.h>")
+    add_compile_options($<$<COMPILE_LANGUAGE:C>:-Wno-unknown-pragmas>)
+endif()
 
 # descent_add_library(<name> <dir> <sources>...)
 # descent_add_executable(<name> <dir> <sources>...)
@@ -82,6 +105,11 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # ---------------------------------------------------------------------------
 # Libraries (one per original subsystem; names match the original .lib files)
 # ---------------------------------------------------------------------------
+
+# Implementations of the DOS services declared in include/compat/dos.h
+descent_add_library(compat compat
+    dos.c)
+link_libraries(compat)
 
 descent_add_library(misc misc
     error.c parsarg.c)

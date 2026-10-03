@@ -131,7 +131,7 @@ void lib_close();
 
 ubyte *ReadFile( char *filename, int *length );
 
-int ReadFileBuf( char *filename, byte *buf, int bufsize );
+int ReadFileBuf( char *filename, ubyte *buf, int bufsize );
 // ReadFileBuf reads bufize bytes of 'filename' into the address of 'buf'
 //  returns an error code < 0 if there is an error.
 

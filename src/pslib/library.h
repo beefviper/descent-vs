@@ -163,7 +163,7 @@ extern file_header *LibHeaderList;
 extern FILE *InputLibInitFile; // file to read from
 extern short init_numfiles;    // number of files in the library
 
-void *ReadFileRaw( char *filename, int *length );
+ubyte *ReadFileRaw( char *filename, int *length );
 // ReadFileRaw reads 'filename' and returns the buffer and passes the length
 // in bytes.
 
@@ -175,6 +175,6 @@ int AppendFile( char *filename, void *data, int length );
 // AppendFile appends 'length' bytes of 'data' to 'filename'
 //  returns an error code != 0 if there is an error.
 
-int ReadFileBuf( char *filename, byte *buf, int bufsize );
+int ReadFileBuf( char *filename, ubyte *buf, int bufsize );
 // ReadFileBuf reads bufize bytes of 'filename' into the address of 'buf'
 //  returns an error code < 0 if there is an error.

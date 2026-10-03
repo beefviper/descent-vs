@@ -1311,7 +1311,7 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 }
 
 static char old_tmap_list[MAX_TEXTURES][13];
-static short tmap_xlate_table[MAX_TEXTURES];
+static short group_tmap_xlate_table[MAX_TEXTURES];
 
 // -----------------------------------------------------------------------------
 // Load group will:
@@ -1474,11 +1474,11 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 				if (translate == 1) {
 					int	temp;
 					tmap_xlate = Segments[segment_ids[i]].sides[j].tmap_num;
-					Segments[segment_ids[i]].sides[j].tmap_num = tmap_xlate_table[tmap_xlate];
+					Segments[segment_ids[i]].sides[j].tmap_num = group_tmap_xlate_table[tmap_xlate];
 					temp = Segments[segment_ids[i]].sides[j].tmap_num2;
 					tmap_xlate = temp & 0x3fff;			// strip off orientation bits
 					if (tmap_xlate != 0)
-						Segments[segment_ids[i]].sides[j].tmap_num2 = temp & (!0x3fff) | tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
+						Segments[segment_ids[i]].sides[j].tmap_num2 = temp & (!0x3fff) | group_tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
 					}
 				}
 			}
@@ -1525,10 +1525,10 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 		temptr = strchr(old_tmap_list[j], '.');
 		if (temptr) *temptr = '\0';
 
-		tmap_xlate_table[j] = hashtable_search( &ht,old_tmap_list[j]);
-		if (tmap_xlate_table[j]	< 0 )
-			tmap_xlate_table[j] = 0;
-		if (tmap_xlate_table[j] != j ) translate = 1;
+		group_tmap_xlate_table[j] = hashtable_search( &ht,old_tmap_list[j]);
+		if (group_tmap_xlate_table[j]	< 0 )
+			group_tmap_xlate_table[j] = 0;
+		if (group_tmap_xlate_table[j] != j ) translate = 1;
 	}
 
 	hashtable_free( &ht );

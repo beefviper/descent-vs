@@ -84,7 +84,10 @@ extern int wall_remove_blastable();
 
 // Adds a wall. (visually)
 extern int wall_add_to_curside();
-extern int wall_add_to_markedside();
+extern int wall_add_to_markedside(byte type);
+extern int wall_add_to_side(segment *segp, int side, byte type);
+extern int wall_add_door_flag(byte flag);
+extern int wall_remove_door_flag(byte flag);
 
 // Removes a wall. (visually)
 extern int wall_remove();
