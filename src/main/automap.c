@@ -214,7 +214,6 @@ static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
 #include "text.h"
 #include "gauges.h"
 #include "powerup.h"
-#include "network.h"
 
 #define EF_USED			1		// This edge is used
 #define EF_DEFINING		2		// A structure defining edge that should always draw.

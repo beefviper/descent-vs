@@ -666,7 +666,7 @@ void digi_close_digi()
 }
 
 
-void digi_close()
+void digi_close(void)
 {
 	if (!Digi_initialized) return;
 	Digi_initialized = 0;
@@ -1093,7 +1093,7 @@ WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
 
 TryNextChannel:
 	if ( (SampleHandles[next_handle] < _MAX_VOICES) && (!sosDIGISampleDone( hSOSDigiDriver, SampleHandles[next_handle]))  )		{
-		if ( (SoundVolumes[next_handle] > digi_volume) && (ntries<digi_max_channels) )	{
+		if ( (SoundVolumes[next_handle] > (uint)digi_volume) && (ntries<digi_max_channels) )	{
 			//mprintf(( 0, "Not stopping loud sound %d.\n", next_handle ));
 			next_handle++;
 			if ( next_handle >= digi_max_channels )

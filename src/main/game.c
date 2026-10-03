@@ -353,12 +353,10 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #include "multi.h"
 #include "desc_id.h"
 #include "cntrlcen.h"
-#include "pcx.h"
 #include "dpmi.h"
 #include "state.h"
 #include "piggy.h"
 #include "multibot.h"
-#include "ai.h"
 
 //#define TEST_TIMER	1		//if this is set, do checking on timer
 

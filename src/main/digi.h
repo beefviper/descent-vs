@@ -149,7 +149,7 @@ extern int digi_midi_port;
 extern int digi_get_settings();
 extern int digi_init();
 extern void digi_reset();
-extern void digi_close();
+extern void digi_close(void);
 
 // Volume is max at F1_0.
 extern void digi_play_sample( int sndnum, fix max_volume );
