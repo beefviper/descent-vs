@@ -81,7 +81,7 @@ b equ byte ptr
     LOCAL count
     count = 0
     FOR arg, <arglist>
-        count = count + 1
+	count = count + 1
     ENDM
     EXITM %count
 ENDM
@@ -99,7 +99,7 @@ ENDM
     LOCAL txt, arg
     txt TEXTEQU <>
 %   FOR arg, <arglist>
-        txt CATSTR <arg>, <!,>, txt
+	txt CATSTR <arg>, <!,>, txt
     ENDM
 
     txt SUBSTR  txt, 1, @SizeStr( %txt ) - 1
@@ -111,32 +111,32 @@ ENDM
 
 ;this macro is used to declare several symbols of the same type
 ;usage is:  extdef  type,sym0,sym1,...
-extdef	macro	type,syms:vararg
-	for	sym,<syms>
+extdef  macro   type,syms:vararg
+	for     sym,<syms>
 	 externdef sym:type
 	endm
 	endm
 
 ;this macro is used to generate ext<type> macros
-extgen	macro	type,id
-ext&id	macro	syms:vararg
-	extdef	type,syms
+extgen  macro   type,id
+ext&id  macro   syms:vararg
+	extdef  type,syms
 	endm
 	endm
 
 ;macros for common types, such as word (extw), byte (extb), & near (extn)
 
-	extgen	word,w
-	extgen	byte,b
-	extgen	dword,d
-	extgen	near,n
+	extgen  word,w
+	extgen  byte,b
+	extgen  dword,d
+	extgen  near,n
 
 
 ;compute the absolute value of eax.  afterwards, edx=sign (0 or -1)
-abs_eax	macro
+abs_eax macro
 	cdq
-	xor	eax,edx
-	sub	eax,edx
+	xor     eax,edx
+	sub     eax,edx
 	endm
 
 ;PUSHM & POPM are used for multiple registers.  Note that POPM pops in the
@@ -145,43 +145,43 @@ abs_eax	macro
 ;argument to both macros.
 
 ;push multiple registers
-pushm	macro	args:vararg
-	local	arg
-	for	arg,<args>
-	 push	arg
+pushm   macro   args:vararg
+	local   arg
+	for     arg,<args>
+	 push   arg
 	endm
 	endm
 
 ;pop multiple registers
-popm	macro	args:vararg
-	local	arg
-%	for	arg,@ArgRev(args)
-	 pop	arg
+popm    macro   args:vararg
+	local   arg
+%       for     arg,@ArgRev(args)
+	 pop    arg
 	endm
 	endm
 
 ;PUSHLONG pushes a long, zero extending the argument if necessary
 ;it trashes no registers
-pushlong	macro	arg
-	local	s
+pushlong        macro   arg
+	local   s
 s = TYPE arg
-	if	s EQ 0	;constant, I think
-	 push	arg
-	elseif	s LT 4
-	 push	eax
-	 movzx	eax,arg
-	 xchg	eax,[esp]
+	if      s EQ 0  ;constant, I think
+	 push   arg
+	elseif  s LT 4
+	 push   eax
+	 movzx  eax,arg
+	 xchg   eax,[esp]
 	else
-	 push	arg
+	 push   arg
 	endif
 
 	endm
 
 ;PUSHML is pushm using pushlong
-pushml	macro	args:vararg
-	local	arg
-	for	arg,<args>
-	 pushlong	arg
+pushml  macro   args:vararg
+	local   arg
+	for     arg,<args>
+	 pushlong       arg
 	endm
 	endm
 
@@ -192,77 +192,78 @@ pushml	macro	args:vararg
 ;note the 'fudge' variable.  This fixes an odd problem with the way
 ;the string macros deal with backslashes - @InStr() treats them like
 ;any other character, but @SubStr() ignores them
-dbstr	macro	str
-	local	pos,oldpos,len,fudge
+dbstr   macro   str
 
-	oldpos = 2	;skip initial quote
+	local   pos,oldpos,len,fudge
+	oldpos = 2      ;skip initial quote
 	fudge = 0
 	len = @SizeStr(str)
 
 	pos = @InStr(oldpos,str,<\n>)
 
-	while	pos GE oldpos
+	while   pos GE oldpos
 
-	 if	pos GT oldpos
-	  %db	'&@SubStr(<&str>,&oldpos-&fudge,&pos-&oldpos)'
+	 if     pos GT oldpos
+	  %db   '&@SubStr(<&str>,&oldpos-&fudge,&pos-&oldpos)'
 	 endif
-	 db	10
+	 db     10
 	 oldpos = pos+2
 	 fudge = fudge+1
 
 	 pos = @InStr(oldpos,<str>,<\n>)
 
-	endm
 
-	if	oldpos LT len
-;;;	 %db	'&@SubStr(&str,&oldpos-&fudge,&len-&oldpos-1)'
-	 %db	'&@SubStr(&str,&oldpos-&fudge,&len-&oldpos)'
+	endm
+	if      oldpos LT len
+
+;;;      %db    '&@SubStr(&str,&oldpos-&fudge,&len-&oldpos-1)'
+	 %db    '&@SubStr(&str,&oldpos-&fudge,&len-&oldpos)'
 	endif
 
-	endm
+endm
 
 
 ;MPRINTF is a macro interface to the mprintf funcion.  It puts the format
 ;string in the code segment at the current location, pushes the args, and
 ;calls mprintf. If window is not specified, zero is assumed
-mprintf	macro	window:=<0>,format:req,args:vararg
-	local	string,skip
-	ifndef	NDEBUG
-	ifndef	NMONO
-	extn	_mprintf_
-	jmp	skip
-string	label	byte
-	dbstr	format
-	db	0
+mprintf macro   window:=<0>,format:req,args:vararg
+	local   string,skip
+	ifndef  NDEBUG
+	ifndef  NMONO
+	extn    _mprintf_
+	jmp     skip
+string  label   byte
+	dbstr   format
+	db      0
 skip:
-	ifnb	<args>
-%	 pushml	@ArgRev(args)
+	ifnb    <args>
+%        pushml @ArgRev(args)
 	endif
-	pushml	offset string,window
-	call	_mprintf_
-	add	esp,(@ArgCount(args)+2)*4	;fix stack
+	pushml  offset string,window
+	call    _mprintf_
+	add     esp,(@ArgCount(args)+2)*4       ;fix stack
 	endif
 	endif
 	endm
 
 
 ;MPRINTF_AT - version of mprintf with coordinates
-mprintf_at	macro	window:=<0>,row,col,format:req,args:vararg
-	local	string,skip
-	ifndef	NDEBUG
-	ifndef	NMONO
-	extn	_mprintf_at_
-	jmp	skip
-string	label	byte
-	dbstr	format
-	db	0
+mprintf_at      macro   window:=<0>,row,col,format:req,args:vararg
+	local   string,skip
+	ifndef  NDEBUG
+	ifndef  NMONO
+	extn    _mprintf_at_
+	jmp     skip
+string  label   byte
+	dbstr   format
+	db      0
 skip:
-	ifnb	<args>
-%	 pushml	@ArgRev(args)
+	ifnb    <args>
+%        pushml @ArgRev(args)
 	endif
-	pushml	offset string,col,row,window
-	call	_mprintf_at_
-	add	esp,(@ArgCount(args)+4)*4	;fix stack
+	pushml  offset string,col,row,window
+	call    _mprintf_at_
+	add     esp,(@ArgCount(args)+4)*4       ;fix stack
 	endif
 	endif
 	endm
@@ -270,23 +271,23 @@ skip:
 
 ;DEBUG calls mprintf with window 0, preserving all registers and flags
 ;is is conditionall assembled based on the DEBUG_ON flags
-debug	macro	format:req,args:vararg
-	ifndef	NDEBUG
-	 pushf		;save flags
-	 push	eax	;mprintf trashes eax
-	 mprintf	,format,args
-	 pop	eax
+debug   macro   format:req,args:vararg
+	ifndef  NDEBUG
+	 pushf          ;save flags
+	 push   eax     ;mprintf trashes eax
+	 mprintf        ,format,args
+	 pop    eax
 	 popf
 	endif
 	endm
 
 ;DEBUG_AT - version of debug with coordinates
-debug_at	macro	row,col,format:req,args:vararg
-	ifndef	NDEBUG
-	 pushf		;save flags
-	 push	eax	;mprintf trashes eax
+debug_at        macro   row,col,format:req,args:vararg
+	ifndef  NDEBUG
+	 pushf          ;save flags
+	 push   eax     ;mprintf trashes eax
 	 mprintf_at ,row,col,format,args
-	 pop	eax
+	 pop    eax
 	 popf
 	endif
 	endm
@@ -294,85 +295,88 @@ debug_at	macro	row,col,format:req,args:vararg
 ;Debugging breakpoint macros
 
 ;print a message, and do an int3 to pop into the debugger
-debug_brk	macro	str
-	ifndef	NDEBUG
-	 debug	str
-	 int	3
-	endif
-	endm
+debug_brk       macro   str
+	endm;added by KRB also. commented out this macro
 
-break_if	macro	cc,str
-	local	skip,yes_break
-	ifndef	NDEBUG
-	 j&cc	yes_break
-	 jmp	skip
-yes_break:	 debug_brk str
-skip:
-	endif
-	endm
+;	ifndef  NDEBUG
+;	 debug  str
+;	 int    3
+;	endif
+;	endm
+
+break_if        macro   cc,str
+	endm;Added by KRB - below code doesn't compile..
+;	local   skip,yes_break
+;	ifndef  NDEBUG
+;	 j&cc   yes_break
+;	 jmp    skip
+;yes_break:       debug_brk str
+;skip:
+;	endif
+;	endm
 
 ;returns the bit number of the highest bit
-@HighBit	macro	n
-	local	t,c
-	if	n EQ 0
-	 exitm	<-1>	;error!
+@HighBit        macro   n
+	local   t,c
+	if      n EQ 0
+	 exitm  <-1>    ;error!
 	else
 	 t = n
 	 c = 0
-	 while	t GT 1
+	 while  t GT 1
 	  t = t SHR 1
 	  c = c+1
 	 endm
-	 exitm	<c>
+	 exitm  <c>
 	endif
 	endm
 
 ;returns the bit number of the lowest bit
-@LowBit	macro	n
-	;local	t,c
-	local	c
-	if	n EQ 0
-	 exitm	<-1>	;error!
+@LowBit macro   n
+	;local  t,c
+	local   c
+	if      n EQ 0
+	 exitm  <-1>    ;error!
 	else
 	 t = n
 	 c = 0
-	 while	(t and 1) EQ 0
+	 while  (t and 1) EQ 0
 	  t = t SHR 1
 	  c = c+1
 	 endm
-	 exitm	<c>
+	 exitm  <c>
 	endif
 	endm
 
 
 ;"multiply" the given register by a constant, using whatever method is
 ;best for the given constant
-imulc	macro	reg,c
-	local	low,high
+imulc   macro   reg,c
+	local   low,high
 
-	if	c EQ 0
-	 xor	reg,reg
-	elseif	c EQ 1
-	elseif	c EQ 3
-	 lea	reg,[reg*2+reg]
-	elseif	c EQ 5
-	 lea	reg,[reg*4+reg]
-	elseif	c EQ 6
-	 lea	reg,[reg*2+reg]	;*3
-	 shl	reg,1	;*6
-	elseif	c EQ 9
-	 lea	reg,[reg*8+reg]
-	elseif	c EQ 36
-	 lea	reg,[reg*8+reg]
-	 sal	reg,2
+	if      c EQ 0
+	 xor    reg,reg
+	elseif  c EQ 1
+	elseif  c EQ 3
+	 lea    reg,[reg*2+reg]
+	elseif  c EQ 5
+	 lea    reg,[reg*4+reg]
+	elseif  c EQ 6
+	 lea    reg,[reg*2+reg] ;*3
+	 shl    reg,1   ;*6
+	elseif  c EQ 9
+	 lea    reg,[reg*8+reg]
+	elseif  c EQ 36
+	 lea    reg,[reg*8+reg]
+	 sal    reg,2
 	else
 	 low = @LowBit(c)
 	 high = @HighBit(c)
-	 if	low EQ high
-	  shl	reg,@LowBit(c)
+	 if     low EQ high
+	  shl   reg,@LowBit(c)
 	 else
-	  imul	reg,c
-	  echo	Warning: Using imul, to perform multiply by &c
+	  imul  reg,c
+	  echo  Warning: Using imul, to perform multiply by &c
 	  ;; .err
 	 endif
 	endif
