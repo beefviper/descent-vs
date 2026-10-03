@@ -23,6 +23,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "gr.h"
 #include "grdef.h"
+#include "platform.h"
 
 // Width and height of the Mode X modes, from tweak.inc.
 static const short modex_dims[][2] = {
@@ -42,9 +43,11 @@ static const short modex_dims[][2] = {
 
 #define LAST_X_MODE	11
 
-// Waited for the start of the vertical retrace.
+// Waits for the start of the (emulated) vertical retrace and shows the
+// screen. Palette fades step once per call.
 void gr_sync_display()
 {
+	plat_video_sync();
 }
 
 // Drew a horizontal line from x1 to x2 at y in planar video memory.

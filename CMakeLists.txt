@@ -24,6 +24,11 @@ option(DESCENT_TOOLS  "Build the hogfile, pslib, lbmcomp and xcolor tools"     O
 add_compile_definitions(NETWORK)
 if(NOT DESCENT_EDITOR)
     add_compile_definitions(RELEASE NDEBUG)
+else()
+    # CMake's Release configurations add NDEBUG too; take it back out.
+    foreach(config RELEASE RELWITHDEBINFO MINSIZEREL)
+        string(REGEX REPLACE "[-/]DNDEBUG" "" CMAKE_C_FLAGS_${config} "${CMAKE_C_FLAGS_${config}}")
+    endforeach()
 endif()
 
 # Watcom's char is unsigned, and it packed structures on byte boundaries
@@ -86,6 +91,14 @@ endfunction()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # ---------------------------------------------------------------------------
+# SDL2: the window, display and keyboard (src/platform). With vcpkg, the
+# vcpkg.json manifest fetches it; otherwise point SDL2_DIR (or
+# CMAKE_PREFIX_PATH) at an SDL2 development package.
+# ---------------------------------------------------------------------------
+
+find_package(SDL2 REQUIRED CONFIG)
+
+# ---------------------------------------------------------------------------
 # Libraries (one per original subsystem; names match the original .lib files)
 # ---------------------------------------------------------------------------
 
@@ -130,6 +143,11 @@ descent_add_library(3d 3d
 descent_add_library(io bios
     key.c mouse.c timer.c mono.c joyc.c dpmi.c ipx.c)
 
+# Window, display and keyboard backend
+descent_add_library(platform platform
+    sdl.c)
+target_link_libraries(platform PUBLIC SDL2::SDL2)
+
 descent_add_library(texmap texmap
     ntmap.c tmapflat.c tmap_per.c tmap_lin.c tmap_ll.c tmap_flt.c
     tmapfade.c tmap_fl1.c scanline.c)
@@ -155,8 +173,8 @@ target_link_libraries(misc   PUBLIC io)
 target_link_libraries(mem    PUBLIC misc io)
 target_link_libraries(cfile  PUBLIC mem misc)
 target_link_libraries(vecmat PUBLIC fix)
-target_link_libraries(io     PUBLIC fix mem misc)
-target_link_libraries(gr     PUBLIC texmap iff cfile fix mem misc io)
+target_link_libraries(io     PUBLIC fix mem misc platform)
+target_link_libraries(gr     PUBLIC texmap iff cfile fix mem misc io platform)
 target_link_libraries(iff    PUBLIC gr cfile mem misc)
 target_link_libraries(texmap PUBLIC 3d gr vecmat fix mem misc)
 target_link_libraries(3d     PUBLIC texmap gr vecmat fix div0)
@@ -202,6 +220,16 @@ target_link_libraries(descent PRIVATE
     3d gr fix io iff vecmat cfile mem ui div0 misc texmap
     $<$<BOOL:${DESCENT_EDITOR}>:editor>)
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT descent)
+
+# descent is a console program: the console shows the debug output (the
+# old mono screen, see src/bios/mono.c) while SDL opens the game window.
+# Put SDL2.dll next to it so it runs from the build directory.
+get_target_property(_sdl2_type SDL2::SDL2 TYPE)
+if(WIN32 AND _sdl2_type STREQUAL "SHARED_LIBRARY")
+    add_custom_command(TARGET descent POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:descent>)
+endif()
 
 # ---------------------------------------------------------------------------
 # Tools

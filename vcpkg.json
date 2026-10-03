@@ -1,0 +1,7 @@
+{
+  "name": "descent",
+  "version-string": "1.5",
+  "dependencies": [
+    "sdl2"
+  ]
+}

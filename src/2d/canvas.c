@@ -75,6 +75,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "gr.h"
 #include "grdef.h"
+#include "platform.h"
 
 grs_canvas * grd_curcanv;    //active canvas
 grs_screen * grd_curscreen;  //active screen
@@ -189,15 +190,10 @@ int gr_wait_for_retrace = 1;
 
 void gr_show_canvas( grs_canvas *canv )
 {
-	if (canv->cv_bitmap.bm_type == BM_MODEX )
-		gr_modex_setstart( canv->cv_bitmap.bm_x, canv->cv_bitmap.bm_y, gr_wait_for_retrace );
-
-	else if (canv->cv_bitmap.bm_type == BM_SVGA )
-		gr_vesa_setstart( canv->cv_bitmap.bm_x, canv->cv_bitmap.bm_y );
-
-		//	else if (canv->cv_bitmap.bm_type == BM_LINEAR )
-		// Int3();		// Get JOHN!
-		//gr_linear_movsd( canv->cv_bitmap.bm_data, (void *)0xA0000, 320*200);
+	// The screen is a linear framebuffer in the platform backend; show the
+	// page this canvas starts on.
+	if (canv->cv_bitmap.bm_type == BM_LINEAR )
+		plat_video_show( canv->cv_bitmap.bm_data );
 }
 
 void gr_set_current_canvas( grs_canvas *canv )

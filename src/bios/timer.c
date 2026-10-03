@@ -34,6 +34,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "types.h"
 #include "fix.h"
 #include "timer.h"
+#include "platform.h"
 
 static struct {
 	int		_timer_cnt;			// PIT count per timer tick (65536 = 18.2 Hz)
@@ -98,8 +99,12 @@ static fix pulses_to_fix(uint64_t pulses)
 	return (fix)(uint32_t)((pulses << 16) / TIMER_FREQUENCY);
 }
 
+// The game polls the clock constantly, in its main loop and in every
+// wait loop, so these also give the window a chance to process events.
+// The X version is called while handling key events and must not.
 fix timer_get_fixed_seconds()
 {
+	plat_pump_events();
 	return pulses_to_fix(timer_get_stamp64());
 }
 
@@ -114,6 +119,7 @@ fix timer_get_approx_seconds()
 {
 	uint64_t pulses = timer_get_stamp64();
 
+	plat_pump_events();
 	pulses -= pulses % (uint64_t)TimerData._timer_cnt;
 	return pulses_to_fix(pulses);
 }
@@ -122,6 +128,7 @@ fix timer_get_approx_seconds()
 // TICKER macro in timer.h.
 int timer_get_bios_ticker()
 {
+	plat_pump_events();
 	return (int)(timer_get_stamp64() >> 16);
 }
 
