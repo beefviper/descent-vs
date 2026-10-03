@@ -761,7 +761,7 @@ ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 
 }
 
-#ifndef NDEBUG
+#if !defined(NDEBUG) || defined(EDITOR)		// the editor's gamesave.c calls it
 #ifndef COMPACT_SEGS
 //returns true if errors detected
 int check_norms(int segnum,int sidenum,int facenum,int csegnum,int csidenum,int cfacenum)

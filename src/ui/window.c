@@ -102,7 +102,7 @@ static int PlaybackSpeed = 1;
 
 extern void ui_draw_frame( short x1, short y1, short x2, short y2 );
 
-#define TICKER (*(volatile int *)0x46C)
+#include "timer.h"			// TICKER (the BIOS ticker at 0x46C)
 
 // 1=1x faster, 2=2x faster, etc
 void ui_set_playback_speed( int speed )

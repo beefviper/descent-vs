@@ -111,7 +111,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Implementations of the DOS services declared in include/compat/dos.h
 descent_add_library(compat compat
-    dos.c)
+    dos.c watcom.c)
 link_libraries(compat)
 
 descent_add_library(misc misc
@@ -121,7 +121,7 @@ descent_add_library(fix fix
     fix.c)
 
 descent_add_library(div0 div
-    div0.asm)
+    div0.c)
 
 descent_add_library(vecmat vecmat
     vecmat.c)
@@ -148,7 +148,7 @@ descent_add_library(3d 3d
 
 # Keyboard, joystick, mouse, timer, DPMI and IPX
 descent_add_library(io bios
-    key.c joy.asm mouse.c timer.asm mono.c joyc.c dpmi.c ipx.c)
+    key.c mouse.c timer.c mono.c joyc.c dpmi.c ipx.c)
 
 descent_add_library(texmap texmap
     ntmap.c tmapflat.c tmap_per.asm tmap_lin.asm tmap_ll.asm tmap_flt.asm
@@ -214,7 +214,7 @@ descent_add_executable(descent main
     vfx.c gameseq.c controls.c automap.c text.c network.c newmenu.c
     netmisc.c victor.c gamefont.c joydefs.c hud.c playsave.c endlevel.c
     terrain.c kconfig.c modem.c multi.c cntrlcen.c credits.c config.c
-    soscodec.asm kmatrix.c paging.c mission.c iglasses.c songs.c bmread.c
+    kmatrix.c paging.c mission.c iglasses.c songs.c bmread.c
     state.c multibot.c nocomlib.c slew.c dumpmine.c)
 
 target_include_directories(descent PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/editor)

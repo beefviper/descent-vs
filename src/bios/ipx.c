@@ -321,8 +321,11 @@ int ipx_get_packet_data( ubyte * data )
 	return size;
 }
 
-unsigned int swap_short( unsigned int short );
-#pragma aux swap_short parm [eax] = "xchg al,ah";
+// Swaps the two low bytes (xchg al,ah): converts a network order short.
+static unsigned int swap_short( unsigned int x )
+{
+	return (x & 0xFFFF0000u) | ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);
+}
 
 void got_new_packet( ecb_header * ecb )
 {
@@ -741,7 +744,7 @@ void ipx_read_user_file(char * filename)
 		ln++;
 		p1 = strchr(temp_line,'\n'); if (p1) *p1 = '\0';
 		p1 = strchr(temp_line,';'); if (p1) *p1 = '\0';
-		n = sscanf( temp_line, "%2x%2x%2x%2x/%2x%2x%2x%2x%2x%2x", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3], &tmp.node[0], &tmp.node[1], &tmp.node[2],&tmp.node[3], &tmp.node[4], &tmp.node[5] );
+		n = sscanf( temp_line, "%2hhx%2hhx%2hhx%2hhx/%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3], &tmp.node[0], &tmp.node[1], &tmp.node[2],&tmp.node[3], &tmp.node[4], &tmp.node[5] );
 		if ( n != 10 ) continue;
 		if ( Ipx_num_users < MAX_USERS )	{
 			ubyte * ipx_real_buffer = (ubyte *)&tmp;
@@ -781,7 +784,7 @@ void ipx_read_network_file(char * filename)
 		ln++;
 		p1 = strchr(temp_line,'\n'); if (p1) *p1 = '\0';
 		p1 = strchr(temp_line,';'); if (p1) *p1 = '\0';
-		n = sscanf( temp_line, "%2x%2x%2x%2x", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3] );
+		n = sscanf( temp_line, "%2hhx%2hhx%2hhx%2hhx", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3] );
 		if ( n != 4 ) continue;
 		if ( Ipx_num_networks < MAX_NETWORKS  )	{
 			int j;

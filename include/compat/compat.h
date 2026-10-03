@@ -45,6 +45,10 @@
    headers as well; make them available everywhere. */
 #include "dos.h"
 
+/* Watcom runtime functions without a C runtime equivalent; implemented in
+   src/compat/watcom.c. */
+size_t stackavail(void);		/* bytes of stack left (malloc.h) */
+
 #endif
 
 #endif

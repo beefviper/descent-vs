@@ -382,8 +382,10 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #include "text.h"
 
 
+#ifdef __WATCOMC__					// Structure layout and stack checking for SOS
 #pragma pack (4);						// Use 32-bit packing!
 #pragma off (check_stack);			// No stack checking!
+#endif
 //*************************************************
 //#include "sos.h"
 //#include "sosm.h"

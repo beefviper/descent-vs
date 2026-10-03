@@ -112,7 +112,7 @@ static grs_bitmap * default_pointer;
 UI_MOUSE Mouse;
 
 
-#define TICKER (*(volatile int *)0x46C)
+#include "timer.h"			// TICKER (the BIOS ticker at 0x46C)
 
 /*
 int ui_mouse_find_gadget(short n)

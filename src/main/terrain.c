@@ -114,7 +114,6 @@ vms_vector start_point;
 grs_bitmap *terrain_bm;
 
 extern fix g3_get_surface_dotprod(g3s_point **list);
-#pragma aux g3_get_surface_dotprod "*" parm [esi] value [eax] modify exact [eax];
 
 int terrain_outline=0;
 

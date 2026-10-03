@@ -73,6 +73,7 @@ extern void timer_init();
 extern void timer_close();
 extern void timer_set_rate(int count_val);
 extern void timer_set_function( void _far * function );
+extern void timer_set_joyhandler( void (*joy_handler)() );
 
 //==========================================================================
 // These functions return the time since the timer was initialized in
@@ -94,7 +95,10 @@ extern fix timer_get_approx_seconds();		// Returns time since program started...
 
 //==========================================================================
 // Use to access the BIOS ticker... ie...   i = TICKER
-#define TICKER (*(volatile int *)0x46C)
+// (18.2 Hz ticks; the BIOS data area at 0x46C is not accessible, so this
+// is derived from the timer)
+extern int timer_get_bios_ticker();
+#define TICKER (timer_get_bios_ticker())
 #define USECS_PER_READING( start, stop, frames ) (((stop-start)*54945)/frames)
 
 #endif

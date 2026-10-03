@@ -79,9 +79,6 @@ static char rcsid[] = "$Id: mono.c 1.12 1995/02/23 11:59:57 john Exp $";
 void msetcursor(short row, short col);
 
 
-void mono_int_3();
-#pragma aux mono_int_3 = "int 3";
-
 #define MAX_NUM_WINDOWS 2
 
 struct mono_element {
@@ -126,7 +123,7 @@ void mputc( short n, char c )
 	if (!OPEN) return;
 
 //	if (keyd_pressed[KEY_BACKSP])
-//		mono_int_3();
+//		Int3();
 
 	switch (c)
 	{
@@ -182,26 +179,14 @@ void mputc_at( short n, short row, short col, char c )
 }
 
 
-void copy_row(int nwords,short *src, short *dest1, short *dest2 );
-#pragma aux copy_row parm [ecx] [esi] [ebx] [edx] modify exact [eax ebx ecx edx esi] = \
-"				shr		ecx, 1"	 			\
-"				jnc		even_num"			\
-"				mov		ax, [esi]"			\
-"				add		esi, 2"				\
-"				mov		[ebx], ax"			\
-"				add		ebx, 2"				\
-"				mov		[edx], ax"			\
-"				add		edx, 2"				\
-"even_num:	cmp		ecx, 0"				\
-"				je			done"					\
-"rowloop:	mov		eax, [esi]"			\
-"				add		esi, 4"				\
-"				mov		[edx], eax"			\
-"				add		edx, 4"				\
-"				mov		[ebx], eax"			\
-"				add		ebx, 4"				\
-"				loop		rowloop"				\
-"done:	"
+// Copies nwords words from src to both dest1 and dest2.
+static void copy_row(int nwords,short *src, short *dest1, short *dest2 )
+{
+	while (nwords-- > 0) {
+		*dest1++ = *src;
+		*dest2++ = *src++;
+	}
+}
 
 
 void scroll( short n )
@@ -365,17 +350,14 @@ void mrefresh(short n)
 
 }
 
-int mono_present();		//return true if mono monitor in system
-#pragma aux mono_present value [eax] modify [bx] = \
-	"mov	ax,1a00h"	\
-	"int	10h"			\
-"mov	eax,-1"		\
-"cmp	bl,1"			\
-"je	got_it"		\
-"cmp	bh,1"			\
-"je	got_it"		\
-"xor	eax,eax"		\
-"got_it:";
+// Returns true if a mono monitor is in the system. The original asked the
+// video BIOS (int 10h, function 1Ah) for the display combination. A
+// monochrome adapter at 0xB0000 cannot be reached here, so report none;
+// the mono windows then stay closed and nothing is written to the screen.
+int mono_present()
+{
+	return 0;
+}
 
 void mopen( short n, short row, short col, short width, short height, char * title )
 {

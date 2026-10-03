@@ -48,7 +48,7 @@ static char rcsid[] = "$Id: scroll.c 1.5 1994/11/18 23:07:33 john Exp $";
 #include "ui.h"
 #include "key.h"
 
-#define TICKER (*(volatile int *)0x46C)
+#include "timer.h"			// TICKER (the BIOS ticker at 0x46C)
 
 void ui_draw_scrollbar( UI_GADGET_SCROLLBAR * scrollbar )
 {

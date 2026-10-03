@@ -131,6 +131,7 @@ static char rcsid[] = "$Id: medmisc.c 2.1 1995/03/06 15:20:50 john Exp $";
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stdint.h>
 #include <process.h>
 
 #include "gr.h"
@@ -156,16 +157,12 @@ static char rcsid[] = "$Id: medmisc.c 2.1 1995/03/06 15:20:50 john Exp $";
 #include "game.h"
 
 //return 2d distance, i.e, sqrt(x*x + y*y)
-long dist_2d(long x,long y);
+static long dist_2d(long x,long y)
+{
+	uint64_t q = (uint64_t)((int64_t)x * x) + (uint64_t)((int64_t)y * y);
 
-#pragma aux dist_2d parm [eax] [ebx] value [eax] modify [ecx edx] = \
-	"imul	eax"			\
-	"xchg	ebx,eax"		\
-	"mov	ecx,edx"		\
-	"imul	eax"			\
-	"add	eax,ebx"		\
-	"adc	edx,ecx"		\
-	"call	quad_sqrt";
+	return (long)quad_sqrt((long)(uint32_t)q, (long)(uint32_t)(q >> 32));
+}
 
 // Given mouse movement in dx, dy, returns a 3x3 rotation matrix in RotMat.
 // Taken from Graphics Gems III, page 51, "The Rolling Ball"

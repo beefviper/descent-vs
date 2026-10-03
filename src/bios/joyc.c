@@ -169,27 +169,59 @@ static char rcsid[] = "$Id: joyc.c 1.37 1995/10/07 13:22:31 john Exp $";
 #include "joy.h"
 #include "dpmi.h"
 
-//In key.c
+// The game port readers below were in joy.asm. They timed the decay of the
+// game port (0x201) one-shots with the PIT; that hardware cannot be reached
+// here, so each reports no events, which makes every axis read as not
+// present, and joy_init() reports that no joystick is connected.
 // ebx = read mask
 // edi = pointer to buffer
 // returns number of events
-int joy_read_stick_asm( int read_masks, int * event_buffer, int timeout );
-#pragma aux joy_read_stick_asm parm [ebx] [edi] [ecx] value [eax] modify exact [eax ebx ecx edx edi];
 
-int joy_read_stick_friendly( int read_masks, int * event_buffer, int timeout );
-#pragma aux joy_read_stick_friendly parm [ebx] [edi] [ecx] value [eax] modify exact [eax ebx ecx edx edi];
+int joy_bogus_reading = 0;
+int joy_retries = 0;
 
-int joy_read_stick_polled( int read_masks, int * event_buffer, int timeout );
-#pragma aux joy_read_stick_polled parm [ebx] [edi] [ecx] value [eax] modify exact [eax ebx ecx edx edi];
+int joy_read_stick_asm( int read_masks, int * event_buffer, int timeout )
+{
+	(void)read_masks; (void)event_buffer; (void)timeout;
+	joy_bogus_reading = 0;
+	return 0;
+}
 
-int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout );
-#pragma aux joy_read_stick_bios parm [ebx] [edi] [ecx] value [eax] modify exact [eax ebx ecx edx edi];
+int joy_read_stick_friendly( int read_masks, int * event_buffer, int timeout )
+{
+	(void)read_masks; (void)event_buffer; (void)timeout;
+	joy_bogus_reading = 0;
+	return 0;
+}
+
+int joy_read_stick_polled( int read_masks, int * event_buffer, int timeout )
+{
+	(void)read_masks; (void)event_buffer; (void)timeout;
+	joy_bogus_reading = 0;
+	return 0;
+}
+
+// Read the axes with BIOS int 15h, function 84h: not available.
+int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout )
+{
+	(void)read_masks; (void)event_buffer; (void)timeout;
+	joy_bogus_reading = 0;
+	return 0;
+}
+
+// Read the buttons with BIOS int 15h, function 84h: no buttons pressed.
+int joy_read_buttons_bios()
+{
+	return 0;
+}
 
 
 char joy_installed = 0;
 char joy_present = 0;
 
-#define JOY_READ_BUTTONS 	((~(inp(0x201) >> 4))&0xf)
+// The buttons were read from the game port, ((~(inp(0x201) >> 4))&0xf);
+// the port cannot be read here, so no buttons are ever pressed.
+#define JOY_READ_BUTTONS 	0
 #ifdef ARCADE
 #define JOY_READ_BUTTONS_ARCADE	(~(inp(0x2A1)))
 #define MAX_BUTTONS 28
@@ -219,9 +251,6 @@ typedef struct Joy_info {
 } Joy_info;
 
 Joy_info joystick;
-
-extern int joy_bogus_reading;
-extern int joy_retries;
 
 void joy_get_cal_vals(int *axis_min, int *axis_center, int *axis_max)
 {
@@ -279,8 +308,6 @@ void joy_flush()	{
 }
 
 #pragma off (check_stack)
-
-extern int joy_read_buttons_bios();
 
 void joy_handler(int ticks_this_time)	{
 	ubyte value;
@@ -450,7 +477,7 @@ ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 	return read_masks;
 }
 
-extern void timer_set_joyhandler( void (*joy_handler)() );
+#include "timer.h"
 
 int joy_init()
 {

@@ -54,6 +54,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _DPMI_H
 #define _DPMI_H
 
+#include <stddef.h>
 #include "types.h"
 
 typedef struct dpmi_real_regs {
@@ -69,13 +70,15 @@ typedef struct dpmi_real_regs {
     ushort es,ds,fs,gs,ip,cs,sp,ss;
 } dpmi_real_regs;
 
+#ifdef __WATCOMC__
 #pragma intrinsic( inp );
 #pragma intrinsic( outp );
 #pragma intrinsic( _enable );
 #pragma intrinsic( _disable );
+#endif
 
-#define DPMI_real_segment(P)	((((uint) (P)) >> 4) & 0xFFFF)
-#define DPMI_real_offset(P)	(((uint) (P)) & 0xF)
+#define DPMI_real_segment(P)	((uint)(((size_t) (P)) >> 4) & 0xFFFF)
+#define DPMI_real_offset(P)	((uint)((size_t) (P)) & 0xF)
 
 // Initializes dpmi. Returns zero if failed.
 extern int dpmi_init(int verbose);

@@ -143,7 +143,6 @@ static int Mouse_installed = 0;
 #pragma off (check_stack)
 void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, int mdi)
 {
-#pragma aux mouse_handler parm [EAX] [EBX] [ECX] [EDX] [ESI] [EDI]
 
 	Mouse.ctime = timer_get_fixed_secondsX();
 
@@ -190,7 +189,7 @@ void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, in
 	}
 
 	if (Mouse.cyberman && (m_ax & (ME_Z_C|ME_P_C|ME_B_C|ME_H_C)))	{
-		Mouse.x_info = (event_info *)((msi & 0xFFFF) << 4);
+		Mouse.x_info = (event_info *)(size_t)((msi & 0xFFFF) << 4);
 
 		if (m_ax & ME_Z_C )	{ // z axis changed
 			if (Mouse.pressed[MB_Z_UP])	{

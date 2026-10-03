@@ -150,7 +150,9 @@ void cfile_use_alternate_hogdir( char * path )
 	}
 }
 
-extern int descent_critical_error;
+// Set by the game's DOS critical error handler (inferno.c). Defined here
+// so the tools that use this library link without the game.
+int descent_critical_error = 0;
 
 FILE * cfile_get_filehandle( char * filename, char * mode )
 {

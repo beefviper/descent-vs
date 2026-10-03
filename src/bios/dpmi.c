@@ -99,6 +99,8 @@ static char rcsid[] = "$Id: dpmi.c 1.19 1995/02/23 09:02:57 john Exp $";
 #include "error.h"
 #include "dpmi.h"
 
+#ifdef __WATCOMC__
+
 int dpmi_find_dos_memory()
 {
 	union REGS r;
@@ -437,3 +439,145 @@ int dpmi_set_pm_handler(unsigned intnum, void far * isr )
 		return 0;
 	return 1;
 }
+
+#else	// not __WATCOMC__
+
+// There is no DOS extender: real mode memory comes from the C heap, real
+// mode interrupts fail (the registers come back unchanged with carry set),
+// and locking memory, which only mattered to interrupt handlers under
+// virtual memory, always succeeds.
+
+unsigned int dpmi_virtual_memory=0;
+unsigned int dpmi_available_memory=0;
+unsigned int dpmi_physical_memory=0;
+unsigned int dpmi_dos_memory = 0;
+
+#define MAX_REAL_BLOCKS 32
+static void * real_blocks[MAX_REAL_BLOCKS];	// indexed by selector-1
+
+int dpmi_find_dos_memory()
+{
+	return 640*1024;
+}
+
+void *dpmi_real_malloc( int size, ushort *selector )
+{
+	int i;
+	void * p;
+
+	for (i=0; i<MAX_REAL_BLOCKS; i++ )
+		if ( real_blocks[i] == NULL )
+			break;
+	if ( i == MAX_REAL_BLOCKS )
+		return NULL;
+
+	p = calloc( 1, (size + 15) & ~15 );
+	if ( p == NULL )
+		return NULL;
+
+	real_blocks[i] = p;
+	if(selector!=NULL)
+		*selector = (ushort)(i+1);
+
+	return p;
+}
+
+void dpmi_real_free( ushort selector )
+{
+	if ( selector > 0 && selector <= MAX_REAL_BLOCKS )	{
+		free( real_blocks[selector-1] );
+		real_blocks[selector-1] = NULL;
+	}
+}
+
+void dpmi_real_int386x( ubyte intno, dpmi_real_regs * rregs )
+{
+	(void)intno;
+	rregs->flags |= 1;					// carry set: call failed
+}
+
+void dpmi_real_call(dpmi_real_regs * rregs)
+{
+	rregs->flags |= 1;					// carry set: call failed
+}
+
+int dpmi_unlock_region(void *address, unsigned length)
+{
+	(void)address; (void)length;
+	return 1;
+}
+
+int dpmi_lock_region(void *address, unsigned length)
+{
+	(void)address; (void)length;
+	return 1;
+}
+
+// Selectors were only used by the assembly code; report success.
+int dpmi_modify_selector_base( ushort selector, void * address )
+{
+	(void)selector; (void)address;
+	return 1;
+}
+
+int dpmi_modify_selector_limit( ushort selector, int size  )
+{
+	(void)selector; (void)size;
+	return 1;
+}
+
+int dpmi_allocate_selector( void * address, int size, ushort * selector )
+{
+	(void)address; (void)size;
+	*selector = 0;
+	return 1;
+}
+
+static void * dpmi_dos_buffer = NULL;
+static ushort dpmi_dos_selector = 0;
+
+void dpmi_close()
+{
+	if (dpmi_dos_selector!=0)	{
+		dpmi_real_free( dpmi_dos_selector );
+		dpmi_dos_buffer = NULL;
+		dpmi_dos_selector = 0;
+	}
+}
+
+int dpmi_init(int verbose)
+{
+	dpmi_dos_memory = dpmi_find_dos_memory();
+
+	dpmi_dos_buffer = dpmi_real_malloc( 1024, &dpmi_dos_selector);
+	if (!dpmi_dos_buffer) {
+		dpmi_dos_selector = 0;
+		printf( "Error allocating 1K of DOS memory\n" );
+		exit(1);
+	}
+	atexit(dpmi_close);
+
+	if (verbose) printf( "none" );
+	dpmi_virtual_memory = 0;
+	dpmi_physical_memory = 64*1024*1024;		// Assume 64 MB
+	dpmi_available_memory = 64*1024*1024;
+
+	return 1;
+}
+
+void *dpmi_get_temp_low_buffer( int size )
+{
+	if ( dpmi_dos_buffer == NULL ) return NULL;
+	if ( size > 1024 ) return NULL;
+
+	return dpmi_dos_buffer;
+}
+
+// Returns 0 if successful
+int dpmi_set_pm_handler(unsigned intnum, void far * isr )
+{
+	(void)intnum; (void)isr;
+	return 1;
+}
+
+#endif

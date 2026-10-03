@@ -217,6 +217,7 @@ static char rcsid[] = "$Id: fvi.c 2.3 1995/03/24 14:49:04 john Exp $";
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "error.h"
 #include "mono.h"
@@ -236,21 +237,16 @@ extern int Physics_cheat_flag;
 
 #define face_type_num(nfaces,face_num,tri_edge) ((nfaces==1)?0:(tri_edge*2 + face_num))
 
-int oflow_check(fix a,fix b);
+//returns true if the product of the absolute values of a and b uses any of
+//bits 47..62, i.e. if fixmul(a,b) would not fit in 32 bits
+static int oflow_check(fix a,fix b)
+{
+	int32_t aa = (a < 0) ? (int32_t)(0u - (uint32_t)a) : a;
+	int32_t ab = (b < 0) ? (int32_t)(0u - (uint32_t)b) : b;
+	int64_t p = (int64_t)aa * ab;
 
-#pragma aux oflow_check parm [eax] [ebx] value [eax] modify exact [eax ebx edx] = \
-   "cdq"				\
-	"xor eax,edx"	\
-	"sub eax,edx"	\
-	"xchg eax,ebx"	\
-   "cdq"				\
-	"xor eax,edx"	\
-	"sub eax,edx"	\
-	"imul ebx"		\
-	"sar  edx,15"	\
-	"or   dx,dx"	\
-	"setnz al"		\
-	"movzx eax,al";
+	return ((p >> 47) & 0xffff) != 0;
+}
 
 
 //find the point on the specified plane where the line intersects

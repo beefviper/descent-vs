@@ -222,19 +222,25 @@ extern char key_to_ascii(int keycode )
 		return ascii_table[keycode];
 }
 
+// The BIOS keyboard buffer and status bits live in the BIOS data area,
+// which can only be reached under DOS.
 void key_clear_bios_buffer_all()
 {
+#ifdef __WATCOMC__
 	// Clear keyboard buffer...
 	*(ushort *)0x41a=*(ushort *)0x41c;
 	// Clear the status bits...
 	*(ubyte *)0x417 = 0;
 	*(ubyte *)0x418 = 0;
+#endif
 }
 
 void key_clear_bios_buffer()
 {
+#ifdef __WATCOMC__
 	// Clear keyboard buffer...
 	*(ushort *)0x41a=*(ushort *)0x41c;
+#endif
 }
 
 void key_flush()
@@ -438,8 +444,8 @@ unsigned int key_up_count(int scancode)	{
 
 // Use intrinsic forms so that we stay in the locked interrup code.
 
-void Int5();
-#pragma aux Int5 = "int 5";
+// Print screen (int 5): not available, so does nothing.
+#define Int5()	((void)0)
 
 #pragma off (check_stack)
 void __interrupt __far key_handler()
@@ -447,7 +453,7 @@ void __interrupt __far key_handler()
 	unsigned char scancode, breakbit, temp;
 	unsigned short keycode;
 
-#ifndef WATCOM_10
+#if defined(__WATCOMC__) && !defined(WATCOM_10)
 #ifndef NDEBUG
 	ubyte * MONO = (ubyte *)(0x0b0000+24*80*2);
 	if (  ((MONO[0]=='D') && (MONO[2]=='B') && (MONO[4]=='G') && (MONO[6]=='>')) ||

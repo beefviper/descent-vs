@@ -137,6 +137,7 @@ static char rcsid[] = "$Id: seguvs.c 2.1 1995/05/08 10:49:34 mike Exp $";
 #include <stdarg.h>
 #include <math.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "inferno.h"
 #include "segment.h"
@@ -602,15 +603,13 @@ void copy_uvs_from_side_to_faces(segment *segp, int sidenum, uvl uvls[])
 
 }
 
-fix zhypot(fix a,fix b);
-#pragma aux zhypot parm [eax] [ebx] value [eax] modify [eax ebx ecx edx] = \
-	"imul	eax" \
-	"xchg eax,ebx" \
-	"mov	ecx,edx" \
-	"imul eax" \
-	"add	eax,ebx" \
-	"adc	edx,ecx" \
-	"call	quad_sqrt";
+//return sqrt(a*a + b*b), computed with a 64-bit sum
+static fix zhypot(fix a,fix b)
+{
+	uint64_t q = (uint64_t)((int64_t)a * a) + (uint64_t)((int64_t)b * b);
+
+	return (fix)quad_sqrt((long)(uint32_t)q, (long)(uint32_t)(q >> 32));
+}
 
 //	---------------------------------------------------------------------------------------------
 //	Assign lighting value to side, a function of the normal vector.

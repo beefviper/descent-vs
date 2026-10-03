@@ -66,36 +66,26 @@ void set_warn_func(void (*f)(char *s));//specifies the function to call with war
 void clear_warn_func(void (*f)(char *s));//say this function no longer valid
 void _Assert(int expr,char *expr_text,char *filename,int linenum);	//assert func
 void Error(char *fmt,...);					//exit with error code=1, print message
-void Assert(int expr);
-void Int3();
 #ifndef NDEBUG		//macros for debugging
-
-//void Int3(void);									//generate int3
-//#pragma aux Int3 = "int 3h";
 
 #define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
 
-//make error do int3, then call func
-#pragma aux Error aborts = \
-	"int	3"	\
-	"jmp Error";
+// The Watcom version made Error() and a failing _Assert() do an int 3
+// first. Int3() breaks into the debugger in MSVC debug builds only.
+#if defined(_MSC_VER) && defined(_DEBUG)
 
-//#pragma aux Error aborts;
+#include <intrin.h>
+#define Int3() __debugbreak()					//break into the debugger
 
-//make assert do int3 (if expr false), then call func
-#pragma aux _Assert parm [eax] [edx] [ebx] [ecx] = \
-	"test eax,eax"		\
-	"jnz	no_int3"		\
-	"int	3"				\
-	"no_int3:"			\
-	"call _Assert";
+#else
+
+#define Int3() ((void)0)
+
+#endif
 
 #else					//macros for real game
 
-#pragma aux Error aborts;
-//Changed Assert and Int3 because I couldn't get the macros to compile -KRB
-//#define Assert(__ignore) ((void)0)
-void Assert(int expr);
-//#define Int3() ((void)0)
-void Int3();
+#define Assert(__ignore) ((void)0)
+#define Int3() ((void)0)
+
 #endif

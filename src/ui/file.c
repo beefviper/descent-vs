@@ -68,7 +68,7 @@ static char rcsid[] = "$Id: file.c 1.6 1994/06/09 12:18:29 john Exp $";
 
 #include "mem.h"
 
-#define TICKER (*(volatile int *)0x46C)
+#include "timer.h"			// TICKER (the BIOS ticker at 0x46C)
 
 char filename_list[300][13];
 char directory_list[100][13];
