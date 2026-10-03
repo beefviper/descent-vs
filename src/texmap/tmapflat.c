@@ -87,7 +87,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 void (*scanline_func)(int y, fix xleft, fix xright);
 
-extern void asm_tmap_scanline_shaded();	// In tmapfade.c
+extern void asm_tmap_scanline_shaded(void);	// In tmapfade.c
 
 // -------------------------------------------------------------------------------------
 //	Texture map current scanline.
@@ -262,7 +262,7 @@ typedef struct pnt2d {
 //this takes the same partms as draw_tmap, but draws a flat-shaded polygon
 void draw_tmap_flat(grs_bitmap *bp,int nverts,g3s_point **vertbuf)
 {
-	pnt2d	points[MAX_TMAP_VERTS];
+	pnt2d	points[MAX_TMAP_VERTS] = {0};
 	int	i;
 	fix	average_light;
 	int	color;
@@ -302,7 +302,7 @@ void draw_tmap_flat(grs_bitmap *bp,int nverts,g3s_point **vertbuf)
 //function with ylr values
 void gr_upoly_tmap_ylr(int nverts, int *vert, void *ylr_func() )
 {
-	g3ds_tmap	my_tmap;
+	g3ds_tmap	my_tmap = {0};
 	int			i;
 
 	//--now called from g3_start_frame-- init_interface_vars_to_assembler();

@@ -486,7 +486,9 @@ void start_endlevel_sequence(void)
 
 	}
 
+#ifndef NDEBUG
 	Assert(last_segnum == exit_segnum);
+#endif
 
 	cockpit_mode_save = Cockpit_mode;
 
@@ -534,7 +536,7 @@ vms_angvec camera_desired_angles,camera_cur_angles;
 //returns bitmask of which angles are at dest. bits 0,1,2 = p,b,h
 static int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 {
-	vms_angvec delta_angs,alt_angles,alt_delta_angs;
+	vms_angvec delta_angs = {0},alt_angles = {0},alt_delta_angs = {0};
 	fix total_delta,alt_total_delta;
 	fix frame_turn;
 	int mask=0;
@@ -625,7 +627,7 @@ void stop_endlevel_sequence(void)
 //find the angle between the player's heading & the station
 static void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *cur_pos)
 {
-	vms_vector tv;
+	vms_vector tv = {0};
 
 	vm_vec_sub(&tv,targ_pos,cur_pos);
 
@@ -635,7 +637,7 @@ static void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *c
 void do_endlevel_frame(void)
 {
 	static fix timer;
-	vms_vector save_last_pos;
+	vms_vector save_last_pos = {0};
 	static fix explosion_wait1=0;
 	static fix explosion_wait2=0;
 	static fix bank_rate;
@@ -674,7 +676,7 @@ void do_endlevel_frame(void)
 	if (!outside_mine) {
 
 		if (Endlevel_sequence==EL_OUTSIDE) {
-			vms_vector tvec;
+			vms_vector tvec = {0};
 
 			vm_vec_sub(&tvec,&ConsoleObject->pos,&mine_side_exit_point);
 
@@ -703,7 +705,7 @@ void do_endlevel_frame(void)
 
 		//do explosions chasing player
 		if ((explosion_wait1-=FrameTime) < 0) {
-			vms_vector tpnt;
+			vms_vector tpnt = {0};
 			int segnum;
 			static int sound_count;
 
@@ -729,9 +731,9 @@ void do_endlevel_frame(void)
 	//do little explosions on walls
 	if (Endlevel_sequence >= EL_FLYTHROUGH && Endlevel_sequence < EL_OUTSIDE)
 		if ((explosion_wait2-=FrameTime) < 0) {
-			vms_vector tpnt;
-			fvi_query fq;
-			fvi_info hit_data;
+			vms_vector tpnt = {0};
+			fvi_query fq = {0};
+			fvi_info hit_data = {0};
 
 			//create little explosion on wall
 
@@ -817,7 +819,7 @@ void do_endlevel_frame(void)
 			}
 
 			if (endlevel_camera->segnum == exit_segnum) {
-				vms_angvec cam_angles,exit_seg_angles;
+				vms_angvec cam_angles = {0},exit_seg_angles = {0};
 
 				Endlevel_sequence = EL_OUTSIDE;
 
@@ -844,7 +846,7 @@ void do_endlevel_frame(void)
 
 		case EL_OUTSIDE: {
 			#ifndef SLEW_ON
-			vms_angvec cam_angles;
+			vms_angvec cam_angles = {0};
 			#endif
 
 			vm_vec_scale_add2(&ConsoleObject->pos,&ConsoleObject->orient.fvec,fixmul(FrameTime,cur_fly_speed));
@@ -937,7 +939,7 @@ void do_endlevel_frame(void)
 
 			if ((mask&5) == 5) {
 
-				vms_vector tvec;
+				vms_vector tvec = {0};
 
 				Endlevel_sequence = EL_CHASING;
 
@@ -1001,7 +1003,7 @@ void do_endlevel_frame(void)
 int find_exit_side(object *obj)
 {
 	int i;
-	vms_vector prefvec,segcenter,sidevec;
+	vms_vector prefvec = {0},segcenter = {0},sidevec = {0};
 	fix best_val=-f2_0;
 	int best_side;
 	segment *pseg = &Segments[obj->segnum];
@@ -1042,7 +1044,7 @@ void render_mine(int start_seg_num,fix eye_offset);
 
 void draw_exit_model(void)
 {
-	vms_vector model_pos;
+	vms_vector model_pos = {0};
 	int f=15,u=0;	//21;
 
 	vm_vec_scale_add(&model_pos,&mine_exit_point,&mine_exit_orient.fvec,i2f(f));
@@ -1079,8 +1081,8 @@ void render_external_scene(fix eye_offset)
 
 	{	//draw satellite
 
-		vms_vector delta;
-		g3s_point p,top_pnt;
+		vms_vector delta = {0};
+		g3s_point p = {0},top_pnt = {0};
 
 		g3_rotate_point(&p,&satellite_pos);
 		g3_rotate_delta_vec(&delta,&satellite_upvec);
@@ -1136,7 +1138,7 @@ void draw_stars(void)
 {
 	int i;
 	int intensity=31;
-	g3s_point p;
+	g3s_point p = {0};
 
 	for (i=0;i<MAX_STARS;i++) {
 
@@ -1211,7 +1213,7 @@ static void endlevel_render_mine(fix eye_offset)
 	}
 
 	if (Endlevel_sequence == EL_LOOKBACK) {
-		vms_matrix headm,viewm;
+		vms_matrix headm = {0},viewm = {0};
 		vms_angvec angles = {0,0,0x7fff};
 
 		vm_angles_2_matrix(&headm,&angles);
@@ -1313,12 +1315,12 @@ void do_endlevel_flythrough(int n)
 	pseg = &Segments[obj->segnum];
 
 	if (flydata->first_time || obj->segnum != old_player_seg) {		//moved into new seg
-		vms_vector curcenter,nextcenter;
+		vms_vector curcenter = {0},nextcenter = {0};
 		fix step_size,seg_time;
-		short entry_side = 0,exit_side;	//what sides we entry and leave through
-		vms_vector dest_point;		//where we are heading (center of exit_side)
-		vms_angvec dest_angles;		//where we want to be pointing
-		vms_matrix dest_orient;
+		short entry_side = 0,exit_side = 0;	//what sides we entry and leave through
+		vms_vector dest_point = {0};		//where we are heading (center of exit_side)
+		vms_angvec dest_angles = {0};		//where we want to be pointing
+		vms_matrix dest_orient = {0};
 		int up_side = 0;
 
 		//find new exit side
@@ -1338,7 +1340,7 @@ void do_endlevel_flythrough(int n)
 
 			for (i=0;i<6;i++) {
 				#ifdef COMPACT_SEGS
-				vms_vector v1;
+				vms_vector v1 = {0};
 				get_side_normal(pseg, i, 0, &v1 );
 				d = vm_vec_dot(&v1,&flydata->obj->orient.uvec);
 				#else
@@ -1357,8 +1359,8 @@ void do_endlevel_flythrough(int n)
 
 		//offset object sideways
 		if (flydata->offset_frac) {
-			int s0=-1,s1,i;
-			vms_vector s0p,s1p;
+			int s0=-1,s1 = 0,i;
+			vms_vector s0p = {0},s1p = {0};
 			fix dist;
 
 			for (i=0;i<6;i++)
@@ -1392,7 +1394,7 @@ void do_endlevel_flythrough(int n)
 
 		#ifdef COMPACT_SEGS
 		{
-			vms_vector _v1;
+			vms_vector _v1 = {0};
 			get_side_normal(pseg, up_side, 0, &_v1 );
 			vm_vector_2_matrix(&dest_orient,&flydata->headvec,&_v1,NULL);
 		}
@@ -1434,11 +1436,11 @@ extern short old_joy_x,old_joy_y;	//position last time around
 int _do_slew_movement(object *obj, int check_keys, int check_joy )
 {
 	int moved = 0;
-	vms_vector svel, movement;				//scaled velocity (per this frame)
-	vms_matrix rotmat,new_pm;
+	vms_vector svel = {0}, movement = {0};				//scaled velocity (per this frame)
+	vms_matrix rotmat = {0},new_pm = {0};
 	int joy_x,joy_y,btns;
 	int joyx_moved,joyy_moved;
-	vms_angvec rotang;
+	vms_angvec rotang = {0};
 
 	if (keyd_pressed[KEY_PAD5])
 		vm_vec_zero(&obj->phys_info.velocity);
@@ -1523,8 +1525,8 @@ static int convert_ext( char *dest, char *ext )
 //called for each level to load & setup the exit sequence
 void load_endlevel_data(int level_num)
 {
-	char filename[13];
-	char line[LINE_LEN],*p;
+	char filename[13] = {0};
+	char line[LINE_LEN] = {0},*p;
 	CFILE *ifile;
 	int var,segnum,sidenum;
 	int exit_side = 0, i;
@@ -1573,7 +1575,7 @@ try_again:
 	while (cfgets(line,LINE_LEN,ifile)) {
 
 		if (have_binary) {
-			for (i = 0; i < strlen(line) - 1; i++) {
+			for (i = 0; i < (int)strlen(line) - 1; i++) {
 				encode_rotate_left(&(line[i]));
 				line[i] = line[i] ^ BITMAP_TBL_XOR;
 				encode_rotate_left(&(line[i]));
@@ -1594,7 +1596,7 @@ try_again:
 
 			case 0: {						//ground terrain
 				int iff_error;
-				ubyte pal[768];
+				ubyte pal[768] = {0};
 
 				if (terrain_bm_instance.bm_data)
 					free(terrain_bm_instance.bm_data);
@@ -1629,7 +1631,7 @@ try_again:
 
 			case 4: {						//planet bitmap
 				int iff_error;
-				ubyte pal[768];
+				ubyte pal[768] = {0};
 
 				if (satellite_bm_instance.bm_data)
 					free(satellite_bm_instance.bm_data);
@@ -1648,8 +1650,8 @@ try_again:
 
 			case 5:							//earth pos
 			case 7: {						//station pos
-				vms_matrix tm;
-				vms_angvec ta;
+				vms_matrix tm = {0};
+				vms_angvec ta = {0};
 				int pitch,head;
 
 				sscanf(p,"%d,%d",&head,&pitch);
@@ -1704,8 +1706,8 @@ try_again:
 
 	//compute orientation of surface
 	{
-		vms_vector tv;
-		vms_matrix exit_orient,tm;
+		vms_vector tv = {0};
+		vms_matrix exit_orient = {0},tm = {0};
 
 		vm_angles_2_matrix(&exit_orient,&exit_angles);
 		vm_transpose_matrix(&exit_orient);

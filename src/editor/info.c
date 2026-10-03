@@ -198,10 +198,10 @@ struct meminfo {
 
 #define DPMI_INT        0x31
 
-static void read_mem_info()
+static void read_mem_info(void)
 {
-    union REGS regs;
-    struct SREGS sregs;
+    union REGS regs = {0};
+    struct SREGS sregs = {0};
 
     regs.x.eax = 0x00000500;
     memset( &sregs, 0, sizeof(sregs) );
@@ -286,7 +286,7 @@ static void info_display_object_placement(int show_all)
 	static	int	old_control_type;
 	static	int	old_mode;
 
-	char		name[30];
+	char		name[30] = {0};
 
 	if (init_info | show_all) {
 		old_Cur_object_index = -2;
@@ -322,7 +322,7 @@ static void info_display_segsize(int show_all)
 {
 	static	int	old_SegSizeMode;
 
-	char		name[30];
+	char		name[30] = {0};
 
 	if (init_info | show_all) {
 		old_SegSizeMode = -2;

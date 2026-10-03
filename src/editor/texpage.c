@@ -133,7 +133,7 @@ static void texpage_display_name( char *format, ... )
 }
 
 //Redraw the list of textures, based on TexturePage
-static void texpage_redraw()
+static void texpage_redraw(void)
 {
 	int i;
 
@@ -150,7 +150,7 @@ static void texpage_redraw()
 
 //shows the current texture, updating the window and printing the name, base
 //on CurrentTexture
-static void texpage_show_current()
+static void texpage_show_current(void)
 {
 	gr_set_current_canvas(TmapCurrent->canvas);
 	PIGGY_PAGE_IN(Textures[CurrentTexture]);
@@ -165,7 +165,7 @@ int texpage_goto_first(void)
 	return 1;
 }
 
-static int texpage_goto_metals()
+static int texpage_goto_metals(void)
 {
 
 	TexturePage=TextureMetals/TMAPS_PER_PAGE;
@@ -175,21 +175,21 @@ static int texpage_goto_metals()
 
 
 // Goto lights (paste ons)
-static int texpage_goto_lights()
+static int texpage_goto_lights(void)
 {
 	TexturePage=TextureLights/TMAPS_PER_PAGE;
 	texpage_redraw();
 	return 1;
 }
 
-static int texpage_goto_effects()
+static int texpage_goto_effects(void)
 {
 	TexturePage=TextureEffects/TMAPS_PER_PAGE;
 	texpage_redraw();
 	return 1;
 }
 
-static int texpage_goto_prev()
+static int texpage_goto_prev(void)
 {
 	if (TexturePage > 0) {
 		TexturePage--;
@@ -198,7 +198,7 @@ static int texpage_goto_prev()
 	return 1;
 }
 
-static int texpage_goto_next()
+static int texpage_goto_next(void)
 {
 	if ((TexturePage+1)*TMAPS_PER_PAGE < Num_tmaps ) {
 		TexturePage++;

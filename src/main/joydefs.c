@@ -301,7 +301,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 int joydefs_calibrate_flag = 0;
 
-static void joy_delay()
+static void joy_delay(void)
 {
 	int t1 = TICKER + 19/4;			// Wait 1/4 second...
 	stop_time();
@@ -314,7 +314,7 @@ static void joy_delay()
 static int joycal_message( char * title, char * text )
 {
 	int i;
-	newmenu_item	m[2];
+	newmenu_item	m[2] = {0};
 	m[0].type = NM_TYPE_TEXT; m[0].text = text;
 	m[1].type = NM_TYPE_MENU; m[1].text = TXT_OK;
 	i = newmenu_do( title, NULL, 2, m, NULL );
@@ -323,22 +323,22 @@ static int joycal_message( char * title, char * text )
 	return 0;
 }
 
-extern int WriteConfigFile();
+extern int WriteConfigFile(void);
 
 void joydefs_calibrate(void)
 {
 	ubyte masks;
-	int org_axis_min[4];
-	int org_axis_center[4];
-	int org_axis_max[4];
+	int org_axis_min[4] = {0};
+	int org_axis_center[4] = {0};
+	int org_axis_max[4] = {0};
 
 	int axis_min[4] = { 0, 0, 0, 0 };
 	int axis_cen[4] = { 0, 0, 0, 0 };
 	int axis_max[4] = { 0, 0, 0, 0 };
 
-	int temp_values[4];
-	char title[50];
-	char text[50];
+	int temp_values[4] = {0};
+	char title[50] = {0};
+	char text[50] = {0};
 	int nsticks = 0;
 
 	joydefs_calibrate_flag = 0;
@@ -532,9 +532,9 @@ extern ubyte *kc_external_name;
 
 void joydefs_config(void)
 {
-	char xtext[128];
+	char xtext[128] = {0};
 	int i, old_masks, masks;
-	newmenu_item m[13];
+	newmenu_item m[13] = {0};
 	int i1=9;
 	int nitems;
 

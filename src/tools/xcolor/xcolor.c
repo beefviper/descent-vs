@@ -77,7 +77,7 @@ static void dofile( char * filename )
 
 int main(int argc, char * argv[])	{
 	int numfiles = 0;
- 	struct find_t find;
+ 	struct find_t find = {0};
 
 	argv++; argc--;
 	for (;argc--;argv++)

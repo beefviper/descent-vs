@@ -285,13 +285,13 @@ typedef struct _grs_screen {     // This is a video screen
 
 int gr_init(int mode);
 int gr_set_mode(int mode);
-void gr_enable_default_palette_loading();
-void gr_disable_default_palette_loading();
+void gr_enable_default_palette_loading(void);
+void gr_disable_default_palette_loading(void);
 
 // These 4 functions actuall change screen colors.
 extern void gr_pal_fade_out(unsigned char * pal);
 extern void gr_pal_fade_in(unsigned char * pal);
-extern void gr_pal_clear();
+extern void gr_pal_clear(void);
 extern void gr_pal_setblock( int start, int number, unsigned char * pal );
 extern void gr_pal_getblock( int start, int number, unsigned char * pal );
 

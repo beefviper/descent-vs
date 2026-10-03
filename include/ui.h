@@ -434,7 +434,7 @@ int ui_pad_get_current(void);
 
 void ui_barbox_open( char * text, int length );
 int ui_barbox_update( int position );
-void ui_barbox_close();
+void ui_barbox_close(void);
 
 void ui_reset_idle_seconds(void);
 int ui_get_idle_seconds(void);

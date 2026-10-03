@@ -53,7 +53,7 @@ static ubyte *scale_run( ubyte *dest, int count, ubyte c )
 
 // Stretches the scanline at scale_source_ptr to scale_dest_ptr, using the
 // run length slice parameters set by rls_stretch_scanline_setup.
-void rls_stretch_scanline_asm()
+void rls_stretch_scanline_asm(void)
 {
 	ubyte *src = scale_source_ptr;
 	ubyte *dest = scale_dest_ptr;
@@ -77,7 +77,7 @@ void rls_stretch_scanline_asm()
 }
 
 // Precomputes the run length of each middle pixel for scale_do_cc_scanline.
-void rls_do_cc_setup_asm()
+void rls_do_cc_setup_asm(void)
 {
 	int error_term = scale_error_term;
 	int i;
@@ -100,7 +100,7 @@ void rls_do_cc_setup_asm()
 
 // Stretches the scanline at scale_source_ptr to scale_dest_ptr using the run
 // lengths computed by rls_do_cc_setup_asm.
-void scale_do_cc_scanline()
+void scale_do_cc_scanline(void)
 {
 	ubyte *src = scale_source_ptr;
 	ubyte *dest = scale_dest_ptr;

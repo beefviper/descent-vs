@@ -81,6 +81,6 @@ void gr_modex_setstart( short x, short y, int wait_for_retrace )
 
 // Drew a line from (modex_line_x1,modex_line_y1) to (modex_line_x2,modex_line_y2)
 // in modex_line_Color.
-void gr_modex_line()
+void gr_modex_line(void)
 {
 }

@@ -447,11 +447,11 @@ extern void show_reticle(int force_big);
 // Draw the reticle in 3D for head tracking
 static void draw_3d_reticle(fix eye_offset)
 {
-	g3s_point 	reticle_points[4];
-	g3s_uvl		uvl[4];
-	g3s_point	*pointlist[4];
+	g3s_point 	reticle_points[4] = {0};
+	g3s_uvl		uvl[4] = {0};
+	g3s_point	*pointlist[4] = {0};
 	int 			i;
-	vms_vector v1, v2;
+	vms_vector v1 = {0}, v2 = {0};
 	grs_canvas *saved_canvas;
 	int saved_interp_method;
 
@@ -547,9 +547,9 @@ static void render_face(int segnum, int sidenum, int nv, short *vp, int tmap1, i
 	fix			face_light;
 	grs_bitmap	*bm;
 	fix			reflect;
-	uvl			uvl_copy[8];
+	uvl			uvl_copy[8] = {0};
 	int			i;
-	g3s_point	*pointlist[8];
+	g3s_point	*pointlist[8] = {0};
 
 	Assert(nv <= 8);
 
@@ -632,8 +632,8 @@ static void check_face(int segnum, int sidenum, int facenum, int nv, short *vp, 
 	if (_search_mode) {
 		int save_lighting;
 		grs_bitmap *bm;
-		uvl uvl_copy[8];
-		g3s_point *pointlist[4];
+		uvl uvl_copy[8] = {0};
+		g3s_point *pointlist[4] = {0};
 
 		if (tmap2 > 0 )
 			bm = texmerge_get_cached_bitmap( tmap1, tmap2 );
@@ -673,13 +673,13 @@ fix	Min_n0_n1_dot	= (F1_0*15/16);
 //	Check for normal facing.  If so, render faces on side dictated by sidep->type.
 static void render_side(segment *segp, int sidenum)
 {
-	short			vertnum_list[4];
+	short			vertnum_list[4] = {0};
 	side			*sidep = &segp->sides[sidenum];
-	vms_vector	tvec;
+	vms_vector	tvec = {0};
 	fix			v_dot_n0, v_dot_n1;
-	uvl			temp_uvls[3];
+	uvl			temp_uvls[3] = {0};
 	fix			min_dot, max_dot;
-	vms_vector  normals[2];
+	vms_vector  normals[2] = {0};
 
 	if (!(WALL_IS_DOORWAY(segp,sidenum) & WID_RENDER_FLAG))		//if (WALL_IS_DOORWAY(segp, sidenum) == WID_NO_WALL)
 		return;
@@ -811,7 +811,7 @@ static void render_object_search(object *obj)
 static void do_render_object(int objnum)
 {
 	#ifdef EDITOR
-	int save_3d_outline;
+	int save_3d_outline = 0;
 	#endif
 	object *obj = &Objects[objnum];
 	int count = 0;
@@ -904,7 +904,7 @@ int check_window_check=0;
 
 //increment counter for checking if points rotated
 //This must be called at the start of the frame if rotate_list() will be used
-void render_start_frame()
+void render_start_frame(void)
 {
 	RL_framecount++;
 
@@ -920,7 +920,7 @@ g3s_codes rotate_list(int nv,short *pointnumlist)
 {
 	int i,pnum;
 	g3s_point *pnt;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	cc.and = 0xff;  cc.or = 0;
 
@@ -966,7 +966,7 @@ void project_list(int nv,short *pointnumlist)
 static void render_segment(int segnum)
 {
 	segment		*seg = &Segments[segnum];
-	g3s_codes 	cc;
+	g3s_codes 	cc = {0};
 	int			sn;
 
 	Assert(segnum!=-1 && segnum<=Highest_segment_index);
@@ -1050,7 +1050,7 @@ static void render_segment(int segnum)
 //draw outline for curside
 static void outline_seg_side(segment *seg,int _side,int edge,int vert)
 {
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	cc=rotate_list(8,seg->verts);
 
@@ -1274,7 +1274,7 @@ static int find_seg_side(segment *seg,short *verts,int notside)
 static int find_joining_side_norms(vms_vector *norm0_0,vms_vector *norm0_1,vms_vector *norm1_0,vms_vector *norm1_1,vms_vector **pnt0,vms_vector **pnt1,segment *seg,int s0,int s1)
 {
 	segment *seg0,*seg1;
-	short edge_verts[2];
+	short edge_verts[2] = {0};
 	int notside0,notside1;
 	int edgeside0,edgeside1;
 
@@ -1354,8 +1354,8 @@ static int find_joining_side_norms(vms_vector *norm0_0,vms_vector *norm0_1,vms_v
 //returns 0 if order doesn't matter, 1 if c0 before c1, -1 if c1 before c0
 static int compare_children(segment *seg,short c0,short c1)
 {
-	vms_vector norm0_0,norm0_1,*pnt0,temp;
-	vms_vector norm1_0,norm1_1,*pnt1;
+	vms_vector norm0_0 = {0},norm0_1 = {0},*pnt0,temp = {0};
+	vms_vector norm1_0 = {0},norm1_1 = {0},*pnt1;
 	fix d0_0,d0_1,d1_0,d1_1,d0,d1;
 
 	if (Side_opposite[c0] == c1) return 0;
@@ -1576,7 +1576,7 @@ static void build_object_lists(int n_segs)
 //mprintf((0,"objnum=%d ",objnum));
 				if (obj->type != OBJ_CNTRLCEN)		//don't migrate controlcen
 				do {
-					segmasks m;
+					segmasks m = {0};
 
 					did_migrate = 0;
 
@@ -1720,13 +1720,13 @@ void render_frame(fix eye_offset)
 		start_seg_num = Viewer->segnum;
 
 	if (Viewer==ConsoleObject && Use_player_head_angles) {
-		vms_matrix headm,viewm;
+		vms_matrix headm = {0},viewm = {0};
 		vm_angles_2_matrix(&headm,&Player_head_angles);
 		vm_matrix_x_matrix(&viewm,&Viewer->orient,&headm);
 		g3_set_view_matrix(&Viewer_eye,&viewm,Render_zoom);
 	//@@} else if ((Cockpit_mode==CM_REAR_VIEW) && (Viewer==ConsoleObject)) {
 	} else if (Rear_view && (Viewer==ConsoleObject)) {
-		vms_matrix headm,viewm;
+		vms_matrix headm = {0},viewm = {0};
 		Player_head_angles.p = Player_head_angles.b = 0;
 		Player_head_angles.h = 0x7fff;
 		vm_angles_2_matrix(&headm,&Player_head_angles);
@@ -1809,7 +1809,7 @@ static void build_segment_list(int start_seg_num)
 		for (scnt=0;scnt < ecnt;scnt++) {
 			int rotated,segnum;
 			window *check_w;
-			short child_list[MAX_SIDES_PER_SEGMENT];		//list of ordered sides to process
+			short child_list[MAX_SIDES_PER_SEGMENT] = {0};		//list of ordered sides to process
 			int n_children;										//how many sides in child_list
 			segment *seg;
 
@@ -2237,7 +2237,7 @@ int find_seg_side_face(short x,short y,int *seg,int *side,int *face,int *poly)
 	found_seg = -1;
 
 	if (render_3d_in_big_window) {
-		grs_canvas temp_canvas;
+		grs_canvas temp_canvas = {0};
 
 		gr_init_sub_canvas(&temp_canvas,canv_offscreen,0,0,
 			LargeView.ev_canv->cv_bitmap.bm_w,LargeView.ev_canv->cv_bitmap.bm_h);

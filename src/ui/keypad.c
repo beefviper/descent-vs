@@ -302,8 +302,8 @@ void ui_pad_goto_prev(void)
 void ui_pad_read( int n, char * filename )
 {
 	char * ptr;
-	char buffer[100];
-	char text[100];
+	char buffer[100] = {0};
+	char text[100] = {0};
 	FILE * infile;
 	int linenumber = 0;
 	int i;

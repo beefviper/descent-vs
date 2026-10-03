@@ -97,7 +97,7 @@ unsigned int next_code;
 int current_code_bits;
 unsigned int next_bump_code;
 
-static void InitializeDictionary()
+static void InitializeDictionary(void)
 {
 	unsigned int i;
 
@@ -109,7 +109,7 @@ static void InitializeDictionary()
     next_bump_code = 511;
 }
 
-static void InitializeStorage()
+static void InitializeStorage(void)
 {
 	//MALLOC( dict, DICTIONARY, TABLE_SIZE );//won't compile, hack below -KRB
 	//MALLOC( decode_stack, char, TABLE_SIZE );
@@ -118,7 +118,7 @@ static void InitializeStorage()
 }
 
 
-static void FreeStorage()
+static void FreeStorage(void)
 {
 	free(dict);
 	free(decode_stack);

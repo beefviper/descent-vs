@@ -304,22 +304,22 @@ static int wall_assign_door(int door_type)
 	return 1;
 }
 
-int wall_add_blastable()
+int wall_add_blastable(void)
 {
 	return wall_add_to_side(Cursegp, Curside, WALL_BLASTABLE);
 }
 
-int wall_add_door()
+int wall_add_door(void)
 {
 	return wall_add_to_side(Cursegp, Curside, WALL_DOOR);
 }
 
-int wall_add_closed_wall()
+int wall_add_closed_wall(void)
 {
 	return wall_add_to_side(Cursegp, Curside, WALL_CLOSED);
 }
 
-int wall_add_external_wall()
+int wall_add_external_wall(void)
 {
 	if (Cursegp->children[Curside] == -2) {
 		editor_status( "Wall is already external!" );
@@ -336,32 +336,32 @@ int wall_add_external_wall()
 	return 1;
 }
 
-int wall_add_illusion()
+int wall_add_illusion(void)
 {
 	return wall_add_to_side(Cursegp, Curside, WALL_ILLUSION);
 }
 
-int wall_lock_door()
+int wall_lock_door(void)
 {
 	return wall_add_door_flag(WALL_DOOR_LOCKED);
 }
 
-int wall_unlock_door()
+int wall_unlock_door(void)
 {
 	return wall_remove_door_flag(WALL_DOOR_LOCKED);
 }
 
-int wall_automate_door()
+int wall_automate_door(void)
 {
 	return wall_add_door_flag(WALL_DOOR_AUTO);
 }
 
-int wall_deautomate_door()
+int wall_deautomate_door(void)
 {
 	return wall_remove_door_flag(WALL_DOOR_AUTO);
 }
 
-static int GotoPrevWall() {
+static int GotoPrevWall(void) {
 	int current_wall;
 
 	if (Cursegp->sides[Curside].wall_num < 0)
@@ -390,7 +390,7 @@ static int GotoPrevWall() {
 }
 
 
-static int GotoNextWall() {
+static int GotoNextWall(void) {
 	int current_wall;
 
 	current_wall = Cursegp->sides[Curside].wall_num; // It's ok to be -1 because it will immediately become 0
@@ -417,7 +417,7 @@ static int GotoNextWall() {
 }
 
 
-static int PrevWall() {
+static int PrevWall(void) {
 	int wall_type;
 
 	if (Cursegp->sides[Curside].wall_num == -1) {
@@ -465,7 +465,7 @@ static int PrevWall() {
 	return 1;
 }
 
-static int NextWall() {
+static int NextWall(void) {
 	int wall_type;
 
 	if (Cursegp->sides[Curside].wall_num == -1) {
@@ -516,7 +516,7 @@ static int NextWall() {
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the wall dialog box
 //-------------------------------------------------------------------------
-int do_wall_dialog()
+int do_wall_dialog(void)
 {
 	int i;
 
@@ -761,7 +761,7 @@ void do_wall_window(void)
 
 //---------------------------------------------------------------------
 // Restore all walls to original status (closed doors, repaired walls)
-int wall_restore_all()
+int wall_restore_all(void)
 {
 	int i, j;
 	int wall_num;
@@ -901,7 +901,7 @@ int wall_remove_side(segment *seg, short side)
 
 //---------------------------------------------------------------------
 //	Remove a special wall.
-int wall_remove()
+int wall_remove(void)
 {
 	return wall_remove_side(Cursegp, Curside);
 }
@@ -1175,12 +1175,12 @@ int wall_unlink_door(void)
 
 #define	DIAGNOSTIC_MESSAGE_MAX				150
 
-int check_walls()
+int check_walls(void)
 {
 	int w, seg, side, wall_count, trigger_count;
 	int w1, w2, t, l;
-	count_wall CountedWalls[MAX_WALLS];
-	char Message[DIAGNOSTIC_MESSAGE_MAX];
+	count_wall CountedWalls[MAX_WALLS] = {0};
+	char Message[DIAGNOSTIC_MESSAGE_MAX] = {0};
 	int matcen_num;
 
 	wall_count = 0;
@@ -1282,7 +1282,7 @@ int check_walls()
 				mprintf((0,"No valid links on Matcen Trigger %d\n", t));
 			else
 				for (l=0;l<Triggers[t].num_links;l++) {
-					if ((!Segments[Triggers[t].seg[l]].special) & SEGMENT_IS_ROBOTMAKER)
+					if (Segments[Triggers[t].seg[l]].special != SEGMENT_IS_ROBOTMAKER)
 						mprintf((0,"Bogus Matcen trigger detected on Trigger %d, No matcen at seg %d\n", t, Triggers[t].seg[l]));
 				}
 		}
@@ -1311,9 +1311,9 @@ int check_walls()
 }
 
 
-int delete_all_walls()
+int delete_all_walls(void)
 {
-	char Message[DIAGNOSTIC_MESSAGE_MAX];
+	char Message[DIAGNOSTIC_MESSAGE_MAX] = {0};
 	int seg, side;
 
 	sprintf( Message, "Are you sure that walls are hosed so\n badly that you want them ALL GONE!?\n");
@@ -1330,9 +1330,9 @@ int delete_all_walls()
 	return 0;
 }
 
-static int delete_all_triggers()
+static int delete_all_triggers(void)
 {
-	char Message[DIAGNOSTIC_MESSAGE_MAX];
+	char Message[DIAGNOSTIC_MESSAGE_MAX] = {0};
 	int w;
 
 	sprintf( Message, "Are you sure that triggers are hosed so\n badly that you want them ALL GONE!?\n");
@@ -1348,7 +1348,7 @@ static int delete_all_triggers()
 	return 0;
 }
 
-static int dump_walls_info()
+static int dump_walls_info(void)
 {
 	int w;
 	FILE *fp;
@@ -1494,7 +1494,7 @@ void check_wall_validity(void)
 {
 	int	i, j;
 	int	segnum, sidenum, wall_num;
-	byte	wall_flags[MAX_WALLS];
+	byte	wall_flags[MAX_WALLS] = {0};
 
 	if (!Validate_walls)
 		return;

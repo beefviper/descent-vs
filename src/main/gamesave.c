@@ -484,7 +484,7 @@ static void convert_name_to_CDL( char *dest, char *src )
 	strcpy (dest, src);
 
 #ifdef SHAREWARE
-	for (i=1; i<strlen(dest); i++ )
+	for (i=1; i<(int)strlen(dest); i++ )
 	{
 		if (dest[i]=='.'||dest[i]==' '||dest[i]==0)
 		{
@@ -507,7 +507,7 @@ static void convert_name_to_CDL( char *dest, char *src )
 		return;
 	}
 #else
-	for (i=1; i<strlen(dest); i++ )
+	for (i=1; i<(int)strlen(dest); i++ )
 	{
 		if (dest[i]=='.'||dest[i]==' '||dest[i]==0)
 		{
@@ -541,7 +541,7 @@ static void convert_name_to_LVL( char *dest, char *src )
 
 	strcpy (dest, src);
 
-	for (i=1; i<strlen(dest); i++ )
+	for (i=1; i<(int)strlen(dest); i++ )
 	{
 		if (dest[i]=='.'||dest[i]==' '||dest[i]==0)
 		{
@@ -1330,7 +1330,7 @@ static int load_game_data(CFILE *LoadFile)
 						Error( "Error reading Walls[%d] in gamesave.c", i);
 				}
 				else if (game_top_fileinfo.fileinfo_version >= 17) {
-					v19_wall w;
+					v19_wall w = {0};
 
 					Assert(sizeof(w) == game_fileinfo.walls_sizeof);
 
@@ -1351,7 +1351,7 @@ static int load_game_data(CFILE *LoadFile)
 					Walls[i].state			= WALL_DOOR_CLOSED;
 				}
 				else {
-					v16_wall w;
+					v16_wall w = {0};
 
 					Assert(sizeof(w) == game_fileinfo.walls_sizeof);
 
@@ -1388,7 +1388,7 @@ static int load_game_data(CFILE *LoadFile)
 						Error( "Error reading ActiveDoors[%d] in gamesave.c", i);
 				}
 				else {
-					v19_door d;
+					v19_door d = {0};
 					int p;
 
 					Assert(sizeof(d) == game_fileinfo.doors_sizeof);
@@ -1576,7 +1576,7 @@ char *Level_being_loaded=NULL;
 #endif
 
 #ifdef COMPACT_SEGS
-extern void ncache_flush();
+extern void ncache_flush(void);
 #endif
 
 //loads a level (.LVL) file from disk
@@ -1586,7 +1586,7 @@ int load_level(char * filename_passed)
 	int use_compiled_level=1;
 	#endif
 	CFILE * LoadFile;
-	char filename[128];
+	char filename[128] = {0};
 	int sig,version,minedata_offset,gamedata_offset,hostagetext_offset;
 	int mine_err,game_err;
 
@@ -1688,7 +1688,7 @@ int load_level(char * filename_passed)
 	write_game_text_file(filename);
 	if (Errors_in_mine) {
 		if (is_real_level(filename)) {
-			char  ErrorMessage[200];
+			char  ErrorMessage[200] = {0};
 
 			sprintf( ErrorMessage, "Warning: %i errors in %s!\n", Errors_in_mine, Level_being_loaded );
 			stop_time();
@@ -1703,7 +1703,7 @@ int load_level(char * filename_passed)
 	#ifdef EDITOR
 	//If an old version, ask the use if he wants to save as new version
 	if (((LEVEL_FILE_VERSION>1) && version<LEVEL_FILE_VERSION) || mine_err==1 || game_err==1) {
-		char  ErrorMessage[200];
+		char  ErrorMessage[200] = {0};
 
 		sprintf( ErrorMessage, "You just loaded a old version level.  Would\n"
 						"you like to save it as a current version level?");
@@ -1764,7 +1764,7 @@ int get_level_name(void)
 //NO_UI!!!	}
 //NO_UI!!!
 
-	newmenu_item m[2];
+	newmenu_item m[2] = {0};
 
 	m[0].type = NM_TYPE_TEXT; m[0].text = "Please enter a name for this mine:";
 	m[1].type = NM_TYPE_INPUT; m[1].text = Current_level_name; m[1].text_len = LEVEL_NAME_LEN;
@@ -1903,7 +1903,7 @@ int save_mine_data(FILE * SaveFile);
 static int save_level_sub(char * filename, int compiled_version)
 {
 	FILE * SaveFile;
-	char temp_filename[128];
+	char temp_filename[128] = {0};
 	int sig = 'PLVL',version=LEVEL_FILE_VERSION;
 	int minedata_offset=0,gamedata_offset=0,hostagetext_offset=0;
 
@@ -1912,7 +1912,7 @@ static int save_level_sub(char * filename, int compiled_version)
 
 		if (Errors_in_mine) {
 			if (is_real_level(filename)) {
-				char  ErrorMessage[200];
+				char  ErrorMessage[200] = {0};
 
 				sprintf( ErrorMessage, "Warning: %i errors in this mine!\n", Errors_in_mine );
 				stop_time();
@@ -1934,9 +1934,9 @@ static int save_level_sub(char * filename, int compiled_version)
 	SaveFile = fopen( temp_filename, "wb" );
 	if (!SaveFile)
 	{
-		char ErrorMessage[256];
+		char ErrorMessage[256] = {0};
 
-		char fname[20];
+		char fname[20] = {0};
 		_splitpath( temp_filename, NULL, NULL, fname, NULL );
 
 		sprintf( ErrorMessage, \

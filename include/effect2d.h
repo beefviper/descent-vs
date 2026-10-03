@@ -33,8 +33,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define _EFFECT2D_H
 
 extern void gr_fade_canvas(int fade);
-extern void gr_deaccent_canvas();
-extern void gr_grey_canvas();
+extern void gr_deaccent_canvas(void);
+extern void gr_grey_canvas(void);
 extern void effect2d_headlight_copy( grs_bitmap * src_bmp, grs_bitmap * dest_bmp, grs_bitmap * mask_bmp );
 
 #endif

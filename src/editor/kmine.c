@@ -227,9 +227,9 @@ static void set_extension( char * f, char *ext )
 }
 
 #if MINESAVE_CRIPPLED
-int SaveMine()
+int SaveMine(void)
 {
-	char  ErrorMessage[200];
+	char  ErrorMessage[200] = {0};
 
 	sprintf( ErrorMessage, "Save Mine not available in demo version.\n");
 	MessageBox( -2, -2, 1, ErrorMessage, "Ok" );
@@ -375,11 +375,11 @@ static int med_load_situation(char * filename)
 static int med_save_situation(char * filename)
 {
 	CFILE * SaveFile;
-	char	mine_name[MAX_NAME_LENGTH];
+	char	mine_name[MAX_NAME_LENGTH] = {0};
 
 	SaveFile = cfopen( filename, "wt" );
 	if (!SaveFile)	{
-		char  ErrorMessage[200];
+		char  ErrorMessage[200] = {0};
 
 		sprintf( ErrorMessage, "ERROR: Unable to open %s\n", filename );
 		MessageBox( -2, -2, 1, ErrorMessage, "Ok" );

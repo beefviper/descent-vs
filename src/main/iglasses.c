@@ -121,7 +121,7 @@ void iglasses_init_tracking(int serial_port)
 	printf( "%s\n", TXT_PRESS_ESC_TO_ABORT);
 	Iport = PortOpenGreenleafFast(serial_port-1, 9600, 'N', 8, 1 );
 	if ( !Iport )	{
-		printf( "%s (%d)\n", TXT_SERIAL_FAILURE, Iport->status );
+		printf( "%s\n", TXT_SERIAL_FAILURE );
 		return;
 	}
 

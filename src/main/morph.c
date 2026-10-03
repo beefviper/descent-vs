@@ -395,8 +395,8 @@ void init_morphs(void)
 void morph_start(object *obj)
 {
 	polymodel *pm;
-	vms_vector pmmin,pmmax;
-	vms_vector box_size;
+	vms_vector pmmin = {0},pmmax = {0};
+	vms_vector box_size = {0};
 	int i;
 	morph_data *md;
 
@@ -454,7 +454,7 @@ static void draw_model(polymodel *pm,int submodel_num,vms_angvec *anim_angles,fi
 {
 	int i,mn;
 	int facing;
-	int sort_list[MAX_SUBMODELS],sort_n;
+	int sort_list[MAX_SUBMODELS] = {0},sort_n;
 
 
 	//first, sort the submodels
@@ -524,7 +524,7 @@ static void draw_model(polymodel *pm,int submodel_num,vms_angvec *anim_angles,fi
 		}
 		else {
 
-			vms_matrix orient;
+			vms_matrix orient = {0};
 
 			vm_angles_2_matrix(&orient,&anim_angles[mn]);
 

@@ -75,8 +75,8 @@ UI_GADGET_SCROLLBAR * ui_add_gadget_scrollbar( UI_WINDOW * wnd, short x, short y
 	int tw, th, taw;
 
 	UI_GADGET_SCROLLBAR * scrollbar;
-	char up[2];
-	char down[2];
+	char up[2] = {0};
+	char down[2] = {0};
 	up[0] = 30; up[1] = 0;
 	down[0] = 31; down[1] = 0;
 

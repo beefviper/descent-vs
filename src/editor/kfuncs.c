@@ -118,18 +118,18 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 // Test function prototypes (replace Test1, 2 and 3 with whatever function
 //										you wish to test.)
-extern void test_create_path();
-extern void test_create_all_paths();
-extern void test_create_path_many();
-extern void create_all_paths();
-extern void test_create_all_anchors();
+extern void test_create_path(void);
+extern void test_create_all_paths(void);
+extern void test_create_path_many(void);
+extern void create_all_paths(void);
+extern void test_create_all_anchors(void);
 // extern void make_curside_bottom_side();
-extern void move_object_to_mouse_click();
-extern void test_create_n_segment_path();
+extern void move_object_to_mouse_click(void);
+extern void test_create_n_segment_path(void);
 
 extern void set_all_modes_to_hover(void);
 
-static int Test1()
+static int Test1(void)
 {
 //	{ int i;
 //		for (i=Highest_segment_index+1; i<MAX_SEGMENTS; i++)
@@ -143,7 +143,7 @@ static int Test1()
 }
 
 extern void check_for_overlapping_segments(void);
-static int Test2()
+static int Test2(void)
 {
 //	mprintf((0, "\nCalling check_for_overlapping_segments.\n"));
 //	check_for_overlapping_segments();
@@ -157,7 +157,7 @@ static int Test2()
 //extern fix fcd_test(void);
 //extern void test_shortpos(void);
 
-static int Test3()
+static int Test3(void)
 {
 	Int3();	//	Are you sure you want to do this?
 	//	This will replace all textures in your replacement list

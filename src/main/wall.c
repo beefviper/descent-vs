@@ -517,7 +517,7 @@ void wall_open_door(segment *seg, int side)
 	if ( Newdemo_state != ND_STATE_PLAYBACK )
 	{
 		// NOTE THE LINK TO ABOVE!!!!
-		vms_vector cp;
+		vms_vector cp = {0};
 		compute_center_point_on_side(&cp, seg, side );
 		if (WallAnims[w->clip_num].open_sound > -1 )
 			digi_link_sound_to_pos( WallAnims[w->clip_num].open_sound, (short)(seg-Segments), side, &cp, 0, F1_0 );
@@ -724,7 +724,7 @@ void do_door_close(int door_num)
 			// NOTE THE LINK TO ABOVE!!
 			if (p==0)	//only play one sound for linked doors
 				if ( d->time==0 )	{		//first time
-					vms_vector cp;
+					vms_vector cp = {0};
 					compute_center_point_on_side(&cp, seg, side );
 					if (WallAnims[w->clip_num].close_sound  > -1 )
 						digi_link_sound_to_pos( WallAnims[Walls[seg->sides[side].wall_num].clip_num].close_sound, (short)(seg-Segments), side, &cp, 0, F1_0 );

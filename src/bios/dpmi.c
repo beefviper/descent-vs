@@ -98,10 +98,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #ifdef __WATCOMC__
 
-static int dpmi_find_dos_memory();
-int dpmi_find_dos_memory()
+static int dpmi_find_dos_memory(void);
+int dpmi_find_dos_memory(void)
 {
-	union REGS r;
+	union REGS r = {0};
 
 	memset(&r,0,sizeof(r));
 	r.x.eax = 0x0100;				// DPMI allocate DOS memory
@@ -117,7 +117,7 @@ int dpmi_find_dos_memory()
 
 void *dpmi_real_malloc( int size, ushort *selector )
 {
-	union REGS r;
+	union REGS r = {0};
 
 	memset(&r,0,sizeof(r));
 	r.x.eax = 0x0100;				// DPMI allocate DOS memory
@@ -135,7 +135,7 @@ void *dpmi_real_malloc( int size, ushort *selector )
 
 void dpmi_real_free( ushort selector )
 {
-	union REGS r;
+	union REGS r = {0};
 
 	memset(&r,0,sizeof(r));
 	r.x.eax = 0x0101;				// DPMI free DOS memory
@@ -146,8 +146,8 @@ void dpmi_real_free( ushort selector )
 
 void dpmi_real_int386x( ubyte intno, dpmi_real_regs * rregs )
 {
-	union REGS regs;
-	struct SREGS sregs;
+	union REGS regs = {0};
+	struct SREGS sregs = {0};
 
     /* Use DMPI call 300h to issue the DOS interrupt */
 
@@ -170,8 +170,8 @@ ubyte * dos_stack_top = NULL;
 void dpmi_real_call(dpmi_real_regs * rregs)
 {
 	ushort temp_selector;
-	union REGS regs;
-	struct SREGS sregs;
+	union REGS regs = {0};
+	struct SREGS sregs = {0};
 
 	if ( !dos_stack_initialized )	{
 		dos_stack_initialized = 1;
@@ -207,7 +207,7 @@ int total_bytes = 0;
 
 int dpmi_unlock_region(void *address, unsigned length)
 {
-	union REGS regs;
+	union REGS regs = {0};
 	unsigned int linear;
 
 #ifndef __WATCOMC__
@@ -234,7 +234,7 @@ int dpmi_unlock_region(void *address, unsigned length)
 
 int dpmi_lock_region(void *address, unsigned length)
 {
-	union REGS regs;
+	union REGS regs = {0};
 	unsigned int linear;
 
 #ifndef __WATCOMC__
@@ -262,7 +262,7 @@ int dpmi_lock_region(void *address, unsigned length)
 
 int dpmi_modify_selector_base( ushort selector, void * address )
 {
-	union REGS regs;
+	union REGS regs = {0};
 	unsigned int linear;
 
 	linear = (unsigned int)address;
@@ -282,7 +282,7 @@ int dpmi_modify_selector_base( ushort selector, void * address )
 
 int dpmi_modify_selector_limit( ushort selector, int size  )
 {
-	union REGS regs;
+	union REGS regs = {0};
 	unsigned int segment_limit;
 
 	segment_limit = (unsigned int) size;
@@ -302,7 +302,7 @@ int dpmi_modify_selector_limit( ushort selector, int size  )
 
 int dpmi_allocate_selector( void * address, int size, ushort * selector )
 {
-	union REGS regs;
+	union REGS regs = {0};
 
 
 	memset(&regs,0,sizeof(regs));
@@ -355,15 +355,15 @@ unsigned int dpmi_physical_memory=0;
 unsigned int dpmi_dos_memory = 0;
 
 #ifdef __WATCOMC__
-extern void cdecl _GETDS();
-extern void cdecl cstart_();
+extern void cdecl _GETDS(void);
+extern void cdecl cstart_(void);
 #endif
 
 int dpmi_init(int verbose)
 {
-	union REGS regs;
-	struct SREGS sregs;
-	mem_data mi;
+	union REGS regs = {0};
+	struct SREGS sregs = {0};
+	mem_data mi = {0};
 
 	dpmi_dos_memory = dpmi_find_dos_memory();
 
@@ -437,7 +437,7 @@ void *dpmi_get_temp_low_buffer( int size )
 
 int dpmi_set_pm_handler(unsigned intnum, void far * isr )
 {
-	union REGS regs;
+	union REGS regs = {0};
 
     /* Use DMPI call 204h to get pm interrrupt */
 	memset(&regs,0,sizeof(regs));
@@ -466,7 +466,7 @@ unsigned int dpmi_dos_memory = 0;
 #define MAX_REAL_BLOCKS 32
 static void * real_blocks[MAX_REAL_BLOCKS];	// indexed by selector-1
 
-static int dpmi_find_dos_memory()
+static int dpmi_find_dos_memory(void)
 {
 	return 640*1024;
 }

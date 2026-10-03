@@ -273,7 +273,7 @@ static fix get_average_light_at_vertex(int vnum, short *segs)
 static void set_average_light_at_vertex(int vnum)
 {
 	int	relvnum, sidenum;
-	short	Segment_indices[MAX_LIGHT_SEGS];
+	short	Segment_indices[MAX_LIGHT_SEGS] = {0};
 	int	segind;
 
 	fix average_light;
@@ -335,7 +335,7 @@ static void set_average_light_on_all_fast(void)
 	int	s,v,relvnum;
 	fix	al;
 	int	alc;
-	int	seglist[MAX_LIGHT_SEGS];
+	int	seglist[MAX_LIGHT_SEGS] = {0};
 	int	*segptr;
 
 	set_vertex_counts();
@@ -445,7 +445,7 @@ int set_average_light_on_all_quick(void)
 //	---------------------------------------------------------------------------------------------
 static fix compute_uv_dist(uvl *uv0, uvl *uv1)
 {
-	vms_vector	v0,v1;
+	vms_vector	v0 = {0},v1 = {0};
 
 	v0.x = uv0->u;
 	v0.y = 0;
@@ -635,9 +635,9 @@ fix	Stretch_scale_y = F1_0;
 static void assign_uvs_to_side(segment *segp, int sidenum, uvl *uva, uvl *uvb, int va, int vb)
 {
 	int			vlo,vhi,v0,v1,v2,v3;
-	vms_vector	fvec,rvec,tvec;
-	vms_matrix	rotmat;
-	uvl			uvls[4],ruvmag,fuvmag,uvlo,uvhi;
+	vms_vector	fvec = {0},rvec = {0},tvec = {0};
+	vms_matrix	rotmat = {0};
+	uvl			uvls[4] = {0},ruvmag = {0},fuvmag = {0},uvlo = {0},uvhi = {0};
 	fix			fmag,mag01;
 	byte			*vp;
 
@@ -748,7 +748,7 @@ int Vmag = VMAG;
 //	v2, v3 assigned by assign_uvs_to_side
 void assign_default_uvs_to_side(segment *segp,int side)
 {
-	uvl			uv0,uv1;
+	uvl			uv0 = {0},uv1 = {0};
 	byte			*vp;
 
 	uv0.u = 0;
@@ -770,7 +770,7 @@ void assign_default_uvs_to_side(segment *segp,int side)
 //	v2, v3 assigned by assign_uvs_to_side
 void stretch_uvs_from_curedge(segment *segp, int side)
 {
-	uvl			uv0,uv1;
+	uvl			uv0 = {0},uv1 = {0};
 	int			v0, v1;
 
 	v0 = Curedge;
@@ -890,8 +890,8 @@ void assign_default_uvs_to_segment(segment *segp)
 // --------------------------------------------------------------------------------------------------------------
 void med_assign_uvs_to_side(segment *con_seg, int con_common_side, segment *base_seg, int base_common_side, int abs_id1, int abs_id2)
 {
-	uvl		uv1,uv2;
-	int		v,bv1,bv2,cv1,cv2, vv1, vv2;
+	uvl		uv1 = {0},uv2 = {0};
+	int		v,bv1,bv2,cv1 = 0,cv2 = 0, vv1, vv2;
 
 	bv1 = -1;	bv2 = -1;
 
@@ -1250,7 +1250,7 @@ int	Hash_hits=0, Hash_retries=0, Hash_calcs=0;
 //	If quick_light set, then don't use find_vector_intersection
 static void cast_light_from_side(segment *segp, int light_side, fix light_intensity, int quick_light)
 {
-	vms_vector	segment_center;
+	vms_vector	segment_center = {0};
 	int			segnum,sidenum,vertnum, lightnum;
 
 	compute_segment_center(&segment_center, segp);
@@ -1260,8 +1260,8 @@ static void cast_light_from_side(segment *segp, int light_side, fix light_intens
 	//	Do for four lights, one just inside each corner of side containing light.
 	for (lightnum=0; lightnum<4; lightnum++) {
 		int			light_vertex_num, i;
-		vms_vector	vector_to_center;
-		vms_vector	light_location;
+		vms_vector	vector_to_center = {0};
+		vms_vector	light_location = {0};
 		// fix			inverse_segment_magnitude;
 
 		light_vertex_num = segp->verts[Side_to_verts[light_side][lightnum]];
@@ -1281,7 +1281,7 @@ static void cast_light_from_side(segment *segp, int light_side, fix light_intens
 
 		for (segnum=0; segnum<=Highest_segment_index; segnum++) {
 			segment		*rsegp = &Segments[segnum];
-			vms_vector	r_segment_center;
+			vms_vector	r_segment_center = {0};
 			fix			dist_to_rseg;
 
 			for (i=0; i<FVI_HASH_SIZE; i++)
@@ -1300,7 +1300,7 @@ static void cast_light_from_side(segment *segp, int light_side, fix light_intens
 //mprintf((0, "[%i %i], ", rsegp-Segments, sidenum));
 						for (vertnum=0; vertnum<4; vertnum++) {
 							fix			distance_to_point, light_at_point, light_dot;
-							vms_vector	vert_location, vector_to_light;
+							vms_vector	vert_location = {0}, vector_to_light = {0};
 							int			abs_vertnum;
 
 							abs_vertnum = rsegp->verts[Side_to_verts[sidenum][vertnum]];
@@ -1320,9 +1320,9 @@ static void cast_light_from_side(segment *segp, int light_side, fix light_intens
 								light_at_point = fixdiv(fixmul(light_dot, light_dot), distance_to_point);
 								light_at_point = fixmul(light_at_point, Magical_light_constant);
 								if (light_at_point >= 0) {
-									fvi_info	hit_data;
+									fvi_info	hit_data = {0};
 									int		hit_type;
-									vms_vector	vert_location_1, r_vector_to_center;
+									vms_vector	vert_location_1 = {0}, r_vector_to_center = {0};
 									fix		inverse_segment_magnitude;
 
 									vm_vec_sub(&r_vector_to_center, &r_segment_center, &vert_location);
@@ -1352,7 +1352,7 @@ static void cast_light_from_side(segment *segp, int light_side, fix light_intens
 												}
 											} else {
 //mprintf((0, "\nH:%04x ", hash_value));
-												fvi_query fq;
+												fvi_query fq = {0};
 
 												Hash_calcs++;
 												hashp->vector = vector_to_light;
@@ -1429,7 +1429,7 @@ static void calim_zero_light_values(void)
 //	of all segments.
 static void cast_light_from_side_to_center(segment *segp, int light_side, fix light_intensity, int quick_light)
 {
-	vms_vector	segment_center;
+	vms_vector	segment_center = {0};
 	int			segnum, lightnum;
 
 	compute_segment_center(&segment_center, segp);
@@ -1437,8 +1437,8 @@ static void cast_light_from_side_to_center(segment *segp, int light_side, fix li
 	//	Do for four lights, one just inside each corner of side containing light.
 	for (lightnum=0; lightnum<4; lightnum++) {
 		int			light_vertex_num;
-		vms_vector	vector_to_center;
-		vms_vector	light_location;
+		vms_vector	vector_to_center = {0};
+		vms_vector	light_location = {0};
 
 		light_vertex_num = segp->verts[Side_to_verts[light_side][lightnum]];
 		light_location = Vertices[light_vertex_num];
@@ -1447,7 +1447,7 @@ static void cast_light_from_side_to_center(segment *segp, int light_side, fix li
 
 		for (segnum=0; segnum<=Highest_segment_index; segnum++) {
 			segment		*rsegp = &Segments[segnum];
-			vms_vector	r_segment_center;
+			vms_vector	r_segment_center = {0};
 			fix			dist_to_rseg;
 //if ((segp == &Segments[Bugseg]) && (rsegp == &Segments[Bugseg]))
 //	Int3();
@@ -1465,8 +1465,8 @@ static void cast_light_from_side_to_center(segment *segp, int light_side, fix li
 					int		hit_type;
 
 					if (!quick_light) {
-						fvi_query fq;
-						fvi_info	hit_data;
+						fvi_query fq = {0};
+						fvi_info	hit_data = {0};
 
 						fq.p0						= &light_location;
 						fq.startseg				= segp-Segments;

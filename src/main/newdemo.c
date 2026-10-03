@@ -982,7 +982,7 @@ static void nd_write_angvec(vms_angvec *v)
 static void nd_write_shortpos(object *obj)
 {
 	int i;
-	shortpos sp;
+	shortpos sp = {0};
 	ubyte render_type;
 
 	create_shortpos(&sp, obj);
@@ -1063,7 +1063,7 @@ static void nd_read_angvec(vms_angvec *v)
 
 static void nd_read_shortpos(object *obj)
 {
-	shortpos sp;
+	shortpos sp = {0};
 	int i;
 	ubyte render_type;
 
@@ -1936,11 +1936,11 @@ static int newdemo_read_demo_start(int rnd_demo)
 {
 	byte i, version, game_type, laser_level;
 	char c, energy, shield;
-	char text[50], current_mission[9];
+	char text[50] = {0}, current_mission[9] = {0};
 
 	nd_read_ubyte(&c);
 	if ((c != ND_EVENT_START_DEMO) || nd_bad_read) {
-		newmenu_item m[1];
+		newmenu_item m[1] = {0};
 
 		sprintf(text, "%s %s", TXT_CANT_PLAYBACK, TXT_DEMO_CORRUPT);
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = text;
@@ -1950,7 +1950,7 @@ static int newdemo_read_demo_start(int rnd_demo)
 	nd_read_byte(&version);
 	if (version < DEMO_VERSION) {
 		if (!rnd_demo) {
-			newmenu_item m[1];
+			newmenu_item m[1] = {0};
 			sprintf(text, "%s %s", TXT_CANT_PLAYBACK, TXT_DEMO_OLD);
 			m[ 0].type = NM_TYPE_TEXT; m[ 0].text = text;
 			newmenu_do( NULL, NULL, sizeof(m)/sizeof(*m), m, NULL );
@@ -1959,7 +1959,7 @@ static int newdemo_read_demo_start(int rnd_demo)
 	}
 	nd_read_byte(&game_type);
 	if (game_type != DEMO_GAME_TYPE) {
-		newmenu_item m[3];
+		newmenu_item m[3] = {0};
 
 		sprintf(text, "%s %s", TXT_CANT_PLAYBACK, TXT_RECORDED);
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = text;
@@ -2043,7 +2043,7 @@ static int newdemo_read_demo_start(int rnd_demo)
 		strcpy(current_mission, "DESTSAT");
 #endif
 	if (!load_mission_by_name(current_mission)) {
-		newmenu_item m[1];
+		newmenu_item m[1] = {0};
 
 		sprintf(text, TXT_NOMISSION4DEMO, current_mission);
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = text;
@@ -2098,7 +2098,7 @@ static int newdemo_read_demo_start(int rnd_demo)
 	return 0;
 }
 
-static void newdemo_pop_ctrlcen_triggers()
+static void newdemo_pop_ctrlcen_triggers(void)
 {
 	int anim_num, n, i;
 	int side, cside;
@@ -2122,7 +2122,7 @@ static void newdemo_pop_ctrlcen_triggers()
 #define N_PLAYER_SHIP_TEXTURES 6
 
 
-static int newdemo_read_frame_information()
+static int newdemo_read_frame_information(void)
 {
 	int done, segnum, side, objnum, soundno, angle, volume, i;
 	object *obj;
@@ -2331,7 +2331,7 @@ static int newdemo_read_frame_information()
 			break;
 
 		case ND_EVENT_HUD_MESSAGE: {
-			char hud_msg[60];
+			char hud_msg[60] = {0};
 
 			nd_read_string(&(hud_msg[0]));
 			if (nd_bad_read) { done = -1; break; }
@@ -2476,7 +2476,7 @@ static int newdemo_read_frame_information()
 		case ND_EVENT_EFFECT_BLOWUP: {
 			short segnum;
 			byte side;
-			vms_vector pnt;
+			vms_vector pnt = {0};
 
 			nd_read_short(&segnum);
 			nd_read_byte(&side);
@@ -2638,8 +2638,8 @@ static int newdemo_read_frame_information()
 
 		case ND_EVENT_MULTI_CONNECT: {
 			byte pnum, new_player;
-			int killed_total, kills_total;
-			char new_callsign[CALLSIGN_LEN+1], old_callsign[CALLSIGN_LEN+1];
+			int killed_total = 0, kills_total = 0;
+			char new_callsign[CALLSIGN_LEN+1] = {0}, old_callsign[CALLSIGN_LEN+1] = {0};
 
 			nd_read_byte(&pnum);
 			nd_read_byte(&new_player);
@@ -2808,7 +2808,7 @@ static int newdemo_read_frame_information()
 			}
 #ifdef DEST_SAT
 			if ( (loaded_level < Last_secret_level) || (loaded_level > Last_level - 1) ) {
-				newmenu_item m[1];
+				newmenu_item m[1] = {0};
 
 				m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_NO_DESTSAT_LVL;
 				newmenu_do( NULL, NULL, sizeof(m)/sizeof(*m), m, NULL );
@@ -2816,7 +2816,7 @@ static int newdemo_read_frame_information()
 			}
 #else
 			if ((loaded_level < Last_secret_level) || (loaded_level > Last_level)) {
-				newmenu_item m[3];
+				newmenu_item m[3] = {0};
 
 				m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_CANT_PLAYBACK;
 				m[ 1].type = NM_TYPE_TEXT; m[ 1].text = TXT_LEVEL_CANT_LOAD;
@@ -2864,7 +2864,7 @@ static int newdemo_read_frame_information()
 		}
 	}
 	if (nd_bad_read) {
-		newmenu_item m[2];
+		newmenu_item m[2] = {0};
 
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_DEMO_ERR_READING;
 		m[ 1].type = NM_TYPE_TEXT; m[ 1].text = TXT_DEMO_OLD_CORRUPT;
@@ -2891,7 +2891,7 @@ void newdemo_goto_beginning(void)
 }
 
 #ifdef SHAREWARE
-void newdemo_goto_end()
+void newdemo_goto_end(void)
 {
 	short frame_length;
 	byte level;
@@ -2900,7 +2900,7 @@ void newdemo_goto_end()
 	fseek(infile, -2, SEEK_END);
 	nd_read_byte(&level);
 	if ((level < LAST_SECRET_LEVEL) || (level > LAST_LEVEL)) {
-		newmenu_item m[3];
+		newmenu_item m[3] = {0};
 
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_CANT_PLAYBACK;
 		m[ 1].type = NM_TYPE_TEXT; m[ 1].text = TXT_LEVEL_CANT_LOAD;
@@ -2944,7 +2944,7 @@ void newdemo_goto_end(void)
 	nd_read_byte(&level);
 
 	if ((level < Last_secret_level) || (level > Last_level)) {
-		newmenu_item m[3];
+		newmenu_item m[3] = {0};
 
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_CANT_PLAYBACK;
 		m[ 1].type = NM_TYPE_TEXT; m[ 1].text = TXT_LEVEL_CANT_LOAD;
@@ -3386,7 +3386,7 @@ void newdemo_playback_one_frame(void)
 
 void newdemo_start_recording(void)
 {
-	struct diskfree_t dfree;
+	struct diskfree_t dfree = {0};
 	unsigned drive;
 
 	_dos_getdrive(&drive);
@@ -3411,12 +3411,12 @@ void newdemo_start_recording(void)
 char demoname_allowed_chars[] = "azAZ09__--";
 void newdemo_stop_recording(void)
 {
-	newmenu_item m[6];
-	int l, exit;
+	newmenu_item m[6] = {0};
+	int l, exit = 0;
 	static char filename[9] = "", *s;
 	static ubyte tmpcnt = 0;
 	ubyte cloaked = 0;
-	char fullname[15];
+	char fullname[15] = {0};
 #ifndef SHAREWARE
 	unsigned short byte_count = 0;
 #endif
@@ -3489,7 +3489,7 @@ void newdemo_stop_recording(void)
 
 	if (filename[0] != '\0') {
  		int num, i = (int)strlen(filename) - 1;
- 		char newfile[15];
+ 		char newfile[15] = {0};
 
  		while (isdigit(filename[i])) {
  			i--;
@@ -3524,7 +3524,7 @@ try_again:
 	Newmenu_allowed_chars = NULL;
 
 	if (exit == -2) {					// got bumped out from network menu
-		char save_file[15];
+		char save_file[15] = {0};
 
 		if (filename[0] != '\0') {
 			strcpy(save_file, filename);
@@ -3561,7 +3561,7 @@ try_again:
 
 void newdemo_start_playback(char * filename)
 {
-	struct find_t find;
+	struct find_t find = {0};
 	int rnd_demo = 0;
 
 	if (filename==NULL) {
@@ -3575,7 +3575,7 @@ void newdemo_start_playback(char * filename)
 		}
 #ifdef USE_CD
 		if ( strlen(destsat_cdpath) )	{
-			char temp_spec[128];
+			char temp_spec[128] = {0};
 			strcpy( temp_spec, destsat_cdpath );
 			strcat( temp_spec, "*.DEM" );
 			if( !_dos_findfirst( temp_spec, _A_NORMAL, &find ) )	{
@@ -3602,7 +3602,7 @@ void newdemo_start_playback(char * filename)
 		}
 #ifdef USE_CD
 		if ( strlen(destsat_cdpath) )	{
-			char temp_spec[128];
+			char temp_spec[128] = {0};
 			strcpy( temp_spec, destsat_cdpath );
 			strcat( temp_spec, "*.DEM" );
 			if( !_dos_findfirst( temp_spec, _A_NORMAL, &find ) )	{
@@ -3627,7 +3627,7 @@ void newdemo_start_playback(char * filename)
 	if (infile==NULL)	{
 		// Read demo from CD??
 		if ( strlen(destsat_cdpath) )	{
-			char temp_spec[128];
+			char temp_spec[128] = {0};
 			strcpy( temp_spec, destsat_cdpath );
 			strcat( temp_spec, filename );
 			infile = fopen( temp_spec, "rb" );
@@ -3694,7 +3694,7 @@ void newdemo_strip_frames(char *outname, int bytes_to_strip)
 
 	outfile = fopen(outname, "wb");
 	if (outfile == NULL) {
-		newmenu_item m[1];
+		newmenu_item m[1] = {0};
 
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = "Can't open output file";
 		newmenu_do( NULL, NULL, 1, m, NULL );
@@ -3703,7 +3703,7 @@ void newdemo_strip_frames(char *outname, int bytes_to_strip)
 	}
 	buf = malloc(BUF_SIZE);
 	if (buf == NULL) {
-		newmenu_item m[1];
+		newmenu_item m[1] = {0};
 
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = "Can't malloc output buffer";
 		newmenu_do( NULL, NULL, 1, m, NULL );

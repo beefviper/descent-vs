@@ -167,8 +167,8 @@ void calc_gun_point(vms_vector *gun_point,object *obj,int gun_num)
 {
 	polymodel *pm;
 	robot_info *r;
-	vms_vector pnt;
-	vms_matrix m;
+	vms_vector pnt = {0};
+	vms_matrix m = {0};
 	int mn;				//submodel number
 
 	Assert(obj->render_type==RT_POLYOBJ || obj->render_type==RT_MORPH);
@@ -191,7 +191,7 @@ void calc_gun_point(vms_vector *gun_point,object *obj,int gun_num)
 
 	//instance up the tree for this gun
 	while (mn != 0) {
-		vms_vector tpnt;
+		vms_vector tpnt = {0};
 
 		vm_angles_2_matrix(&m,&obj->rtype.pobj_info.anim_angles[mn]);
 		vm_transpose_matrix(&m);
@@ -271,7 +271,7 @@ static void set_robot_state(object *obj,int state)
 void robot_set_angles(robot_info *r,polymodel *pm,vms_angvec angs[N_ANIM_STATES][MAX_SUBMODELS])
 {
 	int m,g,state;
-	int gun_nums[MAX_SUBMODELS];			//which gun each submodel is part of
+	int gun_nums[MAX_SUBMODELS] = {0};			//which gun each submodel is part of
 
 	for (m=0;m<pm->n_models;m++)
 		gun_nums[m] = r->n_guns;		//assume part of body...

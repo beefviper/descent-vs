@@ -414,7 +414,7 @@ static void rle_cache_close(void)
 	}
 }
 
-static void rle_cache_init()
+static void rle_cache_init(void)
 {
 	int i;
 	for (i=0; i<MAX_CACHE_BITMAPS; i++ )	{
@@ -427,7 +427,7 @@ static void rle_cache_init()
 	atexit( rle_cache_close );
 }
 
-void rle_cache_flush()
+void rle_cache_flush(void)
 {
 	int i;
 	for (i=0; i<MAX_CACHE_BITMAPS; i++ )	{
@@ -505,7 +505,9 @@ void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 #endif
 		sbits += (int)bmp->bm_data[4+i];
 		dbits += 64;
+#ifndef NDEBUG
 		Assert( dbits == dbits1 );		// Get John, bogus rle data!
+#endif
 	}
 }
 

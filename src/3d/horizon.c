@@ -94,7 +94,7 @@ void g3_draw_horizon(int s_color,int g_color)
 {
 	fix x2,y2,t;
 	ubyte flags_and,flags_or;
-	horz_point ends[4],*e;
+	horz_point ends[4] = {0},*e;
 	int64_t q;
 
 	sky_color = s_color;

@@ -77,7 +77,7 @@ int pcx_encode_byte(ubyte byt, ubyte cnt, FILE* fid);
 
 int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * palette )
 {
-	PCXHeader header;
+	PCXHeader header = {0};
 	CFILE * PCXfile;
 	int i, row, col, count, xsize, ysize;
 	ubyte data, *pixdata;
@@ -189,7 +189,7 @@ int pcx_write_bitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 	int retval;
 	int i;
 	ubyte data;
-	PCXHeader header;
+	PCXHeader header = {0};
 	FILE * PCXfile;
 
 	memset( &header, 0, sizeof( PCXHeader ) );

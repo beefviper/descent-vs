@@ -302,8 +302,8 @@ grs_canvas *name_canv;
 
 static void draw_player( object * obj )
 {
-	vms_vector arrow_pos, head_pos;
-	g3s_point sphere_point, arrow_point, head_point;
+	vms_vector arrow_pos = {0}, head_pos = {0};
+	g3s_point sphere_point = {0}, arrow_point = {0}, head_point = {0};
 
 	// Draw Console player -- shaped like a ellipse with an arrow.
 	g3_rotate_point(&sphere_point,&obj->pos);
@@ -333,13 +333,13 @@ static void draw_player( object * obj )
 }
 
 
-static void draw_automap()
+static void draw_automap(void)
 {
 	int i;
 	int color;
 	object * objp;
-	vms_vector viewer_position;
-	g3s_point sphere_point;
+	vms_vector viewer_position = {0};
+	g3s_point sphere_point = {0};
 
 	current_page ^= 1;
 	gr_set_current_canvas(&DrawingPages[current_page]);
@@ -462,9 +462,9 @@ static void modex_printf(int x,int y,char *s,int fontnum)
 	gr_free_canvas(temp_canv);
 }
 
-static void create_name_canv()
+static void create_name_canv(void)
 {
-	char	name_level[128];
+	char	name_level[128] = {0};
 
 	if (Current_level_num > 0)
 		sprintf(name_level, "%s %i: ",TXT_LEVEL, Current_level_num);
@@ -495,8 +495,8 @@ extern int set_segment_depths(int start_seg, ubyte *segbuf);
 
 void do_automap( int key_code )	{
 	int done=0;
-	vms_matrix	tempm;
-	vms_angvec	tangles;
+	vms_matrix	tempm = {0};
+	vms_angvec	tangles = {0};
 	int leave_mode=0;
 	int first_time=1;
 	int pcx_error;
@@ -506,8 +506,8 @@ void do_automap( int key_code )	{
 	fix entry_time;
 	int pause_game=1;		// Set to 1 if everything is paused during automap...No pause during net.
 	fix t1, t2;
-	control_info saved_control_info;
-	grs_bitmap Automap_background;
+	control_info saved_control_info = {0};
+	grs_bitmap Automap_background = {0};
 	int Max_segments_away = 0;
 	int SegmentLimit = 1;
 
@@ -683,8 +683,8 @@ void do_automap( int key_code )	{
 		tangles.b += (fixang)(fixdiv( Controls.bank_time, ROT_SPEED_DIVISOR*2 ));
 
 		if ( Controls.vertical_thrust_time || Controls.sideways_thrust_time )	{
-			vms_angvec	tangles1;
-			vms_vector	old_vt;
+			vms_angvec	tangles1 = {0};
+			vms_vector	old_vt = {0};
 			old_vt = view_target;
 			tangles1 = tangles;
 			vm_angles_2_matrix(&tempm,&tangles1);
@@ -749,7 +749,7 @@ void adjust_segment_limit(int SegmentLimit)
 
 void draw_all_edges(void)
 {
-	g3s_codes cc;
+	g3s_codes cc = {0};
 	int i,j,nbright;
 	ubyte nfacing,nnfacing;
 	Edge_info *e;
@@ -785,7 +785,7 @@ void draw_all_edges(void)
 			j = 0;
 			while( j<e->num_faces && (nfacing==0 || nnfacing==0) )	{
 				#ifdef COMPACT_SEGS
-				vms_vector temp_v;
+				vms_vector temp_v = {0};
 				get_side_normal(&Segments[e->segnum[j]], e->sides[j], 0, &temp_v );
 				if (!g3_check_normal_facing( tv1, &temp_v ) )
 				#else
@@ -995,7 +995,7 @@ static void add_segment_edges(segment *seg)
 	int	hidden_flag;
 
 	for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++) {
-		short	vertex_list[4];
+		short	vertex_list[4] = {0};
 
 		hidden_flag = 0;
 
@@ -1102,7 +1102,7 @@ static void add_unknown_segment_edges(segment *seg)
 	int segnum = (int)(seg-Segments);
 
 	for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++) {
-		short	vertex_list[4];
+		short	vertex_list[4] = {0};
 
 		// Only add edges that have no children
 		if (seg->children[sn] == -1) {
@@ -1174,7 +1174,7 @@ void automap_build_edge_list(void)
 			for (e2=1; e2<e->num_faces; e2++ )	{
 				if ( (e1 != e2) && (e->segnum[e1] != e->segnum[e2]) )	{
 					#ifdef COMPACT_SEGS
-					vms_vector v1, v2;
+					vms_vector v1 = {0}, v2 = {0};
 					get_side_normal(&Segments[e->segnum[e1]], e->sides[e1], 0, &v1 );
 					get_side_normal(&Segments[e->segnum[e2]], e->sides[e2], 0, &v2 );
 					if ( vm_vec_dot(&v1,&v2) > (F1_0-(F1_0/10))  )	{

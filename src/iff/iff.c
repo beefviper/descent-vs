@@ -251,7 +251,7 @@ int put_byte(unsigned char c, FILE* f);
 
 static long get_sig(FFILE *f)
 {
-	char s[4];
+	char s[4] = {0};
 
 //	if ((s[3]=cfgetc(f))==EOF) return(EOF);
 //	if ((s[2]=cfgetc(f))==EOF) return(EOF);
@@ -571,7 +571,7 @@ static int parse_delta(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 		}
 
 		if (cnt == -1) {
-			if ((!bmheader->w)&1)
+			if (bmheader->w == 0)	// was (!w)&1, which is the same test
 				return IFF_CORRUPT;
 		}
 		else if (cnt)
@@ -834,7 +834,7 @@ static int open_fake_file(char *ifilename,FFILE *ffile)
 	//MALLOC(ffile->data,ubyte,ffile->length);//Hack by KRB
 	ffile->data = (ubyte *)malloc(ffile->length*sizeof(ubyte));
 
-	if (cfread(ffile->data, 1, ffile->length, ifile) < ffile->length)
+	if (cfread(ffile->data, 1, ffile->length, ifile) < (size_t)ffile->length)
 		ret = IFF_READ_ERROR;
 	else
 		ret = IFF_NO_ERROR;
@@ -873,7 +873,7 @@ static void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 static int iff_parse_bitmap(FFILE *ifile,grs_bitmap *bm,int bitmap_type,ubyte *palette,grs_bitmap *prev_bm)
 {
 	int ret;			//return code
-	iff_bitmap_header bmheader;
+	iff_bitmap_header bmheader = {0};
 	long sig,form_len;
 	long form_type;
 
@@ -938,7 +938,7 @@ done:
 int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,ubyte *palette)
 {
 	int ret;			//return code
-	FFILE ifile;
+	FFILE ifile = {0};
 
 	ret = open_fake_file(ifilename,&ifile);		//read in entire file
 	if (ret != IFF_NO_ERROR) goto done;
@@ -963,7 +963,7 @@ done:
 int iff_read_into_bitmap(char *ifilename,grs_bitmap *bm,ubyte *palette)
 {
 	int ret;			//return code
-	FFILE ifile;
+	FFILE ifile = {0};
 
 	ret = open_fake_file(ifilename,&ifile);		//read in entire file
 	if (ret != IFF_NO_ERROR) goto done;
@@ -1153,7 +1153,7 @@ int write_tiny(CFILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 	int len,total_len=0,newlen;
 	int x,y,xofs,odd;
 	ubyte *p = bitmap_header->raw_data;
-	ubyte tspan[80],new_span[80*2];
+	ubyte tspan[80] = {0},new_span[80*2] = {0};
 	long save_pos;
 
 	skip = max((bitmap_header->w+79)/80,(bitmap_header->h+63)/64);
@@ -1241,7 +1241,7 @@ static int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compressio
 int iff_write_bitmap(char *ofilename,grs_bitmap *bm,ubyte *palette)
 {
 	FILE *ofile;
-	iff_bitmap_header bmheader;
+	iff_bitmap_header bmheader = {0};
 	int ret;
 	int compression_on;
 
@@ -1293,8 +1293,8 @@ done:
 int iff_read_animbrush(char *ifilename,grs_bitmap **bm_list,int max_bitmaps,int *n_bitmaps,ubyte *palette)
 {
 	int ret;			//return code
-	FFILE ifile;
-	iff_bitmap_header bmheader;
+	FFILE ifile = {0};
+	iff_bitmap_header bmheader = {0};
 	long sig,form_len;
 	long form_type;
 

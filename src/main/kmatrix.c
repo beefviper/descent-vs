@@ -224,11 +224,11 @@ static void kmatrix_draw_deaths(int *sorted)
 	}
 }
 
-static void kmatrix_redraw()
+static void kmatrix_redraw(void)
 {
 	int i, pcx_error, color;
 
-	int sorted[MAX_NUM_NET_PLAYERS];
+	int sorted[MAX_NUM_NET_PLAYERS] = {0};
 
 	multi_sort_kill_list();
 

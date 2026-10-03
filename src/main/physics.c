@@ -299,7 +299,7 @@ int floor_levelling=0;
 //make sure matrix is orthogonal
 void check_and_fix_matrix(vms_matrix *m)
 {
-	vms_matrix tempm;
+	vms_matrix tempm = {0};
 
 	vm_vector_2_matrix(&tempm,&m->fvec,&m->uvec,NULL);
 	*m  = tempm;
@@ -308,10 +308,10 @@ void check_and_fix_matrix(vms_matrix *m)
 
 static void do_physics_align_object( object * obj )
 {
-	vms_vector desired_upvec;
+	vms_vector desired_upvec = {0};
 	fixang delta_ang,roll_ang;
 	//vms_vector forvec = {0,0,f1_0};
-	vms_matrix temp_matrix;
+	vms_matrix temp_matrix = {0};
 	fix d,largest_d=-f1_0;
 	int i,best_side = 0;
 
@@ -322,7 +322,7 @@ static void do_physics_align_object( object * obj )
 
 	for (i=0;i<6;i++) {
 		#ifdef COMPACT_SEGS
-			vms_vector _tv1;
+			vms_vector _tv1 = {0};
 			get_side_normal( &Segments[obj->segnum], i, 0, &_tv1 );
 			d = vm_vec_dot(&_tv1,&obj->orient.uvec);
 		#else
@@ -345,7 +345,7 @@ static void do_physics_align_object( object * obj )
 	else  // new player leveling code: use normal of side closest to our up vec
 		if (get_num_faces(&Segments[obj->segnum].sides[best_side])==2) {
 			#ifdef COMPACT_SEGS
-				vms_vector normals[2];
+				vms_vector normals[2] = {0};
 				get_side_normals(&Segments[obj->segnum], best_side, &normals[0], &normals[1] );
 
 				desired_upvec.x = (normals[0].x + normals[1].x) / 2;
@@ -370,7 +370,7 @@ static void do_physics_align_object( object * obj )
 			#endif
 
 	if (labs(vm_vec_dot(&desired_upvec,&obj->orient.fvec)) < f1_0/2) {
-		vms_angvec tangles;
+		vms_angvec tangles = {0};
 
 		vm_vector_2_matrix(&temp_matrix,&obj->orient.fvec,&desired_upvec,NULL);
 
@@ -379,7 +379,7 @@ static void do_physics_align_object( object * obj )
 		delta_ang += obj->mtype.phys_info.turnroll;
 
 		if (abs(delta_ang) > DAMP_ANG) {
-			vms_matrix rotmat, new_pm;
+			vms_matrix rotmat = {0}, new_pm = {0};
 
 			roll_ang = (fixang)(fixmul(FrameTime,ROLL_RATE));
 
@@ -450,8 +450,8 @@ extern int disable_new_fvi_stuff;
 // add rotational velocity & acceleration
 static void do_physics_sim_rot(object *obj)
 {
-	vms_angvec	tangles;
-	vms_matrix	rotmat,new_orient;
+	vms_angvec	tangles = {0};
+	vms_matrix	rotmat = {0},new_orient = {0};
 	//fix			rotdrag_scale;
 	physics_info *pi;
 
@@ -464,7 +464,7 @@ static void do_physics_sim_rot(object *obj)
 
 	if (obj->mtype.phys_info.drag) {
 		int count;
-		vms_vector accel;
+		vms_vector accel = {0};
 		fix drag,r,k;
 
 		count = FrameTime / FT;
@@ -510,7 +510,7 @@ static void do_physics_sim_rot(object *obj)
 
 	//unrotate object for bank caused by turn
 	if (obj->mtype.phys_info.turnroll) {
-		vms_matrix new_pm;
+		vms_matrix new_pm = {0};
 
 		tangles.p = tangles.h = 0;
 		tangles.b = -obj->mtype.phys_info.turnroll;
@@ -532,7 +532,7 @@ static void do_physics_sim_rot(object *obj)
 
 	//re-rotate object for bank caused by turn
 	if (obj->mtype.phys_info.turnroll) {
-		vms_matrix new_pm;
+		vms_matrix new_pm = {0};
 
 		tangles.p = tangles.h = 0;
 		tangles.b = obj->mtype.phys_info.turnroll;
@@ -548,22 +548,22 @@ static void do_physics_sim_rot(object *obj)
 //Simulate a physics object for this frame
 void do_physics_sim(object *obj)
 {
-	int ignore_obj_list[MAX_IGNORE_OBJS],n_ignore_objs;
+	int ignore_obj_list[MAX_IGNORE_OBJS] = {0},n_ignore_objs;
 	int iseg;
 	int try_again;
 	int fate;
-	vms_vector frame_vec;			//movement in this frame
-	vms_vector new_pos,ipos;		//position after this frame
+	vms_vector frame_vec = {0};			//movement in this frame
+	vms_vector new_pos = {0},ipos = {0};		//position after this frame
 	int count=0;
 	int objnum;
 	int WallHitSeg, WallHitSide;
-	fvi_info hit_info;
-	fvi_query fq;
-	vms_vector save_pos;
+	fvi_info hit_info = {0};
+	fvi_query fq = {0};
+	vms_vector save_pos = {0};
 	int save_seg;
 	fix drag;
 	fix sim_time;
-	vms_vector start_pos;
+	vms_vector start_pos = {0};
 	int obj_stopped=0;
 	fix moved_time;			//how long objected moved before hit something
 	physics_info *pi;
@@ -636,7 +636,7 @@ if (Dont_move_ai_objects)
 	if ((drag = obj->mtype.phys_info.drag) != 0) {
 
 		int count;
-		vms_vector accel;
+		vms_vector accel = {0};
 		fix r,k;
 
 		count = sim_time / FT;
@@ -830,7 +830,7 @@ if (Dont_move_ai_objects)
 		//calulate new sim time
 		{
 			//vms_vector moved_vec;
-			vms_vector moved_vec_n;
+			vms_vector moved_vec_n = {0};
 			fix attempted_dist,actual_dist;
 
 			actual_dist = vm_vec_normalized_dir(&moved_vec_n,&obj->pos,&save_pos);
@@ -893,7 +893,7 @@ if (Dont_move_ai_objects)
 		switch( fate )		{
 
 			case HIT_WALL:		{
-				vms_vector moved_v;
+				vms_vector moved_v = {0};
 				//@@fix total_d,moved_d;
 				fix hit_speed,wall_part;
 
@@ -951,7 +951,7 @@ if (Dont_move_ai_objects)
 			}
 
 			case HIT_OBJECT:		{
-				vms_vector old_vel;
+				vms_vector old_vel = {0};
 
 				// Mark the hit object so that on a retry the fvi code
 				// ignores this object.
@@ -1017,14 +1017,14 @@ if (Dont_move_ai_objects)
 	}
 
 	if (! obj_stopped)	{	//Set velocity from actual movement
-		vms_vector moved_vec;
+		vms_vector moved_vec = {0};
 		vm_vec_sub(&moved_vec,&obj->pos,&start_pos);
 		vm_vec_copy_scale(&obj->mtype.phys_info.velocity,&moved_vec,fixdiv(f1_0,FrameTime));
 
 		#ifdef BUMP_HACK
 		if (obj==ConsoleObject && (obj->mtype.phys_info.velocity.x==0 && obj->mtype.phys_info.velocity.y==0 && obj->mtype.phys_info.velocity.z==0) &&
 			  !(obj->mtype.phys_info.thrust.x==0 && obj->mtype.phys_info.thrust.y==0 && obj->mtype.phys_info.thrust.z==0)) {
-			vms_vector center,bump_vec;
+			vms_vector center = {0},bump_vec = {0};
 
 			//bump player a little towards center of segment to unstick
 
@@ -1054,7 +1054,7 @@ if (Dont_move_ai_objects)
 				side *s;
 				int vertnum,num_faces,i;
 				fix dist;
-				int vertex_list[6];
+				int vertex_list[6] = {0};
 
 				//bump object back
 
@@ -1070,7 +1070,7 @@ if (Dont_move_ai_objects)
 
 				#ifdef COMPACT_SEGS
 					{
-					vms_vector _vn;
+					vms_vector _vn = {0};
 					get_side_normal(&Segments[orig_segnum], sidenum, 0, &_vn );
 					dist = vm_dist_to_plane(&start_pos, &_vn, &Vertices[vertnum]);
 					vm_vec_scale_add(&obj->pos,&start_pos,&_vn,obj->size-dist);
@@ -1188,7 +1188,7 @@ static void physics_set_rotvel_and_saturate(fix *dest, fix delta)
 //	phys_apply_rot used to call ai_turn_towards_vector until I fixed it, which broke phys_apply_rot.
 void physics_turn_towards_vector(vms_vector *goal_vector, object *obj, fix rate)
 {
-	vms_angvec	dest_angles, cur_angles;
+	vms_angvec	dest_angles = {0}, cur_angles = {0};
 	fix			delta_p, delta_h;
 	vms_vector	*rotvel_ptr = &obj->mtype.phys_info.rotvel;
 

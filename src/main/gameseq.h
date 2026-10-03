@@ -240,7 +240,7 @@ extern void show_high_scores( int place );
 extern void draw_high_scores( int place );
 extern int add_player_to_high_scores(player *pp);
 extern void input_name ( int place );
-extern int reset_high_scores();
+extern int reset_high_scores(void);
 extern void init_player_stats_level(void);
 
 void open_message_window(void);

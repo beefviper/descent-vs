@@ -395,7 +395,7 @@ static void check_vec(vms_vector *v)
 //not overflow or underflow
 vms_vector *vm_vec_perp(vms_vector *dest,vms_vector *p0,vms_vector *p1,vms_vector *p2)
 {
-	vms_vector t0,t1;
+	vms_vector t0 = {0},t1 = {0};
 
 	vm_vec_sub(&t1,p2,p1);
 	vm_vec_sub(&t0,p1,p0);
@@ -475,7 +475,7 @@ vms_matrix *vm_vec_ang_2_matrix(vms_matrix *m,vms_vector *v,fixang a)
 //left unchanged)
 static int forward_vec_2_matrix(vms_matrix *m,vms_vector *fvec,int normalize)
 {
-	vms_vector xvec,yvec,zvec;
+	vms_vector xvec = {0},yvec = {0},zvec = {0};
 
 	zvec = *fvec;
 	if (normalize)
@@ -515,7 +515,7 @@ static int forward_vec_2_matrix(vms_matrix *m,vms_vector *fvec,int normalize)
 //straigt up or down (I think)
 vms_matrix *vm_vector_2_matrix(vms_matrix *m,vms_vector *fvec,vms_vector *uvec,vms_vector *rvec)
 {
-	vms_vector xvec,yvec,zvec;
+	vms_vector xvec = {0},yvec = {0},zvec = {0};
 
 	//Assert(fvec != NULL);
 
@@ -581,7 +581,7 @@ bad_vector2:
 //DESCENT asm library)
 vms_matrix *vm_vector_2_matrix_norm(vms_matrix *m,vms_vector *fvec,vms_vector *uvec,vms_vector *rvec)
 {
-	vms_vector xvec,yvec,zvec;
+	vms_vector xvec = {0},yvec = {0},zvec = {0};
 
 	//Assert(fvec != NULL);
 
@@ -698,7 +698,7 @@ vms_matrix *vm_matrix_x_matrix(vms_matrix *dest,vms_matrix *src0,vms_matrix *src
 //v0 to v1 is returned.
 fixang vm_vec_delta_ang_norm(vms_vector *v0,vms_vector *v1,vms_vector *fvec)
 {
-	vms_vector t;
+	vms_vector t = {0};
 	fixang a;
 
 	a = fix_acos(vm_vec_dotprod(v0,v1));
@@ -728,7 +728,7 @@ fixang vm_vec_delta_ang(vms_vector *v0,vms_vector *v1,vms_vector *fvec)
 //distance is signed, so negative dist is on the back of the plane
 fix vm_dist_to_plane(vms_vector *checkp,vms_vector *norm,vms_vector *planep)
 {
-	vms_vector t;
+	vms_vector t = {0};
 
 	vm_vec_sub(&t,checkp,planep);
 
@@ -795,7 +795,7 @@ vms_angvec *vm_extract_angles_vector_normalized(vms_angvec *a,vms_vector *v)
 //if the vector has zero length, the angles are left unchanged
 vms_angvec *vm_extract_angles_vector(vms_angvec *a,vms_vector *v)
 {
-	vms_vector t;
+	vms_vector t = {0};
 
 	if (vm_vec_copy_normalize(&t,v) != 0)
 		vm_extract_angles_vector_normalized(a,&t);

@@ -180,7 +180,7 @@ static int pof_read_int(ubyte *bufp)
 
 static size_t pof_cfread(void *dst, size_t elsize, size_t nelem, ubyte *bufp)
 {
-	if (Pof_addr + nelem*elsize > Pof_file_end)
+	if (Pof_addr + nelem*elsize > (size_t)Pof_file_end)
 		return 0;
 
 	memcpy(dst, &bufp[Pof_addr], elsize*nelem);
@@ -256,7 +256,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 	CFILE *ifile;
 	short version;
 	int id,len, next_chunk;
-	ubyte	model_buf[MODEL_BUF_SIZE];
+	ubyte	model_buf[MODEL_BUF_SIZE] = {0};
 
 	if ((ifile=cfopen(filename,"rb"))==NULL)
 		Error("Can't open file <%s>",filename);
@@ -289,7 +289,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 		switch (id) {
 
 			case ID_OHDR: {		//Object header
-				vms_vector pmmin,pmmax;
+				vms_vector pmmin = {0},pmmax = {0};
 
 				//mprintf(0,"Got chunk OHDR, len=%d\n",len);
 
@@ -302,7 +302,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 				pof_read_vecs(&pmmax,1,model_buf);
 
 				if ( FindArg( "-bspgen" ))	{
-					vms_vector v;
+					vms_vector v = {0};
 					fix l;
 
 					vm_vec_sub(&v, &pmmax, &pmmin );
@@ -346,7 +346,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 
 				if (r) {
 					int i;
-					vms_vector gun_dir;
+					vms_vector gun_dir = {0};
 
 					r->n_guns = pof_read_int(model_buf);
 
@@ -398,7 +398,7 @@ static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 
 			case ID_TXTR: {		//Texture filename list
 				int n;
-				char name_buf[128];
+				char name_buf[128] = {0};
 
 				//mprintf(0,"Got chunk TXTR, len=%d\n",len);
 
@@ -453,7 +453,7 @@ int read_model_guns(char *filename,vms_vector *gun_points, vms_vector *gun_dirs,
 	short version;
 	int id,len;
 	int n_guns=0;
-	ubyte	model_buf[MODEL_BUF_SIZE];
+	ubyte	model_buf[MODEL_BUF_SIZE] = {0};
 
 	if ((ifile=cfopen(filename,"rb"))==NULL)
 		Error("Can't open file <%s>",filename);
@@ -591,7 +591,7 @@ void draw_polygon_model(vms_vector *pos,vms_matrix *orient,vms_angvec *anim_angl
 
 		for (i=0;flags;flags>>=1,i++)
 			if (flags & 1) {
-				vms_vector ofs;
+				vms_vector ofs = {0};
 
 				Assert(i < po->n_models);
 

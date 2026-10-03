@@ -73,8 +73,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //	On output, a is replaced by its matrix inverse and b is replaced by the corresponding set of solution vectors.
 static void gaussj(fix **a, int n, fix **b, int m)
 {
-	int	indxc[4], indxr[4], ipiv[4];
-	int	i, icol, irow, j, k, l, ll;
+	int	indxc[4] = {0}, indxr[4] = {0}, ipiv[4] = {0};
+	int	i, icol = 0, irow = 0, j, k, l, ll;
 	fix	big, dum, pivinv, temp;
 
 	if (n > 4) {
@@ -124,6 +124,7 @@ static void gaussj(fix **a, int n, fix **b, int m)
 		if (a[icol][icol] == 0) {
 			mprintf((0,"Error: Singular matrix-2\n"));
 			Int3();
+			return;		// can't invert; dividing by the zero pivot would crash
 		}
 		pivinv = fixdiv(F1_0, a[icol][icol]);
 		a[icol][icol] = F1_0;
@@ -162,7 +163,7 @@ static int side_is_planar_p(segment *sp, int side)
 {
 	byte			*vp;
 	vms_vector	*v0,*v1,*v2,*v3;
-	vms_vector	va,vb;
+	vms_vector	va = {0},vb = {0};
 
 	vp = Side_to_verts[side];
 	v0 = &Vertices[sp->verts[vp[0]]];
@@ -198,8 +199,8 @@ static int make_curside_planar(void)
 {
 	int			v;
 	byte			*vp;
-	vms_vector	planar_verts[4];			// store coordinates of up to 4 vertices which will make Curside planar, corresponding to each of 4 vertices on side
-	int			present_verts[4];			//	set to 1 if vertex is present
+	vms_vector	planar_verts[4] = {0};			// store coordinates of up to 4 vertices which will make Curside planar, corresponding to each of 4 vertices on side
+	int			present_verts[4] = {0};			//	set to 1 if vertex is present
 
 	if (side_is_planar_p(Cursegp, Curside))
 		return 0;

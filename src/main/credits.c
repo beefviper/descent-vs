@@ -195,9 +195,9 @@ void credits_show(void)
 {
 	int i, j, l, done;
 	CFILE * file;
-	char buffer[NUM_LINES][80];
-	grs_bitmap backdrop;
-	ubyte backdrop_palette[768];
+	char buffer[NUM_LINES][80] = {0};
+	grs_bitmap backdrop = {0};
+	ubyte backdrop_palette[768] = {0};
 	int pcx_error;
 	int buffer_line = 0;
 	fix last_time;
@@ -253,7 +253,7 @@ void credits_show(void)
 			if (cfgets( buffer[buffer_line], 80, file ))	{
 				char *p;
 				if (have_bin_file) {				// is this a binary tbl file
-					for (i = 0; i < strlen(buffer[buffer_line]) - 1; i++) {
+					for (i = 0; i < (int)strlen(buffer[buffer_line]) - 1; i++) {
 						encode_rotate_left(&(buffer[buffer_line][i]));
 						buffer[buffer_line][i] ^= BITMAP_TBL_XOR;
 						encode_rotate_left(&(buffer[buffer_line][i]));
@@ -281,6 +281,8 @@ void credits_show(void)
 
 				l = (buffer_line + j + 1 ) %  NUM_LINES;
 				s = buffer[l];
+				if (s == NULL)
+					continue;
 
 				if ( s[0] == '!' ) {
 					s++;

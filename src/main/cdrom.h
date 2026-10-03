@@ -34,6 +34,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 // Returns -1 if no cdrom drive, -2 if no memory
 // 0 if no descent cd, else 1-26 where descent cd found.
-int find_descent_cd();
+int find_descent_cd(void);
 
 #endif

@@ -150,7 +150,7 @@ static void matt_fast_nolight(ubyte *dest, int loop_count, int32_t u, int32_t v,
 	int		num_left_over, i, j;
 	int32_t	U0, V0, U1, V1, DU1, DV1, DZ1;
 	uint32_t	uv, duv;
-	ubyte		pix[4];
+	ubyte		pix[4] = {0};
 
 	// Getting dword aligned
 	while ((uintptr_t) dest & 3) {

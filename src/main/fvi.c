@@ -253,7 +253,7 @@ static int oflow_check(fix a,fix b)
 //p0 & p1 are the ends of the line
 static int find_plane_line_intersection(vms_vector *new_pnt,vms_vector *plane_pnt,vms_vector *plane_norm,vms_vector *p0,vms_vector *p1,fix rad)
 {
-	vms_vector d,w;
+	vms_vector d = {0},w = {0};
 	fix num,den;
 
 	vm_vec_sub(&d,p1,p0);
@@ -328,8 +328,8 @@ int ij_table[3][2] =        {
 static uint check_point_to_face(vms_vector *checkp,segment *sp, side *s,int facenum,int nv,int *vertex_list)
 {
 	vms_vector_array *checkp_array;
-	vms_vector_array norm;
-	vms_vector t;
+	vms_vector_array norm = {0};
+	vms_vector t = {0};
 	int biggest;
 ///
 	int i,j,edge;
@@ -367,7 +367,7 @@ static uint check_point_to_face(vms_vector *checkp,segment *sp, side *s,int face
 	check_j = checkp_array->xyz[j];
 
 	for (edge=edgemask=0;edge<nv;edge++) {
-		vec2d edgevec,checkvec;
+		vec2d edgevec = {0},checkvec = {0};
 		fix d;
 
 		v0 = (vms_vector_array *)&Vertices[vertex_list[facenum*3+edge]];
@@ -405,8 +405,8 @@ static int check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum
 	if (edgemask == 0)
 		return IT_FACE;
 	else {
-		vms_vector edgevec,checkvec;            //this time, real 3d vectors
-		vms_vector closest_point;
+		vms_vector edgevec = {0},checkvec = {0};            //this time, real 3d vectors
+		vms_vector closest_point = {0};
 		fix edgelen,d,dist;
 		vms_vector *v0,*v1;
 		int itype;
@@ -464,13 +464,13 @@ static int check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum
 //note: the seg parm is temporary, until the face itself has a point field
 static int check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,segment *seg,int side,int facenum,int nv,fix rad)
 {
-	vms_vector checkp;
+	vms_vector checkp = {0};
 	int pli;
 	struct side *s=&seg->sides[side];
-	int vertex_list[6];
+	int vertex_list[6] = {0};
 	int num_faces;
 	int vertnum;
-	vms_vector norm;
+	vms_vector norm = {0};
 
 	#ifdef COMPACT_SEGS
 		get_side_normal(seg, side, facenum, &norm );
@@ -522,12 +522,14 @@ static fix calc_det_value(vms_matrix *det)
 //fill in two parameters, t0 & t1.  returns 0 if lines are parallel, else 1
 static int check_line_to_line(fix *t1,fix *t2,vms_vector *p1,vms_vector *v1,vms_vector *p2,vms_vector *v2)
 {
-	vms_matrix det;
+	vms_matrix det = {0};
 	fix d,cross_mag2;		//mag squared cross product
 
 	vm_vec_sub(&det.rvec,p2,p1);
 	vm_vec_cross(&det.fvec,v1,v2);
 	cross_mag2 = vm_vec_dot(&det.fvec,&det.fvec);
+
+	*t1 = *t2 = 0;
 
 	if (cross_mag2 == 0)
 		return 0;			//lines are parallel
@@ -560,15 +562,15 @@ int disable_new_fvi_stuff=0;
 //of faces
 static int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,segment *seg,int side,int facenum,int nv,fix rad)
 {
-	vms_vector move_vec;
+	vms_vector move_vec = {0};
 	fix edge_t,move_t,edge_t2,move_t2,closest_dist;
 	fix edge_len,move_len;
-	int vertex_list[6];
+	int vertex_list[6] = {0};
 	int num_faces,edgenum;
 	uint edgemask;
-	vms_vector *edge_v0,*edge_v1,edge_vec;
+	vms_vector *edge_v0,*edge_v1,edge_vec = {0};
 	struct side *s=&seg->sides[side];
-	vms_vector closest_point_edge,closest_point_move;
+	vms_vector closest_point_edge = {0},closest_point_move = {0};
 
 	if (disable_new_fvi_stuff)
 		return check_line_to_face(newp,p0,p1,seg,side,facenum,nv,rad);
@@ -656,7 +658,7 @@ static int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector
 //else returns 0
 static int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_vector *sphere_pos,fix sphere_rad)
 {
-	vms_vector d,dn,w,closest_point;
+	vms_vector d = {0},dn = {0},w = {0},closest_point = {0};
 	fix mag_d,dist,w_dist,int_dist;
 
 	//this routine could be optimized if it's taking too much time!
@@ -876,7 +878,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 int find_vector_intersection(fvi_query *fq,fvi_info *hit_data)
 {
 	int hit_type,hit_seg,hit_seg2;
-	vms_vector hit_pnt;
+	vms_vector hit_pnt = {0};
 	int i;
 
 	Assert(fq->ignore_obj_list != (int *)-1);
@@ -924,7 +926,7 @@ int find_vector_intersection(fvi_query *fq,fvi_info *hit_data)
 
 	if (hit_seg == -1) {
 		int new_hit_seg2=-1;
-		vms_vector new_hit_pnt;
+		vms_vector new_hit_pnt = {0};
 
 		//because of code that deal with object with non-zero radius has
 		//problems, try using zero radius and see if we hit a wall
@@ -1020,14 +1022,14 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 	//@@int sidemask;				//mask of sides - can be on back of face but not side
 	int centermask;			//where the center point is
 	int objnum;
-	segmasks masks;
-	vms_vector hit_point,closest_hit_point; 	//where we hit
+	segmasks masks = {0};
+	vms_vector hit_point = {0},closest_hit_point = {0}; 	//where we hit
 	fix d,closest_d=0x7fffffff;					//distance to hit point
 	int hit_type=HIT_NONE;							//what sort of hit
 	int hit_seg=-1;
 	int hit_none_seg=-1;
 	int hit_none_n_segs=0;
-	int hit_none_seglist[MAX_FVI_SEGS];
+	int hit_none_seglist[MAX_FVI_SEGS] = {0};
 	int cur_nest_level = fvi_nest_count;
 
 	//fvi_hit_object = -1;
@@ -1158,7 +1160,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 								((flags & FQ_TRANSWALL) || (flags & FQ_TRANSPOINT && check_trans_wall(&hit_point,seg,side,face))))) {
 
 							int newsegnum;
-							vms_vector sub_hit_point;
+							vms_vector sub_hit_point = {0};
 							int sub_hit_type,sub_hit_seg;
 							vms_vector save_wall_norm = wall_norm;
 							int save_hit_objnum=fvi_hit_object;
@@ -1171,7 +1173,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 							for (i=0;i<n_segs_visited && newsegnum!=segs_visited[i];i++);
 
 							if (i==n_segs_visited) {                //haven't visited here yet
-								int temp_seglist[MAX_FVI_SEGS],temp_n_segs;
+								int temp_seglist[MAX_FVI_SEGS] = {0},temp_n_segs;
 
 								segs_visited[n_segs_visited++] = newsegnum;
 
@@ -1341,14 +1343,14 @@ quit_looking:
 void find_hitpoint_uv(fix *u,fix *v,vms_vector *pnt,segment *seg,int sidenum,int facenum)
 {
 	vms_vector_array *pnt_array;
-	vms_vector_array normal_array;
+	vms_vector_array normal_array = {0};
 	int segnum = (int)(seg-Segments);
 	int num_faces;
 	int biggest,ii,jj;
 	side *side = &seg->sides[sidenum];
-	int vertex_list[6],vertnum_list[6];
- 	vec2d p1,vec0,vec1,checkp;	//@@,checkv;
-	uvl uvls[3];
+	int vertex_list[6] = {0},vertnum_list[6] = {0};
+ 	vec2d p1 = {0},vec0 = {0},vec1 = {0},checkp = {0};	//@@,checkv;
+	uvl uvls[3] = {0};
 	fix k0,k1;
 	int i;
 
@@ -1483,7 +1485,7 @@ static int sphere_intersects_wall(vms_vector *pnt,int segnum,fix rad)
 
 				if (facemask & bit) {            //on the back of this face
 					int face_hit_type;      //in what way did we hit the face?
-					int num_faces,vertex_list[6];
+					int num_faces,vertex_list[6] = {0};
 
 					//did we go through this wall/door?
 

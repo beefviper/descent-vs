@@ -77,7 +77,7 @@ void create_curve(vms_vector *p1, vms_vector *p4, vms_vector *r1, vms_vector *r4
 
 vms_vector evaluate_curve(vms_equation *coeffs, int degree, fix t) {
     fix t2, t3;
-    vms_vector coord;
+    vms_vector coord = {0};
 
     if (degree!=3) printf("ERROR: for Hermite Curves degree must be 3\n");
 
@@ -92,7 +92,7 @@ vms_vector evaluate_curve(vms_equation *coeffs, int degree, fix t) {
 
 
 fix curve_dist(vms_equation *coeffs, int degree, fix t0, vms_vector *p0, fix dist) {
-	 vms_vector coord;
+	 vms_vector coord = {0};
     fix t, diff;
 
     if (degree!=3) printf("ERROR: for Hermite Curves degree must be 3\n");
@@ -122,7 +122,7 @@ void curve_dir(vms_equation *coeffs, int degree, fix t0, vms_vector *dir) {
 }
 
 void plot_parametric(vms_equation *coeffs, fix min_t, fix max_t, fix del_t) {
-    vms_vector coord, dcoord;
+    vms_vector coord = {0}, dcoord = {0};
     fix t, dt;
 
     gr_setcolor(15);
@@ -150,7 +150,7 @@ void plot_parametric(vms_equation *coeffs, fix min_t, fix max_t, fix del_t) {
 
 
 static vms_vector *vm_vec_interp(vms_vector *result, vms_vector *v0, vms_vector *v1, fix scale) {
-    vms_vector tvec;
+    vms_vector tvec = {0};
 
 	vm_vec_sub(&tvec, v1, v0);
     vm_vec_scale_add(result, v0, &tvec, scale);
@@ -162,9 +162,9 @@ vms_vector p1, p4, r1, r4;
 vms_vector r4t, r1save;
 
 int generate_curve( fix r1scale, fix r4scale ) {
-    vms_vector vec_dir, tvec;
-    vms_vector coord,prev_point;
-    vms_equation coeffs;
+    vms_vector vec_dir = {0}, tvec = {0};
+    vms_vector coord = {0},prev_point = {0};
+    vms_equation coeffs = {0};
     fix enddist, nextdist;
     int firstsegflag;
     fix t, maxscale;
@@ -246,8 +246,8 @@ int generate_curve( fix r1scale, fix r4scale ) {
     firstsegflag = 1;
     enddist = F1_0; nextdist = 0;
     while ( enddist > fixmul( nextdist, 1.5*F1_0 )) {
-            vms_matrix  rotmat,rotmat2;
-			vms_vector	tdest;
+            vms_matrix  rotmat = {0},rotmat2 = {0};
+			vms_vector	tdest = {0};
 
             if (firstsegflag==1)
                 firstsegflag=0;
@@ -315,8 +315,8 @@ int generate_curve( fix r1scale, fix r4scale ) {
 }
 
 static void generate_banked_curve(fix maxscale, vms_equation coeffs) {
-    vms_vector vec_dir, tvec, b4r4t;
-    vms_vector coord,prev_point;
+    vms_vector vec_dir = {0}, tvec = {0}, b4r4t = {0};
+    vms_vector coord = {0},prev_point = {0};
     fix enddist, nextdist;
     int firstsegflag;
     fixang rangle, uangle, angle, scaled_ang = 0;
@@ -358,8 +358,8 @@ static void generate_banked_curve(fix maxscale, vms_equation coeffs) {
     firstsegflag = 1;
     enddist = F1_0; nextdist = 0;
     while ( enddist > fixmul( nextdist, 1.5*F1_0 )) {
-            vms_matrix  rotmat,rotmat2;
-            vms_vector  tdest;
+            vms_matrix  rotmat = {0},rotmat2 = {0};
+            vms_vector  tdest = {0};
 
             if (firstsegflag==1)
                 firstsegflag=0;
@@ -413,7 +413,7 @@ void delete_curve(void) {
 }
 
 /*
-void main() {
+void main(void) {
     vms_vector p1;
     vms_vector p4;
     vms_vector r1;

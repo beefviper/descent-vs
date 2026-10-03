@@ -575,7 +575,7 @@ static void bump_this_object(object *objp, object *other_objp, vms_vector *force
 
 	if (! (objp->mtype.phys_info.flags & PF_PERSISTENT)) {
 		if (objp->type == OBJ_PLAYER) {
-			vms_vector force2;
+			vms_vector force2 = {0};
 			force2.x = force->x/4;
 			force2.y = force->y/4;
 			force2.z = force->z/4;
@@ -586,7 +586,7 @@ static void bump_this_object(object *objp, object *other_objp, vms_vector *force
 			}
 		} else if ((objp->type == OBJ_ROBOT) || (objp->type == OBJ_CLUTTER) || (objp->type == OBJ_CNTRLCEN)) {
 			if (!Robot_info[objp->id].boss_flag) {
-				vms_vector force2;
+				vms_vector force2 = {0};
 				force2.x = force->x/(4 + Difficulty_level);
 				force2.y = force->y/(4 + Difficulty_level);
 				force2.z = force->z/(4 + Difficulty_level);
@@ -608,15 +608,11 @@ static void bump_this_object(object *objp, object *other_objp, vms_vector *force
 //the collision.
 static void bump_two_objects(object *obj0,object *obj1,int damage_flag)
 {
-	vms_vector	force;
-	object		*t=NULL;
+	vms_vector	force = {0};
 
-	if (obj0->movement_type != MT_PHYSICS)
-		t=obj1;
-	else if (obj1->movement_type != MT_PHYSICS)
-		t=obj0;
+	if (obj0->movement_type != MT_PHYSICS || obj1->movement_type != MT_PHYSICS) {
+		object	*t = (obj0->movement_type != MT_PHYSICS) ? obj1 : obj0;
 
-	if (t) {
 		Assert(t->movement_type == MT_PHYSICS);
 		vm_vec_copy_scale(&force,&t->mtype.phys_info.velocity,-t->mtype.phys_info.mass);
 		phys_apply_force(t,&force);
@@ -634,7 +630,7 @@ static void bump_two_objects(object *obj0,object *obj1,int damage_flag)
 
 void bump_one_object(object *obj0, vms_vector *hit_dir, fix damage)
 {
-	vms_vector	hit_vec;
+	vms_vector	hit_vec = {0};
 
 	hit_vec = *hit_dir;
 	vm_vec_scale(&hit_vec, damage);
@@ -704,7 +700,7 @@ void scrape_object_on_wall(object *obj, short hitseg, short hitside, vms_vector 
 				fix d;
 				//mprintf((0, "Scraped segment #%3i, side #%i\n", hitseg, hitside));
 				if ((d=TmapInfo[Segments[hitseg].sides[hitside].tmap_num].damage) > 0) {
-					vms_vector	hit_dir, rand_vec;
+					vms_vector	hit_dir = {0}, rand_vec = {0};
 					fix damage = fixmul(d,FrameTime);
 
 					if (!(Players[Player_num].flags & PLAYER_FLAGS_INVULNERABLE))
@@ -1030,11 +1026,11 @@ static void collide_robot_and_controlcen( object * obj1, object * obj2, vms_vect
 {
 
 	if (obj1->type == OBJ_ROBOT) {
-		vms_vector	hitvec;
+		vms_vector	hitvec = {0};
 		vm_vec_normalize_quick(vm_vec_sub(&hitvec, &obj2->pos, &obj1->pos));
 		bump_one_object(obj1, &hitvec, 0);
 	} else {
-		vms_vector	hitvec;
+		vms_vector	hitvec = {0};
 		vm_vec_normalize_quick(vm_vec_sub(&hitvec, &obj1->pos, &obj2->pos));
 		bump_one_object(obj2, &hitvec, 0);
 	}
@@ -1662,7 +1658,7 @@ void collide_player_and_nasty_robot( object * player, object * robot, vms_vector
 void collide_player_and_materialization_center(object *objp)
 {
 	int	side;
-	vms_vector	exit_dir;
+	vms_vector	exit_dir = {0};
 	segment	*segp = &Segments[objp->segnum];
 
 	digi_link_sound_to_pos(SOUND_PLAYER_GOT_HIT, objp->segnum, 0, &objp->pos, 0, F1_0);
@@ -1675,7 +1671,7 @@ void collide_player_and_materialization_center(object *objp)
 
 	for (side=0; side<MAX_SIDES_PER_SEGMENT; side++)
 		if (WALL_IS_DOORWAY(segp, side) & WID_FLY_FLAG) {
-			vms_vector	exit_point, rand_vec;
+			vms_vector	exit_point = {0}, rand_vec = {0};
 
 			compute_center_point_on_side(&exit_point, segp, side);
 			vm_vec_sub(&exit_dir, &exit_point, &objp->pos);
@@ -1697,7 +1693,7 @@ void collide_player_and_materialization_center(object *objp)
 void collide_robot_and_materialization_center(object *objp)
 {
 	int	side;
-	vms_vector	exit_dir;
+	vms_vector	exit_dir = {0};
 	segment *segp=&Segments[objp->segnum];
 
 	digi_link_sound_to_pos(SOUND_ROBOT_HIT, objp->segnum, 0, &objp->pos, 0, F1_0);
@@ -1708,7 +1704,7 @@ void collide_robot_and_materialization_center(object *objp)
 
 	for (side=0; side<MAX_SIDES_PER_SEGMENT; side++)
 		if (WALL_IS_DOORWAY(segp, side) & WID_FLY_FLAG) {
-			vms_vector	exit_point;
+			vms_vector	exit_point = {0};
 
 			compute_center_point_on_side(&exit_point, segp, side);
 			vm_vec_sub(&exit_dir, &exit_point, &objp->pos);

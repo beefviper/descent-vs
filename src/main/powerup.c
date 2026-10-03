@@ -281,7 +281,7 @@ void draw_powerup(object *obj)
 
 void powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...)
 {
-	char		text[120];
+	char		text[120] = {0};
 	va_list	args;
 
 	va_start(args, format );

@@ -108,7 +108,7 @@ char	center_names[MAX_CENTER_TYPES][CENTER_STRING_LENGTH] = {
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the centers dialog box
 //-------------------------------------------------------------------------
-int do_centers_dialog()
+int do_centers_dialog(void)
 {
 	int i;
 

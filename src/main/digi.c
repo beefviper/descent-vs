@@ -601,7 +601,7 @@ static int digi_xlat_sound(int soundno)
 }
 
 
-static void digi_close_midi()
+static void digi_close_midi(void)
 {
 /*
 	if (digi_midi_type>0)	{
@@ -637,7 +637,7 @@ static void digi_close_midi()
 */
 }
 
-static void digi_close_digi()
+static void digi_close_digi(void)
 {
 	plat_audio_close();
 /*
@@ -752,7 +752,7 @@ static int digi_load_fm_banks( char * melodic_file, char * drum_file )
 
 }
 
-static int digi_init_midi()
+static int digi_init_midi(void)
 {
 /*
    WORD     wError;                 // error code returned from functions
@@ -800,7 +800,7 @@ static int digi_init_midi()
 
 }
 
-static int digi_init_digi()
+static int digi_init_digi(void)
 {
 /*
    WORD     wError;                 // error code returned from functions
@@ -1161,7 +1161,7 @@ void digi_play_sample_once( int soundno, fix max_volume )
 {
 	WORD SampleHandle;
 	digi_sound *snd;
-	_SOS_START_SAMPLE sSOSSampleData;
+	_SOS_START_SAMPLE sSOSSampleData = {0};
 
 #ifdef NEWDEMO
 	if ( Newdemo_state == ND_STATE_RECORDING )
@@ -1208,7 +1208,7 @@ void digi_play_sample_once( int soundno, fix max_volume )
 void digi_play_sample( int soundno, fix max_volume )
 {
 	digi_sound *snd;
-	_SOS_START_SAMPLE sSOSSampleData;
+	_SOS_START_SAMPLE sSOSSampleData = {0};
 
 #ifdef NEWDEMO
 	if ( Newdemo_state == ND_STATE_RECORDING )
@@ -1248,7 +1248,7 @@ void digi_play_sample( int soundno, fix max_volume )
 
 void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )
 {
-	_SOS_START_SAMPLE sSOSSampleData;
+	_SOS_START_SAMPLE sSOSSampleData = {0};
 	digi_sound *snd;
 
 	no_dups = 1;
@@ -1381,7 +1381,7 @@ VOID sosEndMIDICallback(void)		// Used to mark the end of sosMIDICallBack
 {
 }
 
-static void digi_stop_current_song()
+static void digi_stop_current_song(void)
 {
 /*
 	// Stop last song...
@@ -1512,7 +1512,7 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 
 static void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )
 {
-	vms_vector	vector_to_sound;
+	vms_vector	vector_to_sound = {0};
 	fix angle_from_ear, cosang,sinang;
 	fix distance;
 	fix path_distance;
@@ -1570,7 +1570,7 @@ void digi_init_sounds(void)
 static void digi_start_sound_object(int i)
 {
 	// start sample structures
-	_SOS_START_SAMPLE sSOSSampleData;
+	_SOS_START_SAMPLE sSOSSampleData = {0};
 
 	memset( &sSOSSampleData, 0, sizeof(_SOS_START_SAMPLE));
 

@@ -167,11 +167,11 @@ void slew_reset_orient(void)
 static int do_slew_movement(object *obj, int check_keys, int check_joy )
 {
 	int moved = 0;
-	vms_vector svel, movement;				//scaled velocity (per this frame)
-	vms_matrix rotmat,new_pm;
+	vms_vector svel = {0}, movement = {0};				//scaled velocity (per this frame)
+	vms_matrix rotmat = {0},new_pm = {0};
 	int joy_x,joy_y,btns;
 	int joyx_moved,joyy_moved;
-	vms_angvec rotang;
+	vms_angvec rotang = {0};
 
 	if (!slew_obj || slew_obj->control_type!=CT_SLEW) return 0;
 

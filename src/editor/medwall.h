@@ -62,34 +62,34 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "inferno.h"
 #include "segment.h"
 
-extern int wall_add_removable();
+extern int wall_add_removable(void);
 
 // Restores all the walls to original status
-extern int wall_restore_all();
+extern int wall_restore_all(void);
 
 // Reset a wall.
 
 // Adds a removable wall (medwall.c)
-extern int wall_add_removable();
+extern int wall_add_removable(void);
 
 // Adds a door (medwall.c)
-extern int wall_add_door();
+extern int wall_add_door(void);
 
 // Adds an illusory wall (medwall.c)
-extern int wall_add_illusion();
+extern int wall_add_illusion(void);
 
 // Removes a removable wall (medwall.c)
-extern int wall_remove_blastable();
+extern int wall_remove_blastable(void);
 
 // Adds a wall. (visually)
-extern int wall_add_to_curside();
+extern int wall_add_to_curside(void);
 extern int wall_add_to_markedside(byte type);
 extern int wall_add_to_side(segment *segp, int side, byte type);
 extern int wall_add_door_flag(byte flag);
 extern int wall_remove_door_flag(byte flag);
 
 // Removes a wall. (visually)
-extern int wall_remove();
+extern int wall_remove(void);
 
 // Removes a specific side.
 int wall_remove_side(segment *seg, short side);

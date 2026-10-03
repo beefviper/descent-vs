@@ -534,7 +534,7 @@ void draw_object_tmap_rod(object *obj,bitmap_index bitmap,int lighted);
 void obj_delete_all_that_should_be_dead(void);
 
 // Toggles whether or not lock-boxes draw.
-void object_toggle_lock_targets();
+void object_toggle_lock_targets(void);
 
 //move all objects for the current frame
 void object_move_all(void);		// moves all objects

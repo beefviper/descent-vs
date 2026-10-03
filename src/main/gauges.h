@@ -125,8 +125,8 @@ extern bitmap_index Gauges[MAX_GAUGE_BMS];   // Array of all gauge bitmaps.
 extern void init_gauge_canvases(void);
 extern void close_gauge_canvases(void);
 
-extern void show_score();
-extern void show_score_added();
+extern void show_score(void);
+extern void show_score_added(void);
 extern void add_points_to_score(int points);
 extern void add_bonus_points_to_score(int points);
 

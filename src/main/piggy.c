@@ -443,7 +443,7 @@ FILE * count_file = NULL;
 int num_good=0,num_bad=0;
 int num_good64=0,num_bad64=0;
 
-void close_count_file()
+void close_count_file(void)
 {
  	if ( count_file )	{
 		fprintf( count_file,"Good = %d\n", num_good );
@@ -458,7 +458,7 @@ void close_count_file()
 void count_colors( int bnum, grs_bitmap * bmp )
 {
 	int i,colors;
-	ushort n[256];
+	ushort n[256] = {0};
 
 	quantize_colors( bnum, bmp );
 
@@ -496,7 +496,7 @@ void piggy_get_bitmap_name( int i, char * name )
 
 bitmap_index piggy_register_bitmap( grs_bitmap * bmp, char * name, int in_file )
 {
-	bitmap_index temp;
+	bitmap_index temp = {0};
 	Assert( Num_bitmap_files < MAX_BITMAP_FILES );
 
 	temp.index = Num_bitmap_files;
@@ -543,7 +543,7 @@ int piggy_register_sound( digi_sound * snd, char * name, int in_file )
 
 bitmap_index piggy_find_bitmap( char * name )
 {
-	bitmap_index bmp;
+	bitmap_index bmp = {0};
 	int i;
 
 	bmp.index = 0;
@@ -589,12 +589,12 @@ extern void bm_read_all(CFILE * fp);
 int piggy_init(void)
 {
 	int sbytes = 0;
-	char temp_name_read[16];
-	char temp_name[16];
-	grs_bitmap temp_bitmap;
-	digi_sound temp_sound;
-	DiskBitmapHeader bmh;
-	DiskSoundHeader sndh;
+	char temp_name_read[16] = {0};
+	char temp_name[16] = {0};
+	grs_bitmap temp_bitmap = {0};
+	digi_sound temp_sound = {0};
+	DiskBitmapHeader bmh = {0};
+	DiskSoundHeader sndh = {0};
 	int header_size, N_bitmaps, N_sounds;
 	int i,size, y;
 	char * filename;
@@ -810,7 +810,7 @@ char * crit_errors[13] = { "Write Protected", "Unknown Unit", "Drive Not Ready",
 "Bad struct length", "Seek Error", "Unknown media type", "Sector not found", "Printer out of paper", "Write Fault", \
 "Read fault", "General Failure" };
 
-static void piggy_critical_error()
+static void piggy_critical_error(void)
 {
 	grs_canvas * save_canv;
 	grs_font * save_font;
@@ -956,10 +956,10 @@ void piggy_dump_all(void)
 	char * filename;
 	int data_offset;
 	int org_offset;
-	DiskBitmapHeader bmh;
-	DiskSoundHeader sndh;
+	DiskBitmapHeader bmh = {0};
+	DiskSoundHeader sndh = {0};
 	int header_offset;
-	char subst_name[32];
+	char subst_name[32] = {0};
 
 	#ifdef NO_DUMP_SOUNDS
 	Num_sound_files = 0;
@@ -1009,7 +1009,7 @@ void piggy_dump_all(void)
 
 	mprintf( (0, "Paging in all piggy bitmaps..." ));
 	for (i=0; i < Num_bitmap_files; i++ )	{
-		bitmap_index bi;
+		bitmap_index bi = {0};
 		bi.index = i;
 		PIGGY_PAGE_IN( bi );
 	}
@@ -1120,7 +1120,7 @@ void piggy_dump_all(void)
 		bmh.height = GameBitmaps[i].bm_h;
 		bmh.flags = GameBitmaps[i].bm_flags;
 		if (piggy_is_substitutable_bitmap( AllBitmaps[i].name, subst_name ))	{
-			bitmap_index other_bitmap;
+			bitmap_index other_bitmap = {0};
 			other_bitmap = piggy_find_bitmap( subst_name );
 			GameBitmapXlat[i] = other_bitmap.index;
 			bmh.flags |= BM_FLAG_PAGED_OUT;
@@ -1237,7 +1237,7 @@ static int piggy_is_substitutable_bitmap( char * name, char * subst_name )
 {
 	int frame;
 	char * p;
-	char base_name[ 16 ];
+	char base_name[ 16 ] = {0};
 
 	strcpy( subst_name, name );
 	p = strchr( subst_name, '#' );

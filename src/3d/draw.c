@@ -169,7 +169,7 @@ static int draw_poly_2d(g3s_point **pointlist,int nv)
 bool g3_draw_poly(int nv,g3s_point **pointlist)
 {
 	int i;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 	g3s_point **bufptr;
 	bool ret;
 
@@ -243,7 +243,7 @@ static int draw_tmap_2d(g3s_point **pointlist,int nv,grs_bitmap *bm)
 bool g3_draw_tmap(int nv,g3s_point **pointlist,g3s_uvl *uvl_list,grs_bitmap *bm)
 {
 	int i;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 	g3s_point **bufptr;
 	bool ret;
 

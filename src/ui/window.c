@@ -205,7 +205,7 @@ static void add_window_after( UI_WINDOW * w1, UI_WINDOW * w2 )
 		w1->next->prev = w1;
 }
 
-static void close_all()
+static void close_all(void)
 {
 	UI_WINDOW *sav, *wnd = LastWindow;
 
@@ -342,7 +342,7 @@ void ui_close_window( UI_WINDOW * wnd )
 	ui_mouse_show();
 }
 
-static void restore_state()
+static void restore_state(void)
 {
 	int i;
 	_disable();
@@ -359,12 +359,12 @@ static void restore_state()
 
 int last_event = 0;
 
-void ui_reset_idle_seconds()
+void ui_reset_idle_seconds(void)
 {
 	last_event = TICKER;
 }
 
-int ui_get_idle_seconds()
+int ui_get_idle_seconds(void)
 {
 	return (((TICKER - last_event)*10)/182);
 }
@@ -626,7 +626,7 @@ void ui_mega_process(void)
 
 void ui_wprintf( UI_WINDOW * wnd, char * format, ... )
 {
-	char buffer[1000];
+	char buffer[1000] = {0};
 	va_list args;
 
 	va_start(args, format );
@@ -641,7 +641,7 @@ void ui_wprintf( UI_WINDOW * wnd, char * format, ... )
 
 void ui_wprintf_at( UI_WINDOW * wnd, short x, short y, char * format, ... )
 {
-	char buffer[1000];
+	char buffer[1000] = {0};
 	va_list args;
 
 	va_start(args, format );

@@ -145,8 +145,8 @@ int out_of_memory = 0;
 
 void mem_display_blocks(void);
 
-static void mem_init();
-void mem_init()
+static void mem_init(void);
+void mem_init(void)
 {
 	int i;
 
@@ -380,7 +380,7 @@ void mem_display_blocks(void)
 	}
 }
 
-void mem_validate_heap()
+void mem_validate_heap(void)
 {
 	int i;
 
@@ -389,8 +389,8 @@ void mem_validate_heap()
 			mem_check_integrity( i );
 }
 
-static void mem_print_all();
-void mem_print_all()
+static void mem_print_all(void);
+void mem_print_all(void)
 {
 	FILE * ef;
 	int i, size = 0;
@@ -433,7 +433,7 @@ static unsigned int block_size( void * ptr )
 
 int show_mem_info = 0;
 
-static void mem_init()
+static void mem_init(void)
 {
 	Initialized = 1;
 
@@ -520,11 +520,11 @@ void mem_display_blocks(void)
 	}
 }
 
-void mem_validate_heap()
+void mem_validate_heap(void)
 {
 }
 
-static void mem_print_all()
+static void mem_print_all(void)
 {
 }
 

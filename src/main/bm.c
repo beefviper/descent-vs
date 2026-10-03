@@ -150,7 +150,7 @@ void bm_read_all(CFILE * fp)
 	cfread( &N_polygon_models, sizeof(int), 1, fp );
 	for (i=0; i<N_polygon_models; i++ )	{
 		polymodel *pm = &Polygon_models[i];
-		ubyte unused[4];
+		ubyte unused[4] = {0};
 
 		cfread( &pm->n_models, sizeof(int), 1, fp );
 		cfread( &pm->model_data_size, sizeof(int), 1, fp );

@@ -201,7 +201,7 @@ void victor_init_tracking(int serial_port)
 	}
 	VictorPort = PortOpenGreenleafFast(serial_port-1, 19200, 'N', 8, 1 );
 	if ( !VictorPort )	{
-		printf( "%s %d\n", TXT_SERIAL_FAILURE, VictorPort->status );
+		printf( "%s\n", TXT_SERIAL_FAILURE );
 		return;
 	}
 //	printf( "Port opened\n" );

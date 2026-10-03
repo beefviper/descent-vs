@@ -104,7 +104,7 @@ static void checkforgamext( char * f )
 {
 	int i;
 
-	for (i=1; i<strlen(f); i++ )
+	for (i=1; i<(int)strlen(f); i++ )
 	{
 		if (f[i]=='.') return;
 
@@ -152,7 +152,7 @@ int SetPlayerPosition(void)
 //	returns 0 if unsuccessful
 int SaveGameData(void)
 {
-	char Message[200];
+	char Message[200] = {0};
 
 	if (gamestate_not_restored) {
 		sprintf( Message, "Game State has not been restored...\nContinue?\n");

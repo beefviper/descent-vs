@@ -189,7 +189,7 @@ static void call_init_ai_object(object *objp, int behavior)
 // Called when user presses "Next Type" button.  This only works for polygon
 // objects and it just selects the next polygon model for the current object.
 //-------------------------------------------------------------------------
-static int RobotNextType()
+static int RobotNextType(void)
 {
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
@@ -217,7 +217,7 @@ static int RobotNextType()
 // Called when user presses "Prev Type" button.  This only works for polygon
 // objects and it just selects the prev polygon model for the current object.
 //-------------------------------------------------------------------------
-static int RobotPrevType()
+static int RobotPrevType(void)
 {
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
@@ -245,7 +245,7 @@ static int RobotPrevType()
 //-------------------------------------------------------------------------
 // Dummy function for Mike to write.
 //-------------------------------------------------------------------------
-static int med_set_ai_path()
+static int med_set_ai_path(void)
 {
 	mprintf( (0, "med-set-ai-path called -- it does nothing, paths automatically set!\n" ));
 
@@ -306,9 +306,9 @@ static void update_goody_info(void)
 // #define MAX_OBJECT_TYPES	11
 
 
-static int GoodyNextID();
-static int GoodyPrevID();
-static int GoodyNextType()
+static int GoodyNextID(void);
+static int GoodyPrevID(void);
+static int GoodyNextType(void)
 {
 	Cur_goody_type++;
 	while (!((Cur_goody_type == OBJ_ROBOT) || (Cur_goody_type == OBJ_POWERUP))) {
@@ -325,7 +325,7 @@ static int GoodyNextType()
 	return 1;
 }
 
-static int GoodyPrevType()
+static int GoodyPrevType(void)
 {
 	Cur_goody_type--;
 	while (!((Cur_goody_type == OBJ_ROBOT) || (Cur_goody_type == OBJ_POWERUP))) {
@@ -342,7 +342,7 @@ static int GoodyPrevType()
 	return 1;
 }
 
-static int GoodyNextID()
+static int GoodyNextID(void)
 {
 	Cur_goody_id++;
 	if (Cur_goody_type == OBJ_ROBOT) {
@@ -357,7 +357,7 @@ static int GoodyNextID()
 	return 1;
 }
 
-static int GoodyPrevID()
+static int GoodyPrevID(void)
 {
 	Cur_goody_id--;
 	if (Cur_goody_type == OBJ_ROBOT) {
@@ -372,7 +372,7 @@ static int GoodyPrevID()
 	return 1;
 }
 
-static int GoodyNextCount()
+static int GoodyNextCount(void)
 {
 	Cur_goody_count++;
 	if (Cur_goody_count > GOODY_COUNT_MAX)
@@ -382,7 +382,7 @@ static int GoodyNextCount()
 	return 1;
 }
 
-static int GoodyPrevCount()
+static int GoodyPrevCount(void)
 {
 	Cur_goody_count--;
 	if (Cur_goody_count < 0)
@@ -736,7 +736,7 @@ void do_robot_window(void)
 
 	if (ui_button_any_drawn || (old_object != Cur_object_index) )	{
 		int	i;
-		char	type_text[STRING_LENGTH+1],id_text[STRING_LENGTH+1];
+		char	type_text[STRING_LENGTH+1] = {0},id_text[STRING_LENGTH+1] = {0};
 
 		if (Cur_object_index != -1) {
 			Cur_goody_type = Objects[Cur_object_index].contains_type;
@@ -778,7 +778,7 @@ void do_robot_window(void)
 
 		if ( Cur_object_index > -1 )	{
 			int	id = Objects[Cur_object_index].id;
-			char	id_text[12];
+			char	id_text[12] = {0};
 			int	i;
 
 			for (i=0; i<STRING_LENGTH; i++)
@@ -831,7 +831,7 @@ UI_GADGET_INPUTBOX	*Xtext, *Ytext, *Ztext;
 //-------------------------------------------------------------------------
 int do_object_dialog(void)
 {
-	char	Xmessage[MATT_LEN], Ymessage[MATT_LEN], Zmessage[MATT_LEN];
+	char	Xmessage[MATT_LEN] = {0}, Ymessage[MATT_LEN] = {0}, Zmessage[MATT_LEN] = {0};
 	object *obj=&Objects[Cur_object_index];
 
 	if (obj->type == OBJ_ROBOT)		//don't do this for robots

@@ -105,7 +105,7 @@ static int __far critical_error_handler( unsigned deverr, unsigned errcode, unsi
 	}
 }
 
-void InstallErrorHandler()
+void InstallErrorHandler(void)
 {
 	_harderr((void *) critical_error_handler );
 	//Above line modified by KRB, added (void *) cast
@@ -115,7 +115,7 @@ void InstallErrorHandler()
 static void file_sort( int n, char list[][13] )
 {
 	int i, j, incr;
-	char t[14];
+	char t[14] = {0};
 
 	incr = n / 2;
 	while( incr > 0 )
@@ -141,7 +141,9 @@ static void file_sort( int n, char list[][13] )
 }
 
 
-static int SingleDrive()
+#ifdef __WATCOMC__
+// Reads and writes the DOS BIOS data area, so only for the DOS build.
+static int SingleDrive(void)
 {
 	int FloppyPresent, FloppyNumber;
 	unsigned char b;
@@ -166,6 +168,17 @@ static void SetFloppy(int d)
 		*((unsigned char *)0x504) = 1;
 	}
 }
+#else
+static int SingleDrive(void)
+{
+	return 0;
+}
+
+static void SetFloppy(int d)
+{
+	(void)d;
+}
+#endif
 
 
 static void file_capitalize( char * s )
@@ -180,7 +193,7 @@ static void file_capitalize( char * s )
 // Returns 0 if not-valid, 1 if valid.
 int file_chdrive( int DriveNum, int flag )
 {
-	unsigned NumDrives, n, org;
+	unsigned NumDrives, n, org = 0;
 	int Valid = 0;
 
 	if (!flag)
@@ -189,7 +202,7 @@ int file_chdrive( int DriveNum, int flag )
 	_dos_setdrive( DriveNum, &NumDrives );
 	_dos_getdrive( &n );
 
-	if (n == DriveNum )
+	if ((int)n == DriveNum )
 		Valid = 1;
 
 	if ( (!flag) && (n != org) )
@@ -208,7 +221,7 @@ int file_chdrive( int DriveNum, int flag )
 int file_chdir( char * dir )
 {
 	int e;
-	char OriginalDirectory[100];
+	char OriginalDirectory[100] = {0};
 	char * Drive, * Path;
 	char NoDir[] = ".";
 
@@ -253,9 +266,9 @@ int file_chdir( char * dir )
 
 int file_getdirlist( int MaxNum, char list[][13] )
 {
-	struct find_t find;
+	struct find_t find = {0};
 	int NumDirs = 0, i, CurDrive;
-	char cwd[129];
+	char cwd[129] = {0};
 	(void)MaxNum;
 
 	getcwd(cwd, 128 );
@@ -307,7 +320,7 @@ int file_getdirlist( int MaxNum, char list[][13] )
 
 int file_getfilelist( int MaxNum, char list[][13], char * filespec )
 {
-	struct find_t find;
+	struct find_t find = {0};
 	int NumFiles = 0;
 
 	(void)MaxNum;
@@ -345,9 +358,9 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 {
 	FILE * TempFile;
 	int NumFiles, NumDirs,i;
-	char InputText[100];
-	char Spaces[35];
-	char ErrorMessage[100];
+	char InputText[100] = {0};
+	char Spaces[35] = {0};
+	char ErrorMessage[100] = {0};
 	UI_WINDOW * wnd;
 	UI_GADGET_BUTTON * Button1, * Button2, * HelpButton;
 	UI_GADGET_LISTBOX * ListBox1;
@@ -355,15 +368,15 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 	UI_GADGET_INPUTBOX * UserFile;
 	int new_listboxes;
 
-	char drive[ _MAX_DRIVE ];
-	char dir[ _MAX_DIR ];
-	char fname[ _MAX_FNAME ];
-	char ext[ _MAX_EXT ];
-	char fulldir[ _MAX_DIR + _MAX_DRIVE ];
-	char fullfname[ _MAX_FNAME + _MAX_EXT ];
+	char drive[ _MAX_DRIVE ] = {0};
+	char dir[ _MAX_DIR ] = {0};
+	char fname[ _MAX_FNAME ] = {0};
+	char ext[ _MAX_EXT ] = {0};
+	char fulldir[ _MAX_DIR + _MAX_DRIVE ] = {0};
+	char fullfname[ _MAX_FNAME + _MAX_EXT ] = {0};
 
 
-	char OrgDir[128];
+	char OrgDir[128] = {0};
 
 	getcwd( OrgDir, 128 );
 
@@ -585,7 +598,7 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 int ui_get_file( char * filename, char * Filespec  )
 {
 	int x, i, NumFiles;
-	char * text[200];
+	char * text[200] = {0};
 
 	NumFiles = file_getfilelist( 200, filename_list, Filespec );
 

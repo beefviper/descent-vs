@@ -409,7 +409,7 @@ extern void validate_segment_side(segment *sp, int sidenum);
 //		1	unable to rotate group
 static void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, segment *first_seg, int first_side, segment *base_seg, int base_side, vms_matrix *orient_matrix, int orientation)
 {
-	vms_matrix	rotmat2,rotmat,rotmat3,rotmat4;
+	vms_matrix	rotmat2 = {0},rotmat = {0},rotmat3 = {0},rotmat4 = {0};
 	vms_angvec	pbh = {0,0,0};
 
 	//	Determine whether this rotation is a delta rotation, meaning to just rotate in place, or an absolute rotation,
@@ -461,8 +461,8 @@ static void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_f
 static void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group_size, segment *first_seg, int first_side)
 {
 	int			v,s, objnum;
-	byte			vertex_list[MAX_VERTICES];
-	vms_vector	rotate_center;
+	byte			vertex_list[MAX_VERTICES] = {0};
+	vms_vector	rotate_center = {0};
 
 	compute_center_point_on_side(&rotate_center, first_seg, first_side);
 
@@ -479,7 +479,7 @@ static void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group
 		//	Rotate center of all objects in group.
 		objnum = sp->objects;
 		while (objnum != -1) {
-			vms_vector	tv, tv1;
+			vms_vector	tv = {0}, tv1 = {0};
 
 			mprintf((0, "%2i ", objnum));
 			vm_vec_sub(&tv1,&Objects[objnum].pos,&rotate_center);
@@ -493,7 +493,7 @@ static void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group
 	// Do the pre-rotation xlate, do the rotation, do the post-rotation xlate
 	for (v=0; v<=Highest_vertex_index; v++)
 		if (vertex_list[v]) {
-			vms_vector	tv,tv1;
+			vms_vector	tv = {0},tv1 = {0};
 
 			vm_vec_sub(&tv1,&Vertices[v],&rotate_center);
 			vm_vec_rotate(&tv,&tv1,rotmat);
@@ -549,9 +549,9 @@ static void create_group_list(segment *segp, short *seglistp, int *num_segs, sho
 static void duplicate_group(byte *vertex_ids, short *segment_ids, int num_segments)
 {
 	int	v,s,ss,new_vertex_id,new_segment_id,sidenum;
-	short	new_segment_ids[MAX_SEGMENTS];
-	short	new_vertex_ids[MAX_VERTICES];		// If new_vertex_ids[v] != -1, then vertex v has been remapped to new_vertex_ids[v]
-	short	new_object_ids[MAX_OBJECTS];
+	short	new_segment_ids[MAX_SEGMENTS] = {0};
+	short	new_vertex_ids[MAX_VERTICES] = {0};		// If new_vertex_ids[v] != -1, then vertex v has been remapped to new_vertex_ids[v]
+	short	new_object_ids[MAX_OBJECTS] = {0};
 
 	//	duplicate vertices
 	for (v=0; v<MXV; v++)
@@ -646,14 +646,14 @@ static int in_group(int segnum, int group_num)
 static int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix)
 {
 	int			v,s;
-	vms_vector	srcv,destv;
+	vms_vector	srcv = {0},destv = {0};
 	int 			x;
 	int			new_current_group;
 	segment		*segp;
 	int 			c;
-	int			gs_index;
-	byte			in_vertex_list[MAX_VERTICES];
-	vms_matrix	rotmat;
+	int			gs_index = 0;
+	byte			in_vertex_list[MAX_VERTICES] = {0};
+	vms_matrix	rotmat = {0};
 	int			objnum;
 
 	if (IS_CHILD(base_seg->children[base_side])) {
@@ -804,11 +804,11 @@ static int med_copy_group(int delta_flag, segment *base_seg, int base_side, segm
 static int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix, int orientation)
 {
 	int			v,vv,s,ss,c,d;
-	vms_vector	srcv,destv;
+	vms_vector	srcv = {0},destv = {0};
 	segment		*segp, *csegp, *dsegp;
-	byte			in_vertex_list[MAX_VERTICES], out_vertex_list[MAX_VERTICES];
+	byte			in_vertex_list[MAX_VERTICES] = {0}, out_vertex_list[MAX_VERTICES] = {0};
 	int			local_hvi;
-	vms_matrix	rotmat;
+	vms_matrix	rotmat = {0};
 
 	if (IS_CHILD(base_seg->children[base_side]))
 		if (base_seg->children[base_side] != group_seg-Segments) {
@@ -972,7 +972,7 @@ static int place_new_segment_in_world(void)
 int AttachSegmentNewAng(vms_angvec *pbh)
 {
 	int			newseg;
-	vms_matrix	orient_matrix;
+	vms_matrix	orient_matrix = {0};
 
 	GroupList[Current_group].num_segments = 1;
 	newseg = place_new_segment_in_world();
@@ -1002,7 +1002,7 @@ int AttachSegmentNewAng(vms_angvec *pbh)
 
 int AttachSegmentNew(void)
 {
-	vms_angvec	pbh;
+	vms_angvec	pbh = {0};
 
 	pbh.p = 0;
 	pbh.b = 0;
@@ -1087,9 +1087,9 @@ void add_segment_to_group(int segment_num, int group_num)
 int rotate_segment_new(vms_angvec *pbh)
 {
 	int			newseg,baseseg,newseg_side,baseseg_side;
-	vms_matrix	orient_matrix,tm1,tm2;
+	vms_matrix	orient_matrix = {0},tm1 = {0},tm2 = {0};
 	int			n_selected_segs_save;
-	short			selected_segs_save[MAX_SEGMENTS];
+	short			selected_segs_save[MAX_SEGMENTS] = {0};
 	int			child_save;
 	int			current_group_save;
 
@@ -1181,11 +1181,11 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 {
 	FILE * SaveFile;
 	int header_offset, editor_offset, vertex_offset, segment_offset, texture_offset;
-	char ErrorMessage[100];
+	char ErrorMessage[100] = {0};
 	int i, j, k;
 	int segnum;
-	segment tseg;
-   vms_vector tvert;
+	segment tseg = {0};
+   vms_vector tvert = {0};
 	int found;
 
 	SaveFile = fopen( filename, "wb" );
@@ -1319,13 +1319,13 @@ static short group_tmap_xlate_table[MAX_TEXTURES];
 int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *num_vertices, int *num_segments)
 {
 	int segnum, vertnum;
-	char ErrorMessage[200];
+	char ErrorMessage[200] = {0};
 	short tmap_xlate;
 	int 	translate = 0;
 	char 	*temptr;
 	int i, j;
-	segment tseg;
-   vms_vector tvert;
+	segment tseg = {0};
+   vms_vector tvert = {0};
 	CFILE * LoadFile;
 
 	LoadFile = cfopen( filename, CF_READ_MODE );
@@ -1478,7 +1478,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 					temp = Segments[segment_ids[i]].sides[j].tmap_num2;
 					tmap_xlate = temp & 0x3fff;			// strip off orientation bits
 					if (tmap_xlate != 0)
-						Segments[segment_ids[i]].sides[j].tmap_num2 = (temp & (!0x3fff)) | group_tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
+						Segments[segment_ids[i]].sides[j].tmap_num2 = (temp & ~0x3fff) | group_tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
 					}
 				}
 			}
@@ -1504,7 +1504,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 
 	Assert (NumTextures < MAX_TEXTURES);
 {
-	hashtable ht;
+	hashtable ht = {0};
 
 	hashtable_init( &ht, NumTextures );
 
@@ -1560,7 +1560,7 @@ static void checkforgrpext( char * f )
 {
 	int i;
 
-	for (i=1; i<strlen(f); i++ )
+	for (i=1; i<(int)strlen(f); i++ )
 	{
 		if (f[i]=='.') return;
 
@@ -1593,8 +1593,8 @@ int SaveGroup(void)
 {
 	// Save group
 	int i, s, v;
-	char  ErrorMessage[200];
-	byte	vertex_list[MAX_VERTICES];
+	char  ErrorMessage[200] = {0};
+	byte	vertex_list[MAX_VERTICES] = {0};
 
 	if (Current_group == -1)
 		{

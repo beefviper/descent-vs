@@ -202,7 +202,7 @@ int Laser_create_new( vms_vector * direction, vms_vector * position, int segnum,
 	fix parent_speed, weapon_speed;
 	fix volume;
 	fix laser_radius = -1;
-	fix laser_length;
+	fix laser_length = 0;
 
 	Assert( weapon_type < N_weapon_types );
 
@@ -357,7 +357,7 @@ int Laser_create_new( vms_vector * direction, vms_vector * position, int segnum,
 	//	Don't do for weapons created by weapons.
 	if ((Objects[parent].type != OBJ_WEAPON) && (Weapon_info[weapon_type].render_type != WEAPON_RENDER_NONE) && (weapon_type != FLARE_ID)) {
 //	if ((Objects[parent].type != OBJ_WEAPON) && (weapon_type != FLARE_ID) ) {
-		vms_vector	end_pos;
+		vms_vector	end_pos = {0};
 		int			end_segnum;
 
 	 	vm_vec_scale_add( &end_pos, &obj->pos, direction, Laser_offset+(laser_length/2) );
@@ -421,8 +421,8 @@ int Laser_create_new( vms_vector * direction, vms_vector * position, int segnum,
 //	Calls Laser_create_new, but takes care of the segment and point computation for you.
 int Laser_create_new_easy( vms_vector * direction, vms_vector * position, int parent, int weapon_type, int make_sound )
 {
-	fvi_query	fq;
-	fvi_info		hit_data;
+	fvi_query	fq = {0};
+	fvi_info		hit_data = {0};
 	object		*pobjp = &Objects[parent];
 	int			fate;
 
@@ -460,8 +460,8 @@ muzzle_info		Muzzle_data[MUZZLE_QUEUE_MAX];
 //	Calls fvi.
 int object_to_object_visibility(object *obj1, object *obj2, int trans_type)
 {
-	fvi_query	fq;
-	fvi_info		hit_data;
+	fvi_query	fq = {0};
+	fvi_info		hit_data = {0};
 	int			fate;
 
 	fq.p0						= &obj1->pos;
@@ -494,7 +494,7 @@ fix	Min_trackable_dot = MIN_TRACKABLE_DOT;
 static int object_is_trackable(int track_goal, object *tracker)
 {
 	fix			dot; //, dist_to_goal;
-	vms_vector	vector_to_goal;
+	vms_vector	vector_to_goal = {0};
 	object		*objp;
 
 	if (track_goal == -1)
@@ -568,7 +568,7 @@ static int find_homing_object(vms_vector *curpos, object *tracker)
 			//	Not in network mode and fired by player.
 			for (i=Num_rendered_objects-1; i>=0; i--) {
 				fix			dot; //, dist;
-				vms_vector	vec_to_curobj;
+				vms_vector	vec_to_curobj = {0};
 				int			objnum = Ordered_rendered_object_list[i];
 				object		*curobjp = &Objects[objnum];
 
@@ -624,7 +624,7 @@ int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_o
 
 	for (objnum=0; objnum<=Highest_object_index; objnum++) {
 		fix			dot, dist;
-		vms_vector	vec_to_curobj;
+		vms_vector	vec_to_curobj = {0};
 		object		*curobjp = &Objects[objnum];
 
 		if ((curobjp->type != track_obj_type1) && (curobjp->type != track_obj_type2))
@@ -742,11 +742,11 @@ static int track_track_goal(int track_goal, object *tracker)
 static void Laser_player_fire_spread_delay(object *obj, int laser_type, int gun_num, fix spreadr, fix spreadu, fix delay_time, int make_sound, int harmless)
 {
 	int			LaserSeg, Fate;
-	vms_vector	LaserPos, LaserDir;
-	fvi_query	fq;
-	fvi_info		hit_data;
-	vms_vector	gun_point, *pnt;
-	vms_matrix	m;
+	vms_vector	LaserPos = {0}, LaserDir = {0};
+	fvi_query	fq = {0};
+	fvi_info		hit_data = {0};
+	vms_vector	gun_point = {0}, *pnt;
+	vms_matrix	m = {0};
 	int			objnum;
 
 	// Find the initial position of the laser
@@ -895,7 +895,7 @@ void Flare_create(object *obj)
 //	Set object *objp's orientation to (or towards if I'm ambitious) its velocity.
 static void homing_missile_turn_towards_velocity(object *objp, vms_vector *norm_vel)
 {
-	vms_vector	new_fvec;
+	vms_vector	new_fvec = {0};
 
 	new_fvec = *norm_vel;
 
@@ -940,7 +940,7 @@ void Laser_do_weapon_sequence(object *obj)
 
 	//	For homing missiles, turn towards target.
 	if (Weapon_info[obj->id].homing_flag) {
-		vms_vector		vector_to_object, temp_vec;
+		vms_vector		vector_to_object = {0}, temp_vec = {0};
 		fix				dot;
 		fix				speed, max_speed;
 
@@ -1178,7 +1178,7 @@ int do_laser_firing(int objnum, int weapon_num, int level, int flags, int nfires
 			break;
 
 		case FUSION_INDEX: {
-			vms_vector	force_vec;
+			vms_vector	force_vec = {0};
 
 //			mprintf((0, "Fusion multiplier %f.\n", f2fl(Fusion_charge)));
 
@@ -1238,8 +1238,8 @@ typedef	struct {
 static int create_homing_missile(object *objp, int goal_obj, int objtype, int make_sound)
 {
 	int			objnum;
-	vms_vector	vector_to_goal;
-	vms_vector	random_vector;
+	vms_vector	vector_to_goal = {0};
+	vms_vector	random_vector = {0};
 	//vms_vector	goal_pos;
 
 	if (goal_obj == -1) {
@@ -1275,7 +1275,7 @@ void create_smart_children(object *objp)
 	int		make_sound;
 	int		numobjs=0;
 	int		parent_type;
-	objdist	objlist[MAX_OBJDISTS];
+	objdist	objlist[MAX_OBJDISTS] = {0};
 
 	if (Game_mode & GM_MULTI)
 		srand(8321L);

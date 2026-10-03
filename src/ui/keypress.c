@@ -65,9 +65,9 @@ char * KeyDesc[256] = {         \
 
 void GetKeyDescription( char * text, int keypress )
 {
-	char Ctrl[10];
-	char Alt[10];
-	char Shift[10];
+	char Ctrl[10] = {0};
+	char Alt[10] = {0};
+	char Shift[10] = {0};
 
 	if (keypress & KEY_CTRLED)
 		strcpy( Ctrl, "{Ctrl}");
@@ -115,7 +115,7 @@ int GetKeyCode(char * text)
 {
 	UI_WINDOW * wnd;
 	UI_GADGET_BUTTON * DoneButton;
-	char temp_text[100];
+	char temp_text[100] = {0};
 
 	(void)text;
 

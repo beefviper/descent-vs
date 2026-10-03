@@ -207,7 +207,7 @@ static int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout 
 }
 
 // Read the buttons with BIOS int 15h, function 84h: no buttons pressed.
-static int joy_read_buttons_bios()
+static int joy_read_buttons_bios(void)
 {
 	return 0;
 }
@@ -362,7 +362,7 @@ void joy_handler(int ticks_this_time)	{
 	}
 }
 
-static void joy_handler_end()	{		// Dummy function to help calculate size of joystick handler function
+static void joy_handler_end(void)	{		// Dummy function to help calculate size of joystick handler function
 }
 
 #pragma off (check_stack)
@@ -383,7 +383,7 @@ void joy_set_slow_reading(int flag)
 ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 {
 	ubyte read_masks;
-	int t, t1, t2, buffer[4*2+2];
+	int t, t1, t2, buffer[4*2+2] = {0};
 	int e, i, num_channels, c;
 
 	axis[0] = 0; axis[1] = 0;
@@ -478,7 +478,7 @@ ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 int joy_init(void)
 {
 	int i;
-	int temp_axis[4];
+	int temp_axis[4] = {0};
 
 	joy_flush();
 
@@ -624,7 +624,7 @@ int last_reading[4] = { 0, 0, 0, 0 };
 void joy_get_pos( int *x, int *y )
 {
 	ubyte flags;
-	int axis[4];
+	int axis[4] = {0};
 
 	if ((!joy_installed)||(!joy_present)) { *x=*y=0; return; }
 
@@ -653,7 +653,7 @@ void joy_get_pos( int *x, int *y )
 ubyte joy_read_stick( ubyte masks, int *axis )
 {
 	ubyte flags;
-	int raw_axis[4];
+	int raw_axis[4] = {0};
 
 	if ((!joy_installed)||(!joy_present)) {
 		axis[0] = 0; axis[1] = 0;
@@ -804,7 +804,7 @@ void joy_set_btn_values( int btn, int state, fix timedown, int downcount, int up
 	_enable();
 }
 
-static void joy_poll()
+static void joy_poll(void)
 {
 	if ( joystick.slow_read & JOY_BIOS_READINGS )
 		joystick.last_value = joy_read_buttons_bios();

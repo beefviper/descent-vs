@@ -153,12 +153,12 @@ static char	 current_tmap_list[MAX_TEXTURES][13];
 int med_save_mine(char * filename)
 {
 	FILE * SaveFile;
-	char ErrorMessage[256];
+	char ErrorMessage[256] = {0};
 
 	SaveFile = cfopen( filename, CF_WRITE_MODE );
 	if (!SaveFile)
 	{
-		char fname[20];
+		char fname[20] = {0};
 		_splitpath( filename, NULL, NULL, fname, NULL );
 
 		sprintf( ErrorMessage, \
@@ -367,13 +367,13 @@ int save_mine_data_compiled(FILE * SaveFile)
 	warn_if_concave_segments();
 
 	if (Highest_segment_index >= MAX_GAME_SEGMENTS) {
-		char	message[128];
+		char	message[128] = {0};
 		sprintf(message, "Error: Too many segments (%i > %i) for game (not editor)", Highest_segment_index+1, MAX_GAME_SEGMENTS);
 		MessageBox( -2, -2, 1, message, "Ok" );
 	}
 
 	if (Highest_vertex_index >= MAX_GAME_VERTICES) {
-		char	message[128];
+		char	message[128] = {0};
 		sprintf(message, "Error: Too many vertices (%i > %i) for game (not editor)", Highest_vertex_index+1, MAX_GAME_VERTICES);
 		MessageBox( -2, -2, 1, message, "Ok" );
 	}
@@ -446,13 +446,13 @@ static int save_mine_data_compiled_new(FILE * SaveFile)
 	warn_if_concave_segments();
 
 	if (Highest_segment_index >= MAX_GAME_SEGMENTS) {
-		char	message[128];
+		char	message[128] = {0};
 		sprintf(message, "Error: Too many segments (%i > %i) for game (not editor)", Highest_segment_index+1, MAX_GAME_SEGMENTS);
 		MessageBox( -2, -2, 1, message, "Ok" );
 	}
 
 	if (Highest_vertex_index >= MAX_GAME_VERTICES) {
-		char	message[128];
+		char	message[128] = {0};
 		sprintf(message, "Error: Too many vertices (%i > %i) for game (not editor)", Highest_vertex_index+1, MAX_GAME_VERTICES);
 		MessageBox( -2, -2, 1, message, "Ok" );
 	}

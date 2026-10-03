@@ -65,10 +65,24 @@ void Warning(char *fmt,...);				//print out warning message to user
 void set_warn_func(void (*f)(char *s));//specifies the function to call with warning messages
 void clear_warn_func(void (*f)(char *s));//say this function no longer valid
 void _Assert(int expr,char *expr_text,char *filename,int linenum);	//assert func
-void Error(char *fmt,...);					//exit with error code=1, print message
+
+// Error() never returns. Saying so lets the compiler and the code
+// analyzers know that the code after a failed check is not reached.
+#if defined(_MSC_VER)
+#define NORETURN __declspec(noreturn)
+#elif defined(__GNUC__)
+#define NORETURN __attribute__((noreturn))
+#else
+#define NORETURN
+#endif
+
+NORETURN void Error(char *fmt,...);		//exit with error code=1, print message
+
 #ifndef NDEBUG		//macros for debugging
 
-#define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
+// Written as a test plus a call to Error() (which never returns), so the
+// compiler and the code analyzers know the condition holds afterwards.
+#define Assert(expr) ((expr) ? (void)0 : Error("Assertion failed: %s, file %s, line %d",#expr,__FILE__,__LINE__))
 
 // The Watcom version made Error() and a failing _Assert() do an int 3
 // first. Int3() breaks into the debugger in MSVC debug builds only.
@@ -85,7 +99,13 @@ void Error(char *fmt,...);					//exit with error code=1, print message
 
 #else					//macros for real game
 
+#if defined(_PREFAST_)
+// Under the MSVC code analyzer (/analyze, and Visual Studio's background
+// analysis) keep the checks, so the analyzer knows what each one rules out.
+#define Assert(expr) ((expr) ? (void)0 : Error("Assertion failed: %s, file %s, line %d",#expr,__FILE__,__LINE__))
+#else
 #define Assert(__ignore) ((void)0)
+#endif
 #define Int3() ((void)0)
 
 #endif

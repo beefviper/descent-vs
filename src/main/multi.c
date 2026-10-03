@@ -438,7 +438,7 @@ multi_choose_mission(int *anarchy_only)
 {
 	int i, n_missions;
 	int default_mission;
-   char *m[MAX_MISSIONS];
+   char *m[MAX_MISSIONS] = {0};
 	int new_mission_num = 0;
 
 	*anarchy_only = 0;
@@ -471,7 +471,7 @@ multi_choose_mission(int *anarchy_only)
 	return(new_mission_num);
 }
 
-extern void game_disable_cheats();
+extern void game_disable_cheats(void);
 
 void
 multi_new_game(void)
@@ -586,7 +586,7 @@ multi_sort_kill_list(void)
 {
 	// Sort the kills list each time a new kill is added
 
-	int kills[MAX_NUM_NET_PLAYERS];
+	int kills[MAX_NUM_NET_PLAYERS] = {0};
 	int i;
 	int changed = 1;
 
@@ -1071,7 +1071,7 @@ multi_send_message_start(void)
 	}
 }
 
-static void multi_send_message_end()
+static void multi_send_message_end(void)
 {
 	Network_message_reciever = 100;
 	HUD_init_message("%s '%s'", TXT_SENDING, Network_message);
@@ -1082,7 +1082,7 @@ static void multi_send_message_end()
 	multi_sending_message = 0;
 }
 
-static void multi_define_macro_end()
+static void multi_define_macro_end(void)
 {
 	Assert( multi_defining_message > 0 );
 
@@ -1155,7 +1155,7 @@ void multi_message_input_sub( int key )
 void
 multi_send_message_dialog(void)
 {
-	newmenu_item m[1];
+	newmenu_item m[1] = {0};
 	int choice;
 
 	if (!(Game_mode&GM_MULTI))
@@ -1669,7 +1669,7 @@ multi_do_create_explosion(char *buf)
 static void
 multi_do_controlcen_fire(char *buf)
 {
-	vms_vector to_target;
+	vms_vector to_target = {0};
 	char gun_num;
 	short objnum;
 	int count = 1;
@@ -1689,7 +1689,7 @@ multi_do_create_powerup(char *buf)
 	int my_objnum;
 	char pnum;
 	int count = 1;
-	vms_vector new_pos;
+	vms_vector new_pos = {0};
 	char powerup_type;
 
 	if (Endlevel_sequence || Fuelcen_control_center_destroyed)
@@ -1826,7 +1826,7 @@ static void multi_do_save_game(char *buf)
 	int count = 1;
 	ubyte slot;
 	uint id;
-	char desc[25];
+	char desc[25] = {0};
 
 	slot = *(ubyte *)(buf+count);		count += 1;
 	id = *(uint *)(buf+count);		count += 4;
@@ -1850,7 +1850,7 @@ static void multi_do_restore_game(char *buf)
 //
 static void multi_do_req_player(char *buf)
 {
-	netplayer_stats ps;
+	netplayer_stats ps = {0};
 	ubyte player_n;
 	// Send my netplayer_stats to everyone!
 	player_n = *(ubyte *)(buf+1);
@@ -2707,7 +2707,7 @@ void multi_set_robot_ai(void)
 //	}
 }
 
-int multi_delete_extra_objects()
+int multi_delete_extra_objects(void)
 {
 	int i;
 	int nnp=0;
@@ -2758,12 +2758,12 @@ void change_playernum_to( int new_Player_num )
 
 #endif
 
-void multi_initiate_save_game()
+void multi_initiate_save_game(void)
 {
 	uint game_id;
 	int i, slot;
-	char filename[128];
-	char desc[24];
+	char filename[128] = {0};
+	char desc[24] = {0};
 
 	if ((Endlevel_sequence) || (Fuelcen_control_center_destroyed))
 		return;
@@ -2794,10 +2794,10 @@ void multi_initiate_save_game()
 	multi_save_game(slot,game_id, desc );
 }
 
-void multi_initiate_restore_game()
+void multi_initiate_restore_game(void)
 {
 	int slot;
-	char filename[128];
+	char filename[128] = {0};
 
 	if ((Endlevel_sequence) || (Fuelcen_control_center_destroyed))
 		return;
@@ -2817,7 +2817,7 @@ void multi_initiate_restore_game()
 
 void multi_save_game(ubyte slot, uint id, char *desc)
 {
-	char filename[128];
+	char filename[128] = {0};
 
 	if ((Endlevel_sequence) || (Fuelcen_control_center_destroyed))
 		return;
@@ -2832,8 +2832,8 @@ void multi_save_game(ubyte slot, uint id, char *desc)
 
 void multi_restore_game(ubyte slot, uint id)
 {
-	char filename[128];
-	player saved_player;
+	char filename[128] = {0};
+	player saved_player = {0};
 
 	if ((Endlevel_sequence) || (Fuelcen_control_center_destroyed))
 		return;

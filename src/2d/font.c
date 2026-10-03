@@ -226,7 +226,7 @@ static int gr_internal_string0(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 
 	unsigned int VideoOffset, VideoOffset1;
 
@@ -321,7 +321,7 @@ static int gr_internal_string0m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 
 	unsigned int VideoOffset, VideoOffset1;
 
@@ -416,7 +416,7 @@ static int gr_internal_string2(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 	int page_switched;
 
 	unsigned int VideoOffset, VideoOffset1;
@@ -619,7 +619,7 @@ static int gr_internal_string2m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 	int page_switched;
 
 	unsigned int VideoOffset, VideoOffset1;
@@ -775,7 +775,9 @@ grs_bitmap char_bm = {
 				BM_FLAG_TRANSPARENT,		//flags
 				0,								//rowsize
 				NULL,							//data
-				0								//selector
+				0,								//selector
+				0,								//avg_color
+				0								//unused
 };
 
 static int gr_internal_color_string(int x, int y, char *s )
@@ -960,7 +962,7 @@ void gr_get_string_size(char *s, int *string_width, int *string_height, int *ave
 
 int gr_uprintf( int x, int y, char * format, ... )
 {
-	char buffer[1000];
+	char buffer[1000] = {0};
 	va_list args;
 
 	va_start(args, format );
@@ -970,7 +972,7 @@ int gr_uprintf( int x, int y, char * format, ... )
 
 int gr_printf( int x, int y, char * format, ... )
 {
-	char buffer[1000];
+	char buffer[1000] = {0};
 	va_list args;
 
 	va_start(args, format );
@@ -1074,9 +1076,9 @@ grs_font * gr_init_font( char * fontname )
 		font->ft_kerndata = NULL;
 
 	if (font->ft_flags & FT_COLOR) {		//remap palette
-		ubyte palette[256*3];
-		ubyte colormap[256];
-		int freq[256];
+		ubyte palette[256*3] = {0};
+		ubyte colormap[256] = {0};
+		int freq[256] = {0};
 
 		cfread(palette,3,256,fontfile);		//read the palette
 
@@ -1116,7 +1118,7 @@ int gr_internal_string_clipped(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 	int x1 = x, last_x;
 
 	next_row = s;
@@ -1202,7 +1204,7 @@ int gr_internal_string_clipped_m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
-	int r, BitMask, i, bits, width, spacing, letter, underline;
+	int r, BitMask, i, bits = 0, width, spacing, letter, underline;
 	int x1 = x, last_x;
 
 	next_row = s;

@@ -63,7 +63,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "clip.h"
 
-extern void gr_modex_line();
+extern void gr_modex_line(void);
 int modex_line_vertincr;
 int modex_line_incr1;
 int modex_line_incr2;

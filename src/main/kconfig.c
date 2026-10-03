@@ -936,7 +936,7 @@ static void kconfig_sub(kc_item * items,int nitems, char * title)
 void kc_drawitem( kc_item *item, int is_current )
 {
 	int x, w, h, aw;
-	char btext[10];
+	char btext[10] = {0};
 
 	if (is_current)
 		gr_set_fontcolor( BM_XRGB(20,20,29), -1 );
@@ -1031,7 +1031,7 @@ void kc_change_key( kc_item * item )
 		for (i=0; i<256; i++ )	{
 			if (keyd_pressed[i] && (strlen(key_text[i])>0))	{
 				f = 0;
-				for (n=0; n<sizeof(system_keys); n++ )
+				for (n=0; n<(int)sizeof(system_keys); n++ )
 					if ( system_keys[n] == i )
 						f=1;
 				if (!f)
@@ -1087,7 +1087,7 @@ void kc_change_joybutton( kc_item * item )
 		kc_drawquestion( item );
 
 		if (Config_control_type==CONTROL_THRUSTMASTER_FCS)	{
-			int axis[4];
+			int axis[4] = {0};
 			joystick_read_raw_axis( JOY_ALL_AXIS, axis );
 			kconfig_read_fcs( axis[3] );
 			if ( joy_get_button_state(7) ) code = 7;
@@ -1178,8 +1178,8 @@ void kc_change_mousebutton( kc_item * item )
 
 void kc_change_joyaxis( kc_item * item )
 {
-	int axis[4];
-	int old_axis[4];
+	int axis[4] = {0};
+	int old_axis[4] = {0};
 	int n,i,k;
 	ubyte code;
 
@@ -1337,7 +1337,7 @@ void kconfig(int n, char * title)
 
 void kconfig_read_fcs( int raw_axis )
 {
-	int raw_button, button, axis_min[4], axis_center[4], axis_max[4];
+	int raw_button, button, axis_min[4] = {0}, axis_center[4] = {0}, axis_max[4] = {0};
 
 	if (Config_control_type!=CONTROL_THRUSTMASTER_FCS) return;
 
@@ -1402,7 +1402,7 @@ extern int			VR_sensitivity;
 
 int VR_sense_range[3] = { 25, 50, 75 };
 
-static void read_head_tracker()
+static void read_head_tracker(void)
 {
 	fix yaw, pitch, roll;
 	int buttons;
@@ -1472,9 +1472,9 @@ void kconfig_init_external_controls(int intno, uintptr_t address)
 
 }
 
-static void kconfig_read_external_controls()
+static void kconfig_read_external_controls(void)
 {
-	union REGS r;
+	union REGS r = {0};
 
 	if ( !kc_enable_external_control ) return;
 
@@ -1511,7 +1511,7 @@ static void kconfig_read_external_controls()
 		Auto_leveling_on = 0;
 
 		if ( kc_external_version > 0 ) {
-			vms_matrix tempm, ViewMatrix;
+			vms_matrix tempm = {0}, ViewMatrix = {0};
 			vms_angvec * Kconfig_abs_movement;
 			char * oem_message;
 
@@ -1554,8 +1554,8 @@ void controls_read_all(void)
 	int dx, dy;
 	int idx, idy;
 	fix ctime;
-	fix mouse_axis[2];
-	int raw_joy_axis[4];
+	fix mouse_axis[2] = {0};
+	int raw_joy_axis[4] = {0};
 	int mouse_buttons;
 	fix k0, k1, k2, k3, kp;
 	fix k4, k5, k6, k7, kh;
@@ -2160,8 +2160,8 @@ void kc_set_controls(void)
 
 int SenseStatus1( void )
 {
-	union  REGS     regs;
-	struct SREGS    sregs;
+	union  REGS     regs = {0};
+	struct SREGS    sregs = {0};
 	int function, result, i;
 
 	for( i=MIN_SENSE_FUNCTION; i <= MAX_SENSE_FUNCTION; i++ )	{
@@ -2177,7 +2177,7 @@ int SenseStatus1( void )
 		regs.x.eax = function;
 		int386( SENSE_VECTOR, &regs, &regs );
 
-		if( regs.x.eax == result )
+		if( (int)regs.x.eax == result )
 			return( function & 0xFF00 );
 	}
 
@@ -2186,8 +2186,8 @@ int SenseStatus1( void )
 
 int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons )
 {
-	union  REGS     regs;
-	struct SREGS    sregs;
+	union  REGS     regs = {0};
+	struct SREGS    sregs = {0};
 	memset( &regs, 0, sizeof(regs));
 	memset( &sregs, 0, sizeof(sregs));
 	regs.x.eax = function | GET_DEVICE_DATA;
@@ -2221,7 +2221,7 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
 
-void kconfig_center_headset()
+void kconfig_center_headset(void)
 {
 	if (vfx1_installed)
 		SenseSetZero( sense_function1, DCHTD );
@@ -2234,8 +2234,8 @@ void kconfig_center_headset()
 
 int SenseSetZero( int function, int cls )
 {
-	union  REGS     regs;
-	struct SREGS    sregs;
+	union  REGS     regs = {0};
+	struct SREGS    sregs = {0};
 	memset( &regs, 0, sizeof(regs));
 	memset( &sregs, 0, sizeof(sregs));
 	regs.x.eax = function | SET_ZERO;

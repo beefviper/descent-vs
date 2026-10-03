@@ -211,11 +211,11 @@ static int compute_average_pixel(grs_bitmap *new)
 
 static bitmap_index bm_load_sub( char * filename )
 {
-	bitmap_index bitmap_num;
+	bitmap_index bitmap_num = {0};
 	grs_bitmap * new;
-	ubyte newpal[256*3];
+	ubyte newpal[256*3] = {0};
 	int iff_error;		//reference parm to avoid warning message
-	char fname[20];
+	char fname[20] = {0};
 
 	bitmap_num.index = 0;
 
@@ -258,13 +258,13 @@ static bitmap_index bm_load_sub( char * filename )
 
 static void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 {
-	grs_bitmap * bm[MAX_BITMAPS_PER_BRUSH];
-	bitmap_index bi;
+	grs_bitmap * bm[MAX_BITMAPS_PER_BRUSH] = {0};
+	bitmap_index bi = {0};
 	int i;
 	int iff_error;		//reference parm to avoid warning message
-	ubyte newpal[768];
-	char fname[20];
-	char tempname[20];
+	ubyte newpal[768] = {0};
+	char fname[20] = {0};
+	char tempname[20] = {0};
 
 #ifdef SHAREWARE
 	if (Registered_only) {
@@ -300,7 +300,7 @@ static void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 	}
 
 	for (i=0;i< *nframes; i++)	{
-		bitmap_index new_bmp;
+		bitmap_index new_bmp = {0};
 		sprintf( tempname, "%s#%d", fname, i );
 		if ( iff_has_transparency )
 			gr_remap_bitmap_good( bm[i], newpal, iff_transparent_color, SuperX );
@@ -319,9 +319,9 @@ static void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 static int ds_load( char * filename )	{
 	int i;
 	CFILE * cfp;
-	digi_sound new;
-	char fname[20];
-	char rawname[100];
+	digi_sound new = {0};
+	char fname[20] = {0};
+	char rawname[100] = {0};
 
 #ifdef SHAREWARE
 	if (Registered_only) {
@@ -357,7 +357,7 @@ static int ds_load( char * filename )	{
 }
 
 //parse a float
-static float get_float()
+static float get_float(void)
 {
 	char *xarg;
 
@@ -366,7 +366,7 @@ static float get_float()
 }
 
 //parse an int
-static int get_int()
+static int get_int(void)
 {
 	char *xarg;
 
@@ -394,10 +394,10 @@ int	linenum;
 
 //-----------------------------------------------------------------
 // Initializes all bitmaps from BITMAPS.TBL file.
-int bm_init_use_tbl()
+int bm_init_use_tbl(void)
 {
 	CFILE	* InfoFile;
-	char	inputline[LINEBUF_SIZE];
+	char	inputline[LINEBUF_SIZE] = {0};
 	int	i, have_bin_tbl;
 
 	init_polygon_models();
@@ -477,7 +477,7 @@ int bm_init_use_tbl()
 		linenum++;
 
 		if (have_bin_tbl) {				// is this a binary tbl file
-			for (i = 0; i < strlen(inputline) - 1; i++) {
+			for (i = 0; i < (int)strlen(inputline) - 1; i++) {
 				encode_rotate_left(&(inputline[i]));
 				inputline[i] = inputline[i] ^ BITMAP_TBL_XOR;
 				encode_rotate_left(&(inputline[i]));
@@ -685,9 +685,9 @@ static void set_texture_name(char *name)
 	REMOVE_DOTS(TmapInfo[texture_count].filename);
 }
 
-static void bm_read_eclip()
+static void bm_read_eclip(void)
 {
-	bitmap_index bitmap;
+	bitmap_index bitmap = {0};
 
 	Assert(clip_num < MAX_EFFECTS);
 
@@ -725,7 +725,7 @@ static void bm_read_eclip()
 		clip_count++;
 
 	} else {
-		bitmap_index bm[MAX_BITMAPS_PER_BRUSH];
+		bitmap_index bm[MAX_BITMAPS_PER_BRUSH] = {0};
 		abm_flag = 0;
 
 		ab_load( arg, bm, &Effects[clip_num].vc.num_frames );
@@ -773,7 +773,7 @@ static void bm_read_eclip()
 	Effects[clip_num].sound_num = sound_num;
 
 	if (dest_bm) {			//deal with bitmap for blown up clip
-		char short_name[13];
+		char short_name[13] = {0};
 		int i;
 		strcpy(short_name,dest_bm);
 		REMOVE_DOTS(short_name);
@@ -809,9 +809,9 @@ static void bm_read_eclip()
 }
 
 
-static void bm_read_gauges()
+static void bm_read_gauges(void)
 {
-	bitmap_index bitmap;
+	bitmap_index bitmap = {0};
 	int i, num_abm_frames;
 
 	if (!abm_flag)	{
@@ -820,7 +820,7 @@ static void bm_read_gauges()
 		Gauges[clip_count] = bitmap;
 		clip_count++;
 	} else {
-		bitmap_index bm[MAX_BITMAPS_PER_BRUSH];
+		bitmap_index bm[MAX_BITMAPS_PER_BRUSH] = {0};
 		abm_flag = 0;
 		ab_load( arg, bm, &num_abm_frames );
 		for (i=clip_count; i<clip_count+num_abm_frames; i++) {
@@ -831,9 +831,9 @@ static void bm_read_gauges()
 	}
 }
 
-static void bm_read_wclip()
+static void bm_read_wclip(void)
 {
-	bitmap_index bitmap;
+	bitmap_index bitmap = {0};
 	Assert(clip_num < MAX_WALL_ANIMS);
 
 	WallAnims[clip_num].flags = 0;
@@ -862,7 +862,7 @@ static void bm_read_wclip()
 		NumTextures = texture_count;
 		if (clip_num >= Num_wall_anims) Num_wall_anims = clip_num+1;
 	} else {
-		bitmap_index bm[MAX_BITMAPS_PER_BRUSH];
+		bitmap_index bm[MAX_BITMAPS_PER_BRUSH] = {0};
 		int nframes;
 		if ( (WallAnims[clip_num].num_frames>-1)  )
 			Error( "AB_Wall clip %d is already used!", clip_num );
@@ -897,9 +897,9 @@ static void bm_read_wclip()
 	}
 }
 
-static void bm_read_vclip()
+static void bm_read_vclip(void)
 {
-	bitmap_index bi;
+	bitmap_index bi = {0};
 	Assert(clip_num < VCLIP_MAXNUM);
 
 	if (!abm_flag)	{
@@ -920,7 +920,7 @@ static void bm_read_vclip()
 		}
 
 	} else	{
-		bitmap_index bm[MAX_BITMAPS_PER_BRUSH];
+		bitmap_index bm[MAX_BITMAPS_PER_BRUSH] = {0};
 		abm_flag = 0;
 		if ( (Vclip[clip_num].num_frames>-1)  )
 			Error( "AB_Vclip %d is already used!", clip_num );
@@ -1104,10 +1104,10 @@ static grs_bitmap *load_polymodel_bitmap(char *name)
 // ------------------------------------------------------------------------------
 static void bm_read_robot(void)
 {
-	char			*model_name[MAX_MODEL_VARIANTS];
+	char			*model_name[MAX_MODEL_VARIANTS] = {0};
 	int			n_models,i;
 	int			last_model_num=0;
-	int			first_bitmap_num[MAX_MODEL_VARIANTS];
+	int			first_bitmap_num[MAX_MODEL_VARIANTS] = {0};
 	char			*equal_ptr;
 	int 			exp1_vclip_num=-1;
 	int			exp1_sound_num=-1;
@@ -1119,7 +1119,7 @@ static void bm_read_robot(void)
 	fix			drag = f1_0/2;
 	short 		weapon_type = 0;
 	int			g,s;
-	char			name[ROBOT_NAME_LENGTH];
+	char			name[ROBOT_NAME_LENGTH] = {0};
 	int			contains_count=0, contains_id=0, contains_prob=0, contains_type=0;
 	int			score_value=1000;
 	int			cloak_type=0;		//	Default = this robot does not cloak
@@ -1277,7 +1277,7 @@ static void bm_read_robot(void)
 static void bm_read_object(void)
 {
 	char *model_name, *model_name_dead=NULL;
-	int first_bitmap_num, first_bitmap_num_dead, n_normal_bitmaps;
+	int first_bitmap_num, first_bitmap_num_dead = 0, n_normal_bitmaps;
 	char *equal_ptr;
 	short model_num;
 	fix	lighting = F1_0/2;		// Default
@@ -1366,12 +1366,12 @@ static void bm_read_object(void)
 static void bm_read_player_ship(void)
 {
 	char	*model_name_dying=NULL;
-	char	*model_name[MAX_MODEL_VARIANTS];
+	char	*model_name[MAX_MODEL_VARIANTS] = {0};
 	int	n_models=0,i;
 	int	last_model_num=0;
-	int	first_bitmap_num[MAX_MODEL_VARIANTS];
+	int	first_bitmap_num[MAX_MODEL_VARIANTS] = {0};
 	char *equal_ptr;
-	robot_info ri;
+	robot_info ri = {0};
 	int last_multi_bitmap_num=-1;
 
 	// Process bitmaps
@@ -1481,7 +1481,7 @@ static void bm_read_player_ship(void)
 	{
 		polymodel *pm;
 		robot_info *r;
-		vms_vector pnt;
+		vms_vector pnt = {0};
 		int mn;				//submodel number
 		int gun_num;
 
@@ -1512,7 +1512,7 @@ static void bm_read_some_file(void)
 
 	switch (bm_flag) {
 	case BM_COCKPIT:	{
-		bitmap_index bitmap;
+		bitmap_index bitmap = {0};
 		bitmap = bm_load_sub(arg);
 		Assert( Num_cockpits < N_COCKPIT_BITMAPS );
 		cockpit_bitmap[Num_cockpits++] = bitmap;
@@ -1533,7 +1533,7 @@ static void bm_read_some_file(void)
 		bm_read_eclip();
 		break;
 	case BM_TEXTURES:			{
-		bitmap_index bitmap;
+		bitmap_index bitmap = {0};
 		bitmap = bm_load_sub(arg);
 		Assert(tmap_count < MAX_TEXTURES);
   		TmapList[tmap_count++] = texture_count;
@@ -1561,8 +1561,8 @@ static void bm_read_weapon(int unused_flag)
 	int	last_model_num=0;
 	char 	*equal_ptr;
 	char	*pof_file_inner=NULL;
-	char	*model_name[MAX_MODEL_VARIANTS];
-	int	first_bitmap_num[MAX_MODEL_VARIANTS];
+	char	*model_name[MAX_MODEL_VARIANTS] = {0};
+	int	first_bitmap_num[MAX_MODEL_VARIANTS] = {0};
 	int	lighted;					//flag for whether is a texture is lighted
 
 	Assert(N_weapon_types < MAX_WEAPON_TYPES);
@@ -1890,7 +1890,7 @@ static void bm_read_hostage_face(void)
 {
 	char *abm_name,*equal_ptr;
 	int clip_num=-1,sound_num=-1;
-	fix time;
+	fix time = 0;
 
 	abm_name = strtok( NULL, space );
 

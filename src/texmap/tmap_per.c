@@ -219,7 +219,7 @@ static void tmap_per_fast_nolight(ubyte *dest, int loop_count, int32_t u, int32_
 	int32_t	U0, V0, U1, V1, DU1, DV1, DZ1;
 	uint32_t	uv, duv;
 	uint		c;
-	ubyte		pix[4];
+	ubyte		pix[4] = {0};
 
 	// Getting dword aligned
 	while ((uintptr_t) dest & 3) {

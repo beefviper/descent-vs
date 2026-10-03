@@ -246,8 +246,8 @@ int medlisp_delete_segment(void)
 
 int medlisp_scale_segment(void)
 {
-	vms_matrix	rotmat;
-	vms_vector	scale;
+	vms_matrix	rotmat = {0};
+	vms_vector	scale = {0};
 
 	scale.x = fl2f((float) func_get_param(0));
 	scale.y = fl2f((float) func_get_param(1));
@@ -262,7 +262,7 @@ int medlisp_scale_segment(void)
 
 int medlisp_rotate_segment(void)
 {
-	vms_matrix	rotmat;
+	vms_matrix	rotmat = {0};
 
 	Seg_orientation.p = func_get_param(0);
 	Seg_orientation.b = func_get_param(1);
@@ -382,7 +382,7 @@ int medlisp_update_screen(void)
 			}
 
 	if (Update_flags & (UF_WORLD_CHANGED|UF_GAME_VIEW_CHANGED|UF_ED_STATE_CHANGED)) {
-		grs_canvas temp_canvas;
+		grs_canvas temp_canvas = {0};
 		grs_canvas *render_canv,*show_canv;
 
 		if (render_3d_in_big_window) {
@@ -486,7 +486,7 @@ int AttachSegment(void)
 	return 1;
 }
 
-static int ForceTotalRedraw()
+static int ForceTotalRedraw(void)
 {
 	Update_flags = UF_ALL;
 	return 1;
@@ -494,7 +494,7 @@ static int ForceTotalRedraw()
 
 
 #if ORTHO_VIEWS
-int SyncLargeView()
+int SyncLargeView(void)
 {
 	// Make large view be same as one of the orthogonal views.
 	Large_view_index = (Large_view_index + 1) % 3;  // keep in 0,1,2 for top, front, right
@@ -508,7 +508,7 @@ int SyncLargeView()
 }
 #endif
 
-static int DeleteCurSegment()
+static int DeleteCurSegment(void)
 {
 	// Delete current segment.
     med_delete_segment(Cursegp);
@@ -527,7 +527,7 @@ static int DeleteCurSegment()
 int CreateDefaultNewSegment(void)
 {
 	// Create a default segment for New_segment.
-	vms_vector  tempvec;
+	vms_vector  tempvec = {0};
 	med_create_new_segment(vm_vec_make(&tempvec,DEFAULT_X_SIZE,DEFAULT_Y_SIZE,DEFAULT_Z_SIZE));
 	mine_changed = 1;
 

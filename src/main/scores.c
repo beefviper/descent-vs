@@ -299,7 +299,7 @@ char scores_filename[128];
 void scores_view(int citem);
 
 
-static char * get_scores_filename()
+static char * get_scores_filename(void)
 {
 #ifndef RELEASE
 	// Only use the MINER variable for internal developement
@@ -316,7 +316,7 @@ static char * get_scores_filename()
 }
 
 
-static void scores_read()
+static void scores_read(void)
 {
 	FILE * fp;
 	int fsize;
@@ -362,7 +362,7 @@ static void scores_read()
 	}
 }
 
-static void scores_write()
+static void scores_write(void)
 {
 	FILE * fp;
 
@@ -383,7 +383,7 @@ static void scores_write()
 static void int_to_string( int number, char *dest )
 {
 	int i,l,c;
-	char buffer[20],*p;
+	char buffer[20] = {0},*p;
 
 	sprintf( buffer, "%d", number );
 
@@ -433,8 +433,8 @@ static void scores_fill_struct(stats_info * stats)
 
 void scores_maybe_add_player(int abort_flag)
 {
-	char text1[COOL_MESSAGE_LEN+10];
-	newmenu_item m[10];
+	char text1[COOL_MESSAGE_LEN+10] = {0};
+	newmenu_item m[10] = {0};
 	int i,position;
 
 	scores_read();
@@ -488,7 +488,7 @@ void scores_maybe_add_player(int abort_flag)
 static void scores_rprintf(int x, int y, char * format, ... )
 {
 	va_list args;
-	char buffer[128];
+	char buffer[128] = {0};
 	int w, h, aw;
 	char *p;
 
@@ -508,7 +508,7 @@ static void scores_rprintf(int x, int y, char * format, ... )
 
 static void scores_draw_item( int  i, stats_info * stats )
 {
-	char buffer[20];
+	char buffer[20] = {0};
 
 		int y;
 

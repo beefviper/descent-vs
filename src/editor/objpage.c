@@ -265,7 +265,7 @@ void draw_robot_picture(int id, vms_angvec *orient_angles, int type)
 
 }
 
-static void redraw_current_object()
+static void redraw_current_object(void)
 {
 	grs_canvas * cc;
 
@@ -305,7 +305,7 @@ int objpage_goto_first(void)
 	return 1;
 }
 
-static int objpage_goto_last()
+static int objpage_goto_last(void)
 {
 	int i;
 
@@ -324,7 +324,7 @@ static int objpage_goto_last()
 	return 1;
 }
 
-static int objpage_goto_prev()
+static int objpage_goto_prev(void)
 {
 	int i;
 	if (ObjectPage > 0) {
@@ -344,7 +344,7 @@ static int objpage_goto_prev()
 	return 1;
 }
 
-static int objpage_goto_next()
+static int objpage_goto_next(void)
 {
 	int i;
 	if ((ObjectPage+1)*OBJS_PER_PAGE < Num_total_object_types) {
@@ -416,63 +416,63 @@ int objpage_goto_next_object(void)
 
 #define DELTA_ANG 0x800
 
-static int objpage_increase_pitch()
+static int objpage_increase_pitch(void)
 {
 	objpage_view_orient.p += DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_decrease_pitch()
+static int objpage_decrease_pitch(void)
 {
 	objpage_view_orient.p -= DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_increase_heading()
+static int objpage_increase_heading(void)
 {
 	objpage_view_orient.h += DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_decrease_heading()
+static int objpage_decrease_heading(void)
 {
 	objpage_view_orient.h -= DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_increase_bank()
+static int objpage_increase_bank(void)
 {
 	objpage_view_orient.b += DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_decrease_bank()
+static int objpage_decrease_bank(void)
 {
 	objpage_view_orient.b -= DELTA_ANG;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_increase_z()
+static int objpage_increase_z(void)
 {
 	objpage_view_dist -= 0x8000;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_decrease_z()
+static int objpage_decrease_z(void)
 {
 	objpage_view_dist += 0x8000;
 	redraw_current_object();
 	return 1;
 }
 
-static int objpage_reset_orient()
+static int objpage_reset_orient(void)
 {
 	objpage_view_orient.p = 0;
 	objpage_view_orient.b = 0;

@@ -204,7 +204,7 @@ static void insert_center_points(point_seg *psegs, short *num_points)
 
 	for (i=last_point; i>0; i--) {
 		int			connect_side;
-		vms_vector	center_point, new_point;
+		vms_vector	center_point = {0}, new_point = {0};
 
 		psegs[2*i] = psegs[i];
 		connect_side = find_connect_side(&Segments[psegs[i].segnum], &Segments[psegs[i-1].segnum]);
@@ -256,11 +256,11 @@ int create_path_points(object *objp, int start_seg, int end_seg, point_seg *pseg
 	int		sidenum;
 	int		qtail = 0, qhead = 0;
 	int		i;
-	byte		visited[MAX_SEGMENTS];
-	seg_seg	seg_queue[MAX_SEGMENTS];
-	short		depth[MAX_SEGMENTS];
+	byte		visited[MAX_SEGMENTS] = {0};
+	seg_seg	seg_queue[MAX_SEGMENTS] = {0};
+	short		depth[MAX_SEGMENTS] = {0};
 	int		cur_depth;
-	byte		random_xlate[MAX_SIDES_PER_SEGMENT];
+	byte		random_xlate[MAX_SIDES_PER_SEGMENT] = {0};
 	point_seg	*original_psegs = psegs;
 #ifndef NDEBUG
 	point_seg	*other_original_psegs = psegs;
@@ -319,6 +319,9 @@ if ((objp->type == OBJ_ROBOT) && (objp->ctype.ai_info.behavior == AIB_RUN_FROM))
 
 			if ((WALL_IS_DOORWAY(segp, snum) & WID_FLY_FLAG) || (ai_door_is_openable(objp, segp, snum))) {
 				int	this_seg = segp->children[snum];
+
+				if (this_seg < 0 || this_seg >= MAX_SEGMENTS || qtail >= MAX_SEGMENTS)
+					continue;
 
 				if (!visited[this_seg]) {
 					seg_queue[qtail].start = cur_seg;
@@ -826,7 +829,7 @@ void ai_follow_path(object *objp, int player_visibility)
 {
 	ai_static		*aip = &objp->ctype.ai_info;
 
-	vms_vector	goal_point, new_goal_point;
+	vms_vector	goal_point = {0}, new_goal_point = {0};
 	fix			dist_to_goal;
 	// robot_info	*robptr = &Robot_info[objp->id];
 	int			forced_break, original_dir, original_index;
@@ -1005,9 +1008,9 @@ if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (
 				//	If not, turn around.
 				int			opposite_end_index;
 				vms_vector	*opposite_end_point;
-				fvi_info		hit_data;
+				fvi_info		hit_data = {0};
 				int			fate;
-				fvi_query	fq;
+				fvi_query	fq = {0};
 
 				// See which end we're nearer and look at the opposite end point.
 				if (abs(aip->cur_path_index - aip->path_length) < aip->cur_path_index) {
@@ -1082,10 +1085,10 @@ static int path_index_compare(const void* i1, const void* i2)
 void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
 {
 	vms_vector	cur_vel = objp->mtype.phys_info.velocity;
-	vms_vector	norm_cur_vel;
-	vms_vector	norm_vec_to_goal;
+	vms_vector	norm_cur_vel = {0};
+	vms_vector	norm_vec_to_goal = {0};
 	vms_vector	cur_pos = objp->pos;
-	vms_vector	norm_fvec;
+	vms_vector	norm_fvec = {0};
 	fix			speed_scale;
 	fix			dot;
 	robot_info	*robptr = &Robot_info[objp->id];
@@ -1148,7 +1151,7 @@ static void ai_path_garbage_collect(void)
 	int	num_path_objects = 0;
 	int	objnum;
 	int	objind;
-	obj_path		object_list[MAX_OBJECTS];
+	obj_path		object_list[MAX_OBJECTS] = {0};
 
 #ifndef NDEBUG
 	force_dump_ai_objects_all("***** Start ai_path_garbage_collect *****");
@@ -1311,7 +1314,7 @@ int	Test_size = 1000;
 
 void test_create_path_many(void)
 {
-	point_seg	point_segs[200];
+	point_seg	point_segs[200] = {0};
 	short			num_points;
 
 	int			i;
@@ -1326,7 +1329,7 @@ void test_create_path_many(void)
 
 void test_create_path(void)
 {
-	point_seg	point_segs[200];
+	point_seg	point_segs[200] = {0};
 	short			num_points;
 
 	create_path_points(&Objects[0], Cursegp-Segments, Markedsegp-Segments, point_segs, &num_points, -1, 0, 0, -1);
@@ -1437,10 +1440,10 @@ int	Player_following_path_flag=0;
 static void player_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
 {
 	vms_vector	cur_vel = objp->mtype.phys_info.velocity;
-	vms_vector	norm_cur_vel;
-	vms_vector	norm_vec_to_goal;
+	vms_vector	norm_cur_vel = {0};
+	vms_vector	norm_vec_to_goal = {0};
 	vms_vector	cur_pos = objp->pos;
-	vms_vector	norm_fvec;
+	vms_vector	norm_fvec = {0};
 	fix			speed_scale;
 	fix			dot;
 	fix			max_speed;
@@ -1489,7 +1492,7 @@ static void player_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
 //	Optimization: If current velocity will take robot near goal, don't change velocity
 void player_follow_path(object *objp)
 {
-	vms_vector	goal_point;
+	vms_vector	goal_point = {0};
 	fix			dist_to_goal;
 	int			count, forced_break, original_index;
 	int			goal_seg;

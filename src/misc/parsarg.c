@@ -63,7 +63,7 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 
 	for (;argc--;argv++) {
 		if (**argv=='@') {			/* read args from file */
-			char *arg_ptrs[MAX_ARGS];
+			char *arg_ptrs[MAX_ARGS] = {0};
 			int arg_count;
 			FILE *argfile;
 			int len;
@@ -108,9 +108,9 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 		}
 		else
 			if (flags&PA_EXPAND && (**argv != '-')) {
-				struct find_t ffblk;
-				char drive[_MAX_DRIVE],dir[_MAX_DIR];
-				char filename[_MAX_DRIVE+_MAX_DIR+13],*nptr;
+				struct find_t ffblk = {0};
+				char drive[_MAX_DRIVE] = {0},dir[_MAX_DIR] = {0};
+				char filename[_MAX_DRIVE+_MAX_DIR+13] = {0},*nptr;
 				int done;
 
 				_splitpath(*argv,drive,dir,NULL,NULL);		//get path

@@ -317,7 +317,7 @@ int load_mine_data(CFILE *LoadFile)
 	Assert (NumTextures < MAX_TEXTURES);
 
 	{
-		hashtable ht;
+		hashtable ht = {0};
 
 		hashtable_init( &ht, NumTextures );
 
@@ -474,7 +474,7 @@ int load_mine_data(CFILE *LoadFile)
 	#ifdef EDITOR
 
 	{		// Default segment created.
-		vms_vector	sizevec;
+		vms_vector	sizevec = {0};
 		med_create_new_segment(vm_vec_make(&sizevec,DEFAULT_X_SIZE,DEFAULT_Y_SIZE,DEFAULT_Z_SIZE));		// New_segment = Segments[0];
 		//memset( &New_segment, 0, sizeof(segment) );
 	}

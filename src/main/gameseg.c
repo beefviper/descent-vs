@@ -481,7 +481,7 @@ void create_abs_vertex_lists(int *num_faces, int *vertices, int segnum, int side
 segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 {
 	int			sn,facebit,sidebit;
-	segmasks		masks;
+	segmasks		masks = {0};
 	int			num_faces = 0;
 	int			vertex_list[6] = {0};
 	segment		*seg;
@@ -517,7 +517,7 @@ segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 			fix	dist;
 			int	side_count,center_count;
 			#ifdef COMPACT_SEGS
-			vms_vector normals[2];
+			vms_vector normals[2] = {0};
 			#endif
 
 			vertnum = min(vertex_list[0],vertex_list[2]);
@@ -585,7 +585,7 @@ segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 			fix dist;
 			int i;
 			#ifdef COMPACT_SEGS
-			vms_vector normal;
+			vms_vector normal = {0};
 			#endif
 
 			//use lowest point number
@@ -663,7 +663,7 @@ static ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 			int	center_count;
 			int	vertnum;
 			#ifdef COMPACT_SEGS
-			vms_vector normals[2];
+			vms_vector normals[2] = {0};
 			#endif
 
 			vertnum = min(vertex_list[0],vertex_list[2]);
@@ -729,7 +729,7 @@ static ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 			fix dist;
 			int i,vertnum;
 			#ifdef COMPACT_SEGS
-			vms_vector normal;
+			vms_vector normal = {0};
 			#endif
 
 
@@ -797,7 +797,7 @@ int check_segment_connections(void)
 		for (sidenum=0;sidenum<6;sidenum++) {
 			segment *cseg;
 			int num_faces,csegnum,csidenum,con_num_faces;
-			int vertex_list[6],con_vertex_list[6];
+			int vertex_list[6] = {0},con_vertex_list[6] = {0};
 
 			create_abs_vertex_lists( &num_faces, vertex_list, segnum, sidenum);
 
@@ -910,7 +910,7 @@ static int trace_segs(vms_vector *p0,int oldsegnum)
 {
 	int centermask;
 	segment *seg;
-	fix side_dists[6];
+	fix side_dists[6] = {0};
 
 	Assert((oldsegnum <= Highest_segment_index) && (oldsegnum >= 0));
 
@@ -1097,12 +1097,12 @@ fix find_connected_distance(vms_vector *p0, int seg0, vms_vector *p1, int seg1, 
 	int		sidenum;
 	int		qtail = 0, qhead = 0;
 	int		i;
-	byte		visited[MAX_SEGMENTS];
-	seg_seg	seg_queue[MAX_SEGMENTS];
-	short		depth[MAX_SEGMENTS];
+	byte		visited[MAX_SEGMENTS] = {0};
+	seg_seg	seg_queue[MAX_SEGMENTS] = {0};
+	short		depth[MAX_SEGMENTS] = {0};
 	int		cur_depth;
 	int		num_points;
-	point_seg	point_segs[MAX_LOC_POINT_SEGS];
+	point_seg	point_segs[MAX_LOC_POINT_SEGS] = {0};
 	fix		dist;
 
 	//	If > this, will overrun point_segs buffer
@@ -1371,7 +1371,7 @@ void extract_shortpos(object *objp, shortpos *spp)
 static void extract_vector_from_segment(segment *sp, vms_vector *vp, int start, int end)
 {
 	int			i;
-	vms_vector	vs,ve;
+	vms_vector	vs = {0},ve = {0};
 
 	vm_vec_zero(&vs);
 	vm_vec_zero(&ve);
@@ -1389,7 +1389,7 @@ static void extract_vector_from_segment(segment *sp, vms_vector *vp, int start, 
 //create a matrix that describes the orientation of the given segment
 void extract_orient_from_segment(vms_matrix *m,segment *seg)
 {
-	vms_vector fvec,uvec;
+	vms_vector fvec = {0},uvec = {0};
 
 	extract_vector_from_segment(seg,&fvec,WFRONT,WBACK);
 	extract_vector_from_segment(seg,&uvec,WBOTTOM,WTOP);
@@ -1457,7 +1457,7 @@ static void add_side_as_quad(segment *sp, int sidenum, vms_vector *normal)
 static void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, int *v3, int *negate_flag)
 {
 	int	i,j;
-	int	v[4],w[4];
+	int	v[4] = {0},w[4] = {0};
 
 	//	w is a list that shows how things got scrambled so we know if our normal is pointing backwards
 	for (i=0; i<4; i++)
@@ -1494,10 +1494,10 @@ static void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v
 // -------------------------------------------------------------------------------
 static void add_side_as_2_triangles(segment *sp, int sidenum)
 {
-	vms_vector	norm;
+	vms_vector	norm = {0};
 	byte			*vs = Side_to_verts[sidenum];
 	fix			dot;
-	vms_vector	vec_13;		//	vector from vertex 1 to vertex 3
+	vms_vector	vec_13 = {0};		//	vector from vertex 1 to vertex 3
 
 	side	*sidep = &sp->sides[sidenum];
 
@@ -1532,7 +1532,7 @@ static void add_side_as_2_triangles(segment *sp, int sidenum)
 		}
 		#endif
 	} else {
-		int	i,v[4], vsorted[4];
+		int	i,v[4] = {0}, vsorted[4] = {0};
 		int	negate_flag;
 
 		for (i=0; i<4; i++)
@@ -1592,7 +1592,7 @@ void create_walls_on_side(segment *sp, int sidenum)
 {
 	int	vm0, vm1, vm2, vm3, negate_flag;
 	int	v0, v1, v2, v3;
-	vms_vector vn;
+	vms_vector vn = {0};
 	fix	dist_to_plane;
 
 	v0 = sp->verts[Side_to_verts[sidenum][0]];
@@ -1636,7 +1636,7 @@ void create_walls_on_side(segment *sp, int sidenum)
 
 		{
 			int			num_faces;
-			int			vertex_list[6];
+			int			vertex_list[6] = {0};
 			fix			dist0,dist1;
 			int			s0,s1;
 			int			vertnum;
@@ -1652,7 +1652,7 @@ void create_walls_on_side(segment *sp, int sidenum)
 
 			#ifdef COMPACT_SEGS
 			{
-			vms_vector normals[2];
+			vms_vector normals[2] = {0};
 			get_side_normals(sp, sidenum, &normals[0], &normals[1] );
 			dist0 = vm_dist_to_plane(&Vertices[vertex_list[1]],&normals[1],&Vertices[vertnum]);
 			dist1 = vm_dist_to_plane(&Vertices[vertex_list[4]],&normals[0],&Vertices[vertnum]);
@@ -1700,13 +1700,13 @@ int ncache_hits = 0;
 int ncache_misses = 0;
 #endif
 
-void ncache_init()
+void ncache_init(void)
 {
 	ncache_flush();
 	ncache_initialized = 1;
 }
 
-void ncache_flush()
+void ncache_flush(void)
 {
 	int i;
 	for (i=0; i<MAX_CACHE_NORMALS; i++ )	{
@@ -1770,7 +1770,7 @@ void get_side_normal(segment *sp, int sidenum, int face_num, vms_vector * vm )
 	i = find_ncache_element( sp - Segments, sidenum, 1 << face_num );
 	*vm = ncache[i].normals[face_num];
 	if (0) {
-		vms_vector tmp;
+		vms_vector tmp = {0};
 		uncached_get_side_normal(sp, sidenum, face_num, &tmp );
 		Assert( tmp.x == vm->x );
 		Assert( tmp.y == vm->y );
@@ -1786,7 +1786,7 @@ void get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_vector * v
 	*vm2 = ncache[i].normals[1];
 
 	if (0) {
-		vms_vector tmp;
+		vms_vector tmp = {0};
 		uncached_get_side_normal(sp, sidenum, 0, &tmp );
 		Assert( tmp.x == vm1->x );
 		Assert( tmp.y == vm1->y );
@@ -1950,7 +1950,7 @@ void validate_segment_all(void)
 void pick_random_point_in_seg(vms_vector *new_pos, int segnum)
 {
 	int			vnum;
-	vms_vector	vec2;
+	vms_vector	vec2 = {0};
 
 	compute_segment_center(new_pos, &Segments[segnum]);
 	vnum = (rand() * MAX_VERTICES_PER_SEGMENT) >> 15;
@@ -1966,11 +1966,11 @@ void pick_random_point_in_seg(vms_vector *new_pos, int segnum)
 int set_segment_depths(int start_seg, ubyte *segbuf)
 {
 	int	i, curseg;
-	ubyte	visited[MAX_SEGMENTS];
-	int	queue[MAX_SEGMENTS];
+	ubyte	visited[MAX_SEGMENTS] = {0};
+	int	queue[MAX_SEGMENTS] = {0};
 	int	head, tail;
 	int	depth;
-	int	parent_depth;
+	int	parent_depth = 0;
 
 	depth = 1;
 	head = 0;

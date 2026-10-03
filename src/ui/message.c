@@ -70,7 +70,7 @@ int MessageBoxN( short xc, short yc, int NumButtons, char * text, char * Button[
 {
 	grs_font * temp_font;
 	UI_WINDOW * wnd;
-	UI_GADGET_BUTTON * ButtonG[10];
+	UI_GADGET_BUTTON * ButtonG[10] = {0};
 
 	int i, width, height, avg, x, y;
 	int button_width, button_height, text_height, text_width;
@@ -208,7 +208,7 @@ int MessageBoxN( short xc, short yc, int NumButtons, char * text, char * Button[
 int MessageBox( short xc, short yc, int NumButtons, char * text, ... )
 {
 	va_list marker;
-	char * Button[10];
+	char * Button[10] = {0};
 
 	short i;
 

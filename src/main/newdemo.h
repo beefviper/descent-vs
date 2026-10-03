@@ -244,7 +244,7 @@ extern void newdemo_record_laser_level(byte old_level, byte new_level);
 #endif
 
 // Functions called during playback process...
-extern void newdemo_object_move_all();
+extern void newdemo_object_move_all(void);
 extern void newdemo_playback_one_frame(void);
 extern void newdemo_goto_end(void);
 extern void newdemo_goto_beginning(void);

@@ -100,7 +100,7 @@ int		Modified_vertex_index = 0;
 static void validate_modified_segments(void)
 {
 	int	v,w,v0,seg;
-	char	modified_segments[MAX_SEGMENTS];
+	char	modified_segments[MAX_SEGMENTS] = {0};
 
 	for (v=0; v<=Highest_segment_index; v++)
 		modified_segments[v] = 0;
@@ -202,7 +202,7 @@ static void scale_free_verts(segment *sp, vms_vector *vp, int side, fix scale_fa
 //	Make segment *sp bigger in dimension dimension by amount amount.
 static void med_scale_segment_new(segment *sp, int dimension, fix amount)
 {
-	vms_matrix	mat;
+	vms_matrix	mat = {0};
 
 	Modified_vertex_index = 0;
 
@@ -231,7 +231,7 @@ static void med_scale_segment_new(segment *sp, int dimension, fix amount)
 //	The point on each face is the average of the four points forming the face.
 static void extract_vector_from_segment_side(segment *sp, int side, vms_vector *vp, int vla, int vlb, int vra, int vrb)
 {
-	vms_vector	v1, v2;
+	vms_vector	v1 = {0}, v2 = {0};
 
 	vm_vec_sub(&v1,&Vertices[sp->verts[Side_to_verts[side][vra]]],&Vertices[sp->verts[Side_to_verts[side][vla]]]);
 	vm_vec_sub(&v2,&Vertices[sp->verts[Side_to_verts[side][vrb]]],&Vertices[sp->verts[Side_to_verts[side][vlb]]]);
@@ -264,8 +264,8 @@ void med_extract_up_vector_from_segment_side(segment *sp, int sidenum, vms_vecto
 static int segsize_common(int dimension, fix amount)
 {
 	int	i;
-	int	propagated[MAX_SIDES_PER_SEGMENT];
-	vms_vector	uvec, rvec, fvec, scalevec;
+	int	propagated[MAX_SIDES_PER_SEGMENT] = {0};
+	vms_vector	uvec = {0}, rvec = {0}, fvec = {0}, scalevec = {0};
 
 	Degenerate_segment_found = 0;
 
@@ -428,7 +428,7 @@ int ToggleSegSizeMode(void)
 static int	PerturbCursideCommon(fix amount)
 {
 	int			saveSegSizeMode = SegSizeMode;
-	vms_vector	fvec, rvec, uvec;
+	vms_vector	fvec = {0}, rvec = {0}, uvec = {0};
 	fix			fmag, rmag, umag;
 	int			v;
 
@@ -445,7 +445,7 @@ static int	PerturbCursideCommon(fix amount)
 	umag = vm_vec_mag(&uvec);
 
 	for (v=0; v<4; v++) {
-		vms_vector perturb_vec;
+		vms_vector perturb_vec = {0};
 
 		perturb_vec.x = fixmul(rmag, rand()*2 - 32767);
 		perturb_vec.y = fixmul(umag, rand()*2 - 32767);

@@ -286,7 +286,7 @@ static int menu_check_mouse_item( MENU * menu )
 }
 
 
-static void menu_hide_all()
+static void menu_hide_all(void)
 {
  	int i;
 
@@ -674,9 +674,9 @@ void menubar_init( char * file )
 	int i,j, np;
 	int aw, w, h;
 	FILE * infile;
-	char buffer[200];
-	char buf1[200];
-	char buf2[200];
+	char buffer[200] = {0};
+	char buf1[200] = {0};
+	char buf2[200] = {0};
 	int menu, item;
 
 	num_menus = state = 0;
@@ -723,7 +723,7 @@ void menubar_init( char * file )
 		Menu[menu].Item[item].InactiveText = strdup(Menu[menu].Item[item].Text);
 
 		j= 0;
-		for (i=0; i<=strlen(Menu[menu].Item[item].Text); i++ )
+		for (i=0; i<=(int)strlen(Menu[menu].Item[item].Text); i++ )
 		{
 			np = Menu[menu].Item[item].Text[i];
 			if (np != '&')

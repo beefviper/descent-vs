@@ -265,7 +265,7 @@ unsigned _dos_close(int handle)
 
 unsigned _dos_getftime(int handle, unsigned short *date, unsigned short *time)
 {
-	struct _stat st;
+	struct _stat st = {0};
 	struct tm *t;
 
 	if (_fstat(handle, &st) != 0 || (t = localtime(&st.st_mtime)) == NULL)

@@ -120,10 +120,10 @@ int SetCurve(void);
 
 // In kmine.c
 int SaveMine(void);
-int LoadMine();
+int LoadMine(void);
 int MineMenu(void);
 int CreateNewMine(void);
-int LoadOldMine();
+int LoadOldMine(void);
 
 int SaveSituation(void);
 int LoadSituation(void);
@@ -132,7 +132,7 @@ int LoadSituation(void);
 int SetPlayerPosition(void);
 int SaveGameData(void);
 int LoadGameData(void);
-int LoadMineOnly();
+int LoadMineOnly(void);
 void ResetFilename(void);
 
 // In group.c
@@ -154,7 +154,7 @@ int RotateGroup(void);
 
 // In segment.c
 int ToggleBottom(void);
-void make_curside_bottom_side();
+void make_curside_bottom_side(void);
 
 // In editor.c
 int UndoCommand(void);
@@ -247,17 +247,17 @@ int medlisp_scale_segment(void);
 int medlisp_rotate_segment(void);
 int medlisp_add_segment(void);
 int AttachSegment(void);
-int DeleteSegment();
+int DeleteSegment(void);
 int DosShell(void);
-int CallLisp();
+int CallLisp(void);
 int ExitEditor(void);
 int ShowAbout(void);
 int ExchangeMarkAndCurseg(void);
 int med_keypad_goto_prev(void);
 int med_keypad_goto_next(void);
 int med_keypad_goto(void);
-int med_increase_tilings();
-int med_decrease_tilings();
+int med_increase_tilings(void);
+int med_decrease_tilings(void);
 int ToggleAutosave(void);
 int MarkStart(void);
 int MarkEnd(void);
@@ -334,8 +334,8 @@ int set_average_light_on_all(void);
 int set_average_light_on_all_quick(void);
 
 // Miscellaneous, please put in correct file if you have time
-int IncreaseDrawDepth();
-int DecreaseDrawDepth();
+int IncreaseDrawDepth(void);
+int DecreaseDrawDepth(void);
 int GotoGame(void);
 int GotoGameScreen(void);
 int DropIntoDebugger(void);
@@ -343,19 +343,19 @@ int CreateDefaultNewSegment(void);
 int CreateDefaultNewSegmentandAttach(void);
 int ClearSelectedList(void);
 int ClearFoundList(void);
-int SortSelectedList();
+int SortSelectedList(void);
 int SetPlayerFromCurseg(void);
 int SetPlayerFromCursegAndRotate(void);
 int SetPlayerFromCursegMinusOne(void);
 int FindConcaveSegs(void);
-int SelectNextFoundSeg();
+int SelectNextFoundSeg(void);
 int SelectPreviousFoundSeg(void);
-int do_reset_orient();
+int do_reset_orient(void);
 int GameZoomOut(void);
 int GameZoomIn(void);
 
 // John's temp page stuff
-int medtmp_set_page();
+int medtmp_set_page(void);
 
 // In objpage.c
 int objpage_goto_next_object(void);

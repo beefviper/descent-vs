@@ -86,10 +86,17 @@ UI_GADGET * ui_gadget_add( UI_WINDOW * wnd, short kind, short x1, short y1, shor
 		gadget->canvas = NULL;
 	else
 		gadget->canvas = gr_create_sub_canvas( wnd->canvas, x1, y1, x2-x1+1, y2-y1+1 );
-	gadget->x1 = gadget->canvas->cv_bitmap.bm_x;
-	gadget->y1 = gadget->canvas->cv_bitmap.bm_y;
-	gadget->x2 = gadget->canvas->cv_bitmap.bm_x+x2-x1+1;
-	gadget->y2 = gadget->canvas->cv_bitmap.bm_y+y2-y1+1;
+	if (gadget->canvas) {
+		gadget->x1 = gadget->canvas->cv_bitmap.bm_x;
+		gadget->y1 = gadget->canvas->cv_bitmap.bm_y;
+		gadget->x2 = gadget->canvas->cv_bitmap.bm_x+x2-x1+1;
+		gadget->y2 = gadget->canvas->cv_bitmap.bm_y+y2-y1+1;
+	} else {
+		gadget->x1 = x1;
+		gadget->y1 = y1;
+		gadget->x2 = x2+1;
+		gadget->y2 = y2+1;
+	}
 	gadget->parent = NULL;
 	gadget->hotkey = -1;
 	return gadget;

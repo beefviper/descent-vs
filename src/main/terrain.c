@@ -126,7 +126,7 @@ int mine_tiles_drawn;		//flags to tell if all 4 tiles under mine have drawn
 
 static void draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
 {
-	g3s_point *pointlist[3];
+	g3s_point *pointlist[3] = {0};
 
 	pointlist[0] = p0;
 	pointlist[1] = p1;
@@ -201,7 +201,7 @@ static vms_vector *get_dy_vec(int h)
 	dyp = &y_cache[h];
 
 	if (!yc_flags[h]) {
-		vms_vector tv;
+		vms_vector tv = {0};
 
 		//@@g3_rotate_delta_y(dyp,h*HEIGHT_SCALE);
 
@@ -219,13 +219,13 @@ int im=1;
 
 void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 {
-	vms_vector delta_i,delta_j;		//delta_y;
-	g3s_point p,last_p,save_p_low,save_p_high;
-	g3s_point last_p2;
+	vms_vector delta_i = {0},delta_j = {0};		//delta_y;
+	g3s_point p = {0},last_p = {0},save_p_low = {0},save_p_high = {0};
+	g3s_point last_p2 = {0};
 	int i,j;
 	int low_i,high_i,low_j,high_j;
 	int viewer_i,viewer_j;
-	vms_vector tv;
+	vms_vector tv = {0};
 
 	mine_tiles_drawn = 0;	//clear flags
 
@@ -276,7 +276,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i+1,low_j)));
 
 		for (j=low_j;j<viewer_j;j++) {
-			g3s_point p2;
+			g3s_point p2 = {0};
 
 			g3_add_delta_vec(&p,&last_p,&delta_j);
 			g3_add_delta_vec(&p2,&p,get_dy_vec(HEIGHT(i+1,j+1)));
@@ -296,7 +296,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i+1,high_j)));
 
 		for (j=high_j-1;j>=viewer_j;j--) {
-			g3s_point p2;
+			g3s_point p2 = {0};
 
 			g3_add_delta_vec(&p,&last_p,&delta_j);
 			g3_add_delta_vec(&p2,&p,get_dy_vec(HEIGHT(i+1,j)));
@@ -339,7 +339,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i,low_j)));
 
 		for (j=low_j;j<viewer_j;j++) {
-			g3s_point p2;
+			g3s_point p2 = {0};
 
 			g3_add_delta_vec(&p,&last_p,&delta_j);
 			g3_add_delta_vec(&p2,&p,get_dy_vec(HEIGHT(i,j+1)));
@@ -359,7 +359,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i,high_j)));
 
 		for (j=high_j-1;j>=viewer_j;j--) {
-			g3s_point p2;
+			g3s_point p2 = {0};
 
 			g3_add_delta_vec(&p,&last_p,&delta_j);
 			g3_add_delta_vec(&p2,&p,get_dy_vec(HEIGHT(i,j)));
@@ -387,7 +387,7 @@ static void free_height_array(void)
 
 void load_terrain(char *filename)
 {
-	grs_bitmap height_bitmap;
+	grs_bitmap height_bitmap = {0};
 	int iff_error;
 	int i,j;
 	ubyte h,min_h,max_h;
@@ -448,7 +448,7 @@ vms_vector light = {0x2e14,0xe8f5,0x5eb8};
 
 static fix get_face_light(vms_vector *p0,vms_vector *p1,vms_vector *p2)
 {
-	vms_vector norm;
+	vms_vector norm = {0};
 
 	vm_vec_normal(&norm,p0,p1,p2);
 
@@ -459,7 +459,7 @@ static fix get_face_light(vms_vector *p0,vms_vector *p1,vms_vector *p2)
 
 static fix get_avg_light(int i,int j)
 {
-	vms_vector pp,p[6];
+	vms_vector pp = {0},p[6] = {0};
 	fix sum;
 	int f;
 

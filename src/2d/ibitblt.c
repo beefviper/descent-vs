@@ -186,7 +186,7 @@ static int gr_ibitblt_find_code_size( grs_bitmap * mask_bmp, int sx, int sy, int
 	int draw_mode = MODE_NONE;
 	int source_offset = 0;
 	int dest_offset = 0;
-	int num_to_draw, draw_start_source, draw_start_dest;
+	int num_to_draw = 0, draw_start_source, draw_start_dest;
 	int esi, edi;
 
 	Assert( (!(mask_bmp->bm_flags&BM_FLAG_RLE)) );
@@ -258,7 +258,7 @@ ubyte	*gr_ibitblt_create_mask( grs_bitmap * mask_bmp, int sx, int sy, int sw, in
 	int draw_mode = MODE_NONE;
 	int source_offset = 0;
 	int dest_offset = 0;
-	int num_to_draw, draw_start_source, draw_start_dest;
+	int num_to_draw = 0, draw_start_source, draw_start_dest;
 	int esi, edi;
 	int code_size;
 	ubyte *code;

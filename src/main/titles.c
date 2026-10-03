@@ -246,7 +246,7 @@ int show_title_screen( char * filename, int allow_keys )
 {
 	fix timer;
 	int pcx_error;
-	grs_bitmap title_bm;
+	grs_bitmap title_bm = {0};
 
 	title_bm.bm_data=NULL;
 	if ((pcx_error=pcx_read_bitmap( filename, &title_bm, BM_LINEAR, New_pal ))!=PCX_ERROR_NONE)	{
@@ -373,7 +373,7 @@ briefing_screen Briefing_screens[] = {
 
 };
 
-#define	MAX_BRIEFING_SCREEN	(sizeof(Briefing_screens) / sizeof(Briefing_screens[0]))
+#define	MAX_BRIEFING_SCREEN	((int)(sizeof(Briefing_screens) / sizeof(Briefing_screens[0])))
 
 
 char * get_briefing_screen( int level_num )
@@ -485,7 +485,7 @@ static void show_bitmap_frame(void)
 		}
 
 		{
-			bitmap_index bi;
+			bitmap_index bi = {0};
 			bi = piggy_find_bitmap(Bitmap_name);
 			bitmap_ptr = &GameBitmaps[bi.index];
 			PIGGY_PAGE_IN( bi );
@@ -564,7 +564,7 @@ static void init_briefing_bitmap(void)
 static int show_char_delay(char the_char, int delay, int robot_num, int cursor_flag)
 {
 	int	w, h, aw;
-	char	message[2];
+	char	message[2] = {0};
 	fix	start_time;
 	int	i;
 
@@ -656,7 +656,7 @@ void title_save_game(void)
 	grs_canvas * save_canv;
 	grs_canvas * save_canv_data;
 	grs_font * save_font;
-	ubyte palette[768];
+	ubyte palette[768] = {0};
 
 	if ( Next_level_num == 0 ) return;
 
@@ -779,9 +779,9 @@ static int show_briefing_message(int screen_num, char *message)
 				Animating_bitmap_type = 1;
 				prev_ch = 10;
 			} else if (ch == 'B') {
-				char			bitmap_name[32];
-				grs_bitmap	guy_bitmap;
-				ubyte			temp_palette[768];
+				char			bitmap_name[32] = {0};
+				grs_bitmap	guy_bitmap = {0};
+				ubyte			temp_palette[768] = {0};
 				int			iff_error;
 
 				if (Robot_canv != NULL)
@@ -968,7 +968,7 @@ static void load_screen_text(char *filename, char **buf)
 	int	have_binary = 0;
 
 	if ((tfile = cfopen(filename,"rb")) == NULL) {
-		char nfilename[30], *ptr;
+		char nfilename[30] = {0}, *ptr;
 
 		strcpy(nfilename, filename);
 		ptr = strrchr(nfilename, '.');
@@ -1032,7 +1032,7 @@ int show_briefing_screen( int screen_num, int allow_keys)
 {
 	int	rval=0;
 	int	pcx_error;
-	grs_bitmap briefing_bm;
+	grs_bitmap briefing_bm = {0};
 
 	New_pal_254_bash = 0;
 

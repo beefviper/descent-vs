@@ -227,8 +227,8 @@ void build_colormap_good(ubyte* palette, ubyte* colormap, int* freq)
 
 void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {
-	ubyte colormap[256];
-	int freq[256];
+	ubyte colormap[256] = {0};
+	int freq[256] = {0};
 
 	// This should be build_colormap_asm, but we're not using invert table, so...
 	build_colormap_good( palette, colormap, freq );
@@ -250,8 +250,8 @@ void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, 
 
 void gr_remap_bitmap_good( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {
-	ubyte colormap[256];
-	int freq[256];
+	ubyte colormap[256] = {0};
+	int freq[256] = {0};
 
 	build_colormap_good( palette, colormap, freq );
 

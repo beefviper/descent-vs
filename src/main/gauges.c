@@ -637,9 +637,9 @@ void get_hostage_window_coords(int *x,int *y,int *w,int *h)
 extern int HUD_nmessages, hud_first; // From hud.c
 extern char HUD_messages[HUD_MAX_NUM][HUD_MESSAGE_LENGTH+5];
 
-static void hud_show_score()
+static void hud_show_score(void)
 {
-	char	score_str[20];
+	char	score_str[20] = {0};
 	int	w, h, aw;
 
 	if ((HUD_nmessages > 0) && (strlen(HUD_messages[hud_first]) > 38))
@@ -661,11 +661,11 @@ static void hud_show_score()
 	gr_printf(grd_curcanv->cv_w-w-2, 3, score_str);
 }
 
-static void hud_show_score_added()
+static void hud_show_score_added(void)
 {
 	int	color;
 	int	w, h, aw;
-	char	score_str[20];
+	char	score_str[20] = {0};
 
 	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		return;
@@ -697,9 +697,9 @@ static void hud_show_score_added()
 
 }
 
-static void sb_show_score()
+static void sb_show_score(void)
 {
-	char	score_str[20];
+	char	score_str[20] = {0};
 	int x,y;
 	int	w, h, aw;
 	static int last_x[2]={SB_SCORE_RIGHT,SB_SCORE_RIGHT};
@@ -744,11 +744,11 @@ static void sb_show_score()
 	last_x[VR_current_page] = x;
 }
 
-static void sb_show_score_added()
+static void sb_show_score_added(void)
 {
 	int	color;
 	int w, h, aw;
-	char	score_str[32];
+	char	score_str[32] = {0};
 	int x;
 	static int last_x[2]={SB_SCORE_ADDED_RIGHT,SB_SCORE_ADDED_RIGHT};
 	static	int last_score_display[2] = { -1, -1};
@@ -927,7 +927,7 @@ static void hud_show_weapons(void)
 {
 	int	w, h, aw;
 	int	y;
-	char	weapon_str[32], temp_str[10];
+	char	weapon_str[32] = {0}, temp_str[10] = {0};
 
 //	gr_set_current_canvas(&VR_render_sub_buffer[0]);	//render off-screen
 	gr_set_curfont( GAME_FONT );
@@ -1064,7 +1064,7 @@ static void hud_show_shield(void)
 }
 
 //draw the icons for number of lives
-static void hud_show_lives()
+static void hud_show_lives(void)
 {
 	if ((HUD_nmessages > 0) && (strlen(HUD_messages[hud_first]) > 38))
 		return;
@@ -1084,7 +1084,7 @@ static void hud_show_lives()
 
 }
 
-static void sb_show_lives()
+static void sb_show_lives(void)
 {
 	int x,y;
 	grs_bitmap * bm = &GameBitmaps[Gauges[GAUGE_LIVES].index];
@@ -1102,7 +1102,7 @@ static void sb_show_lives()
 
 	if (Game_mode & GM_MULTI)
 	{
-		char killed_str[20];
+		char killed_str[20] = {0};
 		int w, h, aw;
 		static int last_x[2] = {SB_SCORE_RIGHT,SB_SCORE_RIGHT};
 		int x;
@@ -1145,7 +1145,7 @@ static void sb_show_lives()
 extern int Piggy_bitmap_cache_next;
 #endif
 
-static void show_time()
+static void show_time(void)
 {
 	int secs = f2i(Players[Player_num].time_level) % 60;
 	int mins = f2i(Players[Player_num].time_level) / 60;
@@ -1160,7 +1160,7 @@ static void show_time()
 
 #ifdef PIGGY_USE_PAGING
 	{
-		char text[25];
+		char text[25] = {0};
 		int w,h,aw;
 		sprintf( text, "%d KB", Piggy_bitmap_cache_next/1024 );
 		gr_get_string_size( text, &w, &h, &aw );
@@ -1259,7 +1259,7 @@ void close_gauge_canvases(void)
 	gr_free_canvas( Canv_NumericalGauge );
 }
 
-void init_gauges()
+void init_gauges(void)
 {
 	int i;
 
@@ -1437,7 +1437,7 @@ static void draw_numerical_display(int shield, int energy)
 }
 
 
-static void draw_keys()
+static void draw_keys(void)
 {
 	gr_set_current_canvas( get_current_game_screen() );
 
@@ -1494,7 +1494,7 @@ static void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic
 
 	//	For laser, show level and quadness
 	if (info_index == 0) {
-		char	temp_str[7];
+		char	temp_str[7] = {0};
 
 		sprintf(temp_str, "%s: 0", TXT_LVL);
 
@@ -1640,7 +1640,7 @@ static int draw_weapon_box(int weapon_type,int weapon_num)
 
 }
 
-static void draw_weapon_boxes()
+static void draw_weapon_boxes(void)
 {
 	int boxofs = (Cockpit_mode==CM_STATUS_BAR)?2:0;
 	int drew;
@@ -1729,7 +1729,7 @@ static void sb_draw_shield_bar(int shield)
 
 }
 
-static void sb_draw_keys()
+static void sb_draw_keys(void)
 {
 	grs_bitmap * bm;
 	int flags = Players[Player_num].flags;
@@ -1749,7 +1749,7 @@ static void sb_draw_keys()
 }
 
 //	Draws invulnerable ship, or maybe the flashing ship, depending on invulnerability time left.
-static void draw_invulnerable_ship()
+static void draw_invulnerable_ship(void)
 {
 	static fix time=0;
 
@@ -1870,10 +1870,10 @@ void show_reticle(int force_big_one)
 	if ((Newdemo_state == ND_STATE_PLAYBACK) || (((Game_mode & GM_MULTI_COOP) || (Game_mode & GM_TEAM)) && Show_reticle_name))
 	{
 		// Draw player callsign for player in sights
-		fvi_query fq;
-		vms_vector orient;
+		fvi_query fq = {0};
+		vms_vector orient = {0};
 		int Hit_type;
-		fvi_info Hit_data;
+		fvi_info Hit_data = {0};
 
 		fq.p0 		= &ConsoleObject->pos;
 		orient 		= ConsoleObject->orient.fvec;
@@ -1890,7 +1890,7 @@ void show_reticle(int force_big_one)
 		if ((Hit_type == HIT_OBJECT) && (Objects[Hit_data.hit_object].type == OBJ_PLAYER))
 		{
 			// Draw callsign on HUD
-			char s[CALLSIGN_LEN+1];
+			char s[CALLSIGN_LEN+1] = {0};
 			int w, h, aw;
 			int x1, y1;
 			int pnum;
@@ -1916,7 +1916,7 @@ void show_reticle(int force_big_one)
 #ifndef NDEBUG
 		else if ((Hit_type == HIT_OBJECT) && (Objects[Hit_data.hit_object].type == OBJ_ROBOT))
 		{
-			char s[CALLSIGN_LEN+1];
+			char s[CALLSIGN_LEN+1] = {0};
 			int w, h, aw;
 			int x1, y1;
 			int color_num = 0;
@@ -1935,9 +1935,9 @@ void show_reticle(int force_big_one)
 }
 
 #ifdef NETWORK
-static void hud_show_kill_list()
+static void hud_show_kill_list(void)
 {
-	int n_players,player_list[MAX_NUM_NET_PLAYERS];
+	int n_players,player_list[MAX_NUM_NET_PLAYERS] = {0};
 	int n_left,i,x0,x1,y,save_y,fth;
 
 	if (Show_kill_list_timer > 0)
@@ -1993,7 +1993,7 @@ static void hud_show_kill_list()
 
 	for (i=0;i<n_players;i++) {
 		int player_num;
-		char name[9];
+		char name[9] = {0};
 		int sw,sh,aw;
 
 		if (i==n_left) {
@@ -2082,7 +2082,7 @@ void draw_hud(void)
 			hud_show_keys();
 			hud_show_cloak_invuln();
 
-			if ( ( Newdemo_state==ND_STATE_RECORDING ) && ( Players[Player_num].flags != old_flags[VR_current_page] )) {
+			if ( ( Newdemo_state==ND_STATE_RECORDING ) && ( (int)Players[Player_num].flags != old_flags[VR_current_page] )) {
 				newdemo_record_player_flags(old_flags[VR_current_page], Players[Player_num].flags);
 				old_flags[VR_current_page] = Players[Player_num].flags;
 			}
@@ -2119,7 +2119,7 @@ void draw_hud(void)
 }
 
 //print out some player statistics
-void render_gauges()
+void render_gauges(void)
 {
 	int energy = f2ir(Players[Player_num].energy);
 	int shields = f2ir(Players[Player_num].shields);
@@ -2171,7 +2171,7 @@ void render_gauges()
 			old_shields[VR_current_page] = shields;
 		}
 
-		if (Players[Player_num].flags != old_flags[VR_current_page]) {
+		if ((int)Players[Player_num].flags != old_flags[VR_current_page]) {
 			if (Newdemo_state==ND_STATE_RECORDING )
 				newdemo_record_player_flags(old_flags[VR_current_page], Players[Player_num].flags);
 			draw_keys();
@@ -2213,7 +2213,7 @@ void render_gauges()
 				sb_draw_shield_num(shields);
 			}
 
-		if (Players[Player_num].flags != old_flags[VR_current_page]) {
+		if ((int)Players[Player_num].flags != old_flags[VR_current_page]) {
 			if (Newdemo_state==ND_STATE_RECORDING )
 				newdemo_record_player_flags(old_flags[VR_current_page], Players[Player_num].flags);
 			sb_draw_keys();

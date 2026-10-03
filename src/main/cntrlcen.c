@@ -132,7 +132,7 @@ vms_vector	Gun_pos[MAX_CONTROLCEN_GUNS], Gun_dir[MAX_CONTROLCEN_GUNS];
 //return the position & orientation of a gun on the control center object
 void calc_controlcen_gun_point(vms_vector *gun_point,vms_vector *gun_dir,object *obj,int gun_num)
 {
-	vms_matrix m;
+	vms_matrix m = {0};
 
 	Assert(obj->type == OBJ_CNTRLCEN);
 	Assert(obj->render_type==RT_POLYOBJ);
@@ -163,7 +163,7 @@ static int calc_best_gun(int num_guns, vms_vector *gun_pos, vms_vector *gun_dir,
 
 	for (i=0; i<num_guns; i++) {
 		fix			dot;
-		vms_vector	gun_vec;
+		vms_vector	gun_vec = {0};
 
 		vm_vec_sub(&gun_vec, objpos, &gun_pos[i]);
 		vm_vec_normalize_quick(&gun_vec);
@@ -245,7 +245,7 @@ void do_controlcen_frame(object *obj)
 
 	if (!(Control_center_been_hit || Control_center_player_been_seen)) {
 		if (!(FrameCount % 8)) {		//	Do every so often...
-			vms_vector	vec_to_player;
+			vms_vector	vec_to_player = {0};
 			fix			dist_to_player;
 			int			i;
 			segment		*segp = &Segments[obj->segnum];
@@ -287,7 +287,7 @@ void do_controlcen_frame(object *obj)
 			best_gun_num = calc_best_gun(N_controlcen_guns, Gun_pos, Gun_dir, &ConsoleObject->pos);
 
 		if (best_gun_num != -1) {
-			vms_vector	vec_to_goal;
+			vms_vector	vec_to_goal = {0};
 			fix			dist_to_player;
 			fix			delta_fire_time;
 
@@ -314,7 +314,7 @@ void do_controlcen_frame(object *obj)
 
 			//	1/4 of time, fire another thing, not directly at player, so it might hit him if he's constantly moving.
 			if (rand() < 32767/4) {
-				vms_vector	randvec;
+				vms_vector	randvec = {0};
 
 				make_random_vector(&randvec);
 				vm_vec_scale_add2(&vec_to_goal, &randvec, F1_0/4);

@@ -274,8 +274,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern int ai_save_state( FILE * fp );
 extern int ai_restore_state( FILE * fp );
 
-extern void multi_initiate_save_game();
-extern void multi_initiate_restore_game();
+extern void multi_initiate_save_game(void);
+extern void multi_initiate_restore_game(void);
 
 extern int Do_appearance_effect;
 extern fix Fusion_next_sound_time;
@@ -330,10 +330,10 @@ int state_get_save_file(char * fname, char * dsc, int multi )
 {
 	FILE * fp;
 	int i, choice, version;
-	newmenu_item m[NUM_SAVES+1];
-	char filename[NUM_SAVES][20];
-	char desc[NUM_SAVES][DESC_LENGTH+16];
-	char id[5];
+	newmenu_item m[NUM_SAVES+1] = {0};
+	char filename[NUM_SAVES][20] = {0};
+	char desc[NUM_SAVES][DESC_LENGTH+16] = {0};
+	char id[5] = {0};
 	int valid=0;
 
 	for (i=0;i<NUM_SAVES; i++ )	{
@@ -390,10 +390,10 @@ int state_get_restore_file(char * fname, int multi )
 {
 	FILE * fp;
 	int i, choice, version, nsaves;
-	newmenu_item m[NUM_SAVES+1];
-	char filename[NUM_SAVES][20];
-	char desc[NUM_SAVES][DESC_LENGTH + 16];
-	char id[5];
+	newmenu_item m[NUM_SAVES+1] = {0};
+	char filename[NUM_SAVES][20] = {0};
+	char desc[NUM_SAVES][DESC_LENGTH + 16] = {0};
+	char id[5] = {0};
 	int valid;
 
 	nsaves=0;
@@ -461,8 +461,8 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 	int i;
 	int temp_int;
 	ubyte temp_byte;
-	char desc[DESC_LENGTH+1];
-	char filename[128];
+	char desc[DESC_LENGTH+1] = {0};
+	char filename[128] = {0};
 	grs_canvas * cnv;
 	FILE * fp;
 
@@ -485,8 +485,8 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 	cnv = gr_create_canvas( THUMBNAIL_W, THUMBNAIL_H );
 	if ( cnv )	{
 		char * pcx_file;
-		ubyte pcx_palette[768];
-		grs_bitmap bmp;
+		ubyte pcx_palette[768] = {0};
+		grs_bitmap bmp = {0};
 
 		gr_set_current_canvas( cnv );
 
@@ -495,7 +495,7 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 		if ( pcx_file != NULL )	{
 			bmp.bm_data = NULL;
 			if (pcx_read_bitmap( pcx_file, &bmp, BM_LINEAR, pcx_palette )==PCX_ERROR_NONE)	{
-				grs_point vertbuf[3];
+				grs_point vertbuf[3] = {0};
 				gr_clear_canvas( 255 );
 				vertbuf[0].x = vertbuf[0].y = -F1_0*6;		// -6 pixel rows for ascpect
 				vertbuf[1].x = vertbuf[1].y = 0;
@@ -564,7 +564,7 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 
 int state_save_all(int between_levels)
 {
-	char filename[128], desc[DESC_LENGTH+1];
+	char filename[128] = {0}, desc[DESC_LENGTH+1] = {0};
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
@@ -623,15 +623,15 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 		gr_set_current_canvas( cnv );
 		if ( between_levels )	{
 			char * pcx_file;
-			ubyte pcx_palette[768];
-			grs_bitmap bmp;
+			ubyte pcx_palette[768] = {0};
+			grs_bitmap bmp = {0};
 
 			gr_clear_canvas( BM_XRGB(0,0,0) );
 			pcx_file = get_briefing_screen( Next_level_num );
 			if ( pcx_file != NULL )	{
 				bmp.bm_data = NULL;
 				if (pcx_read_bitmap( pcx_file, &bmp, BM_LINEAR, pcx_palette )==PCX_ERROR_NONE)	{
-					grs_point vertbuf[3];
+					grs_point vertbuf[3] = {0};
 					gr_clear_canvas( 255 );
 					vertbuf[0].x = vertbuf[0].y = -F1_0*6;		// -6 pixel rows for ascpect
 					vertbuf[1].x = vertbuf[1].y = 0;
@@ -768,7 +768,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 
 int state_restore_all(int in_game)
 {
-	char filename[128];
+	char filename[128] = {0};
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
@@ -815,10 +815,10 @@ int state_restore_all_sub(char *filename, int multi)
 	FILE *fp;
 	int current_level, next_level;
 	int between_levels;
-	char mission[16];
-	char desc[DESC_LENGTH+1];
-	char id[5];
-	char org_callsign[CALLSIGN_LEN+16];
+	char mission[16] = {0};
+	char desc[DESC_LENGTH+1] = {0};
+	char id[5] = {0};
+	char org_callsign[CALLSIGN_LEN+16] = {0};
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE

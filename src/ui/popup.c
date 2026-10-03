@@ -47,14 +47,14 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define MENU_BORDER 2
 #define MENU_VERT_SPACING 2
 
-extern void ui_mouse_flip_buttons();
+extern void ui_mouse_flip_buttons(void);
 
 int PopupMenu( int NumButtons, char * text[] )
 {
 	UI_WINDOW * wnd;
-	UI_GADGET_BUTTON * ButtonG[10];
+	UI_GADGET_BUTTON * ButtonG[10] = {0};
 
-	char * Button[10];
+	char * Button[10] = {0};
 
 	int button_width, button_height, width, height;
 

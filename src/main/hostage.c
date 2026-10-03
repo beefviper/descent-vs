@@ -238,7 +238,7 @@ static int			N_hostage_clips=0;
 #define RESCUED_SOUND_NUM	91
 
 //starts next clip in queue
-void start_hostage_clip()
+void start_hostage_clip(void)
 {
 	int i,vclip_num,hostage_number;
 
@@ -289,7 +289,7 @@ void queue_hostage_clip(int hostage_num)
 }
 
 //current clip is done, stop it
-void stop_hostage_clip()
+void stop_hostage_clip(void)
 {
 	get_hostage_window_coords(&Hostage_monitor_x,&Hostage_monitor_y,&Hostage_monitor_w,&Hostage_monitor_h);
 
@@ -302,13 +302,13 @@ void stop_hostage_clip()
 	return;
 }
 
-void stop_all_hostage_clips()
+void stop_all_hostage_clips(void)
 {
 	N_hostage_clips = 0;
 	Hostage_animation_time=-1;
 }
 
-int hostage_is_vclip_playing()
+int hostage_is_vclip_playing(void)
 {
 	if (Hostage_animation_time>=0)
 		return 1;
@@ -380,7 +380,7 @@ void hostage_rescue( int hostage_number )
 
 //------------- Called once per frame to do the hostage effects --------------------------------
 //returns true if something drew
-int do_hostage_effects()
+int do_hostage_effects(void)
 {
 	int bitmapnum;
 

@@ -730,7 +730,7 @@ multi_do_robot_fire(char *buf)
 	// Send robot fire event
 	int loc = 1;
 	int botnum, gun_num;
-	vms_vector fire, gun_point;
+	vms_vector fire = {0}, gun_point = {0};
 	robot_info *robptr;
 
 														loc += 1;
@@ -863,7 +863,7 @@ multi_do_create_robot(char *buf)
 	int type = buf[5];
 
 	FuelCenter *robotcen;
-	vms_vector cur_object_loc, direction;
+	vms_vector cur_object_loc = {0}, direction = {0};
 	object *obj;
 
 	if ((pnum < 0) || (objnum < 0) || (fuelcen_num < 0) || (fuelcen_num >= Num_fuelcenters) || (pnum >= N_players))
@@ -947,7 +947,7 @@ multi_do_boss_actions(char *buf)
 		case 1: // Teleport
 			{
 				int teleport_segnum;
-				vms_vector boss_dir;
+				vms_vector boss_dir = {0};
 
 				if ((secondary < 0) || (secondary > Num_boss_teleport_segs))
 				{
@@ -1022,7 +1022,7 @@ multi_do_create_robot_powerups(char *buf)
 	// Code to drop remote-controlled robot powerups
 
 	int loc = 1;
-	object del_obj;
+	object del_obj = {0};
 	int pnum, egg_objnum, i;
 
 	pnum = buf[loc];								loc += 1;

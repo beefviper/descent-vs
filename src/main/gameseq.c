@@ -353,14 +353,14 @@ extern int Last_level_path_created;
 void init_player_stats_new_ship(void);
 int AdvanceLevel(int secret_flag);
 void StartLevel(int random);
-extern void init_cockpit();
+extern void init_cockpit(void);
 void copy_defaults_to_robot_all(void);
 
 
 void HUD_clear_messages(void); // From hud.c
 
 
-static void verify_console_object()
+static void verify_console_object(void)
 {
 	Assert( Player_num > -1 );
 	Assert( Players[Player_num].objnum > -1 );
@@ -369,7 +369,7 @@ static void verify_console_object()
 	Assert( ConsoleObject->id==Player_num );
 }
 
-static int count_number_of_robots()
+static int count_number_of_robots(void)
 {
 	int robot_count;
 	int i;
@@ -384,7 +384,7 @@ static int count_number_of_robots()
 }
 
 
-static int count_number_of_hostages()
+static int count_number_of_hostages(void)
 {
 	int count;
 	int i;
@@ -622,7 +622,7 @@ void init_player_stats_new_ship(void)
 }
 
 #ifdef NETWORK
-static void reset_network_objects()
+static void reset_network_objects(void)
 {
 	memset(local_to_remote, -1, MAX_OBJECTS*sizeof(short));
 	memset(remote_to_local, -1, MAX_NUM_NET_PLAYERS*MAX_OBJECTS*sizeof(short));
@@ -656,7 +656,7 @@ void editor_reset_stuff_on_level(void)
 }
 #endif
 
-void reset_player_object();
+void reset_player_object(void);
 
 
 static fix time_out_value;
@@ -672,7 +672,7 @@ static void DoEndLevelScoreGlitzPoll( int nitems, newmenu_item * menus, int * ke
 
 //do whatever needs to be done when a player dies in multiplayer
 
-static void DoGameOver()
+static void DoGameOver(void)
 {
 	time_out_value = timer_get_approx_seconds() + i2f(60*5);
 	nm_messagebox1( TXT_GAME_OVER, DoEndLevelScoreGlitzPoll, 1, TXT_OK, "" );
@@ -724,7 +724,7 @@ void update_player_stats(void)
 }
 
 //go through this level and start any eclip sounds
-static void set_sound_sources()
+static void set_sound_sources(void)
 {
 	int segnum,sidenum;
 	segment *seg;
@@ -738,7 +738,7 @@ static void set_sound_sources()
 			if ((tm=seg->sides[sidenum].tmap_num2) != 0)
 				if ((ec=TmapInfo[tm&0x3fff].eclip_num)!=-1)
 					if ((sn=Effects[ec].sound_num)!=-1) {
-						vms_vector pnt;
+						vms_vector pnt = {0};
 
 						compute_center_point_on_side(&pnt,seg,sidenum);
 						digi_link_sound_to_pos(sn,segnum,sidenum,&pnt,1, F1_0/2);
@@ -755,7 +755,7 @@ fix flash_dist=fl2f(.9);
 //create flash for player appearance
 void create_player_appearance_effect(object *player_obj)
 {
-	vms_vector pos;
+	vms_vector pos = {0};
 	object *effect_obj;
 
 #ifndef NDEBUG
@@ -791,8 +791,8 @@ char playername_allowed_chars[] = "azAZ09__--";
 int MakeNewPlayerFile(int allow_abort)
 {
 	int x;
-	char filename[14];
-	newmenu_item m;
+	char filename[14] = {0};
+	newmenu_item m = {0};
 	char text[CALLSIGN_LEN+1]="";
 	FILE *fp;
 
@@ -846,7 +846,7 @@ try_again:
 int RegisterPlayer(void)
 {
 	int i,j;
-	char filename[14];
+	char filename[14] = {0};
 	int allow_abort_flag = 1;
 
 	if ( Players[Player_num].callsign[0] == 0 )	{
@@ -899,13 +899,13 @@ extern int descent_critical_error;
 void LoadLevel(int level_num)
 {
 	char *level_name;
-	player save_player;
+	player save_player = {0};
 
 #ifdef REQUIRE_CD
 	{
 		FILE *fp;
 		int i;
-		char fname[128];
+		char fname[128] = {0};
 		strcpy( fname, destsat_cdpath );
 #ifdef DEST_SAT
 		strcat( fname, "saturn.hog" );
@@ -994,7 +994,7 @@ void InitPlayerObject(void)
 	ConsoleObject->movement_type	= MT_PHYSICS;
 }
 
-extern void game_disable_cheats();
+extern void game_disable_cheats(void);
 
 //starts a new game on the given level
 void StartNewGame(int start_level)
@@ -1051,13 +1051,13 @@ void DoEndLevelScoreGlitz(int network)
 	int level_points, skill_points, energy_points, shield_points, hostage_points;
 	int	all_hostage_points;
 	int	endgame_points;
-	char	all_hostage_text[64];
-	char	endgame_text[64];
+	char	all_hostage_text[64] = {0};
+	char	endgame_text[64] = {0};
 	#define N_GLITZITEMS 9
-	char				m_str[N_GLITZITEMS][30];
-	newmenu_item	m[9];
+	char				m_str[N_GLITZITEMS][30] = {0};
+	newmenu_item	m[9] = {0};
 	int				i,c;
-	char				title[128];
+	char				title[128] = {0};
 	int				is_last_level;
 
 	level_points = Players[Player_num].score-Players[Player_num].last_score;
@@ -1137,7 +1137,7 @@ void DoEndLevelScoreGlitz(int network)
 }
 
 //give the player the opportunity to save his game
-static void DoEndlevelMenu()
+static void DoEndlevelMenu(void)
 {
 #ifdef SHAREWARE
 	if (!Cheats_enabled)
@@ -1157,7 +1157,7 @@ void PlayerFinishedLevel(int secret_flag)
 	Players[Player_num].hostages_rescued_total += Players[Player_num].hostages_on_board;
 
 	if (!(Game_mode & GM_MULTI) && (secret_flag)) {
-		newmenu_item	m[1];
+		newmenu_item	m[1] = {0};
 
 		m[0].type = NM_TYPE_TEXT;
 		m[0].text = " ";			//TXT_SECRET_EXIT;
@@ -1531,7 +1531,7 @@ void StartNewLevel(int level_num)
 //initialize the player object position & orientation (at start of game, or new ship)
 static void InitPlayerPosition(int random)
 {
-	int NewPlayer;
+	int NewPlayer = 0;
 
 	if (! ((Game_mode & GM_MULTI) && !(Game_mode&GM_MULTI_COOP)) ) // If not deathmatch
 		NewPlayer = Player_num;

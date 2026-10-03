@@ -321,7 +321,7 @@ void fuelcen_reset(void)
 }
 
 #ifndef NDEBUG		//this is sometimes called by people from the debugger
-static void reset_all_robot_centers()
+static void reset_all_robot_centers(void)
 {
 	int i;
 
@@ -441,7 +441,7 @@ void fuelcen_activate( segment * segp, int station_type )
 void trigger_matcen(int segnum)
 {
 	segment		*segp = &Segments[segnum];
-	vms_vector	pos, delta;
+	vms_vector	pos = {0}, delta = {0};
 	FuelCenter	*robotcen;
 	int			objnum;
 
@@ -581,11 +581,11 @@ int	FrameCount_last_msg = 0;
 static void robotmaker_proc( FuelCenter * robotcen )
 {
 	fix		dist_to_player;
-	vms_vector	cur_object_loc; //, direction;
+	vms_vector	cur_object_loc = {0}; //, direction;
 	int		matcen_num, segnum, objnum;
 	object	*obj;
 	fix		top_time;
-	vms_vector	direction;
+	vms_vector	direction = {0};
 
 	if (robotcen->Enabled == 0)
 		return;
@@ -726,7 +726,7 @@ static void robotmaker_proc( FuelCenter * robotcen )
 			if (RobotCenters[matcen_num].robot_flags != 0) {
 				int	type;
 				uint	flags;
-				byte	legal_types[32];		//	32 bits in a word, the width of robot_flags.
+				byte	legal_types[32] = {0};		//	32 bits in a word, the width of robot_flags.
 				int	num_types, robot_index;
 
 				robot_index = 0;
@@ -816,7 +816,7 @@ static void controlcen_proc( FuelCenter * controlcen )
 	}
 
 	if (controlcen->Timer < i2f(DIFF_CONTROL_CENTER_EXPLOSION_TIME)) {
-		vms_vector vp;	//,v,c;
+		vms_vector vp = {0};	//,v,c;
 		fix size;
 		compute_segment_center(&vp, &Segments[controlcen->segnum]);
 		size = (0x50000*f2i(controlcen->Timer)*(FrameTime & 0xF))/16;

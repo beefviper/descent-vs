@@ -149,7 +149,7 @@ void fuelcen_activate( segment * segp, int station_type );
 void fuelcen_delete( segment * segp );
 
 // Charges all fuel centers to max capacity.
-void fuelcen_replentish_all();
+void fuelcen_replentish_all(void);
 
 // Create a matcen robot
 extern object *create_morph_robot(segment *segp, vms_vector *object_pos, int object_id);

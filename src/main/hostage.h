@@ -145,7 +145,7 @@ void hostage_rescue( int hostage_num );
 void hostage_init(void);
 
 //returns true if something drew
-int do_hostage_effects();
+int do_hostage_effects(void);
 
 void hostage_init_all(void);
 void hostage_compress_all(void);
@@ -155,8 +155,8 @@ int hostage_object_is_valid( int objnum  );
 void hostage_init_info( int objnum );
 
 #ifdef HOSTAGE_FACES
-int hostage_is_vclip_playing();
-void stop_all_hostage_clips();
+int hostage_is_vclip_playing(void);
+void stop_all_hostage_clips(void);
 #else
 #define hostage_is_vclip_playing() (0)
 #endif

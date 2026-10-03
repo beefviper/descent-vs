@@ -147,7 +147,7 @@ static int vfx_base_port = 0x260;
 
 static int vfx_initialized = 0;
 
-void vfx_init()
+void vfx_init(void)
 {
 	char * vipport;
 
@@ -249,7 +249,7 @@ void vfx_close_graphics(void)
 
 void vfx_set_page(ubyte page)
 {
-	DATA_PSR page_register;
+	DATA_PSR page_register = {0};
 
 	if (!vfx_initialized) return;
 

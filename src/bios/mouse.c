@@ -301,10 +301,10 @@ static void mouse_handler_end (void)  // dummy functions
 //           else number of buttons
 int mouse_init(int enable_cyberman)
 {
-	dpmi_real_regs rr;
+	dpmi_real_regs rr = {0};
 	cyberman_info *ci;
-	struct SREGS sregs;
-	union REGS inregs, outregs;
+	struct SREGS sregs = {0};
+	union REGS inregs = {0}, outregs = {0};
 	ubyte *Mouse_dos_mem;
 
 	if (Mouse_installed)
@@ -387,8 +387,8 @@ int mouse_init(int enable_cyberman)
 
 void mouse_close(void)
 {
-	struct SREGS sregs;
-	union REGS inregs, outregs;
+	struct SREGS sregs = {0};
+	union REGS inregs = {0}, outregs = {0};
 
 	if (Mouse_installed)	{
 		Mouse_installed = 0;
@@ -406,7 +406,7 @@ void mouse_close(void)
 
 void mouse_set_limits( int x1, int y1, int x2, int y2 )
 {
-	union REGS inregs, outregs;
+	union REGS inregs = {0}, outregs = {0};
 
 	if (!Mouse_installed) return;
 
@@ -425,7 +425,7 @@ void mouse_set_limits( int x1, int y1, int x2, int y2 )
 
 void mouse_get_pos( int *x, int *y)
 {
-	union REGS inregs, outregs;
+	union REGS inregs = {0}, outregs = {0};
 
 	if (!Mouse_installed) {
 		*x = *y = 0;
@@ -440,7 +440,7 @@ void mouse_get_pos( int *x, int *y)
 
 void mouse_get_delta( int *dx, int *dy )
 {
-	union REGS inregs, outregs;
+	union REGS inregs = {0}, outregs = {0};
 
 	if (!Mouse_installed) {
 		*dx = *dy = 0;
@@ -473,7 +473,7 @@ int mouse_get_btns(void)
 
 void mouse_set_pos( int x, int y)
 {
-	union REGS inregs, outregs;
+	union REGS inregs = {0}, outregs = {0};
 
 	if (!Mouse_installed)
 		return;
@@ -571,7 +571,7 @@ fix mouse_button_down_time(int button)
 
 void mouse_get_cyberman_pos( int *x, int *y )
 {
-	dpmi_real_regs rr;
+	dpmi_real_regs rr = {0};
 	event_info * ei;
 	ubyte *Mouse_dos_mem;
 

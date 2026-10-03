@@ -147,7 +147,7 @@ static void draw_seg_objects(segment *seg)
 
 	for (objnum=seg->objects;objnum!=-1;objnum=Objects[objnum].next) {
 		object *obj = &Objects[objnum];
-		g3s_point sphere_point;
+		g3s_point sphere_point = {0};
 
 		if ((obj->type==OBJ_PLAYER) && (objnum > 0 ))
 			gr_setcolor(BM_XRGB( 0,  25, 0  ));
@@ -171,7 +171,7 @@ static void draw_segment(segment *seg)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	if (seg->segnum == -1)		//this segment doesn't exitst
 		return;
@@ -201,7 +201,7 @@ static void check_segment(segment *seg)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -214,7 +214,7 @@ static void check_segment(segment *seg)
 		gr_setcolor(1);					//and render in color one
 
 		for (fn=0;fn<6;fn++) {
-			g3s_point *vert_list[4];
+			g3s_point *vert_list[4] = {0};
 
 			vert_list[0] = &Segment_points[seg->verts[Side_to_verts[fn][0]]];
 			vert_list[1] = &Segment_points[seg->verts[Side_to_verts[fn][1]]];
@@ -242,7 +242,7 @@ static void draw_seg_side(segment *seg,int side)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -262,7 +262,7 @@ static void draw_side_edge(segment *seg,int side,int edge)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -442,7 +442,7 @@ static void add_edges(segment *seg)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -450,7 +450,7 @@ static void add_edges(segment *seg)
 	if (! cc.and) {		//all off screen?
 		int	i,sn,fn,vn;
 		int	flag;
-		ubyte	edge_flags[N_EDGES_PER_SEGMENT];
+		ubyte	edge_flags[N_EDGES_PER_SEGMENT] = {0};
 
 		for (i=0;i<N_NORMAL_EDGES;i++) edge_flags[i]=ET_NOTUSED;
 		for (;i<N_EDGES_PER_SEGMENT;i++) edge_flags[i]=ET_NOTEXTANT;
@@ -458,7 +458,7 @@ static void add_edges(segment *seg)
 		for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++) {
 			side	*sidep = &seg->sides[sn];
 			int	num_faces, num_vertices;
-			int	vertex_list[6];
+			int	vertex_list[6] = {0};
 
 			create_all_vertex_lists(&num_faces, vertex_list, seg-Segments, sn);
 			if (num_faces == 1)
@@ -507,7 +507,7 @@ static void draw_trigger_side(segment *seg,int side)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -524,7 +524,7 @@ static void draw_wall_side(segment *seg,int side)
 {
 	short	*svp;
 	int	nv;
-	g3s_codes cc;
+	g3s_codes cc = {0};
 
 	med_get_vertex_list(seg,&nv,&svp);				// set nv = number of vertices, svp = pointer to vertex indices
 	cc=rotate_list(nv,svp);
@@ -793,8 +793,8 @@ void free_vert(int vert_num)
 static void draw_coordinate_axes(void)
 {
 	int			i;
-	short			Axes_verts[16];
-	vms_vector	tvec,xvec,yvec,zvec;
+	short			Axes_verts[16] = {0};
+	vms_vector	tvec = {0},xvec = {0},yvec = {0},zvec = {0};
 
 	for (i=0; i<16; i++)
 		Axes_verts[i] = alloc_vert();
@@ -863,10 +863,10 @@ static void draw_coordinate_axes(void)
 
 void draw_world(grs_canvas *screen_canvas,editor_view *v,segment *mine_ptr,int depth)
 {
-	vms_vector viewer_position;
+	vms_vector viewer_position = {0};
 
 #if DOUBLE_BUFFER
-	grs_canvas temp_canvas;
+	grs_canvas temp_canvas = {0};
 
 //	mprintf(0, "\n");
 
@@ -1003,10 +1003,10 @@ void draw_world(grs_canvas *screen_canvas,editor_view *v,segment *mine_ptr,int d
 //fills in globals N_found_segs & Found_segs
 void find_segments(short x,short y,grs_canvas *screen_canvas,editor_view *v,segment *mine_ptr,int depth)
 {
-	vms_vector viewer_position;
+	vms_vector viewer_position = {0};
 
 #if DOUBLE_BUFFER
-	grs_canvas temp_canvas;
+	grs_canvas temp_canvas = {0};
 
 	gr_init_sub_canvas(&temp_canvas,canv_offscreen,0,0,
 			screen_canvas->cv_bitmap.bm_w,screen_canvas->cv_bitmap.bm_h);

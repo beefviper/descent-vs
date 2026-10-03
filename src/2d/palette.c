@@ -271,7 +271,7 @@ int gr_find_closest_color( int r, int g, int b )
 			if (g == Computed_colors[i].g)
 				if (b == Computed_colors[i].b) {
 					if (i > 4) {
-						color_record	trec;
+						color_record	trec = {0};
 						trec = Computed_colors[i-1];
 						Computed_colors[i-1] = Computed_colors[i];
 						Computed_colors[i] = trec;
@@ -412,8 +412,8 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 {
 	ubyte c;
 	int i,j;
-	fix fade_palette[768];
-	fix fade_palette_delta[768];
+	fix fade_palette[768] = {0};
+	fix fade_palette_delta[768] = {0};
 
 	(void)allow_keys;
 
@@ -445,8 +445,8 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 {
 	int i,j;
 	ubyte c;
-	fix fade_palette[768];
-	fix fade_palette_delta[768];
+	fix fade_palette[768] = {0};
+	fix fade_palette_delta[768] = {0};
 
 	(void)allow_keys;
 

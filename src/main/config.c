@@ -174,14 +174,14 @@ static void CrystalLakeSetWSS(void)
 	CrystalLakeWriteMCP( CL_MC1, tmp );
 }
 
-int ReadConfigFile()
+int ReadConfigFile(void)
 {
 	FILE *infile;
-	char line[80], *token, *value, *ptr;
+	char line[80] = {0}, *token, *value, *ptr;
 	ubyte gamma;
-	int joy_axis_min[4];
-	int joy_axis_center[4];
-	int joy_axis_max[4];
+	int joy_axis_min[4] = {0};
+	int joy_axis_center[4] = {0};
+	int joy_axis_max[4] = {0};
 	int i;
 
 	strcpy( config_last_player, "" );
@@ -330,13 +330,13 @@ int ReadConfigFile()
 	return 0;
 }
 
-int WriteConfigFile()
+int WriteConfigFile(void)
 {
 	FILE *infile;
-	char str[256];
-	int joy_axis_min[4];
-	int joy_axis_center[4];
-	int joy_axis_max[4];
+	char str[256] = {0};
+	int joy_axis_min[4] = {0};
+	int joy_axis_center[4] = {0};
+	int joy_axis_max[4] = {0};
 	ubyte gamma = gr_palette_get_gamma();
 
 	joy_get_cal_vals(joy_axis_min, joy_axis_center, joy_axis_max);

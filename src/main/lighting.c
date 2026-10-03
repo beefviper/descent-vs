@@ -237,8 +237,8 @@ void set_dynamic_light(void)
 {
 	int	objnum,vertnum;
 	int	n_render_vertices;
-	short	render_vertices[MAX_VERTICES];
-	byte	render_vertex_flags[MAX_VERTICES];
+	short	render_vertices[MAX_VERTICES] = {0};
+	byte	render_vertex_flags[MAX_VERTICES] = {0};
 	int	render_seg,segnum, v;
 
 	if (!Do_dynamic_light)
@@ -423,7 +423,7 @@ object *old_viewer;
 fix compute_object_light(object *obj,vms_vector *rotated_pnt)
 {
 	fix light;
-	g3s_point objpnt;
+	g3s_point objpnt = {0};
 	int objnum = (int)(obj-Objects);
 
 	if (!rotated_pnt) {

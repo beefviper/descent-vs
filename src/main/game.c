@@ -534,7 +534,7 @@ static void speedtest_init(void)
 
 static void speedtest_frame(void)
 {
-	vms_vector	view_dir, center_point;
+	vms_vector	view_dir = {0}, center_point = {0};
 
 	Speedtest_sidenum=Speedtest_segnum % MAX_SIDES_PER_SEGMENT;
 
@@ -568,9 +568,9 @@ static void speedtest_frame(void)
 #endif
 
 //this is called once per game
-void init_game()
+void init_game(void)
 {
-	ubyte pal[256*3];
+	ubyte pal[256*3] = {0};
 	int pcx_error;
 
 	atexit(close_game);             //for cleanup
@@ -603,7 +603,7 @@ void init_game()
 }
 
 
-void reset_palette_add()
+void reset_palette_add(void)
 {
 	PaletteRedAdd 		= 0;
 	PaletteGreenAdd	= 0;
@@ -686,7 +686,7 @@ static void update_cockpits(int force_redraw)
 
 //initialize the various canvases on the game screen
 //called every time the screen mode or cockpit changes
-void init_cockpit()
+void init_cockpit(void)
 {
 	int minx, maxx, miny, maxy;
 
@@ -775,7 +775,7 @@ void select_cockpit(int mode)
 }
 
 //force cockpit redraw next time. call this if you've trashed the screen
-void reset_cockpit()
+void reset_cockpit(void)
 {
 	force_cockpit_redraw=1;
 	last_drawn_cockpit[0] = -1;
@@ -784,7 +784,7 @@ void reset_cockpit()
 
 void HUD_clear_messages(void);
 
-static void toggle_cockpit()
+static void toggle_cockpit(void)
 {
 	int new_mode = Cockpit_mode;
 
@@ -820,7 +820,7 @@ static void toggle_cockpit()
 
 #define WINDOW_MIN_W		160
 
-static void grow_window()
+static void grow_window(void)
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -917,7 +917,7 @@ void fill_background(int x,int y,int w,int h,int dx,int dy)
 	copy_background_rect(x,y+h,x+w-1,y+h+dy-1);
 }
 
-static void shrink_window()
+static void shrink_window(void)
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -1006,9 +1006,9 @@ void game_init_render_buffers(int screen_mode, int render_w, int render_h, int u
 	}
 }
 
-static void game_3dmax_off()
+static void game_3dmax_off(void)
 {
-	union REGS regs;
+	union REGS regs = {0};
 
 //	memset(&regs,0,sizeof(regs));
 //	regs.w.ax = 0x4fd0;
@@ -1029,9 +1029,9 @@ static void game_3dmax_off()
 	return;
 }
 
-static void game_3dmax_on()
+static void game_3dmax_on(void)
 {
-	union REGS regs;
+	union REGS regs = {0};
 
 //	memset(&regs,0,sizeof(regs));
 //	regs.w.ax = 0x4fd0;
@@ -1181,9 +1181,9 @@ static void ftoa(char *string, fix f)
 	sprintf( string, "%d.%02d", decimal, fractional );
 }
 
-static void show_framerate()
+static void show_framerate(void)
 {
-	char temp[50];
+	char temp[50] = {0};
 	fix rate;
 
 	frame_time_total += RealFrameTime - frame_time_list[frame_time_cntr];
@@ -1202,7 +1202,7 @@ static void show_framerate()
 
 static int timer_paused=0;
 
-void stop_time()
+void stop_time(void)
 {
 	if (timer_paused==0) {
 		fix time;
@@ -1225,7 +1225,7 @@ void stop_time()
 	#endif
 }
 
-void start_time()
+void start_time(void)
 {
 	timer_paused--;
 	Assert(timer_paused >= 0);
@@ -1258,13 +1258,13 @@ void game_flush_inputs(void)
 	memset(&Controls,0,sizeof(control_info));
 }
 
-void reset_time()
+void reset_time(void)
 {
 	last_timer_value = timer_get_fixed_seconds();
 
 }
 
-void calc_frame_time()
+void calc_frame_time(void)
 {
 	fix timer_value,last_frametime = FrameTime;
 
@@ -1365,7 +1365,7 @@ void calc_frame_time()
 
 void move_player_2_segment(segment *seg,int side)
 {
-	vms_vector vp;
+	vms_vector vp = {0};
 
 	compute_segment_center(&ConsoleObject->pos,seg);
 	compute_center_point_on_side(&vp,seg,side);
@@ -1380,7 +1380,7 @@ fix Show_view_text_timer = -1;
 
 #ifndef NDEBUG
 
-static void draw_window_label()
+static void draw_window_label(void)
 {
 	if ( Show_view_text_timer > 0 )
 	{
@@ -1421,7 +1421,7 @@ static void draw_window_label()
 #endif
 
 
-static void render_countdown_gauge()
+static void render_countdown_gauge(void)
 {
 	if (!Endlevel_sequence && Fuelcen_control_center_destroyed  && (Fuelcen_seconds_left>-1) && (Fuelcen_seconds_left<127))	{
 		int	y;
@@ -1436,9 +1436,9 @@ static void render_countdown_gauge()
 }
 
 #ifdef NETWORK
-static void game_draw_multi_message()
+static void game_draw_multi_message(void)
 {
-	char temp_string[MAX_MULTI_MESSAGE_LEN+25];
+	char temp_string[MAX_MULTI_MESSAGE_LEN+25] = {0};
 
 	if ( (Game_mode&GM_MULTI) && (multi_sending_message))	{
 		gr_set_curfont( GAME_FONT );    //GAME_FONT );
@@ -1498,7 +1498,7 @@ void draw_centered_text( int y, char * s )
 
 extern fix Cruise_speed;
 
-static void game_draw_hud_stuff()
+static void game_draw_hud_stuff(void)
 {
 
 	#ifndef NDEBUG
@@ -1523,7 +1523,7 @@ static void game_draw_hud_stuff()
 	#endif
 
 	if ((Newdemo_state == ND_STATE_PLAYBACK) || (Newdemo_state == ND_STATE_RECORDING)) {
-		char message[128];
+		char message[128] = {0};
 		int h,w,aw;
 
 		if (Newdemo_state == ND_STATE_PLAYBACK) {
@@ -1607,11 +1607,11 @@ extern int gr_wait_for_retrace;
 extern int gr_bitblt_double;
 
 //render a frame for the game in stereo
-static void game_render_frame_stereo_vfx()
+static void game_render_frame_stereo_vfx(void)
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
-	grs_canvas RenderCanvas[2];
+	grs_canvas RenderCanvas[2] = {0};
 
 	save_aspect = grd_curscreen->sc_aspect;
 
@@ -1675,11 +1675,11 @@ static void game_render_frame_stereo_vfx()
 
 
 //render a frame for the game in stereo
-static void game_render_frame_stereo_interlaced()
+static void game_render_frame_stereo_interlaced(void)
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
-	grs_canvas RenderCanvas[2];
+	grs_canvas RenderCanvas[2] = {0};
 
 	save_aspect = grd_curscreen->sc_aspect;
 	grd_curscreen->sc_aspect *= 2;	//Muck with aspect ratio
@@ -1720,7 +1720,7 @@ static void game_render_frame_stereo_interlaced()
 	}
 
 	if ( VR_show_hud )	{
-		grs_canvas tmp;
+		grs_canvas tmp = {0};
 		if (VR_eye_offset < 0 ) {
 			gr_init_sub_canvas( &tmp, grd_curcanv, labs(VR_eye_offset*2), 0, grd_curcanv->cv_bitmap.bm_w-(labs(VR_eye_offset)*2), grd_curcanv->cv_bitmap.bm_h );
 		} else {
@@ -1752,7 +1752,7 @@ static void game_render_frame_stereo_interlaced()
 	}
 
 	if ( VR_show_hud )	{
-		grs_canvas tmp;
+		grs_canvas tmp = {0};
 		if (VR_eye_offset > 0 ) {
 			gr_init_sub_canvas( &tmp, grd_curcanv, labs(VR_eye_offset*2), 0, grd_curcanv->cv_bitmap.bm_w-(labs(VR_eye_offset)*2), grd_curcanv->cv_bitmap.bm_h );
 		} else {
@@ -1883,7 +1883,7 @@ static void game_render_frame_stereo_interlaced()
 //render a frame for the game
 static void game_render_frame_mono(void)
 {
-	grs_canvas Screen_3d_window;
+	grs_canvas Screen_3d_window = {0};
 
 	gr_init_sub_canvas( &Screen_3d_window, &VR_screen_pages[0],
 			VR_render_sub_buffer[0].cv_bitmap.bm_x, VR_render_sub_buffer[0].
@@ -1938,7 +1938,7 @@ static void game_render_frame_mono(void)
 
 }
 
-static void game_render_frame()
+static void game_render_frame(void)
 {
 	set_screen_mode( SCREEN_GAME );
 
@@ -1964,19 +1964,19 @@ static void game_render_frame()
 
 }
 
-void do_photos();
-void level_with_floor();
+void do_photos(void);
+void level_with_floor(void);
 
 void save_screen_shot(int automap_flag)
 {
 	fix t1;
-	char message[100];
+	char message[100] = {0};
 	grs_canvas *screen_canv=&grd_curscreen->sc_canvas;
 	grs_font *save_font;
 	static int savenum=0;
 	grs_canvas *temp_canv,*save_canv;
-	char savename[13];
-	ubyte pal[768];
+	char savename[13] = {0};
+	ubyte pal[768] = {0};
 	int w,h,aw,x,y;
 
 	// Can't do screen shots in VR modes.
@@ -2049,14 +2049,14 @@ int sound_nums[] = {10,11,20,21,30,31,32,33,40,41,50,51,60,61,62,70,80,81,82,83,
 
 int test_sound_num=0;
 
-static void play_test_sound()
+static void play_test_sound(void)
 {
 
 	digi_play_sample(sound_nums[test_sound_num], F1_0);
 }
 
 //	------------------------------------------------------------------------------------
-static void advance_sound()
+static void advance_sound(void)
 {
 	if (++test_sound_num == N_TEST_SOUNDS)
 		test_sound_num=0;
@@ -2248,11 +2248,11 @@ void palette_restore(void)
 extern void dead_player_frame(void);
 
 #ifndef RELEASE
-static void do_cheat_menu()
+static void do_cheat_menu(void)
 {
 	int mmn;
-	newmenu_item mm[16];
-	char score_text[21];
+	newmenu_item mm[16] = {0};
+	char score_text[21] = {0};
 
 	sprintf( score_text, "%d", Players[Player_num].score );
 
@@ -2395,7 +2395,7 @@ extern int Death_sequence_aborted;
 static int do_game_pause(int allow_menu)
 {
 	int paused;
-	int key;
+	int key = 0;
 
 	if (Game_mode & GM_MULTI)
 	{
@@ -2469,7 +2469,7 @@ static int do_game_pause(int allow_menu)
 
 void show_help(void)
 {
-	newmenu_item m[14];
+	newmenu_item m[14] = {0};
 
 	if ( VR_render_mode != VR_NONE )	{
 		m[ 0].type = NM_TYPE_TEXT; m[ 0].text = TXT_HELP_ESC;
@@ -2506,7 +2506,7 @@ void show_help(void)
 
 
 #ifdef ARCADE
-void arcade_frame_info()
+void arcade_frame_info(void)
 {
 	if (!Arcade_mode) return;
 
@@ -2533,10 +2533,10 @@ void arcade_frame_info()
 #endif
 
 //temp function until Matt cleans up game sequencing
-extern void temp_reset_stuff_on_level();
+extern void temp_reset_stuff_on_level(void);
 
 //deal with rear view - switch it on, or off, or whatever
-static void check_rear_view()
+static void check_rear_view(void)
 {
 
 	#define LEAVE_TIME 0x4000		//how long until we decide key is down	(Used to be 0x4000)
@@ -2675,7 +2675,7 @@ extern void do_lunacy_on(), do_lunacy_off();
 
 extern int Physics_cheat_flag;
 
-void game_disable_cheats()
+void game_disable_cheats(void)
 {
 	Game_turbo_mode = 0;
 	Cheats_enabled=0;
@@ -2688,7 +2688,7 @@ void game_disable_cheats()
 //	------------------------------------------------------------------------------------
 //this function is the game.  called when game mode selected.  runs until
 //editor mode or exit selected
-void game()
+void game(void)
 {
 	//@@int demo_playing=0;
 	//@@int multi_game=0;
@@ -2864,7 +2864,7 @@ extern void john_cheat_func_3(int);
 extern void john_cheat_func_4(int);
 
 //called at the end of the program
-void close_game()
+void close_game(void)
 {
 	if (VR_offscreen_buffer)	{
 		gr_free_canvas(VR_offscreen_buffer);
@@ -2894,7 +2894,7 @@ grs_canvas * get_current_game_screen(void)
 ubyte exploding_flag = 0;
 
 
-static void ReadControls()
+static void ReadControls(void)
 {
 	int key;
 	fix key_time;
@@ -3163,7 +3163,7 @@ static void ReadControls()
 
 			if (!(Game_mode&GM_MULTI) && key == cheat_warp[cheat_warp_index]) {
 				if (++cheat_warp_index == CHEAT_WARP_LENGTH) {
-					newmenu_item m;
+					newmenu_item m = {0};
 					char text[10]="";
 					int new_level_num;
 					int item;
@@ -3324,8 +3324,8 @@ static void ReadControls()
 #ifndef NDEBUG
 				case KEY_DEBUGGED + KEY_K: {
 					int how_many, c;
-					char filename[13], num[16];
-					newmenu_item m[6];
+					char filename[13] = {0}, num[16] = {0};
+					newmenu_item m[6] = {0};
 
 					filename[0] = '\0';
 					m[ 0].type = NM_TYPE_TEXT; m[ 0].text = "output file name";
@@ -3463,7 +3463,7 @@ static void ReadControls()
 						break;
 
 					case KEY_ALTED+KEY_6: {
-						newmenu_item m;
+						newmenu_item m = {0};
 						char text[10]="";
 						int new_level_num;
 						int item;
@@ -4119,7 +4119,7 @@ mem_check();
 					Auto_fire_fusion_cannon_time = 0;
 					Global_laser_firing_count = 1;
 				} else {
-					vms_vector	rand_vec;
+					vms_vector	rand_vec = {0};
 					fix			bump_amount;
 
 					Global_laser_firing_count = 0;
@@ -4171,7 +4171,7 @@ static void powerup_grab_cheat(object *player, int objnum)
 	dist = vm_vec_dist_quick(&Objects[objnum].pos, &player->pos);
 
 	if ((dist < 2*(powerup_size + player_size)) && !(Objects[objnum].flags & OF_SHOULD_BE_DEAD)) {
-		vms_vector	collision_point;
+		vms_vector	collision_point = {0};
 
 		vm_vec_avg(&collision_point, &Objects[objnum].pos, &player->pos);
 		collide_player_and_powerup(player, &Objects[objnum], &collision_point);
@@ -4236,7 +4236,7 @@ static int mark_player_path_to_segment(int segnum)
 
 	for (i=1; i<player_path_length; i++) {
 		int			segnum, objnum;
-		vms_vector	seg_center;
+		vms_vector	seg_center = {0};
 		object		*obj;
 
 		segnum = Point_segs[player_hide_index+i].segnum;

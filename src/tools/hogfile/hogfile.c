@@ -82,8 +82,8 @@ static void remove_char( char * s, char c )
 int main(int argc, char * argv[] )
 {
 	char * id = "DHF";
-	char	inputline[160+1];
-	char filename[80];
+	char	inputline[160+1] = {0};
+	char filename[80] = {0};
 	FILE * fp;
 
 	if ( argc < 3 )	{

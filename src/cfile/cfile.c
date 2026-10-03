@@ -154,7 +154,7 @@ int descent_critical_error = 0;
 static FILE * cfile_get_filehandle( char * filename, char * mode )
 {
 	FILE * fp;
-	char temp[128];
+	char temp[128] = {0};
 
 	descent_critical_error = 0;
 	fp = fopen( filename, mode );
@@ -177,7 +177,7 @@ static FILE * cfile_get_filehandle( char * filename, char * mode )
 
 static void cfile_init_hogfile(char *fname, hogfile * hog_files, int * nfiles )
 {
-	char id[4];
+	char id[4] = {0};
 	FILE * fp;
 	int i, len;
 
@@ -349,7 +349,7 @@ char * cfgets( char * buf, size_t n, CFILE * fp )
 	int i;
 	int c;
 
-	for (i=0; i<n-1; i++ )	{
+	for (i=0; i<(int)n-1; i++ )	{
 		do {
 			if (fp->raw_position >= fp->size ) {
 				*buf = 0;
@@ -368,7 +368,7 @@ char * cfgets( char * buf, size_t n, CFILE * fp )
 size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp )
 {
 	int i;
-	if ((fp->raw_position+(elsize*nelem)) > fp->size ) return EOF;
+	if ((size_t)fp->raw_position+(elsize*nelem) > (size_t)fp->size ) return EOF;
 	i = (int)fread( buf, elsize, nelem, fp->file );
 	fp->raw_position += (int)(i*elsize);
 	return i;

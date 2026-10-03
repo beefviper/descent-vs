@@ -219,7 +219,7 @@ extern char key_to_ascii(int keycode )
 
 // The BIOS keyboard buffer and status bits live in the BIOS data area,
 // which can only be reached under DOS.
-static void key_clear_bios_buffer_all()
+static void key_clear_bios_buffer_all(void)
 {
 #ifdef __WATCOMC__
 	// Clear keyboard buffer...
@@ -230,7 +230,7 @@ static void key_clear_bios_buffer_all()
 #endif
 }
 
-static void key_clear_bios_buffer()
+static void key_clear_bios_buffer(void)
 {
 #ifdef __WATCOMC__
 	// Clear keyboard buffer...
@@ -361,7 +361,7 @@ int key_getch(void)
 	return key_inkey();
 }
 
-static unsigned int key_get_shift_status()
+static unsigned int key_get_shift_status(void)
 {
 	unsigned int shift_status = 0;
 

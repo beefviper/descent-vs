@@ -305,7 +305,7 @@ ubyte *cfreadfile( char *filename, int *size ) {
     FILE *input;
     ubyte *tempbuf;
     ubyte *buf;
-    char header[3];
+    char header[3] = {0};
     int length, i;
 
     input = fopen( filename, "rb" );
@@ -334,10 +334,10 @@ ubyte *cfreadfile( char *filename, int *size ) {
 
 ubyte *extract( char *library, char *filename ) {
     int i;
-    ubyte *buf_ptr;
+    ubyte *buf_ptr = NULL;
     ubyte *buf;
     ubyte *tempbuf;
-    char header_buf[5];
+    char header_buf[5] = {0};
     short numfiles;
 
     strupr( filename );
@@ -498,7 +498,7 @@ ubyte *ReadFile( char *filename, int *length ) {
 //returns error codes listed in cflib.h
 int lib_init( char *init_lib_name ) {
 
-    char header_buf[5];
+    char header_buf[5] = {0};
     int i;
 	short temp;
 
@@ -543,7 +543,7 @@ void lib_close(void) {
 
 void init_library( char *filename, int numfiles ) {
 
-    lib_header Lib_Header;
+    lib_header Lib_Header = {0};
     int i;
     ubyte nul;
 	short temp;
@@ -602,7 +602,7 @@ int CheckFile( char *filename ) {
 static FILE * LibraryGetFileInfo( char *filename, int * others_use, int * lib_offset, int * file_size, int * org_size, int * compressed, char * buffer ) {
 	int i;
 	FILE * lib_file;
-	char signature[3];
+	char signature[3] = {0};
 
 	strupr( filename );
 

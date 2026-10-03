@@ -819,7 +819,7 @@ extern void physics_turn_towards_vector(vms_vector *goal_vector, object *obj, fi
 //-------------------------------------------------------------------------------------------
 void ai_turn_towards_vector(vms_vector *goal_vector, object *objp, fix rate)
 {
-	vms_vector	new_fvec;
+	vms_vector	new_fvec = {0};
 	fix			dot;
 
 	if ((objp->id == BABY_SPIDER_ID) && (objp->type == OBJ_ROBOT)) {
@@ -876,7 +876,7 @@ void ai_turn_towards_vector(vms_vector *goal_vector, object *objp, fix rate)
 // --------------------------------------------------------------------------------------------------------------------
 static void ai_turn_randomly(vms_vector *vec_to_player, object *obj, fix rate, int previous_visibility)
 {
-	vms_vector	curvec;
+	vms_vector	curvec = {0};
 
 	//	Random turning looks too stupid, so 1/4 of time, cheat.
 	if (previous_visibility)
@@ -995,7 +995,7 @@ void john_cheat_func_4(int key)
 int player_is_visible_from_object(object *objp, vms_vector *pos, fix field_of_view, vms_vector *vec_to_player)
 {
 	fix			dot;
-	fvi_query	fq;
+	fvi_query	fq = {0};
 
 	fq.p0						= pos;
 	if ((pos->x != objp->pos.x) || (pos->y != objp->pos.y) || (pos->z != objp->pos.z)) {
@@ -1289,8 +1289,8 @@ static void ai_fire_laser_at_player(object *obj, vms_vector *fire_point)
 	int			objnum = (int)(obj-Objects);
 	ai_local		*ailp = &Ai_local_info[objnum];
 	robot_info	*robptr = &Robot_info[obj->id];
-	vms_vector	fire_vec;
-	vms_vector	bpp_diff;
+	vms_vector	fire_vec = {0};
+	vms_vector	bpp_diff = {0};
 
 	if (!Robot_firing_enabled)
 		return;
@@ -1349,7 +1349,7 @@ static void ai_fire_laser_at_player(object *obj, vms_vector *fire_point)
 		vm_vec_normalized_dir_quick(&fire_vec, &bpp_diff, fire_point);
 
 	} else {
-		vms_vector	player_direction_vector;
+		vms_vector	player_direction_vector = {0};
 
 		vm_vec_sub(&player_direction_vector, &bpp_diff, &bpp_diff);
 
@@ -1408,7 +1408,7 @@ static void move_towards_vector(object *objp, vms_vector *vec_goal)
 	physics_info	*pptr = &objp->mtype.phys_info;
 	fix				speed, dot, max_speed;
 	robot_info		*robptr = &Robot_info[objp->id];
-	vms_vector		vel;
+	vms_vector		vel = {0};
 
 	//	Trying to move towards player.  If forward vector much different than velocity vector,
 	//	bash velocity vector twice as much towards player as usual.
@@ -1463,7 +1463,7 @@ static void move_around_player(object *objp, vms_vector *vec_to_player, int fast
 	int				dir;
 	int				dir_change;
 	fix				ft;
-	vms_vector		evade_vector;
+	vms_vector		evade_vector = {0};
 	int				count=0;
 
 	if (fast_flag == 0)
@@ -1622,7 +1622,7 @@ static void ai_move_relative_to_player(object *objp, ai_local *ailp, fix dist_to
 
 		if ((dobjp->type == OBJ_WEAPON) && (dobjp->signature == objp->ctype.ai_info.danger_laser_signature)) {
 			fix			dot, dist_to_laser, field_of_view;
-			vms_vector	vec_to_laser, laser_fvec;
+			vms_vector	vec_to_laser = {0}, laser_fvec = {0};
 
 			field_of_view = Robot_info[objp->id].field_of_view[Difficulty_level];
 
@@ -1632,7 +1632,7 @@ static void ai_move_relative_to_player(object *objp, ai_local *ailp, fix dist_to
 
 			if (dot > field_of_view) {
 				fix			laser_robot_dot;
-				vms_vector	laser_vec_to_robot;
+				vms_vector	laser_vec_to_robot = {0};
 
 				//	The laser is seen by the robot, see if it might hit the robot.
 				//	Get the laser's direction.  If it's a polyobj, it can be gotten cheaply from the orientation matrix.
@@ -1837,7 +1837,7 @@ static void compute_vis_and_vec(object *objp, vms_vector *pos, ai_local *ailp, v
 
 			delta_time = GameTime - Ai_cloak_info[cloak_index].last_time;
 			if (delta_time > F1_0*2) {
-				vms_vector	randvec;
+				vms_vector	randvec = {0};
 
 				Ai_cloak_info[cloak_index].last_time = GameTime;
 				make_random_vector(&randvec);
@@ -1916,7 +1916,7 @@ static void move_object_to_legal_spot(object *objp)
 
 	for (i=0; i<MAX_SIDES_PER_SEGMENT; i++) {
 		if (WALL_IS_DOORWAY(segp, i) & WID_FLY_FLAG) {
-			vms_vector	segment_center, goal_dir;
+			vms_vector	segment_center = {0}, goal_dir = {0};
 
 			compute_segment_center(&segment_center, &Segments[segp->children[i]]);
 			vm_vec_sub(&goal_dir, &segment_center, &objp->pos);
@@ -1948,7 +1948,7 @@ void move_towards_segment_center(object *objp)
 {
 	int			segnum = objp->segnum;
 	fix			dist_to_center;
-	vms_vector	segment_center, goal_dir;
+	vms_vector	segment_center = {0}, goal_dir = {0};
 
 	compute_segment_center(&segment_center, &Segments[segnum]);
 
@@ -2118,7 +2118,7 @@ static int create_gated_robot( int segnum, int object_id)
 	int		objnum;
 	object	*objp;
 	segment	*segp = &Segments[segnum];
-	vms_vector	object_pos;
+	vms_vector	object_pos = {0};
 	robot_info	*robptr = &Robot_info[object_id];
 	int		i, count=0;
 	fix		objsize = Polygon_models[robptr->model_num].rad;
@@ -2237,7 +2237,7 @@ int gate_in_robot(int type, int segnum)
 // --------------------------------------------------------------------------------------------------------------------
 static int boss_fits_in_seg(object *boss_objp, int segnum)
 {
-	vms_vector	segcenter;
+	vms_vector	segcenter = {0};
 	int			boss_objnum = (int)(boss_objp-Objects);
 	int			posnum;
 
@@ -2245,7 +2245,7 @@ static int boss_fits_in_seg(object *boss_objp, int segnum)
 
 	for (posnum=0; posnum<9; posnum++) {
 		if (posnum > 0) {
-			vms_vector	vertex_pos;
+			vms_vector	vertex_pos = {0};
 
 			Assert((posnum-1 >= 0) && (posnum-1 < 8));
 			vertex_pos = Vertices[Segments[segnum].verts[posnum-1]];
@@ -2289,10 +2289,10 @@ void init_boss_segments(short segptr[], int *num_segs, int size_check)
 
 	if (boss_objnum != -1) {
 		int			original_boss_seg;
-		vms_vector	original_boss_pos;
+		vms_vector	original_boss_pos = {0};
 		object		*boss_objp = &Objects[boss_objnum];
 		int			head, tail;
-		int			seg_queue[QUEUE_SIZE];
+		int			seg_queue[QUEUE_SIZE] = {0};
 //ALREADY IN RENDER.H		byte			visited[MAX_SEGMENTS];
 		fix			boss_size_save;
 
@@ -2359,7 +2359,7 @@ void init_boss_segments(short segptr[], int *num_segs, int size_check)
 static void teleport_boss(object *objp)
 {
 	int			rand_segnum;
-	vms_vector	boss_dir;
+	vms_vector	boss_dir = {0};
 	int			rand_seg;
 	Assert(Num_boss_teleport_segs > 0);
 
@@ -2574,7 +2574,7 @@ static void do_super_boss_stuff(object *objp, fix dist_to_player, int player_vis
 				int	rtval;
 				int	randtype = (rand() * MAX_GATE_INDEX) >> 15;
 
-				Assert(randtype < MAX_GATE_INDEX);
+				Assert(randtype < (int)MAX_GATE_INDEX);
 				randtype = Super_boss_gate_list[randtype];
 				Assert(randtype < N_robot_types);
 
@@ -2707,7 +2707,7 @@ void do_ai_frame(object *obj)
 	ai_static	*aip = &obj->ctype.ai_info;
 	ai_local		*ailp = &Ai_local_info[objnum];
 	fix			dist_to_player;
-	vms_vector	vec_to_player;
+	vms_vector	vec_to_player = {0};
 	fix			dot;
 	robot_info	*robptr;
 	int			player_visibility=-1;
@@ -2716,8 +2716,8 @@ void do_ai_frame(object *obj)
 	int			new_goal_state;
 	int			visibility_and_vec_computed = 0;
 	int			previous_visibility;
-	vms_vector	gun_point;
-	vms_vector	vis_vec_pos;
+	vms_vector	gun_point = {0};
+	vms_vector	vis_vec_pos = {0};
 
 	if (aip->SKIP_AI_COUNT) {
 		aip->SKIP_AI_COUNT--;
@@ -3208,7 +3208,7 @@ void do_ai_frame(object *obj)
 			//	(Note, only drop if player is visible.  This prevents the bombs from being a giveaway, and
 			//	also ensures that the robot is moving while it is dropping.  Also means fewer will be dropped.)
 			if ((ailp->next_fire <= 0) && (player_visibility)) {
-				vms_vector	fire_vec, fire_pos;
+				vms_vector	fire_vec = {0}, fire_pos = {0};
 
 				if (!ai_multiplayer_awareness(obj, 75))
 					return;
@@ -3363,7 +3363,7 @@ void do_ai_frame(object *obj)
 
 			break;
 		case AIM_OPEN_DOOR: {		// trying to open a door.
-			vms_vector	center_point, goal_vector;
+			vms_vector	center_point = {0}, goal_vector = {0};
 			Assert(obj->id == ROBOT_BRAIN);		//	Make sure this guy is allowed to be in this mode.
 
 			if (!ai_multiplayer_awareness(obj, 62))
@@ -3660,7 +3660,7 @@ FILE *Ai_dump_file = NULL;
 char	Ai_error_message[128] = "";
 
 // ----------------------------------------------------------------------------------
-static void dump_ai_objects_all()
+static void dump_ai_objects_all(void)
 {
 #if PARALLAX
 	int	objnum;

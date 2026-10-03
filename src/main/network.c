@@ -161,7 +161,7 @@ void network_read_object_packet(ubyte* data);
 void network_read_endlevel_packet(ubyte* data);
 
 
-int network_wait_for_snyc();
+int network_wait_for_snyc(void);
 
 static void
 network_init(void)
@@ -202,7 +202,7 @@ network_endlevel_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	int num_escaped = 0;
 	int goto_secret = 0;
 
-	int previous_state[MAX_NUM_NET_PLAYERS];
+	int previous_state[MAX_NUM_NET_PLAYERS] = {0};
 	int previous_seconds_left;
 
 	(void)citem;
@@ -323,11 +323,11 @@ network_endlevel(int *secret)
 {
 	// Do whatever needs to be done between levels
 
-	newmenu_item m[MAX_NUM_NET_PLAYERS+1];
-	char menu_text[MAX_NUM_NET_PLAYERS+1][80];
+	newmenu_item m[MAX_NUM_NET_PLAYERS+1] = {0};
+	char menu_text[MAX_NUM_NET_PLAYERS+1][80] = {0};
 	int i, choice;
 
-	char text[80];
+	char text[80] = {0};
 
 	Function_mode = FMODE_MENU;
 
@@ -362,7 +362,7 @@ menu:
 	choice=newmenu_do3(NULL, text, N_players+1, m, network_endlevel_poll, 0, "STARS.PCX", 300, 160);
 
 	if (choice==-1) {
-		newmenu_item m2[2];
+		newmenu_item m2[2] = {0};
 
 		m2[0].type = m2[1].type = NM_TYPE_MENU;
 		m2[0].text = TXT_YES; m2[1].text = TXT_NO;
@@ -529,7 +529,7 @@ network_new_player(sequence_packet *their)
 static void network_welcome_player(sequence_packet *their)
 {
  	// Add a player to a game already in progress
-	ubyte local_address[6];
+	ubyte local_address[6] = {0};
 	int player_num;
 	int i;
 
@@ -740,7 +740,7 @@ static int network_create_monitor_vector(void)
 	int i, j, k;
 	int num_blown_bitmaps = 0;
 	int monitor_num = 0;
-	int blown_bitmaps[7];
+	int blown_bitmaps[7] = {0};
 	int vector = 0;
 	segment *seg;
 
@@ -871,7 +871,7 @@ void network_send_objects(void)
 			if ((Network_send_object_mode == 1) && ((object_owner[i] == -1) || (object_owner[i] == player_num)))
 				continue;
 
-			if ( ((IPX_MAX_DATA_SIZE-1) - loc) < (sizeof(object)+5) )
+			if ( ((IPX_MAX_DATA_SIZE-1) - loc) < (int)(sizeof(object)+5) )
 				break; // Not enough room for another object
 
 			obj_count_frame++;
@@ -1076,7 +1076,7 @@ void network_dump_player(ubyte * server, ubyte *node, int why)
 {
 	// Inform player that he was not chosen for the netgame
 
-	sequence_packet temp;
+	sequence_packet temp = {0};
 
 	temp.type = PID_DUMP;
 	memcpy(temp.player.callsign, Players[Player_num].callsign, CALLSIGN_LEN+1);
@@ -1089,7 +1089,7 @@ network_send_game_list_request(void)
 {
 	// Send a broadcast request for game info
 
-	sequence_packet me;
+	sequence_packet me = {0};
 
 	mprintf((0, "Sending game_list request.\n"));
 	memcpy( me.player.callsign, Players[Player_num].callsign, CALLSIGN_LEN+1 );
@@ -1132,7 +1132,7 @@ void network_update_netgame(void)
 
 void network_send_endlevel_sub(int player_num)
 {
-	endlevel_info end;
+	endlevel_info end = {0};
 	int i;
 
 	// Send an endlevel packet for a player
@@ -1357,7 +1357,7 @@ static void network_process_packet(ubyte *data, int length )
 }
 
 #ifndef NDEBUG
-static void dump_segments()
+static void dump_segments(void)
 {
 	FILE * fp;
 
@@ -1690,11 +1690,11 @@ static int network_get_game_params( char * game_name, int *mode, int *game_flags
 {
 	int i;
 	int opt, opt_closed, opt_difficulty;
-	newmenu_item m[16];
-	char name[NETGAME_NAME_LEN+1];
-	char slevel[5];
-	char level_text[32];
-	char srinvul[32];
+	newmenu_item m[16] = {0};
+	char name[NETGAME_NAME_LEN+1] = {0};
+	char slevel[5] = {0};
+	char level_text[32] = {0};
+	char srinvul[32] = {0};
 
 #ifndef SHAREWARE
 	int new_mission_num;
@@ -1885,7 +1885,7 @@ void network_read_sync_packet( netgame_info * sp )
 {
 	int i, j;
 
-	char temp_callsign[CALLSIGN_LEN+1];
+	char temp_callsign[CALLSIGN_LEN+1] = {0};
 
 	// This function is now called by all people entering the netgame.
 
@@ -1999,7 +1999,7 @@ network_send_sync(void)
 	// Randomize their starting locations...
 
 	srand( TICKER );
-	for (i=0; i<MaxNumNetPlayers; i++ )
+	for (i=0; i<MaxNumNetPlayers && i<MAX_PLAYERS; i++ )
 	{
 		if (Players[i].connected)
 			Players[i].connected = 1; // Get rid of endlevel connect statuses
@@ -2047,12 +2047,12 @@ static int
 network_select_teams(void)
 {
 #ifndef SHAREWARE
-	newmenu_item m[MAX_PLAYERS+4];
+	newmenu_item m[MAX_PLAYERS+4] = {0};
 	int choice, opt, opt_team_b;
 	ubyte team_vector = 0;
-	char team_names[2][CALLSIGN_LEN+1];
+	char team_names[2][CALLSIGN_LEN+1] = {0};
 	int i;
-	int pnums[MAX_PLAYERS+2];
+	int pnums[MAX_PLAYERS+2] = {0};
 
 	// One-time initialization
 
@@ -2124,9 +2124,9 @@ static int
 network_select_players(void)
 {
 	int i, j;
-	newmenu_item m[MAX_PLAYERS];
-	char text[MAX_PLAYERS][25];
-	char title[50];
+	newmenu_item m[MAX_PLAYERS] = {0};
+	char text[MAX_PLAYERS][25] = {0};
+	char title[50] = {0};
 	int save_nplayers;
 
 	network_add_player( &My_Seq );
@@ -2230,7 +2230,7 @@ void
 network_start_game(void)
 {
 	int i;
-	char game_name[NETGAME_NAME_LEN+1];
+	char game_name[NETGAME_NAME_LEN+1] = {0};
 	int chosen_game_mode, game_flags, level;
 
 	Assert( sizeof(frame_info) < IPX_MAX_DATA_SIZE );
@@ -2353,7 +2353,7 @@ static void network_join_poll( int nitems, newmenu_item * menus, int * key, int 
 	{
 		int game_status = Active_games[i].game_status;
 		int j, nplayers = 0;
-		char levelname[4];
+		char levelname[4] = {0};
 
 		for (j = 0; j < Active_games[i].numplayers; j++)
 			if (Active_games[i].players[j].connected)
@@ -2400,8 +2400,8 @@ static void network_join_poll( int nitems, newmenu_item * menus, int * key, int 
 static int
 network_wait_for_sync(void)
 {
-	char text[60];
-	newmenu_item m[2];
+	char text[60] = {0};
+	newmenu_item m[2] = {0};
 	int i, choice;
 
 	Network_status = NETSTAT_WAITING;
@@ -2424,7 +2424,7 @@ menu:
 
 	if (Network_status != NETSTAT_PLAYING)
 	{
-		sequence_packet me;
+		sequence_packet me = {0};
 
 //		if (Network_status == NETSTAT_ENDLEVEL)
 //		{
@@ -2485,7 +2485,7 @@ network_wait_for_requests(void)
 {
 	// Wait for other players to load the level before we send the sync
 	int choice, i;
-	newmenu_item m[1];
+	newmenu_item m[1] = {0};
 
 	Network_status = NETSTAT_WAITING;
 
@@ -2692,7 +2692,7 @@ void network_leave_game(void)
 
 void network_flush(void)
 {
-	ubyte packet[IPX_MAX_DATA_SIZE];
+	ubyte packet[IPX_MAX_DATA_SIZE] = {0};
 
 	if (!Network_active)
 		return;
@@ -2704,7 +2704,7 @@ void network_flush(void)
 void network_listen(void)
 {
 	int size;
-	ubyte packet[IPX_MAX_DATA_SIZE];
+	ubyte packet[IPX_MAX_DATA_SIZE] = {0};
 
 	if (!Network_active) return;
 

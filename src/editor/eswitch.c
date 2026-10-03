@@ -243,7 +243,7 @@ static int trigger_remove_flag_from_Markedside(short flag) {
 		return 0;
 	}
 
-	if ((!Triggers[trigger_num].flags) & flag)
+	if (!(Triggers[trigger_num].flags & flag))
 		return 1;
 
  	Triggers[trigger_num].flags &= ~flag;
@@ -252,7 +252,7 @@ static int trigger_remove_flag_from_Markedside(short flag) {
 }
 
 
-static int bind_matcen_to_trigger() {
+static int bind_matcen_to_trigger(void) {
 
 	int wall_num, trigger_num, link_num;
 	int i;
@@ -387,7 +387,7 @@ int remove_trigger(segment *seg, short side)
 }
 
 
-static int add_trigger_control()
+static int add_trigger_control(void)
 {
 	trigger_add_to_Markedside(TRIGGER_CONTROL_DOORS);
 	Update_flags = UF_WORLD_CHANGED;
@@ -401,7 +401,7 @@ int trigger_remove(void)
 	return 1;
 }
 
-static int trigger_turn_all_ON()
+static int trigger_turn_all_ON(void)
 {
 	int t;
 
@@ -413,7 +413,7 @@ static int trigger_turn_all_ON()
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the trigger dialog box
 //-------------------------------------------------------------------------
-int do_trigger_dialog()
+int do_trigger_dialog(void)
 {
 	int i;
 

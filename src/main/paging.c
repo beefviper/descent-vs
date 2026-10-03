@@ -367,7 +367,7 @@ static void paging_touch_segment(segment * segp)
 }
 
 
-static void paging_touch_walls()
+static void paging_touch_walls(void)
 {
 	int i,j;
 	wclip *anim;
@@ -445,7 +445,7 @@ void paging_touch_all(void)
 		extern int Current_level_num;
 		extern ushort GameBitmapXlat[MAX_BITMAP_FILES];
 		FILE * fp;
-		char fname[128];
+		char fname[128] = {0};
 		int i;
 
 		if ( Current_level_num < 0 )

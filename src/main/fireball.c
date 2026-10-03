@@ -167,7 +167,7 @@ static object *object_create_explosion_sub(object *objp, short segnum, vms_vecto
 
 	if (maxdamage > 0) {
 		fix dist, force;
-		vms_vector pos_hit, vforce;
+		vms_vector pos_hit = {0}, vforce = {0};
 		fix damage;
 		int i;
 		object * obj0p = &Objects[0];
@@ -200,7 +200,7 @@ static object *object_create_explosion_sub(object *objp, short segnum, vms_vecto
 
 								//	When a robot gets whacked by a badass force, he looks towards it because robots tend to get blasted from behind.
 								{
-									vms_vector neg_vforce;
+									vms_vector neg_vforce = {0};
 									neg_vforce.x = vforce.x * -2 * (7 - Difficulty_level)/8;
 									neg_vforce.y = vforce.y * -2 * (7 - Difficulty_level)/8;
 									neg_vforce.z = vforce.z * -2 * (7 - Difficulty_level)/8;
@@ -219,7 +219,7 @@ static object *object_create_explosion_sub(object *objp, short segnum, vms_vecto
 								break;
 							case OBJ_PLAYER:	{
 								object * killer=NULL;
-								vms_vector	vforce2;
+								vms_vector	vforce2 = {0};
 								if ((objp != NULL) && (Game_mode & GM_MULTI) && (objp->type == OBJ_PLAYER)) {
 //									mprintf((0, "Damaged by player %d's explosion.\n", objp->id));
 									killer = objp;
@@ -409,10 +409,10 @@ static int pick_connected_segment(object *objp, int max_depth)
 	int		cur_depth;
 	int		start_seg;
 	int		head, tail;
-	int		seg_queue[QUEUE_SIZE*2];
-	byte		visited[MAX_SEGMENTS];
-	byte		depth[MAX_SEGMENTS];
-	byte		side_rand[MAX_SIDES_PER_SEGMENT];
+	int		seg_queue[QUEUE_SIZE*2] = {0};
+	byte		visited[MAX_SEGMENTS] = {0};
+	byte		depth[MAX_SEGMENTS] = {0};
+	byte		side_rand[MAX_SIDES_PER_SEGMENT] = {0};
 
 //	mprintf((0, "Finding a segment %i segments away from segment %i: ", max_depth, objp->segnum));
 
@@ -451,13 +451,17 @@ static int pick_connected_segment(object *objp, int max_depth)
 		for (sidenum=0; sidenum<MAX_SIDES_PER_SEGMENT; sidenum++) {
 			int	snrand = side_rand[sidenum];
 			int	wall_num = segp->sides[snrand].wall_num;
+			int	child = segp->children[snrand];
 
-			if (((wall_num == -1) && (segp->children[snrand] > -1)) || door_is_openable_by_player(segp, snrand)) {
-				if (visited[segp->children[snrand]] == 0) {
-					seg_queue[head++] = segp->children[snrand];
-					visited[segp->children[snrand]] = 1;
-					depth[segp->children[snrand]] = cur_depth+1;
-					head &= QUEUE_SIZE-1;
+			if (child < 0 || child >= MAX_SEGMENTS)
+				continue;
+
+			if ((wall_num == -1) || door_is_openable_by_player(segp, snrand)) {
+				if (visited[child] == 0) {
+					seg_queue[head] = child;
+					visited[child] = 1;
+					depth[child] = cur_depth+1;
+					head = (head + 1) & (QUEUE_SIZE-1);
 					if (head > tail) {
 						if (head == tail + QUEUE_SIZE-1)
 							Int3();	//	queue overflow.  Make it bigger!
@@ -529,7 +533,7 @@ void maybe_drop_net_powerup(int powerup_type)
 {
 	if ((Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP)) {
 		int	segnum, objnum;
-		vms_vector	new_pos;
+		vms_vector	new_pos = {0};
 
 		if (Fuelcen_control_center_destroyed || Endlevel_sequence)
 			return;
@@ -687,7 +691,7 @@ int object_create_egg(object *objp)
 	int		objnum = 0;
 	object	*obj;
 	int		count;
-	vms_vector	new_velocity, new_pos;
+	vms_vector	new_velocity = {0}, new_pos = {0};
 	fix		old_mag;
 
 //	maybe_replace_powerup_with_energy(objp);
@@ -1138,7 +1142,7 @@ typedef struct expl_wall {
 expl_wall expl_wall_list[MAX_EXPLODING_WALLS];
 //--unused-- int n_exploding_walls;
 
-void init_exploding_walls()
+void init_exploding_walls(void)
 {
 	int i;
 
@@ -1150,7 +1154,7 @@ void init_exploding_walls()
 void explode_wall(int segnum,int sidenum)
 {
 	int i;
-	vms_vector pos;
+	vms_vector pos = {0};
 
 	//find a free slot
 
@@ -1174,7 +1178,7 @@ void explode_wall(int segnum,int sidenum)
 
 //handle walls for this frame
 //note: this wall code assumes the wall is not triangulated
-void do_exploding_wall_frame()
+void do_exploding_wall_frame(void)
 {
 	int i;
 
@@ -1219,9 +1223,9 @@ void do_exploding_wall_frame()
 			//now create all the next explosions
 
 			for (e=old_count;e<new_count;e++) {
-				short			vertnum_list[4];
+				short			vertnum_list[4] = {0};
 				vms_vector	*v0,*v1,*v2;
-				vms_vector	vv0,vv1,pos;
+				vms_vector	vv0 = {0},vv1 = {0},pos = {0};
 				fix			size;
 
 				//calc expl position
@@ -1243,7 +1247,7 @@ void do_exploding_wall_frame()
 				//fireballs start away from door, with subsequent ones getting closer
 				#ifdef COMPACT_SEGS
 					{
-					vms_vector _vn;
+					vms_vector _vn = {0};
 					get_side_normal(&Segments[segnum], sidenum, 0, &_vn );
 					vm_vec_scale_add2(&pos,&_vn,size*(EXPL_WALL_TOTAL_FIREBALLS-e)/EXPL_WALL_TOTAL_FIREBALLS);
 					}

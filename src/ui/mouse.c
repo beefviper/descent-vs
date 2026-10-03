@@ -245,7 +245,7 @@ void ui_mouse_process(void)
 		Mouse.b2_status |= BUTTON_JUST_RELEASED;
 }
 
-void ui_mouse_flip_buttons()
+void ui_mouse_flip_buttons(void)
 {   short x;
 
 	x = Mouse.b1_status;

@@ -201,7 +201,7 @@ static int ml_sort_func(const void* e0, const void* e1)
 int build_mission_list(int anarchy_mode)
 {
 	int count=0;
-	struct find_t find;
+	struct find_t find = {0};
 
 	//fill in built-in level
 
@@ -218,7 +218,7 @@ int build_mission_list(int anarchy_mode)
 		do	{
 			FILE *mfile;
 			int is_anarchy;
-			char temp[13],*t;
+			char temp[13] = {0},*t;
 
 			strcpy(temp,find.name);
 			if ((t = strchr(temp,'.')) == NULL)
@@ -267,14 +267,14 @@ int build_mission_list(int anarchy_mode)
 #ifdef USE_CD
 	if ( strlen(destsat_cdpath) )	{
 		int i;
-		char temp_spec[128];
+		char temp_spec[128] = {0};
 		strcpy( temp_spec, destsat_cdpath );
 		strcat( temp_spec, "*.MSN" );
 		if( !_dos_findfirst( temp_spec, 0, &find ) )	{
 			do	{
 				FILE *mfile;
 				int is_anarchy;
-				char temp[13],*t;
+				char temp[13] = {0},*t;
 
 				strcpy(temp,find.name);
 				if ((t = strchr(temp,'.')) == NULL)
@@ -390,7 +390,7 @@ int load_mission(int mission_num)
 	{		 //NOTE LINK TO ABOVE IF!!!!!
 			//read mission from file
 		FILE *mfile;
-		char buf[80], tmp[80], *v;
+		char buf[80] = {0}, tmp[80] = {0}, *v;
 
 		strcpy(buf,Mission_list[mission_num].filename);
 		strcat(buf,".MSN");
@@ -403,7 +403,7 @@ int load_mission(int mission_num)
 #ifdef USE_CD
 		if (mfile == NULL) {
 			if ( strlen(destsat_cdpath) )	{
-				char temp_spec[128];
+				char temp_spec[128] = {0};
 				strcpy( temp_spec, destsat_cdpath );
 				strcat( temp_spec, buf );
 				mfile = fopen( temp_spec, "rt" );

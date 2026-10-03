@@ -100,7 +100,7 @@ encode_rotate_left(char *c)
 }
 
 //load all the text strings for Descent
-void load_text()
+void load_text(void)
 {
 	CFILE  *tfile;
 	CFILE *ifile;

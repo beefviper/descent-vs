@@ -375,7 +375,7 @@ ubyte * ipx_get_my_server_address(void)
 
 void ipx_listen_for_packet(ecb_header * ecb )
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	ecb->in_use = 0x1d;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 	rregs.ebx = 4;	// Listen For Packet function
@@ -386,7 +386,7 @@ void ipx_listen_for_packet(ecb_header * ecb )
 
 static void ipx_cancel_listen_for_packet(ecb_header * ecb )
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 	rregs.ebx = 6;	// IPX Cancel event
 	rregs.esi = DPMI_real_offset(ecb);
@@ -397,7 +397,7 @@ static void ipx_cancel_listen_for_packet(ecb_header * ecb )
 
 static void ipx_send_packet(ecb_header * ecb )
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 	rregs.ebx = 3;	// Send Packet function
 	rregs.esi = DPMI_real_offset(ecb);
@@ -414,7 +414,7 @@ typedef struct {
 void ipx_get_local_target( ubyte * server, ubyte * node, ubyte * local_target )
 {
 	net_xlat_info * info;
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 
 	// Get dos memory for call...
 	info = (net_xlat_info *)dpmi_get_temp_low_buffer( sizeof(net_xlat_info) );
@@ -437,7 +437,7 @@ void ipx_get_local_target( ubyte * server, ubyte * node, ubyte * local_target )
 
 static void ipx_close(void)
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	if ( ipx_installed )	{
 		// When using VLM's instead of NETX, the sockets don't
 		// seem to automatically get closed, so we must explicitly
@@ -463,7 +463,7 @@ static void ipx_close(void)
 
 int ipx_init( int socket_number, int show_address )
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	ubyte *ipx_real_buffer;
 	int i;
 
@@ -620,7 +620,7 @@ void ipx_send_broadcast_packet_data( ubyte * data, int datasize )
 {
 	int i, j;
 	ubyte broadcast[] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
-	ubyte local_address[6];
+	ubyte local_address[6] = {0};
 
 	// Set to all networks besides mine
 	for (i=0; i<Ipx_num_networks; i++ )	{
@@ -651,7 +651,7 @@ SkipUser:
 // Sends a non-localized packet... needs 4 byte server, 6 byte address
 void ipx_send_internetwork_packet_data( ubyte * data, int datasize, ubyte * server, ubyte *address )
 {
-	ubyte local_address[6];
+	ubyte local_address[6] = {0};
 
 	if ( (*(uint *)server) != 0 )	{
 		ipx_get_local_target( server, address, local_address );
@@ -666,7 +666,7 @@ int ipx_change_default_socket( ushort socket_number )
 {
 	int i;
 	WORD new_ipx_socket;
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 
 	if ( !ipx_installed ) return -3;
 
@@ -722,8 +722,8 @@ int ipx_change_default_socket( ushort socket_number )
 void ipx_read_user_file(char * filename)
 {
 	FILE * fp;
-	user_address tmp;
-	char temp_line[132], *p1;
+	user_address tmp = {0};
+	char temp_line[132] = {0}, *p1;
 	int n;
 
 	if (!filename) return;
@@ -759,8 +759,8 @@ void ipx_read_user_file(char * filename)
 void ipx_read_network_file(char * filename)
 {
 	FILE * fp;
-	user_address tmp;
-	char temp_line[132], *p1;
+	user_address tmp = {0};
+	char temp_line[132] = {0}, *p1;
 	int i, n;
 
 	if (!filename) return;

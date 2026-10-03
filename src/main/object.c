@@ -485,8 +485,8 @@ void draw_object_tmap_rod(object *obj,bitmap_index bitmapi,int lighted)
 	grs_bitmap * bitmap = &GameBitmaps[bitmapi.index];
 	fix light;
 
-	vms_vector delta,top_v,bot_v;
-	g3s_point top_p,bot_p;
+	vms_vector delta = {0},top_v = {0},bot_v = {0};
+	g3s_point top_p = {0},bot_p = {0};
 
 	PIGGY_PAGE_IN(bitmapi);
 
@@ -530,8 +530,8 @@ fix	Cloak_fadeout_duration;
 static void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
 {
 	fix cloak_delta_time,total_cloaked_time;
-	fix light_scale;
-	int cloak_value;
+	fix light_scale = 0;
+	int cloak_value = 0;
 	int fading=0;		//if true, fading, else cloaking
 
 	total_cloaked_time = cloak_end_time-cloak_start_time;
@@ -637,7 +637,7 @@ static void draw_polygon_object(object *obj)
 
 	if (obj->rtype.pobj_info.tmap_override != -1) {
 		polymodel *pm = &Polygon_models[obj->rtype.pobj_info.model_num];
-		bitmap_index bm_ptrs[10];
+		bitmap_index bm_ptrs[10] = {0};
 
 		int i;
 
@@ -740,7 +740,7 @@ int	Player_fired_laser_this_frame=-1;
 static void set_robot_location_info(object *objp)
 {
 	if (Player_fired_laser_this_frame != -1) {
-		g3s_point temp;
+		g3s_point temp = {0};
 
 		g3_rotate_point(&temp,&objp->pos);
 
@@ -763,7 +763,7 @@ static void set_robot_location_info(object *objp)
 void create_small_fireball_on_object(object *objp, fix size_scale, int sound_flag)
 {
 	fix			size;
-	vms_vector	pos, rand_vec;
+	vms_vector	pos = {0}, rand_vec = {0};
 	int			segnum;
 
 	pos = objp->pos;
@@ -796,7 +796,7 @@ void create_small_fireball_on_object(object *objp, fix size_scale, int sound_fla
 static void create_vclip_on_object(object *objp, fix size_scale, int vclip_num)
 {
 	fix			size;
-	vms_vector	pos, rand_vec;
+	vms_vector	pos = {0}, rand_vec = {0};
 	int			segnum;
 
 	pos = objp->pos;
@@ -966,7 +966,7 @@ void check_and_fix_matrix(vms_matrix *m);
 
 #define vm_angvec_zero(v) (v)->p=(v)->b=(v)->h=0
 
-void reset_player_object()
+void reset_player_object(void)
 {
 	int i;
 
@@ -1105,7 +1105,7 @@ static void johns_obj_unlink(int segnum, int objnum)
 	if (obj->next != -1) Objects[obj->next].prev = obj->prev;
 }
 
-static void remove_incorrect_objects()
+static void remove_incorrect_objects(void)
 {
 	int segnum, objnum, count;
 
@@ -1143,7 +1143,7 @@ static void remove_all_objects_but( int segnum, int objnum )
 	}
 }
 
-static int check_duplicate_objects()
+static int check_duplicate_objects(void)
 {
 	int i, count=0;
 
@@ -1287,7 +1287,7 @@ void obj_free(int objnum)
 static void free_object_slots(int num_used)
 {
 	int	i, olind;
-	int	obj_list[MAX_OBJECTS];
+	int	obj_list[MAX_OBJECTS] = {0};
 	int	num_already_free, num_to_free;
 
 	olind = 0;
@@ -1608,10 +1608,10 @@ static void set_camera_pos(vms_vector *camera_pos, object *objp)
 
 	if (camera_player_dist < Camera_to_player_dist_goal) { //2*objp->size) {
 		//	Camera is too close to player object, so move it away.
-		vms_vector	player_camera_vec;
-		fvi_query	fq;
-		fvi_info		hit_data;
-		vms_vector	local_p1;
+		vms_vector	player_camera_vec = {0};
+		fvi_query	fq = {0};
+		fvi_info		hit_data = {0};
+		vms_vector	local_p1 = {0};
 
 		vm_vec_sub(&player_camera_vec, camera_pos, &objp->pos);
 		if ((player_camera_vec.x == 0) && (player_camera_vec.y == 0) && (player_camera_vec.z == 0))
@@ -1621,7 +1621,7 @@ static void set_camera_pos(vms_vector *camera_pos, object *objp)
 		far_scale = F1_0;
 
 		while ((hit_data.hit_type != HIT_NONE) && (count++ < 6)) {
-			vms_vector	closer_p1;
+			vms_vector	closer_p1 = {0};
 			vm_vec_normalize_quick(&player_camera_vec);
 			vm_vec_scale(&player_camera_vec, Camera_to_player_dist_goal);
 
@@ -1655,7 +1655,7 @@ extern int get_explosion_vclip(object *obj,int stage);
 void dead_player_frame(void)
 {
 	fix	time_dead;
-	vms_vector	fvec;
+	vms_vector	fvec = {0};
 
 	if (Player_is_dead) {
 		time_dead = GameTime - Player_time_of_death;
@@ -1877,8 +1877,8 @@ void obj_relink(int objnum,int newsegnum)
 //process a continuously-spinning object
 static void spin_object(object *obj)
 {
-	vms_angvec rotangs;
-	vms_matrix rotmat, new_pm;
+	vms_angvec rotangs = {0};
+	vms_matrix rotmat = {0}, new_pm = {0};
 
 	Assert(obj->movement_type == MT_SPINNING);
 

@@ -231,8 +231,8 @@ static void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num
 //returns number of item chosen
 int DoMenu(void)
 {
-	int menu_choice[25];
-	newmenu_item m[25];
+	int menu_choice[25] = {0};
+	newmenu_item m[25] = {0};
 	int num_options = 0;
 
 	if ( Players[Player_num].callsign[0]==0 )	{
@@ -267,7 +267,7 @@ int DoMenu(void)
 extern void show_order_form(void);	// John didn't want this in inferno.h so I just externed it.
 
 //returns flag, true means quit menu
-static void do_load_game_menu();
+static void do_load_game_menu(void);
 void do_option ( int select)
 {
 	switch (select) {
@@ -278,7 +278,7 @@ void do_option ( int select)
 			break;
 		case MENU_DEMO_PLAY:
 			{
-				char demo_file[16];
+				char demo_file[16] = {0};
 				if (newmenu_get_filename( TXT_SELECT_DEMO, "*.dem", demo_file, 1 ))	{
 					newdemo_start_playback(demo_file);
 				}
@@ -325,7 +325,7 @@ void do_option ( int select)
 
 		case MENU_PLAY_SONG:	{
 				int i;
-				char * m[MAX_SONGS];
+				char * m[MAX_SONGS] = {0};
 
 				for (i=0;i<MAX_SONGS;i++) {
 					m[i] = Songs[i].filename;
@@ -338,7 +338,7 @@ void do_option ( int select)
 			}
 			break;
 		case MENU_LOAD_LEVEL: {
-			newmenu_item m;
+			newmenu_item m = {0};
 			char text[10]="";
 			int new_level_num;
 
@@ -394,10 +394,10 @@ void do_option ( int select)
 
 }
 
-static int do_difficulty_menu()
+static int do_difficulty_menu(void)
 {
 	int s;
-	newmenu_item m[5];
+	newmenu_item m[5] = {0};
 
 	m[0].type=NM_TYPE_MENU; m[0].text=MENU_DIFFICULTY_TEXT(0);
 	m[1].type=NM_TYPE_MENU; m[1].text=MENU_DIFFICULTY_TEXT(1);
@@ -470,7 +470,7 @@ void set_detail_level_parameters(int detail_level)
 static void do_detail_level_menu(void)
 {
 	int s;
-	newmenu_item m[7];
+	newmenu_item m[7] = {0};
 
 	m[0].type=NM_TYPE_MENU; m[0].text=MENU_DETAIL_TEXT(0);
 	m[1].type=NM_TYPE_MENU; m[1].text=MENU_DETAIL_TEXT(1);
@@ -538,7 +538,7 @@ void set_custom_detail_vars(void)
 void do_detail_level_menu_custom(void)
 {
 	int	s=0;
-	newmenu_item m[7];
+	newmenu_item m[7] = {0};
 
 	do {
 		m[0].type = NM_TYPE_SLIDER;
@@ -595,7 +595,7 @@ void do_new_game_menu(void)
 
 	if (n_missions > 1) {
 		int new_mission_num,i, default_mission;
-		char * m[MAX_MISSIONS];
+		char * m[MAX_MISSIONS] = {0};
 
 		default_mission = 0;
 		for (i=0;i<n_missions;i++) {
@@ -626,9 +626,9 @@ void do_new_game_menu(void)
 		player_highest_level = Last_level;
 
 	if (player_highest_level > 1) {
-		newmenu_item m[2];
-		char info_text[80];
-		char num_text[10];
+		newmenu_item m[2] = {0};
+		char info_text[80] = {0};
+		char num_text[10] = {0};
 		int choice;
 
 try_again:
@@ -674,10 +674,10 @@ try_again:
 
 }
 
-static void do_load_game_menu()
+static void do_load_game_menu(void)
 {
-	newmenu_item m[N_SAVE_SLOTS];
-	char *saved_text[N_SAVE_SLOTS];
+	newmenu_item m[N_SAVE_SLOTS] = {0};
+	char *saved_text[N_SAVE_SLOTS] = {0};
 	int i,choice;
 
 	get_game_list(saved_text);
@@ -702,7 +702,7 @@ static void do_load_game_menu()
 		if ((ret=load_player_game(choice)) == EZERO)
 			ResumeSavedGame(Players[Player_num].level);
 		else {
-			newmenu_item m1[3];
+			newmenu_item m1[3] = {0};
 
 			m1[0].type = NM_TYPE_TEXT;  m1[0].text = strerror(ret);
 			m1[1].type = NM_TYPE_TEXT;  m1[1].text = "";
@@ -714,11 +714,11 @@ static void do_load_game_menu()
 	}
 }
 
-void do_save_game_menu()
+void do_save_game_menu(void)
 {
-	newmenu_item m[N_SAVE_SLOTS];
-	char *saved_text_ptrs[N_SAVE_SLOTS];
-	char menu_text[N_SAVE_SLOTS][GAME_NAME_LEN+1];		//+1 for terminating zero
+	newmenu_item m[N_SAVE_SLOTS] = {0};
+	char *saved_text_ptrs[N_SAVE_SLOTS] = {0};
+	char menu_text[N_SAVE_SLOTS][GAME_NAME_LEN+1] = {0};		//+1 for terminating zero
 	int i,choice;
 
 	get_game_list(saved_text_ptrs);
@@ -779,7 +779,7 @@ static void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int 
 
 void do_options_menu(void)
 {
-	newmenu_item m[13];
+	newmenu_item m[13] = {0};
 	int i = 0;
 
 	do {
@@ -819,8 +819,8 @@ void do_options_menu(void)
 
 void do_multi_player_menu(void)
 {
-	int menu_choice[3];
-	newmenu_item m[3];
+	int menu_choice[3] = {0};
+	newmenu_item m[3] = {0};
 	int choice = 0, num_options = 0;
 	int old_game_mode;
 

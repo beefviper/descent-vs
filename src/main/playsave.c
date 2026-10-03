@@ -309,7 +309,7 @@ void init_game_list(void)
 int new_player_config(void)
 {
 	int i,j,control_choice;
-	newmenu_item m[7];
+	newmenu_item m[7] = {0};
 
 RetrySelection:
 	for (i=0; i<CONTROL_MAX_TYPES; i++ )	{
@@ -361,9 +361,9 @@ RetrySelection:
 //read in the player's saved games.  returns errno (0 == no error)
 int read_player_file(void)
 {
-	char filename[13];
+	char filename[13] = {0};
 	FILE *file;
-	save_info info;
+	save_info info = {0};
 	int errno_ret = EZERO;
 
 	Assert(Player_num>=0 && Player_num<MAX_PLAYERS);
@@ -422,7 +422,7 @@ int read_player_file(void)
 
 		n_highest_levels = info.n_highest_levels;
 
-		if (fread(highest_levels,sizeof(hli),n_highest_levels,file) != n_highest_levels) {
+		if (fread(highest_levels,sizeof(hli),n_highest_levels,file) != (size_t)n_highest_levels) {
 			errno_ret = errno;
 			fclose(file);
 			return errno_ret;
@@ -494,7 +494,7 @@ int read_player_file(void)
 
 //finds entry for this level in table.  if not found, returns ptr to
 //empty entry.  If no empty entries, takes over last one
-static int find_hli_entry()
+static int find_hli_entry(void)
 {
 	int i;
 
@@ -556,9 +556,9 @@ int get_highest_level(void)
 //write out player's saved games.  returns errno (0 == no error)
 int write_player_file(void)
 {
-	char filename[13];
+	char filename[13] = {0};
 	FILE *file;
-	save_info info;
+	save_info info = {0};
 	int errno_ret;
 
 	errno_ret = WriteConfigFile();
@@ -598,7 +598,7 @@ int write_player_file(void)
 	}
 
 	//write higest level info
-	if ((fwrite(highest_levels, sizeof(hli), n_highest_levels, file) != n_highest_levels)) {
+	if ((fwrite(highest_levels, sizeof(hli), n_highest_levels, file) != (size_t)n_highest_levels)) {
 		errno_ret = errno;
 		fclose(file);
 		return errno_ret;
@@ -674,7 +674,7 @@ int save_player_game(int slot_num,char *text)
 //returns errno (0 == no error)
 int load_player_game(int slot_num)
 {
-	char save_callsign[CALLSIGN_LEN+1];
+	char save_callsign[CALLSIGN_LEN+1] = {0};
 	int ret;
 
 	Assert(slot_num < N_SAVE_SLOTS);

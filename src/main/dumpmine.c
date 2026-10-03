@@ -174,7 +174,7 @@ static char	*object_ids(int objnum)
 static void err_printf(FILE *my_file, char * format, ... )
 {
 	va_list	args;
-	char		message[256];
+	char		message[256] = {0};
 
 	va_start(args, format );
 	vsprintf(message,format,args);
@@ -188,7 +188,7 @@ static void err_printf(FILE *my_file, char * format, ... )
 static void warning_printf(FILE *my_file, char * format, ... )
 {
 	va_list	args;
-	char		message[256];
+	char		message[256] = {0};
 
 	va_start(args, format );
 	vsprintf(message,format,args);
@@ -521,7 +521,7 @@ static void write_matcen_text(FILE *my_file)
 static void write_wall_text(FILE *my_file)
 {
 	int	i, j;
-	byte	wall_flags[MAX_WALLS];
+	byte	wall_flags[MAX_WALLS] = {0};
 
 	fprintf(my_file, "-----------------------------------------------------------------------------\n");
 	fprintf(my_file, "Walls:\n");
@@ -626,7 +626,7 @@ static void say_totals(FILE *my_file, char *level_name);
 static void dump_used_textures_level(FILE *my_file, int level_num);
 void write_game_text_file(char *filename)
 {
-	char	my_filename[128];
+	char	my_filename[128] = {0};
 	int	namelen;
 	FILE	* my_file;
 
@@ -648,7 +648,7 @@ void write_game_text_file(char *filename)
 	my_file = fopen( my_filename, "wt" );
 
 	if (!my_file)	{
-		char  ErrorMessage[200];
+		char  ErrorMessage[200] = {0};
 
 		sprintf( ErrorMessage, "ERROR: Unable to open output file %s\n", my_file );
 		stop_time();
@@ -870,7 +870,7 @@ static void say_totals(FILE *my_file, char *level_name)
 	int	total_robots = 0;
 	int	objects_processed = 0;
 
-	int	used_objects[MAX_OBJECTS];
+	int	used_objects[MAX_OBJECTS] = {0};
 
 	fprintf(my_file, "\nLevel %s\n", level_name);
 
@@ -935,7 +935,7 @@ static void say_totals_all(void)
 	my_file = fopen( "levels.all", "wt" );
 
 	if (!my_file)	{
-		char  ErrorMessage[200];
+		char  ErrorMessage[200] = {0};
 
 		sprintf( ErrorMessage, "ERROR: Unable to open output file levels.all\n");
 		stop_time();
@@ -965,11 +965,11 @@ static void say_totals_all(void)
 static void dump_used_textures_level(FILE *my_file, int level_num)
 {
 	int	i;
-	int	temp_tmap_buf[MAX_TEXTURES];
-	int	perm_tmap_buf[MAX_TEXTURES];
-	byte	level_tmap_buf[MAX_TEXTURES];
-	int	temp_wall_buf[MAX_WALL_ANIMS];
-	int	perm_wall_buf[MAX_WALL_ANIMS];
+	int	temp_tmap_buf[MAX_TEXTURES] = {0};
+	int	perm_tmap_buf[MAX_TEXTURES] = {0};
+	byte	level_tmap_buf[MAX_TEXTURES] = {0};
+	int	temp_wall_buf[MAX_WALL_ANIMS] = {0};
+	int	perm_wall_buf[MAX_WALL_ANIMS] = {0};
 
 	for (i=0; i<MAX_TEXTURES; i++) {
 		perm_tmap_buf[i] = 0;
@@ -991,18 +991,18 @@ void dump_used_textures_all(void)
 {
 	FILE	*my_file;
 	int	i;
-	int	temp_tmap_buf[MAX_TEXTURES];
-	int	perm_tmap_buf[MAX_TEXTURES];
-	byte	level_tmap_buf[MAX_TEXTURES];
-	int	temp_wall_buf[MAX_WALL_ANIMS];
-	int	perm_wall_buf[MAX_WALL_ANIMS];
+	int	temp_tmap_buf[MAX_TEXTURES] = {0};
+	int	perm_tmap_buf[MAX_TEXTURES] = {0};
+	byte	level_tmap_buf[MAX_TEXTURES] = {0};
+	int	temp_wall_buf[MAX_WALL_ANIMS] = {0};
+	int	perm_wall_buf[MAX_WALL_ANIMS] = {0};
 
 say_totals_all();
 
 	my_file = fopen( "textures.dmp", "wt" );
 
 	if (!my_file)	{
-		char  ErrorMessage[200];
+		char  ErrorMessage[200] = {0};
 
 		sprintf( ErrorMessage, "ERROR: Unable to open output file textures.dmp\n");
 		stop_time();

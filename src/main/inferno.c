@@ -738,7 +738,7 @@ void install_int3_handler(void);
 int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
 
 #ifndef NDEBUG
-static void do_heap_check()
+static void do_heap_check(void)
 {
 	int heap_status;
 
@@ -781,7 +781,7 @@ check_id_checksum_and_date()
 		desc_id_exit_num = 1;
 
 	test_checksum = 0;
-	for (i = 0; i < strlen(name); i++) {
+	for (i = 0; i < (int)strlen(name); i++) {
 		found = 0;
 		test_checksum += name[i];
 		if (((test_checksum / 2) * 2) != test_checksum)
@@ -797,9 +797,9 @@ check_id_checksum_and_date()
 	printf ("%s %s\n", TXT_REGISTRATION, name);
 }
 
-static int is_3dbios_installed()
+static int is_3dbios_installed(void)
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 	rregs.eax = 0x4ed0;
 	//rregs.ebx = 0x3d10;
@@ -812,7 +812,7 @@ static int is_3dbios_installed()
 }
 
 
-static int init_graphics()
+static int init_graphics(void)
 {
 	int result;
 
@@ -863,9 +863,9 @@ static int init_graphics()
 extern fix fixed_frametime;
 
 // Returns 1 if ok, 0 if failed...
-static int init_gameport()
+static int init_gameport(void)
 {
-	union REGS regs;
+	union REGS regs = {0};
 
 	memset(&regs,0,sizeof(regs));
 	regs.x.eax = 0x8400;
@@ -877,10 +877,10 @@ static int init_gameport()
 		return 0;
 }
 
-static void check_dos_version()
+static void check_dos_version(void)
 {
 	int major, minor;
-	union REGS regs;
+	union REGS regs = {0};
 
 	memset(&regs,0,sizeof(regs));
 	regs.x.eax = 0x3000;							// Get MS-DOS Version Number
@@ -898,7 +898,7 @@ static void check_dos_version()
 
 static void change_to_dir(char *cmd_line)
 {
-	char drive[_MAX_DRIVE], dir[_MAX_DIR], curdir[_MAX_DIR];
+	char drive[_MAX_DRIVE] = {0}, dir[_MAX_DIR] = {0}, curdir[_MAX_DIR] = {0};
 	unsigned total, cur_drive;
 
 	_splitpath(cmd_line, drive, dir, NULL, NULL);
@@ -953,7 +953,7 @@ extern int piggy_low_memory;
 static void mem_int_to_string( int number, char *dest )
 {
 	int i,l,c;
-	char buffer[20],*p;
+	char buffer[20] = {0},*p;
 
 	sprintf( buffer, "%d", number );
 
@@ -978,9 +978,9 @@ static void mem_int_to_string( int number, char *dest )
 	strrev(dest);
 }
 
-static void check_memory()
+static void check_memory(void)
 {
-	char text[32];
+	char text[32] = {0};
 
 	printf( "\n%s\n", TXT_AVAILABLE_MEMORY);
 	printf( "----------------\n" );
@@ -1089,11 +1089,11 @@ extern int Game_victor_flag;
 extern int Game_vio_flag;
 extern int Game_3dmax_flag;
 extern int VR_low_res;
-extern void vfx_init();
+extern void vfx_init(void);
 
 #ifdef USE_CD
 char destsat_cdpath[128] = "";
-int find_descent_cd();
+int find_descent_cd(void);
 #endif
 
 extern int Config_vr_type;
@@ -1102,7 +1102,7 @@ extern int Config_vr_tracking;
 int main(int argc,char **argv)
 {
 	int i,t;
-	ubyte title_pal[768];
+	ubyte title_pal[768] = {0};
 
 	error_init(NULL);
 
@@ -1589,7 +1589,7 @@ int main(int argc,char **argv)
 	{
 		//grs_bitmap title_bm;
 		int pcx_error;
-		char filename[14];
+		char filename[14] = {0};
 
 		strcpy(filename, "descent.pcx");
 
@@ -1757,8 +1757,8 @@ void check_joystick_calibration(void)	{
 void show_order_form(void)
 {
 	int pcx_error;
-	char title_pal[768];
-	char	exit_screen[16];
+	char title_pal[768] = {0};
+	char	exit_screen[16] = {0};
 
 	gr_set_current_canvas( NULL );
 	gr_palette_clear();
@@ -1817,9 +1817,9 @@ typedef struct _Dev_Hdr {
 	char dev_units;
 } dev_header;
 
-int find_descent_cd()
+int find_descent_cd(void)
 {
-	dpmi_real_regs rregs;
+	dpmi_real_regs rregs = {0};
 
 	// Get dos memory for call...
 	dev_list * buf;

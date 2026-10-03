@@ -573,7 +573,7 @@ void nm_draw_background(int x1, int y1, int x2, int y2 )
 
 	if (Newmenu_first_time)	{
 		int pcx_error;
-		ubyte newpal[768];
+		ubyte newpal[768] = {0};
 		atexit( newmenu_close );
 		Newmenu_first_time = 0;
 
@@ -642,7 +642,7 @@ void nm_restore_background( int x, int y, int w, int h )
 static void nm_string( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
-	char *p,*s1;
+	char *p,*s1 = NULL;
 
 	p = strchr( s, '\t' );
 	if (p && (w1>0) )	{
@@ -676,7 +676,7 @@ static void nm_string( bkg * b, int w1,int x, int y, char * s )
 static void nm_string_slider( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
-	char *p,*s1;
+	char *p,*s1 = NULL;
 
 	p = strchr( s, '\t' );
 	if (p)	{
@@ -725,7 +725,7 @@ static void nm_string_black( bkg * b, int w1,int x, int y, char * s )
 // Draw a right justfied string
 static void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 {
-	int w,h,aw;
+	int w = 0,h,aw;
 	gr_get_string_size(s, &w, &h, &aw  );
 	x -= 3;
 
@@ -744,7 +744,7 @@ static void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 //for text items, constantly redraw cursor (to achieve flash)
 static void update_cursor( newmenu_item *item)
 {
-	int w,h,aw;
+	int w = 0,h,aw;
 	fix time = timer_get_approx_seconds();
 	int x,y;
 	char * text = item->text;
@@ -773,7 +773,7 @@ static void update_cursor( newmenu_item *item)
 
 static void nm_string_inputbox( bkg *b, int w, int x, int y, char * text, int current )
 {
-	int w1,h1,aw;
+	int w1 = 0,h1,aw;
 
 	while( *text )	{
 		gr_get_string_size(text, &w1, &h1, &aw  );
@@ -845,7 +845,7 @@ static void draw_item( bkg * b, newmenu_item *item, int is_current )
 			nm_rstring( b,item->right_offset, item->x, item->y, NORMAL_RADIO_BOX );
 		break;
 	case NM_TYPE_NUMBER:	{
-		char text[10];
+		char text[10] = {0};
 		if (item->value < item->min_value) item->value=item->min_value;
 		if (item->value > item->max_value) item->value=item->max_value;
 		nm_string( b, item->w, item->x, item->y, item->text );
@@ -916,7 +916,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	grs_font * save_font;
 	int string_width, string_height, average_width;
 	int ty;
-	bkg bg;
+	bkg bg = {0};
 	int all_text=0;		//set true if all text items
 	int time_stopped=0;
 
@@ -1003,7 +1003,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 		if  (item[i].type==NM_TYPE_NUMBER )	{
 			int w1,h1,aw1;
-			char test_text[20];
+			char test_text[20] = {0};
 			sprintf( test_text, "%d", item[i].max_value );
 			gr_get_string_size( test_text, &w1, &h1, &aw1 );
 			item[i].right_offset = w1;
@@ -1480,8 +1480,8 @@ int nm_messagebox1( char *title, void (*subfunction)(int nitems,newmenu_item * i
 	char * format;
 	va_list args;
 	char *s;
-	char nm_text[MESSAGEBOX_TEXT_SIZE];
-	newmenu_item nm_message_items[5];
+	char nm_text[MESSAGEBOX_TEXT_SIZE] = {0};
+	newmenu_item nm_message_items[5] = {0};
 
 	va_start(args, nchoices );
 
@@ -1507,8 +1507,8 @@ int nm_messagebox( char *title, int nchoices, ... )
 	char * format;
 	va_list args;
 	char *s;
-	char nm_text[MESSAGEBOX_TEXT_SIZE];
-	newmenu_item nm_message_items[5];
+	char nm_text[MESSAGEBOX_TEXT_SIZE] = {0};
+	newmenu_item nm_message_items[5] = {0};
 
 	va_start(args, nchoices );
 
@@ -1532,7 +1532,7 @@ int nm_messagebox( char *title, int nchoices, ... )
 static void newmenu_file_sort( int n, char *list )
 {
 	int i, j, incr;
-	char t[14];
+	char t[14] = {0};
 
 	incr = n / 2;
 	while( incr > 0 )		{
@@ -1556,7 +1556,7 @@ static void newmenu_file_sort( int n, char *list )
 static void delete_player_saved_games(char * name)
 {
 	int i;
-	char filename[16];
+	char filename[16] = {0};
 
 	for (i=0;i<10; i++)	{
 		sprintf( filename, "%s.sg%d", name, i );
@@ -1571,7 +1571,7 @@ int MakeNewPlayerFile(int allow_abort);
 int newmenu_get_filename( char * title, char * filespec, char * filename, int allow_abort_flag )
 {
 	int i;
-	struct find_t find;
+	struct find_t find = {0};
 	int NumFiles=0, key,done, citem, ocitem;
 	char * filenames = NULL;
 	int NumFiles_displayed = 8;
@@ -1582,7 +1582,7 @@ int newmenu_get_filename( char * title, char * filespec, char * filename, int al
 	int demos_deleted=0;
 	int initialized = 0;
 	int exit_value = 0;
-	int w_x, w_y, w_w, w_h;
+	int w_x, w_y = 0, w_w, w_h;
 
 	filenames = malloc( MAX_FILES * 14 );
 	if (filenames==NULL) return 0;
@@ -1623,7 +1623,7 @@ ReadFileNames:
 #ifdef USE_CD
 	// Seach CD for files if demo_mode and cd_mode
 	if ( strlen(destsat_cdpath) && demo_mode )	{
-		char temp_spec[128];
+		char temp_spec[128] = {0};
 		strcpy( temp_spec, destsat_cdpath );
 		strcat( temp_spec, filespec );
 
@@ -2124,9 +2124,9 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 int newmenu_filelist( char * title, char * filespec, char * filename )
 {
 	int i, NumFiles;
-	char * Filenames[MAX_FILES];
-	char FilenameText[MAX_FILES][14];
-	struct find_t find;
+	char * Filenames[MAX_FILES] = {0};
+	char FilenameText[MAX_FILES][14] = {0};
+	struct find_t find = {0};
 
 	NumFiles = 0;
 	if( !_dos_findfirst( filespec, 0, &find ) )	{

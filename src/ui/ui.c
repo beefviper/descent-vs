@@ -65,7 +65,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "mono.h"
 
-extern void InstallErrorHandler();
+extern void InstallErrorHandler(void);
 
 static int Initialized = 0;
 

@@ -90,8 +90,8 @@ static void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uv
 //	-----------------------------------------------------------
 int	TexFlipX(void)
 {
-	uvl	uvcenter;
-	fix	rotmat[4];
+	uvl	uvcenter = {0};
+	fix	rotmat[4] = {0};
 
 	compute_uv_side_center(&uvcenter, Cursegp, Curside);
 
@@ -111,8 +111,8 @@ int	TexFlipX(void)
 //	-----------------------------------------------------------
 int	TexFlipY(void)
 {
-	uvl	uvcenter;
-	fix	rotmat[4];
+	uvl	uvcenter = {0};
+	fix	rotmat[4] = {0};
 
 	compute_uv_side_center(&uvcenter, Cursegp, Curside);
 
@@ -133,7 +133,7 @@ int	TexFlipY(void)
 static int DoTexSlideLeft(int value)
 {
 	side	*sidep;
-	uvl	duvl03;
+	uvl	duvl03 = {0};
 	fix	dist;
 	byte	*vp;
 	int	v;
@@ -173,7 +173,7 @@ int TexSlideLeftBig(void)
 static int DoTexSlideUp(int value)
 {
 	side	*sidep;
-	uvl	duvl03;
+	uvl	duvl03 = {0};
 	fix	dist;
 	byte	*vp;
 	int	v;
@@ -215,7 +215,7 @@ int TexSlideUpBig(void)
 static int DoTexSlideDown(int value)
 {
 	side	*sidep;
-	uvl	duvl03;
+	uvl	duvl03 = {0};
 	fix	dist;
 	byte	*vp;
 	int	v;
@@ -285,7 +285,7 @@ static void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uv
 {
 	int	v;
 	side	*sidep = &segp->sides[sidenum];
-	uvl	tuv;
+	uvl	tuv = {0};
 
 	for (v=0; v<4; v++) {
 		rotate_uv_point(&tuv, rotmat, &sidep->uvls[v], uvcenter);
@@ -313,8 +313,8 @@ static void create_2d_rotation_matrix(fix *rotmat, fix ang)
 //	-----------------------------------------------------------
 static int DoTexRotateLeft(int value)
 {
-	uvl	uvcenter;
-	fix	rotmat[4];
+	uvl	uvcenter = {0};
+	fix	rotmat[4] = {0};
 
 	compute_uv_side_center(&uvcenter, Cursegp, Curside);
 
@@ -343,7 +343,7 @@ int TexRotateLeftBig(void)
 static int DoTexSlideRight(int value)
 {
 	side	*sidep;
-	uvl	duvl03;
+	uvl	duvl03 = {0};
 	fix	dist;
 	byte	*vp;
 	int	v;
@@ -382,8 +382,8 @@ int TexSlideRightBig(void)
 //	-----------------------------------------------------------
 static int DoTexRotateRight(int value)
 {
-	uvl	uvcenter;
-	fix	rotmat[4];
+	uvl	uvcenter = {0};
+	fix	rotmat[4] = {0};
 
 	compute_uv_side_center(&uvcenter, Cursegp, Curside);
 
@@ -416,8 +416,8 @@ int	TexSelectActiveEdge(void)
 //	-----------------------------------------------------------
 int	TexRotate90Degrees(void)
 {
-	uvl	uvcenter;
-	fix	rotmat[4];
+	uvl	uvcenter = {0};
+	fix	rotmat[4] = {0};
 
 	compute_uv_side_center(&uvcenter, Cursegp, Curside);
 

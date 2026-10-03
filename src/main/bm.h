@@ -267,7 +267,7 @@ void bm_write_all(FILE *fp);
 void bm_close(void);
 
 // Initializes the Texture[] array of bmd_bitmap structures.
-void init_textures();
+void init_textures(void);
 
 #define OL_ROBOT 				1
 #define OL_HOSTAGE 			2

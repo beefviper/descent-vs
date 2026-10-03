@@ -339,7 +339,7 @@ static void clear_editor_status(void)
 
 	if (cur_time > erase_time) {
 		int	i;
-		char	message[DIAGNOSTIC_MESSAGE_MAX];
+		char	message[DIAGNOSTIC_MESSAGE_MAX] = {0};
 
 		for (i=0; i<DIAGNOSTIC_MESSAGE_MAX-1; i++)
 			message[i] = ' ';
@@ -353,7 +353,7 @@ static void clear_editor_status(void)
 
 void diagnostic_message( const char *format, ... )
 {
-	char diag_line[DIAGNOSTIC_MESSAGE_MAX];
+	char diag_line[DIAGNOSTIC_MESSAGE_MAX] = {0};
 
 	va_list ap;
 
@@ -394,7 +394,7 @@ int DropIntoDebugger(void)
 
 
 #ifdef INCLUDE_XLISP
-int CallLisp()
+int CallLisp(void)
 {
 	medlisp_go();
 	return 1;
@@ -475,10 +475,10 @@ static void ReadLispMacro( FILE * file, char * buffer )
 
 static int (*KeyFunction[2048])();
 
-static void medkey_init()
+static void medkey_init(void)
 {
 	FILE * keyfile;
-	char keypress[100];
+	char keypress[100] = {0};
 	int key;
 	int i;	//, size;
 	int np;
@@ -510,7 +510,7 @@ static void medkey_init()
 	free( LispCommand );
 }
 
-void init_editor()
+void init_editor(void)
 {
 	minit();
 
@@ -631,8 +631,8 @@ int fuelcen_delete_from_curseg(void) {
 
 static void move_player_2_segment_and_rotate(segment *seg,int side)
 {
-	vms_vector vp;
-	vms_vector	upvec;
+	vms_vector vp = {0};
+	vms_vector	upvec = {0};
 	static int edgenum=0;
 
 	compute_segment_center(&ConsoleObject->pos,seg);
@@ -661,14 +661,17 @@ int SetPlayerFromCursegAndRotate(void)
 //far enough away to see all of curside
 int SetPlayerFromCursegMinusOne(void)
 {
-	vms_vector view_vec,view_vec2,side_center;
-	vms_vector corner_v[4];
-	vms_vector	upvec;
-	g3s_point corner_p[4];
+	vms_vector view_vec = {0},view_vec2 = {0},side_center = {0};
+	vms_vector corner_v[4] = {0};
+	vms_vector	upvec = {0};
+	g3s_point corner_p[4] = {0};
 	int i;
 	fix max,view_dist=f1_0*10;
 	static int edgenum=0;
 	int newseg;
+
+	if (Cursegp == NULL)
+		return 0;
 
 	view_vec = Cursegp->sides[Curside].normals[0];
 	vm_vec_negate(&view_vec);
@@ -744,7 +747,7 @@ static int ToggleLighting(void)
 	return Lighting_on;
 }
 
-void find_concave_segs();
+void find_concave_segs(void);
 
 int FindConcaveSegs(void)
 {
@@ -787,7 +790,7 @@ int DosShell(void)
 
 }
 
-static int ToggleOutlineMode()
+static int ToggleOutlineMode(void)
 {	int mode;
 
 	mode=toggle_outline_mode();
@@ -833,15 +836,15 @@ int GameZoomIn(void)
 }
 
 
-static int med_keypad_goto_0()	{	ui_pad_goto(0);	return 0;	}
-static int med_keypad_goto_1()	{	ui_pad_goto(1);	return 0;	}
-static int med_keypad_goto_2()	{	ui_pad_goto(2);	return 0;	}
-static int med_keypad_goto_3()	{	ui_pad_goto(3);	return 0;	}
-static int med_keypad_goto_4()	{	ui_pad_goto(4);	return 0;	}
-static int med_keypad_goto_5()	{	ui_pad_goto(5);	return 0;	}
-static int med_keypad_goto_6()	{	ui_pad_goto(6);	return 0;	}
-static int med_keypad_goto_7()	{	ui_pad_goto(7);	return 0;	}
-static int med_keypad_goto_8()	{	ui_pad_goto(8);	return 0;	}
+static int med_keypad_goto_0(void)	{	ui_pad_goto(0);	return 0;	}
+static int med_keypad_goto_1(void)	{	ui_pad_goto(1);	return 0;	}
+static int med_keypad_goto_2(void)	{	ui_pad_goto(2);	return 0;	}
+static int med_keypad_goto_3(void)	{	ui_pad_goto(3);	return 0;	}
+static int med_keypad_goto_4(void)	{	ui_pad_goto(4);	return 0;	}
+static int med_keypad_goto_5(void)	{	ui_pad_goto(5);	return 0;	}
+static int med_keypad_goto_6(void)	{	ui_pad_goto(6);	return 0;	}
+static int med_keypad_goto_7(void)	{	ui_pad_goto(7);	return 0;	}
+static int med_keypad_goto_8(void)	{	ui_pad_goto(8);	return 0;	}
 
 #define	PAD_WIDTH	30
 #define	PAD_WIDTH1	(PAD_WIDTH + 7)
@@ -850,7 +853,7 @@ int editor_screen_open = 0;
 
 //setup the editors windows, canvases, gadgets, etc.
 //called whenever the editor screen is selected
-void init_editor_screen()
+void init_editor_screen(void)
 {
 //	grs_bitmap * bmp;
 
@@ -1015,7 +1018,7 @@ int SafetyCheck(void)
 }
 
 //called at the end of the program
-void close_editor() {
+void close_editor(void) {
 
 	close_autosave();
 
@@ -1067,9 +1070,9 @@ static void add_found_segments_to_selected_list(void) {
 	}
 }
 
-static void gamestate_restore_check() {
-	char Message[DIAGNOSTIC_MESSAGE_MAX];
-	obj_position Save_position;
+static void gamestate_restore_check(void) {
+	char Message[DIAGNOSTIC_MESSAGE_MAX] = {0};
+	obj_position Save_position = {0};
 
 	if (gamestate_not_restored) {
 		sprintf( Message, "Do you wish to restore game state?\n");
@@ -1098,7 +1101,7 @@ static void gamestate_restore_check() {
 		}
 }
 
-int RestoreGameState() {
+int RestoreGameState(void) {
 	load_level("GAMESAVE.LVL");
 	gamestate_not_restored = 0;
 
@@ -1120,7 +1123,7 @@ void editor(void)
 	grs_bitmap * savedbitmap;
 	editor_view *new_cv;
 	static int padnum=0;
-	vms_matrix	MouseRotMat,tempm;
+	vms_matrix	MouseRotMat = {0},tempm = {0};
 	//@@short camera_objnum;			//a camera for viewing
 
 	init_editor();
@@ -1301,7 +1304,7 @@ void editor(void)
 			break;
 		default:
 			{
-			char kdesc[100];
+			char kdesc[100] = {0};
 			GetKeyDescription( kdesc, last_keypress );
 			editor_status("Error: %s isn't bound to anything.", kdesc  );
 			}
@@ -1575,7 +1578,7 @@ static void dump_stuff(void)
 
 int MarkStart(void)
 {
-	char mystr[30];
+	char mystr[30] = {0};
 	sprintf(mystr,"mark %i start",Mark_count);
 //	_MARK_(mystr);//Nuked to compile -KRB
 
@@ -1584,7 +1587,7 @@ int MarkStart(void)
 
 int MarkEnd(void)
 {
-	char mystr[30];
+	char mystr[30] = {0};
 	sprintf(mystr,"mark %i end",Mark_count);
 	Mark_count++;
 //	_MARK_(mystr);//Nuked to compile -KRB

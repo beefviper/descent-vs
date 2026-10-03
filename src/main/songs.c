@@ -50,10 +50,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 song_info Songs[MAX_SONGS];
 int Songs_initialized = 0;
 
-static void songs_init()
+static void songs_init(void)
 {
 	int i;
-	char inputline[80+1];
+	char inputline[80+1] = {0};
 	CFILE * fp;
 
 	if ( Songs_initialized ) return;

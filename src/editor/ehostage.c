@@ -173,7 +173,7 @@ static char HostageMessage[]  = "  ";
 
 static fix Time;
 
-static int SelectPrevHostage()	{
+static int SelectPrevHostage(void)	{
 	int start=0;
 
 	do	{
@@ -193,7 +193,7 @@ static int SelectPrevHostage()	{
 }
 
 
-static int SelectNextHostage()	{
+static int SelectNextHostage(void)	{
 	int start=0;
 
 	do	{
@@ -213,7 +213,7 @@ static int SelectNextHostage()	{
 }
 
 
-static int SelectClosestHostage()	{
+static int SelectClosestHostage(void)	{
 	int start=0;
 
 	while ( !hostage_is_valid( CurrentHostageIndex ) )	{
@@ -233,9 +233,9 @@ static int SelectClosestHostage()	{
 }
 
 
-static int PlaceHostage()	{
+static int PlaceHostage(void)	{
 	int ctype,i;
-	vms_vector	cur_object_loc;
+	vms_vector	cur_object_loc = {0};
 
 	//update_due_to_new_segment();
 	compute_segment_center(&cur_object_loc, Cursegp);
@@ -266,7 +266,7 @@ static int PlaceHostage()	{
 	return 0;
 }
 
-static int CompressHostages()
+static int CompressHostages(void)
 {
 	hostage_compress_all();
 
@@ -299,7 +299,7 @@ static int CompressHostages()
 //@@	return 1;
 //@@}
 
-static int SelectNextFace()
+static int SelectNextFace(void)
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
 
@@ -319,7 +319,7 @@ static int SelectNextFace()
 	return 1;
 }
 
-static int SelectPrevFace()
+static int SelectPrevFace(void)
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
 
@@ -339,7 +339,7 @@ static int SelectPrevFace()
 	return 1;
 }
 
-static int PlayHostageSound()	{
+static int PlayHostageSound(void)	{
 	int sound_num;
 
 	if (!hostage_is_valid( CurrentHostageIndex ) )

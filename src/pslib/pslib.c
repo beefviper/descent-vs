@@ -134,7 +134,7 @@ static void datetime( char *filename, ushort *date_ptr, ushort *time_ptr ) {
 
 static void list_files( void ) {
 
-    char header_buf[5];
+    char header_buf[5] = {0};
     short numfiles;
     static char *methods[] = { "Stored", " LZW  " };
     int i;
@@ -248,10 +248,10 @@ static void lib_read_test( char *extractname, char *extractout ) {
 
 
 static void process_arg( char *argv ) {
-    char filename[13], ext[_MAX_EXT];
+    char filename[13] = {0}, ext[_MAX_EXT] = {0};
     unsigned char *input;
     unsigned char *output;
-    file_header Header;
+    file_header Header = {0};
     int length, i;
 
     _splitpath ( argv, NULL, NULL, filename, ext );

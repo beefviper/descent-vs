@@ -291,7 +291,7 @@ void remap_vertices_previous_right(segment *segp, int sidenum)
 //	Takes top to front
 void med_rotate_segment_forward(segment *segp)
 {
-	segment	seg_copy;
+	segment	seg_copy = {0};
 	int		i;
 
 	seg_copy = *segp;
@@ -325,7 +325,7 @@ void med_rotate_segment_forward(segment *segp)
 //	Takes top to right
 void med_rotate_segment_right(segment *segp)
 {
-	segment	seg_copy;
+	segment	seg_copy = {0};
 	int		i;
 
 	seg_copy = *segp;
@@ -615,8 +615,8 @@ int med_set_vertex(int vnum,vms_vector *vp)
 static int check_for_degenerate_side(segment *sp, int sidenum)
 {
 	char			*vp = Side_to_verts[sidenum];
-	vms_vector	vec1, vec2, cross, vec_to_center;
-	vms_vector	segc, sidec;
+	vms_vector	vec1 = {0}, vec2 = {0}, cross = {0}, vec_to_center = {0};
+	vms_vector	segc = {0}, sidec = {0};
 	fix			dot;
 	int			degeneracy_flag = 0;
 
@@ -668,7 +668,7 @@ void create_removable_wall(segment *sp, int sidenum, int tmap_num)
 //	If so, set global Degenerate_segment_found and return 1, else return 0.
 int check_for_degenerate_segment(segment *sp)
 {
-	vms_vector	fvec, rvec, uvec, cross;
+	vms_vector	fvec = {0}, rvec = {0}, uvec = {0}, cross = {0};
 	fix			dot;
 	int			i, degeneracy_flag = 0;				// degeneracy flag for current segment
 
@@ -714,8 +714,8 @@ int check_for_degenerate_segment(segment *sp)
 //		mat_a = mat_b + mat_c * scalar;	// or maybe not, maybe this is not primitive
 void make_orthogonal(vms_matrix *rmat,vms_matrix *smat)
 {
-	vms_matrix		tmat;
-	vms_vector		tvec1,tvec2;
+	vms_matrix		tmat = {0};
+	vms_vector		tvec1 = {0},tvec2 = {0};
 	float				dot;
 
 	// Copy source matrix to work area.
@@ -779,7 +779,7 @@ void make_orthogonal(vms_matrix *rmat,vms_matrix *smat)
 // This means that the forward vector will remain unchanged.
 void med_extract_matrix_from_segment(segment *sp,vms_matrix *rotmat)
 {
-	vms_vector	forwardvec,upvec;
+	vms_vector	forwardvec = {0},upvec = {0};
 
 	extract_forward_vector_from_segment(sp,&forwardvec);
 	extract_up_vector_from_segment(sp,&upvec);
@@ -794,7 +794,7 @@ void med_extract_matrix_from_segment(segment *sp,vms_matrix *rotmat)
 	vm_vector_2_matrix(rotmat,&forwardvec,&upvec,NULL);
 
 #if 0
-	vms_matrix	rm;
+	vms_matrix	rm = {0};
 
 	extract_forward_vector_from_segment(sp,&rm.zrow);
 	extract_right_vector_from_segment(sp,&rm.xrow);
@@ -820,8 +820,8 @@ void med_extract_matrix_from_segment(segment *sp,vms_matrix *rotmat)
 //	and a side destside, return the rotation matrix which describes the orientation for the side.
 void	set_matrix_based_on_side(vms_matrix *rotmat,int destside)
 {
-	vms_angvec	rotvec;
-	vms_matrix	r1,rtemp;
+	vms_angvec	rotvec = {0};
+	vms_matrix	r1 = {0},rtemp = {0};
 
 	switch (destside) {
 		case WLEFT:
@@ -1074,10 +1074,10 @@ static int med_attach_segment_rotated(segment *destseg, segment *newseg, int des
 	char			*dvp;
 	segment		*nsp;
 	int			side,v;
-	vms_matrix	rotmat,rotmat1,rotmat2,rotmat3,rotmat4;
-	vms_vector	vr,vc,tvs[4],xlate_vec;
+	vms_matrix	rotmat = {0},rotmat1 = {0},rotmat2 = {0},rotmat3 = {0},rotmat4 = {0};
+	vms_vector	vr = {0},vc = {0},tvs[4] = {0},xlate_vec = {0};
 	int			segnum;
-	vms_vector	forvec,upvec;
+	vms_vector	forvec = {0},upvec = {0};
 
 	// Return if already a face attached on this side.
 	if (IS_CHILD(destseg->children[destside]))
@@ -1217,7 +1217,7 @@ int med_attach_segment(segment *destseg, segment *newseg, int destside, int news
 	segment	*ocursegp = Cursegp;
 
 	vms_angvec	tang = {0,0,0};
-	vms_matrix	rotmat;
+	vms_matrix	rotmat = {0};
 
 	vm_angles_2_matrix(&rotmat,&tang);
 	rval = med_attach_segment_rotated(destseg,newseg,destside,newside,&rotmat);
@@ -1430,9 +1430,9 @@ static void copy_tmaps_to_segment(segment *dseg, segment *sseg)
 int med_rotate_segment(segment *seg, vms_matrix *rotmat)
 {
 	segment	*destseg;
-	int		newside,destside,s;
+	int		newside = 0,destside,s;
 	int		count;
-	int		back_side,side_tmaps[MAX_SIDES_PER_SEGMENT];
+	int		back_side,side_tmaps[MAX_SIDES_PER_SEGMENT] = {0};
 
 	// Find side of attachment
 	count = 0;
@@ -1483,7 +1483,7 @@ int med_rotate_segment(segment *seg, vms_matrix *rotmat)
 // ----------------------------------------------------------------------------------------
 int med_rotate_segment_ang(segment *seg, vms_angvec *ang)
 {
-	vms_matrix	rotmat;
+	vms_matrix	rotmat = {0};
 
 	return med_rotate_segment(seg,vm_angles_2_matrix(&rotmat,ang));
 }
@@ -1594,8 +1594,8 @@ int med_form_joint(segment *seg1, int side1, segment *seg2, int side2)
 {
 	char		*vp1,*vp2;
 	int		bfi,v,s,sv,s1,nv;
-	int		lost_vertices[4],remap_vertices[4];
-	int		validation_list[MAX_VALIDATIONS];
+	int		lost_vertices[4] = {0},remap_vertices[4] = {0};
+	int		validation_list[MAX_VALIDATIONS] = {0};
 
 	//	Make sure that neither side is connected.
 	if (IS_CHILD(seg1->children[side1]) || IS_CHILD(seg2->children[side2]))
@@ -1763,7 +1763,7 @@ int med_form_bridge_segment(segment *seg1, int side1, segment *seg2, int side2)
 static void med_create_segment(segment *sp,fix cx, fix cy, fix cz, fix length, fix width, fix height, vms_matrix *mp)
 {
 	int			i,f;
-	vms_vector	v0,v1,cv;
+	vms_vector	v0 = {0},v1 = {0},cv = {0};
 
 	Num_segments++;
 
@@ -1823,7 +1823,7 @@ static void med_create_segment(segment *sp,fix cx, fix cy, fix cz, fix length, f
 void med_create_new_segment(vms_vector *scale)
 {
 	int			s,t;
-	vms_vector	v0;
+	vms_vector	v0 = {0};
 	segment		*sp = &New_segment;
 
 	fix			length,width,height;
@@ -1874,8 +1874,8 @@ void med_create_new_segment(vms_vector *scale)
 // -------------------------------------------------------------------------------
 void med_create_new_segment_from_cursegp(void)
 {
-	vms_vector	scalevec;
-	vms_vector	uvec, rvec, fvec;
+	vms_vector	scalevec = {0};
+	vms_vector	uvec = {0}, rvec = {0}, fvec = {0};
 
 	med_extract_up_vector_from_segment_side(Cursegp, Curside, &uvec);
 	med_extract_right_vector_from_segment_side(Cursegp, Curside, &rvec);
@@ -1908,7 +1908,7 @@ static void init_all_vertices(void)
 int create_new_mine(void)
 {
 	int	s;
-	vms_vector	sizevec;
+	vms_vector	sizevec = {0};
 	vms_matrix	m1 = IDENTITY_MATRIX;
 
 	// initialize_mine_arrays();
@@ -1971,7 +1971,7 @@ int create_new_mine(void)
 void med_copy_segment(segment *dsp,segment *ssp)
 {
 	int	v;
-	int	verts_copy[MAX_VERTICES_PER_SEGMENT];
+	int	verts_copy[MAX_VERTICES_PER_SEGMENT] = {0};
 
 	//	First make a copy of the vertex list.
 	for (v=0; v<MAX_VERTICES_PER_SEGMENT; v++)
@@ -1993,8 +1993,8 @@ void med_copy_segment(segment *dsp,segment *ssp)
 //	Create coordinate axes in orientation of specified segment, stores vertices at *vp.
 void create_coordinate_axes_from_segment(segment *sp,short *vertnums)
 {
-	vms_matrix	rotmat;
-	vms_vector t;
+	vms_matrix	rotmat = {0};
+	vms_vector t = {0};
 
 	med_extract_matrix_from_segment(sp,&rotmat);
 
@@ -2018,7 +2018,7 @@ void create_coordinate_axes_from_segment(segment *sp,short *vertnums)
 int check_seg_concavity(segment *s)
 {
 	int sn,vn;
-	vms_vector n0,n1;
+	vms_vector n0 = {0},n1 = {0};
 
 	for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++)
 		for (vn=0;vn<=4;vn++) {
@@ -2041,7 +2041,7 @@ int check_seg_concavity(segment *s)
 
 // -----------------------------------------------------------------------------
 //	Find all concave segments and add to list
-void find_concave_segs()
+void find_concave_segs(void)
 {
 	int i;
 	segment *s;
@@ -2059,7 +2059,7 @@ void find_concave_segs()
 // -----------------------------------------------------------------------------
 void warn_if_concave_segments(void)
 {
-	char temp[1];
+	char temp[1] = {0};
 
 	find_concave_segs();
 
@@ -2073,7 +2073,7 @@ void warn_if_concave_segments(void)
 //	Check segment s, if concave, warn
 void warn_if_concave_segment(segment *s)
 {
-    char temp[1];
+    char temp[1] = {0};
 	int	result;
 
 	result = check_seg_concavity(s);
@@ -2100,7 +2100,7 @@ void warn_if_concave_segment(segment *s)
 int med_find_adjacent_segment_side(segment *sp, int side, segment **adj_sp, int *adj_side)
 {
 	int			seg,s,v,vv;
-	int			abs_verts[4];
+	int			abs_verts[4] = {0};
 
 	//	Stuff abs_verts[4] array with absolute vertex indices
 	for (v=0; v<4; v++)
@@ -2153,7 +2153,7 @@ int med_find_adjacent_segment_side(segment *sp, int side, segment **adj_sp, int 
 int med_find_closest_threshold_segment_side(segment *sp, int side, segment **adj_sp, int *adj_side, fix threshold)
 {
 	int			seg,s;
-	vms_vector  vsc, vtc; 		// original segment center, test segment center
+	vms_vector  vsc = {0}, vtc = {0}; 		// original segment center, test segment center
 	fix			current_dist, closest_seg_dist;
 
 	if (IS_CHILD(sp->children[side]))
@@ -2204,8 +2204,8 @@ void med_check_all_vertices(void)
 static void check_for_overlapping_segment(int segnum)
 {
 	int	i, v;
-	segmasks	masks;
-	vms_vector	segcenter;
+	segmasks	masks = {0};
+	vms_vector	segcenter = {0};
 
 	compute_segment_center(&segcenter, &Segments[segnum]);
 
@@ -2218,7 +2218,7 @@ static void check_for_overlapping_segment(int segnum)
 			}
 
 			for (v=0; v<8; v++) {
-				vms_vector	pdel, presult;
+				vms_vector	pdel = {0}, presult = {0};
 
 				vm_vec_sub(&pdel, &Vertices[Segments[segnum].verts[v]], &segcenter);
 				vm_vec_scale_add(&presult, &segcenter, &pdel, (F1_0*15)/16);

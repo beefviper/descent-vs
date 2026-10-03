@@ -146,7 +146,7 @@ extern int digi_driver_dma;
 extern int digi_midi_type;
 extern int digi_midi_port;
 
-extern int digi_get_settings();
+extern int digi_get_settings(void);
 extern int digi_init(void);
 extern void digi_reset(void);
 extern void digi_close(void);

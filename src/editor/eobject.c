@@ -191,7 +191,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 {
 	short objnum = 0;
 	object *obj;
-	vms_matrix seg_matrix;
+	vms_matrix seg_matrix = {0};
 
 	med_extract_matrix_from_segment(segp,&seg_matrix);
 
@@ -391,7 +391,7 @@ int ObjectPlaceObject(void)
 	int	old_cur_object_index;
 	int	rval;
 
-	vms_vector	cur_object_loc;
+	vms_vector	cur_object_loc = {0};
 
 #ifdef SHAREWARE
 	if (ObjType[Cur_robot_type] == OL_PLAYER) {
@@ -435,7 +435,7 @@ int ObjectPlaceObject(void)
 int ObjectPlaceObjectTmap(void)
 {
 	int	rval, old_cur_object_index;
-	vms_vector	cur_object_loc;
+	vms_vector	cur_object_loc = {0};
 
 	//update_due_to_new_segment();
 	compute_segment_center(&cur_object_loc, Cursegp);
@@ -489,7 +489,7 @@ int ObjectSelectNextinSegment(void)
 }
 
 //Moves to next object in the mine, skipping the player
-int ObjectSelectNextInMine()
+int ObjectSelectNextInMine(void)
 {	int i;
 	for (i=0;i<MAX_OBJECTS;i++) {
 		Cur_object_index++;
@@ -510,7 +510,7 @@ int ObjectSelectNextInMine()
 }
 
 //Moves to next object in the mine, skipping the player
-int ObjectSelectPrevInMine()
+int ObjectSelectPrevInMine(void)
 {	int i;
 	for (i=0;i<MAX_OBJECTS;i++) {
 		Cur_object_index--;
@@ -567,8 +567,8 @@ static int move_object_within_mine(object * obj, vms_vector *newpos )
 		segmasks	result = get_seg_masks(&obj->pos,segnum,0);
 		if (result.centermask == 0) {
 			int	fate;
-			fvi_info	hit_info;
-			fvi_query fq;
+			fvi_info	hit_info = {0};
+			fvi_query fq = {0};
 
 			//	See if the radius pokes through any wall.
 			fq.p0						= &obj->pos;
@@ -612,8 +612,8 @@ static int verify_object_seg(object *objp, vms_vector *newpos)
 int	ObjectMoveForward(void)
 {
 	object *obj;
-	vms_vector	fvec;
-	vms_vector	newpos;
+	vms_vector	fvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -639,8 +639,8 @@ int	ObjectMoveForward(void)
 int	ObjectMoveBack(void)
 {
 	object *obj;
-	vms_vector	fvec;
-	vms_vector	newpos;
+	vms_vector	fvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -666,8 +666,8 @@ int	ObjectMoveBack(void)
 int	ObjectMoveLeft(void)
 {
 	object *obj;
-	vms_vector	rvec;
-	vms_vector	newpos;
+	vms_vector	rvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -693,8 +693,8 @@ int	ObjectMoveLeft(void)
 int	ObjectMoveRight(void)
 {
 	object *obj;
-	vms_vector	rvec;
-	vms_vector	newpos;
+	vms_vector	rvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -738,8 +738,8 @@ int	ObjectSetDefault(void)
 int	ObjectMoveUp(void)
 {
 	object *obj;
-	vms_vector	uvec;
-	vms_vector	newpos;
+	vms_vector	uvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -765,8 +765,8 @@ int	ObjectMoveUp(void)
 int	ObjectMoveDown(void)
 {
 	object *obj;
-	vms_vector	uvec;
-	vms_vector	newpos;
+	vms_vector	uvec = {0};
+	vms_vector	newpos = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("No current object, cannot move.");
@@ -831,8 +831,8 @@ static int	ObjectMakeLarger(void)
 static int rotate_object(short objnum, int p, int b, int h)
 {
 	object *obj = &Objects[objnum];
-	vms_angvec ang;
-	vms_matrix rotmat,tempm;
+	vms_angvec ang = {0};
+	vms_matrix rotmat = {0},tempm = {0};
 
 //	vm_extract_angles_matrix( &ang,&obj->orient);
 
@@ -977,10 +977,10 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 		if (verify_object_seg(&Objects[objnum], newpos)) {
 			int		fate, count;
 			int		viewer_segnum;
-			object	temp_viewer_obj;
-			fvi_query fq;
-			fvi_info	hit_info;
-			vms_vector	last_outside_pos;
+			object	temp_viewer_obj = {0};
+			fvi_query fq = {0};
+			fvi_info	hit_info = {0};
+			vms_vector	last_outside_pos = {0};
 
 			temp_viewer_obj = *Viewer;
 			viewer_segnum = find_object_seg(&temp_viewer_obj);
@@ -991,7 +991,7 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 				//	While outside mine, move towards object
 				count = 0;
 				while (viewer_segnum == -1) {
-					vms_vector	temp_vec;
+					vms_vector	temp_vec = {0};
 
 					//mprintf((0, "[towards %7.3f %7.3f %7.3f]\n", f2fl(temp_viewer_obj.pos.x), f2fl(temp_viewer_obj.pos.y), f2fl(temp_viewer_obj.pos.z)));
 					last_outside_pos = temp_viewer_obj.pos;
@@ -1011,7 +1011,7 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 				//	While inside mine, move away from object.
 				while (viewer_segnum != -1) {
 
-					vms_vector	temp_vec;
+					vms_vector	temp_vec = {0};
 
 					//mprintf((0, "[away %7.3f %7.3f %7.3f]\n", f2fl(temp_viewer_obj.pos.x), f2fl(temp_viewer_obj.pos.y), f2fl(temp_viewer_obj.pos.z)));
 					vm_vec_avg(&temp_vec, &temp_viewer_obj.pos, &last_outside_pos);
@@ -1057,7 +1057,7 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 
 static void move_object_to_vector(vms_vector *vec_through_screen, fix delta_distance)
 {
-	vms_vector	result;
+	vms_vector	result = {0};
 
 	vm_vec_scale_add(&result, &Viewer->pos, vec_through_screen, vm_vec_dist(&Viewer->pos,&Objects[Cur_object_index].pos)+delta_distance);
 
@@ -1068,7 +1068,7 @@ static void move_object_to_vector(vms_vector *vec_through_screen, fix delta_dist
 static void move_object_to_mouse_click_delta(fix delta_distance)
 {
 	short			xcrd,ycrd;
-	vms_vector	vec_through_screen;
+	vms_vector	vec_through_screen = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("Cur_object_index == -1, cannot move that peculiar object...aborting!");
@@ -1093,7 +1093,7 @@ void move_object_to_mouse_click(void)
 
 int	ObjectMoveNearer(void)
 {
-	vms_vector	result;
+	vms_vector	result = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("Cur_object_index == -1, cannot move that peculiar object...aborting!");
@@ -1111,7 +1111,7 @@ int	ObjectMoveNearer(void)
 
 int	ObjectMoveFurther(void)
 {
-	vms_vector	result;
+	vms_vector	result = {0};
 
 	if (Cur_object_index == -1) {
 		editor_status("Cur_object_index == -1, cannot move that peculiar object...aborting!");

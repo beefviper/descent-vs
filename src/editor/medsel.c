@@ -96,7 +96,7 @@ static int segdist_cmp(const void *v0,const void *v1)
 //find the distance between a segment and a point
 static fix compute_dist(segment *seg,vms_vector *pos)
 {
-	vms_vector delta;
+	vms_vector delta = {0};
 
 	compute_segment_center(&delta,seg);
 	vm_vec_sub2(&delta,pos);

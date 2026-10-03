@@ -1090,7 +1090,7 @@ codex(code_11s, code_11e)
 static void
 com_process_menu(char *buf, int len)
 {
-	char text[80];
+	char text[80] = {0};
 
 	(void)len;
 
@@ -1286,7 +1286,7 @@ void com_send_choice(int choice)
 static void
 com_ready_to_start(void)
 {
-	newmenu_item m[2];
+	newmenu_item m[2] = {0};
 	int choice;
 
 	m[0].type = m[1].type = NM_TYPE_MENU;
@@ -1324,11 +1324,11 @@ com_process_other_menu_choice(void)
 void
 com_main_menu(void)
 {
-	newmenu_item m[10];
-	int menu_choice[10];
+	newmenu_item m[10] = {0};
+	int menu_choice[10] = {0};
 	int num_options = 0;
 	int choice=0;
-	char subtitle[SUBTITLE_LEN];
+	char subtitle[SUBTITLE_LEN] = {0};
 	int pcx_error;
 
 	if (com_port_num == -1)
@@ -1475,12 +1475,12 @@ static void com_custom_param_setup(void)
 {
 	// User menu for setting up custom IRQ/Base settings for a COM port
 
-	newmenu_item mm[6];
+	newmenu_item mm[6] = {0};
 	int loc;
 
-	char base[10];
-	char irq[3];
-	char title[60];
+	char base[10] = {0};
+	char irq[3] = {0};
+	char title[60] = {0};
 	int new_irq, new_base;
 	int menu_save, menu_reset;
 	int mmn;
@@ -1576,8 +1576,8 @@ void com_param_setup(void)
 {
 	int mmn;
 	int was_enabled = 0;
-	newmenu_item mm[12];
-	char init_string[INIT_STRING_LEN+1];
+	newmenu_item mm[12] = {0};
+	char init_string[INIT_STRING_LEN+1] = {0};
 	int changed = 0;
 	int menu_baud, menu_custom, menu_save;
 	int loc;
@@ -1692,12 +1692,12 @@ static void modem_game_param_poll( int nitems, newmenu_item * menus, int * key, 
 
 static int com_start_game_menu(void)
 {
-	newmenu_item m[13];
-	char level[5];
+	newmenu_item m[13] = {0};
+	char level[5] = {0};
 	int choice = 0;
 	int opt, diff_opt, mode_opt, options_opt;
-	char level_text[32];
-	char srinvul[32];
+	char level_text[32] = {0};
+	char srinvul[32] = {0};
 
 #ifndef SHAREWARE
 	int new_mission_num, anarchy_only = 0;
@@ -1814,7 +1814,7 @@ com_ask_to_start()
 {
 	// Ask the other player if its OK to start now
 
-	newmenu_item m[1];
+	newmenu_item m[1] = {0};
 	int choice;
 
 	com_send_choice(SELECTION_STARTGAME);
@@ -1932,8 +1932,8 @@ com_start_game()
 static void modem_edit_phonebook(newmenu_item *m)
 {
 	int choice, choice2;
-	newmenu_item menu[5];
-	char text[2][100];
+	newmenu_item menu[5] = {0};
+	char text[2][100] = {0};
 	int default_choice = 0;
 
 	m[NUM_PHONE_NUM].text = TXT_SAVE;
@@ -2003,8 +2003,8 @@ void add_phone_number( char * src, char * num )
 
 static int modem_dial_menu(void)
 {
-	newmenu_item m[NUM_PHONE_NUM+2];
-	char menu_text[NUM_PHONE_NUM][80];
+	newmenu_item m[NUM_PHONE_NUM+2] = {0};
+	char menu_text[NUM_PHONE_NUM][80] = {0};
 	int choice = 0;
 	int i;
 
@@ -2038,7 +2038,7 @@ menu:
 	if (choice == NUM_PHONE_NUM)
 	{
 		// Manual entry
-		newmenu_item m2[1];
+		newmenu_item m2[1] = {0};
 		m2[0].type = NM_TYPE_INPUT; m2[0].text = phone_num[NUM_PHONE_NUM]; m2[0].text_len = LEN_PHONE_NUM;
 		choice = newmenu_do(NULL, TXT_ENTER_NUMBER_DIAL, 1, m2, NULL);
 		if (choice == -1)
@@ -2055,7 +2055,7 @@ static void
 com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	int result;
-	char input_buffer[81];
+	char input_buffer[81] = {0};
 	int baud;
 	char error_mess[5][15] =
 		{"NO DIAL TONE",
@@ -2063,7 +2063,7 @@ com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 		 "NO ANSWER",
 		 "NO CARRIER",
 		 "VOICE"};
-	char text[100];
+	char text[100] = {0};
 	int i;
 
 	int num_error_messages = 5;
@@ -2135,7 +2135,7 @@ static void
 com_wait_for_ring(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	int result;
-	char input_buffer[81];
+	char input_buffer[81] = {0};
 
 	(void)menus;
 	(void)nitems;
@@ -2179,8 +2179,8 @@ static int modem_verify(void)
 
 void modem_dialout(void)
 {
-	newmenu_item m[5];
-	char text[50];
+	newmenu_item m[5] = {0};
+	char text[50] = {0};
 	int choice;
 
 	if (!serial_active)
@@ -2268,7 +2268,7 @@ codex(code_18s, code_18e)
 void modem_answer(void)
 {
 	int choice;
-	newmenu_item m[3];
+	newmenu_item m[3] = {0};
 
 	if (!serial_active)
 	{
@@ -2640,7 +2640,7 @@ com_sync(int id)
 	// returns 0 for success or 1 for failure
 
 	int choice;
-	newmenu_item m[3];
+	newmenu_item m[3] = {0};
 	int pcx_error;
 
 	mprintf((0, "Entered com_sync\n"));
