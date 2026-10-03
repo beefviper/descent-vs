@@ -12,29 +12,18 @@ project(Descent
 option(DESCENT_EDITOR "Build the level editor into the game (defines EDITOR)" OFF)
 option(DESCENT_TOOLS  "Build the hogfile, pslib, lbmcomp and xcolor tools"     ON)
 
-# The original sources are 32-bit x86 C and MASM. The assembly can only be
-# built with the 32-bit MASM (ml.exe), so the assembler is enabled only for a
-# 32-bit MSVC build (generate with: cmake -G "Visual Studio 17 2022" -A Win32).
-if(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)
-    enable_language(ASM_MASM)
-    set(DESCENT_HAVE_MASM ON)
-else()
-    set(DESCENT_HAVE_MASM OFF)
-    message(WARNING
-        "The assembly sources need 32-bit MASM and are left out of this build. "
-        "Use a 32-bit Visual Studio generator (-A Win32) to include them.")
-endif()
 
 # ---------------------------------------------------------------------------
 # Compiler settings
 # ---------------------------------------------------------------------------
 
-# Every library and the game were built with these definitions. RELEASE
-# compiles out the debugging aids the editor depends on (slew mode), so it
-# is left off for editor builds, as the original editor variant did.
-add_compile_definitions(NETWORK NDEBUG)
+# Every library and the game were built with these definitions. RELEASE and
+# NDEBUG compile out the debugging aids the editor depends on (slew mode,
+# object type names, debug marks), so editor builds leave them off, as the
+# original editor variant did.
+add_compile_definitions(NETWORK)
 if(NOT DESCENT_EDITOR)
-    add_compile_definitions(RELEASE)
+    add_compile_definitions(RELEASE NDEBUG)
 endif()
 
 # Watcom's char is unsigned, and it packed structures on byte boundaries
@@ -50,12 +39,9 @@ endif()
 if(MSVC)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
     add_compile_options($<$<COMPILE_LANGUAGE:C>:/W3>)
-    # Assemble the MASM 5.1-era sources in compatibility mode.
-    add_compile_options($<$<COMPILE_LANGUAGE:ASM_MASM>:/Zm>)
 endif()
 
-# Headers shared between modules. The assembler include files (*.inc) live
-# here as well, so the same path serves C and MASM.
+# Headers shared between modules.
 set(DESCENT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${DESCENT_INCLUDE_DIR})
 
@@ -74,17 +60,11 @@ endif()
 # descent_add_executable(<name> <dir> <sources>...)
 #
 # Sources are relative to <dir> under src/. The directory is added to the
-# target's include path so module-private headers resolve. When MASM is
-# unavailable the .asm files stay in the project for browsing but are not
-# assembled.
+# target's include path so module-private headers resolve.
 function(_descent_sources out dir)
     set(result)
     foreach(src IN LISTS ARGN)
-        set(path ${CMAKE_CURRENT_SOURCE_DIR}/src/${dir}/${src})
-        if(src MATCHES "\\.asm$" AND NOT DESCENT_HAVE_MASM)
-            set_source_files_properties(${path} PROPERTIES HEADER_FILE_ONLY TRUE)
-        endif()
-        list(APPEND result ${path})
+        list(APPEND result ${CMAKE_CURRENT_SOURCE_DIR}/src/${dir}/${src})
     endforeach()
     set(${out} ${result} PARENT_SCOPE)
 endfunction()
