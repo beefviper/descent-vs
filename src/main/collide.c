@@ -403,9 +403,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: collide.c 2.5 1995/07/26 12:07:46 john Exp $";
-#pragma on (unreferenced)
 
 #pragma off (unreferenced)	//for all the standard-tempate rountines
 
@@ -576,7 +573,7 @@ static void bump_this_object(object *objp, object *other_objp, vms_vector *force
 {
 	fix force_mag;
 
-	if (! (objp->mtype.phys_info.flags & PF_PERSISTENT))
+	if (! (objp->mtype.phys_info.flags & PF_PERSISTENT)) {
 		if (objp->type == OBJ_PLAYER) {
 			vms_vector force2;
 			force2.x = force->x/4;
@@ -602,6 +599,7 @@ static void bump_this_object(object *objp, object *other_objp, vms_vector *force
 				}
 			}
 		}
+	}
 }
 
 //	-----------------------------------------------------------------------------
@@ -1595,11 +1593,12 @@ void collide_player_and_weapon( object * player, object * weapon, vms_vector *co
 
 	damage = fixmul(damage, weapon->ctype.laser_info.multiplier);
 
-	if (weapon->mtype.phys_info.flags & PF_PERSISTENT)
+	if (weapon->mtype.phys_info.flags & PF_PERSISTENT) {
 		if (weapon->ctype.laser_info.last_hitobj == player-Objects)
 			return;
 		else
 			weapon->ctype.laser_info.last_hitobj = (short)(player-Objects);
+	}
 
 	if (player->id == Player_num)
 	{

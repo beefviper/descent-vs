@@ -54,9 +54,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: centers.c 2.0 1995/02/27 11:35:30 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,7 +97,7 @@ static UI_GADGET_CHECKBOX	*RobotMatFlag[MAX_ROBOT_TYPES];
 
 static int old_seg_num;
 
-extern	char	center_names[MAX_CENTER_TYPES][CENTER_STRING_LENGTH] = {
+char	center_names[MAX_CENTER_TYPES][CENTER_STRING_LENGTH] = {
 	"Nothing",
 	"FuelCen",
 	"RepairCen",
@@ -200,7 +197,7 @@ void do_centers_window()
 
 	redraw_window=0;
 	for (	i=0; i < MAX_CENTER_TYPES; i++ )	{
-		if ( CenterFlag[i]->flag == 1 )
+		if ( CenterFlag[i]->flag == 1 ) {
 			if ( i == 0)
 				fuelcen_delete(Cursegp);
 			else if ( Cursegp->special != i ) {
@@ -208,6 +205,7 @@ void do_centers_window()
 				redraw_window = 1;
 				fuelcen_activate( Cursegp, i );
 			}
+		}
 	}
 
 	for (	i=0; i < N_robot_types; i++ )	{

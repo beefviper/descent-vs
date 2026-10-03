@@ -187,9 +187,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: medwall.c 2.0 1995/02/27 11:35:47 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1280,14 +1277,15 @@ int check_walls()
 	mprintf((0,"Trigger Count = %d\n", trigger_count));
 
 	for (t=0; t<trigger_count; t++) {
-		if (Triggers[t].flags & TRIGGER_MATCEN)
+		if (Triggers[t].flags & TRIGGER_MATCEN) {
 			if (Triggers[t].num_links < 1)
 				mprintf((0,"No valid links on Matcen Trigger %d\n", t));
 			else
 				for (l=0;l<Triggers[t].num_links;l++) {
-					if (!Segments[Triggers[t].seg[l]].special & SEGMENT_IS_ROBOTMAKER)
+					if ((!Segments[Triggers[t].seg[l]].special) & SEGMENT_IS_ROBOTMAKER)
 						mprintf((0,"Bogus Matcen trigger detected on Trigger %d, No matcen at seg %d\n", t, Triggers[t].seg[l]));
 				}
+		}
 
 		if (Triggers[t].flags & TRIGGER_EXIT)
 			if (Triggers[t].num_links != 0)

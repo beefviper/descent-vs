@@ -219,9 +219,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: playsave.c 2.3 1995/05/26 16:16:23 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <string.h>

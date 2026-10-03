@@ -152,9 +152,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: joyc.c 1.37 1995/10/07 13:22:31 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -385,7 +382,7 @@ void joy_set_slow_reading(int flag)
 
 ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 {
-	ubyte read_masks, org_masks;
+	ubyte read_masks;
 	int t, t1, t2, buffer[4*2+2];
 	int e, i, num_channels, c;
 
@@ -395,7 +392,6 @@ ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 	if (!joy_installed) return 0;
 
 	read_masks = 0;
-	org_masks = mask;
 
 	mask &= joystick.present_mask;			// Don't read non-present channels
 	if ( mask==0 )	{

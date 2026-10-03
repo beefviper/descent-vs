@@ -22,9 +22,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: curves.c 2.0 1995/02/27 11:35:50 john Exp $";
-#pragma on (unreferenced)
 
 #include <time.h>
 #include <stdio.h>
@@ -46,6 +43,8 @@ static char rcsid[] = "$Id: curves.c 2.0 1995/02/27 11:35:50 john Exp $";
 #define ONE_OVER_SQRT2 F1_0 * 0.707106781
 #define CURVE_RIGHT 1
 #define CURVE_UP 2
+
+static void generate_banked_curve(fix maxscale, vms_equation coeffs);
 
 segment *OriginalSeg;
 segment *OriginalMarkedSeg;
@@ -315,12 +314,12 @@ int generate_curve( fix r1scale, fix r4scale ) {
         else return 0;
 }
 
-void generate_banked_curve(fix maxscale, vms_equation coeffs) {
+static void generate_banked_curve(fix maxscale, vms_equation coeffs) {
     vms_vector vec_dir, tvec, b4r4t;
     vms_vector coord,prev_point;
     fix enddist, nextdist;
     int firstsegflag;
-    fixang rangle, uangle, angle, scaled_ang;
+    fixang rangle, uangle, angle, scaled_ang = 0;
     fix t;
 
     if (CurveNumSegs) {

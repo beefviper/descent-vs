@@ -42,9 +42,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: bmread.c 2.4 1995/03/28 18:05:29 john Exp $";
-#pragma on (unreferenced)
 
 #include "settings.h"
 
@@ -95,6 +92,18 @@ static char rcsid[] = "$Id: bmread.c 2.4 1995/03/28 18:05:29 john Exp $";
 
 
 #include "texpage.h"
+
+static void verify_textures(void);
+static void bm_read_sound(void);
+static void bm_read_robot_ai(void);
+static void bm_read_robot(void);
+static void bm_read_object(void);
+static void bm_read_player_ship(void);
+static void bm_read_some_file(void);
+static void bm_read_weapon(int unused_flag);
+static void bm_read_powerup(int unused_flag);
+static void bm_read_hostage(void);
+static void bm_read_hostage_face(void);
 
 #define BM_NONE			-1
 #define BM_COCKPIT		 0
@@ -284,7 +293,7 @@ static void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 		return;
 	}
 
-	iff_error = iff_read_animbrush(filename,bm,MAX_BITMAPS_PER_BRUSH,nframes,&newpal);
+	iff_error = iff_read_animbrush(filename,bm,MAX_BITMAPS_PER_BRUSH,nframes,newpal);
 	if (iff_error != IFF_NO_ERROR)	{
 		mprintf((1,"File %s - IFF error: %s",filename,iff_errormsg(iff_error)));
 		Error("File %s - IFF error: %s",filename,iff_errormsg(iff_error));
@@ -619,7 +628,7 @@ int bm_init_use_tbl()
 	return 0;
 }
 
-void verify_textures()
+static void verify_textures(void)
 {
 	grs_bitmap * bmp;
 	int i,j;
@@ -670,7 +679,7 @@ void set_lighting_flag(byte *bp)
 		*bp &= (0xff ^ BM_FLAG_NO_LIGHTING);
 }
 
-set_texture_name(char *name)
+void set_texture_name(char *name)
 {
 	strcpy ( TmapInfo[texture_count].filename, name );
 	REMOVE_DOTS(TmapInfo[texture_count].filename);
@@ -989,7 +998,7 @@ void clear_to_end_of_line(void)
 		arg = strtok( NULL, space );
 }
 
-bm_read_sound()
+static void bm_read_sound(void)
 {
 	int sound_num;
 	int alt_sound_num;
@@ -1019,7 +1028,7 @@ bm_read_sound()
 }
 
 // ------------------------------------------------------------------------------
-void bm_read_robot_ai()
+static void bm_read_robot_ai(void)
 {
 	char			*robotnum_text;
 	int			robotnum;
@@ -1093,10 +1102,11 @@ grs_bitmap *load_polymodel_bitmap(char *name)
 #define MAX_MODEL_VARIANTS	4
 
 // ------------------------------------------------------------------------------
-void bm_read_robot()
+static void bm_read_robot(void)
 {
 	char			*model_name[MAX_MODEL_VARIANTS];
 	int			n_models,i;
+	int			last_model_num=0;
 	int			first_bitmap_num[MAX_MODEL_VARIANTS];
 	char			*equal_ptr;
 	int 			exp1_vclip_num=-1;
@@ -1214,7 +1224,7 @@ void bm_read_robot()
 
 	for (i=0;i<n_models;i++) {
 		int n_textures;
-		int model_num,last_model_num;
+		int model_num;
 
 		n_textures = first_bitmap_num[i+1] - first_bitmap_num[i];
 
@@ -1264,14 +1274,12 @@ void bm_read_robot()
 }
 
 //read a polygon object of some sort
-void bm_read_object()
+static void bm_read_object(void)
 {
 	char *model_name, *model_name_dead=NULL;
 	int first_bitmap_num, first_bitmap_num_dead, n_normal_bitmaps;
 	char *equal_ptr;
 	short model_num;
-	short explosion_vclip_num = -1;
-	short explosion_sound_num = SOUND_ROBOT_DESTROYED;
 	fix	lighting = F1_0/2;		// Default
 	int type=-1;
 	fix strength=0;
@@ -1302,12 +1310,10 @@ void bm_read_object()
 					type = OL_EXIT;
 			}
 			else if (!stricmp( arg, "exp_vclip" ))	{
-				explosion_vclip_num = atoi(equal_ptr);
 			} else if (!stricmp( arg, "dead_pof" ))	{
 				model_name_dead = equal_ptr;
 				first_bitmap_num_dead=N_ObjBitmapPtrs;
 			} else if (!stricmp( arg, "exp_sound" ))	{
-				explosion_sound_num = atoi(equal_ptr);
 			} else if (!stricmp( arg, "lighting" ))	{
 				lighting = fl2f(atof(equal_ptr));
 				if ( (lighting < 0) || (lighting > F1_0 )) {
@@ -1357,11 +1363,12 @@ void bm_read_object()
 
 }
 
-void bm_read_player_ship()
+static void bm_read_player_ship(void)
 {
 	char	*model_name_dying=NULL;
 	char	*model_name[MAX_MODEL_VARIANTS];
 	int	n_models=0,i;
+	int	last_model_num=0;
 	int	first_bitmap_num[MAX_MODEL_VARIANTS];
 	char *equal_ptr;
 	robot_info ri;
@@ -1448,7 +1455,7 @@ void bm_read_player_ship()
 
 	for (i=0;i<n_models;i++) {
 		int n_textures;
-		int model_num,last_model_num;
+		int model_num;
 
 		n_textures = first_bitmap_num[i+1] - first_bitmap_num[i];
 
@@ -1500,7 +1507,7 @@ void bm_read_player_ship()
 
 }
 
-void bm_read_some_file()
+static void bm_read_some_file(void)
 {
 
 	switch (bm_flag) {
@@ -1547,10 +1554,11 @@ void bm_read_some_file()
 
 // ------------------------------------------------------------------------------
 //	If unused_flag is set, then this is just a placeholder.  Don't actually reference vclips or load bbms.
-void bm_read_weapon(int unused_flag)
+static void bm_read_weapon(int unused_flag)
 {
 	int	i,n;
 	int	n_models=0;
+	int	last_model_num=0;
 	char 	*equal_ptr;
 	char	*pof_file_inner=NULL;
 	char	*model_name[MAX_MODEL_VARIANTS];
@@ -1747,7 +1755,7 @@ void bm_read_weapon(int unused_flag)
 
 	for (i=0;i<n_models;i++) {
 		int n_textures;
-		int model_num,last_model_num;
+		int model_num;
 
 		n_textures = first_bitmap_num[i+1] - first_bitmap_num[i];
 
@@ -1778,7 +1786,7 @@ void bm_read_weapon(int unused_flag)
 // ------------------------------------------------------------------------------
 #define DEFAULT_POWERUP_SIZE i2f(3)
 
-void bm_read_powerup(int unused_flag)
+static void bm_read_powerup(int unused_flag)
 {
 	int n;
 	char 	*equal_ptr;
@@ -1837,7 +1845,7 @@ void bm_read_powerup(int unused_flag)
 
 }
 
-void bm_read_hostage()
+static void bm_read_hostage(void)
 {
 	int n;
 	char 	*equal_ptr;
@@ -1878,7 +1886,7 @@ void bm_read_hostage()
 }
 
 
-void bm_read_hostage_face()
+static void bm_read_hostage_face(void)
 {
 	char *abm_name,*equal_ptr;
 	int clip_num=-1,sound_num=-1;

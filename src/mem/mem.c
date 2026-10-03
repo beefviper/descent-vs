@@ -83,9 +83,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: mem.c 1.18 1995/01/24 20:49:18 matt Exp $";
-#pragma on (unreferenced)
 
 
 // Warning( "MEM: Too many malloc's!" );

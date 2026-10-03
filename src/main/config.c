@@ -102,9 +102,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //#include "sos.h"//These sos headers are part of a commercial library, and aren't included-KRB
 //#include "sosm.h"
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: config.c 2.2 1995/03/27 09:42:59 john Exp $";
-#pragma on (unreferenced)
 
 static char *digi_dev_str = "DigiDeviceID";
 static char *digi_port_str = "DigiPort";

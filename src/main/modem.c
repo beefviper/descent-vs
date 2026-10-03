@@ -191,9 +191,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define DOS4G
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: modem.c 2.13 1995/11/28 16:25:05 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -540,7 +537,7 @@ com_enable()
 
 #ifndef NDEBUG
 	{
-		int curr_irq, curr_base;
+		int curr_irq = 0, curr_base = 0;
 		//FastGetPortHardware(com_port_num, &curr_irq, &curr_base); //Removed , we don't have this function! -KRB
 		mprintf((0, "Current port settings: base %x, irq %x.\n", curr_base, curr_irq ));
 	}
@@ -1095,7 +1092,7 @@ com_process_menu(char *buf, int len)
 {
 	char text[80];
 
-	len = len;
+	(void)len;
 
 	mprintf((0, "com_process_menu: type %d.\n", buf[0]));
 
@@ -1259,9 +1256,9 @@ com_menu_poll(int nitems, newmenu_item *menus, int *key, int citem)
 
 	int old_game_mode;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
+	(void)menus;
+	(void)citem;
+	(void)nitems;
 
 	if (! ( (Game_mode & GM_SERIAL) || (Game_mode & GM_MODEM) ) )
 		return;
@@ -1331,7 +1328,6 @@ com_main_menu(void)
 	int menu_choice[10];
 	int num_options = 0;
 	int choice=0;
-	int old_game_mode;
 	char subtitle[SUBTITLE_LEN];
 	int pcx_error;
 
@@ -1343,6 +1339,7 @@ com_main_menu(void)
 	gr_set_current_canvas(NULL);
 	pcx_error = pcx_read_bitmap(Menu_pcx_name,&grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
+	(void)pcx_error;
 
 	com_process_mode = COM_PROCESS_MENU;
 
@@ -1431,7 +1428,6 @@ newmenu:
 
 	if (choice > -1)
 	{
-		old_game_mode=Game_mode;
 		switch (menu_choice[choice])
 		{
 			case MENU_SERIAL_SETUP:
@@ -1552,9 +1548,9 @@ newmenu:
 
 static void com_param_setup_poll(int nitems, newmenu_item *menus, int *key, int citem)
 {
-	nitems = nitems;
-	key = key;
-	citem = citem;
+	(void)nitems;
+	(void)key;
+	(void)citem;
 
 	if ((com_custom_port == -1) && menus[4].value)
 	{
@@ -1682,9 +1678,9 @@ extern int last_cinvul;
 
 static void modem_game_param_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
-	nitems = nitems;
-	key = key;
-	citem = citem;
+	(void)nitems;
+	(void)key;
+	(void)citem;
 	if ( last_cinvul != menus[opt_cinvul].value )	{
 		sprintf( menus[opt_cinvul].text, "%s: %d %s", TXT_REACTOR_LIFE, menus[opt_cinvul].value*5, TXT_MINUTES_ABBREV );
 		last_cinvul = menus[opt_cinvul].value;
@@ -2072,9 +2068,9 @@ com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 
 	int num_error_messages = 5;
 
-	menus = menus;
-	nitems = nitems;
-	citem = citem;
+	(void)menus;
+	(void)nitems;
+	(void)citem;
 
 
 	if (GetCd(com_port))
@@ -2141,9 +2137,9 @@ com_wait_for_ring(int nitems, newmenu_item *menus, int *key, int citem)
 	int result;
 	char input_buffer[81];
 
-	menus = menus;
-	nitems = nitems;
-	citem = citem;
+	(void)menus;
+	(void)nitems;
+	(void)citem;
 
 	result = HMInputLine(com_port, 500, input_buffer, 80);
 
@@ -2539,7 +2535,7 @@ com_process_end_sync(byte *buf)
 
 void com_process_sync(char *buf, int len)
 {
-	len = len;
+	(void)len;
 	switch(buf[0])
 	{
 		case MULTI_END_SYNC:
@@ -2601,9 +2597,9 @@ void com_sync_poll(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	static fix t1 = 0;
 
-	menus = menus;
-	nitems = nitems;
-	citem = citem;
+	(void)menus;
+	(void)nitems;
+	(void)citem;
 
 	if (!com_open)
 	{
@@ -2652,6 +2648,7 @@ com_sync(int id)
 	gr_set_current_canvas(NULL);
 	pcx_error = pcx_read_bitmap(Menu_pcx_name, &grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
+	(void)pcx_error;
 
 	com_process_mode = COM_PROCESS_SYNC;
 	got_sync = other_got_sync = 0;

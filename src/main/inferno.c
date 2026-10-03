@@ -636,10 +636,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: inferno.c 2.36 1996/01/05 16:52:16 john Exp $";
-static char copyright[] = "DESCENT   COPYRIGHT (C) 1994,1995 PARALLAX SOFTWARE CORPORATION";
-#pragma on (unreferenced)
 
 #include <io.h>
 #include <dos.h>
@@ -742,7 +738,7 @@ void install_int3_handler(void);
 int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
 
 #ifndef NDEBUG
-static int do_heap_check()
+static void do_heap_check()
 {
 	int heap_status;
 
@@ -875,7 +871,7 @@ static int init_gameport()
 	regs.x.eax = 0x8400;
 	regs.x.edx = 0xF0;
    int386( 0x15, &regs, &regs );
-	if ( ( regs.x.eax & 0xFFFF ) == 'SG' )
+	if ( ( regs.x.eax & 0xFFFF ) == 0x5347 )	// 'SG'
 		return 1;
 	else
 		return 0;
@@ -1073,7 +1069,7 @@ unsigned descent_critical_errcode = 0;
 #pragma off (check_stack)
 int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, unsigned __far * devhdr )
 {
-	devhdr = devhdr;
+	(void)devhdr;
 	descent_critical_error++;
 	descent_critical_deverror = deverror;
 	descent_critical_errcode = errcode;

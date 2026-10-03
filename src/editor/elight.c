@@ -94,9 +94,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: elight.c 2.0 1995/02/27 11:35:16 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 //#include <stdlib.h>
@@ -234,13 +231,15 @@ static void propagate_light_intensity(segment *segp, int sidenum)
 // -----------------------------------------------------------------------------
 //	Highest level function, bound to a key.  Apply ambient light to all segments based
 //	on user-defined light sources.
-void LightAmbientLighting()
+int LightAmbientLighting()
 {
 	int seg, side;
 
 	for (seg=0; seg<=Highest_segment_index; seg++)
 		for (side=0;side<MAX_SIDES_PER_SEGMENT;side++)
 			propagate_light_intensity(&Segments[seg], side);
+
+	return 1;
 }
 
 

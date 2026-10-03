@@ -275,9 +275,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: gamesave.c 2.2 1995/04/23 14:53:12 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <io.h>
@@ -321,6 +318,10 @@ static char rcsid[] = "$Id: gamesave.c 2.2 1995/04/23 14:53:12 john Exp $";
 #include "text.h"
 #include "gamefont.h"
 #include "gamesave.h"
+
+#ifndef NDEBUG
+static void dump_mine_info(void);
+#endif
 
 #ifdef EDITOR
 #ifdef SHAREWARE
@@ -1018,7 +1019,7 @@ static void read_object(object *obj,CFILE *f,int version)
 #ifdef EDITOR
 
 //writes one object to the given file
-static int write_object(object *obj,FILE *f)
+static void write_object(object *obj,FILE *f)
 {
 	gs_write_byte(obj->type,f);
 	gs_write_byte(obj->id,f);
@@ -1445,9 +1446,9 @@ static int load_game_data(CFILE *LoadFile)
 					 	Error( "Error reading ControlCenterTriggers in gamesave.c", i);
 				} else {
 					ControlCenterTriggers.num_links = read_short( LoadFile );
-					for (j=0; j<MAX_WALLS_PER_LINK; j++ );
+					for (j=0; j<MAX_WALLS_PER_LINK; j++ )
 						ControlCenterTriggers.seg[j] = read_short( LoadFile );
-					for (j=0; j<MAX_WALLS_PER_LINK; j++ );
+					for (j=0; j<MAX_WALLS_PER_LINK; j++ )
 						ControlCenterTriggers.side[j] = read_short( LoadFile );
 				}
 		}
@@ -1650,8 +1651,11 @@ int load_level(char * filename_passed)
 	minedata_offset		= read_int(LoadFile);
 	gamedata_offset		= read_int(LoadFile);
 	hostagetext_offset	= read_int(LoadFile);
+	(void)version;
+	(void)hostagetext_offset;
 
 	Assert(sig == 'PLVL');
+	(void)sig;
 
 	cfseek(LoadFile,minedata_offset,SEEK_SET);
 	#ifdef EDITOR
@@ -1729,7 +1733,7 @@ int load_level(char * filename_passed)
 }
 
 #ifdef EDITOR
-void get_level_name()
+int get_level_name(void)
 {
 //NO_UI!!!	UI_WINDOW 				*NameWindow = NULL;
 //NO_UI!!!	UI_GADGET_INPUTBOX	*NameText;
@@ -1767,6 +1771,7 @@ void get_level_name()
 
 	newmenu_do( NULL, "Enter mine name", 2, m, NULL );
 
+	return 1;
 }
 #endif
 
@@ -1900,7 +1905,7 @@ static int save_level_sub(char * filename, int compiled_version)
 	FILE * SaveFile;
 	char temp_filename[128];
 	int sig = 'PLVL',version=LEVEL_FILE_VERSION;
-	int minedata_offset,gamedata_offset,hostagetext_offset;
+	int minedata_offset=0,gamedata_offset=0,hostagetext_offset=0;
 
 	if ( !compiled_version )	{
 		write_game_text_file(filename);
@@ -2050,7 +2055,7 @@ void save_hostage_data(FILE * fp)
 #endif	//EDITOR
 
 #ifndef NDEBUG
-void dump_mine_info(void)
+static void dump_mine_info(void)
 {
 	int	segnum, sidenum;
 	fix	min_u, max_u, min_v, max_v, min_l, max_l, max_sl;

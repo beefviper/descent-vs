@@ -241,9 +241,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: ai.c 2.11 1995/07/09 11:15:48 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1920,11 +1917,10 @@ static void move_object_to_legal_spot(object *objp)
 	for (i=0; i<MAX_SIDES_PER_SEGMENT; i++) {
 		if (WALL_IS_DOORWAY(segp, i) & WID_FLY_FLAG) {
 			vms_vector	segment_center, goal_dir;
-			fix			dist_to_center;
 
 			compute_segment_center(&segment_center, &Segments[segp->children[i]]);
 			vm_vec_sub(&goal_dir, &segment_center, &objp->pos);
-			dist_to_center = vm_vec_normalize_quick(&goal_dir);
+			vm_vec_normalize_quick(&goal_dir);
 			vm_vec_scale(&goal_dir, objp->size);
 			vm_vec_add2(&objp->pos, &goal_dir);
 			if (!object_intersects_wall(objp)) {
@@ -2789,11 +2785,12 @@ void do_ai_frame(object *obj)
 	previous_visibility = ailp->previous_visibility;	//	Must get this before we toast the master copy!
 
 	//	Deal with cloaking for robots which are cloaked except just before firing.
-	if (robptr->cloak_type == RI_CLOAKED_EXCEPT_FIRING)
+	if (robptr->cloak_type == RI_CLOAKED_EXCEPT_FIRING) {
 		if (ailp->next_fire < F1_0/2)
 			aip->CLOAKED = 1;
 		else
 			aip->CLOAKED = 0;
+	}
 
 	if (!(Players[Player_num].flags & PLAYER_FLAGS_CLOAKED))
 		Believed_player_pos = ConsoleObject->pos;
@@ -2945,11 +2942,12 @@ void do_ai_frame(object *obj)
 					return;
 				ai_multi_send_robot_position(objnum, -1);
 
-				if (!((ailp->mode == AIM_FOLLOW_PATH) && (aip->cur_path_index < aip->path_length-1)))
+				if (!((ailp->mode == AIM_FOLLOW_PATH) && (aip->cur_path_index < aip->path_length-1))) {
 					if (dist_to_player < F1_0*30)
 						create_n_segment_path(obj, 5, 1);
 					else
 						create_path_to_player(obj, 20, 1);
+				}
 			}
 		}
 
@@ -3426,7 +3424,7 @@ void do_ai_frame(object *obj)
 
 	//	- -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -
 	//	If new state = fire, then set all gun states to fire.
-	if ((aip->GOAL_STATE == AIS_FIRE) ) {
+	if (aip->GOAL_STATE == AIS_FIRE) {
 		int	i,num_guns;
 		num_guns = Robot_info[obj->id].n_guns;
 		for (i=0; i<num_guns; i++)
@@ -3616,11 +3614,12 @@ static void pae_aux(int segnum, int type, int level)
 	// Process children.
 	if (level <= 4)
 		for (j=0; j<MAX_SIDES_PER_SEGMENT; j++)
-			if (IS_CHILD(Segments[segnum].children[j]))
+			if (IS_CHILD(Segments[segnum].children[j])) {
 				if (type == 4)
 					pae_aux(Segments[segnum].children[j], type-1, level+1);
 				else
 					pae_aux(Segments[segnum].children[j], type, level+1);
+			}
 }
 
 

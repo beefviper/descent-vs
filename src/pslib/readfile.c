@@ -21,9 +21,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: readfile.c 1.8 1993/10/22 17:50:18 yuan Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -115,7 +112,7 @@ int ReadFileBuf( char *filename, byte *buf, int bufsize )
         return ERROR_OPENING_FILE;
 	}
 
-    if (length = read( handle, buf, bufsize ) != bufsize )    {
+    if ((length = (read( handle, buf, bufsize ) != bufsize)))    {
 		close( handle );
         return ERROR_READING_DATA;
 	}

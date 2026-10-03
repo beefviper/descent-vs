@@ -34,9 +34,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: checkbox.c 1.4 1993/12/07 12:30:47 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <stdlib.h>
@@ -113,7 +110,7 @@ void ui_checkbox_do( UI_GADGET_CHECKBOX * checkbox, int keypress )
 {
 	int OnMe, ButtonLastSelected;
 
-	keypress = keypress;
+	(void)keypress;
 
 	OnMe = ui_mouse_on_gadget( (UI_GADGET *)checkbox );
 

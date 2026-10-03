@@ -163,9 +163,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: ipx.c 2.10 1995/03/29 17:27:55 john Exp $";
-#pragma on (unreferenced)
 
 #include <i86.h>
 #include <dos.h>
@@ -285,7 +282,7 @@ static void free_packet( int id )
 
 int ipx_get_packet_data( ubyte * data )
 {
-	int i, n, best, best_id, size;
+	int i, best, best_id, size;
 
 	for (i=1; i<ipx_num_packets; i++ )	{
 		if ( !packets[i].ecb.in_use )	{
@@ -296,12 +293,10 @@ int ipx_get_packet_data( ubyte * data )
 	}
 
 	best = -1;
-	n = 0;
 	best_id = -1;
 
 	for (i=0; i<=largest_packet_index; i++ )	{
 		if ( packet_buffers[i].packetnum > -1 ) {
-			n++;
 			if ( best == -1 || (packet_buffers[i].packetnum<best) )	{
 				best = packet_buffers[i].packetnum;
 				best_id = i;
@@ -729,7 +724,7 @@ void ipx_read_user_file(char * filename)
 	FILE * fp;
 	user_address tmp;
 	char temp_line[132], *p1;
-	int n, ln=0;
+	int n;
 
 	if (!filename) return;
 
@@ -741,7 +736,6 @@ void ipx_read_user_file(char * filename)
 	printf( "Broadcast Users:\n" );
 
 	while (fgets(temp_line, 132, fp)) {
-		ln++;
 		p1 = strchr(temp_line,'\n'); if (p1) *p1 = '\0';
 		p1 = strchr(temp_line,';'); if (p1) *p1 = '\0';
 		n = sscanf( temp_line, "%2hhx%2hhx%2hhx%2hhx/%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3], &tmp.node[0], &tmp.node[1], &tmp.node[2],&tmp.node[3], &tmp.node[4], &tmp.node[5] );
@@ -767,7 +761,7 @@ void ipx_read_network_file(char * filename)
 	FILE * fp;
 	user_address tmp;
 	char temp_line[132], *p1;
-	int i, n, ln=0;
+	int i, n;
 
 	if (!filename) return;
 
@@ -781,7 +775,6 @@ void ipx_read_network_file(char * filename)
 	}
 
 	while (fgets(temp_line, 132, fp)) {
-		ln++;
 		p1 = strchr(temp_line,'\n'); if (p1) *p1 = '\0';
 		p1 = strchr(temp_line,';'); if (p1) *p1 = '\0';
 		n = sscanf( temp_line, "%2hhx%2hhx%2hhx%2hhx", &tmp.network[0], &tmp.network[1], &tmp.network[2], &tmp.network[3] );

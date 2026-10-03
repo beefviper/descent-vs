@@ -85,9 +85,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: pslib.c 1.18 1994/02/15 12:53:20 john Exp $";
-#pragma on (unreferenced)
 
 #include <time.h>
 #include <stdio.h>
@@ -345,7 +342,7 @@ static void process_arg( char *argv ) {
 }
 
 
-void main( int argc, char *argv[] ) {
+int main( int argc, char *argv[] ) {
     int i;
 
     printf( "\nPSLIB 1.0 - " );
@@ -430,4 +427,5 @@ void main( int argc, char *argv[] ) {
         }
     free(lib_name);
     }
+    return 0;
 }

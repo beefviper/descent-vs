@@ -102,9 +102,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: fireball.c 2.2 1995/03/21 14:39:57 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <string.h>
@@ -231,7 +228,8 @@ static object *object_create_explosion_sub(object *objp, short segnum, vms_vecto
 								if (parent > -1 ) {
 									killer = &Objects[parent];
 									if (killer != ConsoleObject)		// if someone else whacks you, cut force by 2x
-										vforce2.x /= 2;	vforce2.y /= 2;	vforce2.z /= 2;
+										vforce2.x /= 2;
+									vforce2.y /= 2;	vforce2.z /= 2;
 								}
 								vforce2.x /= 2;	vforce2.y /= 2;	vforce2.z /= 2;
 
@@ -324,7 +322,6 @@ static object *object_create_debris(object *parent, int subobj_num)
 {
 	int objnum;
 	object *obj;
-	polymodel *po;
 
 	Assert((parent->type == OBJ_ROBOT) || (parent->type == OBJ_PLAYER)  );
 
@@ -350,8 +347,6 @@ static object *object_create_debris(object *parent, int subobj_num)
 	obj->rtype.pobj_info.tmap_override = parent->rtype.pobj_info.tmap_override;
 
 	//Set physics data for this object
-
-	po = &Polygon_models[obj->rtype.pobj_info.model_num];
 
 	obj->mtype.phys_info.velocity.x = RAND_MAX/2 - rand();
 	obj->mtype.phys_info.velocity.y = RAND_MAX/2 - rand();
@@ -691,12 +686,9 @@ int object_create_egg(object *objp)
 {
 	int		objnum = 0;
 	object	*obj;
-	int		powerup_type, powerup_id, count;
+	int		count;
 	vms_vector	new_velocity, new_pos;
 	fix		old_mag;
-
-	powerup_type = objp->contains_type;
-	powerup_id = objp->contains_id;
 
 //	maybe_replace_powerup_with_energy(objp);
 

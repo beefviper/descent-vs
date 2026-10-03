@@ -29,9 +29,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: keypress.c 1.2 1994/06/09 12:18:27 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -120,7 +117,7 @@ int GetKeyCode(char * text)
 	UI_GADGET_BUTTON * DoneButton;
 	char temp_text[100];
 
-	text = text;
+	(void)text;
 
 	wnd = ui_open_window( 200, 200, 400, 200, WIN_DIALOG );
 

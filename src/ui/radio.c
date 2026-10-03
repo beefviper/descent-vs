@@ -37,9 +37,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: radio.c 1.5 1994/04/22 11:10:15 john Exp $";
-#pragma on (unreferenced)
 #include <stdlib.h>
 #include <string.h>
 
@@ -114,7 +111,7 @@ void ui_radio_do( UI_GADGET_RADIO * radio, int keypress )
 	UI_GADGET * tmp;
 	UI_GADGET_RADIO * tmpr;
 	int OnMe, ButtonLastSelected;
-	keypress  = keypress;
+	(void)keypress;
 
 	OnMe = ui_mouse_on_gadget( (UI_GADGET *)radio );
 

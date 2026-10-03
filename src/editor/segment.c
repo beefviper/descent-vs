@@ -141,9 +141,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: segment.c 2.0 1995/02/27 11:35:21 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -372,10 +369,11 @@ void make_curside_bottom_side(void)
 }
 #endif
 
-void ToggleBottom(void)
+int ToggleBottom(void)
 {
 	Render_only_bottom = !Render_only_bottom;
 	Update_flags = UF_WORLD_CHANGED;
+	return 1;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -2191,9 +2189,6 @@ void med_check_all_vertices()
 {
 	int		s,v;
 	segment	*sp;
-	int		count;
-
-	count = 0;
 
 	for (s=0; s<Num_segments; s++) {
 		sp = &Segments[s];

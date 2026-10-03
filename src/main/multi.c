@@ -24,9 +24,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define DOS4G
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: multi.c 2.10 1995/05/29 16:18:26 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1182,7 +1179,7 @@ multi_do_death(int objnum)
 {
 	// Do any miscellaneous stuff for a new network player after death
 
-	objnum = objnum;
+	(void)objnum;
 
 	if (!(Game_mode & GM_MULTI_COOP))
 	{
@@ -1962,7 +1959,7 @@ multi_process_data(char *buf, int len)
 	// if necessary) and act on it.
 
 	int type;
-	len = len;
+	(void)len;
 
 	type = buf[0];
 

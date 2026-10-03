@@ -148,9 +148,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: powerup.c 2.2 1995/03/24 13:50:36 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdarg.h>
 #include <stdio.h>

@@ -104,9 +104,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: paging.c 2.5 1995/10/07 13:18:21 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <stdio.h>

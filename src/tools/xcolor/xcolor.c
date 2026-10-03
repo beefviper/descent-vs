@@ -26,9 +26,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: xcolor.c 1.1 1994/01/24 11:09:24 john Exp $";
-#pragma on (unreferenced)
 
 #include <dos.h>
 #include <stdio.h>
@@ -78,7 +75,7 @@ static void dofile( char * filename )
 	gr_free_bitmap(bitmap);
 }
 
-void main(int argc, char * argv[])	{
+int main(int argc, char * argv[])	{
 	int numfiles = 0;
  	struct find_t find;
 
@@ -104,5 +101,5 @@ void main(int argc, char * argv[])	{
 		exit(1);
 	}
 
-
+	return 0;
 }

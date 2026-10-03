@@ -688,9 +688,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: newdemo.c 2.7 1995/05/26 16:16:06 john Exp $";
-#pragma on (unreferenced)
 
 #include <dos.h>
 #include <stdlib.h>
@@ -2406,7 +2403,7 @@ static int newdemo_read_frame_information()
 			oflags = Players[Player_num].flags >> 16;
 			Players[Player_num].flags &= 0xffff;
 
-			if ((Newdemo_vcr_state == ND_STATE_REWINDING) || (Newdemo_vcr_state == ND_STATE_ONEFRAMEBACKWARD) && (oflags != 0xffff)) {
+			if ((Newdemo_vcr_state == ND_STATE_REWINDING) || ((Newdemo_vcr_state == ND_STATE_ONEFRAMEBACKWARD) && (oflags != 0xffff))) {
 				if (!(oflags & PLAYER_FLAGS_CLOAKED) && (Players[Player_num].flags & PLAYER_FLAGS_CLOAKED)) {
 					Players[Player_num].cloak_time = 0;
 					Newdemo_players_cloaked &= ~(1 << Player_num);
@@ -3691,12 +3688,10 @@ void newdemo_strip_frames(char *outname, int bytes_to_strip)
 {
 	FILE *outfile;
 	char *buf;
-	int total_size, bytes_done, read_elems, bytes_back;
+	int read_elems, bytes_back;
 	int trailer_start, loc1, loc2, stop_loc, bytes_to_read;
 	short last_frame_length;
 
-	bytes_done = 0;
-	total_size = filelength(fileno(infile));
 	outfile = fopen(outname, "wb");
 	if (outfile == NULL) {
 		newmenu_item m[1];

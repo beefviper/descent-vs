@@ -105,9 +105,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: mine.c 2.0 1995/02/27 11:34:38 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -185,7 +182,7 @@ int med_save_mine(char * filename)
 // saves to an already-open file
 int save_mine_data(CFILE * SaveFile)
 {
-	int  header_offset, editor_offset, vertex_offset, segment_offset, doors_offset, texture_offset, walls_offset, triggers_offset; //, links_offset;
+	int  header_offset, editor_offset, vertex_offset, segment_offset, texture_offset, walls_offset, triggers_offset; //, links_offset;
 	int  newseg_verts_offset;
 	int  newsegment_offset;
 	int  i;
@@ -207,7 +204,6 @@ int save_mine_data(CFILE * SaveFile)
 	newseg_verts_offset = newsegment_offset + sizeof(segment);
 	walls_offset = newseg_verts_offset + (sizeof(vms_vector)*8);
 	triggers_offset =	walls_offset + (sizeof(wall)*Num_walls);
-	doors_offset = triggers_offset + (sizeof(trigger)*Num_triggers);
 
 	//===================== SAVE FILE INFO ========================
 
@@ -331,7 +327,7 @@ static void dump_fix_as_short( fix value, int nbits, CFILE * SaveFile )
 //version of dump for unsigned values
 static void dump_fix_as_ushort( fix value, int nbits, CFILE * SaveFile )
 {
-	uint int_value;
+	uint int_value = 0;
 	ushort short_value;
 
 	if (value < 0) {

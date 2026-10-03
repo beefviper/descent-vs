@@ -37,9 +37,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: scroll.c 1.5 1994/11/18 23:07:33 john Exp $";
-#pragma on (unreferenced)
 #include <stdlib.h>
 
 #include "fix.h"
@@ -52,13 +49,10 @@ static char rcsid[] = "$Id: scroll.c 1.5 1994/11/18 23:07:33 john Exp $";
 
 void ui_draw_scrollbar( UI_GADGET_SCROLLBAR * scrollbar )
 {
-	int x, y;
-
 	if (scrollbar->status==0)
 		return;
 
 	scrollbar->status = 0;
-	x = y = 0;
 	ui_mouse_hide();
 	gr_set_current_canvas( scrollbar->canvas );
 
@@ -129,7 +123,7 @@ void ui_scrollbar_do( UI_GADGET_SCROLLBAR * scrollbar, int keypress )
 	int oldpos, op;
 
 	keyfocus = 0;
-	keypress = keypress;
+	(void)keypress;
 
 	if (CurWindow->keyboard_focus_gadget==(UI_GADGET *)scrollbar)
 		keyfocus = 1;

@@ -348,9 +348,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
-#pragma on (unreferenced)
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -509,27 +506,17 @@ int digi_midi_type					= 0;			// Midi driver type
 int digi_midi_port					= 0;			// Midi driver port
 static int digi_max_channels		= 8;
 static int digi_driver_rate		= 11025;			// rate to use driver at
-static int digi_dma_buffersize	= 4096;			// size of the dma buffer to use (4k)
 int digi_timer_rate					= 9943;			// rate for the timer to go off to handle the driver system (120 Hz)
 int digi_lomem 						= 0;
 static int digi_volume				= _DIGI_MAX_VOLUME;		// Max volume
 static int midi_volume				= 128/2;						// Max volume
-static int midi_system_initialized		= 0;
-static int digi_system_initialized		= 0;
-static int timer_system_initialized		= 0;
 static int digi_sound_locks[MAX_SOUNDS];
 char digi_last_midi_song[16] = "";
 char digi_last_melodic_bank[16] = "";
 char digi_last_drum_bank[16] = "";
 LPSTR digi_driver_path = NULL;//Was _NULL -KRB
 static WORD						hSOSDigiDriver = 0xffff;			// handle for the SOS driver being used
-static WORD     				hSOSMidiDriver = 0xffff;			// handle for the loaded MIDI driver
-static WORD						hTimerEventHandle = 0xffff;		// handle for the timer function
 
-static void * lpInstruments = NULL;		// pointer to the instrument file
-static int InstrumentSize = 0;
-static void * lpDrums = NULL;				// pointer to the drum file
-static int DrumSize = 0;
 // track mapping structure, this is used to map which track goes
 // out which device. this can also be mapped by the name of the
 // midi track. to map by the name of the midi track use the define
@@ -1088,7 +1075,6 @@ static WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
 	if ( !Digi_initialized ) return 0xFFFF;
 	if ( digi_driver_board <= 0 )	return 0xFFFF;
 
-	soundnum  = soundnum;
 	ntries = 0;
 
 TryNextChannel:

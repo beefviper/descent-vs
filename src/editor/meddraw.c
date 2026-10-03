@@ -81,9 +81,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: meddraw.c 2.0 1995/02/27 11:34:42 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -144,7 +141,7 @@ int     Search_mode=0;                      //if true, searching for segments at
 int Search_x,Search_y;
 int	Automap_test=0;		//	Set to 1 to show wireframe in automap mode.
 
-static int draw_seg_objects(segment *seg)
+static void draw_seg_objects(segment *seg)
 {
 	int objnum;
 
@@ -164,7 +161,7 @@ static int draw_seg_objects(segment *seg)
 
 }
 
-static int draw_line(int pnum0,int pnum1)
+static void draw_line(int pnum0,int pnum1)
 {
 	g3_draw_line(&Segment_points[pnum0],&Segment_points[pnum1]);
 }
@@ -230,11 +227,12 @@ static void check_segment(segment *seg)
 
 		}
 
-		if (gr_ugpixel(&grd_curcanv->cv_bitmap,Search_x,Search_y) == 1)
+		if (gr_ugpixel(&grd_curcanv->cv_bitmap,Search_x,Search_y) == 1) {
 			if (N_found_segs < MAX_FOUND_SEGS)
 				Found_segs[N_found_segs++] = SEG_PTR_2_NUM(seg);
 			else
 				Warning("Found too many segs! (limit=%d)",MAX_FOUND_SEGS);
+		}
 
 	}
 }
@@ -369,7 +367,7 @@ static int find_edge_num(int v0,int v1)
 
 	Error("couldn't find edge for %d,%d",v0,v1);
 
-	//return -1;
+	return -1;
 }
 
 
@@ -406,7 +404,7 @@ static int find_edge(int v0,int v1,seg_edge **edge_ptr)
 }
 
 //adds an edge to the edge list
-static int add_edge(int v0,int v1,ubyte type)
+static void add_edge(int v0,int v1,ubyte type)
 {
 	int found;
 
@@ -574,10 +572,6 @@ static void draw_special_wall( segment *seg, int side )
 	draw_wall_side(seg,side);
 
 	if (Walls[seg->sides[side].wall_num].trigger != -1) {
-		int trigger_num;
-
-		trigger_num = Walls[seg->sides[side].wall_num].trigger;
-
 		gr_setcolor(TRIGGER_COLOR);
 		draw_trigger_side(seg,side);
 		}

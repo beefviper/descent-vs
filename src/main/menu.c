@@ -22,9 +22,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: menu.c 2.5 1995/10/07 13:19:09 john Exp $";
-#pragma on (unreferenced)
 
 #include <time.h>
 #include <stdio.h>
@@ -138,9 +135,9 @@ static void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key,
 {
 	int curtime;
 
-	nitems = nitems;
-	items=items;
-	citem = citem;
+	(void)nitems;
+	(void)items;
+	(void)citem;
 
 	//draw copyright message
 	if ( Menu_draw_copyright )		{
@@ -508,9 +505,9 @@ static void do_detail_level_menu(void)
 //	-----------------------------------------------------------------------------
 static void do_detail_level_menu_custom_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 {
-	nitems = nitems;
+	(void)nitems;
 	*last_key = *last_key;
-	citem = citem;
+	(void)citem;
 
 	Object_complexity = items[0].value;
 	Object_detail = items[1].value;
@@ -754,7 +751,7 @@ extern void GameLoop(int, int );
 
 static void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 {
-	nitems=nitems;
+	(void)nitems;
 	*last_key = *last_key;
 
 	if ( citem==4)	{

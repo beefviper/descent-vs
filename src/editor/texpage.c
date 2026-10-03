@@ -74,9 +74,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <stdio.h>
 #include <stdarg.h>
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: texpage.c 2.0 1995/02/27 11:34:51 john Exp $";
-#pragma on (unreferenced)
 
 #include "inferno.h"
 #include "gameseg.h"
@@ -136,7 +133,7 @@ static void texpage_display_name( char *format, ... )
 }
 
 //Redraw the list of textures, based on TexturePage
-static int texpage_redraw()
+static void texpage_redraw()
 {
 	int i;
 
@@ -153,7 +150,7 @@ static int texpage_redraw()
 
 //shows the current texture, updating the window and printing the name, base
 //on CurrentTexture
-static int texpage_show_current()
+static void texpage_show_current()
 {
 	gr_set_current_canvas(TmapCurrent->canvas);
 	PIGGY_PAGE_IN(Textures[CurrentTexture]);

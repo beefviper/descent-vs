@@ -133,9 +133,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: gamemine.c 2.2 1995/03/06 15:23:14 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -408,7 +405,7 @@ int load_mine_data(CFILE *LoadFile)
 		Highest_segment_index = mine_fileinfo.segment_howmany-1;
 
 		for (i=0; i< mine_fileinfo.segment_howmany; i++ ) {
-			segment v16_seg;
+			segment v16_seg = {0};
 
 			// Set the default values for this segment (clear to zero )
 			//memset( &Segments[i], 0, sizeof(segment) );

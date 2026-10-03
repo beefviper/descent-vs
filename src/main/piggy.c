@@ -332,9 +332,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: piggy.c 2.10 1995/10/07 13:17:26 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -599,16 +596,14 @@ int piggy_init()
 	DiskBitmapHeader bmh;
 	DiskSoundHeader sndh;
 	int header_size, N_bitmaps, N_sounds;
-	int i,size, length, x, y;
+	int i,size, y;
 	char * filename;
-	int read_sounds = 1;
 	int Pigdata_start;
 
 	hashtable_init( &AllBitmapsNames, MAX_BITMAP_FILES );
 	hashtable_init( &AllDigiSndNames, MAX_SOUND_FILES );
 
 	if ( FindArg( "-nosound" ) || (digi_driver_board<1) )		{
-		read_sounds = 0;
 		mprintf(( 0, "Not loading sound data!!!!!\n" ));
 	}
 
@@ -676,7 +671,6 @@ int piggy_init()
 
 	cfseek( Piggy_fp, Pigdata_start, SEEK_SET );
 	size = cfilelength(Piggy_fp) - Pigdata_start;
-	length = size;
 	mprintf( (0, "\nReading data (%d KB) ", size/1024 ));
 
 	cfread( &N_bitmaps, sizeof(int), 1, Piggy_fp );
@@ -686,7 +680,7 @@ int piggy_init()
 
 	header_size = (N_bitmaps*sizeof(DiskBitmapHeader)) + (N_sounds*sizeof(DiskSoundHeader));
 
-	x = 60; y = 189;
+	y = 189;
 
 	gr_set_curfont( Gamefonts[GFONT_SMALL] );
 	gr_set_fontcolor(gr_find_closest_color_current( 20, 20, 20 ),-1 );
@@ -834,7 +828,7 @@ static void piggy_critical_error()
 void piggy_bitmap_page_in( bitmap_index bitmap )
 {
 	grs_bitmap * bmp;
-	int i,org_i = 0,temp;
+	int i,org_i = 0;
 
 	i = bitmap.index;
 	Assert( i >= 0 );
@@ -871,7 +865,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 		if ( bmp->bm_flags & BM_FLAG_RLE )	{
 			int zsize = 0;
 			descent_critical_error = 0;
-			temp = (int)cfread( &zsize, 1, sizeof(int), Piggy_fp );
+			cfread( &zsize, 1, sizeof(int), Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -886,7 +880,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			memcpy( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], &zsize, sizeof(int) );
 			Piggy_bitmap_cache_next += sizeof(int);
 			descent_critical_error = 0;
-			temp = (int)cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, zsize-4, Piggy_fp );
+			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, zsize-4, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -900,7 +894,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 				goto ReDoIt;
 			}
 			descent_critical_error = 0;
-			temp = (int)cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, bmp->bm_h*bmp->bm_w, Piggy_fp );
+			cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, bmp->bm_h*bmp->bm_w, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;

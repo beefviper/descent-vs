@@ -62,9 +62,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: scale.c 1.12 1995/03/14 15:14:11 john Exp $";
-#pragma on (unreferenced)
 
 #include <math.h>
 #include <limits.h>

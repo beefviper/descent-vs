@@ -56,9 +56,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: medsel.c 2.0 1995/02/27 11:35:20 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,8 +84,10 @@ typedef struct sort_element {
 
 //compare the distance of two segments.  slow, since it computes the
 //distance each time
-static int segdist_cmp(sort_element *s0,sort_element *s1)
+static int segdist_cmp(const void *v0,const void *v1)
 {
+	const sort_element *s0 = v0, *s1 = v1;
+
 	return (s0->dist==s1->dist)?0:((s0->dist<s1->dist)?-1:1);
 
 }

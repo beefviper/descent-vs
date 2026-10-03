@@ -94,9 +94,6 @@
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: dumpmine.c 2.1 1995/04/06 12:21:50 mike Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 //#include <stdlib.h>
@@ -153,7 +150,7 @@ static char	*object_types(int objnum)
 	int	type = Objects[objnum].type;
 
 	Assert((type >= 0) && (type < MAX_OBJECT_TYPES));
-	return	&Object_type_names[type];
+	return	Object_type_names[type];
 }
 
 //	--------------------------------------------------------------------------------
@@ -164,10 +161,10 @@ static char	*object_ids(int objnum)
 
 	switch (type) {
 		case OBJ_ROBOT:
-			return &Robot_names[id];
+			return Robot_names[id];
 			break;
 		case OBJ_POWERUP:
-			return &Powerup_names[id];
+			return Powerup_names[id];
 			break;
 	}
 
@@ -548,11 +545,12 @@ static void write_wall_text(FILE *my_file)
 		segment	*segp = &Segments[i];
 		for (j=0; j<MAX_SIDES_PER_SEGMENT; j++) {
 			side	*sidep = &segp->sides[j];
-			if (sidep->wall_num != -1)
+			if (sidep->wall_num != -1) {
 				if (wall_flags[sidep->wall_num])
 					err_printf(my_file, "Error: Wall %i appears in two or more segments, including segment %i, side %i.\n", sidep->wall_num, i, j);
 				else
 					wall_flags[sidep->wall_num] = 1;
+			}
 		}
 	}
 
@@ -624,7 +622,8 @@ static void write_trigger_text(FILE *my_file)
 }
 
 //	------------------------------------------------------------------------------------------
-static int say_totals(FILE *my_file, char *level_name);
+static void say_totals(FILE *my_file, char *level_name);
+static void dump_used_textures_level(FILE *my_file, int level_num);
 void write_game_text_file(char *filename)
 {
 	char	my_filename[128];
@@ -765,21 +764,23 @@ static void determine_used_textures_level(int load_level_flag, int shareware_fla
 				}
 			}
 
-			if (sidep->tmap_num >= 0)
+			if (sidep->tmap_num >= 0) {
 				if (sidep->tmap_num < max_tmap) {
 					tmap_buf[sidep->tmap_num]++;
 					if (level_tmap_buf[sidep->tmap_num] == -1)
 						level_tmap_buf[sidep->tmap_num] = level_num + (!shareware_flag) * NUM_SHAREWARE_LEVELS;
 				} else
 					Int3();	//	Error, bogus texture map.  Should not be greater than max_tmap.
+			}
 
-			if ((sidep->tmap_num2 & 0x3fff) != 0)
+			if ((sidep->tmap_num2 & 0x3fff) != 0) {
 				if ((sidep->tmap_num2 & 0x3fff) < max_tmap) {
 					tmap_buf[sidep->tmap_num2 & 0x3fff]++;
 					if (level_tmap_buf[sidep->tmap_num2 & 0x3fff] == -1)
 						level_tmap_buf[sidep->tmap_num2 & 0x3fff] = level_num + (!shareware_flag) * NUM_SHAREWARE_LEVELS;
 				} else
 					Int3();	//	Error, bogus texture map.  Should not be greater than max_tmap.
+			}
 		}
 	}
 }
@@ -839,7 +840,7 @@ static void say_unused_tmaps(FILE *my_file, int *tb)
 
 	for (i=0; i<Num_tmaps; i++)
 		if (!tb[i]) {
-			if (GameBitmaps[Textures[i].index].bm_data == &bogus_data)
+			if (GameBitmaps[Textures[i].index].bm_data == bogus_data)
 				fprintf(my_file, "U");
 			else
 				fprintf(my_file, " ");
@@ -863,9 +864,9 @@ static void say_unused_walls(FILE *my_file, int *tb)
 }
 
 //	-------------------------------------------------------------------------------------------------
-static int say_totals(FILE *my_file, char *level_name)
+static void say_totals(FILE *my_file, char *level_name)
 {
-	int	i, objnum;
+	int	i;
 	int	total_robots = 0;
 	int	objects_processed = 0;
 
@@ -961,7 +962,7 @@ static void say_totals_all(void)
 
 }
 
-void dump_used_textures_level(FILE *my_file, int level_num)
+static void dump_used_textures_level(FILE *my_file, int level_num)
 {
 	int	i;
 	int	temp_tmap_buf[MAX_TEXTURES];

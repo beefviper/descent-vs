@@ -146,9 +146,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: objpage.c 2.0 1995/02/27 11:34:43 john Exp $";
-#pragma on (unreferenced)
 
 // Num_robot_types -->  N_polygon_models
 // Cur_robot_type --> Cur_robot_type

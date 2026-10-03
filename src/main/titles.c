@@ -160,9 +160,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: titles.c 2.10 1995/06/15 12:14:16 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -625,7 +622,7 @@ static int load_briefing_screen( int screen_num )
 
 	if ((pcx_error=pcx_read_bitmap( Briefing_screens[screen_num].bs_name, &grd_curcanv->cv_bitmap, grd_curcanv->cv_bitmap.bm_type, New_pal ))!=PCX_ERROR_NONE)	{
 		printf( "File '%s', PCX load error: %s\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error));
-		printf(0, "File '%s', PCX load error: %s (%i)\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error), pcx_error);
+		mprintf((0, "File '%s', PCX load error: %s (%i)\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error), pcx_error));
 		Int3();
 		return 0;
 	}
@@ -795,6 +792,7 @@ static int show_briefing_message(int screen_num, char *message)
 				guy_bitmap.bm_data = NULL;
 				iff_error = iff_read_bitmap(bitmap_name, &guy_bitmap, BM_LINEAR, temp_palette);
 				Assert(iff_error == IFF_NO_ERROR);
+				(void)iff_error;
 
 				show_briefing_bitmap(&guy_bitmap);
 				free(guy_bitmap.bm_data);
@@ -1166,7 +1164,7 @@ static void do_shareware_end_game(void)
 		Briefing_text=(char *)malloc(4*sizeof(char));//my hack -KRB
 //		sprintf(Briefing_text, "$S1\n$C1\n\n%s!\n\n%s has won with %d kills.\n\n$S2\n", TXT_SHAREWARE_DONE,Players[winner].callsign, Players[winner].net_kills_total);
 
-		kmatrix_view();
+		kmatrix_view(1);
 		return;
 	}
 	else

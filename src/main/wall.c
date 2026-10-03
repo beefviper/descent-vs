@@ -104,9 +104,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: wall.c 2.1 1995/03/21 14:39:04 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -878,7 +875,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 			return WHP_NO_KEY;
 		}
 
-	if (w->type == WALL_DOOR)
+	if (w->type == WALL_DOOR) {
 		if ((w->flags & WALL_DOOR_LOCKED ) && !(special_boss_opening_allowed((int)(seg-Segments), side)) ) {
 			if ( playernum==Player_num )
 				if (show_message)
@@ -897,6 +894,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 			return WHP_DOOR;
 
 		}
+	}
 
 	return WHP_NOT_SPECIAL;		//default is treat like normal wall
 }

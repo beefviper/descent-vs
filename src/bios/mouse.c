@@ -63,9 +63,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: mouse.c 1.11 1995/02/10 18:52:17 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <stdio.h>

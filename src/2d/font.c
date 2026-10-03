@@ -921,7 +921,7 @@ int gr_ustring(int x, int y, char *s )
 
 void gr_get_string_size(char *s, int *string_width, int *string_height, int *average_width )
 {
-	int i = 0, longest_width = 0;
+	int longest_width = 0;
 	int width,spacing;
 
 	*string_height = FHEIGHT;
@@ -951,7 +951,6 @@ void gr_get_string_size(char *s, int *string_width, int *string_height, int *ave
 			if (*string_width > longest_width)
 				longest_width = *string_width;
 
-			i++;
 			s++;
 		}
 	}

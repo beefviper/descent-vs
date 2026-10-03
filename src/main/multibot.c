@@ -20,9 +20,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: multibot.c 2.2 1995/03/21 14:39:10 john Exp $";
-#pragma on (unreferenced)
 
 #ifdef NETWORK
 #ifndef SHAREWARE
@@ -732,11 +729,11 @@ multi_do_robot_fire(char *buf)
 {
 	// Send robot fire event
 	int loc = 1;
-	int botnum, pnum, gun_num;
+	int botnum, gun_num;
 	vms_vector fire, gun_point;
 	robot_info *robptr;
 
-	pnum = buf[loc];												loc += 1;
+														loc += 1;
 	botnum = objnum_remote_to_local(*(short *)(buf+loc), (byte)buf[loc+2]);
 																		loc += 3;
 	gun_num = (byte)buf[loc];											loc += 1;
@@ -773,7 +770,7 @@ multi_explode_robot_sub(int botnum, int killer)
 {
 	object *robot;
 
-	killer = killer;
+	(void)killer;
 
 	if ((botnum < 0) || (botnum > Highest_object_index)) { // Objnum in range?
 		Int3(); // See rob
@@ -831,10 +828,9 @@ multi_do_robot_explode(char *buf)
 	int botnum;
 	int loc = 1;
 	short killer;
-	int pnum;
 	int rval;
 
-	pnum = buf[loc]; 					loc += 1;
+						loc += 1;
 	killer = objnum_remote_to_local(*(short *)(buf+loc), (byte)buf[loc+2]);
 											loc += 3;
 	botnum = objnum_remote_to_local(*(short *)(buf+loc), (byte)buf[loc+2]);

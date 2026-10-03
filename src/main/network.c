@@ -20,9 +20,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: network.c 2.11 1995/07/18 10:57:56 john Exp $";
-#pragma on (unreferenced)
 
 #ifdef NETWORK
 
@@ -208,10 +205,8 @@ network_endlevel_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	int previous_state[MAX_NUM_NET_PLAYERS];
 	int previous_seconds_left;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
-	key = key;
+	(void)citem;
+	(void)nitems;
 
 	// Send our endlevel packet at regular intervals
 
@@ -292,10 +287,9 @@ network_endlevel_poll2( int nitems, newmenu_item * menus, int * key, int citem )
 	int num_ready = 0;
 	int goto_secret = 0;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
-	key = key;
+	(void)menus;
+	(void)citem;
+	(void)nitems;
 
 	// Send our endlevel packet at regular intervals
 
@@ -473,15 +467,12 @@ network_disconnect_player(int playernum)
 static void
 network_new_player(sequence_packet *their)
 {
-	int objnum;
 	int pnum;
 
 	pnum = their->player.connected;
 
 	Assert(pnum >= 0);
 	Assert(pnum < MaxNumNetPlayers);
-
-	objnum = Players[pnum].objnum;
 
 #ifndef SHAREWARE
 	if (Newdemo_state == ND_STATE_RECORDING) {
@@ -1291,8 +1282,6 @@ static void network_process_packet(ubyte *data, int length )
 
 //	if ( length < sizeof(sequence_packet) ) return;
 
-	length = length;
-
 	switch( their->type )	{
 
 	case PID_GAME_INFO:
@@ -1562,9 +1551,9 @@ static void network_sync_poll( int nitems, newmenu_item * menus, int * key, int 
 
 	static fix t1 = 0;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
+	(void)menus;
+	(void)citem;
+	(void)nitems;
 
 	network_listen();
 
@@ -1590,8 +1579,8 @@ static void network_start_poll( int nitems, newmenu_item * menus, int * key, int
 {
 	int i,n,nm;
 
-	key=key;
-	citem=citem;
+	(void)key;
+	(void)citem;
 
 	Assert(Network_status == NETSTAT_STARTING);
 
@@ -1700,7 +1689,7 @@ static void network_game_param_poll( int nitems, newmenu_item * menus, int * key
 static int network_get_game_params( char * game_name, int *mode, int *game_flags, int *level )
 {
 	int i;
-	int opt, opt_name, opt_level, opt_closed, opt_difficulty;
+	int opt, opt_closed, opt_difficulty;
 	newmenu_item m[16];
 	char name[NETGAME_NAME_LEN+1];
 	char slevel[5];
@@ -1727,7 +1716,6 @@ static int network_get_game_params( char * game_name, int *mode, int *game_flags
 	opt = 0;
 	m[opt].type = NM_TYPE_TEXT; m[opt].text = TXT_DESCRIPTION; opt++;
 
-	opt_name = opt;
 	m[opt].type = NM_TYPE_INPUT; m[opt].text = name; m[opt].text_len = NETGAME_NAME_LEN; opt++;
 
 	sprintf(level_text, "%s (1-%d)", TXT_LEVEL_, Last_level);
@@ -1740,7 +1728,6 @@ static int network_get_game_params( char * game_name, int *mode, int *game_flags
 
 	m[opt].type = NM_TYPE_TEXT; m[opt].text = level_text; opt++;
 
-	opt_level = opt;
 	m[opt].type = NM_TYPE_INPUT; m[opt].text = slevel; m[opt].text_len=4; opt++;
 
 #ifdef ROCKWELL_CODE
@@ -2321,10 +2308,8 @@ static void network_join_poll( int nitems, newmenu_item * menus, int * key, int 
 	static fix t1 = 0;
 	int i, osocket;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
-	key = key;
+	(void)citem;
+	(void)nitems;
 
 	if (Network_allow_socket_changes )	{
 		osocket = Network_socket;
@@ -2469,10 +2454,9 @@ network_request_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	int i = 0;
 	int num_ready = 0;
 
-	menus = menus;
-	citem = citem;
-	nitems = nitems;
-	key = key;
+	(void)menus;
+	(void)citem;
+	(void)nitems;
 
 	// Send our endlevel packet at regular intervals
 
@@ -2760,6 +2744,7 @@ void network_send_data( ubyte * ptr, int len, int urgent )
 //		return;
 		mprintf((0, "Packet overflow, sending additional packet, type %d len %d.\n", ptr[0], len));
 		Assert(check == ptr[0]);
+		(void)check;
 	}
 
 	Assert(MySyncPack.data_size+len <= NET_XDATA_SIZE);

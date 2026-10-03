@@ -222,9 +222,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: endlevel.c 2.2 1995/03/21 14:40:14 john Exp $";
-#pragma on (unreferenced)
 
 //#define SLEW_ON 1
 
@@ -412,7 +409,10 @@ int endlevel_data_loaded=0;
 
 void start_endlevel_sequence()
 {
-	int last_segnum,exit_side,tunnel_length;
+	int exit_side,tunnel_length;
+#ifndef NDEBUG
+	int last_segnum;
+#endif
 
 	if (Newdemo_state == ND_STATE_RECORDING)		// stop demo recording
 		Newdemo_state = ND_STATE_PAUSED;
@@ -466,7 +466,9 @@ void start_endlevel_sequence()
 			return;
 		}
 
+#ifndef NDEBUG
 		last_segnum = old_segnum;
+#endif
 
 		//now pick transition segnum 1/3 of the way in
 
@@ -703,7 +705,6 @@ void do_endlevel_frame()
 		if ((explosion_wait1-=FrameTime) < 0) {
 			vms_vector tpnt;
 			int segnum;
-			object *expl;
 			static int sound_count;
 
 			vm_vec_scale_add(&tpnt,&ConsoleObject->pos,&ConsoleObject->orient.fvec,-ConsoleObject->size*5);
@@ -713,7 +714,7 @@ void do_endlevel_frame()
 			segnum = find_point_seg(&tpnt,ConsoleObject->segnum);
 
 			if (segnum != -1) {
-				expl = object_create_explosion(segnum,&tpnt,i2f(20),VCLIP_BIG_PLAYER_EXPLOSION);
+				object_create_explosion(segnum,&tpnt,i2f(20),VCLIP_BIG_PLAYER_EXPLOSION);
 				if (rand()<10000 || ++sound_count==7) {		//pseudo-random
 					digi_link_sound_to_pos( SOUND_TUNNEL_EXPLOSION, segnum, 0, &tpnt, 0, F1_0 );
 					sound_count=0;
@@ -1361,11 +1362,12 @@ void do_endlevel_flythrough(int n)
 			fix dist;
 
 			for (i=0;i<6;i++)
-				if (i!=entry_side && i!=exit_side && i!=up_side && i!=Side_opposite[up_side])
+				if (i!=entry_side && i!=exit_side && i!=up_side && i!=Side_opposite[up_side]) {
 					if (s0==-1)
 						s0 = i;
 					else
 						s1 = i;
+				}
 
 			compute_center_point_on_side(&s0p,pseg,s0);
 			compute_center_point_on_side(&s1p,pseg,s1);
@@ -1549,7 +1551,7 @@ try_again:
 
 		ifile = cfopen(filename,"rb");
 
-		if (!ifile)
+		if (!ifile) {
 			if (level_num==1) {
 				return;		//abort
 				//Error("Cannot load file text of binary version of <%s>",filename);
@@ -1558,6 +1560,7 @@ try_again:
 				level_num = 1;
 				goto try_again;
 			}
+		}
 
 		have_binary = 1;
 	}

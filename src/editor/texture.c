@@ -67,9 +67,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: texture.c 2.0 1995/02/27 11:34:50 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -86,6 +83,9 @@ static char rcsid[] = "$Id: texture.c 2.0 1995/02/27 11:34:50 john Exp $";
 #include "mono.h"
 #include "error.h"
 #include "kdefs.h"
+
+static void compute_uv_side_center(uvl *uvcenter, segment *segp, int sidenum);
+static void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uvl *uvcenter);
 
 //	-----------------------------------------------------------
 int	TexFlipX()
@@ -253,7 +253,7 @@ int TexSlideDownBig()
 
 //	-----------------------------------------------------------
 //	Compute the center of the side in u,v coordinates.
-void compute_uv_side_center(uvl *uvcenter, segment *segp, int sidenum)
+static void compute_uv_side_center(uvl *uvcenter, segment *segp, int sidenum)
 {
 	int	v;
 	side	*sidep = &segp->sides[sidenum];
@@ -281,7 +281,7 @@ static void rotate_uv_point(uvl *uvrot, fix *rotmat, uvl *uv, uvl *uvcenter)
 
 //	-----------------------------------------------------------
 //	Compute the center of the side in u,v coordinates.
-void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uvl *uvcenter)
+static void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uvl *uvcenter)
 {
 	int	v;
 	side	*sidep = &segp->sides[sidenum];

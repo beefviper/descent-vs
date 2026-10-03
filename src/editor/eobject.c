@@ -93,9 +93,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: eobject.c 2.0 1995/02/27 11:35:14 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -192,7 +189,7 @@ static int get_next_object(segment *seg,int id)
 //	------------------------------------------------------------------------------------
 int place_object(segment *segp, vms_vector *object_pos, int object_type)
 {
-	short objnum;
+	short objnum = 0;
 	object *obj;
 	vms_matrix seg_matrix;
 
@@ -984,7 +981,6 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 			fvi_query fq;
 			fvi_info	hit_info;
 			vms_vector	last_outside_pos;
-			vms_vector	last_inside_pos;
 
 			temp_viewer_obj = *Viewer;
 			viewer_segnum = find_object_seg(&temp_viewer_obj);
@@ -1018,8 +1014,6 @@ static void move_object_to_position(int objnum, vms_vector *newpos)
 					vms_vector	temp_vec;
 
 					//mprintf((0, "[away %7.3f %7.3f %7.3f]\n", f2fl(temp_viewer_obj.pos.x), f2fl(temp_viewer_obj.pos.y), f2fl(temp_viewer_obj.pos.z)));
-					last_inside_pos = temp_viewer_obj.pos;
-
 					vm_vec_avg(&temp_vec, &temp_viewer_obj.pos, &last_outside_pos);
 					temp_viewer_obj.pos = temp_vec;
 					update_object_seg(&temp_viewer_obj);

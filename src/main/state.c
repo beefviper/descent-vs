@@ -210,9 +210,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: state.c 2.14 1995/05/26 16:16:10 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -300,8 +297,8 @@ uint state_game_id;
 
 static void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 {
-	nitems = nitems;
-	last_key = last_key;
+	(void)nitems;
+	(void)last_key;
 
 //	if ( sc_last_item != citem )	{
 //		sc_last_item = citem;

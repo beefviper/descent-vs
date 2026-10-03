@@ -91,9 +91,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: robot.c 2.1 1995/03/07 16:52:02 john Exp $";
-#pragma on (unreferenced)
 
 #include "error.h"
 

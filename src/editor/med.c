@@ -161,9 +161,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define	DIAGNOSTIC_MESSAGE_MAX				90
 #define	EDITOR_STATUS_MESSAGE_DURATION	4		//	Shows for 3+..4 seconds
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: med.c 2.3 1995/03/06 18:23:52 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -636,7 +633,7 @@ static void move_player_2_segment_and_rotate(segment *seg,int side)
 {
 	vms_vector vp;
 	vms_vector	upvec;
-	static edgenum=0;
+	static int edgenum=0;
 
 	compute_segment_center(&ConsoleObject->pos,seg);
 	compute_center_point_on_side(&vp,seg,side);
@@ -670,7 +667,7 @@ int SetPlayerFromCursegMinusOne()
 	g3s_point corner_p[4];
 	int i;
 	fix max,view_dist=f1_0*10;
-	static edgenum=0;
+	static int edgenum=0;
 	int newseg;
 
 	view_vec = Cursegp->sides[Curside].normals[0];
@@ -760,7 +757,7 @@ int FindConcaveSegs()
 
 int DosShell()
 {
-	int ok, w, h;
+	int w, h;
 	grs_bitmap * save_bitmap;
 
 	// Save the current graphics state.
@@ -777,7 +774,7 @@ int DosShell()
 	fflush(stdout);
 
 	key_close();
-	ok = spawnl(P_WAIT,getenv("COMSPEC"), NULL );
+	spawnl(P_WAIT,getenv("COMSPEC"), NULL );
 	key_init();
 
 	gr_set_mode(grd_curscreen->sc_mode);
@@ -988,7 +985,7 @@ void close_editor_screen(void)
 
 }
 
-med_show_warning(char *s)
+void med_show_warning(char *s)
 {
 	grs_canvas *save_canv=grd_curcanv;
 
@@ -1101,7 +1098,7 @@ void gamestate_restore_check() {
 		}
 }
 
-void RestoreGameState() {
+int RestoreGameState() {
 	load_level("GAMESAVE.LVL");
 	gamestate_not_restored = 0;
 
@@ -1109,6 +1106,7 @@ void RestoreGameState() {
 	editor_status("Gamestate restored.\n");
 
 	Update_flags |= UF_WORLD_CHANGED;
+	return 1;
 }
 
 extern void check_wall_validity(void);
@@ -1121,7 +1119,7 @@ void editor(void)
 	int w,h;
 	grs_bitmap * savedbitmap;
 	editor_view *new_cv;
-	static padnum=0;
+	static int padnum=0;
 	vms_matrix	MouseRotMat,tempm;
 	//@@short camera_objnum;			//a camera for viewing
 

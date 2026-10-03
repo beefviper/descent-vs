@@ -37,9 +37,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: popup.c 1.5 1994/11/18 23:07:31 john Exp $";
-#pragma on (unreferenced)
 #include "fix.h"
 #include "types.h"
 #include "gr.h"
@@ -57,7 +54,6 @@ int PopupMenu( int NumButtons, char * text[] )
 	UI_WINDOW * wnd;
 	UI_GADGET_BUTTON * ButtonG[10];
 
-	short SavedMouseX, SavedMouseY;
 	char * Button[10];
 
 	int button_width, button_height, width, height;
@@ -82,8 +78,6 @@ int PopupMenu( int NumButtons, char * text[] )
 		ui_mouse_flip_buttons();
 		return -1;
 	}
-
-	SavedMouseX = Mouse.x; SavedMouseY = Mouse.y;
 
 	button_width = button_height = 0;
 

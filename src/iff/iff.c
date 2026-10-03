@@ -164,9 +164,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define MIN_COMPRESS_WIDTH	65	//don't compress if less than this wide
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: iff.c 1.43 1994/12/08 19:03:17 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -364,7 +361,7 @@ static long get_long(FFILE *f)
 
 static int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 {
-	len++;  /* so no "parm not used" warning */
+	(void)len;
 
 //  debug("parsing bmhd len=%ld\n",len);
 
@@ -412,7 +409,9 @@ static int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 	char ignore=0;
 	unsigned char *data_end;
 	int end_pos;
+#ifndef NDEBUG
 	int row_count=0;
+#endif
 
 	end_pos = ifile->position + len;
 	if (len&1)
@@ -572,7 +571,7 @@ static int parse_delta(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 		}
 
 		if (cnt == -1) {
-			if (!bmheader->w&1)
+			if ((!bmheader->w)&1)
 				return IFF_CORRUPT;
 		}
 		else if (cnt)
@@ -606,7 +605,7 @@ static void skip_chunk(FFILE *ifile,long len)
 
 //	for (i=0; i<ilen; i++ )
 //		c = cfgetc(ifile);
-	//Assert(cfseek(ifile,ilen,SEEK_CUR)==0);
+	//if (cfseek(ifile,ilen,SEEK_CUR) != 0) Int3();
 }
 
 //read an ILBM or PBM file
@@ -1133,9 +1132,9 @@ static int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compressi
 	}
 
 	if (compression_on) {		//write actual data length
-		Assert(fseek(ofile,save_pos,SEEK_SET)==0);
+		if (fseek(ofile,save_pos,SEEK_SET) != 0) Int3();
 		put_long(total_len,ofile);
-		Assert(fseek(ofile,total_len,SEEK_CUR)==0);
+		if (fseek(ofile,total_len,SEEK_CUR) != 0) Int3();
 		if (total_len&1) fputc(0,ofile);		//pad to even
 	}
 
@@ -1189,9 +1188,9 @@ int write_tiny(CFILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 	}
 
 	if (compression_on) {
-		Assert(cfseek(ofile,save_pos,SEEK_SET)==0);
+		if (cfseek(ofile,save_pos,SEEK_SET) != 0) Int3();
 		put_long(4+total_len,ofile);
-		Assert(cfseek(ofile,4+total_len,SEEK_CUR)==0);
+		if (cfseek(ofile,4+total_len,SEEK_CUR) != 0) Int3();
 		if (total_len&1) cfputc(0,ofile);		//pad to even
 	}
 
@@ -1229,9 +1228,9 @@ static int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compressio
 
 	pbm_size = 4 + BMHD_SIZE + body_size + tiny_size + (long)sizeof(pal_entry)*(1L<<bitmap_header->nplanes)+8;
 
-	Assert(fseek(ofile,save_pos,SEEK_SET)==0);
+	if (fseek(ofile,save_pos,SEEK_SET) != 0) Int3();
 	put_long(pbm_size+8,ofile);
-	Assert(fseek(ofile,pbm_size+8,SEEK_CUR)==0);
+	if (fseek(ofile,pbm_size+8,SEEK_CUR) != 0) Int3();
 
 	return ret;
 

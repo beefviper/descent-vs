@@ -60,9 +60,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: mono.c 1.12 1995/02/23 11:59:57 john Exp $";
-#pragma on (unreferenced)
 
 // Debug output. The original drew windows on a second, monochrome display
 // adapter (MDA) at B0000h. That output now goes to the console window the

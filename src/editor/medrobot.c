@@ -81,9 +81,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: medrobot.c 2.0 1995/02/27 11:35:59 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -183,18 +180,6 @@ static void call_init_ai_object(object *objp, int behavior)
 	init_ai_object(objp-Objects, behavior, hide_segment);
 
 	if (behavior == AIB_STATION) {
-		int	cseg, mseg;
-
-		cseg = 0;
-		mseg = 0;
-
-		if (Cursegp != NULL)
-			cseg = Cursegp-Segments;
-
-		if (Markedsegp != NULL) {
-			mseg = Markedsegp-Segments;
-		}
-
 		objp->ctype.ai_info.follow_path_start_seg = Cursegp-Segments;
 		objp->ctype.ai_info.follow_path_end_seg = Markedsegp-Segments;
 	}
@@ -724,7 +709,7 @@ void do_robot_window()
 		gr_set_current_canvas( ContainsViewBox->canvas );
 		id = Cur_goody_id;
 		if ( id > -1 )	 {
-			int ol_type;
+			int ol_type = 0;
 			if (Cur_goody_type == OBJ_ROBOT)
 				ol_type = OL_ROBOT;
 			else if (Cur_goody_type == OBJ_POWERUP)

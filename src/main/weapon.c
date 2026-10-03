@@ -192,9 +192,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: weapon.c 2.1 1995/03/21 14:38:43 john Exp $";
-#pragma on (unreferenced)
 
 #include "game.h"
 #include "weapon.h"

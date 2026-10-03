@@ -74,7 +74,7 @@ extern char *Registered_level_names[NUM_REGISTERED_LEVELS];
 
 void LoadGame(void);
 void SaveGame(void);
-void get_level_name(void);
+int get_level_name(void);
 
 //extern int load_game(char *filename);
 //extern int save_game(char *filename);

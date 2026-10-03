@@ -216,9 +216,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "wall.h"
 #include "fuelcen.h"
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: gameseg.c 2.2 1995/03/20 18:15:39 john Exp $";
-#pragma on (unreferenced)
 
 // How far a point can be from a plane, and still be "in" the plane
 #define PLANE_DIST_TOLERANCE	250
@@ -798,13 +795,9 @@ int check_segment_connections(void)
 		seg = &Segments[segnum];
 
 		for (sidenum=0;sidenum<6;sidenum++) {
-			side *s;
 			segment *cseg;
-			side *cs;
 			int num_faces,csegnum,csidenum,con_num_faces;
 			int vertex_list[6],con_vertex_list[6];
-
-			s = &seg->sides[sidenum];
 
 			create_abs_vertex_lists( &num_faces, vertex_list, segnum, sidenum);
 
@@ -819,8 +812,6 @@ int check_segment_connections(void)
 					errors = 1;
 					continue;
 				}
-
-				cs = &cseg->sides[csidenum];
 
 				create_abs_vertex_lists( &con_num_faces, con_vertex_list, csegnum, csidenum);
 

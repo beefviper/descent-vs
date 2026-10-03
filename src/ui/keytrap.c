@@ -36,10 +36,8 @@ UI_GADGET_KEYTRAP * ui_add_gadget_keytrap( UI_WINDOW * wnd, int key_to_trap, int
 
 void ui_keytrap_do( UI_GADGET_KEYTRAP * keytrap, int keypress )
 {
-	int result;
-
 	if ( keypress == keytrap->trap_key )
 	{
-		result = keytrap->user_function();
+		keytrap->user_function();
 	}
 }

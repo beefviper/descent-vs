@@ -238,9 +238,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: physics.c 2.2 1995/03/24 14:48:54 john Exp $";
-#pragma on (unreferenced)
 
 //@@#include <malloc.h>
 #include <stdio.h>
@@ -373,12 +370,11 @@ static void do_physics_align_object( object * obj )
 			#endif
 
 	if (labs(vm_vec_dot(&desired_upvec,&obj->orient.fvec)) < f1_0/2) {
-		fixang save_delta_ang;
 		vms_angvec tangles;
 
 		vm_vector_2_matrix(&temp_matrix,&obj->orient.fvec,&desired_upvec,NULL);
 
-		save_delta_ang = delta_ang = vm_vec_delta_ang(&obj->orient.uvec,&temp_matrix.uvec,&obj->orient.fvec);
+		delta_ang = vm_vec_delta_ang(&obj->orient.uvec,&temp_matrix.uvec,&obj->orient.fvec);
 
 		delta_ang += obj->mtype.phys_info.turnroll;
 
@@ -570,7 +566,6 @@ void do_physics_sim(object *obj)
 	vms_vector start_pos;
 	int obj_stopped=0;
 	fix moved_time;			//how long objected moved before hit something
-	vms_vector save_p0,save_p1;
 	physics_info *pi;
 	int orig_segnum = obj->segnum;
 
@@ -608,7 +603,7 @@ if (Dont_move_ai_objects)
 	}
 
 	//check for correct object segment
-	if(!get_seg_masks(&obj->pos,obj->segnum,0).centermask==0) {
+	if(get_seg_masks(&obj->pos,obj->segnum,0).centermask!=0) {
 		#ifndef NDEBUG
 		mprintf((0,"Warning: object %d not in given seg!\n",objnum));
 		#endif
@@ -741,9 +736,6 @@ if (Dont_move_ai_objects)
 
 //@@			if (get_seg_masks(&obj->pos,obj->segnum,0).centermask!=0)
 //@@				Int3();
-
-save_p0 = *fq.p0;
-save_p1 = *fq.p1;
 
 
 		fate = find_vector_intersection(&fq,&hit_info);

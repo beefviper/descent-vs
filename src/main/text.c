@@ -60,9 +60,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: text.c 2.0 1995/02/27 11:33:09 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -173,7 +170,7 @@ void load_text()
 		}
 
 		//scan for special chars (like \n)
-		for (p=Text_string[i];p=strchr(p,'\\');) {
+		for (p=Text_string[i];(p=strchr(p,'\\'));) {
 			char newchar = 0;
 
 			if (p[1] == 'n') newchar = '\n';

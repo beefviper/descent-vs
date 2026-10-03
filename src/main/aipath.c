@@ -137,9 +137,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: aipath.c 2.0 1995/02/27 11:30:48 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>		//	for printf()
 #include <stdlib.h>		// for rand() and qsort()
@@ -250,6 +247,9 @@ int	Ai_path_debug=0;
 //	the object is (which isn't passed, right?) and making fvi calls (slow, right?).  So, consider it the more_or_less_safe_flag.
 //	If end_seg == -2, then end seg will never be found and this routine will drop out due to depth (probably called by create_n_segment_path).
 static int validate_path(int debug_flag, point_seg *psegs, int num_points);
+#ifndef NDEBUG
+static void validate_all_paths(void);
+#endif
 int create_path_points(object *objp, int start_seg, int end_seg, point_seg *psegs, short *num_points, int max_depth, int random_flag, int safety_flag, int avoid_seg)
 {
 	int		cur_seg;
@@ -516,7 +516,7 @@ if (num_points == 0)
 
 #ifndef NDEBUG
 //	-----------------------------------------------------------------------------------------------------------
-void validate_all_paths(void)
+static void validate_all_paths(void)
 {
 
 #if PARALLAX
@@ -850,12 +850,13 @@ void ai_follow_path(object *objp, int player_visibility)
 //--debug 01/17/95--		} else
 //--debug 01/17/95--			return;
 
-	if ((aip->hide_index == -1) || (aip->path_length == 0))
+	if ((aip->hide_index == -1) || (aip->path_length == 0)) {
 		if (ailp->mode == AIM_RUN_FROM_OBJECT) {
 			create_n_segment_path(objp, 5, -1);
 			ailp->mode = AIM_RUN_FROM_OBJECT;
 		} else
 			create_path(objp);
+	}
 
 if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (aip->path_length>0)) {
 	//Int3();	//	Contact Mike: Bad.  Path goes into what is believed to be free space.
@@ -957,12 +958,13 @@ if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (
 
 	if (aip->cur_path_index < 0)
 		aip->cur_path_index = 0;
-	else if (aip->cur_path_index >= aip->path_length)
+	else if (aip->cur_path_index >= aip->path_length) {
 		if (ailp->mode == AIM_RUN_FROM_OBJECT) {
 			create_n_segment_path(objp, AVOID_SEG_LENGTH, ConsoleObject->segnum);
 			ailp->mode = AIM_RUN_FROM_OBJECT;	//	It gets bashed in create_n_segment_path
 		} else
 			aip->cur_path_index = aip->path_length-1;
+	}
 
 	goal_point = Point_segs[aip->hide_index + aip->cur_path_index].point;
 
@@ -1267,7 +1269,7 @@ void attempt_to_resume_path(object *objp)
 	//int				objnum = objp-Objects;
 	ai_static		*aip = &objp->ctype.ai_info;
 //	int				goal_segnum, object_segnum,
-	int				abs_index, new_path_index;
+	int				new_path_index;
 
 	mprintf((0, "Object %i trying to resume path at index %i\n", objp-Objects, aip->cur_path_index));
 
@@ -1281,7 +1283,6 @@ void attempt_to_resume_path(object *objp)
 		}
 
 //	object_segnum = objp->segnum;
-	abs_index = aip->hide_index+aip->cur_path_index;
 //	goal_segnum = Point_segs[abs_index].segnum;
 
 //	if (object_segnum == goal_segnum)

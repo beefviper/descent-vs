@@ -55,9 +55,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: menubar.c 1.10 1994/11/27 14:53:11 matt Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -303,7 +300,7 @@ static void menu_hide_all()
 }
 
 
-static state2_alt_down;
+static int state2_alt_down;
 
 static void do_state_0( int keypress )
 {
@@ -625,7 +622,7 @@ void menubar_do( int keypress )
 {
 	if (menubar_hid) return;
 
-	keypress = keypress;
+	(void)keypress;
 	do_state_0(last_keypress);
 
 	while (state > 0 )

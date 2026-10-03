@@ -42,9 +42,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: khelp.c 2.0 1995/02/27 11:34:27 john Exp $";
-#pragma on (unreferenced)
 
 #include "inferno.h"
 #include "editor.h"
@@ -111,8 +108,8 @@ char ViewHelpText[] = "MED View Changing Functions\n\n" \
 "\n* Holding the Ctrl key and moving the mouse will change\n" \
 "the viewer's orientation in the main window.";
 
-//"CTRL-MINUS       Decreases drawing depth\n" \
-//"CTRL-EQUAL       Increases drawing depth\n" \
+//"CTRL-MINUS       Decreases drawing depth\n"
+//"CTRL-EQUAL       Increases drawing depth\n"
 
 static char GameHelpText[] = "MED Game Screen Functions\n\n" \
 "KEYPAD FUNCTIONS (Moves in game screen)\n" \

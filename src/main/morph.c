@@ -124,9 +124,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: morph.c 2.1 1995/02/27 18:26:33 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -305,7 +302,7 @@ static void update_points(polymodel *pm,int submodel_num,morph_data *md)
 
 	while (nverts--) {
 
-		if (md->morph_times[i])		//not done yet
+		if (md->morph_times[i]) {		//not done yet
 
 			if ((md->morph_times[i] -= FrameTime) <= 0) {
 				md->morph_vecs[i] = *vp;
@@ -314,6 +311,7 @@ static void update_points(polymodel *pm,int submodel_num,morph_data *md)
 			}
 			else
 				vm_vec_scale_add2(&md->morph_vecs[i],&md->morph_deltas[i],FrameTime);
+		}
 
 		vp++; i++;
 	}

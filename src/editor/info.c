@@ -155,9 +155,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: info.c 2.0 1995/02/27 11:35:34 john Exp $";
-#pragma on (unreferenced)
 
 #include <i86.h>
 #include <stdio.h>
@@ -455,11 +452,11 @@ static void clear_pad_display(void)
 //	------------------------------------------------------------------------------------
 void info_display_all( UI_WINDOW * wnd )
 {
-	static	old_padnum = -1;
+	static	int old_padnum = -1;
 	int		padnum,show_all = 0;
 	grs_canvas *save_canvas = grd_curcanv;
 
-	wnd++;		//kill warning
+	(void)wnd;
 
 	grd_curcanv = Pad_text_canvas;
 

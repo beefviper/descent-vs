@@ -42,9 +42,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: file.c 1.6 1994/06/09 12:18:29 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,7 +91,7 @@ static int __far critical_error_handler( unsigned deverr, unsigned errcode, unsi
 {
 	int x;
 
-	devhdr = devhdr; deverr = deverr;
+	(void)devhdr; (void)deverr;
 
 	if (error_mode==1) return _HARDERR_FAIL;
 
@@ -173,7 +170,8 @@ static void SetFloppy(int d)
 
 static void file_capitalize( char * s )
 {
-	while( *s++ = toupper(*s) );
+	for ( ; *s; s++ )
+		*s = toupper(*s);
 }
 
 
@@ -258,7 +256,7 @@ int file_getdirlist( int MaxNum, char list[][13] )
 	struct find_t find;
 	int NumDirs = 0, i, CurDrive;
 	char cwd[129];
-	MaxNum = MaxNum;
+	(void)MaxNum;
 
 	getcwd(cwd, 128 );
 
@@ -312,7 +310,7 @@ int file_getfilelist( int MaxNum, char list[][13], char * filespec )
 	struct find_t find;
 	int NumFiles = 0;
 
-	MaxNum = MaxNum;
+	(void)MaxNum;
 
 	if( !_dos_findfirst( filespec, 0, &find ) )
 	{

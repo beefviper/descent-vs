@@ -109,9 +109,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: eswitch.c 2.0 1995/02/27 11:35:18 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -246,7 +243,7 @@ static int trigger_remove_flag_from_Markedside(short flag) {
 		return 0;
 	}
 
-	if (!Triggers[trigger_num].flags & flag)
+	if ((!Triggers[trigger_num].flags) & flag)
 		return 1;
 
  	Triggers[trigger_num].flags &= ~flag;

@@ -148,9 +148,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: library.c 1.30 1994/03/23 13:55:30 matt Exp $";
-#pragma on (unreferenced)
 
 #include <time.h>
 #include <stdio.h>
@@ -196,7 +193,7 @@ static int ReadFileBufRaw( char *filename, ubyte *buf, int bufsize )
 	if (handle == -1 )
         Error("File %s, %s ",filename,strerror(errno));
 
-    if (length = read( handle, buf, bufsize ) != bufsize )
+    if ((length = (read( handle, buf, bufsize ) != bufsize)))
 		{
 		close( handle );
       Error("File %s, %s ",filename,strerror(errno));
@@ -425,7 +422,7 @@ int ReadFileBuf( char *filename, ubyte *buf, int bufsize ) {
 	            fseek( InputLibInitFile, LibHeaderList[i].offset, SEEK_SET );
 	            length = LibHeaderList[i].original_size;
 
-	            if ( length == bufsize )
+	            if ( length == bufsize ) {
 	            if ( LibHeaderList[i].compression == 0 ) {
 	                //printf("Reading buf size = %d\n", LibHeaderList[i].original_size);
 	                fread( buf, sizeof(ubyte), LibHeaderList[i].original_size, InputLibInitFile );
@@ -436,6 +433,7 @@ int ReadFileBuf( char *filename, ubyte *buf, int bufsize ) {
 	                    fread( tempbuf, sizeof(ubyte), LibHeaderList[i].length, InputLibInitFile );
 	                    lzw_expand( tempbuf, buf, LibHeaderList[i].original_size );
 	                }
+	            }
 
 	            break;
 	        }

@@ -114,9 +114,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: group.c 2.0 1995/02/27 11:35:05 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <stdio.h>
@@ -142,6 +139,8 @@ static char rcsid[] = "$Id: group.c 2.0 1995/02/27 11:35:05 john Exp $";
 
 #include "medwall.h"
 #include "kdefs.h"
+
+static void validate_selected_segments(void);
 
 struct {
 	int     fileinfo_version;
@@ -1037,7 +1036,7 @@ static void restore_selected_segs(int num, short *segs)
 }
 
 //	-----------------------------------------------------------------------------
-void validate_selected_segments(void)
+static void validate_selected_segments(void)
 {
 	int	i;
 
@@ -1113,7 +1112,7 @@ int rotate_segment_new(vms_angvec *pbh)
 	//	Sever connection between first seg to rotate and its connection on Side_opposite[Curside].
 	child_save = Cursegp->children[newseg_side];	// save connection we are about to sever
 	Cursegp->children[newseg_side] = -1;			// sever connection
-	create_group_list(Cursegp, &GroupList[ROT_GROUP].segments, &GroupList[ROT_GROUP].num_segments, Selected_segs, 0);	// create list of segments in group
+	create_group_list(Cursegp, GroupList[ROT_GROUP].segments, &GroupList[ROT_GROUP].num_segments, Selected_segs, 0);	// create list of segments in group
 	//mprintf((0, "NumSegs = %d\n", GroupList[ROT_GROUP].num_segments));
 	Cursegp->children[newseg_side] = child_save;	// restore severed connection
 	GroupList[ROT_GROUP].segments[0] = newseg;
@@ -1322,7 +1321,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 	int segnum, vertnum;
 	char ErrorMessage[200];
 	short tmap_xlate;
-	int 	translate;
+	int 	translate = 0;
 	char 	*temptr;
 	int i, j;
 	segment tseg;
@@ -1429,13 +1428,13 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 		if (cfseek( LoadFile,group_fileinfo.vertex_offset, SEEK_SET ))
 			Error( "Error seeking to vertex_offset in group.c" );
 
-			for (i=0;i<group_header.num_vertices;i++) {
+		for (i=0;i<group_header.num_vertices;i++) {
 
-				if (cfread( &tvert, sizeof(tvert),1,LoadFile )!=1)
-					Error( "Error reading tvert in group.c" );
-				vertex_ids[i] = med_create_duplicate_vertex( &tvert );
-				//mprintf((0, "vertex %d created from original %d\n", vertex_ids[i], i));
-			}
+			if (cfread( &tvert, sizeof(tvert),1,LoadFile )!=1)
+				Error( "Error reading tvert in group.c" );
+			vertex_ids[i] = med_create_duplicate_vertex( &tvert );
+			//mprintf((0, "vertex %d created from original %d\n", vertex_ids[i], i));
+		}
 
 		}
 
@@ -1479,7 +1478,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 					temp = Segments[segment_ids[i]].sides[j].tmap_num2;
 					tmap_xlate = temp & 0x3fff;			// strip off orientation bits
 					if (tmap_xlate != 0)
-						Segments[segment_ids[i]].sides[j].tmap_num2 = temp & (!0x3fff) | group_tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
+						Segments[segment_ids[i]].sides[j].tmap_num2 = (temp & (!0x3fff)) | group_tmap_xlate_table[tmap_xlate];	// mask on original orientation bits
 					}
 				}
 			}
@@ -1621,12 +1620,12 @@ int SaveGroup()
 		}
 	GroupList[Current_group].num_vertices = v;
 	//mprintf((0, "Saving %d vertices, %d segments\n", GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments));
-	med_save_group("TEMP.GRP", &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
+	med_save_group("TEMP.GRP", GroupList[Current_group].vertices, GroupList[Current_group].segments,
 		GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments);
    if (ui_get_filename( group_filename, "*.GRP", "SAVE GROUP" ))
 	{
       checkforgrpext(group_filename);
-		if (med_save_group(group_filename, &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
+		if (med_save_group(group_filename, GroupList[Current_group].vertices, GroupList[Current_group].segments,
 					GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments))
 			return 0;
 		mine_changed = 0;
@@ -1656,7 +1655,7 @@ int LoadGroup()
    if (ui_get_filename( group_filename, "*.GRP", "LOAD GROUP" ))
 	{
       checkforgrpext(group_filename);
-      med_load_group(group_filename, &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
+      med_load_group(group_filename, GroupList[Current_group].vertices, GroupList[Current_group].segments,
 					 &GroupList[Current_group].num_vertices, &GroupList[Current_group].num_segments) ;
 		//mprintf((0, "Loaded %d vertices, %d segments\n", GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments));
 
@@ -1922,7 +1921,7 @@ int SubtractFromGroup(void)
 
 	//	Create a list of segments to copy.
 	GroupList[Current_group].num_segments = 0;
-	create_group_list(Markedsegp, &GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, N_selected_segs);
+	create_group_list(Markedsegp, GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, N_selected_segs);
 
 	// mprintf((0, "New group: "));
 	// for (s=0; s<GroupList[Current_group].num_segments; s++)
@@ -2022,7 +2021,7 @@ int CreateGroup(void)
 
 	//	Create a list of segments to copy.
 	GroupList[Current_group].num_segments = 0;
-	create_group_list(Markedsegp, &GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, 0);
+	create_group_list(Markedsegp, GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, 0);
 
 	// Replace Marked segment with Group Segment.
 	Groupsegp[Current_group] = Markedsegp;

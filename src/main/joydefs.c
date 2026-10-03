@@ -268,9 +268,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: joydefs.c 2.2 1995/06/30 12:30:22 john Exp $";
-#pragma on (unreferenced)
 
 #include <conio.h>
 #include <stdlib.h>
@@ -502,9 +499,9 @@ static void joydef_menuset_1(int nitems, newmenu_item * items, int *last_key, in
 	int i;
 	int oc_type = Config_control_type;
 
-	nitems = nitems;
-	last_key = last_key;
-	citem = citem;
+	(void)nitems;
+	(void)last_key;
+	(void)citem;
 
 	for (i=0; i<CONTROL_MAX_TYPES; i++ )
 		if (items[i].value) Config_control_type = i;

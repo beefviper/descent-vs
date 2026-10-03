@@ -128,9 +128,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: seguvs.c 2.1 1995/05/08 10:49:34 mike Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -155,6 +152,8 @@ static char rcsid[] = "$Id: seguvs.c 2.1 1995/05/08 10:49:34 mike Exp $";
 #include	"effects.h"	//	Needed for effects_bm_num
 #include "fvi.h"
 #include "seguvs.h"
+
+static void cast_all_light_in_mine(int quick_flag);
 
 //--rotate_uvs-- vms_vector Rightvec;
 
@@ -324,9 +323,10 @@ static void set_average_light_on_side(segment *segp, int sidenum)
 
 }
 
-void set_average_light_on_curside(void)
+int set_average_light_on_curside(void)
 {
 	set_average_light_on_side(Cursegp, Curside);
+	return 1;
 }
 
 //	-----------------------------------------------------------------------------------------
@@ -354,26 +354,26 @@ static void set_average_light_on_all_fast(void)
 					if (segp->verts[relvnum] == v)
 						break;
 
-					if (relvnum != MAX_VERTICES_PER_SEGMENT) {
-						int		si;
+				if (relvnum != MAX_VERTICES_PER_SEGMENT) {
+					int		si;
 
-						*segptr++ = s;			// Note this segment in list, so we can process it below.
-						Assert(segptr - seglist < MAX_LIGHT_SEGS);
+					*segptr++ = s;			// Note this segment in list, so we can process it below.
+					Assert(segptr - seglist < MAX_LIGHT_SEGS);
 
-						for (si=0; si<MAX_SIDES_PER_SEGMENT; si++) {
-							if (!IS_CHILD(segp->children[si])) {
-								side	*sidep = &segp->sides[si];
-								byte	*vp = Side_to_verts[si];
-								int	vv;
+					for (si=0; si<MAX_SIDES_PER_SEGMENT; si++) {
+						if (!IS_CHILD(segp->children[si])) {
+							side	*sidep = &segp->sides[si];
+							byte	*vp = Side_to_verts[si];
+							int	vv;
 
-								for (vv=0; vv<4; vv++)
-									if (*vp++ == relvnum) {
-										al += sidep->uvls[vv].l;
-										alc++;
-									}
-							}	// if (segp->children[si == -1) {
-						}	// for (si=0...
-					}	// if (relvnum != ...
+							for (vv=0; vv<4; vv++)
+								if (*vp++ == relvnum) {
+									al += sidep->uvls[vv].l;
+									alc++;
+								}
+						}	// if (segp->children[si == -1) {
+					}	// for (si=0...
+				}	// if (relvnum != ...
 			}	// for (s=0; ...
 
 			*segptr = -1;
@@ -417,7 +417,7 @@ static void set_average_light_on_all_fast(void)
 }
 
 extern int Doing_lighting_hack_flag;	//	If set, don't mprintf warning messages in gameseg.c/find_point_seg
-void set_average_light_on_all(void)
+int set_average_light_on_all(void)
 {
 //	set_average_light_on_all_fast();
 
@@ -425,6 +425,7 @@ void set_average_light_on_all(void)
 	cast_all_light_in_mine(0);
 	Doing_lighting_hack_flag = 0;
 	Update_flags |= UF_WORLD_CHANGED;
+	return 1;
 
 //	int seg, side;
 
@@ -434,11 +435,11 @@ void set_average_light_on_all(void)
 //				set_average_light_on_side(&Segments[seg], side);
 }
 
-void set_average_light_on_all_quick(void)
+int set_average_light_on_all_quick(void)
 {
 	cast_all_light_in_mine(1);
 	Update_flags |= UF_WORLD_CHANGED;
-
+	return 1;
 }
 
 //	---------------------------------------------------------------------------------------------
@@ -643,7 +644,7 @@ static void assign_uvs_to_side(segment *segp, int sidenum, uvl *uva, uvl *uvb, i
 	Assert( (va<4) && (vb<4) );
 	Assert((abs(va - vb) == 1) || (abs(va - vb) == 3));		// make sure the verticies specify an edge
 
-	vp = &Side_to_verts[sidenum];
+	vp = Side_to_verts[sidenum];
 
 	// We want vlo precedes vhi, ie vlo < vhi, or vlo = 3, vhi = 0
 	if (va == ((vb + 1) % 4)) {		// va = vb + 1
@@ -1042,7 +1043,7 @@ byte	Edge_between_sides[MAX_SIDES_PER_SEGMENT][MAX_SIDES_PER_SEGMENT][2] = {
 //	There is no easy way to figure out which side is adjacent to another side along some edge, so we do a bit of searching.
 void med_propagate_tmaps_to_back_side(segment *base_seg, int back_side, int uv_only_flag)
 {
-	int	v1,v2;
+	int	v1 = 0, v2 = 0;
 	int	s,ss,tmap_num,back_side_tmap;
 
 	if (IS_CHILD(base_seg->children[back_side]))
@@ -1087,9 +1088,10 @@ found1: ;
 
 }
 
-void fix_bogus_uvs_on_side(void)
+int fix_bogus_uvs_on_side(void)
 {
 	med_propagate_tmaps_to_back_side(Cursegp, Curside, 1);
+	return 1;
 }
 
 static void fix_bogus_uvs_on_side1(segment *sp, int sidenum, int uvonly_flag)
@@ -1112,13 +1114,15 @@ static void fix_bogus_uvs_seg(segment *segp)
 	}
 }
 
-void fix_bogus_uvs_all(void)
+int fix_bogus_uvs_all(void)
 {
 	int	seg;
 
 	for (seg=0; seg<=Highest_segment_index; seg++)
 		if (Segments[seg].segnum != -1)
 			fix_bogus_uvs_seg(&Segments[seg]);
+
+	return 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -1126,7 +1130,7 @@ void fix_bogus_uvs_all(void)
 //	There is no easy way to figure out which side is adjacent to another side along some edge, so we do a bit of searching.
 void med_propagate_tmaps_to_any_side(segment *base_seg, int back_side, int tmap_num, int uv_only_flag)
 {
-	int	v1,v2;
+	int	v1 = 0, v2 = 0;
 	int	s;
 
 	//	Scan all sides, look for an occupied side which is not back_side or Side_opposite[back_side]
@@ -1154,12 +1158,11 @@ found1: ;
 //	segment to get the wall in the connected segment which shares the edge, and get tmap_num from there.
 static void propagate_tmaps_to_segment_sides(segment *base_seg, int base_side, segment *con_seg, int con_side, int uv_only_flag)
 {
-	char		*base_vp,*con_vp;
+	char		*base_vp;
 	short		abs_id1,abs_id2;
 	int		v;
 
 	base_vp = Side_to_verts[base_side];
-	con_vp = Side_to_verts[con_side];
 
 	// Do for each edge on connecting face.
 	for (v=0; v<4; v++) {
@@ -1545,7 +1548,7 @@ static void calim_process_all_lights(int quick_light)
 //	Apply static light in mine.
 //	First, zero all light values.
 //	Then, for all light sources, cast their light.
-void cast_all_light_in_mine(int quick_flag)
+static void cast_all_light_in_mine(int quick_flag)
 {
 
 	validate_segment_all();

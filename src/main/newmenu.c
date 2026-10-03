@@ -476,9 +476,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: newmenu.c 2.8 1995/05/26 16:16:28 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -565,6 +562,7 @@ static void nm_draw_background1(char * filename)
 	bmp = gr_create_sub_bitmap( &grd_curcanv->cv_bitmap, x, y, 320, 200 );
 	pcx_error = pcx_read_bitmap(filename,bmp,bmp->bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
+	(void)pcx_error;
 
 	gr_free_sub_bitmap(bmp);
 }
@@ -582,6 +580,7 @@ void nm_draw_background(int x1, int y1, int x2, int y2 )
 		nm_background.bm_data=NULL;
 		pcx_error = pcx_read_bitmap("SCORES.PCX",&nm_background,BM_LINEAR,newpal);
 		Assert(pcx_error == PCX_ERROR_NONE);
+		(void)pcx_error;
 
 		gr_remap_bitmap_good( &nm_background, newpal, -1, -1 );
 	}
@@ -713,7 +712,7 @@ static void nm_string_black( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	gr_get_string_size(s, &w, &h, &aw  );
-	b = b;
+	(void)b;
 	if (w1 == 0) w1 = w;
 
 	gr_setcolor( BM_XRGB(0,0,0) );
@@ -912,7 +911,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 {
 	int old_keyd_repeat, done;
 	int  choice,old_choice,i,j,x,y,w,h,aw, tw, th, twidth,fm,right_offset;
-	int k, nmenus, nothers;
+	int k;
 	grs_canvas * save_canvas;
 	grs_font * save_font;
 	int string_width, string_height, average_width;
@@ -963,7 +962,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 	w = aw = 0;
 	h = th;
-	nmenus = nothers = 0;
 
 	// Find menu height & width (store in w,h)
 	for (i=0; i<nitems; i++ )	{
@@ -976,7 +974,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 		if ( item[i].type == NM_TYPE_SLIDER )	{
 			int w1,h1,aw1;
-			nothers++;
 			sprintf( item[i].saved_text, "%s", SLIDER_LEFT );
 			for (j=0; j<(item[i].max_value-item[i].min_value+1); j++ )	{
 				sprintf( item[i].saved_text, "%s%s", item[i].saved_text,SLIDER_MIDDLE );
@@ -986,13 +983,8 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			string_width += w1 + aw;
 		}
 
-		if ( item[i].type == NM_TYPE_MENU )	{
-			nmenus++;
-		}
-
 		if ( item[i].type == NM_TYPE_CHECK )	{
 			int w1,h1,aw1;
-			nothers++;
 			gr_get_string_size(NORMAL_CHECK_BOX, &w1, &h1, &aw1  );
 			item[i].right_offset = w1;
 			gr_get_string_size(CHECKED_CHECK_BOX, &w1, &h1, &aw1  );
@@ -1002,7 +994,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 		if (item[i].type == NM_TYPE_RADIO ) {
 			int w1,h1,aw1;
-			nothers++;
 			gr_get_string_size(NORMAL_RADIO_BOX, &w1, &h1, &aw1  );
 			item[i].right_offset = w1;
 			gr_get_string_size(CHECKED_RADIO_BOX, &w1, &h1, &aw1  );
@@ -1013,7 +1004,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		if  (item[i].type==NM_TYPE_NUMBER )	{
 			int w1,h1,aw1;
 			char test_text[20];
-			nothers++;
 			sprintf( test_text, "%d", item[i].max_value );
 			gr_get_string_size( test_text, &w1, &h1, &aw1 );
 			item[i].right_offset = w1;
@@ -1026,7 +1016,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		if ( item[i].type == NM_TYPE_INPUT )	{
 			Assert( strlen(item[i].text) < NM_MAX_TEXT_LEN );
 			strcpy(item[i].saved_text, item[i].text );
-			nothers++;
 			string_width = item[i].text_len*grd_curcanv->cv_font->ft_w+item[i].text_len;
 			if ( string_width > MAX_TEXT_WIDTH )
 				string_width = MAX_TEXT_WIDTH;
@@ -1036,7 +1025,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		if ( item[i].type == NM_TYPE_INPUT_MENU )	{
 			Assert( strlen(item[i].text) < NM_MAX_TEXT_LEN );
 			strcpy(item[i].saved_text, item[i].text );
-			nmenus++;
 			string_width = item[i].text_len*grd_curcanv->cv_font->ft_w+item[i].text_len;
 			item[i].value = -1;
 			item[i].group = 0;

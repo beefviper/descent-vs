@@ -262,6 +262,8 @@ extern int Dead_modelnums[];
 
 // Initializes the palette, bitmap system...
 int bm_init();
+int bm_init_use_tbl(void);
+void bm_write_all(FILE *fp);
 void bm_close();
 
 // Initializes the Texture[] array of bmd_bitmap structures.

@@ -294,9 +294,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: render.c 2.5 1995/12/19 15:31:36 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <string.h>
@@ -419,7 +416,7 @@ int toggle_show_only_curside(void)
 	return Show_only_curside = !Show_only_curside;
 }
 
-draw_outline(int nverts,g3s_point **pointlist)
+int draw_outline(int nverts,g3s_point **pointlist)
 {
 	int i;
 
@@ -430,6 +427,7 @@ draw_outline(int nverts,g3s_point **pointlist)
 
 	g3_draw_line(pointlist[i],pointlist[0]);
 
+	return 0;
 }
 #endif
 
@@ -653,7 +651,7 @@ static void check_face(int segnum, int sidenum, int facenum, int nv, short *vp, 
  save_lighting = Lighting_on;
  Lighting_on = 2;
 		//g3_draw_poly(nv,vp);
-		g3_draw_tmap(nv,pointlist, uvl_copy, bm);
+		g3_draw_tmap(nv,pointlist, (g3s_uvl *) uvl_copy, bm);
  Lighting_on = save_lighting;
 
 		if (gr_ugpixel(&grd_curcanv->cv_bitmap,_search_x,_search_y) == 1) {
@@ -782,7 +780,7 @@ im_so_ashamed: ;
 }
 
 #ifdef EDITOR
-static int render_object_search(object *obj)
+static void render_object_search(object *obj)
 {
 	int changed=0;
 
@@ -1050,17 +1048,14 @@ static void render_segment(int segnum)
 #ifndef NDEBUG
 
 //draw outline for curside
-static int outline_seg_side(segment *seg,int _side,int edge,int vert)
+static void outline_seg_side(segment *seg,int _side,int edge,int vert)
 {
 	g3s_codes cc;
 
 	cc=rotate_list(8,seg->verts);
 
 	if (! cc.and) {		//all off screen?
-		side *s;
 		g3s_point *pnt;
-
-		s=&seg->sides[_side];
 
 		//render curedge of curside of curseg in green
 
@@ -1129,7 +1124,7 @@ static ubyte code_window_point(fix x,fix y,window *w)
 }
 
 #ifndef NDEBUG
-static int draw_window_box(int color,short left,short top,short right,short bot)
+static void draw_window_box(int color,short left,short top,short right,short bot)
 {
 	short l,t,r,b;
 
@@ -1137,7 +1132,7 @@ static int draw_window_box(int color,short left,short top,short right,short bot)
 
 	l=left; t=top; r=right; b=bot;
 
-	if ( r<0 || b<0 || l>=grd_curcanv->cv_bitmap.bm_w || t>=grd_curcanv->cv_bitmap.bm_h && b>=grd_curcanv->cv_bitmap.bm_h)
+	if ( r<0 || b<0 || l>=grd_curcanv->cv_bitmap.bm_w || (t>=grd_curcanv->cv_bitmap.bm_h && b>=grd_curcanv->cv_bitmap.bm_h))
 		return;
 
 	if (l<0) l=0;
@@ -1362,7 +1357,6 @@ static int compare_children(segment *seg,short c0,short c1)
 	vms_vector norm0_0,norm0_1,*pnt0,temp;
 	vms_vector norm1_0,norm1_1,*pnt1;
 	fix d0_0,d0_1,d1_0,d1_1,d0,d1;
-int t;
 
 	if (Side_opposite[c0] == c1) return 0;
 
@@ -1370,7 +1364,7 @@ int t;
 
 	//find normals of adjoining sides
 
-	t = find_joining_side_norms(&norm0_0,&norm0_1,&norm1_0,&norm1_1,&pnt0,&pnt1,seg,c0,c1);
+	find_joining_side_norms(&norm0_0,&norm0_1,&norm1_0,&norm1_1,&pnt0,&pnt1,seg,c0,c1);
 
 //if (!t)
 // return 0;
@@ -2039,7 +2033,7 @@ void render_mine(int start_seg_num,fix eye_offset)
 
 	#if defined(EDITOR) && !defined(NDEUBG)
 	if (Show_only_curside) {
-		rotate_list(8,&Cursegp->verts);
+		rotate_list(8,Cursegp->verts);
 		render_side(Cursegp,Curside);
 		goto done_rendering;
 	}
@@ -2075,11 +2069,12 @@ void render_mine(int start_seg_num,fix eye_offset)
 
 			segnum = Render_list[i];
 
-			if (segnum != -1)
+			if (segnum != -1) {
 				if (visited2[segnum])
 					Int3();		//get Matt
 				else
 					visited2[segnum] = 1;
+			}
 		}
 	}
 	#endif

@@ -99,9 +99,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: kfuncs.c 2.1 1995/03/08 16:07:23 yuan Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 
@@ -116,6 +113,7 @@ static char rcsid[] = "$Id: kfuncs.c 2.1 1995/03/08 16:07:23 yuan Exp $";
 #include "gamesave.h"
 #include "eobject.h"
 #include "medwall.h"
+#include "texpage.h"
 
 // Test function prototypes (replace Test1, 2 and 3 with whatever function
 //										you wish to test.)
@@ -144,7 +142,6 @@ static int Test1()
 }
 
 extern void check_for_overlapping_segments(void);
-extern void init_replacements();
 static int Test2()
 {
 //	mprintf((0, "\nCalling check_for_overlapping_segments.\n"));
@@ -158,9 +155,6 @@ static int Test2()
 
 //extern fix fcd_test(void);
 //extern void test_shortpos(void);
-
-extern void do_replacements(void);
-extern void do_replacements_all(void);
 
 static int Test3()
 {

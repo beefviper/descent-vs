@@ -46,9 +46,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: window.c 1.8 1994/11/18 23:21:46 john Exp $";
-#pragma on (unreferenced)
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>

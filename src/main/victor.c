@@ -82,9 +82,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: victor.c 2.5 1995/03/30 16:35:59 mike Exp $";
-#pragma on (unreferenced)
 
 #define DOS4G
 
@@ -281,7 +278,6 @@ void victor_read_headset_filtered( fix *yaw, fix *pitch, fix *roll )
 	int i;
 	fix _yaw, _pitch, _roll;
 	fix t_yaw, t_pitch, t_roll;
-	fix last_yaw;
 
 	t_yaw=t_pitch=t_roll=0;
 
@@ -297,8 +293,6 @@ void victor_read_headset_filtered( fix *yaw, fix *pitch, fix *roll )
 	 	t_yaw += _yaw;
 		t_pitch += _pitch;
 		t_roll += _roll;
-
-		last_yaw = _yaw;
 	}
 
 	*yaw = t_yaw / 2;

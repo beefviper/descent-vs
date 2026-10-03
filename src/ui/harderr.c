@@ -31,6 +31,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: harderr.c 1.3 1993/10/26 13:45:57 john Exp $";
-#pragma on (unreferenced)

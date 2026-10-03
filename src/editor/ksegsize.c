@@ -77,9 +77,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: ksegsize.c 2.1 1995/03/08 16:07:21 yuan Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 

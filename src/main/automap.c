@@ -170,9 +170,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -514,7 +511,7 @@ void do_automap( int key_code )	{
 	int Max_segments_away = 0;
 	int SegmentLimit = 1;
 
-	key_code = key_code;	// disable warning...
+	(void)key_code;	// disable warning...
 
 	if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 		pause_game = 0;

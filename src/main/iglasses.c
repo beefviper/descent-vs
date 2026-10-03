@@ -55,9 +55,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: iglasses.c 2.8 1995/03/30 16:36:31 mike Exp $";
-#pragma on (unreferenced)
 
 #define DOS4G
 
@@ -81,7 +78,7 @@ int iglasses_headset_installed=0;
 
 void iglasses_close_tracking(void);
 
-/*
+#if 0
 //*******************************************
 typedef struct  {
 	int status;
@@ -89,7 +86,7 @@ typedef struct  {
 
 } PORT; //I added this it will compile, but I doubt it works. -KRB
 //*******************************************
-*/
+#endif
 
 PORT * Iport = NULL;
 
@@ -232,7 +229,9 @@ void iglasses_close_tracking(void)	{
 //UNUSED 	return 1;
 //UNUSED }
 
+#ifndef M_PI
 #define M_PI 3.14159265358979323846264338327950288
+#endif
 #define FBITS 16384.
 #define TO_RADIANS (M_PI/FBITS)
 #define TO_DEGREES (180./M_PI)
@@ -349,7 +348,7 @@ static void initHistory(filter * f)
 	}
 	f->hCurrent = f->history;
 	f->hEnd     = &f->history[f->len-1];
-	f->hRestart = &f->history[-1];
+	f->hRestart = f->history - 1;
 }
 
 void initFIR(filter * f)

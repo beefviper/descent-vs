@@ -56,9 +56,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: vfx.c 2.4 1995/05/11 13:28:59 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <stdlib.h>

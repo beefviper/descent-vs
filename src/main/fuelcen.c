@@ -235,9 +235,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: fuelcen.c 2.3 1995/03/21 14:38:40 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -852,8 +849,6 @@ static void controlcen_proc( FuelCenter * controlcen )
 		}
 	}
 }
-
-#define M_PI 3.14159
 
 //-------------------------------------------------------------
 // Called once per frame, replenishes fuel supply.

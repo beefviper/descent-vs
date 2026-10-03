@@ -64,9 +64,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: tmapflat.c 1.13 1995/02/20 18:23:24 john Exp $";
-#pragma on (unreferenced)
 
 
 #include <math.h>
@@ -88,7 +85,7 @@ static char rcsid[] = "$Id: tmapflat.c 1.13 1995/02/20 18:23:24 john Exp $";
 
 //#include "tmapext.h"
 
-void (*scanline_func)();
+void (*scanline_func)(int y, fix xleft, fix xright);
 
 extern void asm_tmap_scanline_shaded();	// In tmapfade.c
 

@@ -137,9 +137,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 //#define PASS_KEYS_TO_BIOS	1			//if set, bios gets keys
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: key.c 1.35 1995/01/25 20:13:30 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -356,13 +353,11 @@ int key_peekkey()
 //	Else returns pending key (or waits for one if none waiting).
 int key_getch()
 {
-	int dummy=0;
-
 	if (!Installed)
 		return getch();
 
 	while (!key_checkch())
-		dummy++;
+		;
 	return key_inkey();
 }
 

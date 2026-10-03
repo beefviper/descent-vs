@@ -176,9 +176,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "3d.h"
 #include "game.h"
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: mglobal.c 2.2 1995/03/14 18:24:37 john Exp $";
-#pragma on (unreferenced)
 
 // Global array of vertices, common to one mine.
 vms_vector Vertices[MAX_VERTICES];

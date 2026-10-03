@@ -210,9 +210,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: fvi.c 2.3 1995/03/24 14:49:04 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -273,9 +270,9 @@ static int find_plane_line_intersection(vms_vector *new_pnt,vms_vector *plane_pn
 	//check for various bad values
 
 	if ( (den==0) ||					//moving parallel to wall, so can't hit it
-		  (den>0) &&
+		  ((den>0) &&
 			( (num>den) ||				//frac greater than one
-		     (-num>>15)>=den) ||	//will overflow (large negative)
+		     (-num>>15)>=den)) ||	//will overflow (large negative)
 		  (den<0 && num<den))		//frac greater than one
 		return 0;
 
@@ -882,7 +879,7 @@ int find_vector_intersection(fvi_query *fq,fvi_info *hit_data)
 	vms_vector hit_pnt;
 	int i;
 
-	Assert(fq->ignore_obj_list != -1);
+	Assert(fq->ignore_obj_list != (int *)-1);
 	Assert((fq->startseg <= Highest_segment_index) && (fq->startseg >= 0));
 
 	fvi_hit_seg = -1;
@@ -926,14 +923,13 @@ int find_vector_intersection(fvi_query *fq,fvi_info *hit_data)
 			hit_seg = fvi_hit_seg2;
 
 	if (hit_seg == -1) {
-		int new_hit_type;
 		int new_hit_seg2=-1;
 		vms_vector new_hit_pnt;
 
 		//because of code that deal with object with non-zero radius has
 		//problems, try using zero radius and see if we hit a wall
 
-		new_hit_type = fvi_sub(&new_hit_pnt,&new_hit_seg2,fq->p0,fq->startseg,fq->p1,0,fq->thisobjnum,fq->ignore_obj_list,fq->flags,hit_data->seglist,&hit_data->n_segs,-2);
+		fvi_sub(&new_hit_pnt,&new_hit_seg2,fq->p0,fq->startseg,fq->p1,0,fq->thisobjnum,fq->ignore_obj_list,fq->flags,hit_data->seglist,&hit_data->n_segs,-2);
 
 		if (new_hit_seg2 != -1) {
 			hit_seg = new_hit_seg2;

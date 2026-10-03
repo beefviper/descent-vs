@@ -29,9 +29,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: func.c 1.1 1994/11/21 14:13:17 matt Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <string.h>

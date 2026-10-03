@@ -86,9 +86,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -491,7 +488,9 @@ void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 	unsigned char * dbits;
 	unsigned char * sbits;
 	int i;
+#ifndef NDEBUG
 	unsigned char * dbits1;
+#endif
 
 	sbits = &bmp->bm_data[4 + 64];
 	dbits = rle_temp_bitmap_1->bm_data;
@@ -499,7 +498,11 @@ void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 	rle_temp_bitmap_1->bm_flags = bmp->bm_flags & (~BM_FLAG_RLE);
 
 	for (i=0; i < 64; i++ )    {
+#ifndef NDEBUG
 		dbits1=gr_rle_decode_asm( sbits, dbits );
+#else
+		gr_rle_decode_asm( sbits, dbits );
+#endif
 		sbits += (int)bmp->bm_data[4+i];
 		dbits += 64;
 		Assert( dbits == dbits1 );		// Get John, bogus rle data!

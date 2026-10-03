@@ -340,7 +340,7 @@ int gr_init(int mode)
 	memset( grd_curscreen, 0, sizeof(grs_screen));
 
 	// Set the mode.
-	if (retcode=gr_set_mode(mode))
+	if ((retcode=gr_set_mode(mode)))
 	{
 		gr_restore_mode();
 		return retcode;

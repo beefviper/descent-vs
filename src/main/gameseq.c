@@ -242,9 +242,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: gameseq.c 2.10 1995/12/19 15:48:25 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <malloc.h>
@@ -1170,11 +1167,12 @@ void PlayerFinishedLevel(int secret_flag)
 
 // -- mk mk mk -- used to be here -- mk mk mk --
 
-	if (Game_mode & GM_NETWORK)
+	if (Game_mode & GM_NETWORK) {
 		if (secret_flag)
 			Players[Player_num].connected = 4; // Finished and went to secret level
 		else
 			Players[Player_num].connected = 2; // Finished but did not die
+	}
 
 	last_drawn_cockpit = -1;
 
@@ -1301,6 +1299,7 @@ died_in_mine_message(void)
 
 	pcx_error = pcx_read_bitmap("STARS.PCX",&grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
+	(void)pcx_error;
 
 	old_fmode = Function_mode;
 	Function_mode = FMODE_MENU;

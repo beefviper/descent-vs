@@ -313,9 +313,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: object.c 2.3 1995/06/15 12:30:51 john Exp $";
-#pragma on (unreferenced)
 
 #include <string.h>	// for memset
 #include <stdio.h>
@@ -516,10 +513,6 @@ extern fix Max_thrust;
 
 //used for robot engine glow
 #define MAX_VELOCITY i2f(50)
-
-//function that takes the same parms as draw_tmap, but renders as flat poly
-//we need this to do the cloaked effect
-extern void draw_tmap_flat();
 
 //what darkening level to use when cloaked
 #define CLOAKED_FADE_LEVEL		28
@@ -1702,12 +1695,12 @@ void dead_player_frame(void)
 		if (time_dead > DEATH_SEQUENCE_EXPLODE_TIME) {
 			if (!Player_exploded) {
 
-			if (Players[Player_num].hostages_on_board > 1)
-				HUD_init_message(TXT_SHIP_DESTROYED_2, Players[Player_num].hostages_on_board);
-			else if (Players[Player_num].hostages_on_board == 1)
-				HUD_init_message(TXT_SHIP_DESTROYED_1);
-			else
-				HUD_init_message(TXT_SHIP_DESTROYED_0);
+				if (Players[Player_num].hostages_on_board > 1)
+					HUD_init_message(TXT_SHIP_DESTROYED_2, Players[Player_num].hostages_on_board);
+				else if (Players[Player_num].hostages_on_board == 1)
+					HUD_init_message(TXT_SHIP_DESTROYED_1);
+				else
+					HUD_init_message(TXT_SHIP_DESTROYED_0);
 
 				Player_exploded = 1;
 				if (!Arcade_mode) {

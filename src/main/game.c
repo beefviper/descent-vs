@@ -282,9 +282,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <malloc.h>
@@ -1184,7 +1181,7 @@ static void ftoa(char *string, fix f)
 	sprintf( string, "%d.%02d", decimal, fractional );
 }
 
-static int show_framerate()
+static void show_framerate()
 {
 	char temp[50];
 	fix rate;
@@ -1203,7 +1200,7 @@ static int show_framerate()
 }
 #endif
 
-static timer_paused=0;
+static int timer_paused=0;
 
 void stop_time()
 {
@@ -1383,7 +1380,7 @@ fix Show_view_text_timer = -1;
 
 #ifndef NDEBUG
 
-static int draw_window_label()
+static void draw_window_label()
 {
 	if ( Show_view_text_timer > 0 )
 	{
@@ -1559,7 +1556,7 @@ static void game_draw_hud_stuff()
 
 		gr_set_curfont( GAME_FONT );
 		gr_set_fontcolor( gr_getcolor(0, 31, 0), -1 );
-		if (Cruise_speed > 0)
+		if (Cruise_speed > 0) {
 			if (Cockpit_mode==CM_FULL_SCREEN) {
 				if (Game_mode & GM_MULTI)
 					y -= 64;
@@ -1574,8 +1571,9 @@ static void game_draw_hud_stuff()
 				y = 12;
 				x = 20;
 			}
+		}
 
-			gr_printf( x, y, "%s %2d%%", TXT_CRUISE, f2i(Cruise_speed) );
+		gr_printf( x, y, "%s %2d%%", TXT_CRUISE, f2i(Cruise_speed) );
 
 	}
 
@@ -1589,14 +1587,14 @@ static void game_draw_hud_stuff()
 #endif
 
 #ifndef SHAREWARE
-	if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+	if ( Newdemo_state == ND_STATE_PLAYBACK )
 		Game_mode = Newdemo_game_mode;
 #endif
 
 	draw_hud();
 
 #ifndef SHAREWARE
-	if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+	if ( Newdemo_state == ND_STATE_PLAYBACK )
 		Game_mode = GM_NORMAL;
 #endif
 
@@ -1926,14 +1924,14 @@ static void game_render_frame_mono(void)
 	if (Cockpit_mode==CM_FULL_COCKPIT || Cockpit_mode==CM_STATUS_BAR) {
 
 #ifndef SHAREWARE
-		if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+		if ( Newdemo_state == ND_STATE_PLAYBACK )
 			Game_mode = Newdemo_game_mode;
 #endif
 
 		render_gauges();
 
 #ifndef SHAREWARE
-		if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+		if ( Newdemo_state == ND_STATE_PLAYBACK )
 			Game_mode = GM_NORMAL;
 #endif
 	}
@@ -1975,7 +1973,7 @@ void save_screen_shot(int automap_flag)
 	char message[100];
 	grs_canvas *screen_canv=&grd_curscreen->sc_canvas;
 	grs_font *save_font;
-	static savenum=0;
+	static int savenum=0;
 	grs_canvas *temp_canv,*save_canv;
 	char savename[13];
 	ubyte pal[768];
@@ -2064,8 +2062,6 @@ static void advance_sound()
 		test_sound_num=0;
 
 }
-
-test_anim_states();
 
 #include "fvi.h"
 
@@ -2252,7 +2248,7 @@ void palette_restore(void)
 extern void dead_player_frame(void);
 
 #ifndef RELEASE
-do_cheat_menu()
+void do_cheat_menu()
 {
 	int mmn;
 	newmenu_item mm[16];
@@ -3967,6 +3963,7 @@ void GameLoop(int RenderFlag, int ReadControlsFlag )
 		for (h=0; h<Debug_slowdown; h++)
 			for (i=0; i<1000; i++)
 				j += i;
+		(void)j;
 	}
 #endif
 

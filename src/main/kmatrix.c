@@ -94,9 +94,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: kmatrix.c 2.3 1995/05/02 17:01:22 john Exp $";
-#pragma on (unreferenced)
 
 #ifdef NETWORK
 
@@ -239,6 +236,7 @@ static void kmatrix_redraw()
 
 	pcx_error = pcx_read_bitmap("STARS.PCX",&grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
+	(void)pcx_error;
 
 	grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_3];
 

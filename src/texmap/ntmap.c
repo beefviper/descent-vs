@@ -121,9 +121,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: ntmap.c 1.52 1995/03/14 15:13:06 john Exp $";
-#pragma on (unreferenced)
 
 #define VESA 0
 #define NUM_TMAPS 16
@@ -468,14 +465,9 @@ int Skip_short_flag=0;
 // -------------------------------------------------------------------------------------
 static void ntmap_scanline_lighted(grs_bitmap *srcb, int y, fix xleft, fix xright, fix uleft, fix uright, fix vleft, fix vright, fix zleft, fix zright, fix lleft, fix lright)
 {
-	fix	u,v,l;
 	fix	dx,recip_dx;
 
-	fix	du_dx,dv_dx,dz_dx,z;
-
-	u = uleft;
-	v = vleft;
-	l = lleft;
+	fix	du_dx,dv_dx,dz_dx;
 
 	fx_xright = f2i(xright);
 	fx_xleft = f2i(xleft);
@@ -493,8 +485,6 @@ static void ntmap_scanline_lighted(grs_bitmap *srcb, int y, fix xleft, fix xrigh
 	du_dx = fixmul(uright - uleft,recip_dx);
 	dv_dx = fixmul(vright - vleft,recip_dx);
 	dz_dx = fixmul(zright - zleft,recip_dx);
-
-	z = zleft;
 
 	fx_u = uleft;
 	fx_v = vleft;
@@ -769,75 +759,70 @@ if (Do_vertical_scan) {
 // -------------------------------------------------------------------------------------
 static void ntmap_scanline_lighted_linear(grs_bitmap *srcb, int y, fix xleft, fix xright, fix uleft, fix uright, fix vleft, fix vright, fix lleft, fix lright)
 {
-	fix	u,v,l;
 	fix	dx,recip_dx;
 
 	fix	du_dx,dv_dx,dl_dx;
-
-	u = uleft;
-	v = vleft;
-	l = lleft;
 
 	dx = f2i(xright) - f2i(xleft);
 	if ((dx < 0) || (xright < 0) || (xleft > xright))		// the (xleft > xright) term is not redundant with (dx < 0) because dx is computed using integers
 		return;
 
-		// setup to call assembler scanline renderer
-		if (dx < FIX_RECIP_TABLE_SIZE)
-			recip_dx = fix_recip[dx];
-		else
-			recip_dx = F1_0/dx;
+	// setup to call assembler scanline renderer
+	if (dx < FIX_RECIP_TABLE_SIZE)
+		recip_dx = fix_recip[dx];
+	else
+		recip_dx = F1_0/dx;
 
-		du_dx = fixmul(uright - uleft,recip_dx);
-		dv_dx = fixmul(vright - vleft,recip_dx);
+	du_dx = fixmul(uright - uleft,recip_dx);
+	dv_dx = fixmul(vright - vleft,recip_dx);
 
-		fx_u = uleft;
-		fx_v = vleft;
-		fx_du_dx = du_dx;
-		fx_dv_dx = dv_dx;
-		fx_y = y;
-		fx_xright = f2i(xright);
-		fx_xleft = f2i(xleft);
-		pixptr = srcb->bm_data;
+	fx_u = uleft;
+	fx_v = vleft;
+	fx_du_dx = du_dx;
+	fx_dv_dx = dv_dx;
+	fx_y = y;
+	fx_xright = f2i(xright);
+	fx_xleft = f2i(xleft);
+	pixptr = srcb->bm_data;
 
-		switch (Lighting_enabled) {
-			case 0:
-				#ifdef NASM
-					c_tmap_scanline_lin_nolight();
-				#else
-					asm_tmap_scanline_lin();
-				#endif
-				break;
-			case 1:
-				if (lleft < F1_0/2)
-					lleft = F1_0/2;
-				if (lright < F1_0/2)
-					lright = F1_0/2;
+	switch (Lighting_enabled) {
+		case 0:
+			#ifdef NASM
+				c_tmap_scanline_lin_nolight();
+			#else
+				asm_tmap_scanline_lin();
+			#endif
+			break;
+		case 1:
+			if (lleft < F1_0/2)
+				lleft = F1_0/2;
+			if (lright < F1_0/2)
+				lright = F1_0/2;
 
-				if (lleft > MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS)
-					lleft = MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS;
-				if (lright > MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS)
-					lright = MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS;
+			if (lleft > MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS)
+				lleft = MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS;
+			if (lright > MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS)
+				lright = MAX_LIGHTING_VALUE*NUM_LIGHTING_LEVELS;
 
-				fx_l = lleft;
-				dl_dx = fixmul(lright - lleft,recip_dx);
-				fx_dl_dx = dl_dx;
-				#ifdef NASM
-					c_tmap_scanline_lin();
-				#else
-					asm_tmap_scanline_lin_lighted();
-				#endif
-				break;
-			case 2:
+			fx_l = lleft;
+			dl_dx = fixmul(lright - lleft,recip_dx);
+			fx_dl_dx = dl_dx;
+			#ifdef NASM
+				c_tmap_scanline_lin();
+			#else
+				asm_tmap_scanline_lin_lighted();
+			#endif
+			break;
+		case 2:
 #ifdef EDITOR_TMAP
-				fx_xright = f2i(xright);
-				fx_xleft = f2i(xleft);
-				asm_tmap_scanline_matt();
+			fx_xright = f2i(xright);
+			fx_xleft = f2i(xleft);
+			asm_tmap_scanline_matt();
 #else
-				Int3();	//	Illegal, called an editor only routine!
+			Int3();	//	Illegal, called an editor only routine!
 #endif
-				break;
-		}
+			break;
+	}
 }
 
 // -------------------------------------------------------------------------------------

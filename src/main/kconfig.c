@@ -286,9 +286,6 @@ n *
  */
 
 
-#pragma off (unreferenced)
-static char rcsid[] = "$Id: kconfig.c 2.11 1995/08/23 16:08:04 john Exp $";
-#pragma on (unreferenced)
 
 #include <stdio.h>
 #include <stdlib.h>

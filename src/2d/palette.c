@@ -200,14 +200,13 @@ int gr_palette_get_gamma()
 void gr_use_palette_table( char * filename )
 {
 	CFILE *fp;
-	int i,fsize;
+	int i;
 
 	fp = cfopen( filename, "rb" );
 	if ( fp==NULL)
 		Error("Can't open palette file <%s>",filename);
 
-	fsize	= cfilelength( fp );
-	Assert( fsize == 9472 );
+	Assert( cfilelength( fp ) == 9472 );
 	cfread( gr_palette, 256*3, 1, fp );
 	cfread( gr_fade_table, 256*34, 1, fp );
 	cfclose(fp);
@@ -416,7 +415,7 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 	fix fade_palette[768];
 	fix fade_palette_delta[768];
 
-	allow_keys  = allow_keys;
+	(void)allow_keys;
 
 	if (gr_palette_faded_out) return 0;
 
@@ -449,7 +448,7 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 	fix fade_palette[768];
 	fix fade_palette_delta[768];
 
-	allow_keys  = allow_keys;
+	(void)allow_keys;
 
 	if (!gr_palette_faded_out) return 0;
 
