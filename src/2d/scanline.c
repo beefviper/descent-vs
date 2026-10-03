@@ -51,16 +51,14 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 int Gr_scanline_darkening_level = GR_FADE_LEVELS;
 
-void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table );
-#pragma aux gr_linear_darken parm [edi] [eax] [ecx] [edx] modify exact [eax ebx ecx edx edi] = \
-"					xor	ebx, ebx					"	\
-"					mov	bh, al					"  \
-"gld_loop:		mov	bl, [edi]				"	\
-"					mov	al, [ebx+edx]			"	\
-"					mov	[edi], al				"	\
-"					inc	edi						"	\
-"					dec	ecx						"	\
-"					jnz	gld_loop					"
+// Darkens count pixels at dest through row darkening_level of fade_table.
+void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table )
+{
+	ubyte *row = &fade_table[(darkening_level & 0xff) << 8];
+
+	for (; count > 0; count--, dest++ )
+		*dest = row[*dest];
+}
 
 void gr_uscanline( int x1, int x2, int y )
 {

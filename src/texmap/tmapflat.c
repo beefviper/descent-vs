@@ -90,7 +90,7 @@ static char rcsid[] = "$Id: tmapflat.c 1.13 1995/02/20 18:23:24 john Exp $";
 
 void (*scanline_func)();
 
-extern void asm_tmap_scanline_shaded();	// In tmapfade.asm
+extern void asm_tmap_scanline_shaded();	// In tmapfade.c
 
 // -------------------------------------------------------------------------------------
 //	Texture map current scanline.

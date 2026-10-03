@@ -114,50 +114,34 @@ static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
 // Function Prototypes
 void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
 
-int gr_rle_decode_asm( ubyte * src, ubyte * dest );
-#pragma aux gr_rle_decode_asm parm [esi] [edi] value [edi] modify exact [eax ebx ecx edx esi edi] = \
-"  cld					"\
-"	xor	ecx, ecx		"\
-"	cld					"\
-"	jmp	NextByte		"\
-"							"\
-"Unique:					"\
-"	mov	[edi],al		"\
-"	inc	edi			"\
-"							"\
-"NextByte:				"\
-"	mov	al,[esi]		"\
-"	inc	esi			"\
-"							"\
-"	mov	ah, al		"\
-"	and	ah, 0xE0    "\
-"  cmp	ah, 0xE0		"\
-"	jne   Unique		"\
-"							"\
-"	mov	cl, al		"\
-"	and	cl, 31  		"\
-"	je		done			"\
-"							"\
-"	mov	al,[esi]		"\
-"	inc	esi			"\
-"	mov	ah, al		"\
-"	shr	ecx,1			"\
-"	rep	stosw			"\
-"	jnc	NextByte		"\
-"	mov	[edi],al		"\
-"	inc	edi			"\
-"							"\
-"	jmp	NextByte		"\
-"							"\
-"done:					";
+// Decodes one scanline of rle data from src into dest.  Returns a pointer
+// to the byte after the last one written.
+ubyte * gr_rle_decode_asm( ubyte * src, ubyte * dest )
+{
+	ubyte c, count;
+
+	for (;;)	{
+		c = *src++;
+		if ( (c & RLE_CODE) != RLE_CODE )	{
+			*dest++ = c;					// unique
+			continue;
+		}
+		count = c & NOT_RLE_CODE;
+		if ( count == 0 )
+			break;							// RLE_CODE alone ends the line
+		c = *src++;
+		memset( dest, c, count );
+		dest += count;
+	}
+	return dest;
+}
 
 void gr_rle_decode( ubyte * src, ubyte * dest )
 {
 	gr_rle_decode_asm( src, dest );
 }
 
-void rle_stosb(char *dest, int len, int color);
-#pragma aux rle_stosb = "cld rep	stosb" parm [edi] [ecx] [eax] modify exact [edi ecx];
+#define rle_stosb(dest,len,color)	memset( (dest), (color), (len) )
 
 // Given pointer to start of one scanline of rle data, uncompress it to
 // dest, from source pixels x1 to x2.
@@ -514,7 +498,7 @@ void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 	rle_temp_bitmap_1->bm_flags = bmp->bm_flags & (~BM_FLAG_RLE);
 
 	for (i=0; i < 64; i++ )    {
-		dbits1=(unsigned char *)gr_rle_decode_asm( sbits, dbits );
+		dbits1=gr_rle_decode_asm( sbits, dbits );
 		sbits += (int)bmp->bm_data[4+i];
 		dbits += 64;
 		Assert( dbits == dbits1 );		// Get John, bogus rle data!

@@ -110,6 +110,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
+#include <string.h>
+
 #include "mem.h"
 #include "gr.h"
 #include "grdef.h"
@@ -127,100 +129,81 @@ void gr_bm_ubitblt0x_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitma
 
 extern void gr_vesa_bitmap( grs_bitmap * source, grs_bitmap * dest, int x, int y );
 
-// This code aligns edi so that the destination is aligned to a dword boundry before rep movsd
-void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels );
-#pragma aux gr_linear_movsd parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx] = \
-" cld "					\
-" mov		ebx, ecx	"	\
-" mov		eax, edi"	\
-" and		eax, 011b"	\
-" jz		d_aligned"	\
-" mov		ecx, 4"		\
-" sub		ecx, eax"	\
-" sub		ebx, ecx"	\
-" rep		movsb"		\
-" d_aligned: "			\
-" mov		ecx, ebx"	\
-" shr		ecx, 2"		\
-" rep 	movsd"		\
-" mov		ecx, ebx"	\
-" and 	ecx, 11b"	\
-" rep 	movsb";
+// Copies num_pixels bytes.  (The assembly aligned the destination to a dword
+// boundary before its rep movsd.)
+void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels )
+{
+	if ( num_pixels > 0 )
+		memcpy( dest, src, num_pixels );
+}
 
-void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels );
-#pragma aux gr_linear_rep_movsdm parm [esi] [edi] [ecx] modify exact [ecx esi edi eax] = \
-"nextpixel:"					\
-	"mov	al,[esi]"			\
-	"inc	esi"					\
-	"cmp	al, 255"				\
-	"je	skip_it"				\
-	"mov	[edi], al"			\
-"skip_it:"						\
-	"inc	edi"					\
-	"dec	ecx"					\
-	"jne	nextpixel";
+// Copies num_pixels bytes, skipping transparent (255) pixels.
+void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels )
+{
+	ubyte c;
 
-void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value );
-#pragma aux gr_linear_rep_movsdm_faded parm [esi] [edi] [ecx] [ebx] modify exact [ecx esi edi eax ebx] = \
-"  xor eax, eax"	\
-"  mov ah, bl"  \
-"nextpixel:"					\
-	"mov	al,[esi]"			\
-	"inc	esi"					\
-	"cmp	al, 255"				\
-	"je	skip_it"				\
-	"mov  al, gr_fade_table[eax]"	\
-	"mov	[edi], al"			\
-"skip_it:"						\
-	"inc	edi"					\
-	"dec	ecx"					\
-	"jne	nextpixel";
+	for (; num_pixels > 0; num_pixels-- )	{
+		c = *src++;
+		if ( c != 255 )
+			*dest = c;
+		dest++;
+	}
+}
+
+// Copies num_pixels bytes through row fade_value of the fade table,
+// skipping transparent (255) pixels.
+void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value )
+{
+	ubyte *fade = &gr_fade_table[fade_value << 8];
+	ubyte c;
+
+	for (; num_pixels > 0; num_pixels-- )	{
+		c = *src++;
+		if ( c != 255 )
+			*dest = fade[c];
+		dest++;
+	}
+}
 
 
-void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels );
-#pragma aux gr_linear_rep_movsd_2x parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx] = \
-	"shr	ecx, 1"				\
-	"jnc	nextpixel"			\
-	"mov	al, [esi]"			\
-	"mov	[edi], al"			\
-	"inc	esi"					\
-	"inc	edi"					\
-	"cmp	ecx, 0"				\
-	"je	done"					\
-"nextpixel:"					\
-	"mov	al,[esi]"			\
-	"mov	ah, al"				\
-	"mov	[edi], ax"			\
-	"inc	esi"					\
-	"inc	edi"					\
-	"inc	edi"					\
-	"dec	ecx"					\
-	"jne	nextpixel"			\
-"done:"
+// Copies source pixels to num_dest_pixels destination pixels, doubling each.
+// If num_dest_pixels is odd, the first source pixel is copied once.
+void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels )
+{
+	int n;
+
+	if ( num_dest_pixels <= 0 )
+		return;
+
+	n = num_dest_pixels >> 1;
+	if ( num_dest_pixels & 1 )
+		*dest++ = *src++;
+
+	for (; n > 0; n-- )	{
+		dest[0] = dest[1] = *src++;
+		dest += 2;
+	}
+}
 
 
-void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
-#pragma aux modex_copy_column parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
-"nextpixel:"							\
-	"mov	al,[esi]"			\
-	"add	esi, ebx"	\
-	"mov	[edi], al"	\
-	"add	edi, edx"	\
-	"dec	ecx"			\
-	"jne	nextpixel"
+void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+{
+	for (; num_pixels > 0; num_pixels-- )	{
+		*dest = *src;
+		src += src_rowsize;
+		dest += dest_rowsize;
+	}
+}
 
-void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
-#pragma aux modex_copy_column_m parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
-"nextpixel:"							\
-	"mov	al,[esi]"			\
-	"add	esi, ebx"	\
-	"cmp	al, 255"		\
-	"je	skip_itx"		\
-	"mov	[edi], al"	\
-"skip_itx:"				\
-	"add	edi, edx"	\
-	"dec	ecx"			\
-	"jne	nextpixel"
+void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+{
+	for (; num_pixels > 0; num_pixels-- )	{
+		if ( *src != 255 )
+			*dest = *src;
+		src += src_rowsize;
+		dest += dest_rowsize;
+	}
+}
 
 
 void gr_ubitmap00( int x, int y, grs_bitmap *bm )
@@ -292,65 +275,23 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 //"aligned4:							"	\
 */
 
-void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels );
-#pragma aux modex_copy_scanline parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \
-"		mov	ebx, ecx				"	\
-"		and	ebx, 11b				"	\
-"		shr	ecx, 2				"	\
-"		cmp	ecx, 0				"	\
-"		je		no2group				"	\
-"next4pixels:						"	\
-"		mov	al, [esi+8]			"	\
-"		mov	ah, [esi+12]		"	\
-"		shl	eax, 16				"	\
-"		mov	al, [esi]			"	\
-"		mov	ah, [esi+4]			"	\
-"		mov	[edi], eax			"	\
-"		add	esi, 16				"	\
-"		add	edi, 4				"	\
-"		dec	ecx					"	\
-"		jne	next4pixels			"	\
-"no2group:							"	\
-"		cmp	ebx, 0				"	\
-"		je		done2					"	\
-"finishend:							"	\
-"		mov	al, [esi]			"	\
-"		add	esi, 4				"	\
-"		mov	[edi], al			"	\
-"		inc	edi					"	\
-"		dec	ebx					"	\
-"		jne	finishend			"	\
-"done2:								";
+// Copies every 4th source pixel (one Mode X plane) to npixels dest pixels.
+void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels )
+{
+	for (; npixels > 0; npixels-- )	{
+		*dest++ = *src;
+		src += 4;
+	}
+}
 
-void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels );
-#pragma aux modex_copy_scanline_2x parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \
-"		mov	ebx, ecx				"	\
-"		and	ebx, 11b				"	\
-"		shr	ecx, 2				"	\
-"		cmp	ecx, 0				"	\
-"		je		no2group				"	\
-"next4pixels:						"	\
-"		mov	al, [esi+4]			"	\
-"		mov	ah, [esi+6]			"	\
-"		shl	eax, 16				"	\
-"		mov	al, [esi]			"	\
-"		mov	ah, [esi+2]			"	\
-"		mov	[edi], eax			"	\
-"		add	esi, 8				"	\
-"		add	edi, 4				"	\
-"		dec	ecx					"	\
-"		jne	next4pixels			"	\
-"no2group:							"	\
-"		cmp	ebx, 0				"	\
-"		je		done2					"	\
-"finishend:							"	\
-"		mov	al, [esi]			"	\
-"		add	esi, 2				"	\
-"		mov	[edi], al			"	\
-"		inc	edi					"	\
-"		dec	ebx					"	\
-"		jne	finishend			"	\
-"done2:								";
+// Copies every 2nd source pixel to npixels dest pixels (doubled Mode X plane).
+void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels )
+{
+	for (; npixels > 0; npixels-- )	{
+		*dest++ = *src;
+		src += 2;
+	}
+}
 
 
 // From Linear to ModeX

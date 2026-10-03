@@ -84,6 +84,7 @@ extern unsigned char *pixptr;
 
 // texture mapper scanline renderers
 extern	void asm_tmap_scanline_per(void);
+extern	void asm_tmap_scanline_shaded(void);
 extern	void asm_tmap_scanline_per_doubled(void);
 extern	void asm_tmap_scanline_lin(void);
 extern	void asm_tmap_scanline_lin_16(void);
@@ -112,7 +113,7 @@ extern	int	fx_r,fx_g,fx_b,fx_dr_dx,fx_dg_dx,fx_db_dx;
 extern	unsigned char *pixptr;
 
 extern	int	bytes_per_row;
-extern	int	write_buffer;
+extern	unsigned char *write_buffer;	// start of the canvas bitmap data
 extern	int  	window_left;
 extern	int	window_right;
 extern	int	window_top;
@@ -124,7 +125,6 @@ extern	int	linear_if_far_flag;
 extern	int	dither_intensity_lighting;
 extern	int	Interlacing_on;
 
-extern	short	_pixel_data_selector;
 
 extern ubyte * tmap_flat_cthru_table;
 extern ubyte tmap_flat_color;

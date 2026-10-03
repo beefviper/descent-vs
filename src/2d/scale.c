@@ -71,6 +71,8 @@ static char rcsid[] = "$Id: scale.c 1.12 1995/03/14 15:14:11 john Exp $";
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 
 #include "mono.h"
 #include "fix.h"
@@ -123,39 +125,34 @@ void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 	}
 }
 
-// esi, edi = source, dest
-// ecx = width
-// ebx = u
-// edx = du
+// Scales a row of width pixels from sbits to dbits, stepping the 16.16
+// source position u by du.  Pixels of color 255 are not drawn.
+void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+{
+	ubyte c;
 
-void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du );
-#pragma aux scale_row_asm_transparent parm [esi] [edi] [ecx] [ebx] [edx] modify exact [edi eax ebx ecx] = \
-"newpixel:	mov	eax, ebx			" \
-"				shr	eax, 16			" \
-"				mov	al, [esi+eax]	" \
-"				cmp	al, 255			" \
-"				je		skip_it			" \
-"				mov	[edi], al		" \
-"skip_it:	add	ebx, edx			" \
-"				inc	edi				" \
-"				dec	ecx				" \
-"				jne	newpixel			"
+	for (; width > 0; width-- )	{
+		c = sbits[(uint32_t)u >> 16];
+		if ( c != 255 )
+			*dbits = c;
+		u = (fix)((uint32_t)u + (uint32_t)du);
+		dbits++;
+	}
+}
 
-void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du );
-#pragma aux scale_row_asm parm [esi] [edi] [ecx] [ebx] [edx] modify exact [edi eax ebx ecx] = \
-"newpixel1:	mov	eax, ebx			" \
-"				shr	eax, 16			" \
-"				mov	al, [esi+eax]	" \
-"				add	ebx, edx			" \
-"				mov	[edi], al		" \
-"				inc	edi				" \
-"				dec	ecx				" \
-"				jne	newpixel1		"
+// Same as above without transparency.
+void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+{
+	for (; width > 0; width-- )	{
+		*dbits++ = sbits[(uint32_t)u >> 16];
+		u = (fix)((uint32_t)u + (uint32_t)du);
+	}
+}
 
-
-void rep_movsb( ubyte * sbits, ubyte * dbits, int width );
-#pragma aux rep_movsb parm [esi] [edi] [ecx] modify exact [esi edi ecx] = \
-"rep movsb"
+void rep_movsb( ubyte * sbits, ubyte * dbits, int width )
+{
+	memcpy( dbits, sbits, width );
+}
 
 #define FIND_SCALED_NUM(x,x0,x1,y0,y1) (fixmuldiv((x)-(x0),(y1)-(y0),(x1)-(x0))+(y0))
 
@@ -380,11 +377,10 @@ void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
       *ScreenPtr++ = Color;
 }
 
-void rep_stosb(char *ScreenPtr, int RunLength, int Color);
-#pragma aux rep_stosb = \
-"				rep	stosb"	\
-parm [EDI] [ECX] [EAX]\
-modify [];
+void rep_stosb(char *ScreenPtr, int RunLength, int Color)
+{
+	memset( ScreenPtr, Color, RunLength );
+}
 
 void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
 {

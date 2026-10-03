@@ -199,17 +199,18 @@ void gr_free_sub_bitmap(grs_bitmap *bm )
 //NO_INVERSE_TABLE 	"jne	again2x"				\
 */
 
-void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
-#pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
-"again_ddn:"							\
-	"xor	eax,eax"				\
-	"mov	al,[esi]"			\
-	"inc	dword ptr [ebx+eax*4]"		\
-	"mov	al,[edi+eax]"		\
-	"mov	[esi],al"			\
-	"inc	esi"					\
-	"dec	ecx"					\
-	"jne	again_ddn"
+// Remaps num_pixels pixels of data in place through colormap, counting how
+// many times each original color occurs in count.
+void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count )
+{
+	ubyte c;
+
+	for (; num_pixels > 0; num_pixels-- )	{
+		c = *data;
+		count[c]++;
+		*data++ = colormap[c];
+	}
+}
 
 void build_colormap_good(ubyte* palette, ubyte* colormap, int* freq)
 {

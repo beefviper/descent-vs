@@ -990,17 +990,8 @@ void gr_close_font( grs_font * font )
 }
 
 void build_colormap_good( ubyte * palette, ubyte * colormap, int * freq );
-void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
-#pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
-"again_ddn:"							\
-	"xor	eax,eax"				\
-	"mov	al,[esi]"			\
-	"inc	dword ptr [ebx+eax*4]"		\
-	"mov	al,[edi+eax]"		\
-	"mov	[esi],al"			\
-	"inc	esi"					\
-	"dec	ecx"					\
-	"jne	again_ddn"
+void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );	// in bitmap.c
+
 
 grs_font * gr_init_font( char * fontname )
 {

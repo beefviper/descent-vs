@@ -53,6 +53,7 @@ static char rcsid[] = "$Id: ibitblt.c 1.6 1994/11/28 17:07:29 john Exp $";
 #include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "types.h"
 #include "gr.h"
@@ -330,12 +331,60 @@ ubyte	*gr_ibitblt_create_mask( grs_bitmap * mask_bmp, int sx, int sy, int sw, in
 }
 
 
-void gr_ibitblt_do_asm(char *start_si, char *start_di, ubyte * code);
-#pragma aux gr_ibitblt_do_asm parm [esi] [edi] [eax] modify [ecx edi esi eax] = \
-	"pusha"	\
-	"cld"		\
-	"call	eax"	\
-	"popa"
+// The mask made by gr_ibitblt_create_mask is a block of x86 code (add esi/edi,
+// mov ecx, movs and ret instructions) that the original called directly.
+// Interpret it instead, with esi and edi as source and dest pointers.
+void gr_ibitblt_do_asm(char *start_si, char *start_di, ubyte * code)
+{
+	ubyte *esi = (ubyte *)start_si;
+	ubyte *edi = (ubyte *)start_di;
+	int ecx = 0;
+	int n;
+
+	for (;;)	{
+		switch( *code++ )	{
+		case OPCODE_ADD:
+			memcpy( &n, code+1, 4 );
+			if ( *code == OPCODE_ESI )
+				esi += n;
+			else
+				edi += n;
+			code += 5;
+			break;
+		case OPCODE_MOV_ECX:
+			memcpy( &ecx, code, 4 );
+			code += 4;
+			break;
+		case OPCODE_REP:			// rep movsd
+			code++;
+			memcpy( edi, esi, ecx*4 );
+			esi += ecx*4;
+			edi += ecx*4;
+			ecx = 0;
+			break;
+		case OPCODE_16BIT:		// movsw
+			code++;
+			edi[0] = esi[0];
+			edi[1] = esi[1];
+			esi += 2;
+			edi += 2;
+			break;
+		case OPCODE_MOVSD:
+			memcpy( edi, esi, 4 );
+			esi += 4;
+			edi += 4;
+			break;
+		case OPCODE_MOVSB:
+			*edi++ = *esi++;
+			break;
+		case OPCODE_RET:
+			return;
+		default:
+			Error( "Bad ibitblt mask code\n" );
+			return;
+		}
+	}
+}
 
 
 void gr_ibitblt(grs_bitmap * source_bmp, grs_bitmap * dest_bmp, ubyte * mask )

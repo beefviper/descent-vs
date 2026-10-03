@@ -137,9 +137,9 @@ descent_add_library(iff iff
 
 # 2d graphics
 descent_add_library(gr 2d
-    linear.asm vesa.asm modex.asm canvas.c bitmap.c gr.c font.c bitblt.c
+    linear.c vesa.c modex.c canvas.c bitmap.c gr.c font.c bitblt.c
     scanline.c pixel.c poly.c disc.c rect.c box.c gpixel.c palette.c line.c
-    lbitblt.asm scale.c scalea.asm circle.c ibitblt.c rle.c pcx.c)
+    lbitblt.c scale.c scalea.c circle.c ibitblt.c rle.c pcx.c)
 
 # 3d rendering pipeline
 descent_add_library(3d 3d
@@ -151,8 +151,8 @@ descent_add_library(io bios
     key.c mouse.c timer.c mono.c joyc.c dpmi.c ipx.c)
 
 descent_add_library(texmap texmap
-    ntmap.c tmapflat.c tmap_per.asm tmap_lin.asm tmap_ll.asm tmap_flt.asm
-    tmapfade.asm tmap_fl1.asm scanline.c)
+    ntmap.c tmapflat.c tmap_per.c tmap_lin.c tmap_ll.c tmap_flt.c
+    tmapfade.c tmap_fl1.c scanline.c)
 # ntmap.c uses the game's texture table (textures.h).
 target_include_directories(texmap PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main)
 
