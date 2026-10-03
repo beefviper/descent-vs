@@ -16,25 +16,57 @@ networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 
 | Path            | Contents                                                        |
 |-----------------|-----------------------------------------------------------------|
-| `include/`      | Headers and assembler include files shared between modules      |
-| `src/main/`     | The game (`descent`)                                            |
-| `src/editor/`   | The level editor (built into the game with `DESCENT_EDITOR=ON`) |
-| `src/2d/`       | 2D graphics library (`gr`)                                      |
-| `src/3d/`       | 3D rendering pipeline (`3d`)                                    |
-| `src/texmap/`   | Texture mapper (`texmap`)                                       |
-| `src/bios/`     | Keyboard, mouse, joystick, timer, DPMI and IPX (`io`)           |
-| `src/fix/`, `src/vecmat/`, `src/div/` | Fixed-point math, vectors and matrices, divide overflow handling |
-| `src/cfile/`, `src/iff/`, `src/mem/`, `src/misc/` | File access, IFF images, memory and error helpers |
-| `src/ui/`       | The editor's user interface toolkit (`ui`)                      |
-| `src/pslib/`    | Compressed library archiver and its `cflib`/`readfile` libraries |
-| `src/platform/` | SDL2 window, display and keyboard backend (`platform`)         |
-| `src/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
-| `src/tools/`    | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
+| `include/`      | Headers shared between modules, grouped below                   |
+| `source/main/`  | The game (`descent`), grouped below                             |
+| `source/editor/` | The level editor (built into the game with `DESCENT_EDITOR=ON`) |
+| `source/2d/`    | 2D graphics library (`gr`)                                      |
+| `source/3d/`    | 3D rendering pipeline (`3d`)                                    |
+| `source/texmap/` | Texture mapper (`texmap`)                                      |
+| `source/bios/`  | Keyboard, mouse, joystick, timer, DPMI and IPX (`io`)           |
+| `source/fix/`, `source/vecmat/`, `source/div/` | Fixed-point math, vectors and matrices, divide overflow handling |
+| `source/cfile/`, `source/iff/`, `source/mem/`, `source/misc/` | File access, IFF images, memory and error helpers |
+| `source/ui/`    | The editor's user interface toolkit (`ui`)                      |
+| `source/pslib/` | Compressed library archiver and its `cflib`/`readfile` libraries |
+| `source/platform/` | SDL2 window, display, keyboard and sound backend (`platform`) |
+| `source/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
+| `source/tools/` | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
 | `data/`         | `editdata.exe`, a self-extracting archive of the editor's data files |
 | `docs/`         | Original readme, build variant notes, porting notes             |
 
 Each library keeps the name of the `.lib` file the original makefiles
 produced. Headers used by only one module live next to its sources.
+
+The library directories under `source/` are the directories of the
+original makefiles. The game itself was one flat directory of about 150
+files; it is now split by subsystem, each `.c` file with its `.h`:
+
+| `source/main/` | Contents |
+|----------------|----------|
+| `core/`    | Startup, main loop, level sequencing, options, players' save files, missions, demos, version ids |
+| `data/`    | Bitmap and sound tables, the pig file, texture caching, polygon models, animations, fonts |
+| `world/`   | Mine geometry and segments, level loading and saving, walls, triggers, fuel centers, reactor, collision tracing |
+| `objects/` | Objects, physics, collisions, weapons, powerups, explosions, hostages, players |
+| `ai/`      | Robot AI, pathfinding, robot definitions |
+| `render/`  | Mine renderer, automap, cockpit gauges, HUD, lighting, terrain and exit sequence |
+| `menus/`   | Menus, controls setup, credits, briefings, high scores, kill matrix |
+| `net/`     | IPX and serial/modem multiplayer |
+| `sound/`   | Sound effects and music |
+| `devices/` | Head-mounted displays, 3D glasses, arcade and CD-ROM hooks |
+
+| `include/` | Contents |
+|------------|----------|
+| `2d/`       | Graphics library, palettes, PCX/IFF/RLE bitmaps |
+| `3d/`       | 3D pipeline and texture mapper |
+| `math/`     | Fixed-point math, vectors and matrices |
+| `bios/`     | Keyboard, mouse, joystick, timer, DPMI, IPX, mono debug output |
+| `cfile/`    | File and library archive access |
+| `misc/`     | Errors, memory, basic types, argument parsing |
+| `ui/`       | Editor UI toolkit |
+| `platform/` | SDL2 backend interface |
+| `compat/`   | Watcom/DOS header replacements |
+
+Every group directory is on the include path, so the sources still use
+plain `#include "gr.h"` as the originals did.
 
 ## Generating a Visual Studio solution
 

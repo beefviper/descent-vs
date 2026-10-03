@@ -48,9 +48,11 @@ if(MSVC)
     add_compile_options($<$<COMPILE_LANGUAGE:C>:/W3>)
 endif()
 
-# Headers shared between modules.
+# Headers shared between modules, grouped by the libraries they belong to.
 set(DESCENT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${DESCENT_INCLUDE_DIR})
+foreach(group 2d 3d bios cfile math misc platform ui)
+    include_directories(${DESCENT_INCLUDE_DIR}/${group})
+endforeach()
 
 # Stand-ins for the Watcom/DOS headers (dos.h, i86.h, bios.h) and a header,
 # force-included everywhere, that neutralizes Watcom keywords such as far.
@@ -66,12 +68,12 @@ endif()
 # descent_add_library(<name> <dir> <sources>...)
 # descent_add_executable(<name> <dir> <sources>...)
 #
-# Sources are relative to <dir> under src/. The directory is added to the
+# Sources are relative to <dir> under source/. The directory is added to the
 # target's include path so module-private headers resolve.
 function(_descent_sources out dir)
     set(result)
     foreach(src IN LISTS ARGN)
-        list(APPEND result ${CMAKE_CURRENT_SOURCE_DIR}/src/${dir}/${src})
+        list(APPEND result ${CMAKE_CURRENT_SOURCE_DIR}/source/${dir}/${src})
     endforeach()
     set(${out} ${result} PARENT_SCOPE)
 endfunction()
@@ -80,20 +82,22 @@ function(descent_add_library name dir)
     _descent_sources(sources ${dir} ${ARGN})
     add_library(${name} STATIC ${sources})
     set_target_properties(${name} PROPERTIES LINKER_LANGUAGE C)
-    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/${dir})
+    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source/${dir})
     set_target_properties(${name} PROPERTIES FOLDER "Libraries")
 endfunction()
 
 function(descent_add_executable name dir)
     _descent_sources(sources ${dir} ${ARGN})
     add_executable(${name} ${sources})
-    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/${dir})
+    # Show the subsystem directories as folders in Solution Explorer.
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/source/${dir} FILES ${sources})
+    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source/${dir})
 endfunction()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # ---------------------------------------------------------------------------
-# SDL2: the window, display and keyboard (src/platform). With vcpkg, the
+# SDL2: the window, display and keyboard (source/platform). With vcpkg, the
 # vcpkg.json manifest fetches it; otherwise point SDL2_DIR (or
 # CMAKE_PREFIX_PATH) at an SDL2 development package.
 # ---------------------------------------------------------------------------
@@ -150,11 +154,19 @@ descent_add_library(platform platform
     sdl.c audio.c)
 target_link_libraries(platform PUBLIC SDL2::SDL2)
 
+# The game's headers live next to its sources, grouped by subsystem under
+# source/main. The editor and the texture mapper include some of them.
+set(DESCENT_GAME_GROUPS core data world objects ai render menus net sound devices)
+set(DESCENT_GAME_INCLUDE_DIRS)
+foreach(group IN LISTS DESCENT_GAME_GROUPS)
+    list(APPEND DESCENT_GAME_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/source/main/${group})
+endforeach()
+
 descent_add_library(texmap texmap
     ntmap.c tmapflat.c tmap_per.c tmap_lin.c tmap_ll.c tmap_flt.c
     tmapfade.c tmap_fl1.c scanline.c)
 # ntmap.c uses the game's texture table (textures.h).
-target_include_directories(texmap PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main)
+target_include_directories(texmap PRIVATE ${DESCENT_GAME_INCLUDE_DIRS})
 
 # Editor user interface toolkit
 descent_add_library(ui ui
@@ -196,7 +208,7 @@ set(DESCENT_EDITOR_SOURCES
 if(DESCENT_EDITOR)
     descent_add_library(editor editor ${DESCENT_EDITOR_SOURCES})
     # The editor and the game include each other's headers.
-    target_include_directories(editor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main)
+    target_include_directories(editor PRIVATE ${DESCENT_GAME_INCLUDE_DIRS})
     target_compile_definitions(editor PUBLIC EDITOR)
     target_link_libraries(editor PUBLIC ui 3d texmap gr iff vecmat fix io cfile mem misc)
 endif()
@@ -206,18 +218,37 @@ endif()
 # ---------------------------------------------------------------------------
 
 descent_add_executable(descent main
-    inferno.c game.c gauges.c mglobal.c scores.c object.c laser.c physics.c
-    bm.c menu.c gamesave.c switch.c effects.c texmerge.c polyobj.c
-    gamemine.c fireball.c ai.c aipath.c hostage.c powerup.c fuelcen.c
-    digi.c render.c hash.c piggy.c args.c gameseg.c wall.c collide.c
-    lighting.c robot.c morph.c vclip.c weapon.c fvi.c newdemo.c titles.c
-    vfx.c gameseq.c controls.c automap.c text.c network.c newmenu.c
-    netmisc.c victor.c gamefont.c joydefs.c hud.c playsave.c endlevel.c
-    terrain.c kconfig.c modem.c multi.c cntrlcen.c credits.c config.c
-    kmatrix.c paging.c mission.c iglasses.c songs.c bmread.c
-    state.c multibot.c nocomlib.c slew.c dumpmine.c)
+    # Startup, the main loop, game sequencing, settings and saved games
+    core/inferno.c core/game.c core/gameseq.c core/mglobal.c core/args.c
+    core/controls.c core/slew.c core/config.c core/playsave.c core/state.c
+    core/mission.c core/text.c core/newdemo.c core/dumpmine.c
+    # Loading bitmaps, sounds, models and animations from the data files
+    data/bm.c data/bmread.c data/piggy.c data/paging.c data/texmerge.c
+    data/polyobj.c data/vclip.c data/effects.c data/gamefont.c data/hash.c
+    # The mine: segments, walls, triggers, fuel and reactor centers
+    world/gameseg.c world/gamemine.c world/gamesave.c world/wall.c
+    world/switch.c world/fuelcen.c world/cntrlcen.c world/fvi.c
+    # Objects and what happens to them
+    objects/object.c objects/physics.c objects/collide.c objects/laser.c
+    objects/weapon.c objects/powerup.c objects/fireball.c objects/morph.c
+    objects/hostage.c
+    # Robot behavior and path finding
+    ai/ai.c ai/aipath.c ai/robot.c
+    # Drawing the world, the automap, cockpit and HUD, and the exit sequence
+    render/render.c render/automap.c render/gauges.c render/hud.c
+    render/lighting.c render/terrain.c render/endlevel.c
+    # Menus and full-screen pages
+    menus/menu.c menus/newmenu.c menus/kconfig.c menus/joydefs.c
+    menus/credits.c menus/titles.c menus/scores.c menus/kmatrix.c
+    # Multiplayer over IPX and modem
+    net/network.c net/netmisc.c net/modem.c net/multi.c net/multibot.c
+    net/nocomlib.c
+    # Sound effects and music
+    sound/digi.c sound/songs.c
+    # Optional hardware: VR headsets and glasses
+    devices/iglasses.c devices/victor.c devices/vfx.c)
 
-target_include_directories(descent PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/editor)
+target_include_directories(descent PRIVATE ${DESCENT_GAME_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/source/editor)
 target_link_libraries(descent PRIVATE
     3d gr fix io iff vecmat cfile mem ui div0 misc texmap
     $<$<BOOL:${DESCENT_EDITOR}>:editor>)
@@ -228,7 +259,7 @@ if(DESCENT_DATA_DIR)
 endif()
 
 # descent is a console program: the console shows the debug output (the
-# old mono screen, see src/bios/mono.c) while SDL opens the game window.
+# old mono screen, see source/bios/mono.c) while SDL opens the game window.
 # Put SDL2.dll next to it so it runs from the build directory.
 get_target_property(_sdl2_type SDL2::SDL2 TYPE)
 if(WIN32 AND _sdl2_type STREQUAL "SHARED_LIBRARY")
