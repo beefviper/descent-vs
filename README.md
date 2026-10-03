@@ -7,9 +7,9 @@ Studio project. The original release notes and license are in
 non-commercial purposes.
 
 The code compiles and links for 32-bit and 64-bit Windows, with all of the
-original assembly rewritten in C. It opens an SDL2 window for the graphics
-keyboard and sound effects, and a console window that shows the debug
-output the original sent to a monochrome monitor. Mouse, music and
+original assembly rewritten in C. It opens an SDL2 window for the graphics,
+keyboard, sound effects and music, and a console window that shows the
+debug output the original sent to a monochrome monitor. Mouse and
 networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 
 ## Layout
@@ -27,7 +27,7 @@ networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 | `source/cfile/`, `source/iff/`, `source/mem/`, `source/misc/` | File access, IFF images, memory and error helpers |
 | `source/ui/`    | The editor's user interface toolkit (`ui`)                      |
 | `source/pslib/` | Compressed library archiver and its `cflib`/`readfile` libraries |
-| `source/platform/` | SDL2 window, display, keyboard and sound backend (`platform`) |
+| `source/platform/` | SDL2 window, display, keyboard, sound and music backend (`platform`) |
 | `source/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
 | `source/tools/` | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
 | `data/`         | `editdata.exe`, a self-extracting archive of the editor's data files |
@@ -70,17 +70,22 @@ plain `#include "gr.h"` as the originals did.
 
 ## Generating a Visual Studio solution
 
-The game needs SDL2. The easiest way to get it is vcpkg, which comes with
-Visual Studio 2022: the `vcpkg.json` manifest makes CMake fetch and build
-SDL2 automatically.
+The game needs SDL2, and libADLMIDI for the music. The easiest way to get
+them is vcpkg, which comes with Visual Studio 2022: the `vcpkg.json`
+manifest makes CMake fetch and build both automatically.
 
     cmake -S . -B build -G "Visual Studio 17 2022" -A Win32 ^
         -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake
 
 Use `-A x64` for a 64-bit build. Without vcpkg, download the SDL2 VC
 development package from https://github.com/libsdl-org/SDL/releases and
-pass `-DSDL2_DIR=<path>/cmake` instead of the toolchain file. The build
-copies `SDL2.dll` next to `descent.exe`.
+pass `-DSDL2_DIR=<path>/cmake` instead of the toolchain file; build
+libADLMIDI (https://github.com/Wohlstand/libADLMIDI) and pass
+`-DlibADLMIDI_DIR=<prefix>/lib/cmake/libADLMIDI`, or `-DDESCENT_MUSIC=OFF`
+to build without music. The build copies `SDL2.dll` next to `descent.exe`.
+
+libADLMIDI is licensed in parts under the GPL and LGPL, so a `descent.exe`
+built with it carries those terms on top of the Parallax license.
 
 Run `descent.exe` from the directory holding the game data
 (`descent.hog`, `descent.pig`): it opens them from the current directory.
@@ -93,5 +98,6 @@ Options:
   builds define `EDITOR` and leave `RELEASE` and `NDEBUG` off, as the
   original editor variant did.
 - `DESCENT_TOOLS` (ON): build the data tools.
+- `DESCENT_MUSIC` (ON): play the music with libADLMIDI.
 - `DESCENT_DATA_DIR` (empty): the game data folder, used as the Visual
   Studio debugger's working directory.

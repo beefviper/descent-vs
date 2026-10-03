@@ -470,9 +470,10 @@ static void sosDIGISetPanLocation( WORD hDriver, WORD hSample, uint wLocation )
 	plat_audio_set_pan( hSample, (int)wLocation );
 }
 
-// No music yet; MIDI stays off (digi_midi_type is 0).
-#define sosMIDISetMasterVolume(v)	((void)(v))
-#define sosMIDIStopSong(h)			((void)(h))
+// The MIDI calls, played through libADLMIDI's FM synth
+// (source/platform/music.c). There is one song at a time; its handle is 0.
+#define sosMIDISetMasterVolume(v)	plat_music_set_volume(v)
+#define sosMIDIStopSong(h)			((void)(h), plat_music_stop())
 #define sosMIDIUnInitSong(h)		((void)(h))
 
 static void digi_reset_digi_sounds(void);
@@ -603,7 +604,13 @@ static int digi_xlat_sound(int soundno)
 
 static void digi_close_midi(void)
 {
-/*
+	if (digi_midi_type>0)	{
+		if (wSongHandle < 0xffff)	{
+			sosMIDIStopSong( wSongHandle );
+			wSongHandle = 0xffff;
+		}
+	}
+/* The SOS version:
 	if (digi_midi_type>0)	{
 		if (wSongHandle < 0xffff)	{
 		   // stop the last MIDI song from playing
@@ -844,7 +851,7 @@ int digi_init(void)
 {
 	int i;
 
-	// Sound effects go through SDL2; there is no music yet.
+	// Sound effects go through SDL2, music through libADLMIDI's FM synth.
 	digi_midi_type = 0;
 
 	if (!plat_audio_init())	{
@@ -854,6 +861,8 @@ int digi_init(void)
 	}
 	if ( digi_driver_board < 1 )
 		digi_driver_board = 1;		// any board: the SDL mixer stands in for it
+	if ( plat_music_available() && !FindArg( "-nomusic" ) )
+		digi_midi_type = 1;			// any MIDI device: the synth stands in for it
 
 	Digi_initialized = 1;
 
@@ -863,6 +872,7 @@ int digi_init(void)
 	}
 
 	digi_init_sounds();
+	digi_set_midi_volume( midi_volume );
 
 	for (i=0; i<MAX_SOUNDS; i++ )
 		digi_sound_locks[i] = 0;
@@ -1294,7 +1304,23 @@ void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )
 
 void digi_set_midi_volume( int mvolume )
 {
-/*
+	int old_volume = midi_volume;
+
+	if ( mvolume > 127 )
+		midi_volume = 127;
+	else if ( mvolume < 0 )
+		midi_volume = 0;
+	else
+		midi_volume = mvolume;
+
+	if ( Digi_initialized && digi_midi_type > 0 )	{
+		if (  (old_volume < 1) && ( midi_volume > 1 ) )	{
+			if (wSongHandle == 0xffff && digi_last_midi_song[0])
+				digi_play_midi_song( digi_last_midi_song, digi_last_melodic_bank, digi_last_drum_bank, 1 );
+		}
+		sosMIDISetMasterVolume(midi_volume);
+	}
+/* The SOS version:
 	int old_volume = midi_volume;
 
 	if ( mvolume > 127 )
@@ -1384,7 +1410,11 @@ static VOID sosEndMIDICallback(void)		// Used to mark the end of sosMIDICallBack
 
 static void digi_stop_current_song(void)
 {
-/*
+	if (wSongHandle < 0xffff )	{
+		sosMIDIStopSong( wSongHandle );
+		wSongHandle = 0xffff;
+	}
+/* The SOS version:
 	// Stop last song...
 	if (wSongHandle < 0xffff )	{
 	   // stop the last MIDI song from playing
@@ -1406,7 +1436,64 @@ static void digi_stop_current_song(void)
 
 void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank, int loop )
 {
-/*
+	char fname[128];
+	CFILE		*fp;
+	ubyte		*data;
+	int		size;
+
+	if (!Digi_initialized) return;
+	if ( digi_midi_type <= 0 )	return;
+
+	digi_stop_current_song();
+
+	if ( filename == NULL )	return;
+
+	if ( filename != digi_last_midi_song )	{		// not a restart of the last song
+		strncpy( digi_last_midi_song, filename, sizeof(digi_last_midi_song) - 1 );
+		strncpy( digi_last_melodic_bank, melodic_bank, sizeof(digi_last_melodic_bank) - 1 );
+		strncpy( digi_last_drum_bank, drum_bank, sizeof(digi_last_drum_bank) - 1 );
+	}
+
+	if ( midi_volume < 1 )
+		return;				// Don't play song if volume == 0;
+
+	// The FM driver played the .hmq version of a song when there was one.
+	fp = NULL;
+	if ( strlen( filename ) < sizeof(fname) )	{
+		size_t sl = strlen( filename );
+		strcpy( fname, filename );
+		if ( sl > 0 )	{
+			fname[sl-1] = 'q';
+			fp = cfopen( fname, "rb" );
+		}
+	}
+	if ( !fp )	{
+		fp = cfopen( filename, "rb" );
+		if (!fp) {
+			mprintf( (1, "Error opening midi file, '%s'", filename ));
+			return;
+		}
+	}
+	size = cfilelength( fp );
+	data = size > 0 ? malloc( size ) : NULL;
+	if (data == NULL)	{
+		cfclose(fp);
+		mprintf( (1, "Error mallocing %d bytes for '%s'", size, filename ));
+		return;
+	}
+	if ( cfread( data, size, 1, fp ) != 1 )	{
+		mprintf( (1, "Error reading midi file, '%s'", filename ));
+		cfclose(fp);
+		free(data);
+		return;
+	}
+	cfclose(fp);
+
+	if ( plat_music_play( data, size, melodic_bank, loop ) )
+		wSongHandle = 0;
+	free(data);
+
+/* The SOS version:
 	int i;
 	char fname[128];
    WORD     wError;                 // error code returned from functions

@@ -38,6 +38,17 @@ Where the port stands and what is left before the game runs on Windows.
   Warnings") to standard error. Release builds compile the mono calls out
   except `mprintf`, which also prints to the console. Positioned output
   (`mprintf_at`) is dropped.
+- **Sound and music.** `source/main/sound/digi.c` was written against
+  the Human Machine Interfaces SOS library, which Parallax removed from
+  the release. Small stand-ins for the SOS calls at the top of `digi.c`
+  send sound effects to an SDL2 mixer (`source/platform/audio.c`) and
+  songs to libADLMIDI (`source/platform/music.c`). libADLMIDI reads the
+  HMI `.hmq`/`.hmp` songs directly and plays them on an emulated OPL3
+  chip, the way the game sounded on a Sound Blaster, using its built-in
+  copies of Descent's FM banks: `descent.sng` names each song's bank
+  (`melodic.bnk`, `intmelo.bnk`, `hammelo.bnk`, `rickmelo.bnk`). The
+  music is mixed into the same stream as the sound effects. `-nomusic`
+  turns it off; `DESCENT_MUSIC=OFF` builds without it.
 - **Watcom conventions kept:** `char` is unsigned (`/J`), and structures
   are byte-packed (`/Zp1`) because the game reads data files straight
   into them.
@@ -50,12 +61,6 @@ Where the port stands and what is left before the game runs on Windows.
 - **Leftover SVGA code.** A few banked-SVGA paths in `pixel.c`,
   `gpixel.c`, `bitblt.c` and `font.c` still cast pointers to `int`; they
   are no longer reached, since all modes are linear now.
-- **Music.** `source/main/sound/digi.c` was written against the Human Machine
-  Interfaces SOS library, which Parallax removed from the release. Sound
-  effects now go through an SDL2 mixer (`source/platform/audio.c`), with
-  small stand-ins for the SOS calls at the top of `digi.c`. The MIDI half
-  is still commented out: the songs are HMP files that need converting to
-  MIDI and a synthesizer to play them.
 - **Networking.** IPX goes through real-mode interrupts and reports
   "no IPX". Modem and serial play used the Greenleaf CommLib, which is not
   in the release; `source/main/net/nocomlib.h` only has dummy values.

@@ -11,6 +11,7 @@ project(Descent
 
 option(DESCENT_EDITOR "Build the level editor into the game (defines EDITOR)" OFF)
 option(DESCENT_TOOLS  "Build the hogfile, pslib, lbmcomp and xcolor tools"     ON)
+option(DESCENT_MUSIC  "Play the music with libADLMIDI (OPL3 FM synth emulation)" ON)
 set(DESCENT_DATA_DIR "" CACHE PATH
     "Folder with descent.hog and descent.pig; Visual Studio starts the game there")
 
@@ -104,6 +105,18 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(SDL2 REQUIRED CONFIG)
 
+# libADLMIDI: the music (source/platform/music.c). vcpkg.json fetches it too.
+# It is C++, so the game links with the C++ runtime when it is in.
+if(DESCENT_MUSIC)
+    find_package(libADLMIDI CONFIG)
+    if(libADLMIDI_FOUND)
+        enable_language(CXX)
+    else()
+        message(WARNING "libADLMIDI not found; building without music. "
+            "Point libADLMIDI_DIR at its package, or set DESCENT_MUSIC=OFF.")
+    endif()
+endif()
+
 # ---------------------------------------------------------------------------
 # Libraries (one per original subsystem; names match the original .lib files)
 # ---------------------------------------------------------------------------
@@ -151,8 +164,16 @@ descent_add_library(io bios
 
 # Window, display, keyboard and sound backend
 descent_add_library(platform platform
-    sdl.c audio.c)
+    sdl.c audio.c music.c)
 target_link_libraries(platform PUBLIC SDL2::SDL2)
+if(DESCENT_MUSIC AND libADLMIDI_FOUND)
+    target_compile_definitions(platform PRIVATE DESCENT_HAVE_ADLMIDI)
+    target_link_libraries(platform PUBLIC libADLMIDI::ADLMIDI)
+    if(MINGW)
+        # Keep the game free of the MinGW C++ runtime DLLs.
+        target_link_options(platform INTERFACE -static-libgcc -static-libstdc++)
+    endif()
+endif()
 
 # The game's headers live next to its sources, grouped by subsystem under
 # source/main. The editor and the texture mapper include some of them.
@@ -260,13 +281,18 @@ endif()
 
 # descent is a console program: the console shows the debug output (the
 # old mono screen, see source/bios/mono.c) while SDL opens the game window.
-# Put SDL2.dll next to it so it runs from the build directory.
-get_target_property(_sdl2_type SDL2::SDL2 TYPE)
-if(WIN32 AND _sdl2_type STREQUAL "SHARED_LIBRARY")
-    add_custom_command(TARGET descent POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:descent>)
-endif()
+# Put SDL2.dll (and libADLMIDI's DLL, if shared) next to it so it runs from
+# the build directory.
+foreach(_dll_target SDL2::SDL2 libADLMIDI::ADLMIDI_shared)
+    if(WIN32 AND TARGET ${_dll_target})
+        get_target_property(_dll_type ${_dll_target} TYPE)
+        if(_dll_type STREQUAL "SHARED_LIBRARY")
+            add_custom_command(TARGET descent POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    $<TARGET_FILE:${_dll_target}> $<TARGET_FILE_DIR:descent>)
+        endif()
+    endif()
+endforeach()
 
 # ---------------------------------------------------------------------------
 # Tools

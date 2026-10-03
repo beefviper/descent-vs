@@ -3,7 +3,8 @@
  *
  * Stands in for the digital half of the SOS sound library: a fixed set of
  * voices, each playing an 8-bit unsigned mono sample with its own volume
- * and pan, mixed into a 16-bit stereo stream.
+ * and pan, mixed into a 16-bit stereo stream along with the music
+ * (music.c).
  */
 
 #include <stdio.h>
@@ -21,9 +22,11 @@ COMPAT_PACK_DEFAULT_BEGIN	// see compat.h
 COMPAT_PACK_DEFAULT_END
 
 #include "platform.h"
+#include "music.h"
 
 #define OUTPUT_RATE		44100
 #define FULL_VOLUME		16384		// volume that plays a sample at its own level
+#define MIX_CHUNK		1024		// frames of music rendered at a time
 
 typedef struct voice {
 	const unsigned char *data;
@@ -39,6 +42,7 @@ typedef struct voice {
 static SDL_AudioDeviceID device;
 static int output_rate;
 static voice voices[PLAT_AUDIO_VOICES];
+static short music_buf[MIX_CHUNK * 2];
 
 static void set_gains(voice *v, int volume, int pan)
 {
@@ -61,16 +65,14 @@ static void set_gains(voice *v, int volume, int pan)
 	v->right = (int)(((Sint64)volume * r) / 0xffff);
 }
 
-static void SDLCALL mix(void *userdata, Uint8 *stream, int len)
+static void mix_chunk(Sint16 *out, int frames)
 {
-	Sint16 *out = (Sint16 *)stream;
-	int frames = len / 4;
 	int i, n;
 
-	(void)userdata;
+	music_render(music_buf, frames);
 
 	for (i = 0; i < frames; i++) {
-		int l = 0, r = 0;
+		int l = music_buf[i * 2], r = music_buf[i * 2 + 1];
 
 		for (n = 0; n < PLAT_AUDIO_VOICES; n++) {
 			voice *v = &voices[n];
@@ -113,6 +115,33 @@ static void SDLCALL mix(void *userdata, Uint8 *stream, int len)
 	}
 }
 
+static void SDLCALL mix(void *userdata, Uint8 *stream, int len)
+{
+	Sint16 *out = (Sint16 *)stream;
+	int frames = len / 4;
+
+	(void)userdata;
+
+	while (frames > 0) {
+		int n = frames < MIX_CHUNK ? frames : MIX_CHUNK;
+		mix_chunk(out, n);
+		out += n * 2;
+		frames -= n;
+	}
+}
+
+void audio_lock(void)
+{
+	if (device)
+		SDL_LockAudioDevice(device);
+}
+
+void audio_unlock(void)
+{
+	if (device)
+		SDL_UnlockAudioDevice(device);
+}
+
 int plat_audio_init(void)
 {
 	SDL_AudioSpec want, have;
@@ -141,6 +170,7 @@ int plat_audio_init(void)
 	}
 	output_rate = have.freq;
 	memset(voices, 0, sizeof(voices));
+	music_open(output_rate);
 	SDL_PauseAudioDevice(device, 0);
 	return 1;
 }
@@ -151,6 +181,7 @@ void plat_audio_close(void)
 		return;
 	SDL_CloseAudioDevice(device);
 	device = 0;
+	music_close();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 

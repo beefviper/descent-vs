@@ -60,4 +60,19 @@ int plat_audio_playing(int voice);
 void plat_audio_set_volume(int voice, int volume);
 void plat_audio_set_pan(int voice, int pan);
 
+// Music: HMI songs (.hmp, .hmq) or standard MIDI files, played on an
+// emulated OPL3 FM synth and mixed in with the sound effects. Needs the
+// audio device open. Returns 1 if this build has music.
+int plat_music_available(void);
+
+// Starts a song from the file's data (which may be freed afterwards),
+// replacing any song playing. `bank` is the melodic bank file the song
+// was written for (melodic.bnk, intmelo.bnk, ...) and picks the matching
+// FM instruments. Returns 1 on success.
+int plat_music_play(const void *data, int length, const char *bank, int loop);
+void plat_music_stop(void);
+
+// Music volume, 0..127.
+void plat_music_set_volume(int volume);
+
 #endif
