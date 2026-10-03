@@ -362,6 +362,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #ifdef ARCADE
 #include "arcade.h"
+static void arcade_frame_info(void);
 #else
 #define Arcade_mode 0
 #endif
@@ -2504,7 +2505,7 @@ void show_help(void)
 
 
 #ifdef ARCADE
-void arcade_frame_info(void)
+static void arcade_frame_info(void)
 {
 	if (!Arcade_mode) return;
 

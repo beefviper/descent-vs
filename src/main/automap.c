@@ -1173,14 +1173,16 @@ static void automap_build_edge_list(void)
 		for (e1=0; e1<e->num_faces; e1++ )	{
 			for (e2=1; e2<e->num_faces; e2++ )	{
 				if ( (e1 != e2) && (e->segnum[e1] != e->segnum[e2]) )	{
+					fix dot;
 					#ifdef COMPACT_SEGS
 					vms_vector v1 = {0}, v2 = {0};
 					get_side_normal(&Segments[e->segnum[e1]], e->sides[e1], 0, &v1 );
 					get_side_normal(&Segments[e->segnum[e2]], e->sides[e2], 0, &v2 );
-					if ( vm_vec_dot(&v1,&v2) > (F1_0-(F1_0/10))  )	{
+					dot = vm_vec_dot(&v1,&v2);
 					#else
-					if ( vm_vec_dot( &Segments[e->segnum[e1]].sides[e->sides[e1]].normals[0], &Segments[e->segnum[e2]].sides[e->sides[e2]].normals[0] ) > (F1_0-(F1_0/10))  )	{
+					dot = vm_vec_dot( &Segments[e->segnum[e1]].sides[e->sides[e1]].normals[0], &Segments[e->segnum[e2]].sides[e->sides[e2]].normals[0] );
 					#endif
+					if ( dot > (F1_0-(F1_0/10))  )	{
 						e->flags &= (~EF_DEFINING);
 						break;
 					}

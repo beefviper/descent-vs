@@ -1423,7 +1423,7 @@ void do_missile_firing(void)
 				maybe_drop_net_powerup(POW_MEGA_WEAPON);
 				#endif
 
-				{ vms_vector force_vec;
+				{ vms_vector force_vec = {0};
 				force_vec.x = -(ConsoleObject->orient.fvec.x << 7);
 				force_vec.y = -(ConsoleObject->orient.fvec.y << 7);
 				force_vec.z = -(ConsoleObject->orient.fvec.z << 7);

@@ -926,7 +926,7 @@ static void wait_for_any_key(void)
 static void dos_check_file_handles(int num_required)
 {
 	int i, n;
-	FILE * fp[16];
+	FILE * fp[16] = {0};
 
 	if ( num_required > 16 )
 		num_required = 16;
