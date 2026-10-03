@@ -6,28 +6,28 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/main/rcs/int3hand.asm $
 ; $Revision: 2.0 $
 ; $Author: john $
 ; $Date: 1995/02/27 11:26:43 $
-; 
+;
 ; Rountine to handle int3's when debugger not present
-; 
+;
 ; $Log: int3hand.asm $
 ; Revision 2.0  1995/02/27  11:26:43  john
 ; New version 2.0, which has no anonymous unions, builds with
 ; Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
-; 
+;
 ; Revision 1.2  1993/10/15  11:29:45  matt
 ; Made stack bigger
-; 
+;
 ; Revision 1.1  1993/10/15  11:27:45  matt
 ; Initial revision
-; 
-; 
+;
+;
 
 
 INT3_STACK_SIZE = 2048	;big enough for mprintf() 1000-byte buffer
@@ -57,7 +57,6 @@ save_esp	dd	?
 	extd	__stacklow
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -116,4 +115,3 @@ int3_handler:	pusha
 _TEXT	ends
 
 	end
-

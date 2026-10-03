@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,26 +15,25 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.4 $
  * $Author: john $
  * $Date: 1994/12/09 17:53:52 $
- * 
+ *
  * Prototypes to *NOT* use cfile, but use cfile calling parameters.
  * For debugging.
- * 
+ *
  * $Log: nocfile.h $
  * Revision 1.4  1994/12/09  17:53:52  john
  * Added error checking to number of hogfiles..
- * 
+ *
  * Revision 1.3  1994/02/17  17:36:34  john
  * Added CF_READ_MODE and CF_WRITE_MODE constants.
- * 
+ *
  * Revision 1.2  1994/02/15  12:52:08  john
  * Crappy inbetween version
- * 
+ *
  * Revision 1.1  1994/02/15  09:51:00  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _NOCFILE_H
@@ -60,4 +59,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define CF_WRITE_MODE "wb"
 
 #endif
-

@@ -3,97 +3,97 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:18 $
- * 
- * Editor switch functions. 
- * 
+ *
+ * Editor switch functions.
+ *
  * $Log: eswitch.c $
  * Revision 2.0  1995/02/27  11:35:18  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.33  1995/01/14  19:18:04  john
  * First version of object paging.
- * 
+ *
  * Revision 1.32  1994/11/27  23:18:01  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.31  1994/11/07  10:55:42  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.30  1994/10/13  13:15:06  yuan
  * Fixed trigger removal bug.
- * 
+ *
  * Revision 1.29  1994/10/06  21:24:16  matt
  * Added switch for exit to secret level
- * 
+ *
  * Revision 1.28  1994/09/29  17:06:10  matt
  * Took out references to obsolete external triggers
- * 
+ *
  * Revision 1.27  1994/09/28  13:40:34  yuan
  * Fixed control center trigger bug.
- * 
+ *
  * Revision 1.26  1994/09/26  16:25:04  yuan
  * Only allow one binding of each matcen .
- * 
+ *
  * Revision 1.25  1994/09/24  17:10:19  yuan
  * Added Matcen triggers.
- * 
+ *
  * Revision 1.24  1994/09/20  18:23:58  yuan
  * Killed the BOGIFYING WALL DRAGON...
- * 
+ *
  * There was a problem with triggers being created that had bogus
  * pointers back to their segments.
- * 
+ *
  * Revision 1.23  1994/08/25  21:56:33  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.22  1994/08/15  18:06:54  yuan
  * Added external trigger.
- * 
+ *
  * Revision 1.21  1994/07/22  17:18:47  yuan
  * Working on dialog box for refuel/repair/material/control centers.
- * 
+ *
  * Revision 1.20  1994/07/06  10:55:55  john
  * New structures for hostages.
- * 
+ *
  * Revision 1.19  1994/07/01  16:36:20  yuan
  * Working on triggers that aren't always on.
- * 
+ *
  * Revision 1.18  1994/06/21  18:50:14  john
  * Made ESC key exit dialog.
- * 
+ *
  * Revision 1.17  1994/06/20  22:30:36  yuan
  * Fixed crazy runaway trigger bug that Adam found
- * 
+ *
  * Revision 1.16  1994/05/31  10:03:48  yuan
  * Fixed compiler warnings...
- * 
- * 
+ *
+ *
  * Revision 1.15  1994/05/30  20:22:30  yuan
  * New triggers.
- * 
+ *
  * Revision 1.14  1994/05/27  12:33:50  yuan
  * Fixed some bugs when adding trigger.
- * 
+ *
  * Revision 1.13  1994/05/27  10:34:29  yuan
  * Added new Dialog boxes for Walls and Triggers.
- * 
+ *
  * Revision 1.12  1994/05/25  18:15:02  yuan
  * Fixed make warnings to save 10 cents!
- * 
+ *
  * Revision 1.11  1994/05/25  18:08:03  yuan
  * Revamping walls and triggers interface.
  * Wall interface complete, but triggers are still in progress.
- * 
+ *
  * Revision 1.10  1994/04/29  15:05:50  yuan
  * Trigger/Link removing stuff still needs to be fixed.
- * 
+ *
  * Revision 1.9  1994/04/28  23:25:34  yuan
  * Obliterated warnings.
- * 
+ *
  * Revision 1.8  1994/04/28  18:08:06  yuan
  * Fixed trigger bug.
- * 
+ *
  */
 
 
@@ -140,7 +140,7 @@ static UI_GADGET_CHECKBOX	*TriggerFlag[NUM_TRIGGER_FLAGS];
 static int old_trigger_num;
 
 //-----------------------------------------------------------------
-// Adds a trigger to wall, and returns the trigger number. 
+// Adds a trigger to wall, and returns the trigger number.
 // If there is a trigger already present, it returns the trigger number. (To be replaced)
 int add_trigger(segment *seg, short side)
 {
@@ -154,12 +154,12 @@ int add_trigger(segment *seg, short side)
 		wall_add_to_markedside(WALL_OPEN);
 		wall_num = seg->sides[side].wall_num;
 		Walls[wall_num].trigger = trigger_num;
-		
+
 		// Set default values first time trigger is added
 		Triggers[trigger_num].flags = 0;
 		Triggers[trigger_num].value = F1_0*5;
 		Triggers[trigger_num].num_links = 0;
-		Triggers[trigger_num].flags &= TRIGGER_ON;		
+		Triggers[trigger_num].flags &= TRIGGER_ON;
 
 		Num_triggers++;
 		return trigger_num;
@@ -179,7 +179,7 @@ int add_trigger(segment *seg, short side)
 		Num_triggers++;
 		return trigger_num;
 	}
-}		
+}
 
 //-----------------------------------------------------------------
 // Adds a specific trigger flag to Markedsegp/Markedside if it is possible.
@@ -212,7 +212,7 @@ int trigger_add_to_Markedside(short flag) {
 int trigger_remove_flag_from_Markedside(short flag) {
 	int trigger_num; //, ctrigger_num;
 	int wall_num;
-	
+
 	if (!Markedsegp) {
 		editor_status("No Markedside.");
 		return 0;
@@ -258,7 +258,7 @@ int bind_matcen_to_trigger() {
 		return 0;
 	}
 
-	trigger_num = Walls[wall_num].trigger;	
+	trigger_num = Walls[wall_num].trigger;
 
 	if (trigger_num == -1) {
 		editor_status("No trigger at Markedside.");
@@ -282,7 +282,7 @@ int bind_matcen_to_trigger() {
 	Triggers[trigger_num].num_links++;
 
 	mprintf((0, "seg %d linked to link_num %d\n",
-				Triggers[trigger_num].seg[link_num], link_num)); 
+				Triggers[trigger_num].seg[link_num], link_num));
 
 	editor_status("Matcen linked to trigger");
 
@@ -306,7 +306,7 @@ int bind_wall_to_trigger() {
 		return 0;
 	}
 
-	trigger_num = Walls[wall_num].trigger;	
+	trigger_num = Walls[wall_num].trigger;
 
 	if (trigger_num == -1) {
 		editor_status("No trigger at Markedside.");
@@ -336,7 +336,7 @@ int bind_wall_to_trigger() {
 	Triggers[trigger_num].num_links++;
 
 	mprintf((0, "seg %d:side %d linked to link_num %d\n",
-				Triggers[trigger_num].seg[link_num], Triggers[trigger_num].side[link_num], link_num)); 
+				Triggers[trigger_num].seg[link_num], Triggers[trigger_num].side[link_num], link_num));
 
 	editor_status("Wall linked to trigger");
 
@@ -344,11 +344,11 @@ int bind_wall_to_trigger() {
 }
 
 int remove_trigger(segment *seg, short side)
-{    	
+{
 	int trigger_num, t, w;
 
 	if (seg->sides[side].wall_num == -1) {
-		mprintf((0, "Can't remove trigger from wall_num -1\n"));	
+		mprintf((0, "Can't remove trigger from wall_num -1\n"));
 		return 0;
 	}
 
@@ -358,9 +358,9 @@ int remove_trigger(segment *seg, short side)
 		Walls[seg->sides[side].wall_num].trigger = -1;
 		for (t=trigger_num;t<Num_triggers-1;t++)
 			Triggers[t] = Triggers[t+1];
-	
+
 		for (w=0; w<Num_walls; w++) {
-			if (Walls[w].trigger > trigger_num) 
+			if (Walls[w].trigger > trigger_num)
 				Walls[w].trigger--;
 		}
 
@@ -368,7 +368,7 @@ int remove_trigger(segment *seg, short side)
 		for (t=0;t<Num_walls;t++)
 			if (Walls[seg->sides[side].wall_num].trigger > trigger_num)
 				Walls[seg->sides[side].wall_num].trigger--;
-		
+
 		return 1;
 	}
 
@@ -415,7 +415,7 @@ int do_trigger_dialog()
 	// Only open 1 instance of this window...
 	if ( MainWindow != NULL ) return 0;
 
-	// Close other windows.	
+	// Close other windows.
 	robot_close_window();
 	close_wall_window();
 	close_centers_window();
@@ -438,7 +438,7 @@ int do_trigger_dialog()
 	TriggerFlag[9] = ui_add_gadget_checkbox( MainWindow, 22, i, 16, 16, 0, "Secret Exit" ); 		i+=22;
 
 	QuitButton = ui_add_gadget_button( MainWindow, 20, i, 48, 40, "Done", NULL );
-																				 
+
 	// The little box the wall will appear in.
 	WallViewBox = ui_add_gadget_userbox( MainWindow, 155, 5, 64, 64 );
 
@@ -479,10 +479,10 @@ void do_trigger_window()
 	//------------------------------------------------------------
 	ui_button_any_drawn = 0;
 	ui_window_do_gadgets(MainWindow);
-	
+
 	//------------------------------------------------------------
 	// If we change walls, we need to reset the ui code for all
-	// of the checkboxes that control the wall flags.  
+	// of the checkboxes that control the wall flags.
 	//------------------------------------------------------------
 	Markedwall = Markedsegp->sides[Markedside].wall_num;
 	if (Markedwall != -1)
@@ -518,34 +518,34 @@ void do_trigger_window()
 				TriggerFlag[9]->flag = 1;
 		}
 	}
-	
+
 	//------------------------------------------------------------
 	// If any of the checkboxes that control the wallflags are set, then
 	// update the cooresponding wall flag.
 	//------------------------------------------------------------
 	if (IS_CHILD(Markedsegp->children[Markedside])) {
-		if (TriggerFlag[0]->flag == 1) 
-			trigger_add_to_Markedside(TRIGGER_CONTROL_DOORS); 
+		if (TriggerFlag[0]->flag == 1)
+			trigger_add_to_Markedside(TRIGGER_CONTROL_DOORS);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_CONTROL_DOORS);
 		if (TriggerFlag[1]->flag == 1)
-			trigger_add_to_Markedside(TRIGGER_SHIELD_DAMAGE); 
+			trigger_add_to_Markedside(TRIGGER_SHIELD_DAMAGE);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_SHIELD_DAMAGE);
 		if (TriggerFlag[2]->flag == 1)
-			trigger_add_to_Markedside(TRIGGER_ENERGY_DRAIN); 
+			trigger_add_to_Markedside(TRIGGER_ENERGY_DRAIN);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_ENERGY_DRAIN);
 		if (TriggerFlag[3]->flag == 1)
-			trigger_add_to_Markedside(TRIGGER_EXIT); 
+			trigger_add_to_Markedside(TRIGGER_EXIT);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_EXIT);
 		if (TriggerFlag[4]->flag == 1)
-			trigger_add_to_Markedside(TRIGGER_ONE_SHOT); 
+			trigger_add_to_Markedside(TRIGGER_ONE_SHOT);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_ONE_SHOT);
 		if (TriggerFlag[5]->flag == 1)
-			trigger_add_to_Markedside(TRIGGER_ILLUSION_ON); 
+			trigger_add_to_Markedside(TRIGGER_ILLUSION_ON);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_ILLUSION_ON);
 		if (TriggerFlag[6]->flag == 1)
@@ -557,23 +557,23 @@ void do_trigger_window()
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_ON);
 
-		if (TriggerFlag[8]->flag == 1) 
+		if (TriggerFlag[8]->flag == 1)
 			trigger_add_to_Markedside(TRIGGER_MATCEN);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_MATCEN);
 
-		if (TriggerFlag[9]->flag == 1) 
+		if (TriggerFlag[9]->flag == 1)
 			trigger_add_to_Markedside(TRIGGER_SECRET_EXIT);
 		else
 			trigger_remove_flag_from_Markedside(TRIGGER_SECRET_EXIT);
 
 	} else
 		for (	i=0; i < NUM_TRIGGER_FLAGS; i++ )
-			if (TriggerFlag[i]->flag == 1) { 
+			if (TriggerFlag[i]->flag == 1) {
 				TriggerFlag[i]->flag = 0;					// Tells ui that this button isn't checked
 				TriggerFlag[i]->status = 1;				// Tells ui to redraw button
 			}
-	
+
 	//------------------------------------------------------------
 	// Draw the wall in the little 64x64 box
 	//------------------------------------------------------------
@@ -609,13 +609,7 @@ void do_trigger_window()
 	if ( QuitButton->pressed || (last_keypress==KEY_ESC))	{
 		close_trigger_window();
 		return;
-	}		
+	}
 
 	old_trigger_num = trigger_num;
 }
-
-
-
-
-
-

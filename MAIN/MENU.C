@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -18,7 +18,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  * Inferno main menu.
  *
- * 
+ *
  *
  */
 
@@ -87,7 +87,7 @@ static char rcsid[] = "$Id: menu.c 2.5 1995/10/07 13:19:09 john Exp $";
 //char *menu_detail_text[] = { "Lowest", "Low", "Medium", "High", "Highest", "", "Custom..." };
 
 #define MENU_NEW_GAME            0
-#define MENU_GAME      				1 
+#define MENU_GAME      				1
 #define MENU_EDITOR					2
 #define MENU_VIEW_SCORES			3
 #define MENU_QUIT                4
@@ -142,7 +142,7 @@ void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int ci
 		gr_set_fontcolor(BM_XRGB(6,6,6),-1);
 		gr_printf(0x8000,grd_curcanv->cv_bitmap.bm_h-GAME_FONT->ft_h-2,TXT_COPYRIGHT);
 	}
-	
+
 	// Don't allow them to hit ESC in the main menu.
 	if (*last_key==KEY_ESC) *last_key = 0;
 
@@ -154,7 +154,7 @@ void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int ci
 			newdemo_start_playback(NULL);		// Randomly pick a file
 			if (Newdemo_state == ND_STATE_PLAYBACK)	{
 				Function_mode = FMODE_GAME;
-				*last_key = -2;							  	
+				*last_key = -2;
 			}
 		}
 	}
@@ -224,7 +224,7 @@ void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num_option
 }
 
 //returns number of item chosen
-int DoMenu() 
+int DoMenu()
 {
 	int menu_choice[25];
 	newmenu_item m[25];
@@ -234,7 +234,7 @@ int DoMenu()
 		RegisterPlayer();
 		return 0;
 	}
-	
+
 	if ((Game_mode & GM_SERIAL) || (Game_mode & GM_MODEM)) {
 		do_option(MENU_START_SERIAL);
 		return 0;
@@ -244,7 +244,7 @@ int DoMenu()
 
 	do {
 		keyd_time_when_last_pressed = timer_get_fixed_seconds();		// .. 20 seconds from now!
-		if (main_menu_choice < 0 )	main_menu_choice = 0;		
+		if (main_menu_choice < 0 )	main_menu_choice = 0;
 		Menu_draw_copyright = 1;
 		main_menu_choice = newmenu_do2( "", NULL, num_options, m, autodemo_menu_check, main_menu_choice, Menu_pcx_name);
 		if ( main_menu_choice > -1 ) do_option(menu_choice[main_menu_choice]);
@@ -253,7 +253,7 @@ int DoMenu()
 
 //	if (main_menu_choice != -2)
 //		do_auto_demo = 0;		// No more auto demos
-	if ( Function_mode==FMODE_GAME )	
+	if ( Function_mode==FMODE_GAME )
 		gr_palette_fade_out( gr_palette, 32, 0 );
 
 	return main_menu_choice;
@@ -262,7 +262,7 @@ int DoMenu()
 extern void show_order_form(void);	// John didn't want this in inferno.h so I just externed it.
 
 //returns flag, true means quit menu
-void do_option ( int select) 
+void do_option ( int select)
 {
 	switch (select) {
 		case MENU_NEW_GAME:
@@ -271,7 +271,7 @@ void do_option ( int select)
 		case MENU_GAME:
 			break;
 		case MENU_DEMO_PLAY:
-			{ 
+			{
 				char demo_file[16];
 				if (newmenu_get_filename( TXT_SELECT_DEMO, "*.dem", demo_file, 1 ))	{
 					newdemo_start_playback(demo_file);
@@ -282,7 +282,7 @@ void do_option ( int select)
 #ifdef SHAREWARE
 			do_load_game_menu();
 #else
-			state_restore_all(0);	
+			state_restore_all(0);
 #endif
 			break;
 		#ifdef EDITOR
@@ -379,7 +379,7 @@ void do_option ( int select)
 			break;
 		case MENU_SHOW_CREDITS:
 			gr_palette_fade_out( gr_palette,32,0);
-			credits_show();	
+			credits_show();
 			break;
 		default:
 			Error("Unknown option %d in do_option",select);
@@ -403,7 +403,7 @@ int do_difficulty_menu()
 
 	if (s > -1 )	{
 		if (s != Difficulty_level)
-		{	
+		{
 			Player_default_difficulty = s;
 			write_player_file();
 		}
@@ -594,7 +594,7 @@ do_new_game_menu()
 		default_mission = 0;
 		for (i=0;i<n_missions;i++) {
 			m[i] = Mission_list[i].mission_name;
-			if ( !stricmp( m[i], config_last_mission ) )	
+			if ( !stricmp( m[i], config_last_mission ) )
 				default_mission = i;
 		}
 
@@ -604,9 +604,9 @@ do_new_game_menu()
 			return;		//abort!
 
 		strcpy(config_last_mission, m[new_mission_num]  );
-		
+
 		if (!load_mission(new_mission_num)) {
-			nm_messagebox( NULL, 1, TXT_OK, "Error in Mission file"); 
+			nm_messagebox( NULL, 1, TXT_OK, "Error in Mission file");
 			return;
 		}
 	}
@@ -642,7 +642,7 @@ try_again:
 
 		if (!(new_level_num>0 && new_level_num<=player_highest_level)) {
 			m[0].text = TXT_ENTER_TO_CONT;
-			nm_messagebox( NULL, 1, TXT_OK, TXT_INVALID_LEVEL); 
+			nm_messagebox( NULL, 1, TXT_OK, TXT_INVALID_LEVEL);
 			goto try_again;
 		}
 	}
@@ -658,9 +658,9 @@ try_again:
 	{
 		int i;
 		for (i=Last_secret_level; i<=Last_level; i++ )	{
-			if ( i!=0 )	
+			if ( i!=0 )
 				StartNewGame(i);
-		}		
+		}
 	}
 #endif
 
@@ -745,7 +745,7 @@ extern void GameLoop(int, int );
 
 void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 {
-	nitems=nitems;		
+	nitems=nitems;
 	*last_key = *last_key;
 
 	if ( citem==4)	{
@@ -777,11 +777,11 @@ void do_options_menu()
 	int i = 0;
 
 	do {
-		m[0].type = NM_TYPE_SLIDER; m[0].text=TXT_FX_VOLUME; m[0].value=Config_digi_volume;m[0].min_value=0; m[0].max_value=8; 
-		m[1].type = NM_TYPE_SLIDER; m[1].text=TXT_MUSIC_VOLUME; m[1].value=Config_midi_volume;m[1].min_value=0; m[1].max_value=8; 
-		m[2].type = NM_TYPE_CHECK; m[2].text=TXT_REVERSE_STEREO; m[2].value=Config_channels_reversed; 
+		m[0].type = NM_TYPE_SLIDER; m[0].text=TXT_FX_VOLUME; m[0].value=Config_digi_volume;m[0].min_value=0; m[0].max_value=8;
+		m[1].type = NM_TYPE_SLIDER; m[1].text=TXT_MUSIC_VOLUME; m[1].value=Config_midi_volume;m[1].min_value=0; m[1].max_value=8;
+		m[2].type = NM_TYPE_CHECK; m[2].text=TXT_REVERSE_STEREO; m[2].value=Config_channels_reversed;
 		m[3].type = NM_TYPE_TEXT; m[3].text="";
-		m[4].type = NM_TYPE_SLIDER; m[4].text=TXT_BRIGHTNESS; m[4].value=gr_palette_get_gamma();m[4].min_value=0; m[4].max_value=8; 
+		m[4].type = NM_TYPE_SLIDER; m[4].text=TXT_BRIGHTNESS; m[4].value=gr_palette_get_gamma();m[4].min_value=0; m[4].max_value=8;
 		m[5].type = NM_TYPE_TEXT; m[5].text="";
 		m[6].type = NM_TYPE_MENU; m[6].text=TXT_CONTROLS_;
 		m[7].type = NM_TYPE_MENU; m[7].text=TXT_DETAIL_LEVELS;
@@ -789,10 +789,10 @@ void do_options_menu()
 		m[9].type = NM_TYPE_TEXT; m[9].text="";
 		m[10].type = NM_TYPE_SLIDER; m[10].text=TXT_JOYS_SENSITIVITY; m[10].value=Config_joystick_sensitivity; m[10].min_value =0; m[10].max_value = 8;
 		m[11].type = NM_TYPE_TEXT; m[11].text="";
-		m[12].type = NM_TYPE_CHECK; m[12].text="Ship auto-leveling"; m[12].value=Auto_leveling_on; 
-				
+		m[12].type = NM_TYPE_CHECK; m[12].text="Ship auto-leveling"; m[12].value=Auto_leveling_on;
+
 		i = newmenu_do1( NULL, TXT_OPTIONS, 13, m, joydef_menuset, i );
-			
+
 		switch(i)	{
 			case 6: joydefs_config(); 			break;
 			case 7: do_detail_level_menu();	break;
@@ -827,16 +827,13 @@ void do_multi_player_menu()
 		ADD_ITEM(TXT_MODEM_GAME, MENU_START_SERIAL, -1);
 
 		choice = newmenu_do1( NULL, TXT_MULTIPLAYER, num_options, m, NULL, choice );
-		
-		if ( choice > -1 )	
+
+		if ( choice > -1 )
 			do_option(menu_choice[choice]);
-	
+
 		if (old_game_mode != Game_mode)
 			break;		// leave menu
 
 	} while( choice > -1 );
 
 }
-
-
-

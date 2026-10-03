@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_lin.asm $
@@ -19,33 +19,33 @@
 ; $Log: tmap_lin.asm $
 ; Revision 1.3  1995/02/20  18:22:57  john
 ; Put all the externs in the assembly modules into tmap_inc.asm.
-; Also, moved all the C versions of the inner loops into a new module, 
+; Also, moved all the C versions of the inner loops into a new module,
 ; scanline.c.
-; 
+;
 ; Revision 1.2  1995/02/20  17:09:10  john
 ; Added code so that you can build the tmapper with no assembly!
-; 
+;
 ; Revision 1.1  1994/11/30  12:24:04  mike
 ; Initial revision
-; 
+;
 ; Revision 1.6  1994/11/12  16:39:40  mike
 ; jae to ja.
-; 
+;
 ; Revision 1.5  1994/02/10  21:24:43  matt
 ; Got rid of debug_on set
-; 
+;
 ; Revision 1.4  1994/01/31  15:39:53  mike
 ; Write additional inner loop for transparency.
-; 
+;
 ; Revision 1.3  1994/01/26  11:50:04  john
 ; Added transparency to linear unlighted texture mapper.
-; 
+;
 ; Revision 1.2  1993/11/22  10:24:36  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  17:29:50  mike
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -202,7 +202,7 @@ _start1:
 ;	esi	pointer to source bitmap
 ;	edi	write address
  rept num_iters
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,26	; shift in v coordinate
 	shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
@@ -240,7 +240,7 @@ transparent_texture:
 	test	_loop_count,-1
 	je	_t_none_to_do
 loop_transparent:
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,26	; shift in v coordinate
 	shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
@@ -262,19 +262,18 @@ _TEXT	ends
 	end
 
 
-
 ; This is the inner loop to write two pixels at a time
 ; This is about 2.5% faster overall (on Mike's 66 MHz 80486 DX2, VLB)
 ; You must write code to even align edi and do half as many iterations, and write
 ; the beginning and ending extra pixels, if necessary.
-;	sub	eax,eax	; clear for 
+;	sub	eax,eax	; clear for
 ;	shld	eax,ebp,6	; shift in v coordinate
 ;	add	ebp,_fx_dv_dx	; update v coordinate
 ;	shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
 ;	add	ebx,ecx	; update u coordinate
 ;	mov	dl,[esi+eax]	; get pixel from source bitmap
 ;
-;	sub	eax,eax	; clear for 
+;	sub	eax,eax	; clear for
 ;	shld	eax,ebp,6	; shift in v coordinate
 ;	add	ebp,_fx_dv_dx	; update v coordinate
 ;	shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
@@ -283,6 +282,3 @@ _TEXT	ends
 ;
 ;	mov	[edi],dx
 ;	add	edi,2
-
-
-

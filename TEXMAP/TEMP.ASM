@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 public tmap_loop_fast_nolight
 tmap_loop_fast_nolight:
@@ -39,7 +39,7 @@ NotDwordAligned1_nolight:
 	; write 1 pixel
 	mov	[edi],al
 	inc	edi
-	
+
 	; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -57,14 +57,14 @@ DwordAligned1_nolight:
 	mov	num_left_over, eax
 	shr	eax, NBITS
 
-	cmp	eax, 0		
+	cmp	eax, 0
 	je	tmap_loop
-	
+
 	mov 	_loop_count, eax	; _loop_count = pixels / NPIXS
 	;OPshl	eax, NBITS
 	lea	eax, [eax*8]
 	sub	num_left_over, eax	; num_left_over = obvious
-		
+
 	; compute initial v coordinate
 	mov	eax,ebp	; get v
 	PDIV
@@ -72,7 +72,7 @@ DwordAligned1_nolight:
 
 	; compute initial u coordinate
 	mov	eax,ebx	; get u
-	PDIV	
+	PDIV
 	mov	U0, eax
 
 	; Set deltas to NPIXS pixel increments
@@ -100,13 +100,13 @@ TopOfLoop4_nolight:
 		push	ecx
 		push	ebp
 		push	edi
-	
-		; Find fixed U1		
+
+		; Find fixed U1
 		mov	eax, ebx
 		PDIV
 		mov	ebx, eax	; ebx = U1 until pop's
 
-		; Find fixed V1		
+		; Find fixed V1
 		mov	eax, ebp
 		PDIV
 		mov	ebp, eax	; ebp = V1 until pop's
@@ -120,7 +120,7 @@ TopOfLoop4_nolight:
 		mov	esi, edi
 		shl	esi, 10
 		mov	si, ax
-		
+
 		; Make EDX = DV:DU in 6:10,6:10 format
 		mov	eax, ebx
 		sub	eax, ecx
@@ -136,10 +136,10 @@ TopOfLoop4_nolight:
 		mov	V0, ebp
 
 		pop	edi		; Restore EDI before using it
-		
+
 		REPT (1 SHL (NBITS-2))
-			REPT 4	
-				; Do 1 pixel 
+			REPT 4
+				; Do 1 pixel
 				mov	eax, esi	; get u,v
 				shr	eax, 26		; shift out all but int(v)
 				shld	ax,si,6		; shift in u, shifting up v
@@ -148,7 +148,7 @@ TopOfLoop4_nolight:
 				ror	ecx, 8		; move to next dest pixel
 
 			ENDM
-					
+
 			mov 	[edi],ecx		; Draw 4 pixels to display
 			add 	edi,4
 		ENDM
@@ -171,12 +171,12 @@ DoEndPixels_nolight:
 
 		push	edi		; use edi as a temporary variable
 
-		; Find fixed U1		
+		; Find fixed U1
 		mov	eax, ebx
 		PDIV
 		mov	ebx, eax	; ebx = U1 until pop's
 
-		; Find fixed V1		
+		; Find fixed V1
 		mov	eax, ebp
 		PDIV
 		mov	ebp, eax	; ebp = V1 until pop's
@@ -190,7 +190,7 @@ DoEndPixels_nolight:
 		mov	esi, edi
 		shl	esi, 10
 		mov	si, ax
-		
+
 		; Make EDX = DV:DU in 6:10,6:10 format
 		mov	eax, ebx
 		sub	eax, ecx
@@ -201,12 +201,12 @@ DoEndPixels_nolight:
 		mov	dx, ax		; put delta u in low word
 
 		pop	edi		; Restore EDI before using it
-		
+
 		mov	ecx, num_left_over
 
 		ITERATION = 0
 		REPT (1 SHL NBITS)
-			; Do 1 pixel 
+			; Do 1 pixel
 			mov	eax, esi	; get u,v
 			shr	eax, 26		; shift out all but int(v)
 			shld	ax,si,6		; shift in u, shifting up v
@@ -221,4 +221,3 @@ DoEndPixels_nolight:
 		; Should never get here!!!!!
 		int	3
 		jmp	_none_to_do
-

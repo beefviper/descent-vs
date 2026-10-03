@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,320 +15,320 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.10 $
  * $Author: john $
  * $Date: 1995/10/07 13:17:26 $
- * 
+ *
  * Functions for managing the pig files.
- * 
+ *
  * $Log: piggy.c $
  * Revision 2.10  1995/10/07  13:17:26  john
  * Made all bitmaps paged out by default.
- * 
+ *
  * Revision 2.9  1995/04/14  14:05:24  john
  * *** empty log message ***
- * 
+ *
  * Revision 2.8  1995/04/12  13:39:37  john
  * Fixed bug with -lowmem not working.
- * 
+ *
  * Revision 2.7  1995/03/29  23:23:17  john
  * Fixed major bug with sounds not building into pig right.
- * 
+ *
  * Revision 2.6  1995/03/28  18:05:00  john
  * Fixed it so you don't have to delete pig after changing bitmaps.tbl
- * 
+ *
  * Revision 2.5  1995/03/16  23:13:06  john
  * Fixed bug with piggy paging in bitmap not checking for disk
  * error, hence bogifying textures if you pull the CD out.
- * 
+ *
  * Revision 2.4  1995/03/14  16:22:27  john
  * Added cdrom alternate directory stuff.
- * 
+ *
  * Revision 2.3  1995/03/06  15:23:20  john
  * New screen techniques.
- * 
+ *
  * Revision 2.2  1995/02/27  13:13:40  john
  * Removed floating point.
- * 
+ *
  * Revision 2.1  1995/02/27  12:31:25  john
  * Made work without editor.
- * 
+ *
  * Revision 2.0  1995/02/27  11:28:02  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.85  1995/02/09  12:54:24  john
  * Made paged out bitmaps have bm_data be a valid pointer
  * instead of NULL, in case anyone accesses it.
- * 
+ *
  * Revision 1.84  1995/02/09  12:50:59  john
  * Bullet-proofed the piggy loading code.
- * 
+ *
  * Revision 1.83  1995/02/07  17:08:51  john
  * Added some error handling stuff instead of asserts.
- * 
+ *
  * Revision 1.82  1995/02/03  17:06:48  john
  * Changed sound stuff to allow low memory usage.
  * Also, changed so that Sounds isn't an array of digi_sounds, it
  * is a ubyte pointing into GameSounds, this way the digi.c code that
  * locks sounds won't accidentally unlock a sound that is already playing, but
  * since it's Sounds[soundno] is different, it would erroneously be unlocked.
- * 
+ *
  * Revision 1.81  1995/02/02  21:56:39  matt
  * Added data for new gauge bitmaps
- * 
+ *
  * Revision 1.80  1995/02/01  23:31:57  john
  * Took out loading bar.
- * 
+ *
  * Revision 1.79  1995/01/28  15:13:18  allender
  * bumped up Piggy_bitmap_cache_size
- * 
+ *
  * Revision 1.78  1995/01/26  12:30:43  john
  * Took out prev.
- * 
+ *
  * Revision 1.77  1995/01/26  12:12:17  john
  * Made buffer be big for bitmaps.
- * 
+ *
  * Revision 1.76  1995/01/25  20:15:38  john
  * Made editor allocate all mem.
- * 
+ *
  * Revision 1.75  1995/01/25  14:52:56  john
  * Made bitmap buffer be 1.5 MB.
- * 
+ *
  * Revision 1.74  1995/01/22  16:03:19  mike
  * localization.
- * 
+ *
  * Revision 1.73  1995/01/22  15:58:36  mike
  * localization
- * 
+ *
  * Revision 1.72  1995/01/18  20:51:20  john
  * Took out warnings.
- * 
+ *
  * Revision 1.71  1995/01/18  20:47:21  john
  * Added code to allocate sounds & bitmaps into diff
  * buffers, also made sounds not be compressed for registered.
- * 
+ *
  * Revision 1.70  1995/01/18  15:08:41  john
  * Added start/stop time around paging.
  * Made paging clear screen around globe.
- * 
+ *
  * Revision 1.69  1995/01/18  10:07:51  john
- * 
+ *
  * Took out debugging mprintfs.
- * 
+ *
  * Revision 1.68  1995/01/17  14:27:42  john
  * y
- * 
+ *
  * Revision 1.67  1995/01/17  12:14:39  john
  * Made walls, object explosion vclips load at level start.
- * 
+ *
  * Revision 1.66  1995/01/15  13:15:44  john
  * Made so that paging always happens, lowmem just loads less.
  * Also, make KB load print to hud.
- * 
+ *
  * Revision 1.65  1995/01/15  11:56:28  john
  * Working version of paging.
- * 
+ *
  * Revision 1.64  1995/01/14  19:17:07  john
  * First version of new bitmap paging code.
- * 
+ *
  * Revision 1.63  1994/12/15  12:26:44  john
  * Added -nolowmem function.
- * 
+ *
  * Revision 1.62  1994/12/14  21:12:26  john
  * Fixed bug with page fault when exiting and using
  * -nosound.
- * 
+ *
  * Revision 1.61  1994/12/14  11:35:31  john
  * Evened out thermometer for pig read.
- * 
+ *
  * Revision 1.60  1994/12/14  10:51:00  john
  * Sped up sound loading.
- * 
+ *
  * Revision 1.59  1994/12/14  10:12:08  john
  * Sped up pig loading.
- * 
+ *
  * Revision 1.58  1994/12/13  09:14:47  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.57  1994/12/13  09:12:57  john
  * Made the bar always fill up.
- * 
+ *
  * Revision 1.56  1994/12/13  03:49:08  john
  * Made -lowmem not load the unnecessary bitmaps.
- * 
+ *
  * Revision 1.55  1994/12/06  16:06:35  john
  * Took out piggy sorting.
- * 
+ *
  * Revision 1.54  1994/12/06  15:11:14  john
  * Fixed bug with reading pigs.
- * 
+ *
  * Revision 1.53  1994/12/06  14:14:47  john
  * Added code to set low mem based on memory.
- * 
+ *
  * Revision 1.52  1994/12/06  14:01:10  john
  * Fixed bug that was causing -lowmem all the time..
- * 
+ *
  * Revision 1.51  1994/12/06  13:33:48  john
  * Added lowmem option.
- * 
+ *
  * Revision 1.50  1994/12/05  19:40:10  john
  * If -nosound or no sound card selected, don't load sounds from pig.
- * 
+ *
  * Revision 1.49  1994/12/05  12:17:44  john
  * Added code that locks/unlocks digital sounds on demand.
- * 
+ *
  * Revision 1.48  1994/12/05  11:39:03  matt
  * Fixed little mistake
- * 
+ *
  * Revision 1.47  1994/12/05  09:29:22  john
  * Added clength to the sound field.
- * 
+ *
  * Revision 1.46  1994/12/04  15:27:15  john
  * Fixed my stupid bug that looked at -nosound instead of digi_driver_card
  * to see whether or not to lock down sound memory.
- * 
+ *
  * Revision 1.45  1994/12/03  14:17:00  john
  * Took out my debug mprintf.
- * 
+ *
  * Revision 1.44  1994/12/03  13:32:37  john
  * Fixed bug with offscreen bitmap.
- * 
+ *
  * Revision 1.43  1994/12/03  13:07:13  john
  * Made the pig read/write compressed sounds.
- * 
+ *
  * Revision 1.42  1994/12/03  11:48:51  matt
  * Added option to not dump sounds to pigfile
- * 
+ *
  * Revision 1.41  1994/12/02  20:02:20  matt
  * Made sound files constant match constant for table
- * 
+ *
  * Revision 1.40  1994/11/29  11:03:09  adam
  * upped # of sounds
- * 
+ *
  * Revision 1.39  1994/11/27  23:13:51  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.38  1994/11/20  18:40:34  john
  * MAde the piggy.lst and piggy.all not dump for release.
- * 
+ *
  * Revision 1.37  1994/11/19  23:54:45  mike
  * up number of bitmaps for shareware version.
- * 
+ *
  * Revision 1.36  1994/11/19  19:53:05  mike
  * change MAX_BITMAP_FILES
- * 
+ *
  * Revision 1.35  1994/11/19  10:42:56  matt
  * Increased number of bitmaps for non-shareware version
- * 
+ *
  * Revision 1.34  1994/11/19  09:11:52  john
  * Added avg_color to bitmaps saved in pig.
- * 
+ *
  * Revision 1.33  1994/11/19  00:07:05  john
  * Fixed bug with 8 char sound filenames not getting read from pig.
- * 
+ *
  * Revision 1.32  1994/11/18  22:24:54  john
  * Added -bigpig command line that doesn't rle your pig.
- * 
+ *
  * Revision 1.31  1994/11/18  21:56:53  john
  * Added a better, leaner pig format.
- * 
+ *
  * Revision 1.30  1994/11/16  12:06:16  john
  * Fixed bug with calling .bbms abms.
- * 
+ *
  * Revision 1.29  1994/11/16  12:00:56  john
  * Added piggy.all dump.
- * 
+ *
  * Revision 1.28  1994/11/10  21:16:02  adam
  * nothing important
- * 
+ *
  * Revision 1.27  1994/11/10  13:42:00  john
  * Made sounds not lock down if using -nosound.
- * 
+ *
  * Revision 1.26  1994/11/09  19:55:40  john
  * Added full rle support with texture rle caching.
- * 
+ *
  * Revision 1.25  1994/11/09  16:36:42  john
  * First version with RLE bitmaps in Pig.
- * 
+ *
  * Revision 1.24  1994/10/27  19:42:59  john
  * Disable the piglet option.
- * 
+ *
  * Revision 1.23  1994/10/27  18:51:40  john
- * Added -piglet option that only loads needed textures for a 
+ * Added -piglet option that only loads needed textures for a
  * mine.  Only saved ~1MB, and code still doesn't free textures
  * before you load a new mine.
- * 
+ *
  * Revision 1.22  1994/10/25  13:11:42  john
  * Made the sounds sort. Dumped piggy.lst.
- * 
+ *
  * Revision 1.21  1994/10/06  17:06:23  john
  * Took out rle stuff.
- * 
+ *
  * Revision 1.20  1994/10/06  15:45:36  adam
  * bumped MAX_BITMAP_FILES again!
- * 
+ *
  * Revision 1.19  1994/10/06  11:01:17  yuan
  * Upped MAX_BITMAP_FILES
- * 
+ *
  * Revision 1.18  1994/10/06  10:44:45  john
  * Added diagnostic message and psuedo run-length-encoder
  * to see how much memory we would save by storing bitmaps
  * in a RLE method.  Also, I commented out the code that
- * stores 4K bitmaps on a 4K boundry to reduce pig size 
+ * stores 4K bitmaps on a 4K boundry to reduce pig size
  * a bit.
- * 
+ *
  * Revision 1.17  1994/10/04  20:03:13  matt
  * Upped maximum number of bitmaps
- * 
+ *
  * Revision 1.16  1994/10/03  18:04:20  john
  * Fixed bug with data_offset not set right for bitmaps
  * that are 64x64 and not aligned on a 4k boundry.
- * 
+ *
  * Revision 1.15  1994/09/28  11:30:55  john
  * changed inferno.pig to descent.pig, changed the way it
  * is read.
- * 
+ *
  * Revision 1.14  1994/09/22  16:14:17  john
  * Redid intro sequecing.
- * 
+ *
  * Revision 1.13  1994/09/19  14:42:47  john
  * Locked down sounds with Virtual memory.
- * 
+ *
  * Revision 1.12  1994/09/10  17:31:52  mike
  * Increase number of loadable bitmaps.
- * 
+ *
  * Revision 1.11  1994/09/01  19:32:49  mike
  * Boost texture map allocation.
- * 
+ *
  * Revision 1.10  1994/08/16  11:51:02  john
  * Added grwased pigs.
- * 
+ *
  * Revision 1.9  1994/07/06  09:18:03  adam
  * upped bitmap #s
- * 
+ *
  * Revision 1.8  1994/06/20  22:02:15  matt
  * Fixed bug from last change
- * 
+ *
  * Revision 1.7  1994/06/20  21:33:18  matt
  * Made bm.h not include sounds.h, to reduce dependencies
- * 
+ *
  * Revision 1.6  1994/06/20  16:52:19  john
  * cleaned up init output a bit.
- * 
+ *
  * Revision 1.5  1994/06/08  14:20:57  john
  * Made piggy dump before going into game.
- * 
+ *
  * Revision 1.4  1994/06/02  18:59:22  matt
  * Clear selector field of bitmap loaded from pig file
- * 
+ *
  * Revision 1.3  1994/05/06  15:31:41  john
  * Made name field a bit longer.
- * 
+ *
  * Revision 1.2  1994/05/06  13:02:44  john
  * Added piggy stuff; worked on supertransparency
- * 
+ *
  * Revision 1.1  1994/05/06  11:47:26  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -361,8 +361,8 @@ static char rcsid[] = "$Id: piggy.c 2.10 1995/10/07 13:17:26 john Exp $";
 #include "screens.h"
 
 //#include "soscomp.h"
-//The above include is part of a commercial 
-//sound library, so it cannot be included in a public 
+//The above include is part of a commercial
+//sound library, so it cannot be included in a public
 //release of the source code. -KRB
 #include "no_sos.h" //Added by KRB
 
@@ -421,7 +421,7 @@ int piggy_page_flushed = 0;
 typedef struct DiskBitmapHeader {
 	char name[8];
 	ubyte dflags;
-	ubyte	width;	
+	ubyte	width;
 	ubyte height;
 	ubyte flags;
 	ubyte avg_color;
@@ -532,11 +532,11 @@ int piggy_register_sound( digi_sound * snd, char * name, int in_file )
 	hashtable_insert( &AllDigiSndNames, AllSounds[Num_sound_files].name, Num_sound_files );
 	GameSounds[Num_sound_files] = *snd;
 	if ( !in_file )	{
-		SoundOffset[Num_sound_files] = 0;	
+		SoundOffset[Num_sound_files] = 0;
 	}
 
 	i = Num_sound_files;
-   
+
 	if (!in_file)
 		Num_sound_files_new++;
 
@@ -544,7 +544,7 @@ int piggy_register_sound( digi_sound * snd, char * name, int in_file )
 	return i;
 }
 
-bitmap_index piggy_find_bitmap( char * name )	
+bitmap_index piggy_find_bitmap( char * name )
 {
 	bitmap_index bmp;
 	int i;
@@ -560,7 +560,7 @@ bitmap_index piggy_find_bitmap( char * name )
 	return bmp;
 }
 
-int piggy_find_sound( char * name )	
+int piggy_find_sound( char * name )
 {
 	int i;
 
@@ -611,7 +611,7 @@ int piggy_init()
 		read_sounds = 0;
 		mprintf(( 0, "Not loading sound data!!!!!\n" ));
 	}
-	
+
 	for (i=0; i<MAX_SOUND_FILES; i++ )	{
 		GameSounds[i].length = 0;
 		GameSounds[i].data = NULL;
@@ -645,7 +645,7 @@ int piggy_init()
 	}
 
 	filename = "DESCENT.PIG";
-	
+
 	if ( FindArg( "-bigpig" ))
 		BigPig = 1;
 
@@ -688,7 +688,7 @@ int piggy_init()
 
 	x = 60; y = 189;
 
-	gr_set_curfont( Gamefonts[GFONT_SMALL] );	
+	gr_set_curfont( Gamefonts[GFONT_SMALL] );
 	gr_set_fontcolor(gr_find_closest_color_current( 20, 20, 20 ),-1 );
 	gr_printf( 0x8000, y-10, "%s...", TXT_LOADING_DATA );
 
@@ -697,7 +697,7 @@ int piggy_init()
 		//size -= sizeof(DiskBitmapHeader);
 		memcpy( temp_name_read, bmh.name, 8 );
 		temp_name_read[8] = 0;
-		if ( bmh.dflags & DBM_FLAG_ABM )	
+		if ( bmh.dflags & DBM_FLAG_ABM )
 			sprintf( temp_name, "%s#%d", temp_name_read, bmh.dflags & 63 );
 		else
 			strcpy( temp_name, temp_name_read );
@@ -748,9 +748,9 @@ int piggy_init()
 	BitmapBits = malloc( Piggy_bitmap_cache_size );
 	if ( BitmapBits == NULL )
 		Error( "Not enough memory to load DESCENT.PIG bitmaps\n" );
-	Piggy_bitmap_cache_data = BitmapBits;	
+	Piggy_bitmap_cache_data = BitmapBits;
 	Piggy_bitmap_cache_next = 0;
-	
+
 	mprintf(( 0, "\nBitmaps: %d KB   Sounds: %d KB\n", Piggy_bitmap_cache_size/1024, sbytes/1024 ));
 
 	atexit(piggy_close_file);
@@ -794,7 +794,7 @@ void piggy_read_sounds()
 		if ( SoundOffset[i] > 0 )	{
 			if ( piggy_is_needed(i) )	{
 				cfseek( Piggy_fp, SoundOffset[i], SEEK_SET );
-	
+
 				// Read in the sound data!!!
 				snd->data = ptr;
 				ptr += snd->length;
@@ -835,7 +835,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 {
 	grs_bitmap * bmp;
 	int i,org_i,temp;
-			
+
 	i = bitmap.index;
 	Assert( i >= 0 );
 	Assert( i < MAX_BITMAP_FILES );
@@ -853,7 +853,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 		i = GameBitmapXlat[i];		// Xlat for low-memory settings!
 	}
 	bmp = &GameBitmaps[i];
-	
+
 	if ( bmp->bm_flags & BM_FLAG_PAGED_OUT )	{
 		stop_time();
 
@@ -864,10 +864,10 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			piggy_critical_error();
 			goto ReDoIt;
 		}
-		
+
 		bmp->bm_data = &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next];
 		bmp->bm_flags = GameBitmapFlags[i];
-	
+
 		if ( bmp->bm_flags & BM_FLAG_RLE )	{
 			int zsize = 0;
 			descent_critical_error = 0;
@@ -876,9 +876,9 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 				piggy_critical_error();
 				goto ReDoIt;
 			}
-	
+
 			// GET JOHN NOW IF YOU GET THIS ASSERT!!!
-			Assert( Piggy_bitmap_cache_next+zsize < Piggy_bitmap_cache_size );	
+			Assert( Piggy_bitmap_cache_next+zsize < Piggy_bitmap_cache_size );
 			if ( Piggy_bitmap_cache_next+zsize >= Piggy_bitmap_cache_size )	{
 				piggy_bitmap_page_out_all();
 				goto ReDoIt;
@@ -894,7 +894,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			Piggy_bitmap_cache_next += zsize-4;
 		} else {
 			// GET JOHN NOW IF YOU GET THIS ASSERT!!!
-			Assert( Piggy_bitmap_cache_next+(bmp->bm_h*bmp->bm_w) < Piggy_bitmap_cache_size );	
+			Assert( Piggy_bitmap_cache_next+(bmp->bm_h*bmp->bm_w) < Piggy_bitmap_cache_size );
 			if ( Piggy_bitmap_cache_next+(bmp->bm_h*bmp->bm_w) >= Piggy_bitmap_cache_size )	{
 				piggy_bitmap_page_out_all();
 				goto ReDoIt;
@@ -907,7 +907,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			}
 			Piggy_bitmap_cache_next+=bmp->bm_h*bmp->bm_w;
 		}
-	
+
 		if ( bmp->bm_selector ) {
 			if (!dpmi_modify_selector_base( bmp->bm_selector, bmp->bm_data ))
 				Error( "Error modifying selector base in piggy.c\n" );
@@ -919,13 +919,13 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 		if ( org_i != i )
 			GameBitmaps[org_i] = GameBitmaps[i];
 	}
-	
+
 }
 
 void piggy_bitmap_page_out_all()
 {
 	int i;
-	
+
 	Piggy_bitmap_cache_next = 0;
 
 	piggy_page_flushed++;
@@ -1027,7 +1027,7 @@ void piggy_dump_all()
 	if ( (i=FindArg( "-piggy" )) )	{
 		filename	= Args[i+1];
 		mprintf( (0, "Dumping alternate pigfile, '%s'\n", filename ));
-	} 
+	}
 	mprintf( (0, "\nDumping bitmaps..." ));
 
 	fp = fopen( filename, "wb" );
@@ -1039,7 +1039,7 @@ void piggy_dump_all()
 #endif
 
 	i = 0;
-	fwrite( &i, sizeof(int), 1, fp );	
+	fwrite( &i, sizeof(int), 1, fp );
 	bm_write_all(fp);
 	xlat_offset = ftell(fp);
 	fwrite( GameBitmapXlat, sizeof(ushort)*MAX_BITMAP_FILES, 1, fp );
@@ -1047,7 +1047,7 @@ void piggy_dump_all()
 	fseek( fp, 0, SEEK_SET );
 	fwrite( &i, sizeof(int), 1, fp );
 	fseek( fp, i, SEEK_SET );
-		
+
 	Num_bitmap_files--;
 	fwrite( &Num_bitmap_files, sizeof(int), 1, fp );
 	Num_bitmap_files++;
@@ -1061,18 +1061,18 @@ void piggy_dump_all()
 		int *size;
 		grs_bitmap *bmp;
 
-		{		
+		{
 			char * p, *p1;
 			p = strchr(AllBitmaps[i].name,'#');
 			if (p)	{
 				int n;
-				p1 = p; p1++; 
+				p1 = p; p1++;
 				n = atoi(p1);
 				*p = 0;
 #ifndef RELEASE
-				if (n==0)	{		
+				if (n==0)	{
 					fprintf( fp2, "%s.abm\n", AllBitmaps[i].name );
-				}	
+				}
 #endif
 				memcpy( bmh.name, AllBitmaps[i].name, 8 );
 				Assert( n <= 63 );
@@ -1187,7 +1187,7 @@ void piggy_dump_all()
 
 #ifdef BUILD_PSX_DATA
 	fp = fopen( "psx/descent.dat", "wb" );
-	fwrite( &i, sizeof(int), 1, fp );	
+	fwrite( &i, sizeof(int), 1, fp );
 	bm_write_all(fp);
 	fwrite( GameBitmapXlat, sizeof(ushort)*MAX_BITMAP_FILES, 1, fp );
 	fclose(fp);
@@ -1231,11 +1231,11 @@ int piggy_is_gauge_bitmap( char * base_name )
 {
 	int i;
 	for (i=0; i<NUM_GAUGE_BITMAPS; i++ )	{
-		if ( !stricmp( base_name, gauge_bitmap_names[i] ))	
+		if ( !stricmp( base_name, gauge_bitmap_names[i] ))
 			return 1;
 	}
 
-	return 0;	
+	return 0;
 }
 
 int piggy_is_substitutable_bitmap( char * name, char * subst_name )
@@ -1243,7 +1243,7 @@ int piggy_is_substitutable_bitmap( char * name, char * subst_name )
 	int frame;
 	char * p;
 	char base_name[ 16 ];
-	
+
 	strcpy( subst_name, name );
 	p = strchr( subst_name, '#' );
 	if ( p ) 	{
@@ -1263,4 +1263,3 @@ int piggy_is_substitutable_bitmap( char * name, char * subst_name )
 	strcpy( subst_name, name );
 	return 0;
 }
-

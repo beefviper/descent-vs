@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,17 +15,17 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.2 $
  * $Author: john $
  * $Date: 1994/06/09 12:18:27 $
- * 
- * 
- * 
+ *
+ *
+ *
  * $Log: keypress.c $
  * Revision 1.2  1994/06/09  12:18:27  john
  * Took out keyboard flushes.
- * 
+ *
  * Revision 1.1  1993/12/07  12:30:14  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -64,8 +64,6 @@ char * KeyDesc[256] = {         \
 "{Delete}","","","","","","","","","","","","","","","","","",     \
 "","","","","","","","","","","","","","","","","","","","",     \
 "","","","","","","" };
-
-
 
 
 void GetKeyDescription( char * text, int keypress )
@@ -116,8 +114,6 @@ int DecodeKeyText( char * text )
 }
 
 
-
-
 int GetKeyCode(char * text)
 {
 	UI_WINDOW * wnd;
@@ -155,5 +151,3 @@ int GetKeyCode(char * text)
 
 	return 0;
 }
-
-

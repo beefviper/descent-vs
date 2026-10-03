@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,19 +21,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: ui.h $
  * Revision 1.5  1993/12/07  12:30:11  john
  * new version.
- * 
+ *
  * Revision 1.4  1993/10/26  13:46:15  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/10/07  11:23:30  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/10/05  17:31:15  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/09/20  10:36:36  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -413,5 +413,3 @@ void ui_pad_goto_prev();
 void ui_pad_read( int n, char * filename );
 
 #endif
-
-

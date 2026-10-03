@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,19 +21,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: pixel.c $
  * Revision 1.5  1994/11/18  22:50:26  john
  * Changed shorts to ints in parameters.
- * 
+ *
  * Revision 1.4  1993/10/15  16:22:26  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/09/29  17:31:27  john
  * optimized vesa pixel stuff
- * 
+ *
  * Revision 1.2  1993/09/29  16:15:15  john
  * optimized
- * 
+ *
  * Revision 1.1  1993/09/08  11:44:09  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -118,5 +118,3 @@ void gr_bm_pixel( grs_bitmap * bm, int x, int y, unsigned char color )
 		return;
 	}
 }
-
-

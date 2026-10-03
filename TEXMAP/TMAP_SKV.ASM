@@ -6,34 +6,33 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_skv.asm $
 ; $Revision: 1.5 $
 ; $Author: mike $
 ; $Date: 1994/11/30 00:57:03 $
-; 
+;
 ; Vertical scanner for sky bitmap rendering.
-; 
+;
 ; $Log: tmap_skv.asm $
 ; Revision 1.5  1994/11/30  00:57:03  mike
 ; optimization.
-; 
+;
 ; Revision 1.4  1994/11/12  16:41:13  mike
 ; jae -> ja.
-; 
+;
 ; Revision 1.3  1994/05/24  11:03:12  mike
 ; Make work for any sized (power of 2) bitmap.
-; 
+;
 ; Revision 1.2  1994/01/31  15:42:14  mike
 ; Vertical scanning sky texture mapper (in inner loop).
-; 
+;
 ; Revision 1.1  1994/01/30  14:10:55  mike
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 DEBUG_ON	=	1
@@ -196,7 +195,7 @@ _start1:
 ;	esi	pointer to source bitmap
 ;	edi	write address
  rept num_iters
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,32-sky_height_log_2	; shift in v coordinate
 	shld	eax,ebx,sky_width_log_2	; shift in u coordinate while shifting up v coordinate
@@ -309,7 +308,7 @@ _start1_a:
 ;	esi	pointer to source bitmap
 ;	edi	write address
  rept num_iters
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,32-height_log_2	; shift in v coordinate
 	shld	eax,ebx,width_log_2	; shift in u coordinate while shifting up v coordinate
@@ -325,7 +324,6 @@ _end1_a:
 _none_to_do_a:	popa
 
 	ret
-
 
 
 _TEXT	ends

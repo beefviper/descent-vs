@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/fix/rcs/fix.inc $
@@ -19,25 +19,25 @@
 ; $Log: fix.inc $
 ; Revision 1.7  1994/01/19  23:12:00  matt
 ; Made fix_atan2() left-handed, like our coordinate system
-; 
+;
 ; Revision 1.6  1993/10/20  01:08:49  matt
 ; Add fix_asin(), improved fix_atan2()
-; 
+;
 ; Revision 1.5  1993/10/19  23:53:36  matt
 ; Added fix_atan2()
-; 
+;
 ; Revision 1.4  1993/10/19  22:32:12  matt
 ; Added fix_acos()
-; 
+;
 ; Revision 1.3  1993/09/13  12:09:42  matt
 ; Added extf,extfa macros to generate externdef's of fixed-point types
-; 
+;
 ; Revision 1.2  1993/09/10  11:54:12  matt
 ; Added missing 'endif' at end of file
-; 
+;
 ; Revision 1.1  1993/08/24  12:59:36  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -100,6 +100,6 @@ fixmuldiv	macro	a,b
 	extn	fix_acos	;takes eax=cos, ret ax=angle
 	extn	fix_atan2	;takes eax,ebx = cos,sin, ret ax=angle
 	extn	long_sqrt	;takes eax, returns ax
-	extn	fix_sqrt	;takes eax, returns eax	
+	extn	fix_sqrt	;takes eax, returns eax
 	extn	quad_sqrt	;takes eds:eax, returns eax
 endif

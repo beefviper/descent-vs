@@ -6,34 +6,34 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/objects.asm $
 ; $Revision: 1.5 $
 ; $Author: matt $
 ; $Date: 1993/12/07 23:04:47 $
-; 
+;
 ; Code to draw objects
-; 
+;
 ; $Log: objects.asm $
 ; Revision 1.5  1993/12/07  23:04:47  matt
 ; Misc changes.
 ; NOTE: This file will not be used anymore.  See object.c in main.
-; 
+;
 ; Revision 1.4  1993/12/02  16:09:50  matt
 ; Removed debugging print to mono screen
-; 
+;
 ; Revision 1.3  1993/11/24  16:58:49  matt
 ; Changed bitmap number of cube object
-; 
+;
 ; Revision 1.2  1993/11/23  14:29:53  matt
 ; Fixed bitmap objects, hopefully.
-; 
+;
 ; Revision 1.1  1993/11/21  20:09:02  matt
 ; Initial revision
-; 
-; 
+;
+;
 
 .386
 	option	oldstructs
@@ -88,7 +88,6 @@ draw_bitmap_lines	dd	0
 
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -301,8 +300,6 @@ obj_off_screen:
 	ret
 
 
-
 _TEXT	ends
 
 	end
-

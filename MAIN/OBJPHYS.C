@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 
@@ -47,7 +47,7 @@ void do_object_physics( object * obj )
 
 	if (!rotang.pitch) rotang.pitch = fixmul(-joy_y * 128,FrameTime);
 	if (!rotang.head) rotang.head = fixmul(joy_x * 128,FrameTime);
-	
+
 	if (joyx_moved) _old_joy_x = joy_x;
 	if (joyy_moved) _old_joy_y = joy_y;
 
@@ -118,12 +118,3 @@ void do_object_physics( object * obj )
 	}
 
 }
-
-
-
-
-
-
-
-
-

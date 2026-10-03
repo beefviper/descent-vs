@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -78,7 +78,7 @@ void ms_delay_asm(short n_milliseconds);
 // n_milliseconds 0-32768...
 void ms_delay(short n_milliseconds)
 {
-	unsigned long count, target;		
+	unsigned long count, target;
 	unsigned char reading;
 	unsigned short delta;
 
@@ -99,7 +99,7 @@ void ms_delay(short n_milliseconds)
 		inportb( TDATA );					// Low byte
 		reading = inportb( TDATA );	// High byte
 		enable();
-		if ( reading > delta )	
+		if ( reading > delta )
 			delta += 256;
 		delta -= reading;
 		count += delta;
@@ -125,5 +125,3 @@ void main()
 	printf( "Stop\n" );
 
 }
-
-

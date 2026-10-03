@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,274 +15,274 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.11 $
  * $Author: john $
  * $Date: 1995/08/23 16:08:04 $
- * 
+ *
  * Routines to configure keyboard, joystick, etc..
- * 
+ *
  * $Log: kconfig.c $
  * Revision 2.11  1995/08/23  16:08:04  john
  * Added version 2 of external controls that passes the ship
  * position and orientation the drivers.
- * 
+ *
  * Revision 2.10  1995/07/07  16:48:01  john
  * Fixed bug with new interface.
- * 
+ *
  * Revision 2.9  1995/07/03  15:02:32  john
  * Added new version of external controls for Cybermouse absolute position.
- * 
+ *
  * Revision 2.8  1995/06/30  12:30:28  john
  * Added -Xname command line.
- * 
+ *
  * Revision 2.7  1995/03/30  16:36:56  mike
  * text localization.
- * 
+ *
  * Revision 2.6  1995/03/21  14:39:31  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.5  1995/03/16  10:53:07  john
  * Move VFX center to Shift+Z instead of Enter because
  * it conflicted with toggling HUD on/off.
- * 
+ *
  * Revision 2.4  1995/03/10  13:47:24  john
  * Added head tracking sensitivity.
- * 
+ *
  * Revision 2.3  1995/03/09  18:07:06  john
  * Fixed bug with iglasses tracking not "centering" right.
  * Made VFX have bright headlight lighting.
- * 
+ *
  * Revision 2.2  1995/03/08  15:32:39  john
  * Made VictorMaxx head tracking use Greenleaf code.
- * 
+ *
  * Revision 2.1  1995/03/06  15:23:31  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:29:26  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.105  1995/02/22  14:11:58  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.104  1995/02/13  12:01:56  john
  * Fixed bug with buggin not mmaking player faster.
- * 
+ *
  * Revision 1.103  1995/02/09  22:00:46  john
  * Added i-glasses tracking.
- * 
+ *
  * Revision 1.102  1995/01/24  21:25:47  john
  * Fixed bug with slide/bank on not working with
  * Cyberman heading.,
- * 
+ *
  * Revision 1.101  1995/01/24  16:09:56  john
  * Fixed bug with Wingman extreme customize text overwriting title.
- * 
+ *
  * Revision 1.100  1995/01/24  12:37:46  john
  * Made Esc exit key define menu.
- * 
+ *
  * Revision 1.99  1995/01/23  23:54:43  matt
  * Made keypad enter work
- * 
+ *
  * Revision 1.98  1995/01/23  16:42:00  john
  * Made the external controls always turn banking off, leveling off
  * and passed automap state thru to the tsr.
- * 
+ *
  * Revision 1.97  1995/01/12  11:41:33  john
  * Added external control reading.
- * 
+ *
  * Revision 1.96  1995/01/05  10:43:58  mike
  * Handle case when timer_get_fixed_seconds() goes negative.  Happens at 9.1
  * hours.  Previously, joystick would stop functioning.  Now will work.
- * 
+ *
  * Revision 1.95  1994/12/29  11:17:38  john
  * Took out some warnings and mprintf.
- * 
+ *
  * Revision 1.94  1994/12/29  11:07:41  john
  * Fixed Thrustmaster and Logitech Wingman extreme
  * Hat by reading the y2 axis during the center stage
  * of the calibration, and using 75, 50, 27, and 3 %
  * as values for the 4 positions.
- * 
+ *
  * Revision 1.93  1994/12/27  12:16:20  john
  * Fixed bug with slide on not working with joystick or mouse buttons.
- * 
+ *
  * Revision 1.92  1994/12/20  10:34:15  john
  * Made sensitivity work for mouse & joystick and made
  * it only affect, pitch, heading, and roll.
- * 
+ *
  * Revision 1.91  1994/12/16  00:11:23  matt
  * Made delete key act normally when debug out
- * 
+ *
  * Revision 1.90  1994/12/14  17:41:15  john
  * Added more buttons so that  Yoke would work.
- * 
+ *
  * Revision 1.89  1994/12/13  17:25:35  allender
  * Added Assert for bogus time for joystick reading.
- * 
+ *
  * Revision 1.88  1994/12/13  14:48:01  john
  * Took out some debugging mprintf's
- * 
- * 
+ *
+ *
  * Revision 1.87  1994/12/13  14:43:02  john
  * Took out the code in kconfig to build direction array.
  * Called kc_set_controls after selecting a new control type.
- * 
+ *
  * Revision 1.86  1994/12/13  01:11:32  john
- * Fixed bug with message clearing overwriting 
+ * Fixed bug with message clearing overwriting
  * right border.
- * 
+ *
  * Revision 1.85  1994/12/12  00:35:58  john
  * Added or thing for keys.
- * 
+ *
  * Revision 1.84  1994/12/09  17:08:06  john
  * Made mouse a bit less sensitive.
- * 
+ *
  * Revision 1.83  1994/12/09  16:04:00  john
  * Increased mouse sensitivity.
- * 
+ *
  * Revision 1.82  1994/12/09  00:41:26  mike
  * fix hang in automap print screen
- * 
+ *
  * Revision 1.81  1994/12/08  11:50:37  john
  * Made strcpy only copy corect number of chars,.
- * 
+ *
  * Revision 1.80  1994/12/07  16:16:06  john
  * Added command to check to see if a joystick axes has been used.
- * 
+ *
  * Revision 1.79  1994/12/07  14:52:28  yuan
  * Localization 492
- * 
+ *
  * Revision 1.78  1994/12/07  13:37:40  john
  * Made the joystick thrust work in reverse.
- * 
+ *
  * Revision 1.77  1994/12/07  11:28:24  matt
  * Did a little localization support
- * 
+ *
  * Revision 1.76  1994/12/04  12:30:03  john
  * Made the Thrustmaster stick read every frame, not every 10 frames,
  * because it uses analog axis as buttons.
- * 
+ *
  * Revision 1.75  1994/12/03  22:35:25  yuan
  * Localization 412
- * 
+ *
  * Revision 1.74  1994/12/03  15:39:24  john
  * Made numeric keypad move in conifg.
- * 
+ *
  * Revision 1.73  1994/12/01  16:23:39  john
  * Fixed include mistake.
- * 
+ *
  * Revision 1.72  1994/12/01  16:07:57  john
  * Fixed bug that disabled joystick in automap because it used gametime, which is
  * paused during automap. Fixed be used timer_Get_fixed_seconds instead of GameTime.
- * 
+ *
  * Revision 1.71  1994/12/01  12:30:49  john
  * Made Ctrl+D delete, not Ctrl+E
- * 
+ *
  * Revision 1.70  1994/12/01  11:52:52  john
  * Added default values for GamePad.
- * 
+ *
  * Revision 1.69  1994/11/30  00:59:12  mike
  * optimizations.
- * 
+ *
  * Revision 1.68  1994/11/29  03:45:50  john
  * Added joystick sensitivity; Added sound channels to detail menu.  Removed -maxchannels
  * command line arg.
- * 
+ *
  * Revision 1.67  1994/11/27  23:13:44  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.66  1994/11/27  19:52:12  matt
  * Made screen shots work in a few more places
- * 
+ *
  * Revision 1.65  1994/11/22  16:54:50  mike
  * autorepeat on missiles.
- * 
+ *
  * Revision 1.64  1994/11/21  11:16:17  rob
  * Changed calls to GameLoop to calls to multi_menu_poll and changed
  * conditions under which they are called.
- * 
+ *
  * Revision 1.63  1994/11/19  15:14:48  mike
  * remove unused code and data
- * 
+ *
  * Revision 1.62  1994/11/18  23:37:56  john
  * Changed some shorts to ints.
- * 
+ *
  * Revision 1.61  1994/11/17  13:36:35  rob
  * Added better network hook in kconfig menu.
- * 
+ *
  * Revision 1.60  1994/11/14  20:09:13  john
  * Made Tab be default for automap.
- * 
+ *
  * Revision 1.59  1994/11/13  16:34:07  matt
  * Fixed victormaxx angle conversions
- * 
+ *
  * Revision 1.58  1994/11/12  14:47:05  john
  * Added support for victor head tracking.
- * 
+ *
  * Revision 1.57  1994/11/08  15:14:55  john
  * Added more calls so net doesn't die in net game.
- * 
+ *
  * Revision 1.56  1994/11/07  14:01:07  john
  * Changed the gamma correction sequencing.
- * 
+ *
  * Revision 1.55  1994/11/01  16:40:08  john
  * Added Gamma correction.
- * 
+ *
  * Revision 1.54  1994/10/25  23:09:26  john
  * Made the automap key configurable.
- * 
+ *
  * Revision 1.53  1994/10/25  13:11:59  john
  * Made keys the way Adam speced 'em for final game.
- * 
+ *
  * Revision 1.52  1994/10/24  17:44:22  john
  * Added stereo channel reversing.
- * 
+ *
  * Revision 1.51  1994/10/22  13:23:18  john
  * Made default rear view key be R.
- * 
+ *
  * Revision 1.50  1994/10/22  13:20:09  john
  * Took out toggle primary/secondary weapons.  Fixed black
  * background for 'axes' and 'buttons' text.
- * 
+ *
  * Revision 1.49  1994/10/21  15:20:15  john
  * Made PrtScr do screen dump, not F2.
- * 
+ *
  * Revision 1.48  1994/10/21  13:41:36  john
  * Allowed F2 to screen dump.
- * 
+ *
  * Revision 1.47  1994/10/17  13:07:05  john
  * Moved the descent.cfg info into the player config file.
- * 
+ *
  * Revision 1.46  1994/10/14  15:30:22  john
  * Added Cyberman default positions.
- * 
+ *
  * Revision 1.45  1994/10/14  15:24:54  john
  * Made Cyberman work with config.
- * 
+ *
  * Revision 1.44  1994/10/14  12:46:04  john
  * Added the ability to reset all to default.
- * 
+ *
  * Revision 1.43  1994/10/14  12:18:31  john
  * Made mouse invert axis always be 0 or 1.
- * 
+ *
  * Revision 1.42  1994/10/14  12:16:03  john
  * Changed code so that by doing DEL+F12 saves the current kconfig
  * values as default. Added support for drop_bomb key.  Took out
  * unused slots for keyboard.  Made keyboard use control_type of 0
  * save slots.
- * 
+ *
  * Revision 1.41  1994/10/13  21:27:02  john
  * Made axis invert value always be 0 or 1.
-n * 
+n *
  * Revision 1.40  1994/10/13  20:18:15  john
  * Added some more system keys, such as F? and CAPSLOCK.
- * 
+ *
  * Revision 1.39  1994/10/13  19:22:29  john
  * Added separate config saves for different devices.
  * Made all the devices work together better, such as mice won't
  * get read when you're playing with the joystick.
- * 
+ *
  * Revision 1.38  1994/10/13  15:41:57  mike
  * Remove afterburner.
- * 
+ *
  */
 
 
@@ -330,7 +330,7 @@ static char rcsid[] = "$Id: kconfig.c 2.11 1995/08/23 16:08:04 john Exp $";
 
 //#define TABLE_CREATION 1
 
-int     sense_function1=0;	
+int     sense_function1=0;
 int	  vfx1_installed=0;
 int     SenseStatus1( void );
 
@@ -338,19 +338,19 @@ int     SenseStatus1( void );
 byte fades[64] = { 1,1,1,2,2,3,4,4,5,6,8,9,10,12,13,15,16,17,19,20,22,23,24,26,27,28,28,29,30,30,31,31,31,31,31,30,30,29,28,28,27,26,24,23,22,20,19,17,16,15,13,12,10,9,8,6,5,4,4,3,2,2,1,1 };
 
 //char * invert_text[2] = { "N", "Y" };
-//char * joybutton_text[28] = { "BTN 1", "BTN 2", "BTN 3", "BTN 4", "", "TRIG", "LEFT", "HAT Å", "RIGHT", "", "", "HAT Ä", "MID", "", "", "HAT ", "", "", "", "HAT Ç", "TRIG", "LEFT", "RIGHT", "", "UP","DOWN","LEFT", "RIGHT" };
+//char * joybutton_text[28] = { "BTN 1", "BTN 2", "BTN 3", "BTN 4", "", "TRIG", "LEFT", "HAT \201", "RIGHT", "", "", "HAT \200", "MID", "", "", "HAT \177", "", "", "", "HAT \202", "TRIG", "LEFT", "RIGHT", "", "UP","DOWN","LEFT", "RIGHT" };
 //char * joyaxis_text[4] = { "X1", "Y1", "X2", "Y2" };
 //char * mouseaxis_text[2] = { "L/R", "F/B" };
 //char * mousebutton_text[3] = { "Left", "Right", "Mid" };
 
 int invert_text[2] = { TNUM_N, TNUM_Y };
-int joybutton_text[28] = 
+int joybutton_text[28] =
 { TNUM_BTN_1, TNUM_BTN_2, TNUM_BTN_3, TNUM_BTN_4,
   -1, TNUM_TRIG, TNUM_LEFT, TNUM_HAT_L,
  TNUM_RIGHT, -1, TNUM_HAT2_D, TNUM_HAT_R,
  TNUM_MID, -1, TNUM_HAT2_R, TNUM_HAT_U,
  TNUM_HAT2_L, -1, TNUM_HAT2_U, TNUM_HAT_D,
- TNUM_TRIG, TNUM_LEFT, TNUM_RIGHT, -1, 
+ TNUM_TRIG, TNUM_LEFT, TNUM_RIGHT, -1,
   TNUM_UP, TNUM_DOWN, TNUM_LEFT, TNUM_RIGHT };
 int joyaxis_text[4] = { TNUM_X1, TNUM_Y1, TNUM_X2, TNUM_Y2 };
 int mouseaxis_text[2] = { TNUM_L_R, TNUM_F_B };
@@ -359,7 +359,7 @@ int mousebutton_text[3] = { TNUM_LEFT, TNUM_RIGHT, TNUM_MID };
 char * key_text[256] = {         \
 "","ESC","1","2","3","4","5","6","7","8","9","0","-", 			\
 "=","BSPC","TAB","Q","W","E","R","T","Y","U","I","O",				\
-"P","[","]","É","LCTRL","A","S","D","F",        \
+"P","[","]","\203","LCTRL","A","S","D","F",        \
 "G","H","J","K","L",";","'","`",        \
 "LSHFT","\\","Z","X","C","V","B","N","M",",",      \
 ".","/","RSHFT","PAD*","LALT","SPC",      \
@@ -370,10 +370,10 @@ char * key_text[256] = {         \
 "","","","","","","","","","","","","","","","","","","","",     \
 "","","","","","","","","","","","","","","","","","","","",     \
 "","","","","","","","","","","","","","","","","","",           \
-"PADÉ","RCTRL","","","","","","","","","","","","","", \
+"PAD\203","RCTRL","","","","","","","","","","","","","", \
 "","","","","","","","","","","PAD/","","","RALT","",      \
-"","","","","","","","","","","","","","HOME","Ç","PGUP",     \
-"","Å","","","","END","Ä","PGDN","INS",       \
+"","","","","","","","","","","","","","HOME","\202","PGUP",     \
+"","\201","","\177","","END","\200","PGDN","INS",       \
 "DEL","","","","","","","","","","","","","","","","","",     \
 "","","","","","","","","","","","","","","","","","","","",     \
 "","","","","","","" };
@@ -405,7 +405,7 @@ char *btype_text[] = { "BT_KEY", "BT_MOUSE_BUTTON", "BT_MOUSE_AXIS", "BT_JOY_BUT
 
 typedef struct kc_item {
 	short id;				// The id of this item
-	short x, y;				
+	short x, y;
 	short w1;
 	short w2;
 	short u,d,l,r;
@@ -556,7 +556,7 @@ int kconfig_is_axes_used(int axis)
 int find_item_at( kc_item * items, int nitems, int x, int y )
 {
 	int i;
-	
+
 	for (i=0; i<nitems; i++ )	{
 		if ( ((items[i].x+items[i].w1)==x) && (items[i].y==y))
 			return i;
@@ -570,8 +570,8 @@ int find_next_item_up( kc_item * items, int nitems, int citem )
 
 	y = items[citem].y;
 	x = items[citem].x+items[citem].w1;
-	
-	do {	
+
+	do {
 		y--;
 		if ( y < 0 ) {
 			y = grd_curcanv->cv_bitmap.bm_h-1;
@@ -582,7 +582,7 @@ int find_next_item_up( kc_item * items, int nitems, int citem )
 		}
 		i = find_item_at( items, nitems, x, y );
 	} while ( i < 0 );
-	
+
 	return i;
 }
 
@@ -592,8 +592,8 @@ int find_next_item_down( kc_item * items, int nitems, int citem )
 
 	y = items[citem].y;
 	x = items[citem].x+items[citem].w1;
-	
-	do {	
+
+	do {
 		y++;
 		if ( y > grd_curcanv->cv_bitmap.bm_h-1 ) {
 			y = 0;
@@ -604,7 +604,7 @@ int find_next_item_down( kc_item * items, int nitems, int citem )
 		}
 		i = find_item_at( items, nitems, x, y );
 	} while ( i < 0 );
-	
+
 	return i;
 }
 
@@ -614,8 +614,8 @@ int find_next_item_right( kc_item * items, int nitems, int citem )
 
 	y = items[citem].y;
 	x = items[citem].x+items[citem].w1;
-	
-	do {	
+
+	do {
 		x++;
 		if ( x > grd_curcanv->cv_bitmap.bm_w-1 ) {
 			x = 0;
@@ -626,7 +626,7 @@ int find_next_item_right( kc_item * items, int nitems, int citem )
 		}
 		i = find_item_at( items, nitems, x, y );
 	} while ( i < 0 );
-	
+
 	return i;
 }
 
@@ -636,8 +636,8 @@ int find_next_item_left( kc_item * items, int nitems, int citem )
 
 	y = items[citem].y;
 	x = items[citem].x+items[citem].w1;
-	
-	do {	
+
+	do {
 		x--;
 		if ( x < 0 ) {
 			x = grd_curcanv->cv_bitmap.bm_w-1;
@@ -648,11 +648,10 @@ int find_next_item_left( kc_item * items, int nitems, int citem )
 		}
 		i = find_item_at( items, nitems, x, y );
 	} while ( i < 0 );
-	
+
 	return i;
 }
 #endif
-
 
 
 void kconfig_sub(kc_item * items,int nitems, char * title)
@@ -675,7 +674,7 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 	}
 
 	save_canvas = grd_curcanv;
-	gr_set_current_canvas( NULL );			
+	gr_set_current_canvas( NULL );
 	save_font = grd_curcanv->cv_font;
 	game_flush_inputs();
 	old_keyd_repeat = keyd_repeat;
@@ -712,22 +711,22 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 	if ( items == kc_keyboard )	{
 		gr_set_fontcolor( BM_XRGB(31,27,6), -1 );
 		gr_setcolor( BM_XRGB(31,27,6) );
-		
+
 		gr_scanline( 98, 106, 42 );
 		gr_scanline( 120, 128, 42 );
-		gr_pixel( 98, 43 );						
-		gr_pixel( 98, 44 );						
-		gr_pixel( 128, 43 );						
-		gr_pixel( 128, 44 );						
-		
+		gr_pixel( 98, 43 );
+		gr_pixel( 98, 44 );
+		gr_pixel( 128, 43 );
+		gr_pixel( 128, 44 );
+
 		gr_string( 109, 40, "OR" );
 
 		gr_scanline( 253, 261, 42 );
 		gr_scanline( 274, 283, 42 );
-		gr_pixel( 253, 43 );						
-		gr_pixel( 253, 44 );						
-		gr_pixel( 283, 43 );						
-		gr_pixel( 283, 44 );						
+		gr_pixel( 253, 43 );
+		gr_pixel( 253, 44 );
+		gr_pixel( 283, 43 );
+		gr_pixel( 283, 44 );
 
 		gr_string( 264, 40, "OR" );
 
@@ -758,7 +757,7 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 		gr_string( 169, 129, TXT_AXIS );
 		gr_string( 199, 129, TXT_INVERT );
 	}
-	
+
 	for (i=0; i<nitems; i++ )	{
 		kc_drawitem( &items[i], 0 );
 	}
@@ -781,12 +780,12 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 			break;
 		case KEY_PRINT_SCREEN:
 			save_screen_shot(0);
-			break;							
+			break;
 		case KEY_CTRLED+KEY_D:
 			items[citem].value = 255;
 			kc_drawitem( &items[citem], 1 );
 			break;
-		case KEY_CTRLED+KEY_R:	
+		case KEY_CTRLED+KEY_R:
 			if ( items==kc_keyboard )	{
 				for (i=0; i<NUM_KEY_CONTROLS; i++ )		{
 					items[i].value=default_kconfig_settings[0][i];
@@ -800,36 +799,36 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 			}
 			kc_drawitem( &items[citem], 1 );
 			break;
-		case KEY_UP: 		
+		case KEY_UP:
 		case KEY_PAD8:
 #ifdef TABLE_CREATION
 			if (items[citem].u==-1) items[citem].u=find_next_item_up( items,nitems, citem);
 #endif
-			citem = items[citem].u; 
+			citem = items[citem].u;
 			break;
-		case KEY_DOWN: 	
+		case KEY_DOWN:
 		case KEY_PAD2:
 #ifdef TABLE_CREATION
 			if (items[citem].d==-1) items[citem].d=find_next_item_down( items,nitems, citem);
 #endif
-			citem = items[citem].d; 
+			citem = items[citem].d;
 			break;
-		case KEY_LEFT: 	
+		case KEY_LEFT:
 		case KEY_PAD4:
 #ifdef TABLE_CREATION
 			if (items[citem].l==-1) items[citem].l=find_next_item_left( items,nitems, citem);
 #endif
-			citem = items[citem].l; 
+			citem = items[citem].l;
 			break;
-		case KEY_RIGHT: 	
+		case KEY_RIGHT:
 		case KEY_PAD6:
 #ifdef TABLE_CREATION
 			if (items[citem].r==-1) items[citem].r=find_next_item_right( items,nitems, citem);
 #endif
-			citem = items[citem].r; 
+			citem = items[citem].r;
 			break;
-		case KEY_ENTER:	
-		case KEY_PADENTER:	
+		case KEY_ENTER:
+		case KEY_PADENTER:
 			switch( items[citem].type )	{
 			case BT_KEY:				kc_change_key( &items[citem] ); break;
 			case BT_MOUSE_BUTTON:	kc_change_mousebutton( &items[citem] ); break;
@@ -839,10 +838,10 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 			case BT_INVERT: 			kc_change_invert( &items[citem] ); break;
 			}
 			break;
-		case -2:	
+		case -2:
 		case KEY_ESC:
 			grd_curcanv->cv_font	= save_font;
-			gr_set_current_canvas( save_canvas );			
+			gr_set_current_canvas( save_canvas );
 			keyd_repeat = old_keyd_repeat;
 			game_flush_inputs();
 			if (time_stopped)
@@ -880,10 +879,10 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 				fprintf( fp, "},\n" );
 			}
 			fprintf( fp, "};\n" );
-		
+
 			fprintf( fp, "\nkc_item kc_keyboard[NUM_KEY_CONTROLS] = {\n" );
 			for (i=0; i<NUM_KEY_CONTROLS; i++ )	{
-				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n", 
+				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n",
 					kc_keyboard[i].id, kc_keyboard[i].x, kc_keyboard[i].y, kc_keyboard[i].w1, kc_keyboard[i].w2,
 					kc_keyboard[i].u, kc_keyboard[i].d, kc_keyboard[i].l, kc_keyboard[i].r,
 					34, Text_string[kc_keyboard[i].text_num1], 34, btype_text[kc_keyboard[i].type] );
@@ -892,7 +891,7 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 
 			fprintf( fp, "\nkc_item kc_joystick[NUM_OTHER_CONTROLS] = {\n" );
 			for (i=0; i<NUM_OTHER_CONTROLS; i++ )	{
-				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n", 
+				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n",
 					kc_joystick[i].id, kc_joystick[i].x, kc_joystick[i].y, kc_joystick[i].w1, kc_joystick[i].w2,
 					kc_joystick[i].u, kc_joystick[i].d, kc_joystick[i].l, kc_joystick[i].r,
 					34, Text_string[kc_joystick[i].text_num1], 34, btype_text[kc_joystick[i].type] );
@@ -901,7 +900,7 @@ void kconfig_sub(kc_item * items,int nitems, char * title)
 
 			fprintf( fp, "\nkc_item kc_mouse[NUM_OTHER_CONTROLS] = {\n" );
 			for (i=0; i<NUM_OTHER_CONTROLS; i++ )	{
-				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n", 
+				fprintf( fp, "\t{ %2d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%c%s%c, %s, 255 },\n",
 					kc_mouse[i].id, kc_mouse[i].x, kc_mouse[i].y, kc_mouse[i].w1, kc_mouse[i].w2,
 					kc_mouse[i].u, kc_mouse[i].d, kc_mouse[i].l, kc_mouse[i].r,
 					34, Text_string[kc_mouse[i].text_num1], 34, btype_text[kc_mouse[i].type] );
@@ -962,7 +961,7 @@ void kc_drawitem( kc_item *item, int is_current )
 	else
 		gr_setcolor( BM_XRGB(16,0,19) );
 	gr_urect( item->w1+item->x, item->y-1, item->w1+item->x+item->w2, item->y+h );
-	
+
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
 
 	x = item->w1+item->x+((item->w2-w)/2);
@@ -976,7 +975,7 @@ static int looper=0;
 void kc_drawquestion( kc_item *item )
 {
 	int c, x, w, h, aw;
-	
+
 	gr_get_string_size("?", &w, &h, &aw  );
 
 	c = BM_XRGB(21,0,24);
@@ -986,7 +985,7 @@ void kc_drawquestion( kc_item *item )
 	if (looper>63) looper=0;
 
 	gr_urect( item->w1+item->x, item->y-1, item->w1+item->x+item->w2, item->y+h );
-	
+
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
 
 	x = item->w1+item->x+((item->w2-w)/2);
@@ -1000,13 +999,13 @@ void kc_change_key( kc_item * item )
 	ubyte keycode;
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
-	
+
 	gr_string( 0x8000, INFO_Y, TXT_PRESS_NEW_KEY );
-	
+
 	game_flush_inputs();
 	keycode=255;
 	k=255;
-	while( (k!=KEY_ESC) && (keycode==255) )	{				
+	while( (k!=KEY_ESC) && (keycode==255) )	{
 		#ifdef NETWORK
 		if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 			multi_menu_poll();
@@ -1016,14 +1015,14 @@ void kc_change_key( kc_item * item )
 		k = key_inkey();
 		delay(10);
 		kc_drawquestion( item );
-	
+
 		for (i=0; i<256; i++ )	{
 			if (keyd_pressed[i] && (strlen(key_text[i])>0))	{
 				f = 0;
 				for (n=0; n<sizeof(system_keys); n++ )
 					if ( system_keys[n] == i )
 						f=1;
-				if (!f)	
+				if (!f)
 					keycode=i;
 			}
 		}
@@ -1054,13 +1053,13 @@ void kc_change_joybutton( kc_item * item )
 	ubyte code;
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
-	
+
 	gr_string( 0x8000, INFO_Y, TXT_PRESS_NEW_JBUTTON );
-	
+
 	game_flush_inputs();
 	code=255;
 	k=255;
-	while( (k!=KEY_ESC) && (code==255))	{				
+	while( (k!=KEY_ESC) && (code==255))	{
 		#ifdef NETWORK
 		if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 			multi_menu_poll();
@@ -1122,13 +1121,13 @@ void kc_change_mousebutton( kc_item * item )
 	ubyte code;
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
-	
+
 	gr_string( 0x8000, INFO_Y, TXT_PRESS_NEW_MBUTTON );
-	
+
 	game_flush_inputs();
 	code=255;
 	k=255;
-	while( (k!=KEY_ESC) && (code==255))	{				
+	while( (k!=KEY_ESC) && (code==255))	{
 		#ifdef NETWORK
 		if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 			multi_menu_poll();
@@ -1145,7 +1144,7 @@ void kc_change_mousebutton( kc_item * item )
 
 		b = mouse_get_btns();
 		for (i=0; i<3; i++ )	{
-			if ( b & (1<<i) )	
+			if ( b & (1<<i) )
 				code = i;
 		}
 	}
@@ -1173,16 +1172,16 @@ void kc_change_joyaxis( kc_item * item )
 	ubyte code;
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
-	
+
 	gr_string( 0x8000, INFO_Y, TXT_MOVE_NEW_JOY_AXIS );
-	
+
 	game_flush_inputs();
 	code=255;
 	k=255;
 
 	joystick_read_raw_axis( JOY_ALL_AXIS, old_axis );
 
-	while( (k!=KEY_ESC) && (code==255))	{				
+	while( (k!=KEY_ESC) && (code==255))	{
 		#ifdef NETWORK
 		if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 			multi_menu_poll();
@@ -1198,7 +1197,7 @@ void kc_change_joyaxis( kc_item * item )
 		kc_drawquestion( item );
 
 		joystick_read_raw_axis( JOY_ALL_AXIS, axis );
-		
+
 		for (i=0; i<4; i++ )	{
   			if ( abs(axis[i]-old_axis[i])>20 )	{
 				code = i;
@@ -1215,7 +1214,7 @@ void kc_change_joyaxis( kc_item * item )
 			}
 		}
 
-		item->value = code;					 
+		item->value = code;
 	}
 	kc_drawitem( item, 1 );
 	nm_restore_background( 0, INFO_Y, 310, grd_curcanv->cv_font->ft_h );
@@ -1230,16 +1229,16 @@ void kc_change_mouseaxis( kc_item * item )
 	int dx,dy;
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
-	
+
 	gr_string( 0x8000, INFO_Y, TXT_MOVE_NEW_MSE_AXIS );
-	
+
 	game_flush_inputs();
 	code=255;
 	k=255;
 
 	mouse_get_delta( &dx, &dy );
 
-	while( (k!=KEY_ESC) && (code==255))	{				
+	while( (k!=KEY_ESC) && (code==255))	{
 		#ifdef NETWORK
 		if ((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME) && (!Endlevel_sequence))
 			multi_menu_poll();
@@ -1281,7 +1280,7 @@ void kc_change_invert( kc_item * item )
 
 	if (item->value)
 		item->value = 0;
-	else 
+	else
 		item->value = 1;
 
 	kc_drawitem( item, 1 );
@@ -1309,15 +1308,15 @@ void kconfig(int n, char * title)
 	reset_cockpit();		//force cockpit redraw next time
 
 	// Update save values...
-	
-	for (i=0; i<NUM_KEY_CONTROLS; i++ )	
+
+	for (i=0; i<NUM_KEY_CONTROLS; i++ )
 		kconfig_settings[0][i] = kc_keyboard[i].value;
 
 	if ( (Config_control_type>0) && (Config_control_type<5))	{
-		for (i=0; i<NUM_OTHER_CONTROLS; i++ )	
+		for (i=0; i<NUM_OTHER_CONTROLS; i++ )
 			kconfig_settings[Config_control_type][i] = kc_joystick[i].value;
 	} else if (Config_control_type>4) {
-		for (i=0; i<NUM_OTHER_CONTROLS; i++ )	
+		for (i=0; i<NUM_OTHER_CONTROLS; i++ )
 			kconfig_settings[Config_control_type][i] = kc_mouse[i].value;
 	}
 
@@ -1345,7 +1344,7 @@ void kconfig_read_fcs( int raw_axis )
 		button = 11;
 	else if ( raw_button > 15 )
 		button = 15;
-	else	
+	else
 		button = 19;
 
 	kconfig_set_fcs_button( 19, button );
@@ -1353,7 +1352,7 @@ void kconfig_read_fcs( int raw_axis )
 	kconfig_set_fcs_button( 11, button );
 	kconfig_set_fcs_button( 7, button );
 }
-		
+
 
 void kconfig_set_fcs_button( int btn, int button )
 {
@@ -1375,12 +1374,11 @@ void kconfig_set_fcs_button( int btn, int button )
 		} else {
 			upcount=1;
 		}
-	}				
-			
-	joy_set_btn_values( btn, state, time_down, downcount, upcount );
-					
-}
+	}
 
+	joy_set_btn_values( btn, state, time_down, downcount, upcount );
+
+}
 
 
 fix Last_angles_p = 0;
@@ -1389,7 +1387,7 @@ fix Last_angles_h = 0;
 ubyte Last_angles_read = 0;
 
 extern int			VR_sensitivity;
-						
+
 int VR_sense_range[3] = { 25, 50, 75 };
 
 read_head_tracker()
@@ -1410,13 +1408,13 @@ read_head_tracker()
 	Use_player_head_angles = 0;
 	if ( Last_angles_read )	{
 		fix yaw1 = yaw;
-		
+
 		yaw1 = yaw;
-		if ( (Last_angles_h < (F1_0/4) ) && (yaw > ((F1_0*3)/4) ) )	
+		if ( (Last_angles_h < (F1_0/4) ) && (yaw > ((F1_0*3)/4) ) )
 			yaw1 -= F1_0;
-		else if ( (yaw < (F1_0/4) ) && (Last_angles_h > ((F1_0*3)/4) ) )	
+		else if ( (yaw < (F1_0/4) ) && (Last_angles_h > ((F1_0*3)/4) ) )
 			yaw1 += F1_0;
-	
+
 		Controls.pitch_time	+= fixmul((pitch- Last_angles_p)*VR_sense_range[VR_sensitivity],FrameTime);
 		Controls.heading_time+= fixmul((yaw1 -  Last_angles_h)*VR_sense_range[VR_sensitivity],FrameTime);
 		Controls.bank_time	+= fixmul((roll - Last_angles_b)*VR_sense_range[VR_sensitivity],FrameTime);
@@ -1449,7 +1447,7 @@ void kconfig_init_external_controls(int intno, int address)
 	kc_enable_external_control  = 1;
 
 	i = FindArg( "-xname" );
-	if ( i )	
+	if ( i )
 		kc_external_name = Args[i+1];
 	else
 		kc_external_name = "External Controller";
@@ -1457,7 +1455,7 @@ void kconfig_init_external_controls(int intno, int address)
 	i = FindArg( "-xver" );
 	if ( i )
 		kc_external_version = atoi(Args[i+1]);
-	
+
 	printf( "%s int: 0x%x, data: 0x%x, ver:%d\n", kc_external_name, kc_external_intno, kc_external_control, kc_external_version );
 
 }
@@ -1468,7 +1466,7 @@ void kconfig_read_external_controls()
 
 	if ( !kc_enable_external_control ) return;
 
-	if ( kc_external_version == 0 ) 
+	if ( kc_external_version == 0 )
 		memset( kc_external_control, 0, sizeof(control_info) );
 	else if ( kc_external_version > 0 ) 	{
 		memset( kc_external_control, 0, sizeof(control_info)+sizeof(vms_angvec) + 64 );
@@ -1500,17 +1498,17 @@ void kconfig_read_external_controls()
 		Objects[Players[Player_num].objnum].mtype.phys_info.flags &= (~PF_LEVELLING);	// Turn off leveling to nearest side.
 		Auto_leveling_on = 0;
 
-		if ( kc_external_version > 0 ) {		
+		if ( kc_external_version > 0 ) {
 			vms_matrix tempm, ViewMatrix;
 			vms_angvec * Kconfig_abs_movement;
 			char * oem_message;
-	
+
 			Kconfig_abs_movement = (vms_angvec *)((uint)kc_external_control + sizeof(control_info));
-	
+
 			if ( Kconfig_abs_movement->p || Kconfig_abs_movement->b || Kconfig_abs_movement->h )	{
 				vm_angles_2_matrix(&tempm,Kconfig_abs_movement);
 				vm_matrix_x_matrix(&ViewMatrix,&Objects[Players[Player_num].objnum].orient,&tempm);
-				Objects[Players[Player_num].objnum].orient = ViewMatrix;		
+				Objects[Players[Player_num].objnum].orient = ViewMatrix;
 			}
 			oem_message = (char *)((uint)Kconfig_abs_movement + sizeof(vms_angvec));
 			if (oem_message[0] != '\0' )
@@ -1519,21 +1517,20 @@ void kconfig_read_external_controls()
 	}
 
 
-
-	Controls.pitch_time += fixmul(kc_external_control->pitch_time,FrameTime);						
+	Controls.pitch_time += fixmul(kc_external_control->pitch_time,FrameTime);
 	Controls.vertical_thrust_time += fixmul(kc_external_control->vertical_thrust_time,FrameTime);
 	Controls.heading_time += fixmul(kc_external_control->heading_time,FrameTime);
 	Controls.sideways_thrust_time += fixmul(kc_external_control->sideways_thrust_time ,FrameTime);
 	Controls.bank_time += fixmul(kc_external_control->bank_time ,FrameTime);
 	Controls.forward_thrust_time += fixmul(kc_external_control->forward_thrust_time ,FrameTime);
-	Controls.rear_view_down_count += kc_external_control->rear_view_down_count;	
-	Controls.rear_view_down_state |= kc_external_control->rear_view_down_state;	
+	Controls.rear_view_down_count += kc_external_control->rear_view_down_count;
+	Controls.rear_view_down_state |= kc_external_control->rear_view_down_state;
 	Controls.fire_primary_down_count += kc_external_control->fire_primary_down_count;
 	Controls.fire_primary_state |= kc_external_control->fire_primary_state;
 	Controls.fire_secondary_state |= kc_external_control->fire_secondary_state;
 	Controls.fire_secondary_down_count += kc_external_control->fire_secondary_down_count;
 	Controls.fire_flare_down_count += kc_external_control->fire_flare_down_count;
-	Controls.drop_bomb_down_count += kc_external_control->drop_bomb_down_count;	
+	Controls.drop_bomb_down_count += kc_external_control->drop_bomb_down_count;
 	Controls.automap_down_count += kc_external_control->automap_down_count;
 	Controls.automap_state |= kc_external_control->automap_state;
 }
@@ -1556,7 +1553,7 @@ void controls_read_all()
 
 	if (Game_turbo_mode)
 		speed_factor = 2;
-	
+
 	if (Arcade_mode)	{
 		arcade_read_controls();
 		return;
@@ -1582,7 +1579,7 @@ void controls_read_all()
 	} else if ((Config_control_type>0) && (Config_control_type<5) ) {
 		LastReadTime = ctime;
 		channel_masks = joystick_read_raw_axis( JOY_ALL_AXIS, raw_joy_axis );
-		
+
 		for (i=0; i<4; i++ )	{
 			if (channel_masks&(1<<i))	{
 				int joy_null_value = 10;
@@ -1591,22 +1588,22 @@ void controls_read_all()
 					kconfig_read_fcs( raw_joy_axis[i] );
 				} else {
 					raw_joy_axis[i] = joy_get_scaled_reading( raw_joy_axis[i], i );
-	
+
 					if (kc_joystick[23].value==i)		// If this is the throttle
 						joy_null_value = 20;				// Then use a larger dead-zone
-	
-					if (raw_joy_axis[i] > joy_null_value) 
+
+					if (raw_joy_axis[i] > joy_null_value)
 						raw_joy_axis[i] = ((raw_joy_axis[i]-joy_null_value)*128)/(128-joy_null_value);
 				  	else if (raw_joy_axis[i] < -joy_null_value)
 						raw_joy_axis[i] = ((raw_joy_axis[i]+joy_null_value)*128)/(128-joy_null_value);
 					else
 						raw_joy_axis[i] = 0;
-					joy_axis[i]	= (raw_joy_axis[i]*FrameTime)/128;	
+					joy_axis[i]	= (raw_joy_axis[i]*FrameTime)/128;
 				}
 			} else {
 				joy_axis[i] = 0;
 			}
-		}	
+		}
 		use_joystick=1;
 	} else {
 		for (i=0; i<4; i++ )
@@ -1638,7 +1635,7 @@ void controls_read_all()
 
 
 //------------- Read slide_on -------------
-	
+
 	// From keyboard...
 	if ( kc_keyboard[8].value < 255 ) slide_on |= keyd_pressed[ kc_keyboard[8].value ];
 	if ( kc_keyboard[9].value < 255 ) slide_on |= keyd_pressed[ kc_keyboard[9].value ];
@@ -1677,7 +1674,7 @@ void controls_read_all()
 			kp += mouse_button_down_time(MB_PITCH_FORWARD)/(PH_SCALE*2);
 			kp -= mouse_button_down_time(MB_PITCH_BACKWARD)/(PH_SCALE*2);
 		}
-	
+
 		if (kp == 0)
 			Controls.pitch_time = 0;
 		else if (kp > 0) {
@@ -1687,7 +1684,7 @@ void controls_read_all()
 			if (Controls.pitch_time > 0)
 				Controls.pitch_time = 0;
 		Controls.pitch_time += kp;
-	
+
 		// From joystick...
 		if ( (use_joystick)&&(kc_joystick[13].value < 255 ))	{
 			if ( !kc_joystick[14].value )		// If not inverted...
@@ -1695,7 +1692,7 @@ void controls_read_all()
 			else
 				Controls.pitch_time += (joy_axis[kc_joystick[13].value]*Config_joystick_sensitivity)/8;
 		}
-	
+
 		// From mouse...
 		//mprintf(( 0, "UM: %d, PV: %d\n", use_mouse, kc_mouse[13].value ));
 		if ( (use_mouse)&&(kc_mouse[13].value < 255) )	{
@@ -1728,7 +1725,7 @@ void controls_read_all()
 			Controls.vertical_thrust_time -= mouse_button_down_time(MB_PITCH_FORWARD);
 			Controls.vertical_thrust_time += mouse_button_down_time(MB_PITCH_BACKWARD);
 		}
-	
+
 		// From joystick...
 		if ((use_joystick)&&( kc_joystick[13].value < 255 ))	{
 			if ( !kc_joystick[14].value )		// If not inverted...
@@ -1736,7 +1733,7 @@ void controls_read_all()
 			else
 				Controls.vertical_thrust_time -= joy_axis[kc_joystick[13].value];
 		}
-	
+
 		// From mouse...
 		if ( (use_mouse)&&(kc_mouse[13].value < 255 ))	{
 			if ( !kc_mouse[14].value )		// If not inverted...
@@ -1751,7 +1748,7 @@ void controls_read_all()
 	if ( kc_keyboard[15].value < 255 ) Controls.vertical_thrust_time += speed_factor*key_down_time( kc_keyboard[15].value );
 	if ( kc_keyboard[16].value < 255 ) Controls.vertical_thrust_time -= speed_factor*key_down_time( kc_keyboard[16].value );
 	if ( kc_keyboard[17].value < 255 ) Controls.vertical_thrust_time -= speed_factor*key_down_time( kc_keyboard[17].value );
-	
+
 	// From joystick...
 	if ((use_joystick)&&( kc_joystick[19].value < 255 ))	{
 		if ( !kc_joystick[20].value )		// If not inverted...
@@ -1803,7 +1800,7 @@ void controls_read_all()
 			kh -= mouse_button_down_time(MB_HEAD_LEFT)/PH_SCALE;
 			kh += mouse_button_down_time(MB_HEAD_RIGHT)/PH_SCALE;
 		}
-	
+
 		if (kh == 0)
 			Controls.heading_time = 0;
 		else if (kh > 0) {
@@ -1821,7 +1818,7 @@ void controls_read_all()
 			else
 				Controls.heading_time -= (joy_axis[kc_joystick[15].value]*Config_joystick_sensitivity)/8;
 		}
-	
+
 		// From mouse...
 		if ( (use_mouse)&&(kc_mouse[15].value < 255 ))	{
 			if ( !kc_mouse[16].value )		// If not inverted...
@@ -1846,7 +1843,7 @@ void controls_read_all()
 		if ( kc_keyboard[5].value < 255 ) Controls.sideways_thrust_time -= k1;
 		if ( kc_keyboard[6].value < 255 ) Controls.sideways_thrust_time += k2;
 		if ( kc_keyboard[7].value < 255 ) Controls.sideways_thrust_time += k3;
-	
+
 		// From joystick...
 		if ( (use_joystick)&&(kc_joystick[15].value < 255 ))	{
 			if ( !kc_joystick[16].value )		// If not inverted...
@@ -1854,13 +1851,13 @@ void controls_read_all()
 			else
 				Controls.sideways_thrust_time -= joy_axis[kc_joystick[15].value];
 		}
-		
+
 		// From cyberman
 		if ((use_mouse)&&(Config_control_type==CONTROL_CYBERMAN))	{
 			Controls.sideways_thrust_time -= mouse_button_down_time(MB_HEAD_LEFT);
 			Controls.sideways_thrust_time += mouse_button_down_time(MB_HEAD_RIGHT);
 		}
-	
+
 		// From mouse...
 		if ( (use_mouse)&&(kc_mouse[15].value < 255 ))	{
 			if ( !kc_mouse[16].value )		// If not inverted...
@@ -1875,7 +1872,7 @@ void controls_read_all()
 	if ( kc_keyboard[11].value < 255 ) Controls.sideways_thrust_time -= speed_factor*key_down_time( kc_keyboard[11].value );
 	if ( kc_keyboard[12].value < 255 ) Controls.sideways_thrust_time += speed_factor*key_down_time( kc_keyboard[12].value );
 	if ( kc_keyboard[13].value < 255 ) Controls.sideways_thrust_time += speed_factor*key_down_time( kc_keyboard[13].value );
-	
+
 	// From joystick...
 	if ( (use_joystick)&&(kc_joystick[17].value < 255 ))	{
 		if ( !kc_joystick[18].value )		// If not inverted...
@@ -1927,7 +1924,7 @@ void controls_read_all()
 			else
 				Controls.bank_time += (joy_axis[kc_joystick[15].value]*Config_joystick_sensitivity)/8;
 		}
-	
+
 		// From mouse...
 		if ( (use_mouse)&&(kc_mouse[15].value < 255 ))	{
 			if ( !kc_mouse[16].value )		// If not inverted...
@@ -2071,10 +2068,10 @@ void controls_read_all()
 			Cruise_speed = 0;
 		if ( (kc_keyboard[43].value < 255) && (key_down_count(kc_keyboard[43].value)) )
 			Cruise_speed = 0;
-	
+
 		if (Cruise_speed > i2f(100) ) Cruise_speed = i2f(100);
 		if (Cruise_speed < 0 ) Cruise_speed = 0;
-	
+
 		if (Controls.forward_thrust_time==0)
 			Controls.forward_thrust_time = fixmul(Cruise_speed,FrameTime)/100;
 	}
@@ -2124,7 +2121,7 @@ void kc_set_controls()
 {
 	int i;
 
-	for (i=0; i<NUM_KEY_CONTROLS; i++ )	
+	for (i=0; i<NUM_KEY_CONTROLS; i++ )
 		kc_keyboard[i].value = kconfig_settings[0][i];
 
 	if ( (Config_control_type>0) && (Config_control_type<5))	{
@@ -2159,7 +2156,7 @@ int SenseStatus1( void )
 		result    = i;
 		result   |= (SENSE_DRIVER_STATUS << 8);
 		function  = SENSE_DRIVER_STATUS;
-		function |= (i << 8);        
+		function |= (i << 8);
 		memset( &regs, 0, sizeof(regs));
 		memset( &sregs, 0, sizeof(sregs));
 		regs.x.ecx = 0;
@@ -2167,11 +2164,11 @@ int SenseStatus1( void )
 		regs.x.ebx = 0;
 		regs.x.eax = function;
 		int386( SENSE_VECTOR, &regs, &regs );
-        
+
 		if( regs.x.eax == result )
 			return( function & 0xFF00 );
 	}
-    
+
 	return( 0 );
 }
 
@@ -2185,7 +2182,7 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 	regs.x.ebx = 1 | (cls << 8);
 
 	int386x( SENSE_VECTOR, &regs, &regs, &sregs);
-    
+
 	*yaw     = (short)(regs.x.ebx & 0xffff);
 	*pitch   = (short)(regs.x.ecx & 0xffff);
 	*roll    = (short)(regs.x.edx & 0xffff);
@@ -2193,7 +2190,7 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 	*pitch *= -1;
 	*roll *= -1;
 	*buttons = regs.x.eax & 0x00FF;
-    
+
 	return( (int)(regs.x.eax >> 8) );
 }
 
@@ -2206,16 +2203,16 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 //--unused-- 	regs.x.eax = function | SET_DEVICE_DATA;
 //--unused-- 	regs.x.ebx = 1 | (cls << 8);
 //--unused-- 	regs.x.ecx = mode;
-//--unused-- 
+//--unused--
 //--unused-- 	int386x( SENSE_VECTOR, &regs, &regs, &sregs);
-//--unused--     
+//--unused--
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
 
 void kconfig_center_headset()
 {
 	if (vfx1_installed)
-		SenseSetZero( sense_function1, DCHTD );                    
+		SenseSetZero( sense_function1, DCHTD );
 //	} else if (iglasses_headset_installed)	{
 //	} else if (Victor_headset_installed)   {
 //	} else {
@@ -2233,7 +2230,7 @@ int SenseSetZero( int function, int cls )
 	regs.x.ebx = 1 | (cls << 8);
 
 	int386x( SENSE_VECTOR, &regs, &regs, &sregs);
-    
+
 	return( (int)(regs.x.eax >> 8) );
 }
 
@@ -2245,9 +2242,9 @@ int SenseSetZero( int function, int cls )
 //--unused-- 	memset( &sregs, 0, sizeof(sregs));
 //--unused-- 	regs.x.eax = function | RESET_ZERO;
 //--unused-- 	regs.x.ebx = 1 | (cls << 8);
-//--unused-- 
+//--unused--
 //--unused-- 	int386x( SENSE_VECTOR, &regs, &regs, &sregs);
-//--unused--     
+//--unused--
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
 
@@ -2272,5 +2269,3 @@ void kconfig_sense_init()
 		printf( TXT_VFX1_ERROR2 );
 	}
 }
-
-

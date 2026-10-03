@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,33 +15,33 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.6 $
  * $Author: john $
  * $Date: 1994/11/28 17:07:29 $
- * 
+ *
  * Rountines to copy a bitmap on top of another bitmap, but
  * only copying to pixels that are transparent.
- * 
+ *
  * $Log: ibitblt.c $
  * Revision 1.6  1994/11/28  17:07:29  john
  * Took out some unused functions in linear.asm, moved
  * gr_linear_movsd from linear.asm to bitblt.c, made sure that
  * the code in ibiblt.c sets the direction flags before rep movsing.
- * 
+ *
  * Revision 1.5  1994/11/18  22:50:22  john
  * Changed shorts to ints in parameters.
- * 
+ *
  * Revision 1.4  1994/11/09  16:35:16  john
  * First version with working RLE bitmaps.
- * 
+ *
  * Revision 1.3  1994/10/03  17:18:05  john
  * Fixed bug with edi not getting intialized to zero
  * in create_mask.
- * 
+ *
  * Revision 1.2  1994/05/31  11:10:55  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1994/05/30  16:08:27  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -64,7 +64,7 @@ static char rcsid[] = "$Id: ibitblt.c 1.6 1994/11/28 17:07:29 john Exp $";
 #define MODE_SKIP		1
 #define MODE_DRAW		2
 
-#define OPCODE_ADD 			0x81			
+#define OPCODE_ADD 			0x81
 #define OPCODE_ESI			0xC6			// Followed by a dword	(add esi, ????)
 #define OPCODE_EDI		 	0xC7			// Followed by a dword  (add edi, ????)
 #define OPCODE_MOV_ECX		0xB9			// Followed by a dword  (mov ecx,????)
@@ -80,7 +80,7 @@ int Code_counter = 0;
 void move_and_count( int dsource, int ddest, int ecx )
 {
 	int blocks;
-	if ( ecx <= 0 )	
+	if ( ecx <= 0 )
 		return;
 
 	if ( dsource > 0 )
@@ -99,7 +99,7 @@ void move_and_count( int dsource, int ddest, int ecx )
 			blocks = ecx / 4;
 			if ( blocks == 1 )
 				Code_counter++;	// MOVSD
-			else 
+			else
 				Code_counter+=7;
 			ecx -= blocks*4;
 		}
@@ -121,7 +121,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		*Code_pointer++ = OPCODE_ESI;
 		iptr = (int *)Code_pointer;
 		*iptr++ = dsource;
-		Code_pointer = (ubyte *)iptr;						
+		Code_pointer = (ubyte *)iptr;
 	}
 	if ( ddest > 0 )	{
 		// ADD EDI, ddest
@@ -129,7 +129,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		*Code_pointer++ = OPCODE_EDI;
 		iptr = (int *)Code_pointer;
 		*iptr++ = ddest;
-		Code_pointer = (ubyte *)iptr;						
+		Code_pointer = (ubyte *)iptr;
 	}
 
 	while ( ecx > 0 )	{
@@ -160,7 +160,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		default:
 			blocks = ecx / 4;
 
-			if ( blocks == 1 )	{	
+			if ( blocks == 1 )	{
 				// MOVSD
 				*Code_pointer++ = OPCODE_MOVSD;
 			} else {
@@ -168,7 +168,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 				*Code_pointer++ = OPCODE_MOV_ECX;
 				iptr = (int *)Code_pointer;
 				*iptr++ = blocks;
-				Code_pointer = (ubyte *)iptr;						
+				Code_pointer = (ubyte *)iptr;
 				// REP MOVSD
 				*Code_pointer++ = OPCODE_REP;
 				*Code_pointer++ = OPCODE_MOVSD;
@@ -179,7 +179,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 }
 
 //-----------------------------------------------------------------------------------------
-// Given bitmap, bmp, finds the size of the code 
+// Given bitmap, bmp, finds the size of the code
 
 int gr_ibitblt_find_code_size( grs_bitmap * mask_bmp, int sx, int sy, int sw, int sh, int srowsize )
 {
@@ -321,7 +321,7 @@ ubyte	*gr_ibitblt_create_mask( grs_bitmap * mask_bmp, int sx, int sy, int sw, in
 	}
 	*Code_pointer++ = OPCODE_RET;
 
-	if ( Code_pointer >= &code[code_size-1] )	
+	if ( Code_pointer >= &code[code_size-1] )
 		Error( "ibitblt overwrote allocated code block\n" );
 
 	//printf( "Code is %d bytes\n", Code_pointer - code );
@@ -373,4 +373,3 @@ void	gr_ibitblt_find_hole_size( grs_bitmap * mask_bmp, int *minx, int *miny, int
 		Error( "Bitmap for ibitblt doesn't have transparency!\n" );
 	}
 }
-

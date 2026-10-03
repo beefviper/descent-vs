@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/div/rcs/div0.asm $
@@ -19,26 +19,24 @@
 ; $Log: div0.asm $
 ; Revision 1.4  1995/02/07  17:55:58  john
 ; Made the debug counter variables public.
-; 
+;
 ; Revision 1.3  1994/01/14  15:34:12  john
 ; Added counters for number of overflows.
-; 
+;
 ; Revision 1.2  1993/10/26  17:25:45  john
 ; fixed bug in init, cx was being trashed.
-; 
+;
 ; Revision 1.1  1993/09/17  12:37:51  john
 ; Initial revision
-; 
 ;
 ;
-
+;
 
 
 ; DIV0.ASM   - Provides routines to capture divide overflow exceptions.
 ;              See DIV0.H for calling parameters.
 
 .386
-
 
 
 _DATA   SEGMENT BYTE PUBLIC USE32 'DATA'
@@ -106,7 +104,6 @@ OVERFLOW_32BIT_NEGATIVE EQU -2147483648
 OVERFLOW_8BIT_POSITIVE EQU 127
 OVERFLOW_16BIT_POSITIVE EQU 32767
 OVERFLOW_32BIT_POSITIVE EQU 2147483647
-
 
 
 SAVED_REGS  EQU 32
@@ -183,7 +180,6 @@ NotIt:
 		jmp     NextCB
 
 
-
 CheckSatList:
 		xor     ecx, ecx
 NextSAT:
@@ -200,7 +196,6 @@ NotIt1:
 		jmp     NextCB
 
 
-
 UseDefaultAction:
 		cmp     DefaultMode, 1
 		je      DefaultSaturate
@@ -215,7 +210,7 @@ DefaultSaturate:
 		; isn't in any callback or saturate lists. For your handy debugging
 		; information, the instruction that caused this exception is at
 		; BX:EAX.
-		inc	_div0_num_saturated 
+		inc	_div0_num_saturated
 
 		mov     eax, BAD_EIP
 		mov     bx, BAD_CS
@@ -842,9 +837,6 @@ div0_close_:
 		ret
 
 
-
-
-
 PUBLIC  div0_set_saturate_
 
 div0_set_saturate_:
@@ -898,7 +890,6 @@ TooMany:
 		mov     eax, 0
 		pop     ecx
 		ret
-
 
 
 PUBLIC  div0_set_mode_
@@ -965,6 +956,3 @@ _TEXT   ENDS
 
 
 		END
-
-
-

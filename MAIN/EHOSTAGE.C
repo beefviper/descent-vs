@@ -3,71 +3,71 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:45 $
- * 
+ *
  * Routines for placing hostages, etc...
- * 
+ *
  * $Log: ehostage.c $
  * Revision 2.0  1995/02/27  11:35:45  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.17  1995/01/14  19:18:05  john
  * First version of object paging.
- * 
+ *
  * Revision 1.16  1994/11/20  14:11:41  matt
  * Show object number in hostage window
- * 
+ *
  * Revision 1.15  1994/11/19  19:55:46  matt
  * Added code to full support different hostage head clip & message for
  * each hostage.
- * 
- * 
+ *
+ *
  * Revision 1.14  1994/10/28  15:03:27  john
  * Made digi_play_sample use volume.
- * 
- * 
+ *
+ *
  * Revision 1.13  1994/10/23  02:11:39  matt
  * Got rid of obsolete hostage_info stuff
- * 
+ *
  * Revision 1.12  1994/10/04  13:15:44  john
  * Changed PLAY_SOUND to digi_play_sample.
- * 
+ *
  * Revision 1.11  1994/08/02  14:17:28  mike
  * Clean up dialog boxes.
- * 
+ *
  * Revision 1.10  1994/07/22  17:19:17  yuan
  * Working on dialog box for refuel/repair/material/control centers.
- * 
+ *
  * Revision 1.9  1994/07/06  15:22:34  john
  * Added new sound.
- * 
- * 
+ *
+ *
  * Revision 1.8  1994/07/06  14:26:07  john
  * Added vclip.
- * 
+ *
  * Revision 1.7  1994/07/06  13:25:52  john
  * Added compress hostages functions.
- * 
+ *
  * Revision 1.6  1994/07/06  12:52:27  john
  * Fixed warnings.
- * 
+ *
  * Revision 1.5  1994/07/06  12:43:04  john
  * Made generic messages for hostages.
- * 
+ *
  * Revision 1.4  1994/07/06  11:49:01  john
  * Made adding hostage update current object.
- * 
+ *
  * Revision 1.3  1994/07/06  10:56:00  john
  * New structures for hostages.
- * 
+ *
  * Revision 1.2  1994/07/01  17:57:13  john
  * First version of not-working hostage system
- * 
- * 
+ *
+ *
  * Revision 1.1  1994/07/01  14:21:44  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -124,7 +124,7 @@ static fix 			Vclip_animation_time=0;			// How long the rescue sequence has been
 static fix 			Vclip_playback_speed=0;				// Calculated internally.  Frames/second of vclip.
 static vclip 		*Vclip_ptr = NULL;				// Used for the vclip on monitor
 
-void vclip_play( vclip * vc, fix frame_time )	
+void vclip_play( vclip * vc, fix frame_time )
 {
 	int bitmapnum;
 
@@ -154,10 +154,9 @@ void vclip_play( vclip * vc, fix frame_time )
 
 	PIGGY_PAGE_IN( Vclip_ptr->frames[bitmapnum] );
 	gr_bitmap(0,0,&GameBitmaps[Vclip_ptr->frames[bitmapnum].index] );
-	
+
 	Vclip_animation_time += fixmul(frame_time, Vclip_playback_speed );
 }
-
 
 
 static char HostageMessage[]  = "  ";
@@ -179,7 +178,7 @@ int SelectPrevHostage()	{
 	} else {
 		CurrentHostageIndex =-1;
 	}
-	
+
 	return CurrentHostageIndex;
 }
 
@@ -199,7 +198,7 @@ int SelectNextHostage()	{
 	} else {
 		CurrentHostageIndex =-1;
 	}
-	
+
 	return CurrentHostageIndex;
 }
 
@@ -219,7 +218,7 @@ int SelectClosestHostage()	{
 	} else {
 		CurrentHostageIndex =-1;
 	}
-	
+
 	return CurrentHostageIndex;
 }
 
@@ -234,7 +233,7 @@ int PlaceHostage()	{
 	ctype = -1;
 	for (i=0; i<Num_total_object_types; i++ )	{
 		if (ObjType[i] == OL_HOSTAGE )	{
-			ctype = i;	
+			ctype = i;
 			break;
 		}
 	}
@@ -265,22 +264,22 @@ int CompressHostages()
 }
 
 //@@int SelectPrevVclip()	{
-//@@	if (!hostage_is_valid( CurrentHostageIndex ) )	
+//@@	if (!hostage_is_valid( CurrentHostageIndex ) )
 //@@		return 0;
 //@@
 //@@	if ( Hostages[CurrentHostageIndex].type == 0 )
 //@@		Hostages[CurrentHostageIndex].type = N_hostage_types-1;
 //@@	else
 //@@		Hostages[CurrentHostageIndex].type--;
-//@@	
+//@@
 //@@	if ( Hostages[CurrentHostageIndex].type >= N_hostage_types )
 //@@		Hostages[CurrentHostageIndex].type = 0;
-//@@	
+//@@
 //@@	return 1;
 //@@}
 //@@
 //@@int SelectNextVclip()	{
-//@@	if (!hostage_is_valid( CurrentHostageIndex ) )	
+//@@	if (!hostage_is_valid( CurrentHostageIndex ) )
 //@@		return 0;
 //@@
 //@@	Hostages[CurrentHostageIndex].type++;
@@ -293,8 +292,8 @@ int CompressHostages()
 int SelectNextFace()
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
-	
-	if (!hostage_is_valid( CurrentHostageIndex ) )	
+
+	if (!hostage_is_valid( CurrentHostageIndex ) )
 		return 0;
 
 	do {
@@ -313,8 +312,8 @@ int SelectNextFace()
 int SelectPrevFace()
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
-	
-	if (!hostage_is_valid( CurrentHostageIndex ) )	
+
+	if (!hostage_is_valid( CurrentHostageIndex ) )
 		return 0;
 
 	do {
@@ -333,7 +332,7 @@ int SelectPrevFace()
 int PlayHostageSound()	{
 	int sound_num;
 
-	if (!hostage_is_valid( CurrentHostageIndex ) )	
+	if (!hostage_is_valid( CurrentHostageIndex ) )
 		return 0;
 
 	sound_num = Hostage_face_clip[Hostages[CurrentHostageIndex].vclip_num].sound_num;
@@ -342,7 +341,7 @@ int PlayHostageSound()	{
 		digi_play_sample( sound_num, F1_0 );
 	}
 
-	return 1;	
+	return 1;
 }
 
 //@@int find_next_hostage_sound()	{
@@ -397,7 +396,7 @@ int do_hostage_dialog()
 
 	// Only open 1 instance of this window...
 	if ( MainWindow != NULL ) return 0;
-	
+
 	// Close other windows
 	close_all_windows();
 
@@ -417,23 +416,23 @@ int do_hostage_dialog()
 	// A bunch of buttons...
 	i = 90;
 //@@	ui_add_gadget_button( MainWindow,155,i,70, 26, "<< Type", SelectPrevVclip );
-//@@	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Type >>", SelectNextVclip );i += 29;		
+//@@	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Type >>", SelectNextVclip );i += 29;
 //@@	ui_add_gadget_button( MainWindow,155,i,70, 26, "<< Sound",  find_prev_hostage_sound );
-//@@	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Sound >>", find_next_hostage_sound );i += 29;		
+//@@	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Sound >>", find_next_hostage_sound );i += 29;
 
 	ui_add_gadget_button( MainWindow,155,i,70, 26, "<< Face", SelectPrevFace );
-	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Face >>", SelectNextFace );i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Play sound", PlayHostageSound );i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Next Hostage", SelectNextHostage );	i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Prev Hostage", SelectPrevHostage ); i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Compress All", CompressHostages ); i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Delete", ObjectDelete );	i += 29;		
-	ui_add_gadget_button( MainWindow,155,i,140, 26, "Create New", PlaceHostage );	i += 29;		
-	
+	ui_add_gadget_button( MainWindow,155+70,i,70, 26, "Face >>", SelectNextFace );i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Play sound", PlayHostageSound );i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Next Hostage", SelectNextHostage );	i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Prev Hostage", SelectPrevHostage ); i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Compress All", CompressHostages ); i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Delete", ObjectDelete );	i += 29;
+	ui_add_gadget_button( MainWindow,155,i,140, 26, "Create New", PlaceHostage );	i += 29;
+
 	Time = timer_get_fixed_seconds();
 
 	LastHostageIndex = -2;		// Set to some dummy value so everything works ok on the first frame.
-	
+
 //	if ( CurrentHostageIndex == -1 )
 //		SelectNextHostage();
 
@@ -470,7 +469,7 @@ void do_hostage_window()
 	//------------------------------------------------------------
 	if (LastHostageIndex != CurrentHostageIndex )	{
 
-		if ( CurrentHostageIndex > -1 )	
+		if ( CurrentHostageIndex > -1 )
 			strcpy( HostageText->text, Hostages[CurrentHostageIndex].text );
 		else
 			strcpy(HostageText->text, " " );
@@ -486,7 +485,7 @@ void do_hostage_window()
 	// If any of the radio buttons that control the mode are set, then
 	// update the cooresponding AI state.
 	//------------------------------------------------------------
-	if ( CurrentHostageIndex > -1 )	
+	if ( CurrentHostageIndex > -1 )
 		strcpy( Hostages[CurrentHostageIndex].text, HostageText->text );
 
 	//------------------------------------------------------------
@@ -501,7 +500,7 @@ void do_hostage_window()
 	//------------------------------------------------------------
 	if (CurrentHostageIndex > -1 )	{
 		int vclip_num;
-		
+
 		vclip_num = Hostages[CurrentHostageIndex].vclip_num;
 
 		Assert(vclip_num != -1);
@@ -509,7 +508,7 @@ void do_hostage_window()
 		gr_set_current_canvas( HostageViewBox->canvas );
 
 		if ( vclip_num > -1 )	{
-			vclip_play( &Hostage_face_clip[vclip_num], DeltaTime );	
+			vclip_play( &Hostage_face_clip[vclip_num], DeltaTime );
 		} else {
 			gr_clear_canvas( CGREY );
 		}
@@ -539,11 +538,7 @@ void do_hostage_window()
 	if ( QuitButton->pressed || (last_keypress==KEY_ESC))	{
 		hostage_close_window();
 		return;
-	}		
+	}
 
 	LastHostageIndex = CurrentHostageIndex;
 }
-
-
-
-

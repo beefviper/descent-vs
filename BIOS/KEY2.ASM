@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/bios/rcs/key.asm $
@@ -19,71 +19,71 @@
 ; $Log: key.asm $
 ; Revision 1.20  1994/01/18  10:58:55  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.19  1993/12/22  13:28:40  john
 ; Added back changes Matt made in r1.14
-; 
+;
 ; Revision 1.18  1993/12/22  13:18:32  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.17  1993/12/20  16:48:47  john
 ; Put cli/sti around clear keybuffer in key_close
-; 
+;
 ; Revision 1.16  1993/12/20  15:39:13  john
 ; Tried to neaten handler code... also, moved some cli's and sti's around
 ; trying to find bug.  Made the code call key_get_milliseconds instead
 ; of timer_get_milliseconds, because we don't want the cli and sti
-; stuff in the interrupt handler.  
-; 
+; stuff in the interrupt handler.
+;
 ; Revision 1.15  1993/12/02  10:54:48  john
 ; Made the Ctrl,Shift,Alt keys buffer like all the other keys.
-; 
+;
 ; Revision 1.14  1993/10/29  11:25:18  matt
 ; Made key_down_time() not accumulate time if shift,alt,ctrl down
-; 
+;
 ; Revision 1.13  1993/10/29  10:47:00  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.12  1993/10/16  19:24:16  matt
 ; Added new function key_clear_times() & key_clear_counts()
-; 
+;
 ; Revision 1.11  1993/10/15  10:16:49  john
 ; bunch of stuff, mainly with detecting debugger.
-; 
+;
 ; Revision 1.10  1993/10/04  13:25:57  john
 ; Changed the way extended keys are processed.
-; 
+;
 ; Revision 1.9  1993/09/28  11:35:32  john
 ; added key_peekkey
-; 
+;
 ; Revision 1.8  1993/09/23  18:09:23  john
 ; fixed bug checking for DBG
-; 
+;
 ; Revision 1.7  1993/09/23  17:28:01  john
 ; made debug check look for DBG> instead of CONTROL
-; 
+;
 ; Revision 1.6  1993/09/20  17:08:19  john
 ; Made so that keys pressed in debugger don't get passed through to
 ; the keyboard handler. I also discovered, but didn't fix a error
 ; (page fault) caused by jumping back and forth between the debugger
 ; and the program...
-; 
+;
 ; Revision 1.5  1993/09/17  09:58:12  john
 ; Added checks for already installed, not installed, etc.
-; 
+;
 ; Revision 1.4  1993/09/15  17:28:00  john
 ; Fixed bug in FlushBuffer that used CX before a REP instead of ECX.
-; 
+;
 ; Revision 1.3  1993/09/08  14:48:00  john
 ; made getch() return an int instead of a char that has shift states, etc.
-; 
+;
 ; Revision 1.2  1993/07/22  13:12:23  john
 ; fixed comment
 ; ,.
-; 
+;
 ; Revision 1.1  1993/07/10  13:10:42  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -258,7 +258,7 @@ CantDoKey:
 public key_clear_times_,key_clear_counts_
 
 ;clear the array of key down times.
-key_clear_times_:	
+key_clear_times_:
 	cli
 	push	eax
 	push	ecx
@@ -274,7 +274,7 @@ key_clear_times_:
 	ret
 
 ;clear the arrays of key down counts
-key_clear_counts_:	
+key_clear_counts_:
 	cli
 	push	eax
 	push	ecx
@@ -309,7 +309,7 @@ key_down_time_:
 		cmp     _keyd_pressed[ebx], 0
 		je      NotPressed
 
-		
+
 		cmp	_keyd_editor_mode, 0
 		je	read_time
 
@@ -355,7 +355,6 @@ key_up_count_:
 		pop     ebx
 		sti
 		ret
-
 
 
 ;************************************************************************
@@ -635,11 +634,10 @@ key_peekkey_:
 		je      NoPeek
 		mov     bl, keyhead
 		mov     ax, word ptr keybuffer[ebx*2]
-		
+
 NoPeek:		sti
 		pop     ebx
 		ret
-
 
 
 ;************************************************************************
@@ -707,14 +705,14 @@ NotE0Code:	mov	bl, al			; Put break bit into bl	; 0 = pressed, 1=released
 key_mark_pressed:
 		;cmp	al, 0eh	; backspace
 		;je	pause_execution
-		
+
 		mov     _keyd_last_pressed, al
 		; Check if the key is repeating or if it just got pressed.
 		cmp     byte ptr _keyd_pressed[eax], 1
 		je      AlreadyDown
 
 ;------------------------------- Code for a key pressed for the first time ------------------------
-		mov     byte ptr _keyd_pressed[eax], 1	
+		mov     byte ptr _keyd_pressed[eax], 1
 		; Set the time
 
 		push    edx
@@ -742,7 +740,7 @@ BufferAX:
 	je      SkipBuffer
 
 	call    get_modifiers  	;returns ah
-	
+
 	xor     ebx, ebx
 	mov     bl, keytail
 	inc     bl
@@ -756,8 +754,8 @@ BufferAX:
 	mov     word ptr keybuffer[ebx*2], ax
 	mov     keytail, bl
 
-SkipBuffer:	
-		
+SkipBuffer:
+
 ;---------------------------------- Exit function -----------------------------
 DoneMarkingPressed:
 	jmp	LeaveHandler
@@ -781,7 +779,7 @@ key_mark_released:
 		pop     eax
 		jnz     skip_time
 
-NotInEditorMode:	
+NotInEditorMode:
 		push    eax
 
 		call    timer_get_stamp64
@@ -871,7 +869,7 @@ pause_execution:
 
 		iretd               	; Interrupt must return with IRETD
 
-DontPassToBios:	
+DontPassToBios:
 
 ; Resets the keyboard, PIC, restores stack, returns.
 		in      al, 61h         ; Get current port 61h state
@@ -928,7 +926,6 @@ CheckForDebugger:
 		; the screen to see if the texxt "Control" is there, which should
 		; only be there when we're in the debugger.
 
-	
 
 		push    eax
 		;mov     eax, 0462h          ; Address 0462 stores BIOS current page
@@ -1041,6 +1038,3 @@ ENDIF
 _TEXT   ENDS
 
 		END
-
-
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,222 +21,222 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: gauges.c $
  * Revision 2.7  1995/12/19  16:18:33  john
  * Made weapon info align with canvas width, not 315.
- * 
+ *
  * Revision 2.6  1995/03/21  14:39:25  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.5  1995/03/14  12:31:25  john
  * Prevent negative shields from printing.
- * 
+ *
  * Revision 2.4  1995/03/10  12:57:58  allender
  * move rear view text up four pixels up when playing back demo
- * 
+ *
  * Revision 2.3  1995/03/09  11:47:51  john
  * Added HUD for VR helmets.
- * 
+ *
  * Revision 2.2  1995/03/06  15:23:26  john
  * New screen techniques.
- * 
+ *
  * Revision 2.1  1995/02/27  13:13:45  john
  * Removed floating point.
- * 
+ *
  * Revision 2.0  1995/02/27  11:29:06  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.203  1995/02/11  01:56:45  mike
  * move up weapons text on fullscreen hud, missiles was offscreen.
- * 
+ *
  * Revision 1.202  1995/02/09  13:23:34  rob
  * Added reticle names in demo playback.
- * 
+ *
  * Revision 1.201  1995/02/08  19:20:46  rob
  * Show cloaked teammates on H
  * UD.  Get rid of show ID's in anarchy option.
- * 
+ *
  * Revision 1.200  1995/02/07  21:09:00  mike
  * add flashing to invulnerability and cloak on fullscreen.
- * 
+ *
  * Revision 1.199  1995/02/02  21:55:57  matt
  * Added new colored key icons for fullscreen
- * 
+ *
  * Revision 1.198  1995/01/30  17:17:07  rob
  * Fixed teammate names on hud.
- * 
+ *
  * Revision 1.197  1995/01/28  17:40:49  mike
  * fix gauge fontcolor.
- * 
+ *
  * Revision 1.196  1995/01/27  17:03:14  mike
  * fix placement of weapon info in multiplayer fullscreen, as per AP request.
- * 
+ *
  * Revision 1.195  1995/01/27  11:51:23  rob
  * Put deaths tally into cooperative mode
- * 
+ *
  * Revision 1.194  1995/01/27  11:43:24  adam
  * fiddled with key display
- * 
+ *
  * Revision 1.193  1995/01/25  23:38:35  mike
  * fix keys on fullscreen.
- * 
+ *
  * Revision 1.192  1995/01/24  22:03:28  mike
  * Lotsa hud stuff, put a lot of messages up.
- * 
+ *
  * Revision 1.191  1995/01/23  16:47:21  rob
  * Fixed problem with playing extra life noise in coop.
- * 
+ *
  * Revision 1.190  1995/01/22  16:00:46  mike
  * remove unneeded string.
- * 
+ *
  * Revision 1.189  1995/01/22  15:58:22  mike
  * localization
- * 
+ *
  * Revision 1.188  1995/01/20  17:19:45  rob
  * Fixing colors of hud kill list players.
- * 
+ *
  * Revision 1.187  1995/01/20  09:19:18  allender
  * record player flags when in CM_FULL_SCREEN
- * 
+ *
  * Revision 1.186  1995/01/19  16:29:09  allender
  * made demo recording of weapon change be in this file for shareware only
- * 
+ *
  * Revision 1.185  1995/01/19  15:00:33  allender
  * code to record shield, energy, and ammo in fullscreen
- * 
+ *
  * Revision 1.184  1995/01/19  13:43:13  matt
  * Fixed "cheater" message on HUD
- * 
+ *
  * Revision 1.183  1995/01/18  16:11:58  mike
  * Don't show added scores of 0.
- * 
+ *
  * Revision 1.182  1995/01/17  17:42:39  allender
  * do ammo counts in demo recording
- * 
+ *
  * Revision 1.181  1995/01/16  17:26:25  rob
  * Fixed problem with coloration of team kill list.
- * 
+ *
  * Revision 1.180  1995/01/16  17:22:39  john
  * Made so that KB and framerate don't collide.
- * 
+ *
  * Revision 1.179  1995/01/16  14:58:31  matt
  * Changed score_added display to print "Cheater!" when cheats enabled
- * 
+ *
  * Revision 1.178  1995/01/15  19:42:07  matt
  * Ripped out hostage faces for registered version
- * 
+ *
  * Revision 1.177  1995/01/15  19:25:07  mike
  * show vulcan ammo and secondary ammo in fullscreen view.
- * 
+ *
  * Revision 1.176  1995/01/15  13:16:12  john
  * Made so that paging always happens, lowmem just loads less.
  * Also, make KB load print to hud.
- * 
+ *
  * Revision 1.175  1995/01/14  19:17:32  john
  * First version of piggy paging.
- * 
+ *
  * Revision 1.174  1995/01/05  21:25:23  rob
  * Re-did some changes lost due to RCS weirdness.
- * 
+ *
  * Revision 1.173  1995/01/05  12:22:34  rob
  * Don't show player names for cloaked players.
- * 
+ *
  * Revision 1.172  1995/01/04  17:14:50  allender
  * make init_gauges work properly on demo playback
- * 
+ *
  * Revision 1.171  1995/01/04  15:04:42  allender
  * new demo calls for registered version
- * 
+ *
  * Revision 1.167  1995/01/03  13:03:57  allender
  * pass score points instead of total points.   Added ifdef for
  * multi_send_score
- * 
+ *
  * Revision 1.166  1995/01/03  11:45:02  allender
  * add hook to record player score
- * 
+ *
  * Revision 1.165  1995/01/03  11:25:19  allender
  * remove newdemo stuff around score display
- * 
+ *
  * Revision 1.163  1995/01/02  21:03:53  rob
  * Fixing up the hud-score-list for coop games.
- * 
+ *
  * Revision 1.162  1994/12/31  20:54:40  rob
  * Added coop mode HUD score list.
  * Added more generic system for player names on HUD.
- * 
+ *
  * Revision 1.161  1994/12/30  20:13:01  rob
  * Ifdef reticle names on shareware.
  * Added robot reticle naming.
- * 
+ *
  * Revision 1.160  1994/12/29  17:53:51  mike
  * move up energy/shield in fullscreen to get out of way of kill list.
- * 
+ *
  * Revision 1.159  1994/12/29  16:44:05  mike
  * add energy and shield showing.
- * 
+ *
  * Revision 1.158  1994/12/28  16:34:29  mike
  * make warning beep go away on Player_is_dead.
- * 
+ *
  * Revision 1.157  1994/12/28  10:00:43  allender
  * change in init_gauges to for multiplayer demo playbacks
- * 
+ *
  * Revision 1.156  1994/12/27  11:06:46  allender
  * removed some previous code to for demo playback stuff
- * 
+ *
  * Revision 1.155  1994/12/23  14:23:06  john
- * Added floating reticle for VR helments.  
- * 
+ * Added floating reticle for VR helments.
+ *
  * Revision 1.154  1994/12/21  12:56:41  allender
  * on multiplayer demo playback, show kills and deaths
- * 
+ *
  * Revision 1.153  1994/12/19  20:28:42  rob
  * Get rid of kill list in coop games.
- * 
+ *
  * Revision 1.152  1994/12/14  18:06:44  matt
  * Removed compile warnings
- * 
+ *
  * Revision 1.151  1994/12/14  15:21:28  rob
  * Made gauges align in status_bar net game.
- * 
+ *
  * Revision 1.150  1994/12/12  17:20:33  matt
  * Don't get bonus points when cheating
- * 
+ *
  * Revision 1.149  1994/12/12  16:47:00  matt
- * When cheating, get no score.  Change level cheat to prompt for and 
+ * When cheating, get no score.  Change level cheat to prompt for and
  * jump to new level.
- * 
+ *
  * Revision 1.148  1994/12/12  12:05:45  rob
  * Grey out players who are disconnected.
- * 
+ *
  * Revision 1.147  1994/12/09  16:19:48  yuan
  * kill matrix stuff.
- * 
+ *
  * Revision 1.146  1994/12/09  16:12:34  rob
  * Fixed up the status bar kills gauges for net play.
- * 
+ *
  * Revision 1.145  1994/12/09  01:55:34  rob
  * Added kills list to HUD/status bar.
  * Added something for Mark.
- * 
+ *
  * Revision 1.144  1994/12/08  21:03:30  allender
  * pass old player flags to record_player_flags
- * 
+ *
  * Revision 1.143  1994/12/07  22:49:33  mike
  * no homing missile warning during endlevel sequence.
- * 
+ *
  * Revision 1.142  1994/12/06  13:55:31  matt
  * Use new rounding func, f2ir()
- * 
+ *
  * Revision 1.141  1994/12/03  19:03:37  matt
  * Fixed vulcan ammo HUD message
- * 
+ *
  * Revision 1.140  1994/12/03  18:43:18  matt
  * Fixed (hopefully) claok gauge
- * 
+ *
  * Revision 1.139  1994/12/03  14:26:21  yuan
  * Fixed dumb bug
- * 
+ *
  * Revision 1.138  1994/12/03  14:17:30  yuan
  * Localization 320
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -310,7 +310,7 @@ grs_canvas *Canv_NumericalGauge;
 
 #define SB_GAUGE_ENERGY			36
 
-#define GAUGE_LIVES				37	
+#define GAUGE_LIVES				37
 
 #define GAUGE_SHIPS				38
 #define GAUGE_SHIPS_LAST		45
@@ -370,7 +370,7 @@ grs_canvas *Canv_NumericalGauge;
 #define SHIELD_GAUGE_X 			146
 #define SHIELD_GAUGE_Y			155
 #define SHIELD_GAUGE_W 			35
-#define SHIELD_GAUGE_H			32 
+#define SHIELD_GAUGE_H			32
 
 #define SHIP_GAUGE_X 			(SHIELD_GAUGE_X+5)
 #define SHIP_GAUGE_Y				(SHIELD_GAUGE_Y+5)
@@ -429,7 +429,7 @@ static int old_lives[2]				= { -1, -1 };
 
 static int invulnerable_frame = 0;
 
-static int cloak_fade_state;		//0=steady, -1 fading out, 1 fading in 
+static int cloak_fade_state;		//0=steady, -1 fading out, 1 fading in
 
 #define WS_SET				0		//in correct state
 #define WS_FADING_OUT	1
@@ -535,7 +535,7 @@ span weapon_window_right[] = {		//first span 207,154
 		{211-202,255-202},
 	};
 
-											
+
 #define N_LEFT_WINDOW_SPANS  (sizeof(weapon_window_left)/sizeof(*weapon_window_left))
 #define N_RIGHT_WINDOW_SPANS (sizeof(weapon_window_right)/sizeof(*weapon_window_right))
 
@@ -543,7 +543,7 @@ span weapon_window_right[] = {		//first span 207,154
 #define PRIMARY_W_BOX_TOP		154
 #define PRIMARY_W_BOX_RIGHT	(PRIMARY_W_BOX_LEFT+58)
 #define PRIMARY_W_BOX_BOT		(PRIMARY_W_BOX_TOP+N_LEFT_WINDOW_SPANS-1)
-											
+
 #define SECONDARY_W_BOX_LEFT	202	//207
 #define SECONDARY_W_BOX_TOP	151
 #define SECONDARY_W_BOX_RIGHT	263	//(SECONDARY_W_BOX_LEFT+54)
@@ -553,7 +553,7 @@ span weapon_window_right[] = {		//first span 207,154
 #define SB_PRIMARY_W_BOX_TOP		153
 #define SB_PRIMARY_W_BOX_RIGHT	(SB_PRIMARY_W_BOX_LEFT+53)
 #define SB_PRIMARY_W_BOX_BOT		(195)
-											
+
 #define SB_SECONDARY_W_BOX_LEFT	169	//210
 #define SB_SECONDARY_W_BOX_TOP	153
 #define SB_SECONDARY_W_BOX_RIGHT	(SB_SECONDARY_W_BOX_LEFT+54)
@@ -631,14 +631,14 @@ get_hostage_window_coords(int *x,int *y,int *w,int *h)
 
 }
 
-//these should be in gr.h 
+//these should be in gr.h
 #define cv_w  cv_bitmap.bm_w
 #define cv_h  cv_bitmap.bm_h
 
 #define HUD_MESSAGE_LENGTH 150
 #define HUD_MAX_NUM 4
 extern int HUD_nmessages, hud_first; // From hud.c
-extern char HUD_messages[HUD_MAX_NUM][HUD_MESSAGE_LENGTH+5]; 
+extern char HUD_messages[HUD_MAX_NUM][HUD_MESSAGE_LENGTH+5];
 
 void hud_show_score()
 {
@@ -670,7 +670,7 @@ void hud_show_score_added()
 	int	w, h, aw;
 	char	score_str[20];
 
-	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		return;
 
 	if (score_display == 0)
@@ -697,18 +697,18 @@ void hud_show_score_added()
 		score_time = 0;
 		score_display = 0;
 	}
-	
+
 }
 
 void sb_show_score()
-{	                                                                                                                                                                                                                                                             
+{
 	char	score_str[20];
 	int x,y;
 	int	w, h, aw;
 	static int last_x[2]={SB_SCORE_RIGHT,SB_SCORE_RIGHT};
 	int redraw_score;
 
-	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		redraw_score = -99;
 	else
 		redraw_score = -1;
@@ -717,14 +717,14 @@ void sb_show_score()
 		gr_set_curfont( GAME_FONT );
 		gr_set_fontcolor(gr_getcolor(0,20,0),-1 );
 
-		if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+		if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 			gr_printf(SB_SCORE_LABEL_X,SB_SCORE_Y,"%s:", TXT_KILLS);
 		else
 			gr_printf(SB_SCORE_LABEL_X,SB_SCORE_Y,"%s:", TXT_SCORE);
 	}
 
 	gr_set_curfont( GAME_FONT );
-	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		sprintf(score_str, "%5d", Players[Player_num].net_kills_total);
 	else
 		sprintf(score_str, "%5d", Players[Player_num].score);
@@ -737,10 +737,10 @@ void sb_show_score()
 	gr_setcolor(BM_XRGB(0,0,0));
 	gr_rect(last_x[VR_current_page],y,SB_SCORE_RIGHT,y+GAME_FONT->ft_h);
 
-	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		gr_set_fontcolor(gr_getcolor(0,20,0),-1 );
 	else
-		gr_set_fontcolor(gr_getcolor(0,31,0),-1 );	
+		gr_set_fontcolor(gr_getcolor(0,31,0),-1 );
 
 	gr_printf(x,y,score_str);
 
@@ -756,7 +756,7 @@ void sb_show_score_added()
 	static int last_x[2]={SB_SCORE_ADDED_RIGHT,SB_SCORE_ADDED_RIGHT};
 	static	int last_score_display[2] = { -1, -1};
 
-	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) ) 
+	if ( (Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP) )
 		return;
 
 	if (score_display == 0)
@@ -800,7 +800,7 @@ void sb_show_score_added()
 		score_display = 0;
 
 	}
-	
+
 }
 
 fix	Last_warning_beep_time[2] = {0,0};		//	Time we last played homing missile warning beep.
@@ -1076,7 +1076,7 @@ hud_show_lives()
 		gr_set_curfont( GAME_FONT );
 		gr_set_fontcolor(gr_getcolor(0,31,0),-1 );
 		gr_printf(10, 3, "%s: %d", TXT_DEATHS, Players[Player_num].net_killed_total);
-	} 
+	}
 	else if (Players[Player_num].lives > 1)  {
 		gr_set_curfont( GAME_FONT );
 		gr_set_fontcolor(gr_getcolor(0,20,0),-1 );
@@ -1115,7 +1115,7 @@ sb_show_lives()
 		gr_setcolor(BM_XRGB(0,0,0));
 		gr_rect(last_x[VR_current_page], y+1, SB_SCORE_RIGHT, y+GAME_FONT->ft_h);
 		gr_set_fontcolor(gr_getcolor(0,20,0),-1);
-		x = SB_SCORE_RIGHT-w-2;		
+		x = SB_SCORE_RIGHT-w-2;
 		gr_printf(x, y+1, killed_str);
 		last_x[VR_current_page] = x;
 		return;
@@ -1166,7 +1166,7 @@ void show_time()
 		char text[25];
 		int w,h,aw;
 		sprintf( text, "%d KB", Piggy_bitmap_cache_next/1024 );
-		gr_get_string_size( text, &w, &h, &aw );	
+		gr_get_string_size( text, &w, &h, &aw );
 		gr_printf(grd_curcanv->cv_w-10-w,grd_curcanv->cv_h/2, text );
 	}
 #endif
@@ -1176,7 +1176,7 @@ void show_time()
 
 #define EXTRA_SHIP_SCORE	50000		//get new ship every this many points
 
-void add_points_to_score(int points) 
+void add_points_to_score(int points)
 {
 	int prev_score;
 
@@ -1218,7 +1218,7 @@ void add_points_to_score(int points)
 	}
 }
 
-void add_bonus_points_to_score(int points) 
+void add_bonus_points_to_score(int points)
 {
 	int prev_score;
 
@@ -1269,7 +1269,7 @@ void init_gauges()
 	//draw_gauges_on 	= 1;
 
 	for (i=0; i<2; i++ )	{
-		if ( ((Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP)) || ((Newdemo_state == ND_STATE_PLAYBACK) && (Newdemo_game_mode & GM_MULTI) && !(Newdemo_game_mode & GM_MULTI_COOP)) ) 
+		if ( ((Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP)) || ((Newdemo_state == ND_STATE_PLAYBACK) && (Newdemo_game_mode & GM_MULTI) && !(Newdemo_game_mode & GM_MULTI_COOP)) )
 			old_score[i] = -99;
 		else
 			old_score[i]			= -1;
@@ -1278,7 +1278,7 @@ void init_gauges()
 		old_flags[i]			= -1;
 		old_cloak[i]			= -1;
 		old_lives[i]			= -1;
-	
+
 		old_weapon[0][i] = old_weapon[1][i] = -1;
 		old_ammo_count[0][i] = old_ammo_count[1][i] = -1;
 	}
@@ -1303,12 +1303,12 @@ void draw_energy_bar(int energy)
 		for (y=0; y<8; y++) {
 			x1 = 7 - y;
 			x2 = 7 - y + not_energy;
-	
+
 			if ( y>=0 && y<2 ) if (x2 > LEFT_ENERGY_GAUGE_W - 1) x2 = LEFT_ENERGY_GAUGE_W - 1;
 			if ( y>=2 && y<6 ) if (x2 > LEFT_ENERGY_GAUGE_W - 2) x2 = LEFT_ENERGY_GAUGE_W - 2;
 			if ( y>=6 ) if (x2 > LEFT_ENERGY_GAUGE_W - 3) x2 = LEFT_ENERGY_GAUGE_W - 3;
-			
-			if (x2 > x1) gr_uscanline( x1, x2, y ); 
+
+			if (x2 > x1) gr_uscanline( x1, x2, y );
 		}
 
 	gr_set_current_canvas( get_current_game_screen() );
@@ -1323,12 +1323,12 @@ void draw_energy_bar(int energy)
 		for (y=0; y<8; y++) {
 			x1 = RIGHT_ENERGY_GAUGE_W - 8 + y - not_energy;
 			x2 = RIGHT_ENERGY_GAUGE_W - 8 + y;
-	
+
 			if ( y>=0 && y<2 ) if (x1 < 0) x1 = 0;
 			if ( y>=2 && y<6 ) if (x1 < 1) x1 = 1;
 			if ( y>=6 ) if (x1 < 2) x1 = 2;
-			
-			if (x2 > x1) gr_uscanline( x1, x2, y ); 
+
+			if (x2 > x1) gr_uscanline( x1, x2, y );
 		}
 
 	gr_set_current_canvas( get_current_game_screen() );
@@ -1362,7 +1362,7 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 		PIGGY_PAGE_IN(Gauges[GAUGE_SHIPS+Player_num]);
 		bm = &GameBitmaps[Gauges[GAUGE_SHIPS+Player_num].index];
 	}
-	
+
 
 	if (old_cloak_state==-1 && cloak_state)
 			cloak_fade_value=0;
@@ -1380,7 +1380,7 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 	if (cloak_state==old_cloak_state)		//doing "about-to-uncloak" effect
 		if (cloak_fade_state==0)
 			cloak_fade_state = 2;
-	
+
 
 	if (cloak_fade_state)
 		cloak_fade_timer -= FrameTime;
@@ -1434,7 +1434,7 @@ void draw_numerical_display(int shield, int energy)
 
 	gr_set_fontcolor(gr_getcolor(25,18,6),-1 );
 	gr_printf((energy>99)?3:((energy>9)?5:7),2,"%d",energy);
-					  
+
 	gr_set_current_canvas( get_current_game_screen() );
 	gr_ubitmapm( NUMERICAL_GAUGE_X, NUMERICAL_GAUGE_Y, &Canv_NumericalGauge->cv_bitmap );
 }
@@ -1593,7 +1593,7 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 		weapon_box_states[weapon_type] = WS_FADING_OUT;
 		weapon_box_fade_values[weapon_type]=i2f(GR_FADE_LEVELS-1);
 	}
-		
+
 	if (old_weapon[weapon_type][VR_current_page] == -1) {
 		draw_weapon_info(weapon_type,weapon_num);
 		old_weapon[weapon_type][VR_current_page] = weapon_num;
@@ -1701,7 +1701,7 @@ sb_draw_energy_bar(energy)
 	//draw numbers
 	gr_set_fontcolor(gr_getcolor(25,18,6),-1 );
 	gr_printf((energy>99)?SB_ENERGY_NUM_X:((energy>9)?SB_ENERGY_NUM_X+2:SB_ENERGY_NUM_X+4),SB_ENERGY_NUM_Y,"%d",energy);
-					  
+
 }
 
 sb_draw_shield_num(int shield)
@@ -1872,7 +1872,7 @@ show_reticle(int force_big_one)
 #ifdef NETWORK
 	if ((Newdemo_state == ND_STATE_PLAYBACK) || (((Game_mode & GM_MULTI_COOP) || (Game_mode & GM_TEAM)) && Show_reticle_name))
 	{
-		// Draw player callsign for player in sights 
+		// Draw player callsign for player in sights
 		fvi_query fq;
 		vms_vector orient;
 		int Hit_type;
@@ -1949,7 +1949,7 @@ hud_show_kill_list()
 		if (Show_kill_list_timer < 0)
 			Show_kill_list = 0;
 	}
-	
+
 #ifdef SHAREWARE
 	if (Game_mode & GM_MULTI_COOP)
 	{
@@ -1970,7 +1970,7 @@ hud_show_kill_list()
 	else
 		n_left = (n_players+1)/2;
 
-	//If font size changes, this code might not work right anymore 
+	//If font size changes, this code might not work right anymore
 	Assert(GAME_FONT->ft_h==5 && GAME_FONT->ft_w==7);
 
 	fth = GAME_FONT->ft_h;
@@ -2012,7 +2012,7 @@ hud_show_kill_list()
 				x1 = grd_curcanv->cv_w - 15;
 			y = save_y;
 		}
-	
+
 		if (Show_kill_list == 2)
 			player_num = i;
 		else
@@ -2032,9 +2032,9 @@ hud_show_kill_list()
 				color = player_num;
 				gr_set_fontcolor(gr_getcolor(player_rgb[color].r,player_rgb[color].g,player_rgb[color].b),-1 );
 			}
-		}	
+		}
 
-		else 
+		else
 		{
 			gr_set_fontcolor(gr_getcolor(player_rgb[player_num].r,player_rgb[player_num].g,player_rgb[player_num].b),-1 );
 		}
@@ -2049,7 +2049,7 @@ hud_show_kill_list()
 			gr_get_string_size(name,&sw,&sh,&aw);
 		}
 		gr_printf(x0,y,"%s",name);
-		if (Show_kill_list == 2)	
+		if (Show_kill_list == 2)
 			gr_printf(x1,y,"%3d",team_kills[i]);
 #ifndef SHAREWARE
 		else if (Game_mode & GM_MULTI_COOP)
@@ -2173,7 +2173,7 @@ void render_gauges()
 			draw_numerical_display(shields, energy);
 			old_shields[VR_current_page] = shields;
 		}
-	
+
 		if (Players[Player_num].flags != old_flags[VR_current_page]) {
 			if (Newdemo_state==ND_STATE_RECORDING )
 				newdemo_record_player_flags(old_flags[VR_current_page], Players[Player_num].flags);
@@ -2182,7 +2182,7 @@ void render_gauges()
 		}
 
 		show_homing_warning();
-	
+
 	} else if (Cockpit_mode == CM_STATUS_BAR) {
 
 		if (energy != old_energy[VR_current_page]) {
@@ -2196,13 +2196,13 @@ void render_gauges()
 			sb_draw_energy_bar(energy);
 			old_energy[VR_current_page] = energy;
 		}
-	
+
 		if (Players[Player_num].flags & PLAYER_FLAGS_INVULNERABLE) {
 			draw_invulnerable_ship();
 			old_shields[VR_current_page] = shields ^ 1;
 			sb_draw_shield_num(shields);
-		} 
-		else 
+		}
+		else
 			if (shields != old_shields[VR_current_page]) {		// Draw the shield gauge
 				if (Newdemo_state==ND_STATE_RECORDING ) {
 #ifdef SHAREWARE
@@ -2222,7 +2222,7 @@ void render_gauges()
 			sb_draw_keys();
 			old_flags[VR_current_page] = Players[Player_num].flags;
 		}
-	
+
 
 		if ((Game_mode & GM_MULTI) && !(Game_mode & GM_MULTI_COOP))
 		{
@@ -2279,5 +2279,3 @@ void update_laser_weapon_info(void)
 	if (old_weapon[0][VR_current_page] == 0)
 		old_weapon[0][VR_current_page] = -1;
 }
-
-

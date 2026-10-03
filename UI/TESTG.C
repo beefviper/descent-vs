@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -112,7 +112,7 @@ void set_fade_buttons(int color)
 		OrgFadeButton[i]->canvas->cv_color = SavedFadeTable[i*256+color];
 		OrgFadeButton[i]->status = 1;
 
-	}	
+	}
 }
 
 void set_fade_color_to_current(int fade_level)	{
@@ -153,7 +153,7 @@ void outline_current_color()
 }
 
 
-void set_current_color( int color )	
+void set_current_color( int color )
 {
 	CurrentColor = color;
 	CurrentColorButton->canvas->cv_color = CurrentColor;
@@ -201,7 +201,7 @@ void SaveTables( )
 main()
 {	int i,j, last_fader, last_color;
 	grs_font * my_font;
-	
+
 	minit();
 	gr_init( SM_320x200C );
 	gr_use_palette_table( "PALETTE.256");
@@ -223,7 +223,7 @@ main()
 	RestoreButton = ui_add_gadget_button( MainWindow, 70, 80, 40, 10, "Restore", NULL );
 	init_color_buttons();
 	set_fade_buttons(0);
-	
+
 	last_fader = last_color = -1;
 
 	while ( 1 )
@@ -277,14 +277,14 @@ main()
 				}
 			}
 		}
-	
+
 		if (last_fader != CurrentFader) {
 			if (last_fader >= 0 )	{
 				ColorButton[last_fader]->status = 1;
 			}
 			outline_current_fader();
 			last_fader = CurrentFader;
-		}	
+		}
 
 		if (last_color != CurrentColor) {
 			if (last_color >= 0 )	{
@@ -292,12 +292,12 @@ main()
 			}
 			outline_current_color();
 			last_color = CurrentColor;
-		}	
+		}
 
 		if (ui_button_any_drawn)	{
 			outline_current_fader();
 			outline_current_color();
-		}	
+		}
 
 		if (RestoreButton->pressed )
 			RestoreCurrent();
@@ -316,7 +316,7 @@ main()
 				if (choice==1)	{
 					SaveTables();
 					break;
-				}								
+				}
 			} else {
 				break;
 			}
@@ -332,5 +332,3 @@ main()
 	return 0;
 
 }
-
-

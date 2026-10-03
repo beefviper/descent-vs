@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,39 +15,39 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:20 $
- * 
+ *
  * File to make the cockpit.inc source code file.
- * 
+ *
  * $Log: mcockpit.c $
  * Revision 2.0  1995/02/27  11:30:20  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.8  1994/05/30  19:27:57  john
  * Moved functionality of mcockpit into 2d, ibitblt.
- * 
+ *
  * Revision 1.7  1994/05/11  11:36:08  john
  * Neatend up; took out debugging lines.
- * 
+ *
  * Revision 1.6  1994/05/11  11:19:19  john
  * Made cockpit code be created at runtime.
- * 
+ *
  * Revision 1.5  1994/01/28  17:40:22  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1994/01/26  18:14:10  john
  * Printed out x,y,w,h;
- * 
+ *
  * Revision 1.3  1994/01/25  11:45:00  john
  * Took out graphics.
- * 
+ *
  * Revision 1.2  1994/01/24  18:55:40  john
  * initial version.
- * 
+ *
  * Revision 1.1  1994/01/24  18:31:21  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -72,7 +72,7 @@ static char rcsid[] = "$Id: mcockpit.c 2.0 1995/02/27 11:30:20 john Exp $";
 #define MODE_SKIP		1
 #define MODE_DRAW		2
 
-#define OPCODE_ADD 			0x81			
+#define OPCODE_ADD 			0x81
 #define OPCODE_ESI			0xC6			// Followed by a dword	(add esi, ????)
 #define OPCODE_EDI		 	0xC7			// Followed by a dword  (add edi, ????)
 #define OPCODE_MOV_ECX		0xB9			// Followed by a dword  (mov ecx,????)
@@ -88,7 +88,7 @@ int Code_counter = 0;
 void move_and_count( int dsource, int ddest, int ecx )
 {
 	int blocks;
-	if ( ecx <= 0 )	
+	if ( ecx <= 0 )
 		return;
 
 	if ( dsource > 0 )
@@ -107,7 +107,7 @@ void move_and_count( int dsource, int ddest, int ecx )
 			blocks = ecx / 4;
 			if ( blocks == 1 )
 				Code_counter++;	// MOVSD
-			else 
+			else
 				Code_counter+=7;
 			ecx -= blocks*4;
 		}
@@ -129,7 +129,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		*Code_pointer++ = OPCODE_ESI;
 		iptr = (int *)Code_pointer;
 		*iptr++ = dsource;
-		Code_pointer = (ubyte *)iptr;						
+		Code_pointer = (ubyte *)iptr;
 	}
 	if ( ddest > 0 )	{
 		// ADD EDI, ddest
@@ -137,7 +137,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		*Code_pointer++ = OPCODE_EDI;
 		iptr = (int *)Code_pointer;
 		*iptr++ = ddest;
-		Code_pointer = (ubyte *)iptr;						
+		Code_pointer = (ubyte *)iptr;
 	}
 
 	while ( ecx > 0 )	{
@@ -168,7 +168,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 		default:
 			blocks = ecx / 4;
 
-			if ( blocks == 1 )	{	
+			if ( blocks == 1 )	{
 				// MOVSD
 				*Code_pointer++ = OPCODE_MOVSD;
 			} else {
@@ -176,7 +176,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 				*Code_pointer++ = OPCODE_MOV_ECX;
 				iptr = (int *)Code_pointer;
 				*iptr++ = blocks;
-				Code_pointer = (ubyte *)iptr;						
+				Code_pointer = (ubyte *)iptr;
 				// REP MOVSD
 				*Code_pointer++ = OPCODE_REP;
 				*Code_pointer++ = OPCODE_MOVSD;
@@ -187,7 +187,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 }
 
 //-----------------------------------------------------------------------------------------
-// Given bitmap, bmp, finds the size of the code 
+// Given bitmap, bmp, finds the size of the code
 
 int mcockpit_find_inverted_bitblit_code_size( grs_bitmap * bmp, int sx, int sy, int sw, int sh, int srowsize, ubyte transparent_color )
 {
@@ -353,4 +353,3 @@ void mcockpit_find_extents( grs_bitmap * bmp, int *minx, int *miny, int *maxx, i
 }
 
 */
-

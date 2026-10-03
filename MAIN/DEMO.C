@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,78 +15,78 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:55 $
- * 
+ *
  * Demo playback and recording.
- * 
+ *
  * $Log: demo.c $
  * Revision 2.0  1995/02/27  11:30:55  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.19  1994/12/15  13:04:11  mike
  * Replace Players[Player_num].time_total references with GameTime.
- * 
+ *
  * Revision 1.18  1994/07/02  13:49:49  matt
  * Cleaned up includes
- * 
+ *
  * Revision 1.17  1994/06/24  17:01:37  john
  * Add VFX support; Took Game Sequencing, like EndGame and stuff and
  * took it out of game.c and into gameseq.c
- * 
+ *
  * Revision 1.16  1994/06/20  12:02:10  john
  * Made demo only start if the -autostart switch is on ...
- * 
- * 
+ *
+ *
  * Revision 1.15  1994/05/19  18:53:21  yuan
  * Changing player structure...
- * 
+ *
  * Revision 1.14  1994/05/14  17:16:08  matt
  * Got rid of externs in source (non-header) files
- * 
+ *
  * Revision 1.13  1994/02/17  11:32:33  matt
  * Changes in object system
- * 
+ *
  * Revision 1.12  1994/02/11  21:51:12  matt
  * Made auto_demo off by default
- * 
+ *
  * Revision 1.11  1994/02/10  17:45:38  yuan
  * Integrated some hacks which still need to be fixed.
- * 
+ *
  * Revision 1.10  1994/02/09  13:42:31  john
  * Fix demo playback bug with Slew_object->pos and
  * Slew_object->seg_id not being in sync by call
  * ing check_object_seg after the demo code computes
  * x,y,z and segment each frame.
- * 
+ *
  * Revision 1.9  1994/02/08  12:38:29  yuan
  * fixed demo_loaded variable, so it must be 1 (first time)
  * to run demo.
- * 
+ *
  * Revision 1.8  1994/02/07  17:25:01  yuan
  * Fixed hack, reset time.
- * 
+ *
  * Revision 1.7  1994/02/02  09:41:51  mike
  * much auto-demo stuff.
- * 
+ *
  * Revision 1.6  1994/02/01  18:04:19  yuan
  * Tweaked gauges
- * 
+ *
  * Revision 1.5  1994/02/01  16:26:51  yuan
  * Removed mprintf debugs.
- * 
+ *
  * Revision 1.4  1994/02/01  16:21:03  yuan
  * Checked in.
- * 
+ *
  * Revision 1.3  1994/02/01  15:14:53  mike
  * Self-running demo code.
- * 
+ *
  * Revision 1.2  1994/02/01  11:49:46  mike
  * Demo system.
- * 
+ *
  * Revision 1.1  1994/01/31  18:10:23  mike
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -322,10 +322,10 @@ void demo_startup(void)
 {
 	//	Warning!  Danger!  Shameful hack!  Don't know how to tell if demo1.min is loaded, so
 	//	just make sure there are a bunch of segments.
-	
+
 	// Fixed hack to check if Demo mine is loaded.
 
-//	mprintf(0, "demo_loaded for startup %d\n", demo_loaded); 
+//	mprintf(0, "demo_loaded for startup %d\n", demo_loaded);
 //	if (Auto_demo && (demo_loaded==1)) {
 //		setup_predefined_demo();
 //	}
@@ -350,6 +350,3 @@ void write_demo_as_source(void)
 
 	fclose(fp);
 }
-
-
-

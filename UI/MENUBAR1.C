@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,11 +15,11 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: $
  * $Author: $
  * $Date: $
- * 
+ *
  * .
- * 
+ *
  * $Log: $
- * 
+ *
  */
 
 
@@ -166,7 +166,7 @@ void menubar_do( int keypress )
 				hide_level(2);
 				hide_level(3);
 				break;
-			}			
+			}
 
 			if (keypress==KEY_ESC)
 			{
@@ -181,15 +181,15 @@ void menubar_do( int keypress )
 				citem[0]--;
 			if (keypress==KEY_RIGHT)
 				citem[0]++;
-		
+
 			if (keypress==KEY_ENTER || keypress==KEY_DOWN )
 			{
 				state3_alt_down = 0;
-				state = 3;	
+				state = 3;
 				show_level( citem[0]+1 );
 				show_citem[	citem[0]+1 ] = 1;
 			}
-			
+
 			break;
 
 		case 3:
@@ -201,7 +201,7 @@ void menubar_do( int keypress )
 				hide_level( citem[0]+1 );
 				state = 2;
 				break;
-			}		
+			}
 
 			if (keypress==KEY_ESC)
 			{
@@ -215,7 +215,7 @@ void menubar_do( int keypress )
 				citem[ citem[0]+1 ]++;
 			if (keypress==KEY_UP)
 				citem[ citem[0]+1 ]--;
-			
+
 			if (keypress==KEY_RIGHT )
 			{
 				hide_level( citem[0]+1 );
@@ -234,7 +234,7 @@ void menubar_do( int keypress )
 				show_citem[	citem[0]+1 ] = 1;
 				show_level( citem[0]+1 );
 			}
-					
+
 			break;
 		default:
 			state = 0;
@@ -279,5 +279,3 @@ void menubar_close()
 		gr_free_bitmap( MenuSystem[i].background );
 	}
 }
-
-

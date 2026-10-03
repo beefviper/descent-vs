@@ -30,7 +30,7 @@ IO_OBJS = key.obj joy.obj mouse.obj timer.obj mono.obj joyc.obj dpmi.obj ipx.obj
 
 # What object files and libs for the test programs
 DEMO_SRCS = demo.c
-DEMO_LIBS = io.lib 
+DEMO_LIBS = io.lib
 
 io.lib: $(IO_OBJS)
 	wlib io.lib $(IO_OBJS)
@@ -68,4 +68,3 @@ testt.obj: testt.c
 	wcc386 $(CCFLAGS) testt.c
 timer.obj: timer.asm
 	masm timer.asm
-

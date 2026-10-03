@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,96 +15,96 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:19 $
- * 
+ *
  * Structs and constants for AI system.
  * object.h depends on this.
  * ai.h depends on object.h.
  * Get it?
- * 
+ *
  * $Log: aistruct.h $
  * Revision 2.0  1995/02/27  11:30:19  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.34  1995/01/25  13:50:46  mike
  * Robots make angry sounds.
- * 
+ *
  * Revision 1.33  1994/12/29  12:44:56  rob
  * Added new coop robot flag.
- * 
+ *
  * Revision 1.32  1994/12/20  20:41:54  rob
  * Added new ai flag for multiplayer robots.
- * 
+ *
  * Revision 1.31  1994/12/19  16:37:39  rob
  * Added a new flag for remote controlled objects.
- * 
+ *
  * Revision 1.30  1994/12/07  00:36:07  mike
  * fix phys_apply_rot for robots -- ai was bashing effect in next frame.
- * 
+ *
  * Revision 1.29  1994/12/02  22:06:28  mike
  * add fields to allow robots to make awareness sounds every so often, not every damn blasted frame
- * 
+ *
  * Revision 1.28  1994/11/04  17:18:35  yuan
  * Increased MAX_SEG_POINTS to 2500.
- * 
+ *
  * Revision 1.27  1994/10/17  21:19:22  mike
  * robot cloaking.
- * 
+ *
  * Revision 1.26  1994/10/12  21:28:38  mike
  * Add new ai mode: AIM_OPEN_DOOR.
  * Add GOALSIDE to aip.
- * 
+ *
  * Revision 1.25  1994/09/25  23:41:08  matt
  * Changed the object load & save code to read/write the structure fields one
  * at a time (rather than the whole structure at once).  This mean that the
  * object structure can be changed without breaking the load/save functions.
- * As a result of this change, the local_object data can be and has been 
- * incorporated into the object array.  Also, timeleft is now a property 
+ * As a result of this change, the local_object data can be and has been
+ * incorporated into the object array.  Also, timeleft is now a property
  * of all objects, and the object structure has been otherwise cleaned up.
- * 
+ *
  * Revision 1.24  1994/09/21  12:28:11  mike
  * Change AI behavior for when player cloaked
- * 
+ *
  * Revision 1.23  1994/09/19  21:43:00  mike
  * Add follow_path_start_seg and follow_path_end_seg to aistruct.h.
- * 
+ *
  * Revision 1.22  1994/09/18  18:06:14  mike
  * Add Last_uncloaked_time and Last_uncloaked_position variables.
- * 
+ *
  * Revision 1.21  1994/09/15  16:31:38  mike
  * Define GREEN_GUY
  * Add previous_visibility to ai_local struct.
- * 
+ *
  * Revision 1.20  1994/09/12  19:12:45  mike
  * Change some bytes to ints in ai_local so I could set watchpoints.
- * 
+ *
  * Revision 1.19  1994/08/25  21:53:31  mike
  * Add behavior, taking place of what used to be mode.
- * 
+ *
  * Revision 1.18  1994/08/23  16:38:09  mike
  * rapidfire_count in ai_local.
- * 
+ *
  * Revision 1.17  1994/08/19  17:38:23  mike
  * *** empty log message ***
- * 
+ *
  * Revision 1.16  1994/08/17  22:18:58  mike
  * add time_since_processed to ai_local.
- * 
+ *
  * Revision 1.15  1994/08/10  19:52:25  mike
  * Add Overall_agitation.
- * 
+ *
  * Revision 1.14  1994/08/04  16:32:32  mike
  * Add time_player_seen.
- * 
+ *
  * Revision 1.13  1994/07/28  16:58:11  mike
  * Move constants from ai.c
- * 
+ *
  * Revision 1.12  1994/07/19  15:26:24  mike
  * New ai_static and ai_local structures.
- * 
+ *
  * Revision 1.11  1994/07/15  15:17:19  matt
  * Changes MAX_AI_FLAGS for better alignment
- * 
+ *
  */
 
 
@@ -183,7 +183,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //} opath;
 //
 //typedef struct oai_state {
-//	short			mode;							// 
+//	short			mode;							//
 //	short			counter;						// kind of a hack, frame countdown until switch modes
 //	opath			paths[2];
 //	vms_vector	movement_vector;			// movement vector for one second
@@ -206,7 +206,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 //	This is the stuff that is permanent for an AI object and is therefore saved to disk.
 typedef struct ai_static {
-	ubyte			behavior;					// 
+	ubyte			behavior;					//
 	byte			flags[MAX_AI_FLAGS];		// various flags, meaning defined by constants
 	short			hide_segment;				//	Segment to go to for hiding.
 	short			hide_index;					//	Index in Path_seg_points

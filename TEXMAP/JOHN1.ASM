@@ -6,10 +6,8 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
-
-
 
 
 		; eax = 0
@@ -56,7 +54,7 @@
 			mov	[edi+OFFSET], al	; write pixel to frame buffer
 		ENDM
 
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,26	; shift in v coordinate
 	shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
@@ -64,7 +62,6 @@
 	mov	al,[esi+eax]	; get pixel from source bitmap
 	mov	[edi],al
 	inc	edi		; XPARENT ADDED BY JOHN
-
 
 
 ; compute v coordinate
@@ -102,7 +99,7 @@ NoLight1:	cmp	al,255
 
 	mov	[edi],al
 skip1:	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -113,4 +110,3 @@ skip1:	inc	edi
 
 	dec	_loop_count
 	jns	tmap_loop
-

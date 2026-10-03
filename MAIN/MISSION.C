@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,89 +15,89 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.9 $
  * $Author: john $
  * $Date: 1995/05/26 16:16:32 $
- * 
+ *
  * Code to handle multiple missions
- * 
+ *
  * $Log: mission.c $
  * Revision 2.9  1995/05/26  16:16:32  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.8  1995/03/20  15:49:31  mike
  * Remove eof char from comment which confused make depend, causing
  * no mission.obj: line in makefile.  Pretty stupid tool, huh?
- * 
+ *
  * Revision 2.7  1995/03/20  12:12:11  john
  * Added ifdef SATURN.
- * 
+ *
  * Revision 2.6  1995/03/15  14:32:49  john
  * Added code to force the Descent CD-rom in the drive.
- * 
+ *
  * Revision 2.5  1995/03/15  11:41:15  john
  * Better Saturn CD-ROM support.
- * 
+ *
  * Revision 2.4  1995/03/14  18:24:14  john
  * Force Destination Saturn to use CD-ROM drive.
- * 
+ *
  * Revision 2.3  1995/03/07  14:19:41  mike
  * More destination saturn stuff.
- * 
+ *
  * Revision 2.2  1995/03/06  23:09:03  mike
  * more saturn stuff: make briefings work for saturn mission.
- * 
+ *
  * Revision 2.1  1995/03/06  16:47:48  mike
  * destination saturn
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:49  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.14  1995/02/15  11:30:37  john
  * Fixed bug with potential mem overwrite on line 160.
- * 
+ *
  * Revision 1.13  1995/02/10  17:53:20  matt
  * Changed mission name again
- * 
+ *
  * Revision 1.12  1995/02/10  17:35:38  matt
  * Changed name of built-in mission
- * 
+ *
  * Revision 1.11  1995/02/07  17:13:51  allender
  * removed return statement in load_mission so that built in mission will
  * actually set the Current_mission_name and _filename
- * 
+ *
  * Revision 1.10  1995/01/31  01:19:45  matt
  * Made build_mission_list() sort missions by name
- * 
+ *
  * Revision 1.9  1995/01/30  13:49:58  allender
  * changed build_mission_list in load_mission_by_name to include
  * anarchy levels.
- * 
+ *
  * Revision 1.8  1995/01/30  13:03:51  matt
  * Fixed dumb mistake
- * 
+ *
  * Revision 1.7  1995/01/30  12:55:22  matt
  * Added vars to point to mission names
- * 
+ *
  * Revision 1.6  1995/01/22  18:57:28  matt
  * Made player highest level work with missions
- * 
+ *
  * Revision 1.5  1995/01/22  14:13:08  matt
  * Added flag in mission list for anarchy-only missions
- * 
+ *
  * Revision 1.4  1995/01/21  23:13:12  matt
  * Made high scores with (not work, really) with loaded missions
  * Don't give player high score when quit game
- * 
+ *
  * Revision 1.3  1995/01/21  16:27:12  matt
  * Made endlevel briefing work with missions
- * 
+ *
  * Revision 1.2  1995/01/20  22:47:50  matt
  * Mission system implemented, though imcompletely
- * 
+ *
  * Revision 1.1  1995/01/20  13:42:19  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -179,7 +179,7 @@ char *get_value(char *buf)
 char *get_parm_value(char *parm,FILE *f)
 {
 	static char buf[80];
-	
+
 	if (!mfgets(buf,80,f))
 		return NULL;
 
@@ -251,7 +251,7 @@ int build_mission_list(int anarchy_mode)
 
 				p = get_parm_value("type",mfile);
 
-				//get mission type 
+				//get mission type
 				if (p)
 					Mission_list[count].anarchy_only_flag = is_anarchy = istok(p,"anarchy");
 
@@ -276,7 +276,7 @@ int build_mission_list(int anarchy_mode)
 				FILE *mfile;
 				int is_anarchy;
 				char temp[13],*t;
-	
+
 				strcpy(temp,find.name);
 				if ((t = strchr(temp,'.')) == NULL)
 					continue;
@@ -287,10 +287,10 @@ int build_mission_list(int anarchy_mode)
 						break;
 				}
 				if ( i < count ) continue;		// Don't use same mission twice!
-		
+
 				strncpy( Mission_list[count].filename, temp, 9 );
 				Mission_list[count].anarchy_only_flag = is_anarchy = 0;
-	
+
 				mfile = fopen(find.name,"rt");
 				if (!mfile)	{
 					strcpy( temp_spec, destsat_cdpath );
@@ -299,9 +299,9 @@ int build_mission_list(int anarchy_mode)
 				}
 				if (mfile) {
 					char *p;
-	
+
 					p = get_parm_value("name",mfile);
-	
+
 					if (p) {
 						char *t;
 						if ((t=strchr(p,';'))!=NULL)
@@ -314,21 +314,21 @@ int build_mission_list(int anarchy_mode)
 						fclose(mfile);
 						continue;			//abort this mission file
 					}
-	
+
 					p = get_parm_value("type",mfile);
-	
-					//get mission type 
+
+					//get mission type
 					if (p)
 						Mission_list[count].anarchy_only_flag = is_anarchy = istok(p,"anarchy");
-	
+
 					fclose(mfile);
-	
+
 					if (!anarchy_mode && is_anarchy)
 						continue;		//skip this mission
-	
+
 					count++;
 				}
-	
+
 			} while( !_dos_findnext( &find ) && count<MAX_MISSIONS);
 		}
 	}
@@ -386,10 +386,10 @@ int load_mission(int mission_num)
 		strcpy(Briefing_text_filename,BIM_BRIEFING_FILE);
 		strcpy(Ending_text_filename,BIM_ENDING_FILE);
 		cfile_use_alternate_hogfile(NULL);		//disable alternate
-	} else 
+	} else
 #endif
 	{		 //NOTE LINK TO ABOVE IF!!!!!
-			//read mission from file 
+			//read mission from file
 		FILE *mfile;
 		char buf[80], tmp[80], *v;
 
@@ -421,7 +421,7 @@ int load_mission(int mission_num)
 		Last_secret_level = 0;
 		Briefing_text_filename[0] = 0;
 		Ending_text_filename[0] = 0;
-	
+
 #ifdef DEST_SAT
 		if (!stricmp(Mission_list[mission_num].filename, "DESTSAT")) {		//	Destination Saturn.
 			strcpy(Briefing_text_filename,"briefsat.tex");
@@ -434,7 +434,7 @@ int load_mission(int mission_num)
 			if (istok(buf,"name"))
 				continue;						//already have name, go to next line
 			else if (istok(buf,"type"))
-				continue;						//already have name, go to next line				
+				continue;						//already have name, go to next line
 			else if (istok(buf,"hog")) {
 				char	*bufp = buf;
 
@@ -490,7 +490,7 @@ int load_mission(int mission_num)
 					for (i=0;i<n_secret_levels && mfgets(buf,80,mfile);i++) {
 						char *t;
 
-						
+
 						if ((t=strchr(buf,','))!=NULL) *t++=0;
 						else
 							break;
@@ -515,7 +515,7 @@ int load_mission(int mission_num)
 		fclose(mfile);
 
 		if (Last_level <= 0) {
-			Current_mission_num = -1;		//no valid mission loaded 
+			Current_mission_num = -1;		//no valid mission loaded
 			return 0;
 		}
 	}
@@ -540,5 +540,3 @@ int load_mission_by_name(char *mission_name)
 
 	return 0;		//couldn't find mission
 }
-
-

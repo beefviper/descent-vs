@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,92 +15,92 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.1 $
  * $Author: john $
  * $Date: 1995/03/21 14:39:04 $
- * 
+ *
  * Destroyable wall stuff
- * 
+ *
  * $Log: wall.c $
  * Revision 2.1  1995/03/21  14:39:04  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.0  1995/02/27  11:28:32  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.112  1995/02/22  13:53:07  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.111  1995/02/01  17:32:17  adam
  * Took out a bogus int3.
- * 
+ *
  * Revision 1.110  1995/02/01  17:20:24  john
  * Lintized.
- * 
+ *
  * Revision 1.109  1995/01/21  17:39:50  matt
  * Cleaned up laser/player hit wall confusions
- * 
+ *
  * Revision 1.108  1995/01/21  17:14:17  rob
  * Fixed bug in multiplayer door-butting.
- * 
+ *
  * Revision 1.107  1995/01/18  18:57:11  rob
  * Added new hostage door hooks.
- * 
+ *
  * Revision 1.106  1995/01/18  18:48:18  allender
  * removed #ifdef newdemo's.  Added function call to record a door that
  * starts to open. This fixes the rewind problem
- * 
+ *
  * Revision 1.105  1995/01/16  11:55:39  mike
  * make control center (and robots whose id == your playernum) not able to open doors.
- * 
+ *
  * Revision 1.104  1994/12/11  23:07:21  matt
  * Fixed stuck objects & blastable walls
- * 
+ *
  * Revision 1.103  1994/12/10  16:44:34  matt
  * Added debugging code to track down door that turns into rock
- * 
+ *
  * Revision 1.102  1994/12/06  16:27:05  matt
  * Added debugging
- * 
+ *
  * Revision 1.101  1994/12/02  10:50:27  yuan
  * Localization
- * 
+ *
  * Revision 1.100  1994/11/30  19:41:22  rob
  * Put in a fix so that door opening sounds travel through the door.
- * 
+ *
  * Revision 1.99  1994/11/28  11:59:50  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.98  1994/11/28  11:25:45  matt
  * Cleaned up key hud messages
- * 
+ *
  * Revision 1.97  1994/11/27  23:15:11  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.96  1994/11/19  15:18:29  mike
  * rip out unused code and data.
- * 
+ *
  * Revision 1.95  1994/11/17  14:57:12  mike
  * moved segment validation functions from editor to main.
- * 
+ *
  * Revision 1.94  1994/11/07  08:47:30  john
  * Made wall state record.
- * 
+ *
  * Revision 1.93  1994/11/04  16:06:37  rob
  * Fixed network damage of blastable walls.
- * 
+ *
  * Revision 1.92  1994/11/02  21:54:01  matt
  * Don't let objects with zero size keep door from shutting
- * 
+ *
  * Revision 1.91  1994/10/31  13:48:42  rob
  * Fixed bug in opening doors over network/modem.  Added a new message
- * type to multi.c that communicates door openings across the net. 
+ * type to multi.c that communicates door openings across the net.
  * Changed includes in multi.c and wall.c to accomplish this.
- * 
+ *
  * Revision 1.90  1994/10/28  14:42:41  john
  * Added sound volumes to all sound calls.
- * 
+ *
  * Revision 1.89  1994/10/23  19:16:55  matt
  * Fixed bug with "no key" messages
- * 
+ *
  */
 
 
@@ -173,11 +173,11 @@ char	Wall_names[7][10] = {
 //		1 = YES
 //		0 = NO
 int check_transparency( segment * seg, int side )
-{	  
+{
 	if ( (seg->sides[side].tmap_num2 & 0x3FFF) == 0) {
 		if (GameBitmaps[Textures[seg->sides[side].tmap_num].index].bm_flags & BM_FLAG_TRANSPARENT )
 			return 1;
-		else 
+		else
 			return 0;
 		}
 
@@ -195,7 +195,7 @@ int check_transparency( segment * seg, int side )
 //		WID_RENDER_FLAG			2
 //		WID_RENDPAST_FLAG			4
 //	 Return values:
-//		WID_WALL						2	// 0/1/0		wall	
+//		WID_WALL						2	// 0/1/0		wall
 //		WID_TRANSPARENT_WALL		6	//	0/1/1		transparent wall
 //		WID_ILLUSORY_WALL			3	//	1/1/0		illusory wall
 //		WID_TRANSILLUSORY_WALL	7	//	1/1/1		transparent illusory wall
@@ -243,15 +243,15 @@ int wall_is_doorway ( segment * seg, int side )
 			return WID_TRANSPARENT_WALL;
 		else
 			return WID_WALL;
-	}	
-	
+	}
+
 	if (flags & WALL_DOOR_OPENED)
 		return WID_TRANSILLUSORY_WALL;
-	
+
 	state = Walls[seg->sides[side].wall_num].state;
 	if ((type == WALL_DOOR) && (state == WALL_DOOR_OPENING))
 		return WID_TRANSPARENT_WALL;
-	
+
 // If none of the above flags are set, there is no doorway.
 	if (check_transparency( seg, side))
 		return WID_TRANSPARENT_WALL;
@@ -265,7 +265,7 @@ int wall_is_doorway ( segment * seg, int side )
 void wall_init()
 {
 	int i;
-	
+
 	Num_walls = 0;
 	for (i=0;i<MAX_WALLS;i++) {
 		Walls[i].segnum = Walls[i].sidenum = -1;
@@ -285,7 +285,7 @@ void wall_init()
 void wall_reset(segment *seg, int side)
 {
 	int i;
-	
+
 	i = seg->sides[side].wall_num;
 
 	if (i==-1) {
@@ -371,7 +371,7 @@ void wall_destroy(segment *seg, int side)
 }
 
 //-----------------------------------------------------------------
-// Deteriorate appearance of wall. (Changes bitmap (paste-ons)) 
+// Deteriorate appearance of wall. (Changes bitmap (paste-ons))
 void wall_damage(segment *seg, int side, fix damage)
 {
 	int a, i, n;
@@ -383,7 +383,7 @@ void wall_damage(segment *seg, int side, fix damage)
 
 	if (Walls[seg->sides[side].wall_num].type != WALL_BLASTABLE)
 		return;
-	
+
 	if (!(Walls[seg->sides[side].wall_num].flags & WALL_BLASTED))
 		{
 		int Connectside;
@@ -392,15 +392,15 @@ void wall_damage(segment *seg, int side, fix damage)
 		csegp = &Segments[seg->children[side]];
 		Connectside = find_connect_side(seg, csegp);
 		Assert(Connectside != -1);
-		
+
 		Walls[seg->sides[side].wall_num].hps -= damage;
 		Walls[csegp->sides[Connectside].wall_num].hps -= damage;
-			
+
 		a = Walls[seg->sides[side].wall_num].clip_num;
 		n = WallAnims[a].num_frames;
-		
+
 		if (Walls[seg->sides[side].wall_num].hps < WALL_HPS*1/n) {
-			blast_blastable_wall( seg, side );			
+			blast_blastable_wall( seg, side );
 			#ifdef NETWORK
 			if (Game_mode & GM_MULTI)
 				multi_send_door_open(seg-Segments, side);
@@ -416,7 +416,7 @@ void wall_damage(segment *seg, int side, fix damage)
 
 
 //-----------------------------------------------------------------
-// Opens a door 
+// Opens a door
 void wall_open_door(segment *seg, int side)
 {
 	wall *w;
@@ -439,16 +439,16 @@ void wall_open_door(segment *seg, int side)
 	if (w->state != WALL_DOOR_CLOSED) {		//reuse door
 
 		int i;
-	
+
 		d = NULL;
 
 		for (i=0;i<Num_open_doors;i++) {		//find door
 
 			d = &ActiveDoors[i];
-	
+
 			if (d->front_wallnum[0]==w-Walls || d->back_wallnum[0]==w-Walls || (d->n_parts==2 && (d->front_wallnum[1]==w-Walls || d->back_wallnum[1]==w-Walls)))
 				break;
-		} 
+		}
 
 		Assert(i<Num_open_doors);				//didn't find door!
 		Assert( d!=NULL ); // Get John!
@@ -457,7 +457,7 @@ void wall_open_door(segment *seg, int side)
 
 		if (d->time < 0)
 			d->time = 0;
-	
+
 	}
 	else {											//create new door
 		d = &ActiveDoors[Num_open_doors];
@@ -539,25 +539,25 @@ void wall_close_door(int door_num)
 		wall *w;
 		int Connectside, side;
 		segment *csegp, *seg;
-	
+
 		w = &Walls[d->front_wallnum[p]];
 
 		seg = &Segments[w->segnum];
 		side = w->sidenum;
-	
+
 		Assert(seg->sides[side].wall_num != -1);		//Closing door on illegal wall
-		
+
 		csegp = &Segments[seg->children[side]];
 		Connectside = find_connect_side(seg, csegp);
 		Assert(Connectside != -1);
-	
+
 		Walls[seg->sides[side].wall_num].state = WALL_DOOR_CLOSED;
 		Walls[csegp->sides[Connectside].wall_num].state = WALL_DOOR_CLOSED;
-	
+
 		wall_set_tmap_num(seg,side,csegp,Connectside,w->clip_num,0);
 
 	}
-	
+
 	for (i=door_num;i<Num_open_doors;i++)
 		ActiveDoors[i] = ActiveDoors[i+1];
 
@@ -575,7 +575,7 @@ void do_door_open(int door_num)
 	active_door *d;
 
 	Assert(door_num != -1);		//Trying to do_door_open on illegal door
-	
+
 	d = &ActiveDoors[door_num];
 
 	for (p=0;p<d->n_parts;p++) {
@@ -584,38 +584,38 @@ void do_door_open(int door_num)
 		segment *csegp, *seg;
 		fix time_elapsed, time_total, one_frame;
 		int i, n;
-	
+
 		w = &Walls[d->front_wallnum[p]];
 		kill_stuck_objects(d->front_wallnum[p]);
 		kill_stuck_objects(d->back_wallnum[p]);
 
 		seg = &Segments[w->segnum];
 		side = w->sidenum;
-	
+
 		Assert(seg->sides[side].wall_num != -1);		//Trying to do_door_open on illegal wall
-	
+
 		csegp = &Segments[seg->children[side]];
 		Connectside = find_connect_side(seg, csegp);
 		Assert(Connectside != -1);
 
 		d->time += FrameTime;
-	
+
 		time_elapsed = d->time;
 		n = WallAnims[w->clip_num].num_frames;
 		time_total = WallAnims[w->clip_num].play_time;
-	
-		one_frame = time_total/n;	
-	
+
+		one_frame = time_total/n;
+
 		i = time_elapsed/one_frame;
-	
+
 		if (i < n)
 			wall_set_tmap_num(seg,side,csegp,Connectside,w->clip_num,i);
-	
+
 		if (i> n/2) {
 			Walls[seg->sides[side].wall_num].flags |= WALL_DOOR_OPENED;
 			Walls[csegp->sides[Connectside].wall_num].flags |= WALL_DOOR_OPENED;
 		}
-	
+
 		if (i >= n-1) {
 			wall_set_tmap_num(seg,side,csegp,Connectside,w->clip_num,n-1);
 
@@ -662,7 +662,7 @@ void do_door_close(int door_num)
 	wall *w;
 
 	Assert(door_num != -1);		//Trying to do_door_open on illegal door
-	
+
 	d = &ActiveDoors[door_num];
 
 	w = &Walls[d->front_wallnum[0]];
@@ -673,10 +673,10 @@ void do_door_close(int door_num)
 			int Connectside, side;
 			segment *csegp, *seg;
 			int objnum;
-		
+
 			seg = &Segments[w->segnum];
 			side = w->sidenum;
-		
+
 			csegp = &Segments[seg->children[side]];
 			Connectside = find_connect_side(seg, csegp);
 			Assert(Connectside != -1);
@@ -699,25 +699,25 @@ void do_door_close(int door_num)
 		segment *csegp, *seg;
 		fix time_elapsed, time_total, one_frame;
 		int i, n;
-	
+
 		w = &Walls[d->front_wallnum[p]];
 
 		seg = &Segments[w->segnum];
 		side = w->sidenum;
-	
+
 		if (seg->sides[side].wall_num == -1) {
 			mprintf((0, "Trying to do_door_close on Illegal wall\n"));
 			return;
 		}
-	
+
 		//if here, must be auto door
-		Assert(Walls[seg->sides[side].wall_num].flags & WALL_DOOR_AUTO);		
-	
+		Assert(Walls[seg->sides[side].wall_num].flags & WALL_DOOR_AUTO);
+
 		// Otherwise, close it.
 		csegp = &Segments[seg->children[side]];
 		Connectside = find_connect_side(seg, csegp);
 		Assert(Connectside != -1);
-	
+
 
 		if ( Newdemo_state != ND_STATE_PLAYBACK )
 			// NOTE THE LINK TO ABOVE!!
@@ -728,22 +728,22 @@ void do_door_close(int door_num)
 					if (WallAnims[w->clip_num].close_sound  > -1 )
 						digi_link_sound_to_pos( WallAnims[Walls[seg->sides[side].wall_num].clip_num].close_sound, seg-Segments, side, &cp, 0, F1_0 );
 				}
-	
+
 		d->time += FrameTime;
 
 		time_elapsed = d->time;
 		n = WallAnims[w->clip_num].num_frames;
 		time_total = WallAnims[w->clip_num].play_time;
-	
-		one_frame = time_total/n;	
-	
+
+		one_frame = time_total/n;
+
 		i = n-time_elapsed/one_frame-1;
-	
+
 		if (i < n/2) {
 			Walls[seg->sides[side].wall_num].flags &= ~WALL_DOOR_OPENED;
 			Walls[csegp->sides[Connectside].wall_num].flags &= ~WALL_DOOR_OPENED;
 		}
-	
+
 		// Animate door.
 		if (i > 0) {
 			wall_set_tmap_num(seg,side,csegp,Connectside,w->clip_num,i);
@@ -753,7 +753,7 @@ void do_door_close(int door_num)
 
 			ActiveDoors[Num_open_doors].time = 0;		//counts up
 
-		} else 
+		} else
 			wall_close_door(door_num);
 	}
 }
@@ -842,7 +842,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 		return WHP_NOT_SPECIAL;
 
 	Assert( playernum > -1 );
-	
+
 	//	Determine whether player is facing door he hit.  If not, don't say negative
 	//	messages because he probably didn't intentionally hit the door.
 	if (obj->type == OBJ_PLAYER)
@@ -865,7 +865,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 					HUD_init_message("%s %s",TXT_RED,TXT_ACCESS_DENIED);
 			return WHP_NO_KEY;
 		}
-	
+
 	if (w->keys == KEY_GOLD)
 		if (!(Players[playernum].flags & PLAYER_FLAGS_GOLD_KEY)) {
 			if ( playernum==Player_num )
@@ -891,7 +891,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 			#endif
 			}
 			return WHP_DOOR;
-			
+
 		}
 
 	return WHP_NOT_SPECIAL;		//default is treat like normal wall
@@ -901,7 +901,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 // Opens doors/destroys wall/shuts off triggers.
 void wall_toggle(segment *seg, int side)
 {
-	int wall_num; 
+	int wall_num;
 
 	Assert( seg-Segments <= Highest_segment_index);
 	Assert( side < MAX_SIDES_PER_SEGMENT );
@@ -966,8 +966,8 @@ void wall_frame_process()
 				w->state = WALL_DOOR_CLOSING;
 				d->time = 0;
 			}
-		} 
-	} 
+		}
+	}
 }
 
 int	Num_stuck_objects=0;
@@ -985,7 +985,7 @@ void add_stuck_object(object *objp, int segnum, int sidenum)
 
 	if (wallnum != -1) {
 		if (Walls[wallnum].flags & WALL_BLASTED)
-			objp->flags |= OF_SHOULD_BE_DEAD;  
+			objp->flags |= OF_SHOULD_BE_DEAD;
 
 		for (i=0; i<MAX_STUCK_OBJECTS; i++) {
 			if (Stuck_objects[i].wallnum == -1) {
@@ -1000,7 +1000,6 @@ void add_stuck_object(object *objp, int segnum, int sidenum)
 		if (i == MAX_STUCK_OBJECTS)
 			mprintf((1, "Warning: Unable to add object %i which got stuck in wall %i to Stuck_objects\n", objp-Objects, wallnum));
 	}
-
 
 
 }
@@ -1046,5 +1045,3 @@ void kill_stuck_objects(int wallnum)
 		} else if (Stuck_objects[i].wallnum != -1)
 			Num_stuck_objects++;
 }
-
-

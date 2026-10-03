@@ -3,36 +3,36 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:36:25 $
- * 
+ *
  * Functions to make faces planar and probably other things.
- * 
+ *
  * $Log: fixseg.c $
  * Revision 2.0  1995/02/27  11:36:25  john
  * Version 2.0. Ansi-fied.
- * 
+ *
  * Revision 1.7  1994/11/27  23:18:01  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.6  1994/11/17  14:48:00  mike
  * validation functions moved from editor to game.
- * 
+ *
  * Revision 1.5  1994/08/04  19:13:26  matt
  * Changed a bunch of vecmat calls to use multiple-function routines, and to
  * allow the use of C macros for some functions
- * 
+ *
  * Revision 1.4  1994/02/10  15:36:31  matt
  * Various changes to make editor compile out.
- * 
+ *
  * Revision 1.3  1993/12/03  18:45:09  mike
  * initial stuff.
- * 
+ *
  * Revision 1.2  1993/11/30  17:05:09  mike
  * Added part of code to make a side planar.
- * 
+ *
  * Revision 1.1  1993/11/30  10:05:36  mike
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -163,7 +163,7 @@ int side_is_planar_p(segment *sp, int side)
 
 	vm_vec_normalize(vm_vec_normal(&va,v0,v1,v2));
 	vm_vec_normalize(vm_vec_normal(&vb,v0,v2,v3));
-	
+
 	// If the two vectors are very close to being the same, then generate one quad, else generate two triangles.
 	return (vm_vec_dist(&va,&vb) < F1_0/1000);
 }
@@ -217,10 +217,9 @@ int make_curside_planar(void)
 			med_set_vertex(vp[v],&planar_verts[v]);
 			validate_segment(Cursegp);
 			// -- should propagate tmaps to segments or something here...
-			
+
 			return 0;
 		}
 	//	We tried, but we failed, to make Curside planer.
 	return 1;
 }
-

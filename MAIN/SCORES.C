@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -22,213 +22,213 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * Revision 2.2  1995/06/15  12:13:54  john
  * Made end game, win game and title sequences all go
  * on after 5 minutes automatically.
- * 
+ *
  * Revision 2.1  1995/03/06  15:23:57  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:30:53  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.109  1995/02/09  12:23:19  rob
  * Added assert for length of filename.
- * 
+ *
  * Revision 1.108  1995/01/03  17:33:24  john
  * Made scrolling textbox. Used it for scores cool saying.
- * 
+ *
  * Revision 1.107  1994/12/28  10:42:51  john
  * More VFX tweaking.
- * 
+ *
  * Revision 1.106  1994/12/28  10:26:19  john
  * Fixed some VFX problems.
- * 
+ *
  * Revision 1.105  1994/12/15  16:42:12  adam
  * some fix
- * 
+ *
  * Revision 1.104  1994/12/14  11:59:19  john
  * Changed the default high scores.
- * 
+ *
  * Revision 1.103  1994/12/09  00:41:12  mike
  * fix hang in automap print screen
- * 
+ *
  * Revision 1.102  1994/12/07  00:36:26  mike
  * scores sequencing stuff.
- * 
+ *
  * Revision 1.101  1994/12/06  15:14:21  yuan
  * Localization
- * 
+ *
  * Revision 1.100  1994/12/03  17:07:52  yuan
  * Localization 368
- * 
+ *
  * Revision 1.99  1994/12/03  14:49:27  mark
  * Fixed john's bug with previous.
- * 
+ *
  * Revision 1.98  1994/12/03  14:43:54  john
  * Added enter, space  to exit scores.
- * 
+ *
  * Revision 1.97  1994/12/03  14:32:34  john
  * Added integrated-super-deluxe-ctrl-r to reset high scores.
- * 
+ *
  * Revision 1.96  1994/12/01  20:15:20  yuan
  * Localization
- * 
+ *
  * Revision 1.95  1994/11/30  19:36:36  john
  * Made Gravis Ultrasound work again.  Made the scores blink
  * at a constant rate.  Revamped the newmenu background storage,
  * which hopefully fixed some bugs.  Made menus in ame not pause
  * sound, except for the pause key.               ^== Game!
- * 
+ *
  * Revision 1.94  1994/11/30  12:32:08  john
  * Made secret levels print correctly.
- * 
+ *
  * Revision 1.93  1994/11/30  12:06:47  mike
  * fix bug: looper not initialized.
- * 
+ *
  * Revision 1.92  1994/11/29  13:20:04  john
  * changed the "Wow! You placed .." to something better.
- * 
+ *
  * Revision 1.91  1994/11/29  01:35:38  john
  * Made it so that even if you don't get a high score, you still show
  * up on the chart..
- * 
+ *
  * Revision 1.90  1994/11/23  17:29:29  mike
  * fix xx-xx level bug in high scores.
- * 
+ *
  * Revision 1.89  1994/11/22  16:55:27  mike
  * allow high scores even in pudly trainee level.
- * 
+ *
  * Revision 1.88  1994/11/21  17:28:33  john
  * Changed default score values.
- * 
+ *
  * Revision 1.87  1994/11/18  23:37:53  john
  * Changed some shorts to ints.
- * 
+ *
  * Revision 1.86  1994/11/13  15:39:24  john
  * Added critical error handler to game.  Took out -editor command line
  * option because it didn't work anymore and wasn't worth fixing.  Made scores
  * not use MINER enviroment variable on release version, and made scores
  * not print an error if there is no descent.hi.
- * 
+ *
  * Revision 1.85  1994/11/06  10:15:58  john
  * Took out kill % and hostage %
- * 
+ *
  * Revision 1.84  1994/11/05  15:03:39  john
  * Added non-popup menu for the main menu, so that scores and credits don't have to save
  * the background.
- * 
+ *
  * Revision 1.83  1994/11/05  14:05:57  john
  * Fixed fade transitions between all screens by making gr_palette_fade_in and out keep
  * track of whether the palette is faded in or not.  Then, wherever the code needs to fade out,
  * it just calls gr_palette_fade_out and it will fade out if it isn't already.  The same with fade_in.
  * This eliminates the need for all the flags like Menu_fade_out, game_fade_in palette, etc.
- * 
+ *
  * Revision 1.82  1994/11/04  20:11:41  john
  * Neatening up palette stuff with demos.
- * 
+ *
  * Revision 1.81  1994/11/04  12:02:34  john
  * Fixed fading transitions a bit more.
- * 
+ *
  * Revision 1.80  1994/10/27  12:10:39  john
  * Moved kill % a little to the right.
- * 
+ *
  * Revision 1.79  1994/10/24  20:25:03  john
  * Fixed bug with space at end of 1 line message.
  * Made Enter go between the two input lines.
- * 
+ *
  * Revision 1.78  1994/10/24  18:20:18  john
  * Made the current high score flash.
- * 
+ *
  * Revision 1.77  1994/10/24  13:37:22  mike
  * Fix grammar error.  --anal Mike.
- * 
+ *
  * Revision 1.76  1994/10/22  13:19:19  john
  * Made joy/mouse buttons leave score screen.
- * 
+ *
  * Revision 1.75  1994/10/21  15:26:57  john
  * Used PrtScr instead of F2.
- * 
+ *
  * Revision 1.74  1994/10/21  13:54:21  matt
  * Replace '1' with special wide '1' to make numbers line up
- * 
+ *
  * Revision 1.73  1994/10/19  20:48:01  john
  * Made so that people playing on wimp level
  * can't get high scores.
- * 
+ *
  * Revision 1.72  1994/10/19  15:14:05  john
  * Took % hits out of player structure, made %kills work properly.
- * 
+ *
  * Revision 1.71  1994/10/19  14:39:27  john
  * Finished up; added keys to prtscr, int3.
- * 
+ *
  * Revision 1.70  1994/10/19  12:44:09  john
  * Added hours field to player structure.
- * 
+ *
  * Revision 1.69  1994/10/19  11:25:21  john
  * Looking good.
- * 
+ *
  * Revision 1.68  1994/10/19  10:54:12  john
  * Test version.
- * 
+ *
  * Revision 1.67  1994/10/19  10:00:27  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.66  1994/10/19  09:59:03  john
  * Made cool saying have the potential to be up to 50 chars
- * 
+ *
  * Revision 1.65  1994/10/19  09:53:30  john
  * Working version of scores.
- * 
+ *
  * Revision 1.64  1994/10/18  21:07:46  john
  * Fixed bug that didn't print name correctly.
- * 
+ *
  * Revision 1.63  1994/10/18  18:21:46  john
  * NEw score system.
- * 
+ *
  * Revision 1.62  1994/10/17  20:31:42  john
  * Made the text for the difficulty labels global so that
  * the high score screen can print "rookie" or whatever.
- * 
+ *
  * Revision 1.61  1994/10/17  17:27:44  john
  * Added starting_level to high score system.
- * 
+ *
  * Revision 1.60  1994/10/17  16:56:35  john
  * Added starting level to stats menu.
- * 
+ *
  * Revision 1.59  1994/10/17  16:55:25  john
  * Added starting level, but didn't hook it to anything.
- * 
+ *
  * Revision 1.58  1994/10/17  16:47:17  john
  * Added diff. level.
- * 
+ *
  * Revision 1.57  1994/10/17  15:49:53  john
  * Added stats screen.
- * 
+ *
  * Revision 1.56  1994/10/03  23:02:29  matt
  * After player added or not to scores, scores are now displayed
- * 
+ *
  * Revision 1.55  1994/09/01  18:09:38  john
  * Made commas in scores work correctly .
- * 
- * 
+ *
+ *
  * Revision 1.54  1994/09/01  18:03:57  john
  * Neatened up scores a bit.
- * 
+ *
  * Revision 1.53  1994/08/26  14:27:37  john
  * Made it prompt for name
- * 
+ *
  * Revision 1.52  1994/08/26  13:03:17  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.51  1994/08/26  13:01:52  john
  * Put high score system in.
- * 
+ *
  * Revision 1.50  1994/08/10  19:57:01  john
  * Changed font stuff; Took out old menu; messed up lots of
  * other stuff like game sequencing messages, etc.
- * 
+ *
  * Revision 1.49  1994/07/25  15:40:27  matt
  * Took out debugging code accidentally left in.
- * 
+ *
  *
  */
 
@@ -277,7 +277,7 @@ typedef struct stats_info {
 	byte		ending_level;
 	byte  	diff_level;
 	short 	kill_ratio;	// 0-100
-	short		hostage_ratio;   // 
+	short		hostage_ratio;   //
 	int		seconds;			// How long it took in seconds...
 } stats_info;
 
@@ -343,7 +343,7 @@ void scores_read()
 			Scores.stats[i].score = (10-i)*1000;
 		return;
 	}
-		
+
 	fsize = filelength( fileno( fp ));
 
 	if ( fsize != sizeof(all_scores) )	{
@@ -411,12 +411,12 @@ void scores_fill_struct(stats_info * stats)
 		strcpy( stats->name, Players[Player_num].callsign );
 		stats->score = Players[Player_num].score;
 		stats->ending_level = Players[Player_num].level;
-		if (Players[Player_num].num_robots_total > 0 )	
+		if (Players[Player_num].num_robots_total > 0 )
 			stats->kill_ratio = (Players[Player_num].num_kills_total*100)/Players[Player_num].num_robots_total;
 		else
 			stats->kill_ratio = 0;
 
-		if (Players[Player_num].hostages_total > 0 )	
+		if (Players[Player_num].hostages_total > 0 )
 			stats->hostage_ratio = (Players[Player_num].hostages_rescued_total*100)/Players[Player_num].hostages_total;
 		else
 			stats->hostage_ratio = 0;
@@ -436,7 +436,7 @@ void scores_maybe_add_player(int abort_flag)
 	int i,position;
 
 	scores_read();
-	
+
 	position = MAX_HIGH_SCORES;
 	for (i=0; i<MAX_HIGH_SCORES; i++ )	{
 		if ( Players[Player_num].score > Scores.stats[i].score )	{
@@ -444,7 +444,7 @@ void scores_maybe_add_player(int abort_flag)
 			break;
 		}
 	}
-	
+
 	if ( position == MAX_HIGH_SCORES ) {
 		if (abort_flag)
 			return;
@@ -466,20 +466,19 @@ void scores_maybe_add_player(int abort_flag)
 		} else {
 			nm_messagebox( TXT_HIGH_SCORE, 1, TXT_OK, "%s %s!", TXT_YOU_PLACED, *(&TXT_1ST + position) );
 		}
-	
+
 		// move everyone down...
 		for ( i=MAX_HIGH_SCORES-1; i>position; i-- )	{
 			Scores.stats[i] = Scores.stats[i-1];
 		}
 
 		scores_fill_struct( &Scores.stats[position] );
-	
+
 		scores_write();
 
 	}
 	scores_view(position);
 }
-
 
 
 #define TEXT_FONT  		(Gamefonts[GFONT_MEDIUM_3])
@@ -563,9 +562,9 @@ ReshowScores:
 	scores_read();
 
 	set_screen_mode(SCREEN_MENU);
-	
+
 	gr_set_current_canvas(NULL);
-	
+
 	nm_draw_background(0,0,grd_curcanv->cv_bitmap.bm_w, grd_curcanv->cv_bitmap.bm_h );
 
 	grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_3];
@@ -583,19 +582,19 @@ ReshowScores:
 //	gr_string( 234, 46, "Rescues" );
 	gr_string( 288-42+XX, 46+7+YY, TXT_TIME );
 
-	if ( citem < 0 )	
+	if ( citem < 0 )
 		gr_string( 0x8000, 175, TXT_PRESS_CTRL_R );
 
 	gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
 
 	gr_printf( 0x8000, 31, "%c%s%c  - %s", 34, Scores.cool_saying, 34, Scores.stats[0].name );
-	
+
 	for (i=0; i<MAX_HIGH_SCORES; i++ )		{
 		if (i==0)	{
 			gr_set_fontcolor( BM_XRGB(28,28,28), -1 );
 		} else {
 			gr_set_fontcolor( gr_fade_table[BM_XRGB(28,28,28)+((28-i*2)*256)], -1 );
-		}														 
+		}
 		scores_draw_item( i, &Scores.stats[i] );
 	}
 
@@ -609,10 +608,10 @@ ReshowScores:
 	time_out_value = timer_get_fixed_seconds()+i2f(60*5);
 	while(!done)	{
 		if ( citem > -1 )	{
-	
+
 			t1	= timer_get_fixed_seconds();
 			if ( t1 > time_out_value ) done = 1;
-			while ( timer_get_fixed_seconds() < t1+F1_0/128 );	
+			while ( timer_get_fixed_seconds() < t1+F1_0/128 );
 
 			gr_set_fontcolor( gr_fade_table[fades[looper]*256+BM_XRGB(28,28,28)], -1 );
 			looper++;
@@ -623,14 +622,14 @@ ReshowScores:
 				scores_draw_item( citem, &Scores.stats[citem] );
 		}
 
-		for (i=0; i<4; i++ )	
+		for (i=0; i<4; i++ )
 			if (joy_get_button_down_cnt(i)>0) done=1;
-		for (i=0; i<3; i++ )	
+		for (i=0; i<3; i++ )
 			if (mouse_button_down_count(i)>0) done=1;
 
 		k = key_inkey();
 		switch( k )	{
-		case KEY_CTRLED+KEY_R:		
+		case KEY_CTRLED+KEY_R:
 			if ( citem < 0 )		{
 				// Reset scores...
 				if ( nm_messagebox( NULL, 2,  TXT_NO, TXT_YES, TXT_RESET_HIGH_SCORES )==1 )	{
@@ -642,7 +641,7 @@ ReshowScores:
 			break;
 		case KEY_BACKSP:				Int3(); k = 0; break;
 		case KEY_PRINT_SCREEN:		save_screen_shot(0); k = 0; break;
-			
+
 		case KEY_ENTER:
 		case KEY_SPACEBAR:
 		case KEY_ESC:
@@ -656,7 +655,5 @@ ReshowScores:
 	gr_set_current_canvas(NULL);
 
 	game_flush_inputs();
-	
+
 }
-
-

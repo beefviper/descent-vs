@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,66 +15,66 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.2 $
  * $Author: john $
  * $Date: 1995/03/27 09:42:59 $
- * 
+ *
  * contains routine(s) to read in the configuration file which contains
  * game configuration stuff like detail level, sound card, etc
- * 
+ *
  * $Log: config.c $
  * Revision 2.2  1995/03/27  09:42:59  john
  * Added VR Settings in config file.
- * 
+ *
  * Revision 2.1  1995/03/16  11:20:40  john
  * Put in support for Crystal Lake soundcard.
- * 
+ *
  * Revision 2.0  1995/02/27  11:30:13  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.14  1995/02/11  16:19:36  john
  * Added code to make the default mission be the one last played.
- * 
+ *
  * Revision 1.13  1995/01/18  13:23:24  matt
  * Made curtom detail level vars initialize properly at load
- * 
+ *
  * Revision 1.12  1995/01/04  22:15:36  matt
  * Fixed stupid bug using scanf() to read bytes
- * 
+ *
  * Revision 1.11  1995/01/04  13:14:21  matt
  * Made custom detail level settings save in config file
- * 
+ *
  * Revision 1.10  1994/12/12  21:35:09  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.9  1994/12/12  21:31:51  john
  * Made volume work better by making sure volumes are valid
  * and set correctly at program startup.
- * 
+ *
  * Revision 1.8  1994/12/12  13:58:01  john
  * MAde -nomusic work.
  * Fixed GUS hang at exit by deinitializing digi before midi.
- * 
+ *
  * Revision 1.7  1994/12/08  10:01:33  john
  * Changed the way the player callsign stuff works.
- * 
+ *
  * Revision 1.6  1994/12/01  11:24:07  john
  * Made volume/gamma/joystick sliders all be the same length.  0-->8.
- * 
+ *
  * Revision 1.5  1994/11/29  02:01:07  john
  * Added code to look at -volume command line arg.
- * 
+ *
  * Revision 1.4  1994/11/14  20:14:11  john
  * Fixed some warnings.
- * 
+ *
  * Revision 1.3  1994/11/14  19:51:01  john
  * Added joystick cal values to descent.cfg.
- * 
+ *
  * Revision 1.2  1994/11/14  17:53:09  allender
  * read and write descent.cfg file
- * 
+ *
  * Revision 1.1  1994/11/14  16:28:08  allender
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #include <stdio.h>
@@ -259,7 +259,7 @@ int ReadConfigFile()
 			}
 			else if (!strcmp(token, joystick_min_str))	{
 				sscanf( value, "%d,%d,%d,%d", &joy_axis_min[0], &joy_axis_min[1], &joy_axis_min[2], &joy_axis_min[3] );
-			} 
+			}
 			else if (!strcmp(token, joystick_max_str))	{
 				sscanf( value, "%d,%d,%d,%d", &joy_axis_max[0], &joy_axis_max[1], &joy_axis_max[2], &joy_axis_max[3] );
 			}
@@ -288,7 +288,7 @@ int ReadConfigFile()
 	fclose(infile);
 
 	i = FindArg( "-volume" );
-	
+
 	if ( i > 0 )	{
 		i = atoi( Args[i+1] );
 		if ( i < 0 ) i = 0;
@@ -316,7 +316,7 @@ int ReadConfigFile()
 	Config_midi_type = digi_midi_type;
 	Config_digi_type = digi_driver_board;
 
-	// HACK!!! 
+	// HACK!!!
 	//Hack to make the Crytal Lake look like Microsoft Sound System
 	if ( digi_driver_board == 0xe200 )	{
 		ubyte tmp;
@@ -338,7 +338,7 @@ int WriteConfigFile()
 	int joy_axis_center[4];
 	int joy_axis_max[4];
 	ubyte gamma = gr_palette_get_gamma();
-	
+
 	joy_get_cal_vals(joy_axis_min, joy_axis_center, joy_axis_max);
 
 	infile = fopen("descent.cfg", "wt");
@@ -387,6 +387,4 @@ int WriteConfigFile()
 	fputs(str, infile);
 	fclose(infile);
 	return 0;
-}		
-
-
+}

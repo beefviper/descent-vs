@@ -20,10 +20,10 @@ INSTALL_TARGS = cflib.lib cflib.h pslib.exe
 CLEAN_TARGS = $(OBJDIR)\*.obj
 
 # What libs to make
-LIBS = cflib 
+LIBS = cflib
 
 # What object files for the lib
-CFLIB_OBJS = lzw.obj bitio.obj library.obj 
+CFLIB_OBJS = lzw.obj bitio.obj library.obj
 #cf.obj
 
 # What test programs to make
@@ -61,11 +61,10 @@ library.obj: library.c
 	wcc386 $(CCFLAGS) library.c
 
 lzw.obj: lzw.c
-	wcc386 $(CCFLAGS) lzw.c	
+	wcc386 $(CCFLAGS) lzw.c
 
 pslib.obj: cflib.h conio.h ctype.h dos.h fcntl.h i86.h library.h mem.h \
 	 parsarg.h stdarg.h stdio.h stdlib.h string.h time.h types.h
 
 readfile.obj: errno.h error.h fcntl.h io.h mem.h readfile.h stat.h stdio.h \
 	 stdlib.h string.h types.h
-

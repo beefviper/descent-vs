@@ -6,40 +6,39 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/2d/rcs/lbitblt.asm $
 ; $Revision: 1.7 $
 ; $Author: mike $
 ; $Date: 1994/08/12 17:38:28 $
-; 
+;
 ; Bitblt from linear to linear
-; 
+;
 ; $Log: lbitblt.asm $
 ; Revision 1.7  1994/08/12  17:38:28  mike
 ; Fix bug.
-; 
+;
 ; Revision 1.6  1994/08/11  17:59:33  mike
 ; Assembler versions for 3 rotations of merge functions.
-; 
+;
 ; Revision 1.5  1994/01/22  14:35:16  john
 ; Added transparency as color index 255.
-; 
+;
 ; Revision 1.4  1994/01/18  21:42:41  john
 ; unrolled loops in gr_merge_textures...
-; 
+;
 ; Revision 1.3  1994/01/18  10:56:04  john
 ; Added code to merge two ttextures.
-; 
+;
 ; Revision 1.2  1993/12/28  12:07:26  john
 ; initial version
-; 
+;
 ; Revision 1.1  1993/12/22  11:05:46  john
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -106,7 +105,7 @@ gr_lbitblt_:
 	jmp     NEAR32 PTR JumpTable[ecx*4]
 
 RowAligned0:
-NextRowAligned0:	
+NextRowAligned0:
 	mov	ecx, ebp
 	shr	ecx, 2
 	rep     movsd
@@ -128,8 +127,8 @@ RowAligned1:
 	sub	ebp, 3
 
 NextRowAligned1:
-	movsw	
-	movsb	
+	movsw
+	movsb
 	mov	ecx, ebp
 	shr	ecx, 2
 	rep     movsd
@@ -196,10 +195,10 @@ Done:	pop	ebp
 PUBLIC	gr_merge_textures_, gr_merge_textures_1_, gr_merge_textures_2_, gr_merge_textures_3_
 
 ; case 1:
-;    // 
+;    //
 ;    for (y=0; y<64; y++ )
 ;       for (x=0; x<64; x++ )   {
-;          c = top_data[ 64*x+(63-y) ];      
+;          c = top_data[ 64*x+(63-y) ];
 ;          if (c==255)
 ;             c = bottom_data[ 64*y+x ];
 ;          *dest_data++ = c;
@@ -269,7 +268,7 @@ gmt1:	mov	dx, [ebp]
 not_transparent:
 	mov	ax,[esi]
 	add	esi,2
-		
+
 	cmp	dl, bl
 	je	second_must_be_not_trans
 	mov	al, dl
@@ -284,7 +283,7 @@ not_transparent:
 donegmt:
 
 	pop	esi
-	pop	ecx	
+	pop	ecx
 	pop	edi
 	pop	ebp
 	ret
@@ -333,7 +332,7 @@ not_transparent_1:	mov	[ebx], cl	; write pixel
 
 	pop	ebx
 	pop	esi
-	pop	ecx	
+	pop	ecx
 	pop	edi
 	pop	ebp
 	ret
@@ -372,7 +371,7 @@ not_transparent_2:	mov	[ebx], cl	; write pixel
 
 	pop	ebx
 	pop	esi
-	pop	ecx	
+	pop	ecx
 	pop	edi
 	pop	ebp
 	ret
@@ -435,7 +434,7 @@ nt_3a:	inc	eax
 
 	pop	ebx
 	pop	esi
-	pop	ecx	
+	pop	ecx
 	pop	edi
 	pop	ebp
 	ret
@@ -443,4 +442,3 @@ nt_3a:	inc	eax
 _TEXT	ends
 
 	end
-

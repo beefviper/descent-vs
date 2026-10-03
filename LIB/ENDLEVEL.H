@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,34 +15,33 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:37 $
- * 
+ *
  * Header for newfile.c
- * 
+ *
  * $Log: endlevel.h $
  * Revision 2.0  1995/02/27  11:31:37  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.5  1994/12/06  13:24:55  matt
  * Made exit model come out of bitmaps.tbl
- * 
+ *
  * Revision 1.4  1994/11/19  12:41:35  matt
  * Added system to read endlevel data from file, and to make it work
  * with any exit tunnel.
- * 
+ *
  * Revision 1.3  1994/10/30  20:09:20  matt
- * For endlevel: added big explosion at tunnel exit; made lights in tunnel 
+ * For endlevel: added big explosion at tunnel exit; made lights in tunnel
  * go out; made more explosions on walls.
- * 
+ *
  * Revision 1.2  1994/08/19  20:09:38  matt
  * Added end-of-level cut scene with external scene
- * 
+ *
  * Revision 1.1  1994/08/15  19:18:47  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _OUTSIDE_H

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,54 +15,54 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:27 $
- * 
+ *
  * Code to render cool external-scene terrain
- * 
+ *
  * $Log: terrain.c $
  * Revision 2.0  1995/02/27  11:31:27  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.12  1994/12/03  00:18:00  matt
  * Made endlevel sequence cut off early
  * Made exit model and bit explosion always plot last (after all terrain)
- * 
+ *
  * Revision 1.11  1994/11/27  23:13:46  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.10  1994/11/21  18:04:36  matt
  * Fixed alloc/free problem with height array
- * 
+ *
  * Revision 1.9  1994/11/21  17:30:42  matt
  * Properly free light array
- * 
+ *
  * Revision 1.8  1994/11/19  12:40:55  matt
  * Added system to read endlevel data from file, and to make it work
  * with any exit tunnel.
- * 
+ *
  * Revision 1.7  1994/11/16  11:49:44  matt
  * Added code to rotate terrain to match mine
- * 
+ *
  * Revision 1.6  1994/11/02  16:22:59  matt
  * Killed mprintf
- * 
+ *
  * Revision 1.5  1994/10/30  20:09:19  matt
- * For endlevel: added big explosion at tunnel exit; made lights in tunnel 
+ * For endlevel: added big explosion at tunnel exit; made lights in tunnel
  * go out; made more explosions on walls.
- * 
+ *
  * Revision 1.4  1994/10/27  21:15:07  matt
  * Added better error handling
- * 
+ *
  * Revision 1.3  1994/10/27  01:03:17  matt
  * Made terrain renderer use aribtary point in height array as origin
- * 
+ *
  * Revision 1.2  1994/08/19  20:09:44  matt
  * Added end-of-level cut scene with external scene
- * 
+ *
  * Revision 1.1  1994/08/17  20:20:49  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -178,7 +178,7 @@ draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
 		mine_tiles_drawn |= 4;
 	if (i==org_i-1 && j==org_j-1)
 		mine_tiles_drawn |= 8;
-	
+
 	if (mine_tiles_drawn == 0xf) {
 		render_mine(exit_segnum,0);
 		//draw_exit_model();
@@ -274,7 +274,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&save_p_low,&save_p_low,&delta_i);
 		last_p = save_p_low;
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i+1,low_j)));
-		
+
 		for (j=low_j;j<viewer_j;j++) {
 			g3s_point p2;
 
@@ -294,7 +294,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&save_p_high,&save_p_high,&delta_i);
 		last_p = save_p_high;
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i+1,high_j)));
-		
+
 		for (j=high_j-1;j>=viewer_j;j--) {
 			g3s_point p2;
 
@@ -337,7 +337,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&save_p_low,&save_p_low,&delta_i);
 		last_p = save_p_low;
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i,low_j)));
-		
+
 		for (j=low_j;j<viewer_j;j++) {
 			g3s_point p2;
 
@@ -357,7 +357,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 		g3_add_delta_vec(&save_p_high,&save_p_high,&delta_i);
 		last_p = save_p_high;
 		g3_add_delta_vec(&last_p2,&last_p,get_dy_vec(HEIGHT(i,high_j)));
-		
+
 		for (j=high_j-1;j>=viewer_j;j--) {
 			g3s_point p2;
 
@@ -427,7 +427,7 @@ void load_terrain(char *filename)
 	for (i=0;i<grid_w;i++)
 		for (j=0;j<grid_h;j++)
 			HEIGHT(i,j) -= min_h;
-	
+
 
 //	free(height_bitmap.bm_data);
 
@@ -518,7 +518,7 @@ build_light_table()
 			if (min_l == max_l) {
 				LIGHT(i,j) = l>>8;
 				continue;
-			}				
+			}
 
 			l2 = fixdiv((l-min_l),(max_l-min_l));
 
@@ -531,4 +531,3 @@ build_light_table()
 
 		}
 }
-

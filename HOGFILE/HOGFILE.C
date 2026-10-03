@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <dos.h>
@@ -28,40 +28,40 @@ void hog_add_file( char * filename )
 	fp = fopen( filename, "rb" );
 	if ( fp == NULL )	{
 		printf( "Error opening '%s'... not added!\n", filename );
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
-	}	
+	}
 	length = filelength(fileno(fp));
 	data = malloc( length );
 	if ( data == NULL )	{
 		printf( "Error mallocing '%s'... not added!\n", filename );
 		fclose(fp);
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
-	}	
+	}
 	i = fread( data, length, 1, fp );
 	if ( i != 1 )	{
 		printf( "Error reading '%s'... not added!\n", filename );
 		fclose(fp);
 		free(data);
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
 	}
 	fclose(fp);
 
 	if (fwrite( filename, 13, 1, HogFile )!=1 )	{
 		printf("Error writing hogfile\n" );
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
 	}
 	if (fwrite( &length, 4, 1, HogFile)!=1 )	{
 		printf("Error writing hogfile\n" );
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
 	}
 	if (fwrite( data, length, 1, HogFile)!=1 )	{
 		printf("Error writing hogfile\n" );
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
 	}
 
@@ -79,7 +79,7 @@ void remove_char( char * s, char c )
 	if (p) *p = '\0';
 }
 
-int main(int argc, char * argv[] )	
+int main(int argc, char * argv[] )
 {
 	char * id = "DHF";
 	char	inputline[160+1];
@@ -90,7 +90,7 @@ int main(int argc, char * argv[] )
 		printf( "Usage: hogfile inputfile outputfile\n" );
 		exit(1);
 	}
-	
+
 	fp = fopen( argv[1], "rt" );
 	if ( fp == NULL )	{
 		printf( "Error opening '%s'\n", argv[1] );
@@ -105,16 +105,16 @@ int main(int argc, char * argv[] )
 	}
 	if (fwrite( id, 3, 1, HogFile )!=1)	{
 		printf("Error writing hogfile\n" );
-		fclose( HogFile );	
+		fclose( HogFile );
 		exit(1);
 	}
-		
+
 	while (fgets(inputline, 160, fp )) {
 		REMOVE_EOL(inputline);
 		REMOVE_COMMENTS(inputline);
-		
+
 		sscanf( inputline, " %s ", filename );
-			
+
 		if ( strlen( inputline ) > 0 )	{
 			//printf( "Adding '%s'...", filename );
 			hog_add_file( filename );
@@ -123,13 +123,7 @@ int main(int argc, char * argv[] )
 	}
 
 	fclose(fp);
-	fclose( HogFile );	
+	fclose( HogFile );
 
 	return 0;
 }
-
-
-
-
-
-

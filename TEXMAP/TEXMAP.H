@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,56 +21,56 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: texmap.h $
  * Revision 1.17  1994/11/10  11:09:16  mike
  * detail level stuff.
- * 
+ *
  * Revision 1.16  1994/11/09  22:55:32  matt
  * Added variable Current_seg_depth for detail level optimization
- * 
+ *
  * Revision 1.15  1994/06/09  16:10:04  mike
  * Add prototype for SC2000
- * 
+ *
  * Revision 1.14  1994/05/25  18:46:16  matt
  * Added gr_upoly_tmap_ylr(), which generates ylr's for a polygon
- * 
+ *
  * Revision 1.13  1994/05/25  09:47:12  mike
  * Added interface support for linear texture mapper (Mike change, Matt commnet)
- * 
+ *
  * Revision 1.12  1994/05/24  17:30:43  mike
  * Prototype a bunch of linear, vertical scanning functions.
- * 
+ *
  * Revision 1.11  1994/05/19  23:26:14  mike
  * Add constants NUM_LIGHTING_VALUES, MAX_LIGHTING_VALUE, MIN_LIGHTING_VALUE,
  * all part of new lighting_values_in_0_to_1 system.
- * 
+ *
  * Revision 1.10  1994/05/14  17:19:21  matt
  * Added externs
- * 
+ *
  * Revision 1.9  1994/04/13  23:55:44  matt
  * Increased max_tmap_verts from 16 to 25
- * 
+ *
  * Revision 1.8  1994/03/31  08:35:43  mike
  * Prototype for gr_upoly_tmap.
- * 
+ *
  * Revision 1.7  1994/02/08  15:17:54  mike
  * define label for MAX_TMAP_VERTS
- * 
+ *
  * Revision 1.6  1994/01/31  15:41:51  mike
  * Add texture_map_lin_lin_sky_v
- * 
+ *
  * Revision 1.5  1994/01/18  10:49:40  mike
  * prototype for texture_map_lin_lin_sky
- * 
+ *
  * Revision 1.4  1993/11/30  17:09:46  mike
  * prototype for compute_lighting_value.
- * 
+ *
  * Revision 1.3  1993/11/22  10:50:38  matt
  * Add ifndef around body of file
- * 
+ *
  * Revision 1.2  1993/10/06  12:41:25  mike
  * Change prototype for draw_tmap.
- * 
+ *
  * Revision 1.1  1993/09/08  17:29:11  mike
  * Initial revision
- * 
+ *
  *
  */
 
@@ -127,7 +127,7 @@ extern	int	Interpolation_method;
 extern	int	Lighting_on;
 
 // HACK INTERFACE: how far away the current segment (& thus texture) is
-extern	int	Current_seg_depth;		
+extern	int	Current_seg_depth;
 extern	int	Max_perspective_depth;		//	Deepest segment at which perspective interpolation will be used.
 extern	int	Max_linear_depth;				//	Deepest segment at which linear interpolation will be used.
 extern	int	Max_flat_depth;				//	Deepest segment at which flat shading will be used. (If not flat shading, then what?)
@@ -158,4 +158,3 @@ extern int Transparency_on,per2_flag;
 extern	int	SC2000;
 
 #endif
-

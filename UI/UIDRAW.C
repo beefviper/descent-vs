@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,19 +21,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: uidraw.c $
  * Revision 1.5  1994/11/18  23:07:34  john
  * Changed a bunch of shorts to ints.
- * 
+ *
  * Revision 1.4  1994/09/13  11:20:22  john
  * Made ui_string_centered not clip.
- * 
+ *
  * Revision 1.3  1993/10/26  13:46:33  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/10/05  17:31:00  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/09/20  10:35:41  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -98,9 +98,6 @@ void ui_draw_frame( short x1, short y1, short x2, short y2 )
 }
 
 
-
-
-
 void ui_draw_box_out( short x1, short y1, short x2, short y2 )
 {
 
@@ -138,9 +135,3 @@ void ui_draw_line_in( short x1, short y1, short x2, short y2 )
 	Vline( y1+1, y2-1, x2 );
 
 }
-
-
-
-
-
-

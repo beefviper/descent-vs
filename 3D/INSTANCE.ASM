@@ -6,43 +6,42 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/instance.asm $
 ; $Revision: 1.8 $
 ; $Author: matt $
 ; $Date: 1994/07/29 18:16:16 $
-; 
+;
 ; Code for handling instanced 3d objects
-; 
+;
 ; $Log: instance.asm $
 ; Revision 1.8  1994/07/29  18:16:16  matt
 ; Added instance by angles, and corrected parms for g3_init()
-; 
+;
 ; Revision 1.7  1994/07/25  00:00:02  matt
 ; Made 3d no longer deal with point numbers, but only with pointers.
-; 
+;
 ; Revision 1.6  1994/06/16  17:52:31  matt
 ; If NULL passed for instance matrix, don't rotate (just do offset)
-; 
+;
 ; Revision 1.5  1994/06/01  18:10:22  matt
 ; Fixed register trash in g3_start_instance_matrix()
-; 
+;
 ; Revision 1.4  1994/03/25  17:09:20  matt
 ; Increase MAX_INSTANCE_DEPTH to 5 (from 3)
-; 
+;
 ; Revision 1.3  1994/02/10  18:00:43  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.2  1994/01/24  14:08:45  matt
 ; Added code to this previously dull file
-; 
+;
 ; Revision 1.1  1994/01/23  15:22:52  matt
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -98,7 +97,7 @@ g3_start_instance_angles:
 
 ;start instancing, using a matrix
 ;takes esi=position, edi=matrix. trashes esi,edi
-;if matrix==NULL, don't modify matrix.  This will be like doing an offset   
+;if matrix==NULL, don't modify matrix.  This will be like doing an offset
 g3_start_instance_matrix:
 	pushm	eax,ebx,ecx
 
@@ -155,7 +154,7 @@ g3_start_instance_matrix:
 
 no_inst_matrix:
 
-;now we are done! 
+;now we are done!
 	popm	eax,ebx,ecx
 	ret
 
@@ -179,4 +178,3 @@ g3_done_instance:	pushm	eax,ecx,esi,edi
 _TEXT	ends
 
 	end
-

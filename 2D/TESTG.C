@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -46,7 +46,7 @@ void ReadBitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 		printf("Error loading bitmap <%s>, error=%d",filename,iff_error);
 		exit(1);
 	}
-			
+
 }
 
 
@@ -64,7 +64,7 @@ int myx = 0;
 ubyte getpixel1( grs_bitmap * bmp, int x, int y )
 {
 	float xmid, ymid, xx, yy, delta, dist, factor;
-	
+
 	xmid = (bmp->bm_w - 1 ) / 2.0;	xx = x - xmid;
 	ymid = (bmp->bm_h - 1 ) / 2.0;   yy = y - ymid;
 
@@ -74,18 +74,18 @@ ubyte getpixel1( grs_bitmap * bmp, int x, int y )
 		dist = 0.0;
 	else
 		dist = 1.01 * sqrt(delta) / min(xmid,ymid);
-	
+
 	if ( dist > 1.0 )
 		return 0;
 	else if ( dist < EPSILON )
 		factor = 1.0 / cfactor;
 	else
 		factor = asin(dist) / (dist * cfactor );
-	
+
 	xx = xx * factor; yy = yy * factor;
 	x = xx + xmid + myx; y = yy+ymid;
 	x = x % bmp->bm_w;
-	
+
 	return bmp->bm_data[y*320+x];
 }
 
@@ -133,6 +133,3 @@ main(int argc, char * argv[] )
 	}
 
 }
-
-
-

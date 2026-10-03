@@ -25,7 +25,7 @@ VECMAT_OBJS = vecmat.obj
 CLEAN_TARGS = $(OBJDIR)\*.obj
 
 # What test programs to make
-TEST_PROGS = vectest 
+TEST_PROGS = vectest
 
 # What object files and libs for the test programs
 VECTEST_SRCS = vectest.c

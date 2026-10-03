@@ -1,104 +1,104 @@
-/*		
+/*
  * $Source: f:/miner/source/main/editor/rcs/group.c $
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:05 $
- * 
+ *
  * group functions
- * 
+ *
  * $Log: group.c $
  * Revision 2.0  1995/02/27  11:35:05  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.65  1994/11/27  23:17:21  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.64  1994/11/17  14:48:08  mike
  * validation functions moved from editor to game.
- * 
+ *
  * Revision 1.63  1994/11/17  11:38:56  matt
  * Ripped out code to load old mines
- * 
+ *
  * Revision 1.62  1994/10/27  10:06:20  mike
  * adapt to no inverse table.
- * 
+ *
  * Revision 1.61  1994/10/03  23:40:08  mike
  * New fuelcen_activate parameters.
- * 
+ *
  * Revision 1.60  1994/09/28  17:32:01  mike
  * Make group copying work for copying a group's walls.
- * 
+ *
  * Revision 1.59  1994/09/20  14:35:28  mike
  * Fix bugs in group subtraction code.  Don't allow to attach a group if the attach side is unfree.
- * 
+ *
  * Revision 1.58  1994/08/25  21:58:07  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.57  1994/08/04  19:12:58  matt
  * Changed a bunch of vecmat calls to use multiple-function routines, and to
  * allow the use of C macros for some functions
- * 
+ *
  * Revision 1.56  1994/08/03  15:40:01  mike
  * Enable calls to compress_mine to get rid of bugs in group
  * copying -- was creating invalid segments.
- * 
+ *
  * Revision 1.55  1994/06/30  10:59:13  yuan
  * Fixed texture translations.
- * 
+ *
  * Revision 1.54  1994/06/22  17:36:00  mike
  * Fix bug in group creation, was stuffing first two group segs over number
  * of segments in group (then number would overwrite them), so there would
  * be two bogus segments in group, one of which was always 0, the other
  * would be a small number.
- * 
+ *
  * Revision 1.53  1994/06/14  17:07:15  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.52  1994/06/14  16:59:09  mike
  * Fix references to tmap_num2, must strip off orientation bits.
- * 
+ *
  * Revision 1.51  1994/05/23  14:56:37  mike
  * make current segment be add segment.
- * 
+ *
  * Revision 1.50  1994/05/19  12:10:01  matt
  * Use new vecmat macros and globals
- * 
+ *
  * Revision 1.49  1994/05/17  10:33:59  matt
  * Deleted unused get_free_object_num() func.
- * 
+ *
  * Revision 1.48  1994/05/09  23:34:17  mike
  * Punch all sloppy sides in a group, speed up segment rotation.
- * 
+ *
  * Revision 1.47  1994/05/06  14:39:56  mike
  * Make objects move and copy with groups.
- * 
+ *
  * Revision 1.46  1994/05/05  16:05:54  yuan
  * Added fuelcen/repaircens to groups...
- * 
+ *
  * Eventually, walls will be added too...
- * 
+ *
  * Revision 1.45  1994/05/05  12:56:25  yuan
  * Fixed a bunch of group bugs.
- * 
+ *
  * Revision 1.44  1994/05/04  14:10:04  mike
  * Assert added to prevent bombing out when current_group = -1
- * 
+ *
  * Revision 1.43  1994/05/02  17:59:18  yuan
  * Changed undo_status into an array rather than malloced pointers.
- * 
+ *
  * Revision 1.42  1994/05/02  15:23:19  mike
  * Call med_combine_duplicate_vertices in med_copy_group and med_move_group.
- * 
+ *
  * Revision 1.41  1994/04/27  12:11:23  mike
  * Fix bug in group rotation.
- * 
+ *
  * Revision 1.40  1994/04/22  10:07:37  yuan
  * Make sure we don't get obj->next equal itself error.
- * 
+ *
  * Revision 1.39  1994/04/18  17:15:13  yuan
  * Added error checking for select prev, and next group.
- * 
+ *
  */
 
 
@@ -171,7 +171,7 @@ segment  *Groupsegp[MAX_GROUPS+1];
 int		Groupside[MAX_GROUPS+1];
 int		Group_orientation[MAX_GROUPS+1];
 int 		Current_group=-1;
-int 		Num_groups=0; 
+int 		Num_groups=0;
 
 extern void validate_segment_side(segment *sp, int sidenum);
 
@@ -179,206 +179,206 @@ extern void validate_segment_side(segment *sp, int sidenum);
 // -- {
 // -- 	fix	col1_1,col1_2,col1_3;
 // -- 	fix	col2_1,col2_2,col2_3;
-// -- 
+// --
 // -- 	switch (col1) {
 // -- 		case 0:
 // -- 			col1_1 = rotmat->m1;
 // -- 			col1_2 = rotmat->m2;
 // -- 			col1_3 = rotmat->m3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			col1_1 = rotmat->m4;
 // -- 			col1_2 = rotmat->m5;
 // -- 			col1_3 = rotmat->m6;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			col1_1 = rotmat->m7;
 // -- 			col1_2 = rotmat->m8;
 // -- 			col1_3 = rotmat->m9;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (col2) {
 // -- 		case 0:
 // -- 			col2_1 = rotmat->m1;
 // -- 			col2_2 = rotmat->m2;
 // -- 			col2_3 = rotmat->m3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			col2_1 = rotmat->m4;
 // -- 			col2_2 = rotmat->m5;
 // -- 			col2_3 = rotmat->m6;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			col2_1 = rotmat->m7;
 // -- 			col2_2 = rotmat->m8;
 // -- 			col2_3 = rotmat->m9;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (col2) {
 // -- 		case 0:
 // -- 			rotmat->m1 = -col1_1;
 // -- 			rotmat->m2 = -col1_2;
 // -- 			rotmat->m3 = -col1_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			rotmat->m4 = -col1_1;
 // -- 			rotmat->m5 = -col1_2;
 // -- 			rotmat->m6 = -col1_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			rotmat->m7 = -col1_1;
 // -- 			rotmat->m8 = -col1_2;
 // -- 			rotmat->m9 = -col1_3;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (col1) {
 // -- 		case 0:
 // -- 			rotmat->m1 = -col2_1;
 // -- 			rotmat->m2 = -col2_2;
 // -- 			rotmat->m3 = -col2_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			rotmat->m4 = -col2_1;
 // -- 			rotmat->m5 = -col2_2;
 // -- 			rotmat->m6 = -col2_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			rotmat->m7 = -col2_1;
 // -- 			rotmat->m8 = -col2_2;
 // -- 			rotmat->m9 = -col2_3;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- }
-// -- 
+// --
 // -- void swap_negate_rows(vms_matrix *rotmat, int row1, int row2)
 // -- {
 // -- 	fix	row1_1,row1_2,row1_3;
 // -- 	fix	row2_1,row2_2,row2_3;
-// -- 
+// --
 // -- 	switch (row1) {
 // -- 		case 0:
 // -- 			row1_1 = rotmat->m1;
 // -- 			row1_2 = rotmat->m4;
 // -- 			row1_3 = rotmat->m7;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			row1_1 = rotmat->m2;
 // -- 			row1_2 = rotmat->m5;
 // -- 			row1_3 = rotmat->m8;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			row1_1 = rotmat->m3;
 // -- 			row1_2 = rotmat->m6;
 // -- 			row1_3 = rotmat->m9;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (row2) {
 // -- 		case 0:
 // -- 			row2_1 = rotmat->m1;
 // -- 			row2_2 = rotmat->m4;
 // -- 			row2_3 = rotmat->m7;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			row2_1 = rotmat->m2;
 // -- 			row2_2 = rotmat->m5;
 // -- 			row2_3 = rotmat->m8;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			row2_1 = rotmat->m3;
 // -- 			row2_2 = rotmat->m6;
 // -- 			row2_3 = rotmat->m9;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (row2) {
 // -- 		case 0:
 // -- 			rotmat->m1 = -row1_1;
 // -- 			rotmat->m4 = -row1_2;
 // -- 			rotmat->m7 = -row1_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			rotmat->m2 = -row1_1;
 // -- 			rotmat->m5 = -row1_2;
 // -- 			rotmat->m8 = -row1_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			rotmat->m3 = -row1_1;
 // -- 			rotmat->m6 = -row1_2;
 // -- 			rotmat->m9 = -row1_3;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- 	switch (row1) {
 // -- 		case 0:
 // -- 			rotmat->m1 = -row2_1;
 // -- 			rotmat->m4 = -row2_2;
 // -- 			rotmat->m7 = -row2_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 1:
 // -- 			rotmat->m2 = -row2_1;
 // -- 			rotmat->m5 = -row2_2;
 // -- 			rotmat->m8 = -row2_3;
 // -- 			break;
-// -- 
+// --
 // -- 		case 2:
 // -- 			rotmat->m3 = -row2_1;
 // -- 			rotmat->m6 = -row2_2;
 // -- 			rotmat->m9 = -row2_3;
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- }
-// -- 
+// --
 // -- // ------------------------------------------------------------------------------------------------
 // -- void	side_based_matrix(vms_matrix *rotmat,int destside)
 // -- {
 // -- 	vms_angvec	rotvec;
 // -- 	vms_matrix	r1,rtemp;
-// -- 
+// --
 // -- 	switch (destside) {
 // -- 		case WLEFT:
 // -- //			swap_negate_columns(rotmat,1,2);
 // -- //			swap_negate_rows(rotmat,1,2);
 // -- 			break;
-// -- 
+// --
 // -- 		case WTOP:
 // -- 			break;
-// -- 
+// --
 // -- 		case WRIGHT:
 // -- //			swap_negate_columns(rotmat,1,2);
 // -- //			swap_negate_rows(rotmat,1,2);
 // -- 			break;
-// -- 
+// --
 // -- 		case WBOTTOM:
 // -- 			break;
-// -- 
+// --
 // -- 		case WFRONT:
 // -- 			break;
-// -- 
+// --
 // -- 		case WBACK:
 // -- 			break;
 // -- 	}
-// -- 
+// --
 // -- }
 
 
@@ -413,10 +413,10 @@ void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, se
 	 	vm_matrix_x_matrix(&rotmat2,&rotmat,&rotmat4);			// this is the desired orientation of the new segment
 	} else {
 	 	//	Create rotation matrix describing rotation.
- 
+
 	 	med_extract_matrix_from_segment(base_seg, &rotmat);		// get rotation matrix describing desired orientation
 	 	set_matrix_based_on_side(&rotmat, base_side);				// modify rotation matrix for desired side
- 
+
 	 	//	If the new segment is to be attached without rotation, then its orientation is the same as the base_segment
 	 	vm_matrix_x_matrix(&rotmat4,&rotmat,orient_matrix);			// this is the desired orientation of the new segment
 
@@ -428,13 +428,13 @@ void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, se
 	 	rotmat = rotmat4;
 
 	 	med_extract_matrix_from_segment(first_seg, &rotmat3);		// get rotation matrix describing current orientation of first seg
- 
+
 	 	// It is curious that the following statement has no analogue in the med_attach_segment_rotated code.
 	 	//	Perhaps it is because segments are always attached at their front side.  If the back side is the side
 	 	//	passed to the function, then the matrix is not modified, which might suggest that what you need to do below
 	 	//	is use Side_opposite[first_side].
 	 	set_matrix_based_on_side(&rotmat3, Side_opposite[first_side]);				// modify rotation matrix for desired side
- 
+
 	 	vm_transpose_matrix(&rotmat3);								// get the inverse of the current orientation matrix
 	 	vm_matrix_x_matrix(&rotmat2,&rotmat,&rotmat3);			// now rotmat2 takes the current segment to the desired orientation
 	 	vm_transpose_matrix(&rotmat2);
@@ -475,7 +475,7 @@ void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group_size, 
 			vm_vec_add(&Objects[objnum].pos, &tv, &rotate_center);
 
 			objnum = Objects[objnum].next;
-		}			
+		}
 	}
 
 	// Do the pre-rotation xlate, do the rotation, do the post-rotation xlate
@@ -655,7 +655,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 			return 0;
 	}
 
-	if (Num_groups < MAX_GROUPS) { 
+	if (Num_groups < MAX_GROUPS) {
 		Num_groups++;
 		new_current_group = Num_groups-1;
 	} else
@@ -666,7 +666,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 	// Find groupsegp index
 	for (s=0;s<GroupList[Current_group].num_segments;s++)
 		if (GroupList[Current_group].segments[s] == (Groupsegp[Current_group]-Segments))
-			gs_index=s; 
+			gs_index=s;
 
 	GroupList[new_current_group] = GroupList[Current_group];
 
@@ -716,7 +716,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 	for (s=0; s<GroupList[new_current_group].num_segments; s++) {
 		mprintf((0, "[%3i %3i] ", GroupList[new_current_group].segments[s], GroupList[current_group].segments[s]));
 		segp = &Segments[GroupList[new_current_group].segments[s]];
-		for (c=0; c<MAX_SIDES_PER_SEGMENT; c++) 
+		for (c=0; c<MAX_SIDES_PER_SEGMENT; c++)
 			if (IS_CHILD(segp->children[c])) {
 				if (!in_group(segp->children[c], new_current_group)) {
 					mprintf((0, "2: Breaking connection at seg:side = %i:%i\n", segp-Segments, c));
@@ -727,7 +727,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 	}
 
 	copy_uvs_seg_to_seg(&New_segment, Groupsegp[new_current_group]);
-	
+
 	//	Now do the copy
 	//	First, xlate all vertices so center of group_seg:group_side is at origin
 	compute_center_point_on_side(&srcv,group_seg,group_side);
@@ -828,7 +828,7 @@ int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 		for (ss=0; ss<GroupList[Current_group].num_segments; ss++)
 			if (GroupList[Current_group].segments[ss] == s)
 				break;
-		if (ss == GroupList[Current_group].num_segments) 
+		if (ss == GroupList[Current_group].num_segments)
 			for (v=0; v<MAX_VERTICES_PER_SEGMENT; v++)
 				out_vertex_list[Segments[s].verts[v]] = 1;
 	}
@@ -855,14 +855,14 @@ int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 				}
 			}
 
-	for (s=0;s<GroupList[Current_group].num_segments;s++) 
+	for (s=0;s<GroupList[Current_group].num_segments;s++)
 		Segments[GroupList[Current_group].segments[s]].group = Current_group;
 
 	// Breaking connections between segments in the group and segments not in the group.
-	for (s=0; s<GroupList[Current_group].num_segments; s++) 
+	for (s=0; s<GroupList[Current_group].num_segments; s++)
 		{
 		segp = &Segments[GroupList[Current_group].segments[s]];
-		for (c=0; c<MAX_SIDES_PER_SEGMENT; c++) 
+		for (c=0; c<MAX_SIDES_PER_SEGMENT; c++)
 			if (IS_CHILD(segp->children[c]))
 				{
 				csegp = &Segments[segp->children[c]];
@@ -872,7 +872,7 @@ int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 						if (IS_CHILD(csegp->children[d]))
 							{
 							dsegp = &Segments[csegp->children[d]];
-							if (dsegp->group == Current_group) 
+							if (dsegp->group == Current_group)
 								{
 								csegp->children[d] = -1;
 								validate_segment_side(csegp,d);					// we have converted a connection to a side so validate the segment
@@ -1039,23 +1039,23 @@ void validate_selected_segments(void)
 void delete_segment_from_group(int segment_num, int group_num)
 {
 	int g, del_seg_index;
-	
+
 	del_seg_index = -1;
 	for (g=0; g<GroupList[group_num].num_segments; g++)
-		if (segment_num == GroupList[group_num].segments[g]) {  
+		if (segment_num == GroupList[group_num].segments[g]) {
 			del_seg_index = g;
 			break;
 		}
 
-	//mprintf((0, "segment_num=%d delseg_index=%d\n", segment_num, del_seg_index)); 
-	
+	//mprintf((0, "segment_num=%d delseg_index=%d\n", segment_num, del_seg_index));
+
 	if (IS_CHILD(del_seg_index)) {
-		for (g=del_seg_index;g<GroupList[group_num].num_segments-1;g++) { 
+		for (g=del_seg_index;g<GroupList[group_num].num_segments-1;g++) {
 			GroupList[group_num].segments[g] = GroupList[group_num].segments[g+1];
 			}
 		GroupList[group_num].num_segments--;
 		//mprintf((0, "num_segments=%d\n\n", GroupList[group_num].num_segments));
-		Segments[segment_num].group = -1;		
+		Segments[segment_num].group = -1;
 		}
 
 }
@@ -1064,7 +1064,7 @@ void delete_segment_from_group(int segment_num, int group_num)
 
 //	-----------------------------------------------------------------------------
 void add_segment_to_group(int segment_num, int group_num)
-{  
+{
 	GroupList[group_num].num_segments++;
 	GroupList[group_num].segments[GroupList[group_num].num_segments-1] = segment_num;
 }
@@ -1090,7 +1090,7 @@ int rotate_segment_new(vms_angvec *pbh)
 	current_group_save = Current_group;
 	Current_group = ROT_GROUP;
 	Groupsegp[ROT_GROUP] = Cursegp;
-	
+
 	save_selected_segs(&n_selected_segs_save, selected_segs_save);
 	GroupList[ROT_GROUP].num_segments = 0;
 	newseg = Cursegp - Segments;
@@ -1218,12 +1218,12 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 	group_editor.newsegment_offset   =   -1; // To be written
 	group_editor.newsegment_size     =   sizeof(segment);
 	// Next 3 vars added 10/07 by JAS
-	if (Groupsegp[Current_group]) { 
-		segnum = Groupsegp[Current_group]-Segments;     	
+	if (Groupsegp[Current_group]) {
+		segnum = Groupsegp[Current_group]-Segments;
 		for (i=0;i<num_segments;i++)
-			if (segnum == segment_ids[i])	
+			if (segnum == segment_ids[i])
 				group_editor.Groupsegp = i;
-	} 
+	}
 	else
 		group_editor.Groupsegp      	=   0;
 	group_editor.Groupside           =   Groupside[Current_group];
@@ -1236,8 +1236,8 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 
 	vertex_offset = ftell(SaveFile);
 	for (i=0;i<num_vertices;i++) {
-		tvert = Vertices[vertex_ids[i]];	
-		fwrite( &tvert, sizeof(tvert), 1, SaveFile ); 
+		tvert = Vertices[vertex_ids[i]];
+		fwrite( &tvert, sizeof(tvert), 1, SaveFile );
 	}
 
 	//===================== SAVE SEGMENT INFO =========================
@@ -1246,15 +1246,15 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 	segment_offset = ftell(SaveFile);
 	for (i=0;i<num_segments;i++) {
 		tseg = Segments[segment_ids[i]];
-		
+
 		for (j=0;j<6;j++)	{
 			found = 0;
-			for (k=0;k<num_segments;k++) 
-				if (tseg.children[j] == segment_ids[k]) { 
+			for (k=0;k<num_segments;k++)
+				if (tseg.children[j] == segment_ids[k]) {
 					tseg.children[j] = k;
 					found = 1;
 					break;
-					}	
+					}
 			if (found==0) tseg.children[j] = -1;
 		}
 
@@ -1286,7 +1286,7 @@ int med_save_group( char *filename, short *vertex_ids, short *segment_ids, int n
 	group_fileinfo.vertex_offset     =   vertex_offset;
 	group_fileinfo.segment_offset    =   segment_offset;
 	group_fileinfo.texture_offset    =   texture_offset;
-	
+
 	// Write the fileinfo
 	fseek(  SaveFile, 0, SEEK_SET );  // Move to TOF
 	fwrite( &group_fileinfo, sizeof(group_fileinfo), 1, SaveFile );
@@ -1311,7 +1311,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 	short tmap_xlate;
 	int 	translate;
 	char 	*temptr;
-	int i, j; 
+	int i, j;
 	segment tseg;
    vms_vector tvert;
 	CFILE * LoadFile;
@@ -1420,7 +1420,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 
 				if (cfread( &tvert, sizeof(tvert),1,LoadFile )!=1)
 					Error( "Error reading tvert in group.c" );
-				vertex_ids[i] = med_create_duplicate_vertex( &tvert ); 
+				vertex_ids[i] = med_create_duplicate_vertex( &tvert );
 				//mprintf((0, "vertex %d created from original %d\n", vertex_ids[i], i));
 			}
 
@@ -1436,9 +1436,9 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 		for (i=0;i<group_header.num_segments;i++) {
 			if (cfread( &tseg, sizeof(segment),1,LoadFile )!=1)
 				Error( "Error reading tseg in group.c" );
-				
+
 			segment_ids[i] = get_free_segment_number();
-			Segments[segment_ids[i]] = tseg; 
+			Segments[segment_ids[i]] = tseg;
 			Segments[segment_ids[i]].objects = -1;
 
 			fuelcen_activate( &Segments[segment_ids[i]], Segments[segment_ids[i]].special );
@@ -1457,7 +1457,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 				if (IS_CHILD(Segments[segment_ids[i]].children[j])) {
 					segnum = segment_ids[Segments[segment_ids[i]].children[j]];
 					Segments[segment_ids[i]].children[j] = segnum;
-					} 
+					}
 				//Translate textures.
 				if (translate == 1) {
 					int	temp;
@@ -1471,7 +1471,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 				}
 			}
 	}
-	
+
 	//===================== READ TEXTURE INFO ==========================
 
 	if ( (group_fileinfo.texture_offset > -1) && (group_fileinfo.texture_howmany > 0))
@@ -1489,7 +1489,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 	//=============== GENERATE TEXTURE TRANSLATION TABLE ===============
 
 	translate = 0;
-	
+
 	Assert (NumTextures < MAX_TEXTURES);
 {
 	hashtable ht;
@@ -1528,17 +1528,17 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 
 	//========================= UPDATE VARIABLES ======================
 
-	if (group_editor.Groupsegp != -1 ) 
+	if (group_editor.Groupsegp != -1 )
 		Groupsegp[Current_group] = &Segments[segment_ids[group_editor.Groupsegp]];
 	else
-		Groupsegp[Current_group] = NULL;	
+		Groupsegp[Current_group] = NULL;
 
 	Groupside[Current_group] = group_editor.Groupside;
 
 	*num_vertices = group_fileinfo.vertex_howmany;
 	*num_segments = group_fileinfo.segment_howmany;
 	warn_if_concave_segments();
-	
+
 	return 0;
 }
 
@@ -1599,26 +1599,26 @@ int SaveGroup()
 	for (s=0; s<GroupList[Current_group].num_segments; s++)
 		for (v=0; v<MAX_VERTICES_PER_SEGMENT; v++) {
 			vertex_list[Segments[GroupList[Current_group].segments[s]].verts[v]] = 1;
-		}	
+		}
 
 	v=0;
-	for (i=0; i<=Highest_vertex_index; i++) 
-		if (vertex_list[i] == 1) { 
+	for (i=0; i<=Highest_vertex_index; i++)
+		if (vertex_list[i] == 1) {
 			GroupList[Current_group].vertices[v++] = i;
 		}
 	GroupList[Current_group].num_vertices = v;
 	//mprintf((0, "Saving %d vertices, %d segments\n", GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments));
-	med_save_group("TEMP.GRP", &GroupList[Current_group].vertices, &GroupList[Current_group].segments, 
+	med_save_group("TEMP.GRP", &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
 		GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments);
    if (ui_get_filename( group_filename, "*.GRP", "SAVE GROUP" ))
 	{
       checkforgrpext(group_filename);
-		if (med_save_group(group_filename, &GroupList[Current_group].vertices, &GroupList[Current_group].segments, 
+		if (med_save_group(group_filename, &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
 					GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments))
 			return 0;
 		mine_changed = 0;
 	}
-	
+
 	return 1;
 }
 
@@ -1646,7 +1646,7 @@ int LoadGroup()
       med_load_group(group_filename, &GroupList[Current_group].vertices, &GroupList[Current_group].segments,
 					 &GroupList[Current_group].num_vertices, &GroupList[Current_group].num_segments) ;
 		//mprintf((0, "Loaded %d vertices, %d segments\n", GroupList[Current_group].num_vertices, GroupList[Current_group].num_segments));
-		
+
 	if (!med_move_group(0, Cursegp, Curside, Groupsegp[Current_group], Groupside[Current_group], &vmd_identity_matrix, 0)) {
 		autosave_mine(mine_filename);
 		set_view_target_from_segment(Cursegp);
@@ -1665,14 +1665,14 @@ int LoadGroup()
 int UngroupSegment( void )
 {
 	if (Cursegp->group == Current_group) {
-	
+
 		Cursegp->group = -1;
 		delete_segment_from_group( Cursegp-Segments, Current_group );
-	
+
 	   Update_flags |= UF_WORLD_CHANGED;
 	   mine_changed = 1;
 	   diagnostic_message("Segment Ungrouped from Group %d.", Current_group);
-	
+
 		return 1;
 	} else
 	return 0;
@@ -1684,7 +1684,7 @@ int GroupSegment( void )
 
 		Cursegp->group = Current_group;
 		add_segment_to_group( Cursegp-Segments, Current_group );
-	
+
 	   Update_flags |= UF_WORLD_CHANGED;
 	   mine_changed = 1;
 	   diagnostic_message("Segment Added to Group %d.", Current_group);
@@ -1703,12 +1703,12 @@ int Degroup( void )
 
 	if (Num_groups==0) return 0;
 
-	for (i=0; i<GroupList[Current_group].num_segments; i++)  
+	for (i=0; i<GroupList[Current_group].num_segments; i++)
 		delete_segment_from_group( GroupList[Current_group].segments[i], Current_group );
 
 	  //	delete_segment_from_group( &Segments[GroupList[Current_group].segments[i]]-Segments, Current_group );
 
-	for (i=Current_group;i<Num_groups-1;i++) 
+	for (i=Current_group;i<Num_groups-1;i++)
 		{
 		GroupList[i] = GroupList[i+1];
 		Groupsegp[i] = Groupsegp[i+1];
@@ -1718,7 +1718,7 @@ int Degroup( void )
 
 	GroupList[Num_groups].num_segments = 0;
 	Groupsegp[Num_groups] = 0;
-	
+
 	if (Current_group > Num_groups-1) Current_group--;
 
 	if (Num_groups == 0)
@@ -1733,27 +1733,27 @@ int Degroup( void )
 	return 1;
 }
 
-void NextGroup( void ) 
+void NextGroup( void )
 {
 
 	if (Num_groups > 0)
 		{
 		Current_group++;
 		if (Current_group >= Num_groups ) Current_group = 0;
-		
+
 		Update_flags |= UF_ED_STATE_CHANGED;
 		mine_changed = 1;
 		}
 	else editor_status("No Next Group\n");
 }
 
-void PrevGroup( void ) 
+void PrevGroup( void )
 {
 	if (Num_groups > 0)
 		{
 		Current_group--;
 		if (Current_group < 0 ) Current_group = Num_groups-1;
-		
+
 		Update_flags |= UF_ED_STATE_CHANGED;
 		mine_changed = 1;
 		}
@@ -1792,7 +1792,7 @@ int MoveGroup(void)
 		return 0;
 	} else
 		return 1;
-}				  
+}
 
 
 //	-----------------------------------------------------------------------------
@@ -1829,7 +1829,7 @@ int CopyGroup(void)
 		mine_changed = 1;
 		diagnostic_message("Group copied.");
 		return 0;
-	} else	  
+	} else
 		return 1;
 }
 
@@ -1844,20 +1844,20 @@ int RotateGroup(void)
 	}
 
 	Group_orientation[Current_group]++;
-	if ((Group_orientation[Current_group] <0) || (Group_orientation[Current_group] >4)) 
+	if ((Group_orientation[Current_group] <0) || (Group_orientation[Current_group] >4))
 		Group_orientation[Current_group]=0;
 
 	med_compress_mine();
-	
-	if (!med_move_group(0, Cursegp, Curside, Groupsegp[Current_group], Groupside[Current_group], 
-								&vmd_identity_matrix, Group_orientation[Current_group])) 
+
+	if (!med_move_group(0, Cursegp, Curside, Groupsegp[Current_group], Groupside[Current_group],
+								&vmd_identity_matrix, Group_orientation[Current_group]))
 			{
 			Update_flags |= UF_WORLD_CHANGED;
 			mine_changed = 1;
 			diagnostic_message("Group rotated.");
 			return 0;
-			} 
-		else	  
+			}
+		else
 			return 1;
 }
 
@@ -1881,7 +1881,7 @@ int SubtractFromGroup(void)
 	if (Num_groups == MAX_GROUPS) {
 		x = MessageBox( -2, -2, 2, "Warning: You are about to wipe out a group.", "ARGH! NO!", "No problemo." );
 		if (x==1) return 0;
-	}					   
+	}
 
 	if (Current_group == -1) {
 		editor_status("Error -- No current group.  Cannot subtract.");
@@ -1902,7 +1902,7 @@ int SubtractFromGroup(void)
 	// for (s=0; s<GroupList[original_group].num_segments; s++)
 	// 	mprintf((0, "%3i ", GroupList[original_group].segments[s]));
 	// mprintf((0, "\n"));
-	
+
 	//	Create a list of segments to copy.
 	GroupList[Current_group].num_segments = 0;
 	create_group_list(Markedsegp, &GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, N_selected_segs);
@@ -1911,7 +1911,7 @@ int SubtractFromGroup(void)
 	// for (s=0; s<GroupList[Current_group].num_segments; s++)
 	// 	mprintf((0, "%3i ", GroupList[Current_group].segments[s]));
 	// mprintf((0, "\n"));
-	
+
 	//	Now, scan the two groups, forming a group which consists of only those segments common to the two groups.
 	gp = GroupList[Current_group].segments;
 	cur_num_segs = GroupList[Current_group].num_segments;
@@ -1967,13 +1967,13 @@ int SubtractFromGroup(void)
 
 	for (x=0;x<GroupList[Current_group].num_segments;x++)
 		Segments[GroupList[Current_group].segments[x]].group = Current_group;
-	
+
 	Update_flags |= UF_WORLD_CHANGED;
 	mine_changed = 1;
 	diagnostic_message("Group created.");
 
-	return 1; 
-				  
+	return 1;
+
 }
 
 //	-----------------------------------------------------------------------------
@@ -1995,7 +1995,7 @@ int CreateGroup(void)
 		x = MessageBox( -2, -2, 2, "Warning: You are about to wipe out a group.", "ARGH! NO!", "No problemo." );
 		if (x==1)
 			return 0;				// Aborting at user's request.
-	}					   
+	}
 
 	if (Num_groups < MAX_GROUPS) {
 		Num_groups++;
@@ -2006,7 +2006,7 @@ int CreateGroup(void)
 	//	Create a list of segments to copy.
 	GroupList[Current_group].num_segments = 0;
 	create_group_list(Markedsegp, &GroupList[Current_group].segments, &GroupList[Current_group].num_segments, Selected_segs, 0);
-	
+
 	// Replace Marked segment with Group Segment.
 	Groupsegp[Current_group] = Markedsegp;
 	Groupside[Current_group] = Markedside;
@@ -2015,13 +2015,13 @@ int CreateGroup(void)
 
 	for (x=0;x<GroupList[Current_group].num_segments;x++)
 		Segments[GroupList[Current_group].segments[x]].group = Current_group;
-	
+
 	Update_flags |= UF_WORLD_CHANGED;
 	mine_changed = 1;
 	diagnostic_message("Group created.");
 
-	return 1; 
-				  
+	return 1;
+
 }
 
 //	-----------------------------------------------------------------------------
@@ -2031,13 +2031,13 @@ int DeleteGroup( void )
 	int i, numsegs;
 
 	autosave_mine(mine_filename);
-		
+
 	if (Num_groups==0) return 0;
 
 	//mprintf((0, "num_segments = %d\n", GroupList[Current_group].num_segments));
 
 	numsegs = GroupList[Current_group].num_segments;
-	
+
 	for (i=0; i<numsegs; i++) {
 		med_delete_segment(&Segments[GroupList[Current_group].segments[0]]);
 	}

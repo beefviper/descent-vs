@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,40 +15,40 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:27:36 $
- * 
+ *
  * Modem support code
- * 
+ *
  * $Log: ourcom.c $
  * Revision 2.0  1995/02/27  11:27:36  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.1  1994/10/09  22:29:00  rob
  * Initial revision
- * 
+ *
  * Revision 1.7  1994/09/27  15:05:54  rob
  * Last checkin had error.
- * 
+ *
  * Revision 1.6  1994/09/27  15:03:12  rob
  * Null modem basic routines working.  Sending DEAD messages and
  * missiles still need to be done.
- * 
+ *
  * Revision 1.5  1994/09/24  16:52:20  rob
  * Added stubbed funcs for startup and stop of serial games.
- * 
+ *
  * Revision 1.4  1994/09/24  15:10:21  rob
  * Removed some compiler warnings.
- * 
+ *
  * Revision 1.3  1994/09/24  14:40:34  rob
  * Sending shortpos structures.  9600 baud max.
- * 
+ *
  * Revision 1.2  1994/09/22  17:53:11  rob
  * First revision.  Not functional yet.
- * 
+ *
  * Revision 1.1  1994/09/21  13:23:25  rob
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -107,7 +107,7 @@ long MyObjnum, OtherObjnum;
 
 void (__interrupt __far *oldcomhandler)();
 void __interrupt __far comhandler(void);
-																			 
+
 
 void reset_player_object(void); // In object.c but not in object.h
 
@@ -120,7 +120,7 @@ void modem_answer(void);
 long serial_get_sync_packet(void);
 void com_do_sync(int nitem, newmenu_item *menus, int *key, int citem);
 
-	
+
 com_enable () // Detect and enable the COM port selected by the user
 {
 	// com_port_num and com_speed should be set before calling this func
@@ -140,12 +140,12 @@ com_enable () // Detect and enable the COM port selected by the user
 	ptr = (short *) (0x400L+(long)((com_port_num-1)<<1));
 	com_port = (long)(*ptr); // COM I/O Port Addr
 	if (com_port == 0) return -1;
- 
+
 	/* Set the speed of the COM port UART, saving the old value */
 	if ( (com_speed <= 0) || (com_speed > 115200) )
  		return -1;
-	
-	// Enable the interrupts for the COM port 
+
+	// Enable the interrupts for the COM port
 
 	_disable();
 
@@ -162,24 +162,24 @@ com_enable () // Detect and enable the COM port selected by the user
 	{
 		com_type = 16550;
 		mprintf(0,"16550 uart found.\n"); // debug
-	}	
-	else 
+	}
+	else
 	{
 		com_type = 16450;
 		mprintf(0,"16450 uart found.\n"); // debug
 	}
-	
+
 	/* register new com interrupt handler */
 
 	oldcomhandler = _dos_getvect(com_vect);
 	_dos_setvect(com_vect, serial_isr);
 
 	/* Enable UART generation of interrupts, but select none for now */
-	
+
 	outp(com_port+4, 0x0b);
-	outp(com_port+1, 0);	   
-	
-	
+	outp(com_port+1, 0);
+
+
 	/* Unmask vector in PIC */
 	outp(0x21, inp(0x21)&(255-(1 << (com_vect&7))));
 
@@ -188,9 +188,9 @@ com_enable () // Detect and enable the COM port selected by the user
 
 	inp(com_port+0); /* eat any pending char */
 	inp(com_port+2); /* ignore any existing interrupts */
-	
+
 	/* Enable specific UART interrupts */
-	
+
 	outp(com_port+1, 0x03); /* RxRDY and TBE are enabled */
 
 	atexit(com_disable);
@@ -206,7 +206,7 @@ com_enable () // Detect and enable the COM port selected by the user
 void
 com_disable()
 {
-	if (!com_open) 
+	if (!com_open)
 		return;
 
 	if ((inp(com_port+5)&0x20) > 0)
@@ -217,7 +217,7 @@ com_disable()
 			outbufplc = ((outbufplc+1)&(SERIAL_BUFFER_SIZE-1));
 		}
 	}
-		
+
 	while (outbufplc != outbufend) ; // wait for buffer to drain
 
 	_disable();
@@ -285,8 +285,7 @@ com_send_ptr(char *ptr, long len)
 	return ;
 }
 
-		
-			  	
+
 com_send_string(char *string, int len)
 {
 	long i;
@@ -390,13 +389,13 @@ void __interrupt __far serial_isr(void)
 			 modem_alert = 1;
 			 break;
 			case 0: /* RS-232 status change */
-			 modem_stat = inp(com_port+6); 
+			 modem_stat = inp(com_port+6);
 			 modem_alert = 1;
 			 break;
 			default:
 			 outp(0x20, 0x20); // Clear interrupt
 			 return;
-		}			
+		}
 	}
 }
 
@@ -405,7 +404,7 @@ com_get_fire(void)
 	ushort check;
 
 	mprintf(0, "Entered com_get_fire.\n");
- 
+
 	// Check checksum
 	check = netmisc_calc_checksum(syncbuffer, 5);
 	if (check != *(ushort *)(syncbuffer+5))
@@ -417,13 +416,13 @@ com_get_fire(void)
 	}
 
 	// Act out the actual shooting
-	
+
 	do_laser_firing(OtherObjnum, (int)syncbuffer[2], (int)syncbuffer[3], (int)syncbuffer[4]);
 }
 
 void
 com_get_ppos(void)
-{		
+{
 	ushort check;
 
 	// Check checksum
@@ -435,7 +434,7 @@ com_get_ppos(void)
 		mprintf(0, "Bad checksum on ppos.\n");
 		return;
 	}
-	
+
 	extract_shortpos(Objects+OtherObjnum, (shortpos *)(syncbuffer+1));
 	obj_relink(OtherObjnum, Objects[OtherObjnum].segnum);
 }
@@ -460,7 +459,7 @@ com_process_input(void)
 				case SER_FIRE: synclen = 7;  break;
 				case SER_MESS: synclen = MAX_MESSAGE_LEN+1; break;
 				case SER_KILL: synclen = 2;  break;
-				case SER_QUIT: synclen = 1;  break; 
+				case SER_QUIT: synclen = 1;  break;
 				default: mprintf(0,"%c", dat);
 					synccnt = 0;
 					synclen = 1;
@@ -479,11 +478,11 @@ com_process_input(void)
 					break;
 				case SER_MESS:  // Message sending
 					HUD_init_message("%s says '%s'", Players[temp_char].callsign,
-						(char *)syncbuffer+2);					
+						(char *)syncbuffer+2);
 					break;
 				case SER_KILL:  // 'I got killed' message
 					temp_char= (char)syncbuffer[2];     // who killed him
-					if (temp_char != Player_num) 
+					if (temp_char != Player_num)
 					{  // Not suicide
 						Players[temp_char].net_kills_total++;
 						Players[temp_char].net_kills_level++;
@@ -501,7 +500,7 @@ com_process_input(void)
 					// More is needed here
 					HUD_init_message("%s has left the game!", Players[temp_char].callsign);
 					break;
- 
+
 			}
 			synccnt = 0;
 		}
@@ -548,12 +547,12 @@ com_send_status(void)
 
 	last_comm_time = 0;
 
-	// Send the data for my current position through the serial 
+	// Send the data for my current position through the serial
 
 	com_send_mypos();
 
 	// If we fired this frame, send FIRE messages
-	
+
 	if (Network_laser_fired)
 	{
 		com_send_fire();
@@ -563,7 +562,7 @@ com_send_status(void)
 
 	// Send network messages, if any were sent this frame
 
-	if (Network_message_reciever != -1) 
+	if (Network_message_reciever != -1)
 	{
 		Network_message_reciever = -1;
 		com_send((long)SER_MESS, 1);
@@ -572,7 +571,7 @@ com_send_status(void)
 	}
 
 	// No other message types are sent here.  SER_KILL messages are sent
-	// at time of 'termination'.  SER_QUIT messages are sent when leaving.	
+	// at time of 'termination'.  SER_QUIT messages are sent when leaving.
 
 	return;
 }
@@ -583,7 +582,7 @@ com_send_status(void)
 void
 modem_stop_serial(void)
 {
-	
+
 }
 
 void
@@ -620,7 +619,7 @@ modem_start_game(void)
 
 	choice = newmenu_do("SERIAL OPTIONS", NULL, num_options, m, NULL);
 
-	if (choice > -1) 
+	if (choice > -1)
 	{
 		switch (choice)
 		{
@@ -636,7 +635,7 @@ modem_start_game(void)
 			case MENU_MODEM_ANSWER:
 				modem_answer();
 				break;
-			default: 
+			default:
 				return;
 		}
 	}
@@ -652,14 +651,14 @@ void serial_param_setup(void)
 void com_do_sync(int nitems, newmenu_item *menus, int *key, int citem)
 {
 
-	int result;	
+	int result;
 
 	menus = menus;
 	nitems = nitems;
 	citem = citem;
-	
+
 	serial_send_my_sync_packet();
-		
+
 	result = serial_get_sync_packet();
 
 	if (result == -1)
@@ -707,7 +706,7 @@ void serial_link_start(void)
 	load_game(Gamesave_current_filename);
 
 	network_delete_extra_objects(); // Removes monsters from level
-	
+
 	j = 0;
 	for (i = 0; i < 2; i++)
 	{
@@ -720,7 +719,7 @@ void serial_link_start(void)
 		mprintf(0,"Player %d is object %d.\n", i, j);
 		j++;
 	}
-		
+
 	MyObjnum = Players[Player_num].objnum;
 	OtherObjnum = Players[Other_player].objnum;
 
@@ -768,16 +767,16 @@ serial_get_sync_packet(void)
 	long other_sync_time;
 	ushort checksum;
 	short dat;
-	
+
  	while ( (dat = comgetchar_timed(1000000L)) >= 0) // returns -1 when timed out
  	{
  		syncbuf[loc_synccnt++] = dat;
- 		if (loc_synccnt == 1) 
+ 		if (loc_synccnt == 1)
  		{
  			if (dat != SER_SYNC)
  			{
  				loc_synccnt = 0;
- 					
+
  			}
  		}
  		if (loc_synccnt == SER_SYNC_LEN)
@@ -795,32 +794,32 @@ serial_get_sync_packet(void)
 			}
 
 			other_sync_time = *(long *)(syncbuf+1);
-			if (other_sync_time > sync_time) 
+			if (other_sync_time > sync_time)
 			{
 				// I am the master
 				Player_num = 0;
 				Other_player = 1;
 			}
 			else if (other_sync_time < sync_time)
-			{									 											  	
+			{
 				// I am the slave
 				Player_num = 1;
 				Other_player = 0;
 				strcpy(Gamesave_current_filename, (char *)syncbuf+17);
 			}
-			else 
+			else
 			{
 				// Time times were equal!
 				sync_time = (long)time(0);
 				loc_synccnt = 0;
 				return -1;
 			}
-			
+
 			// Fill in opponent's Player structure
 			strcpy(Players[Other_player].callsign, (char *)syncbuf+5);
 			mprintf(0, "Opponent is named %s.\n", Players[Other_player].callsign);
 
-			return (0);			
+			return (0);
 		}
 	}
 	return (-1);
@@ -835,5 +834,3 @@ void modem_answer(void)
 {
 
 }
-
-

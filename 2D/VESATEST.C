@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,20 +15,20 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.3 $
  * $Author: john $
  * $Date: 1993/12/21 11:40:47 $
- * 
+ *
  * .
- * 
+ *
  * $Log: vesatest.c $
  * Revision 1.3  1993/12/21  11:40:47  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/12/09  17:14:14  john
  * VESA test program.
- * 
+ *
  * Revision 1.1  1993/12/09  16:53:01  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -54,22 +54,22 @@ void CreatePalette( )
 	{
 		// Make 0-63 be red shades
 		palette[ i*3+0 ] = i;	// Red
-		palette[ i*3+1 ] = 0;	// Green		
+		palette[ i*3+1 ] = 0;	// Green
 		palette[ i*3+2 ] = 0;	// Blue
 
 		// Make 64-127 be green shades
 		palette[ i*3+0+64*3 ] = 0;	// Red
-		palette[ i*3+1+64*3 ] = i;	// Green		
+		palette[ i*3+1+64*3 ] = i;	// Green
 		palette[ i*3+2+64*3 ] = 0;	// Blue
 
 		// Make 128-191 be blue shades
 		palette[ i*3+0+128*3 ] = 0;	// Red
-		palette[ i*3+1+128*3 ] = 0;	// Green		
+		palette[ i*3+1+128*3 ] = 0;	// Green
 		palette[ i*3+2+128*3 ] = i;	// Blue
-		
+
 		// Make 192-255 be greyscale
 		palette[ i*3+0+192*3 ] = i;	// Red
-		palette[ i*3+1+192*3 ] = i;	// Green		
+		palette[ i*3+1+192*3 ] = i;	// Green
 		palette[ i*3+2+192*3 ] = i;	// Blue
 	}
 }
@@ -94,7 +94,7 @@ main()
 
 	if (i)	{
 		printf( "Couldn't initialize because " );
-		
+
 		switch(i)
 		{
 			case 1:	printf( "no VGA adapter is installed.\n" ); break;
@@ -110,7 +110,7 @@ main()
 			exit(1);
 		}
 	}
-	
+
 	gr_setcolor( 1 );
 	gr_urect( 0, 0, 799, 599 );
 	gr_setcolor( 12 );
@@ -138,10 +138,3 @@ main()
 	getch();
 
 }
-	
-
-
-
-
-
-

@@ -6,7 +6,7 @@
  *
  * curve generation stuff
  *
- * 
+ *
  *
  */
 
@@ -183,7 +183,7 @@ int generate_curve( fix r1scale, fix r4scale ) {
             extract_forward_vector_from_segment(Cursegp, &r1);
             vm_vec_scale( &r1, -F1_0 );
             break;
-        }            
+        }
 
     compute_center_point_on_side( &p4, Markedsegp, Markedside );
 
@@ -342,7 +342,7 @@ void generate_banked_curve(fix maxscale, vms_equation coeffs) {
         scaled_ang = fixdiv(angle,fixmul(maxscale,MAGIC_NUM));
     mprintf((0, "scaled angle = %f\n", f2fl(scaled_ang)));
 
-    t=0; 
+    t=0;
     tvec = r1save;
     firstsegflag = 1;
     enddist = F1_0; nextdist = 0;
@@ -493,5 +493,3 @@ void main() {
 
 }
 */
-
-

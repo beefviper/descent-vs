@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,26 +15,25 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:34:25 $
- * 
+ *
  * temporary demo version for mine.c
- * 
+ *
  * $Log: dcflib.h $
  * Revision 2.0  1995/02/27  11:34:25  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.3  1994/02/14  20:14:27  john
  * First version working with new cfile stuff.
- * 
+ *
  * Revision 1.2  1994/02/08  13:38:21  yuan
  * mine loading functions converted.
- * 
+ *
  * Revision 1.1  1994/02/08  13:23:14  yuan
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _DCFLIB_H
@@ -49,7 +48,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define dcfopen(filename) fopen((filename),"rb")
 
 // Moves to a position in the file. Returns 0 if ok.
-#define dcfseek( cfile, position ) fseek( cfile, position, SEEK_SET); 
+#define dcfseek( cfile, position ) fseek( cfile, position, SEEK_SET);
 
 #define dcftell( cfile ) ftell(cfile)
 // Returns the current file position.
@@ -64,4 +63,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // Closes 'cfile'. Frees all memory associated with file.
 
 #endif
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,18 +21,18 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: bm.c $
  * Revision 2.3  1995/03/14  16:22:04  john
  * Added cdrom alternate directory stuff.
- * 
+ *
  * Revision 2.2  1995/03/07  16:51:48  john
  * Fixed robots not moving without edtiro bug.
- * 
+ *
  * Revision 2.1  1995/03/06  15:23:06  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:05  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -86,7 +86,7 @@ fix	ObjStrength[MAX_OBJTYPE];
 int Dying_modelnums[MAX_POLYGON_MODELS];
 int Dead_modelnums[MAX_POLYGON_MODELS];
 
-//right now there's only one player ship, but we can have another by 
+//right now there's only one player ship, but we can have another by
 //adding an array and setting the pointer to the active ship.
 player_ship only_player_ship,*Player_ship=&only_player_ship;
 
@@ -122,7 +122,7 @@ void bm_read_all(CFILE * fp)
 	cfread( &NumTextures, sizeof(int), 1, fp );
 	cfread( Textures, sizeof(bitmap_index), MAX_TEXTURES, fp );
 	cfread( TmapInfo, sizeof(tmap_info), MAX_TEXTURES, fp );
-	
+
 	cfread( Sounds, sizeof(ubyte), MAX_SOUNDS, fp );
 	cfread( AltSounds, sizeof(ubyte), MAX_SOUNDS, fp );
 
@@ -146,7 +146,7 @@ void bm_read_all(CFILE * fp)
 
 	cfread( &N_powerup_types, sizeof(int), 1, fp );
 	cfread( Powerup_info, sizeof(powerup_type_info), MAX_POWERUP_TYPES, fp );
-	
+
 	cfread( &N_polygon_models, sizeof(int), 1, fp );
 	cfread( Polygon_models, sizeof(polymodel), N_polygon_models, fp );
 
@@ -185,6 +185,3 @@ void bm_read_all(CFILE * fp)
 	cfread( &exit_modelnum, sizeof(int), 1, fp );
 	cfread( &destroyed_exit_modelnum, sizeof(int), 1, fp );
 }
-
-
-

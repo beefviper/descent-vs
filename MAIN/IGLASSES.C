@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,43 +15,43 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.8 $
  * $Author: mike $
  * $Date: 1995/03/30 16:36:31 $
- * 
+ *
  * Routines for the i-glasses VR stuff.
- * 
+ *
  * $Log: iglasses.c $
  * Revision 2.8  1995/03/30  16:36:31  mike
  * text localization.
- * 
+ *
  * Revision 2.7  1995/03/24  13:10:37  john
  * Synced with shareware.
- * 
+ *
  * Revision 2.6  1995/03/09  18:07:35  john
  * Fixed bug with iglasses tracking not "centering" right.
  * Made VFX have bright headlight lighting.
- * 
+ *
  * Revision 2.5  1995/03/09  15:33:23  john
  * Fixed bug with iglasses timeout too long, and objects
  * disappearing from left eye.
- * 
+ *
  * Revision 2.4  1995/03/06  15:23:13  john
  * New screen techniques.
- * 
+ *
  * Revision 2.3  1995/03/03  22:38:30  john
  * Tweaked the filtering,.
- * 
+ *
  * Revision 2.2  1995/03/03  22:28:22  john
  * Added code to detect invalid serial ports.
- * 
+ *
  * Revision 2.1  1995/03/03  22:24:00  john
  * Added code to make iglasses work with Greenleaf.
- * 
+ *
  * Revision 1.2  1995/02/09  22:01:01  john
  * Added i-glasses tracking.
- * 
+ *
  * Revision 1.1  1995/02/09  15:53:47  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -59,7 +59,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: iglasses.c 2.8 1995/03/30 16:36:31 mike Exp $";
 #pragma on (unreferenced)
 
-#define DOS4G		
+#define DOS4G
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -85,7 +85,7 @@ void iglasses_close_tracking();
 typedef struct  {
 	int status;
 	int count;
-	
+
 } PORT; //I added this it will compile, but I doubt it works. -KRB
 //*******************************************
 
@@ -94,21 +94,21 @@ PORT * Iport = NULL;
 
 #define USE_FILTERS 1
 
-#ifdef USE_FILTERS 
+#ifdef USE_FILTERS
 #define FILTER_LENGTH 6
 typedef struct filter {
   fix history[FILTER_LENGTH];
   fix weights[FILTER_LENGTH];
   long len;
   fix * hCurrent,* hEnd,* hRestart;
-} filter;  
+} filter;
 
 void initFIR(filter * f);
 fix filterFIR(filter * f,fix newval);
 static filter X_filter, Y_filter, Z_filter;
 #endif
 
-void iglasses_init_tracking(int serial_port)	
+void iglasses_init_tracking(int serial_port)
 {
 	fix t1;
 	int c;
@@ -126,11 +126,11 @@ void iglasses_init_tracking(int serial_port)
 		printf( "%s\n", TXT_SERIAL_FAILURE, Iport->status );
 		return;
 	}
-	
+
 	SetDtr( Iport, 1 );
 	SetRts( Iport, 1 );
 	UseRtsCts( Iport, 0 );
-	
+
 	iglasses_headset_installed = 1;
 	atexit( iglasses_close_tracking );
 
@@ -145,7 +145,7 @@ void iglasses_init_tracking(int serial_port)
 			c = ReadChar( Iport );
 			if ( c == 'O' )	{
 				goto TrackerOK1;
-			} 	
+			}
 		}
 	}
 
@@ -164,7 +164,7 @@ TrackerOK1:
 			c = ReadChar( Iport );
 			if ( c == 'O' )	{
 				goto TrackerOK2;
-			} 	
+			}
 		}
 	}
 
@@ -175,7 +175,7 @@ TrackerOK2:
 
  	WriteChar( Iport, 'S' );
 
-#ifdef USE_FILTERS 
+#ifdef USE_FILTERS
 	initFIR( &X_filter );
 	initFIR( &Y_filter );
 	initFIR( &Z_filter );
@@ -207,7 +207,7 @@ void iglasses_close_tracking()	{
 //UNUSED 	static unsigned char buff[8];
 //UNUSED 	unsigned char checksum;
 //UNUSED 	int i,count;
-//UNUSED 
+//UNUSED
 //UNUSED 	ReadBufferTimed(Iport, buff, 8, 1000);
 //UNUSED 	checksum = 0;
 //UNUSED 	count = Iport->count;
@@ -219,15 +219,15 @@ void iglasses_close_tracking()	{
 //UNUSED 		return 0;
 //UNUSED 	}
 //UNUSED 	WriteChar( Iport, 'S' );
-//UNUSED 
+//UNUSED
 //UNUSED 	y  =  (short)(buff[1] << 8) | buff[2];
 //UNUSED 	p  =  (short)(buff[3] << 8) | buff[4];
 //UNUSED 	r  =  (short)(buff[5] << 8) | buff[6];
-//UNUSED 
+//UNUSED
 //UNUSED 	*yaw 		= y;
 //UNUSED 	*pitch 	= p;
 //UNUSED 	*roll 	= r;
-//UNUSED 
+//UNUSED
 //UNUSED 	return 1;
 //UNUSED }
 
@@ -287,7 +287,7 @@ int iglasses_read_headset( fix *yaw, fix *pitch, fix *roll )
 	rotz = sinPitch*fy + cosPitch*fz;
 	rotx = cosRoll*fx  - sinRoll*roty;
 
-#ifdef USE_FILTERS 
+#ifdef USE_FILTERS
 	*yaw   = filterFIR( &X_filter,fl2f(-atan2(rotz,rotx)*M_PI/2.0));
 	*pitch = filterFIR( &Y_filter,fl2f(-radPitch*M_PI/2.0));
 	*roll  = filterFIR( &Z_filter,fl2f(radRoll*M_PI/2.0));
@@ -314,8 +314,8 @@ int iglasses_read_headset( fix *yaw, fix *pitch, fix *roll )
 }
 
 
-#ifdef USE_FILTERS 
-void initWeights(filter * f) 
+#ifdef USE_FILTERS
+void initWeights(filter * f)
 {
 	fix sum;
 	long i;
@@ -337,10 +337,10 @@ void initWeights(filter * f)
 	// Normalize and convert to fixed point.
 	for (i=0; i < f->len; i++) {
 		f->weights[i] = fixdiv(f->weights[i],sum);
-	} 
+	}
 }
 
-void initHistory(filter * f) 
+void initHistory(filter * f)
 {
 	long i;
 	for (i=0; i < f->len; i++) {
@@ -349,16 +349,16 @@ void initHistory(filter * f)
 	f->hCurrent = f->history;
 	f->hEnd     = &f->history[f->len-1];
 	f->hRestart = &f->history[-1];
-} 
+}
 
-void initFIR(filter * f) 
+void initFIR(filter * f)
 {
   f->len = FILTER_LENGTH;
   initWeights(f);
   initHistory(f);
-} 
+}
 
-fix filterFIR(filter * f,fix newval) 
+fix filterFIR(filter * f,fix newval)
 {
 	fix * currp,* last;
 	fix * weightp;

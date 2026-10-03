@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,17 +15,17 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.2 $
  * $Author: john $
  * $Date: 1994/01/18 11:07:45 $
- * 
+ *
  * File for creating a barbox...
- * 
+ *
  * $Log: barbox.c $
  * Revision 1.2  1994/01/18  11:07:45  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1994/01/10  15:24:32  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -65,7 +65,7 @@ void ui_barbox_open( char * text, int length )
 	}
 
 	gr_get_string_size(text, &text_width, &text_height, &avg );
-	
+
 	text_width += avg*6;
 	text_width += 10;
 
@@ -93,7 +93,7 @@ void ui_barbox_open( char * text, int length )
 	ui_string_centered( width/2, y, text );
 
 	y = 10 + text_height;
-	
+
 	bar_width = width - 15;
 	bar_height = 10;
 	bar_x = (width/2) - (bar_width/2);
@@ -102,7 +102,7 @@ void ui_barbox_open( char * text, int length )
 	ui_draw_line_in( bar_x-2, bar_y-2, bar_x+bar_width+1, bar_y+bar_height+1 );
 
 	grd_curscreen->sc_canvas.cv_font = temp_font;
-		
+
 }
 
 int ui_barbox_update( int position )
@@ -126,4 +126,3 @@ void ui_barbox_close()
 	if (wnd)
 		ui_close_window(wnd);
 }
-

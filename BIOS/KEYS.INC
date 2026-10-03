@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/bios/rcs/keys.inc $
@@ -19,10 +19,10 @@
 ; $Log: keys.inc $
 ; Revision 1.2  1993/10/04  13:26:19  john
 ; changed the key def's.
-; 
+;
 ; Revision 1.1  1993/09/08  14:50:36  john
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -30,16 +30,16 @@
 ;**************** SCAN CODE TO ASCII TABLES *******************
 ;**************************************************************
 ; This are two tables of ASCII codes for a given scan code.
-; The character € is used to denote an invalid keystroke that won't
+; The character ‚ñà is used to denote an invalid keystroke that won't
 ; be put into the keyboard buffer.
 
 ;0                         1                    2               3               4               5               6               7
 ;0   1  23456789ABCD  E F  0123456789AB   C  DEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF
-;db "€",27,"1234567890-=",8,9,"qwertyuiop[]",13,"€asdfghjkl;'`€\zxcvbnm,./€*€ €€€€€€€€€€€€€789-456+1230.€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€"
+;db "‚ñà",27,"1234567890-=",8,9,"qwertyuiop[]",13,"‚ñàasdfghjkl;'`‚ñà\zxcvbnm,./‚ñà*‚ñà ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà789-456+1230.‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà"
 
 ;0                  1               2                    3               4               5               6               7
 ;0123456789ABCDE   F0123456789ABCDEF01234567   8  9ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF
-;Key2 db "€€!@#$%^&*()_+€",11,"QWERTYUIOP{}€€ASDFGHJKL:",34,"€€|ZXCVBNM<>?€€€ €€€€€€€€€€€€€€€€-€€€+€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€"
+;Key2 db "‚ñà‚ñà!@#$%^&*()_+‚ñà",11,"QWERTYUIOP{}‚ñà‚ñàASDFGHJKL:",34,"‚ñà‚ñà|ZXCVBNM<>?‚ñà‚ñà‚ñà ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà-‚ñà‚ñà‚ñà+‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà"
 
 Key1    db  255     ; No key for 0
 		db  255     ; Esc
@@ -297,6 +297,3 @@ Key2    db  255     ; No key for 0
 		db  255
 		db  255
 		db  255
-
-
-

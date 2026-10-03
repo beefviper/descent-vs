@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,34 +15,34 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.45 $
  * $Author: john $
  * $Date: 1994/10/27 18:51:42 $
- * 
+ *
  * Functions for loading mines in the game
- * 
+ *
  * $Log: gamemine.c $
  * Revision 1.45  1994/10/27  18:51:42  john
- * Added -piglet option that only loads needed textures for a 
+ * Added -piglet option that only loads needed textures for a
  * mine.  Only saved ~1MB, and code still doesn't free textures
  * before you load a new mine.
- * 
+ *
  * Revision 1.44  1994/10/20  12:47:22  matt
  * Replace old save files (MIN/SAV/HOT) with new LVL files
- * 
+ *
  * Revision 1.43  1994/10/19  16:46:40  matt
  * Made tmap overrides for robots remap texture numbers
- * 
+ *
  * Revision 1.42  1994/10/03  23:37:01  mike
  * Adapt to changed fuelcen_activate parameters.
- * 
+ *
  * Revision 1.41  1994/09/23  22:14:49  matt
  * Took out obsolete structure fields
- * 
+ *
  * Revision 1.40  1994/08/01  11:04:11  yuan
  * New materialization centers.
- * 
+ *
  * Revision 1.39  1994/07/21  19:01:47  mike
  * Call Lsegment stuff.
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -73,14 +73,14 @@ static char rcsid[] = "$Id: gamemine.c 1.45 1994/10/27 18:51:42 john Exp $";
 #include "ui.h"
 #endif
 
-#include "nocfile.h"		
+#include "nocfile.h"
 #include "fuelcen.h"
 
 #include "hash.h"
 #include "key.h"
 #include "piggy.h"
 
-//Structures for old mine versions 
+//Structures for old mine versions
 
 #define	V15_MAX_VERTICES_PER_SEGMENT	8
 #define	V15_MAX_SIDES_PER_SEGMENT		6
@@ -178,7 +178,7 @@ int load_mine_data(CFILE *LoadFile)
 
 	for (i=0; i<MAX_TEXTURES; i++ )
 		tmap_times_used[i] = 0;
-	
+
 	#ifdef EDITOR
 	// Create a new mine to initialize things.
 	//texpage_goto_first();
@@ -210,16 +210,16 @@ int load_mine_data(CFILE *LoadFile)
 	mine_fileinfo.texture_sizeof    =   13;  // num characters in a name
  	mine_fileinfo.walls_offset		  =	-1;
 	mine_fileinfo.walls_howmany	  =	0;
-	mine_fileinfo.walls_sizeof		  =	sizeof(wall);  
+	mine_fileinfo.walls_sizeof		  =	sizeof(wall);
  	mine_fileinfo.triggers_offset	  =	-1;
 	mine_fileinfo.triggers_howmany  =	0;
-	mine_fileinfo.triggers_sizeof	  =	sizeof(trigger);  
+	mine_fileinfo.triggers_sizeof	  =	sizeof(trigger);
 	mine_fileinfo.object_offset		=	-1;
 	mine_fileinfo.object_howmany		=	1;
-	mine_fileinfo.object_sizeof		=	sizeof(object);  
+	mine_fileinfo.object_sizeof		=	sizeof(object);
 
 	// Read in mine_top_fileinfo to get size of saved fileinfo.
-	
+
 	memset( &mine_top_fileinfo, 0, sizeof(mine_top_fileinfo) );
 
 	if (cfseek( LoadFile, mine_start, SEEK_SET ))
@@ -252,7 +252,7 @@ int load_mine_data(CFILE *LoadFile)
 	{
 		if (cfseek( LoadFile, mine_fileinfo.header_offset, SEEK_SET ))
 			Error( "Error seeking to header_offset in gamemine.c" );
-	
+
 		if (cfread( &mine_header, mine_fileinfo.header_size, 1, LoadFile )!=1)
 			Error( "Error reading mine_header in gamemine.c" );
 	}
@@ -271,7 +271,7 @@ int load_mine_data(CFILE *LoadFile)
 	{
 		if (cfseek( LoadFile, mine_fileinfo.editor_offset, SEEK_SET ))
 			Error( "Error seeking to editor_offset in gamemine.c" );
-	
+
 		if (cfread( &mine_editor, mine_fileinfo.editor_size, 1, LoadFile )!=1)
 			Error( "Error reading mine_editor in gamemine.c" );
 	}
@@ -293,29 +293,29 @@ int load_mine_data(CFILE *LoadFile)
 	//=============== GENERATE TEXTURE TRANSLATION TABLE ===============
 
 	translate = 0;
-	
+
 	Assert (NumTextures < MAX_TEXTURES);
 
 	{
 		hashtable ht;
-	
+
 		hashtable_init( &ht, NumTextures );
-	
+
 		// Remove all the file extensions in the textures list
-	
+
 		for (i=0;i<NumTextures;i++)	{
 			temptr = strchr(TmapInfo[i].filename, '.');
 			if (temptr) *temptr = '\0';
 			hashtable_insert( &ht, TmapInfo[i].filename, i );
 		}
-	
+
 		// For every texture, search through the texture list
 		// to find a matching name.
 		for (j=0;j<mine_fileinfo.texture_howmany;j++) 	{
 			// Remove this texture name's extension
 			temptr = strchr(old_tmap_list[j], '.');
 			if (temptr) *temptr = '\0';
-	
+
 			tmap_xlate_table[j] = hashtable_search( &ht,old_tmap_list[j]);
 			if (tmap_xlate_table[j]	< 0 )	{
 				tmap_xlate_table[j] = 0;
@@ -324,7 +324,7 @@ int load_mine_data(CFILE *LoadFile)
 			if (tmap_xlate_table[j] != j ) translate = 1;
 			tmap_times_used[tmap_xlate_table[j]]++;
 		}
-	
+
 		{
 			int count = 0;
 			for (i=0; i<MAX_TEXTURES; i++ )
@@ -332,9 +332,9 @@ int load_mine_data(CFILE *LoadFile)
 					count++;
 			mprintf( 0, "This mine has %d unique textures in it (~%.2f MB)\n", count, ((float)(count*4096))/(1024.0*1024.0) );
 		}
-	
+
 		mprintf( 0, "Translate=%d\n", translate );
-	
+
 		hashtable_free( &ht );
 	}
 
@@ -394,7 +394,7 @@ int load_mine_data(CFILE *LoadFile)
 				if (cfread( &v16_seg, mine_fileinfo.segment_sizeof, 1, LoadFile )!=1)
 					Error( "Error reading segments in gamemine.c" );
 
-			}				
+			}
 			else if (mine_top_fileinfo.fileinfo_version < 16) {
 				int t;
 
@@ -408,7 +408,7 @@ int load_mine_data(CFILE *LoadFile)
 				v16_seg.objects = v15_seg.objects;
 				v16_seg.special = v15_seg.special;
 				v16_seg.value   = v15_seg.value;
-				
+
 				for (t=0;t<MAX_SIDES_PER_SEGMENT;t++) {
 					int n;
 
@@ -427,7 +427,7 @@ int load_mine_data(CFILE *LoadFile)
 						v16_seg.sides[t].normals[n] = v15_seg.sides[t].normals[n];
 
 				}
-				
+
 				for (t=0;t<MAX_VERTICES_PER_SEGMENT;t++)
 					v16_seg.verts[t]    = v15_seg.verts[t];
 
@@ -494,7 +494,7 @@ int load_mine_data(CFILE *LoadFile)
 			Vertices[NEW_SEGMENT_VERTICES+i].x = 1;
 			Vertices[NEW_SEGMENT_VERTICES+i].y = 1;
 			Vertices[NEW_SEGMENT_VERTICES+i].z = 1;
-			
+
 			if (cfread( &Vertices[NEW_SEGMENT_VERTICES+i], mine_fileinfo.newseg_verts_sizeof,1,LoadFile )!=1)
 				Error( "Error reading Vertices[NEW_SEGMENT_VERTICES+i] in gamemine.c" );
 
@@ -503,14 +503,14 @@ int load_mine_data(CFILE *LoadFile)
 	}
 
 	#endif
-															
+
 	//========================= UPDATE VARIABLES ======================
 
 	#ifdef EDITOR
 
 	// Setting to Markedsegp to NULL ignores Curside and Markedside, which
 	// we want to do when reading in an old file.
-	
+
  	Markedside = mine_editor.Markedside;
 	Curside = mine_editor.Curside;
 	for (i=0;i<10;i++)
@@ -521,7 +521,7 @@ int load_mine_data(CFILE *LoadFile)
 	else
  		Cursegp = NULL;
 
-	if (mine_editor.Markedsegp != -1 ) 
+	if (mine_editor.Markedsegp != -1 )
 		Markedsegp = mine_editor.Markedsegp + Segments;
 	else
 		Markedsegp = NULL;
@@ -597,15 +597,6 @@ void gamemine_find_textures()
 
 			}
 		}
-	}	
+	}
 	//mprintf( 0, "Mine used %d textures\n", unique );
 }
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/matrix.asm $
@@ -19,16 +19,16 @@
 ; $Log: matrix.asm $
 ; Revision 1.4  1994/11/20  15:59:34  matt
 ; instance functions were trashing eax
-; 
+;
 ; Revision 1.3  1994/01/04  12:06:17  matt
 ; Made scale_matrix save and restore ecx, which it was trashing.
-; 
+;
 ; Revision 1.2  1993/11/04  18:49:16  matt
 ; Added system to only rotate points once per frame
-; 
+;
 ; Revision 1.1  1993/10/29  22:20:27  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -53,11 +53,10 @@ rcsid	db	"$Id: matrix.asm 1.4 1994/11/20 15:59:34 matt Exp $"
 _DATA	ends
 
 
-
 _TEXT	segment	dword public USE32 'CODE'
 
 
-;set view from x,y,z, p,b,h, & zoom. 
+;set view from x,y,z, p,b,h, & zoom.
 ;takes esi=orient vec, edi=pos vec, eax=zoom. returns nothing
 g3_set_view_angles:
 	pushm	eax,edi
@@ -147,8 +146,6 @@ done_zoom:
 	ret
 
 
-
 _TEXT	ends
 
 	end
-

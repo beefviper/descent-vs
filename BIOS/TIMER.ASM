@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/bios/rcs/timer.asm $
@@ -19,104 +19,104 @@
 ; $Log: timer.asm $
 ; Revision 1.28  1995/02/15  01:36:56  matt
 ; Cleaned up code to avoid doing out 20,20 more than once
-; 
+;
 ; Revision 1.27  1995/02/14  11:39:37  john
 ; Fixed bug with joystick handler not having enough
 ; stack space under Windows.
-; 
+;
 ; Revision 1.26  1995/02/09  21:51:39  john
 ; Made so that DOS timer interrupt gets called before interrupts are
 ; enabled in timer interpt because not doing this cause conflicts with
 ; ps2 style mice and smartdrv with write caching enabled that hangs the
 ; program and trashes the FAT.
-; 
+;
 ; Revision 1.25  1995/02/04  15:39:33  john
 ; More time interrupt changes.
-; 
+;
 ; Revision 1.24  1995/02/03  23:25:21  john
 ; Made so that when interrupts are nested, the time interrupt still
 ; calls the DOS one.
-; 
+;
 ; Revision 1.23  1995/01/29  19:00:42  john
 ; Made latching timer value more readable.
-; 
+;
 ; Revision 1.22  1995/01/17  10:34:53  mike
 ; prevent divide overflows.
-; 
+;
 ; Revision 1.21  1994/12/15  11:10:54  john
-; Added code that should make DOS 18.2 callbacks 
+; Added code that should make DOS 18.2 callbacks
 ; a bit more accurate.
-; 
+;
 ; Revision 1.20  1994/12/10  12:47:34  john
 ; Made so that timer_get_fixed seconds and get_approx seconds are always equal.
-; 
+;
 ; Revision 1.19  1994/12/10  12:27:34  john
 ; Added timer_get_approx_seconds.
-; 
+;
 ; Revision 1.18  1994/12/10  12:07:14  john
 ; Added tick counter variable.
-; 
+;
 ; Revision 1.17  1994/12/04  11:55:16  john
 ; Made stick read at whatever rate the clock is at, not
 ; at 18.2 times/second.
-; 
+;
 ; Revision 1.16  1994/11/28  15:24:10  john
 ; Cleaned up timer interrupt a bit.
-; 
+;
 ; Revision 1.15  1994/11/22  17:00:43  john
 ; Made the timer handler fill in ES along with DS.
 ; The HMI drivers expect this.
-; 
+;
 ; Revision 1.14  1994/11/15  12:04:38  john
 ; Cleaned up timer code a bit... took out unused functions
 ; like timer_get_milliseconds, etc.
-; 
+;
 ; Revision 1.13  1994/10/05  16:17:40  john
 ; Made interrupts more stable.
-; 
+;
 ; Revision 1.12  1994/09/29  18:29:57  john
 ; Enabled interrupts whil calling the user_function.
-; 
+;
 ; Revision 1.11  1994/09/23  16:00:31  john
 ; MAde the timer interrupt switch to a 4K stack
 ; before calling the timer_function.
-; 
+;
 ; Revision 1.10  1994/09/22  16:09:21  john
 ; Fixed some virtual memory lockdown problems with timer and
 ; joystick.
-; 
+;
 ; Revision 1.9  1994/04/29  12:13:48  john
 ; Locked all memory used during interrupts so that program
 ; won't hang when using virtual memory.
-; 
+;
 ; Revision 1.8  1994/04/28  23:50:49  john
 ; Changed calling for init_timer.  Made the function that the
 ; timer calls be a far function. All of this was done to make
 ; our timer system compatible with the HMI sound stuff.
-; 
+;
 ; Revision 1.7  1994/02/17  15:57:15  john
 ; Changed key libary to C.
-; 
+;
 ; Revision 1.6  1994/01/18  20:19:17  john
 ; Fixed minor flaws with pending interrupts,
 ; interfaced with joystick code.
-; 
+;
 ; Revision 1.5  1994/01/18  13:54:18  john
 ; Fixed a few miner flaws.
-; 
+;
 ; Revision 1.4  1994/01/18  10:58:25  john
 ; Added timer_get_fixed_seconds
-; 
+;
 ; Revision 1.3  1993/12/20  15:40:59  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.2  1993/09/23  18:08:44  john
 ; added code so that timer_init can handle multiple calls.
 ; added code so that atexit is called.
-; 
+;
 ; Revision 1.1  1993/07/10  13:10:43  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -154,7 +154,7 @@ TCOMMAND    	EQU 	43h
 PIC         	EQU 	020h
 STACK_SIZE	EQU	4096	; A 4K stack
 
-TIMER_DATA STRUCT   
+TIMER_DATA STRUCT
 	in_timer	db  0
 
 	nested_counter	dd	0
@@ -165,8 +165,8 @@ TIMER_DATA STRUCT
 	joystick_poller	dd  0
 
 	user_function   df  0
-	
-	org_interrupt	df  0	
+
+	org_interrupt	df  0
 
 	saved_stack	df  0
 
@@ -176,10 +176,10 @@ TIMER_DATA STRUCT
 
 	Installed db 	0
 
-	TimerStack	db  STACK_SIZE dup (?)		
+	TimerStack	db  STACK_SIZE dup (?)
 TIMER_DATA ENDS
 
-	TimerData	TIMER_DATA <>	
+	TimerData	TIMER_DATA <>
 
 _DATA   ENDS
 
@@ -224,15 +224,15 @@ timer_get_stamp64:
 		mov	dh, al
 		and	edx, 0ffffh
 		mov	eax, TimerData._timer_cnt
-		shl	eax, 1		
+		shl	eax, 1
 		sub	eax, edx
-			
+
 		push	ebx
 		mov	ebx, eax
 		mov	eax, TimerData.tick_count
 		imul	TimerData._timer_cnt	; edx:eax = Number of 1.19 MHz ticks elapsed...
 		add	eax, ebx
-		adc	edx, 0				
+		adc	edx, 0
 		pop	ebx
 
 		ret
@@ -251,7 +251,7 @@ NoInterrupt:
 		mov	eax, TimerData.tick_count
 		imul	TimerData._timer_cnt	; edx:eax = Number of 1.19 MHz ticks elapsed...
 		add	eax, ebx
-		adc	edx, 0				
+		adc	edx, 0
 		pop	ebx
 
 		ret
@@ -270,7 +270,7 @@ timer_get_fixed_seconds_:
 		; Timing in fixed point (16.16) seconds.
 		; Can be used for up to 1000 hours
 		shld    edx, eax, 16            ; Keep 32+11 bits
-		shl     eax, 16			
+		shl     eax, 16
 		; edx:eax = number of 1.19Mhz pulses elapsed.
 		mov     ebx, 1193180
 
@@ -297,7 +297,7 @@ timer_get_fixed_secondsX_:
 		; Timing in fixed point (16.16) seconds.
 		; Can be used for up to 1000 hours
 		shld    edx, eax, 16            ; Keep 32+11 bits
-		shl     eax, 16			
+		shl     eax, 16
 		; edx:eax = number of 1.19Mhz pulses elapsed.
 		mov     ebx, 1193180
 
@@ -321,7 +321,7 @@ timer_get_approx_seconds_:
 	mov	eax, TimerData.tick_count
 	imul	TimerData._timer_cnt	; edx:eax = Number of 1.19 MHz ticks elapsed...
 	shld    edx, eax, 16            ; Keep 32+16 bits, for conversion to fixed point
-	shl     eax, 16			
+	shl     eax, 16
 	; edx:eax = number of 1.19Mhz pulses elapsed.
 	mov     ebx, 1193180
 
@@ -335,7 +335,6 @@ approx_sub_again:	sub     edx, ebx	; subtract until negative...
 	pop	edx
 	pop	ebx
 	ret
-
 
 
 ;extern void timer_set_rate(int count_val);
@@ -358,7 +357,7 @@ timer_set_rate_:
 @@:	; Set the timer rate to eax
 	cli
 	mov	TimerData.tick_count, 0
-	mov     TimerData._timer_cnt, eax		
+	mov     TimerData._timer_cnt, eax
 	mov     al, 34h		; count in binary, mode 2, load low byte then hi byte, counter 0:  00 11 010 0
 	out     TCOMMAND, al    ; Reset PIT channel 0
 	mov     eax, TimerData._timer_cnt
@@ -452,7 +451,7 @@ NoReset:
 		pop	fs
 		popad
 
-NoUserFunction:	
+NoUserFunction:
 		cmp	dword ptr TimerData.joystick_poller, 0
 		je	NoJoyPolling
 		mov	eax, TimerData._timer_cnt
@@ -509,7 +508,7 @@ timer_init_:
 		;--------------- lock data used in interrupt
 		mov	eax, SIZEOF TIMER_DATA
 		mov	esi, eax
-		shr	esi, 16			
+		shr	esi, 16
 		mov	edi, eax
 		and	edi, 0ffffh	; si:di = length of region to lock in bytes
 		lea	ebx, ds:TimerData
@@ -527,7 +526,7 @@ timer_init_:
 		sub	eax, ecx
 		inc	eax		; EAX = size of timer interrupt handler
 		mov	esi, eax
-		shr	esi, 16			
+		shr	esi, 16
 		mov	edi, eax
 		and	edi, 0ffffh	; si:di = length of region to lock in bytes
 		lea	ebx, cs:TIMER_LOCKED_CODE_START
@@ -625,14 +624,14 @@ timer_close_:
 		pop	ds
 
 		sti
-		
+
 		cmp	TimerData.nested_counter, 0
 		je	NoNestedInterrupts
 		mov	eax, TimerData.nested_counter
 		;int 	3		; Get John!!
-	
+
 NoNestedInterrupts:
-		
+
 
 NotInstalled:
 		pop     ds

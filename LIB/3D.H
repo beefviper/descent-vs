@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,104 +21,104 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: 3d.h $
  * Revision 1.34  1994/11/11  19:22:14  matt
  * Added new function, g3_calc_point_depth()
- * 
+ *
  * Revision 1.33  1994/09/09  14:23:58  matt
  * Added support for glowing textures, to add engine glow to Descent.
- * 
+ *
  * Revision 1.32  1994/09/01  10:42:27  matt
  * Blob routine, renamed g3_draw_bitmap(), now takes seperate 3d width & height.
- * 
+ *
  * Revision 1.31  1994/07/29  18:16:14  matt
  * Added instance by angles, and corrected parms for g3_init()
- * 
+ *
  * Revision 1.30  1994/07/25  00:00:00  matt
  * Made 3d no longer deal with point numbers, but only with pointers.
- * 
+ *
  * Revision 1.29  1994/07/22  17:57:27  matt
  * Changed the name of the rod functions, and took out some debugging code
- * 
+ *
  * Revision 1.28  1994/06/07  16:49:12  matt
  * Made interpreter take lighting value as parm, rather than in global var
- * 
+ *
  * Revision 1.27  1994/05/31  18:35:28  matt
  * Added light value to g3_draw_facing_bitmap()
- * 
+ *
  * Revision 1.26  1994/05/30  22:48:04  matt
  * Added support for morph effect
- * 
+ *
  * Revision 1.25  1994/05/30  11:34:57  matt
  * Added g3_set_special_render() to allow a user to specify functions to
  * call for 2d draws.
- * 
+ *
  * Revision 1.24  1994/05/19  21:46:31  matt
  * Moved texture lighting out of 3d and into the game
- * 
+ *
  * Revision 1.23  1994/05/14  15:26:48  matt
  * Added extern for polyobj outline flag
- * 
+ *
  * Revision 1.22  1994/04/19  18:26:33  matt
  * Added g3_draw_sphere() function.
- * 
+ *
  * Revision 1.21  1994/03/25  18:22:28  matt
  * g3_draw_polygon_model() now takes ptr to list of angles
- * 
+ *
  * Revision 1.20  1994/03/15  21:23:23  matt
  * Added interpreter functions
- * 
+ *
  * Revision 1.19  1994/02/15  17:37:34  matt
  * New function, g3_draw_blob()
- * 
+ *
  * Revision 1.18  1994/02/09  11:47:47  matt
  * Added rod & delta point functions
- * 
+ *
  * Revision 1.17  1994/01/26  12:38:11  matt
  * Added function g3_compute_lighting_value()
- * 
+ *
  * Revision 1.16  1994/01/25  18:00:02  yuan
  * Fixed variable beam_brightness...
- * 
+ *
  * Revision 1.15  1994/01/24  14:08:34  matt
  * Added instancing functions
- * 
+ *
  * Revision 1.14  1994/01/22  18:21:48  matt
  * New lighting stuff now done in 3d; g3_draw_tmap() takes lighting parm
- * 
+ *
  * Revision 1.13  1994/01/20  17:21:24  matt
  * New function g3_compute_sky_polygon()
- * 
+ *
  * Revision 1.12  1994/01/14  17:20:25  matt
  * Added prototype for new function g3_draw_horizon()
- * 
+ *
  * Revision 1.10  1993/12/20  20:21:52  matt
  * Added g3_point_2_vec()
- * 
+ *
  * Revision 1.9  1993/12/07  23:05:47  matt
  * Fixed mistyped function name.
- * 
+ *
  * Revision 1.8  1993/12/05  23:47:03  matt
  * Added function g3_draw_line_ptrs()
- * 
+ *
  * Revision 1.7  1993/12/05  23:13:22  matt
  * Added prototypes for g3_rotate_point() and g3_project_point()
- * 
+ *
  * Revision 1.6  1993/12/05  23:03:28  matt
  * Changed uvl structs to g3s_uvl
- * 
+ *
  * Revision 1.5  1993/11/22  10:51:09  matt
  * Moved uvl structure here from segment.h, made texture map functions use it
- * 
+ *
  * Revision 1.4  1993/11/21  20:08:31  matt
  * Added function g3_draw_object()
- * 
+ *
  * Revision 1.3  1993/11/04  18:49:19  matt
  * Added system to only rotate points once per frame
- * 
+ *
  * Revision 1.2  1993/11/04  08:16:06  mike
  * Add light field (p3_l) to g3s_point.
- * 
+ *
  * Revision 1.1  1993/10/29  22:20:56  matt
  * Initial revision
- * 
+ *
  *
  */
 
@@ -201,10 +201,10 @@ void g3_close(void);
 //start the frame
 void g3_start_frame(void);
 
-//set view from x,y,z & p,b,h, zoom.  Must call one of g3_set_view_*() 
+//set view from x,y,z & p,b,h, zoom.  Must call one of g3_set_view_*()
 void g3_set_view_angles(vms_vector *view_pos,vms_angvec *view_orient,fix zoom);
 
-//set view from x,y,z, viewer matrix, and zoom.  Must call one of g3_set_view_*() 
+//set view from x,y,z, viewer matrix, and zoom.  Must call one of g3_set_view_*()
 void g3_set_view_matrix(vms_vector *view_pos,vms_matrix *view_matrix,fix zoom);
 
 //end the frame
@@ -239,7 +239,7 @@ fix g3_get_zoom(char axis,fixang fov,short window_width,short window_height);
 //returns the normalized, unscaled view vectors
 void g3_get_view_vectors(vms_vector *forward,vms_vector *up,vms_vector *right);
 
-//returns true if a plane is facing the viewer. takes the unrotated surface 
+//returns true if a plane is facing the viewer. takes the unrotated surface
 //normal of the plane, and a point on it.  The normal need not be normalized
 bool g3_check_normal_facing(vms_vector *v,vms_vector *norm);
 
@@ -294,7 +294,7 @@ g3_draw_sphere(g3s_point *pnt,fix rad);
 
 
 //like g3_draw_poly(), but checks to see if facing.  If surface normal is
-//NULL, this routine must compute it, which will be slow.  It is better to 
+//NULL, this routine must compute it, which will be slow.  It is better to
 //pre-compute the normal, and pass it to this function.  When the normal
 //is passed, this function works like g3_check_normal_facing() plus
 //g3_draw_poly().
@@ -311,7 +311,7 @@ g3_draw_rod_flat(g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top
 //draw a bitmap object that is always facing you
 g3_draw_rod_tmap(grs_bitmap *bitmap,g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width,fix light);
 
-//draws a bitmap with the specified 3d width & height 
+//draws a bitmap with the specified 3d width & height
 g3_draw_bitmap(vms_vector *pos,fix width,fix height,grs_bitmap *bm);
 
 //specifies 2d drawing routines to use instead of defaults.  Passing
@@ -391,4 +391,3 @@ bool g3_draw_morphing_model(void *model_ptr,grs_bitmap **model_bitmaps,vms_angve
 #pragma aux g3_set_special_render "*" parm [eax] [edx] [ebx] modify exact [eax edx ebx];
 
 #endif
-

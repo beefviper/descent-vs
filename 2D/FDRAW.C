@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -33,7 +33,7 @@ main(int argc, char * argv[] )
 	FILE * fp;
 	char line[200];
 	grs_font * font;
-	
+
 	if ( argc < 2 )	{
 		printf( "Usage: fdraw fontfile textfile outfile.pcx\n" );
 		printf( " example: fdraw font3-1.fnt config.sys config.pcx\n" );
@@ -68,6 +68,3 @@ main(int argc, char * argv[] )
 
 	pcx_write_bitmap( argv[3], &grd_curcanv->cv_bitmap, gr_palette );
 }
-
-
-

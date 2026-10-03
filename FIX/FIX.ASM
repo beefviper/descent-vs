@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/fix/rcs/fix.asm $
@@ -19,53 +19,53 @@
 ; $Log: fix.asm $
 ; Revision 1.16  1994/11/30  00:59:40  mike
 ; optimizations.
-; 
+;
 ; Revision 1.15  1994/11/16  18:05:01  matt
 ; Added error checking to atan2
-; 
+;
 ; Revision 1.14  1994/10/21  12:14:26  matt
 ; For acos & asin, saturate at 1 instead of generate error
-; 
+;
 ; Revision 1.13  1994/05/18  17:15:56  matt
 ; Allow sin & cos ptrs in C sincos func to be null
-; 
+;
 ; Revision 1.12  1994/02/10  21:23:08  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.11  1994/01/19  23:11:26  matt
 ; Made fix_atan2() left-handed, like our coordinate system
-; 
+;
 ; Revision 1.10  1993/10/26  18:51:49  matt
 ; Fixed register trash in fix_atan2()
-; 
+;
 ; Revision 1.9  1993/10/20  01:09:01  matt
 ; Add fix_asin(), improved fix_atan2()
-; 
+;
 ; Revision 1.8  1993/10/19  23:53:48  matt
 ; Added fix_atan2()
-; 
+;
 ; Revision 1.7  1993/10/19  22:22:34  matt
 ; Added fix_acos()
-; 
+;
 ; Revision 1.6  1993/09/10  19:13:44  matt
 ; Fixed problem with quad_sqrt() when edx==0 and high bit of eax set
-; 
+;
 ; Revision 1.5  1993/08/24  13:00:17  matt
 ; Adopted new standard, and made assembly-callable routines not trash any regs
-; 
+;
 ; Revision 1.4  1993/08/12  14:43:34  matt
 ; Added rcsid
-; 
+;
 ; Revision 1.3  1993/08/06  15:59:49  matt
 ; Added check for high bit of low longword set in quad_sqrt
 ; Changed long_sqrt to do longword moves and save the override
-; 
+;
 ; Revision 1.2  1993/08/04  19:56:03  matt
 ; Fixed mistake in quad_sqrt first quess code
-; 
+;
 ; Revision 1.1  1993/08/03  17:45:26  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -947,7 +947,6 @@ guess_table	db	  1 dup (1)	;0
 _DATA	ends
 
 
-
 _TEXT	segment	para public USE32 'CODE'
 
 ;the sincos functions have two varients: the C version is passed pointer
@@ -956,7 +955,7 @@ _TEXT	segment	para public USE32 'CODE'
 
 ;takes ax=angle, returns eax=sin, ebx=cos.
 fix_fastsincos:
-	movzx	eax,ah	;get high byte 
+	movzx	eax,ah	;get high byte
 	movsx	ebx,cos_table[eax*2]
 	sal	ebx,2	;make a fix
 	movsx	eax,sin_table[eax*2]
@@ -1057,9 +1056,9 @@ no_asin_oflow:
 
 	ret
 
-;given cos & sin of an angle, return that angle. takes eax=cos,ebx=sin. 
+;given cos & sin of an angle, return that angle. takes eax=cos,ebx=sin.
 ;returns ax. parms need not be normalized, that is, the ratio eax/ebx must
-;equal the ratio cos/sin, but the parms need not be the actual cos & sin.  
+;equal the ratio cos/sin, but the parms need not be the actual cos & sin.
 ;NOTE: this is different from the standard C atan2, since it is left-handed.
 ;trashes ebx
 ;uses either asin or acos, to get better precision
@@ -1199,7 +1198,7 @@ got_guess:
 
 ;the loop nearly always executes 3 times, so we'll unroll it 2 times and
 ;not do any checking until after the third time.  By my calcutations, the
-;loop is executed 2 times in 99.97% of cases, 3 times in 93.65% of cases, 
+;loop is executed 2 times in 99.97% of cases, 3 times in 93.65% of cases,
 ;four times in 16.18% of cases, and five times in 0.44% of cases.  It never
 ;executes more than five times.  By timing, I determined that is is faster
 ;to always execute three times and not check for termination the first two

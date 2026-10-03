@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -22,39 +22,39 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: lzw.c $
  * Revision 1.8  1994/02/01  13:23:51  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.7  1993/10/22  17:50:43  yuan
  * Fixed the hard to track down bug
- * 
+ *
  * Revision 1.6  1993/10/18  18:00:13  yuan
  * Fixed memory alloc errors.
- * 
+ *
  * Revision 1.5  1993/09/21  17:22:24  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/09/21  17:16:25  yuan
  * cleaning up
- * 
+ *
  * Revision 1.3  1993/09/14  13:11:57  yuan
  * cfread and cfwrite have been changed into lzw_expand and lzw_compress.
  * the new cfread and cfwrite functions are now in library.c
  * lzw_compress returns the compressed buffer and a parameter *size.
- * 
+ *
  * Revision 1.2  1993/09/09  17:45:56  yuan
  * tab added to ERROR messages
- * 
+ *
  * Revision 1.1  1993/09/08  16:15:03  yuan
  * Initial revision
- * 
+ *
  * Revision 1.3  1993/07/24  19:05:22  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/07/22  11:27:29  yuan
  * No change
- * 
+ *
  * Revision 1.1  1993/07/21  15:28:48  matt
  * Initial revision
- * 
+ *
  *
  */
 
@@ -307,6 +307,3 @@ unsigned int decode_string( unsigned int count, unsigned int code ) {
     decode_stack[ count++ ] = (char) code;
     return( count );
 }
-
-
-

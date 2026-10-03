@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,230 +15,230 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.10 $
  * $Author: john $
  * $Date: 1995/12/19 15:48:25 $
- * 
+ *
  * Routines for EndGame, EndLevel, etc.
- * 
+ *
  * $Log: gameseq.c $
  * Revision 2.10  1995/12/19  15:48:25  john
  * Made screen reset when loading new level.
- * 
+ *
  * Revision 2.9  1995/07/07  16:47:52  john
  * Fixed bug with reactor time..
- * 
+ *
  * Revision 2.8  1995/06/15  12:14:18  john
  * Made end game, win game and title sequences all go
  * on after 5 minutes automatically.
- * 
+ *
  * Revision 2.7  1995/05/26  16:16:25  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.6  1995/03/24  13:11:20  john
  * Added save game during briefing screens.
- * 
+ *
  * Revision 2.5  1995/03/23  17:56:20  allender
  * added code to record old laser level and weapons when player gets
  * new ship
- * 
+ *
  * Revision 2.4  1995/03/21  08:39:14  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.3  1995/03/15  14:33:33  john
  * Added code to force the Descent CD-rom in the drive.
- * 
+ *
  * Revision 2.2  1995/03/06  16:47:26  mike
  * destination saturn
- * 
+ *
  * Revision 2.1  1995/03/06  15:23:23  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:28:53  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.310  1995/02/14  10:48:09  mike
  * zero bonus if you are a cheater.
- * 
+ *
  * Revision 1.309  1995/02/11  19:17:08  rob
  * Fixed bug in laser fire rate after demo playback.
- * 
+ *
  * Revision 1.308  1995/02/11  14:34:08  rob
  * Added include of netmisc.c
- * 
+ *
  * Revision 1.307  1995/02/11  14:29:04  rob
  * Fixes for invul. controlcen.
- * 
+ *
  * Revision 1.306  1995/02/11  13:47:00  mike
  * fix cheats.
- * 
+ *
  * Revision 1.305  1995/02/11  13:10:52  rob
  * Fixed end of anarchy mission problems.
- * 
+ *
  * Revision 1.304  1995/02/11  12:46:12  mike
  * initialize Robot_firing_enabled, part of AHIMSA cheat.
- * 
+ *
  * Revision 1.303  1995/02/11  12:42:03  john
  * Added new song method, with FM bank switching..
- * 
+ *
  * Revision 1.302  1995/02/10  17:39:29  matt
  * Changed secret exit message to be centered
- * 
+ *
  * Revision 1.301  1995/02/10  16:17:33  mike
  * init Last_level_path_shown.
- * 
+ *
  * Revision 1.300  1995/02/09  22:18:22  john
  * Took out between level saves.
- * 
+ *
  * Revision 1.299  1995/02/09  12:11:42  rob
  * Get rid of high scores thing for multiplayer games.
- * 
+ *
  * Revision 1.298  1995/02/08  20:34:24  rob
  * Took briefing screens back OUT of coop games (per Interplay request)
- * 
+ *
  * Revision 1.297  1995/02/08  19:20:09  rob
  * Moved checksum calc.
- * 
+ *
  * Revision 1.296  1995/02/05  14:39:24  rob
  * Changed object mapping to be more efficient.
- * 
+ *
  * Revision 1.295  1995/02/02  19:05:38  john
  * Made end level menu for 27 not overwrite descent title..
- * 
+ *
  * Revision 1.294  1995/02/02  16:36:42  adam
  * *** empty log message ***
- * 
+ *
  * Revision 1.293  1995/02/02  15:58:02  john
  * Added turbo mode cheat.
- * 
+ *
  * Revision 1.292  1995/02/02  15:29:34  matt
  * Changed & localized secret level text
- * 
+ *
  * Revision 1.291  1995/02/02  10:50:03  adam
  * messed with secret level message
- * 
+ *
  * Revision 1.290  1995/02/02  01:20:28  adam
  * changed endgame song temporarily.
- * 
+ *
  * Revision 1.289  1995/02/01  23:19:43  rob
  * Fixed up endlevel stuff for multiplayer.
  * Put in palette fades around areas that didn't have them before.
- * 
+ *
  * Revision 1.288  1995/02/01  17:12:34  mike
  * Make score come after endgame screens.
- * 
+ *
  * Revision 1.287  1995/01/30  18:34:30  rob
  * Put briefing screens back into coop games.
- * 
+ *
  * Revision 1.286  1995/01/27  13:07:59  rob
  * Removed erroneous warning message.
- * 
+ *
  * Revision 1.285  1995/01/27  11:47:43  rob
  * Removed new secret level menu from multiplayer games.
- * 
+ *
  * Revision 1.284  1995/01/26  22:11:11  mike
  * Purple chromo-blaster (ie, fusion cannon) spruce up (chromification)
- * 
+ *
  * Revision 1.283  1995/01/26  16:55:13  rob
  * Removed ship bonus from cooperative endgame.
- * 
+ *
  * Revision 1.282  1995/01/26  16:45:24  mike
  * Add autofire fusion cannon stuff.
- * 
+ *
  * Revision 1.281  1995/01/26  14:44:44  rob
  * Removed unnecessary #ifdefs around mprintfs.
  * Changed NumNetPlayerPositions to be independant of MaxNumNetPlayers to
  * accomodate 4-player robo-archy games with 8 start positions.
- * 
+ *
  * Revision 1.280  1995/01/26  12:19:01  rob
  * Changed network_do_frame call.
- * 
+ *
  * Revision 1.279  1995/01/26  00:35:03  matt
  * Changed numbering convention for HMP files for levels
- * 
+ *
  * Revision 1.278  1995/01/25  16:07:59  matt
  * Added message (prototype) when going to secret level
- * 
+ *
  * Revision 1.277  1995/01/22  18:57:23  matt
  * Made player highest level work with missions
- * 
+ *
  * Revision 1.276  1995/01/21  23:13:08  matt
  * Made high scores with (not work, really) with loaded missions
  * Don't give player high score when quit game
- * 
+ *
  * Revision 1.275  1995/01/21  17:17:39  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.274  1995/01/21  17:15:38  john
  * Added include for state.h
- * 
+ *
  * Revision 1.273  1995/01/21  16:21:14  matt
  * Fixed bugs in secret level sequencing
- * 
+ *
  * Revision 1.272  1995/01/20  22:47:29  matt
  * Mission system implemented, though imcompletely
- * 
+ *
  * Revision 1.271  1995/01/19  17:00:48  john
  * Made save game work between levels.
- * 
+ *
  * Revision 1.270  1995/01/17  17:49:10  rob
  * Added key syncing for coop.
- * 
+ *
  * Revision 1.269  1995/01/17  14:27:37  john
  * y
- * 
+ *
  * Revision 1.268  1995/01/17  13:36:33  john
  * Moved pig loading into StartNewLevelSub.
- * 
+ *
  * Revision 1.267  1995/01/16  16:53:55  john
  * Added code to save cheat state during save game.
- * 
+ *
  * Revision 1.266  1995/01/15  19:42:10  matt
  * Ripped out hostage faces for registered version
- * 
+ *
  * Revision 1.265  1995/01/15  16:55:06  john
  * Improved mine texture parsing.
- * 
+ *
  * Revision 1.264  1995/01/15  11:56:24  john
  * Working version of paging.
- * 
+ *
  * Revision 1.263  1995/01/14  19:16:40  john
  * First version of new bitmap paging code.
- * 
+ *
  * Revision 1.262  1995/01/13  17:38:58  yuan
  * Removed Int3() for number players check.
- * 
+ *
  * Revision 1.261  1995/01/12  12:09:52  yuan
  * Added coop object capability.
- * 
+ *
  * Revision 1.260  1995/01/05  17:16:08  yuan
  * Removed Int3s.
- * 
+ *
  * Revision 1.259  1995/01/05  11:34:29  john
  * Took out endlevel save stuff for registered.
- * 
+ *
  * Revision 1.258  1995/01/04  19:00:16  rob
  * Added some debugging for two bugs.
- * 
+ *
  * Revision 1.257  1995/01/04  13:18:18  john
  * Added cool 6 game save.
- * 
+ *
  * Revision 1.256  1995/01/04  08:46:18  rob
  * JOHN CHECKED IN FOR ROB !!!
- * 
+ *
  * Revision 1.255  1995/01/02  20:07:35  rob
  * Added score syncing.
  * Get rid of endlevel score for coop games (put it back in elsewhere)
- * 
+ *
  * Revision 1.254  1995/01/02  16:17:43  mike
  * init super boss.
- * 
+ *
  * Revision 1.253  1994/12/21  21:08:47  rob
  * fixed a bug in coop player ship positions.
- * 
+ *
  * Revision 1.252  1994/12/21  12:57:08  rob
  * Handle additional player ships in mines.
- * 
- * 
+ *
+ *
  */
 
 
@@ -333,7 +333,7 @@ static char rcsid[] = "$Id: gameseq.c 2.10 1995/12/19 15:48:25 john Exp $";
 //-1,-2,-3 are secret levels
 //0 means not a real level loaded
 int	Current_level_num=0,Next_level_num;
-char	Current_level_name[LEVEL_NAME_LEN];		
+char	Current_level_name[LEVEL_NAME_LEN];
 
 int Last_level,Last_secret_level;
 
@@ -364,7 +364,7 @@ void verify_console_object()
 	Assert( ConsoleObject->id==Player_num );
 }
 
-int count_number_of_robots() 
+int count_number_of_robots()
 {
 	int robot_count;
 	int i;
@@ -379,7 +379,7 @@ int count_number_of_robots()
 }
 
 
-int count_number_of_hostages() 
+int count_number_of_hostages()
 {
 	int count;
 	int i;
@@ -499,7 +499,7 @@ void init_player_stats_game()
 	Players[Player_num].num_kills_total = 0;
 	Players[Player_num].num_robots_level = 0;
 	Players[Player_num].num_robots_total = 0;
-	
+
 	Players[Player_num].hostages_rescued_total = 0;
 	Players[Player_num].hostages_level = 0;
 	Players[Player_num].hostages_total = 0;
@@ -819,7 +819,7 @@ try_again:
 		sprintf(filename,"$%.7s.plr",text);
 		fp = fopen(filename,"rb");
 	}
-	
+
 	if ( fp )	{
 		nm_messagebox(NULL, 1, TXT_OK, "%s '%s' %s", TXT_PLAYER, text, TXT_ALREADY_EXISTS );
 		fclose(fp);
@@ -892,7 +892,7 @@ do_menu_again:
 extern int descent_critical_error;
 
 //load a level off disk. level numbers start at 1.  Secret levels are -1,-2,-3
-void LoadLevel(int level_num) 
+void LoadLevel(int level_num)
 {
 	char *level_name;
 	player save_player;
@@ -928,7 +928,7 @@ void LoadLevel(int level_num)
 	}
 #endif
 
-	save_player = Players[Player_num];	
+	save_player = Players[Player_num];
 
 	Assert(level_num <= Last_level  && level_num >= Last_secret_level  && level_num != 0);
 
@@ -970,7 +970,7 @@ void LoadLevel(int level_num)
 
 }
 
-//sets up Player_num & ConsoleObject  
+//sets up Player_num & ConsoleObject
 InitPlayerObject()
 {
 	Assert(Player_num>=0 && Player_num<MAX_PLAYERS);
@@ -1179,7 +1179,7 @@ PlayerFinishedLevel(int secret_flag)
 			multi_endlevel_score();
 			rval = AdvanceLevel(secret_flag);				//now go on to the next one (if one)
 		}
-		else 
+		else
 		#endif
 		{	// Note link to above else!
 			rval = AdvanceLevel(secret_flag);				//now go on to the next one (if one)
@@ -1189,7 +1189,7 @@ PlayerFinishedLevel(int secret_flag)
 		#ifdef NETWORK
 		if (Game_mode & GM_MULTI)
 			multi_endlevel_score();
-		else 
+		else
 		#endif	// Note link!!
 			DoEndLevelScoreGlitz(0);		//give bonuses
 		rval = AdvanceLevel(secret_flag);				//now go on to the next one (if one)
@@ -1207,7 +1207,7 @@ PlayerFinishedLevel(int secret_flag)
 
 extern void do_end_game(void);
 
-//from which level each do you get to each secret level 
+//from which level each do you get to each secret level
 int Secret_level_table[MAX_SECRET_LEVELS_PER_MISSION];
 
 //called to go to the next level (if there is one)
@@ -1235,7 +1235,7 @@ int AdvanceLevel(int secret_flag)
 	#endif
 
 	if (Current_level_num == Last_level) {		//player has finished the game!
-		
+
 		Function_mode = FMODE_MENU;
 		if ((Newdemo_state == ND_STATE_RECORDING) || (Newdemo_state == ND_STATE_PAUSED))
 			newdemo_stop_recording();
@@ -1291,7 +1291,7 @@ died_in_mine_message(void)
 	gr_palette_fade_out(gr_palette, 32, 0);
 
 	gr_set_current_canvas(NULL);
-	
+
 	pcx_error = pcx_read_bitmap("STARS.PCX",&grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
 
@@ -1331,17 +1331,17 @@ DoPlayerDead()
 	{
 		multi_do_death(Players[Player_num].objnum);
 	}
-	else 
-	#endif		
+	else
+	#endif
 	{				//Note link to above else!
 		Players[Player_num].lives--;
 		if (Players[Player_num].lives == 0)
-		{	
+		{
 			DoGameOver();
 			return;
 		}
 	}
-				
+
 	if ( Fuelcen_control_center_destroyed ) {
 		int	rval;
 
@@ -1361,10 +1361,10 @@ DoPlayerDead()
 				rval = AdvanceLevel(0);			//if finished, go on to next level
 			}
 			else
-			#endif	
+			#endif
 			{			// Note link to above else!
 				rval = AdvanceLevel(0);			//if finished, go on to next level
-				DoEndLevelScoreGlitz(0);	
+				DoEndLevelScoreGlitz(0);
 			}
 			init_player_stats_new_ship();
 			last_drawn_cockpit = -1;
@@ -1419,7 +1419,7 @@ StartNewLevelSub(int level_num, int page_in_textures)
 
 	Assert(Current_level_num == level_num);	//make sure level set right
 
-	gameseq_init_network_players(); // Initialize the Players array for 
+	gameseq_init_network_players(); // Initialize the Players array for
 											  // this level
 
 #ifdef NETWORK
@@ -1518,7 +1518,7 @@ StartNewLevel(int level_num)
 	if (!(Game_mode & GM_MULTI)) {
 		do_briefing_screens(level_num);
 	}
-	StartNewLevelSub(level_num, 1 );		
+	StartNewLevelSub(level_num, 1 );
 
 }
 
@@ -1546,7 +1546,7 @@ InitPlayerPosition(int random)
 #endif
 
 		do {
-			if (trys > 0)	
+			if (trys > 0)
 			{
 				mprintf((0, "Can't start in location %d because its too close to player %d\n", NewPlayer, closest ));
 			}
@@ -1555,7 +1555,7 @@ InitPlayerPosition(int random)
 
 			closest = -1;
 			closest_dist = 0x7fffffff;
-	
+
 			for (i=0; i<N_players; i++ )	{
 				if ( (i!=Player_num) && (Objects[Players[i].objnum].type == OBJ_PLAYER) )	{
 					dist = find_connected_distance(&Objects[Players[i].objnum].pos, Objects[Players[i].objnum].segnum, &Player_init[NewPlayer].pos, Player_init[NewPlayer].segnum, 5, WID_FLY_FLAG );
@@ -1568,7 +1568,7 @@ InitPlayerPosition(int random)
 			}
 			mprintf((0, "Closest from pos %d is %f to plr %d.\n", NewPlayer, f2fl(closest_dist), closest));
 		} while ( (closest_dist<i2f(10*20)) && (trys<MAX_NUM_NET_PLAYERS*2) );
-	} 
+	}
 #endif
 	else {
 		mprintf((0, "Starting position is not being changed.\n"));
@@ -1654,7 +1654,7 @@ StartLevel(int random)
 #endif
 		multi_send_position(Players[Player_num].objnum);
 	 	multi_send_reappear();
-	}		
+	}
 
 	if (Game_mode & GM_NETWORK)
 		network_do_frame(1, 1);
@@ -1673,6 +1673,3 @@ StartLevel(int random)
 	if (VR_screen_mode == SCREEN_MENU)
 		vr_reset_display();
 }
-
-
-

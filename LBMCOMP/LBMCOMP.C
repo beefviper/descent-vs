@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,14 +15,14 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.1 $
  * $Author: john $
  * $Date: 1994/01/24 11:09:24 $
- * 
+ *
  * .
- * 
+ *
  * $Log: xcolor.c $
  * Revision 1.1  1994/01/24  11:09:24  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -45,7 +45,7 @@ void dofile( char * filename )
 {
 	grs_bitmap * bitmap;
 
-	MALLOC( bitmap, grs_bitmap, 1 );	
+	MALLOC( bitmap, grs_bitmap, 1 );
 
 	printf( "Compressing %s... Reading,", filename );
 	iff_read_bitmap( filename, bitmap, BM_LINEAR, palette );
@@ -87,9 +87,3 @@ void main(int argc, char * argv[])	{
 
 
 }
-
-
-
-
-
-

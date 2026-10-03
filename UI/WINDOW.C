@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,28 +21,28 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: window.c $
  * Revision 1.8  1994/11/18  23:21:46  john
  * Fixed big with prev.
- * 
+ *
  * Revision 1.7  1994/11/18  23:21:06  john
  * Changed some shorts to int.
- * 
+ *
  * Revision 1.6  1994/06/09  12:18:12  john
  * Took out keyboard flushes.
- * 
+ *
  * Revision 1.5  1994/01/18  11:00:36  john
  * added ui_get_idle_seconds.
- * 
+ *
  * Revision 1.4  1993/12/07  12:30:33  john
  * new version.
- * 
+ *
  * Revision 1.3  1993/10/26  13:46:08  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/10/05  17:31:46  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/09/20  10:35:44  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -234,7 +234,6 @@ void remove_window( UI_WINDOW * wnd )
 }
 
 
-
 UI_WINDOW * ui_open_window( short x, short y, short w, short h, int flags )
 {
 	UI_WINDOW * wnd;
@@ -377,7 +376,7 @@ void ui_mega_process()
 {
 	int mx, my;
 	unsigned char k;
-	
+
 	switch( Record )
 	{
 	case 0:
@@ -527,22 +526,22 @@ void ui_mega_process()
 		last_keypress = 0;
 
 		if ( keyd_last_pressed ) {
-			_disable();			
+			_disable();
 			k = keyd_last_pressed;
 			keyd_last_pressed = 0;
 			_disable();
 			SavedState[k] = 1;
 		}
 
-		if ( keyd_last_released ) 
+		if ( keyd_last_released )
 		{
-			_disable();			
+			_disable();
 			k = keyd_last_released;
 			keyd_last_released = 0;
 			_disable();
 			SavedState[k] = 0;
 		}
-		
+
 		if (key_inkey() == KEY_F12 )
 		{
 			//mprintf( 0, "Playing stopped.\n" );
@@ -598,28 +597,28 @@ void ui_mega_process()
 		case 2:
 			{
 				int next_frame;
-			
+
 				if ( ui_event_counter < ui_number_of_events )
 				{
 					next_frame = EventBuffer[ui_event_counter].frame;
-					
+
 					if ( (FrameCount+PlaybackSpeed) < next_frame )
 						FrameCount = next_frame - PlaybackSpeed;
 					else
 						FrameCount++;
 				} else {
 				 	FrameCount++;
-				}	
+				}
 			}
 			break;
 
-		case 3:			
- 			if ( ui_event_counter < ui_number_of_events ) 
+		case 3:
+ 			if ( ui_event_counter < ui_number_of_events )
 				FrameCount = EventBuffer[ui_event_counter].frame;
-			else 		
+			else
 				FrameCount++;
 			break;
-		default:		
+		default:
 			FrameCount++;
 		}
 	}
@@ -658,4 +657,3 @@ void ui_wprintf_at( UI_WINDOW * wnd, short x, short y, char * format, ... )
 	ui_mouse_show();
 
 }
-

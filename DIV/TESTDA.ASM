@@ -37,7 +37,6 @@ correct_:
 		jmp     Corrected
 
 
-
 PUBLIC  testdivide_
 testdivide_:
 
@@ -86,15 +85,7 @@ setup_correct_:
 		ret
 
 
-
 _TEXT   ENDS
 
 
 		END
-
-
-
-
-
-
-

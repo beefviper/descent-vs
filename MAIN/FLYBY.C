@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,77 +15,77 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:33:03 $
- * 
+ *
  * Routines to fly though a mine (to show it off)
- * 
+ *
  * $Log: flyby.c $
  * Revision 2.0  1995/02/27  11:33:03  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.20  1994/11/19  15:17:49  mike
  * rip out unused code and data
- * 
+ *
  * Revision 1.19  1994/11/17  14:58:40  mike
  * move segment validation functions from editor to main.
- * 
+ *
  * Revision 1.18  1994/08/19  20:09:39  matt
  * Added end-of-level cut scene with external scene
- * 
+ *
  * Revision 1.17  1994/05/20  11:56:44  matt
  * Cleaned up find_vector_intersection() interface
  * Killed check_point_in_seg(), check_player_seg(), check_object_seg()
- * 
+ *
  * Revision 1.16  1994/05/19  09:51:06  matt
  * Use new function vm_vec_normalized_dir()
- * 
+ *
  * Revision 1.15  1994/05/18  22:29:25  matt
  * Use new function vm_extract_angles_vector()
- * 
+ *
  * Revision 1.14  1994/05/12  10:26:33  matt
  * Took out references to unused structure fields.
- * 
+ *
  * Revision 1.13  1994/03/30  16:44:13  matt
  * Use great new vm_vec_scale_add2() function
- * 
+ *
  * Revision 1.12  1994/02/17  11:32:37  matt
  * Changes in object system
- * 
+ *
  * Revision 1.11  1994/01/27  18:18:10  john
  * Added new module, objfly, and made robots
  * fly using this code.
- * 
+ *
  * Revision 1.10  1994/01/05  14:26:01  john
  * Made Slew_object be able to slew, fly, and auto-fly.
- * 
+ *
  * Revision 1.9  1994/01/05  10:53:52  john
- * New object code by John.  
- * 
+ * New object code by John.
+ *
  * Revision 1.8  1993/12/21  14:30:32  matt
  * Explicitely set some variables in init, so flyby is the same each time.
- * 
+ *
  * Revision 1.7  1993/12/01  11:44:15  matt
  * Chagned Frfract to FrameTime
- * 
+ *
  * Revision 1.6  1993/11/04  15:47:29  matt
  * Added check to hopefully prevent divide overflow
- * 
+ *
  * Revision 1.5  1993/10/29  22:54:38  matt
  * Made changes for new matrix ordering
- * 
+ *
  * Revision 1.4  1993/10/26  11:23:25  matt
  * Doesn't get stuck now in some cases with very small segments
- * 
+ *
  * Revision 1.3  1993/10/25  14:34:42  matt
  * Added direction choice keys to flythrough
- * 
+ *
  * Revision 1.2  1993/10/14  18:04:51  mike
  * Change CONNECTIVITY to MAX_SIDES_PER_SEGMENT
- * 
+ *
  * Revision 1.1  1993/10/14  11:03:47  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -178,14 +178,14 @@ fixang delta_ang(fixang a,fixang b)
 //--unused-- fixang interp_angle(fixang dest,fixang src,fixang step)
 //--unused-- {
 //--unused-- 	fixang delta;
-//--unused-- 
+//--unused--
 //--unused-- 	delta = delta_ang(dest,src);
-//--unused-- 
+//--unused--
 //--unused-- 	if (delta > step) delta = step;
 //--unused-- 	else if (delta < -step) delta = -step;
-//--unused-- 
+//--unused--
 //--unused-- 	return dest + delta;
-//--unused-- 
+//--unused--
 //--unused-- }
 
 #define MIN_D 0x100
@@ -206,7 +206,7 @@ do_flythrough(object *obj,int first_time)		//set true if init
 		//obj->fly_info.heading = zero_vector;
 
 	}
-	
+
 	//move the player for this frame
 
 	if (!first_time) {
@@ -321,4 +321,3 @@ do_flythrough(object *obj,int first_time)		//set true if init
 		}
 	}
 }
-

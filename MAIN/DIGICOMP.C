@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,21 +15,21 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:33:04 $
- * 
+ *
  * Routines for manipulating digi samples.
- * 
+ *
  * $Log: digicomp.c $
  * Revision 2.0  1995/02/27  11:33:04  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.2  1994/12/07  18:42:21  john
  * Initial, unused version..
- * 
+ *
  * Revision 1.1  1994/12/05  09:37:13  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -75,7 +75,7 @@ void digicomp_init()
 		Digi_blocks[i].len = 0;
 		Digi_blocks[i].offset = 0;
 		Digi_blocks[i].soundno = -1;
-	}	
+	}
 }
 
 ubyte * digicomp_get_data(int soundnum)
@@ -92,11 +92,11 @@ ubyte * digicomp_get_data(int soundnum)
 			return &digicomp_memory[Digi_blocks[i].offset];
 		}
 	}
-	
+
 	// It doesn't exits, so look for the next unused hole that this data can fit into...
 	mysize = (Sounds[soundnum].length+1)/2;
 	i = Next_block;
-	
+
 	while( ((Digi_blocks[i].soundno >-1) && (  Digi_blocks[i].len < mysize ) )	{
 		i++;
 		if ( i > MAX_DIGI_BLOCKS )
@@ -108,13 +108,5 @@ ubyte * digicomp_get_data(int soundnum)
 		}
 	}
 
-	
-	
-		
-	
 
 }
-
-
-
-

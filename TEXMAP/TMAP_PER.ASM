@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_per.asm $
@@ -19,63 +19,63 @@
 ; $Log: tmap_per.asm $
 ; Revision 1.26  1995/02/20  18:22:55  john
 ; Put all the externs in the assembly modules into tmap_inc.asm.
-; Also, moved all the C versions of the inner loops into a new module, 
+; Also, moved all the C versions of the inner loops into a new module,
 ; scanline.c.
-; 
+;
 ; Revision 1.25  1995/02/20  17:09:08  john
 ; Added code so that you can build the tmapper with no assembly!
-; 
+;
 ; Revision 1.24  1995/01/10  09:32:07  mike
 ; mostly fix garbage at end of scanline, but slow down by 1-4%.
-; 
+;
 ; Revision 1.23  1994/12/02  23:29:57  mike
 ; optimizations.
-; 
+;
 ; Revision 1.22  1994/11/30  00:57:00  mike
 ; optimization.
-; 
+;
 ; Revision 1.21  1994/11/21  13:57:42  mike
 ; fix right side shear bug
-; 
+;
 ; Revision 1.20  1994/11/12  16:41:09  mike
 ; jae -> ja.
-; 
+;
 ; Revision 1.19  1994/10/27  19:40:00  john
 ; Made lighting table lookup be _gr_fade_table[eax] instead
-; of fs:[eax], which gets rig of a segment override that 
+; of fs:[eax], which gets rig of a segment override that
 ; supposedly costs 1 clock on a 486.  Mainly, I wanted to verify
 ; that the only reason we need selectors is for the source texture
 ; data .
-; 
+;
 ; Revision 1.18  1994/05/03  11:08:32  mike
 ; Trap divide overflows.
-; 
+;
 ; Revision 1.17  1994/04/21  15:03:41  mike
 ; make faster.
-; 
+;
 ; Revision 1.16  1994/04/08  16:46:57  john
 ; Made 32 fade levels. Hacked.
-; 
+;
 ; Revision 1.15  1994/03/31  08:35:18  mike
 ; Fix quantized-by-4 bug in inner loop.
-; 
+;
 ; Revision 1.14  1994/03/14  17:41:14  mike
 ; Fix bug in unlighted version.
-; 
+;
 ; Revision 1.13  1994/03/14  15:45:14  mike
 ; streamline code.
-; 
+;
 ; Revision 1.12  1994/01/14  14:01:58  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.11  1993/12/18  14:43:44  john
 ; Messed around with doing 1/z, the u*(1/z) and v*(1/z)
 ; (Went from 23 fps to 21 fps... not good! )
 ;
 ; Revision 1.10  1993/12/17  16:14:17  john
 ; Split lighted/nonlighted, so there is no cmp lighting
-; in the inner loop. 
-; 
+; in the inner loop.
+;
 ; Revision 1.9  1993/12/17  12:34:29  john
 ; Made leftover bytes use linear approx instead of correct...
 ; should save about 8 divides per scanline on average.
@@ -83,32 +83,32 @@
 ; order of some instructions to help on 486 pipelining.
 ; (The anti-aliasing code did *not* look good, so I
 ; figure there was no reason to keep it in. )
-; 
+;
 ; Revision 1.8  1993/12/16  18:37:52  mike
 ; Align some stuff on 4 byte boundaries.
-; 
+;
 ; Revision 1.7  1993/11/30  08:44:18  john
 ; Made selector set check for < 64*64 bitmaps.
-; 
+;
 ; Revision 1.6  1993/11/23  17:25:26  john
 ; Added safety "and eax, 0fffh" in lighting lookup.
-; 
+;
 ; Revision 1.5  1993/11/23  15:08:52  mike
-; Fixed lighting bug. 
-; 
+; Fixed lighting bug.
+;
 ; Revision 1.4  1993/11/23  14:38:50  john
 ; optimized NORMAL code by switching EBX and ESI, so BH can be used in
 ; the lighting process.
-; 
+;
 ; Revision 1.3  1993/11/23  14:30:53  john
 ; Made the perspective tmapper do 1/8 divides; added lighting.
-; 
+;
 ; Revision 1.2  1993/11/22  10:24:59  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  17:29:53  mike
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -203,7 +203,7 @@ _TEXT   SEGMENT PARA PUBLIC USE32 'CODE'
 asm_tmap_scanline_per_:
 	push	es
 	pusha
-	
+
 ;---------------------------- setup for loop ---------------------------------
 ; Setup for loop:	_loop_count  iterations = (int) xright - (int) xleft
 ;	esi	source pixel pointer = pixptr
@@ -319,7 +319,7 @@ NoLight1:	cmp	al,255
 
 	mov	[edi],al
 skip1:	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -329,7 +329,7 @@ skip1:	inc	edi
 	dec	_loop_count
 	jns	tmap_loop0
 
-_none_to_do:	
+_none_to_do:
 	popa
 	pop	es
 	ret
@@ -341,7 +341,7 @@ _div_0_abort:
 	jmp	_none_to_do
 
 ;-------------------------- PER/4 TMAPPER ----------------
-; 
+;
 ;	x = x1
 ;	U0 = u/w; V0 = v/w;
 ;	while ( 1 )
@@ -363,7 +363,7 @@ _div_0_abort:
 ;
 ;		screen[x] = pixel
 ;		x += 4;
-;		U0 = U1; V0 = V1 
+;		U0 = U1; V0 = V1
 
 NBITS = 4	; 2^NBITS pixels plotted per divide
 ZSHIFT = 4	; precision used in PDIV macro
@@ -435,11 +435,11 @@ NotDwordAligned1:
 	je	skip2	; this pixel is transparent, so don't write it (or light it)
 
 	mov	al, _gr_fade_table[eax]	; xlat pixel thru lighting tables
-					
+
 ; write 1 pixel
 	mov	[edi],al
 skip2:	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -464,7 +464,7 @@ DwordAligned1:
 ;--;
 ;--;	test	eax, -1
 ;--;	je	tmap_loop	; there are no 2^NBITS chunks, do divide/pixel for whole scanline
-;--;	
+;--;
 ;--;	mov 	_loop_count, eax	; _loop_count = pixels / NPIXS
 ;--;	shl	eax, NBITS
 ;--;	sub	num_left_over, eax	; num_left_over = obvious
@@ -478,7 +478,7 @@ DwordAligned1:
 	mov	num_left_over, esi
 	je	tmap_loop	; there are no 2^NBITS chunks, do divide/pixel for whole scanline
 	mov 	_loop_count, eax	; _loop_count = pixels / NPIXS
-		
+
 ; compute initial v coordinate
 	mov	eax,ebp	; get v
 	mov	edx,ebp
@@ -520,8 +520,8 @@ TopOfLoop4:
 	push	ecx
 	push	ebp
 	push	edi
-	
-; Find fixed U1		
+
+; Find fixed U1
 	mov	eax, ebx
 	mov	edx,ebx
 	shl	eax,ZSHIFT
@@ -530,7 +530,7 @@ TopOfLoop4:
 	shl	eax, 16-ZSHIFT
 	mov	ebx, eax	; ebx = U1 until pop's
 
-; Find fixed V1		
+; Find fixed V1
 	mov	eax, ebp
 	mov	edx, ebp
 	shl	eax,ZSHIFT
@@ -549,7 +549,7 @@ TopOfLoop4:
 	mov	esi, edi
 	shl	esi, 10
 	mov	si, ax
-		
+
 ; Make EDX = DV:DU in 6:10,6:10 format
 	mov	eax, ebx
 	sub	eax, ecx
@@ -564,7 +564,7 @@ TopOfLoop4:
 	mov	V0, ebp
 
 	pop	edi	; Restore EDI before using it
-		
+
 ; LIGHTING CODE
 	mov	ebx, _fx_l
 	mov	ebp, _fx_dl_dx
@@ -742,12 +742,12 @@ dep_cont:
 	mov	ecx, 1 shl (ZSHIFT+1)
 ecx_ok:
 
-; Find fixed U1		
+; Find fixed U1
 	mov	eax, ebx
 	PDIV
 	mov	ebx, eax	; ebx = U1 until pop's
 
-; Find fixed V1		
+; Find fixed V1
 	mov	eax, ebp
 	PDIV
 	mov	ebp, eax	; ebp = V1 until pop's
@@ -761,7 +761,7 @@ ecx_ok:
 	mov	esi, edi
 	shl	esi, 10
 	mov	si, ax
-		
+
 ; Make EDX = DV:DU in 6:10,6:10 format
 	mov	eax, ebx
 	sub	eax, ecx
@@ -772,7 +772,7 @@ ecx_ok:
 	mov	dx, ax	; put delta u in low word
 
 	pop	edi	; Restore EDI before using it
-		
+
 	mov	ecx, num_left_over
 
 ; LIGHTING CODE
@@ -844,8 +844,8 @@ skip5:	dec	ecx
 ; --BUGGY NEW--	push	ecx
 ; --BUGGY NEW--	push	ebp
 ; --BUGGY NEW--	push	edi
-; --BUGGY NEW--	
-; --BUGGY NEW--; Find fixed U1		
+; --BUGGY NEW--
+; --BUGGY NEW--; Find fixed U1
 ; --BUGGY NEW--	mov	eax, ebx
 ; --BUGGY NEW--	mov	edx,ebx
 ; --BUGGY NEW--	shl	eax,(ZSHIFT-2)
@@ -854,7 +854,7 @@ skip5:	dec	ecx
 ; --BUGGY NEW--	shl	eax, 16-(ZSHIFT-2)
 ; --BUGGY NEW--	mov	ebx, eax	; ebx = U1 until pop's
 ; --BUGGY NEW--
-; --BUGGY NEW--; Find fixed V1		
+; --BUGGY NEW--; Find fixed V1
 ; --BUGGY NEW--	mov	eax, ebp
 ; --BUGGY NEW--	mov	edx, ebp
 ; --BUGGY NEW--	shl	eax,(ZSHIFT-2)
@@ -888,7 +888,7 @@ skip5:	dec	ecx
 ; --BUGGY NEW--	mov	V0, ebp
 ; --BUGGY NEW--
 ; --BUGGY NEW--	pop	edi	; Restore EDI before using it
-; --BUGGY NEW--		
+; --BUGGY NEW--
 ; --BUGGY NEW--; LIGHTING CODE
 ; --BUGGY NEW--	mov	ebx, _fx_l
 ; --BUGGY NEW--	mov	ebp, _fx_dl_dx
@@ -979,11 +979,11 @@ skip5:	dec	ecx
 ; --BUGGY NEW--	je	NDEP_skip2	; this pixel is transparent, so don't write it (or light it)
 ; --BUGGY NEW--
 ; --BUGGY NEW--	mov	al, _gr_fade_table[eax]	; xlat pixel thru lighting tables
-; --BUGGY NEW--					
+; --BUGGY NEW--
 ; --BUGGY NEW--; write 1 pixel
 ; --BUGGY NEW--	mov	[edi],al
 ; --BUGGY NEW--NDEP_skip2:	inc	edi
-; --BUGGY NEW--	
+; --BUGGY NEW--
 ; --BUGGY NEW--; update deltas
 ; --BUGGY NEW--	add	ebp,_fx_dv_dx
 ; --BUGGY NEW--	add	esi,_fx_du_dx
@@ -1034,11 +1034,11 @@ NDEP_loop:
 	je	NDEP_skip2	; this pixel is transparent, so don't write it (or light it)
 
 	mov	al, _gr_fade_table[eax]	; xlat pixel thru lighting tables
-					
+
 ; write 1 pixel
 	mov	[edi],al
 NDEP_skip2:	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -1086,7 +1086,7 @@ NotDwordAligned1_nolight:
 	je	skip6
 	mov	[edi],al
 skip6:	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -1107,11 +1107,11 @@ DwordAligned1_nolight:
 
 	test	eax, -1
 	je	tmap_loop	; no 2^NBITS chunks, do divide/pixel for whole scanline
-	
+
 	mov 	_loop_count, eax	; _loop_count = pixels / NPIXS
 	shl	eax, NBITS
 	sub	num_left_over, eax	; num_left_over = obvious
-		
+
 ; compute initial v coordinate
 	mov	eax,ebp	; get v
 	PDIV
@@ -1119,7 +1119,7 @@ DwordAligned1_nolight:
 
 ; compute initial u coordinate
 	mov	eax,ebx	; get u
-	PDIV	
+	PDIV
 	mov	U0, eax
 
 ; Set deltas to NPIXS pixel increments
@@ -1145,13 +1145,13 @@ TopOfLoop4_nolight:
 	push	ecx
 	push	ebp
 	push	edi
-	
-; Find fixed U1		
+
+; Find fixed U1
 	mov	eax, ebx
 	PDIV
 	mov	ebx, eax	; ebx = U1 until pop's
 
-; Find fixed V1		
+; Find fixed V1
 	mov	eax, ebp
 	PDIV
 	mov	ebp, eax	; ebp = V1 until pop's
@@ -1165,7 +1165,7 @@ TopOfLoop4_nolight:
 	mov	esi, edi
 	shl	esi, 10
 	mov	si, ax
-		
+
 ; Make EDX = DV:DU in 6:10,6:10 format
 	mov	eax, ebx
 	sub	eax, ecx
@@ -1180,11 +1180,11 @@ TopOfLoop4_nolight:
 	mov	V0, ebp
 
 	pop	edi	; Restore EDI before using it
-		
+
     REPT (1 SHL (NBITS-2))
 	local	skip7, no_trans2, skip1q, skip2q, skip3q, skip4q
 
-; Do 1 pixel 
+; Do 1 pixel
 	mov	eax, esi	; get u,v
 	shr	eax, 26	; shift out all but int(v)
 	shld	ax,si,6	; shift in u, shifting up v
@@ -1269,7 +1269,7 @@ DoEndPixels_nolight:
 	je	_div_0_abort
 	push	edi	; use edi as a temporary variable
 
-; Find fixed U1		
+; Find fixed U1
 	mov	eax, ebx
 	mov	edx,eax
 	shl	eax,ZSHIFT
@@ -1278,7 +1278,7 @@ DoEndPixels_nolight:
 	shl	eax, 16-ZSHIFT
 	mov	ebx, eax	; ebx = U1 until pop's
 
-; Find fixed V1		
+; Find fixed V1
 	mov	eax, ebp
 	mov	edx,eax
 	shl	eax,ZSHIFT
@@ -1296,7 +1296,7 @@ DoEndPixels_nolight:
 	mov	esi, edi
 	shl	esi, 10
 	mov	si, ax
-		
+
 ; Make EDX = DV:DU in 6:10,6:10 format
 	mov	eax, ebx
 	sub	eax, ecx
@@ -1307,13 +1307,13 @@ DoEndPixels_nolight:
 	mov	dx, ax	; put delta u in low word
 
 	pop	edi	; Restore EDI before using it
-		
+
 	mov	ecx, num_left_over
 
     ITERATION = 0
     REPT (1 SHL NBITS)
 	local	skip8
-; Do 1 pixel 
+; Do 1 pixel
 	mov	eax, esi	; get u,v
 	shr	eax, 26	; shift out all but int(v)
 	shld	ax,si,6	; shift in u, shifting up v
@@ -1331,9 +1331,7 @@ skip8:	dec	ecx
 	int	3
 	jmp	_none_to_do
 
-	
 
 _TEXT	ends
 
 	end
-

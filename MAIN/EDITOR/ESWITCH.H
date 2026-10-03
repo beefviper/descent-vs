@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,34 +15,34 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:40 $
- * 
+ *
  * Headers for switch adding functions
- * 
+ *
  * $Log: eswitch.h $
  * Revision 2.0  1995/02/27  11:35:40  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.6  1994/05/30  20:22:35  yuan
  * New triggers.
- * 
+ *
  * Revision 1.5  1994/05/27  10:34:35  yuan
  * Added new Dialog boxes for Walls and Triggers.
- * 
+ *
  * Revision 1.4  1994/05/25  18:08:39  yuan
  * Revamping walls and triggers interface.
  * Wall interface complete, but triggers are still in progress.
- * 
+ *
  * Revision 1.3  1994/04/28  23:46:56  yuan
  * Added prototype for remove_trigger.
- * 
+ *
  * Revision 1.2  1994/03/15  16:34:20  yuan
  * Fixed bm loader (might have some changes in walls and switches)
- * 
+ *
  * Revision 1.1  1994/03/10  14:49:03  yuan
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #ifndef _ESWITCH_H
@@ -63,5 +63,3 @@ extern void close_trigger_window();
 extern void do_trigger_window();
 
 #endif
-
-

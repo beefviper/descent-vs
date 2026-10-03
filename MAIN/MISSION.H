@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,34 +15,34 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:35 $
- * 
+ *
  * Header for mission.h
- * 
+ *
  * $Log: mission.h $
  * Revision 2.0  1995/02/27  11:31:35  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.6  1995/01/30  12:55:41  matt
  * Added vars to point to mission names
- * 
+ *
  * Revision 1.5  1995/01/22  18:57:21  matt
  * Made player highest level work with missions
- * 
+ *
  * Revision 1.4  1995/01/22  14:13:21  matt
  * Added flag in mission list for anarchy-only missions
- * 
+ *
  * Revision 1.3  1995/01/21  23:13:12  matt
  * Made high scores with (not work, really) with loaded missions
  * Don't give player high score when quit game
- * 
+ *
  * Revision 1.2  1995/01/20  22:47:53  matt
  * Mission system implemented, though imcompletely
- * 
+ *
  * Revision 1.1  1995/01/20  13:42:26  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #ifndef _MISSION_H

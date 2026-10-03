@@ -32,8 +32,8 @@ iff.exe: iff.obj
 	wcl386 /l=dos4g iff.c
 iff.obj: iff.c
 	wcc386 /l=dos4g $(CCFLAGS) iff.c
-iff15bpp.obj: 
+iff15bpp.obj:
 
-testp.obj: 
+testp.obj:
 
-tga.obj: 
+tga.obj:

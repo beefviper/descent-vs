@@ -37,4 +37,4 @@ div0.lib: $(DIV0_OBJS)
 div0.obj: div0.asm
 	masm div0.asm
 
-testd.obj: 
+testd.obj:

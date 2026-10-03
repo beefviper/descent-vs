@@ -7,14 +7,14 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 //========================================================
-// Views a PCX file 
-// This is a 16-bit program.  
+// Views a PCX file
+// This is a 16-bit program.
 // Compiles using Turbo C.
-// All self-contained in this one module. 
+// All self-contained in this one module.
 // Uses 320x200 or 320x400 ModeX.
 //========================================================
 
@@ -111,16 +111,16 @@ void set_viewing_page(int page)
 	lo = (lo<<8) | 0xD;
 
 	disable();
-	
+
 	while( inportb(0x3DA) & 0x1 )			// Wait for display enable
-		;		
+		;
 
 	outport( 0x3d4, hi );		// Set Start address high bits
 	outport( 0x3d4, lo );		// Set Start address lo bits
 	enable();
 
 	while( !(inportb(0x3DA) & 0x8) )			// Wait for not vertical retrace
-		;		
+		;
 }
 
 void set_video_mode(int mode, int use_400_lines )
@@ -161,7 +161,6 @@ void set_pixel(int x, int y, ubyte color )
 	address += x/4;
 	video_ram[address] = color;
 }
-
 
 
 void set_palette(ubyte * palette)
@@ -216,13 +215,13 @@ int read_pcx_file( char * filename, ubyte * palette )
 	for (row=0; row< ysize ; row++)      {
 		for (col=0; col< xsize ; )      {
 			if (fread( &data, 1, 1, PCXfile )!=1 )	{
-				fclose( PCXfile );	
+				fclose( PCXfile );
 				return PCX_ERROR_READING;
 			}
 			if ((data & PCX_COUNT_FLAG) == PCX_COUNT_FLAG)     {
 				count =  data & (~PCX_COUNT_FLAG);
 				if (fread( &data, 1, 1, PCXfile )!=1 )	{
-					fclose( PCXfile );	
+					fclose( PCXfile );
 					return PCX_ERROR_READING;
 				}
 				for (i=0;i<count;i++)
@@ -246,7 +245,7 @@ int read_pcx_file( char * filename, ubyte * palette )
 			}
 		}
 	} else {
-		fclose( PCXfile );	
+		fclose( PCXfile );
 		return PCX_ERROR_NO_PALETTE;
 	}
 	fclose(PCXfile);
@@ -282,7 +281,5 @@ int main( int argc, char * argv[] )
 		done = findnext( &ffblk );
 	}
 	set_video_mode( 0x3, 0 );
-	return 0;		
+	return 0;
 }
-
-

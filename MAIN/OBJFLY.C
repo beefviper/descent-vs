@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,27 +15,27 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:00 $
- * 
+ *
  * Code for making objects do a flythrough.
- * 
+ *
  * $Log: objfly.c $
  * Revision 2.0  1995/02/27  11:31:00  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.4  1994/11/17  14:58:11  mike
  * moved segment validation functions from editor to main.
- * 
+ *
  * Revision 1.3  1994/02/17  11:32:36  matt
  * Changes in object system
- * 
+ *
  * Revision 1.2  1994/01/27  18:46:28  john
  * Initial version
- * 
+ *
  * Revision 1.1  1994/01/27  15:11:07  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -98,7 +98,7 @@ void objfly_move_to_new_segment( object * obj, short newseg, int first_time )
 			//find exit side
 
 			if (obj->fly_info.ft_mode == FP_FORWARD) {
-				if (first_time) 
+				if (first_time)
 					prefvec = obj->orient.fvec;
 				else
 					prefvec = obj->fly_info.heading;
@@ -152,7 +152,7 @@ void objfly_move_to_new_segment( object * obj, short newseg, int first_time )
 
 		angles_from_vector(&dest_angles,&obj->fly_info.heading);	//extract angles
 
-		if (first_time) 
+		if (first_time)
 			angles_from_vector(&obj->phys_info.rotvel,&obj->orient.fvec);
 
 		seg_time = fixdiv(step_size,obj->phys_info.speed);	//how long through seg

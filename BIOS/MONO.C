@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,39 +21,39 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: mono.c $
  * Revision 1.12  1995/02/23  11:59:57  john
  * Made the windows smaller so they don't overwrite the debug file menus.
- * 
+ *
  * Revision 1.11  1994/11/27  23:07:50  matt
  * Made changes needed to be able to compile out monochrome debugging code
- * 
+ *
  * Revision 1.10  1994/10/26  22:23:43  john
  * Limited windows to 2.  Took away saving what was under
  * a window.
- * 
+ *
  * Revision 1.9  1994/07/14  23:25:44  matt
  * Allow window 0 to be opened; don't allow mono to be initialized twice
- * 
+ *
  * Revision 1.8  1994/03/09  10:45:38  john
  * Sped up scroll.
- * 
+ *
  * Revision 1.7  1994/01/26  08:56:55  mike
  * Comment out int3 in mputc.
- * 
+ *
  * Revision 1.6  1994/01/12  15:56:34  john
  * made backspace do an int3 during mono stuff.
  * .,
- * 
+ *
  * Revision 1.5  1993/12/07  12:33:23  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/10/15  10:10:25  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/09/14  20:55:13  matt
  * Made minit() and mopen() check for presence of mono card in machine.
- * 
+ *
  * Revision 1.2  1993/07/22  13:10:21  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/07/10  13:10:38  matt
  * Initial revision
  *
@@ -121,7 +121,7 @@ void mputc( short n, char c )
 {
 	if (!OPEN) return;
 
-//	if (keyd_pressed[KEY_BACKSP]) 
+//	if (keyd_pressed[KEY_BACKSP])
 //		mono_int_3();
 
 	switch (c)
@@ -397,13 +397,13 @@ void mopen( short n, short row, short col, short width, short height, char * tit
 
 #pragma aux mono_present value [eax] modify [bx] = \
 	"mov	ax,1a00h"	\
-	"int	10h"			\	
-	"mov	eax,-1"		\	
+	"int	10h"			\
+	"mov	eax,-1"		\
 	"cmp	bl,1"			\
 	"je	got_it"		\
 	"cmp	bh,1"			\
 	"je	got_it"		\
-	"xor	eax,eax"		\	
+	"xor	eax,eax"		\
 "got_it:";
 
 
@@ -445,5 +445,3 @@ int minit()
 
 	return -1;	//everything ok
 }
-
-

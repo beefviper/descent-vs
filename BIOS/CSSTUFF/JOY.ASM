@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/bios/rcs/joy.asm $
@@ -19,30 +19,30 @@
 ; $Log: joy.asm $
 ; Revision 1.16  1995/03/30  11:03:30  john
 ; Made -JoyBios read buttons using BIOS.
-; 
+;
 ; Revision 1.15  1995/02/14  11:39:36  john
 ; Added polled/bios joystick readers..
-; 
+;
 ; Revision 1.14  1995/01/29  18:36:00  john
 ; Made timer count in mode 2 instead of mode 3.
-; 
+;
 ; Revision 1.13  1994/12/28  15:32:21  john
 ; Added code to read joystick axis not all at one time.
-; 
+;
 ; Revision 1.12  1994/12/27  15:44:59  john
-; Made the joystick timeout be at 1/100th of a second, 
+; Made the joystick timeout be at 1/100th of a second,
 ; regardless of CPU speed.
-; 
+;
 ; Revision 1.11  1994/11/15  12:04:40  john
 ; Cleaned up timer code a bit... took out unused functions
 ; like timer_get_milliseconds, etc.
-; 
+;
 ; Revision 1.10  1994/07/01  10:55:54  john
 ; Fixed some bugs... added support for 4 axis.
-; 
+;
 ; Revision 1.9  1994/06/30  20:36:54  john
 ; Revamped joystick code.
-; 
+;
 ; Revision 1.8  1994/04/22  12:52:06  john
 
 .386
@@ -60,7 +60,7 @@ rcsid	db	"$Id: joy.asm 1.16 1995/03/30 11:03:30 john Exp $"
 	_joy_retries		dd	0
 	RetryCount		dd	0
 
-	
+
 _DATA   ENDS
 
 DGROUP  GROUP _DATA
@@ -83,13 +83,12 @@ joy_get_timer:
 	in	al, TDATA		; Read hi byte
 	xchg	ah, al
 	and	eax, 0ffffh
-	ret	
-
+	ret
 
 
 PUBLIC joy_read_stick_friendly_
 
-joy_read_stick_friendly_:	
+joy_read_stick_friendly_:
 		; ebx = read mask
 		; edi = pointer to event buffer
 		; ecx = timeout value
@@ -112,7 +111,7 @@ joy_read_stick_friendly_retry:
 		push	ebx
 		push	edi
 
-		and	ebx, 01111b		; Make sure we only check the right values										
+		and	ebx, 01111b		; Make sure we only check the right values
 						; number of events we found will be in bh, so this also clears it to zero.
 
 		mov     dx, JOY_PORT
@@ -125,7 +124,7 @@ joy_read_stick_friendly_retry:
 waitforstable_f:	in	al, dx
 		and	al, bl
 		jz	ready_f 			; Wait for the port in question to be done reading...
-		
+
 		cli				; disable interrupts while reading time...
 		call	joy_get_timer		; Returns counter in EAX
 		sti				; enable interrupts after reading time...
@@ -138,18 +137,18 @@ waitforstable_f:	in	al, dx
 		cmp	TotalTicks, ecx		; Timeout at 1/200'th of a second
 		jae	ready_f
 		jmp	waitforstable_f
-		
+
 ready_f:
-		cli			
+		cli
 		mov     al, 0ffh
 		out     dx, al			; Start joystick a readin'
 
 		call	joy_get_timer		; Returns counter in EAX
 		mov	LastTick, eax
 		mov	TotalTicks, 0
-		
+
 		mov	[edi], eax		; Store initial count
-		add	edi, 4		
+		add	edi, 4
 
 	again_f:	in	al, dx			; Read Joystick port
 		not	al
@@ -167,7 +166,7 @@ ready_f:
 		sti
 		nop	; let the interrupt go on...
 		cli
-		
+
 		; See if any axis turned
 		in	al, dx
 		not	al
@@ -185,7 +184,7 @@ ready_f:
 
 NoInts:
 		call	joy_get_timer		; Returns counter in EAX
-		
+
 		xchg	eax, LastTick
 		cmp	eax, LastTick
 		jb	@f
@@ -198,15 +197,15 @@ NoInts:
 
 	flip_f:	and	eax, 01111b		; Only care about axis values
 		mov	[edi], eax		; Record what channel(s) flipped
-		add	edi, 4	
+		add	edi, 4
 		xor	bl, al			; Unmark the channels that just tripped
 
 		call	joy_get_timer		; Returns counter in EAX
 		mov	[edi], eax		; Record the time this channel flipped
-		add	edi, 4		
+		add	edi, 4
 		inc	bh			; Increment number of events
 
-		cmp	bl, 0	
+		cmp	bl, 0
 		jne	again_f			; If there are more channels to read, keep looping
 
 	timed_out_f:
@@ -221,17 +220,16 @@ NoInts:
 		ret
 
 
-
 PUBLIC joy_read_stick_asm_
 
-joy_read_stick_asm_:	
+joy_read_stick_asm_:
 		; ebx = read mask
 		; edi = pointer to event buffer
 		; ecx = timeout value
 		; returns in eax the number of events
 		mov	_joy_bogus_reading, 0
 
-		and	ebx, 01111b		; Make sure we only check the right values										
+		and	ebx, 01111b		; Make sure we only check the right values
 						; number of events we found will be in bh, so this also clears it to zero.
 
 		mov     dx, JOY_PORT
@@ -244,7 +242,7 @@ joy_read_stick_asm_:
 waitforstable:	in	al, dx
 		and	al, bl
 		jz	ready 			; Wait for the port in question to be done reading...
-		
+
 		cli				; disable interrupts while reading time...
 		call	joy_get_timer		; Returns counter in EAX
 		sti				; enable interrupts after reading time...
@@ -257,7 +255,7 @@ waitforstable:	in	al, dx
 		cmp	TotalTicks, ecx		; Timeout at 1/200'th of a second
 		jae	ready
 		jmp	waitforstable
-		
+
 ready:
 		cli
 		mov     al, 0ffh
@@ -266,9 +264,9 @@ ready:
 		call	joy_get_timer		; Returns counter in EAX
 		mov	LastTick, eax
 		mov	TotalTicks, 0
-		
+
 		mov	[edi], eax		; Store initial count
-		add	edi, 4		
+		add	edi, 4
 
 	again:	in	al, dx			; Read Joystick port
 		not	al
@@ -276,7 +274,7 @@ ready:
 		jnz	flip			; See if any of the channels flipped
 
 		call	joy_get_timer		; Returns counter in EAX
-		
+
 		xchg	eax, LastTick
 		cmp	eax, LastTick
 		jb	@f
@@ -289,15 +287,15 @@ ready:
 
 	flip:	and	eax, 01111b		; Only care about axis values
 		mov	[edi], eax		; Record what channel(s) flipped
-		add	edi, 4	
+		add	edi, 4
 		xor	bl, al			; Unmark the channels that just tripped
 
 		call	joy_get_timer		; Returns counter in EAX
 		mov	[edi], eax		; Record the time this channel flipped
-		add	edi, 4		
+		add	edi, 4
 		inc	bh			; Increment number of events
 
-		cmp	bl, 0	
+		cmp	bl, 0
 		jne	again			; If there are more channels to read, keep looping
 
 	timedout:
@@ -309,14 +307,14 @@ ready:
 
 PUBLIC joy_read_stick_polled_
 
-joy_read_stick_polled_:	
+joy_read_stick_polled_:
 		; ebx = read mask
 		; edi = pointer to event buffer
 		; ecx = timeout value
 		; returns in eax the number of events
 		mov	_joy_bogus_reading, 0
 
-		and	ebx, 01111b		; Make sure we only check the right values										
+		and	ebx, 01111b		; Make sure we only check the right values
 						; number of events we found will be in bh, so this also clears it to zero.
 
 		mov     dx, JOY_PORT
@@ -326,7 +324,7 @@ joy_read_stick_polled_:
 waitforstable1:	in	al, dx
 		and	al, bl
 		jz	ready1 			; Wait for the port in question to be done reading...
-		
+
 		inc	TotalTicks
 		cmp	TotalTicks, ecx		; Timeout at 1/200'th of a second
 		jae	ready1
@@ -339,7 +337,7 @@ ready1:
 		mov	TotalTicks, 0
 
 		mov	dword ptr [edi], 0		; Store initial count
-		add	edi, 4		
+		add	edi, 4
 
 	again1:	in	al, dx			; Read Joystick port
 		not	al
@@ -353,15 +351,15 @@ ready1:
 
 	flip1:	and	eax, 01111b		; Only care about axis values
 		mov	[edi], eax		; Record what channel(s) flipped
-		add	edi, 4	
+		add	edi, 4
 		xor	bl, al			; Unmark the channels that just tripped
 
 		mov	eax, TotalTicks
 		mov	[edi], eax		; Record the time this channel flipped
-		add	edi, 4		
+		add	edi, 4
 		inc	bh			; Increment number of events
 
-		cmp	bl, 0	
+		cmp	bl, 0
 		jne	again1			; If there are more channels to read, keep looping
 
 	timedout1:
@@ -372,25 +370,25 @@ ready1:
 
 PUBLIC joy_read_stick_bios_
 
-joy_read_stick_bios_:	
+joy_read_stick_bios_:
 		; ebx = read mask
 		; edi = pointer to event buffer
 		; ecx = timeout value
 		; returns in eax the number of events
 
 		mov	_joy_bogus_reading, 0
-		
+
 		pusha
 
 		mov	dword ptr [edi], 0
-			
+
 		mov	eax, 08400h
 		mov	edx, 1
 		cli
 		int	15h
 		sti
-	
-		mov	dword ptr [edi+4], 1	;	Axis 1		
+
+		mov	dword ptr [edi+4], 1	;	Axis 1
 		and	eax, 0ffffh
 		mov	[edi+8], eax		; 	Axis 1 value
 
@@ -414,9 +412,9 @@ joy_read_stick_bios_:
 
 PUBLIC joy_read_buttons_bios_
 
-joy_read_buttons_bios_:	
+joy_read_buttons_bios_:
 		; returns in eax the button settings
-		
+
 		push	ebx
 		push	ecx
 		push	edx
@@ -426,7 +424,7 @@ joy_read_buttons_bios_:
 		pop	edx
 		pop	ecx
 		pop	ebx
-		
+
 		shr	eax, 4
 		not	eax
 		and	eax, 01111b
@@ -437,4 +435,3 @@ _TEXT   ENDS
 
 
 		END
-

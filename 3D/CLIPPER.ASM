@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/clipper.asm $
@@ -19,22 +19,22 @@
 ; $Log: clipper.asm $
 ; Revision 1.6  1994/07/25  00:00:02  matt
 ; Made 3d no longer deal with point numbers, but only with pointers.
-; 
+;
 ; Revision 1.5  1994/02/10  18:00:38  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.4  1994/01/13  15:39:09  mike
 ; Change usage of Frame_count to _Frame_count
-; 
+;
 ; Revision 1.3  1993/11/04  18:48:39  matt
 ; Added system to only rotate points once per frame
-; 
+;
 ; Revision 1.2  1993/11/04  12:36:25  mike
 ; Add clipping for lighting value.
-; 
+;
 ; Revision 1.1  1993/10/29  22:20:27  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -68,7 +68,7 @@ p = temp_points
 	endm
 
 free_point_num	dd	0
-	
+
 ;Vars for polygon clipper
 
 nverts	dd	?	;number of verts in poly
@@ -77,7 +77,6 @@ nv_cnt	dd	?	;loop variable
 plane	db	?
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -101,7 +100,7 @@ free_temp_point:	push	eax
 	pop	eax
 	ret
 
-;clip a particular value (eg. x, y, u). 
+;clip a particular value (eg. x, y, u).
 ;assumes esi,edi=start,end points, ebp=dest point, and ebx/ecx=fraction
 ;stores new value and returns it in eax
 clip_value	macro	ofs
@@ -113,7 +112,7 @@ clip_value	macro	ofs
 	mov	[ebp].ofs,eax
 	endm
 
-;clips an edge against one plane. 
+;clips an edge against one plane.
 ;takes esi (on) ,edi (off)=points, cl=plane flag (1,2,4,8 = left,right,bot,top)
 ;returns esi,edi=clipped points (edi new), bl=codes
 ;trashes eax,edx,ebp
@@ -147,7 +146,7 @@ not_neg:
 
 	call	get_temp_point	;ret ebp=point
 	;;mov	ax,_Frame_count
-	;;mov	[ebp].p3_frame,ax	;this point valid 
+	;;mov	[ebp].p3_frame,ax	;this point valid
 
 	clip_value x
 	mov	[ebp].z,eax	;assume z=x
@@ -251,7 +250,7 @@ clip_plane:
 point_loop:	mov	eax,[esi]	;get current point
 	add	esi,4
 
-;go though list of points. 
+;go though list of points.
 
 	test	[eax].p3_codes,cl	;cur point off?
 	jz	cur_not_off	;..nope
@@ -326,7 +325,7 @@ do_next_point:	dec	nv_cnt
 	ret
 
 
-;3d clip a polygon.  
+;3d clip a polygon.
 ;takes esi=src list, edi=dest list, ecx=nverts, al=codes_or
 ;returns esi=list of clipped points, some of them new, ecx=new nverts, dx=codes
 ;esi at exit will be either of esi,edi at entry
@@ -338,7 +337,7 @@ clip_polygon:	push	ebp
 
 	mov	ecx,1	;plane flag
 
-	mov	dl,al	;dl = codes_or 
+	mov	dl,al	;dl = codes_or
 
 ;clipping from [esi] -> [edi]
 p_plane_loop:	test	dl,cl	;off this plane?
@@ -375,8 +374,6 @@ p_clipped_away:	pop	ebp
 _TEXT	ends
 
 
-
 ;should I write a combined clipper/projector?
 
 	end
-

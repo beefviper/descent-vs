@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,23 +15,22 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:38 $
- * 
+ *
  * Routines to read the coin counter.
- * 
+ *
  * $Log: coindev.h $
  * Revision 2.0  1995/02/27  11:30:38  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.2  1994/09/16  16:15:10  john
  * Added acrade sequencing.
- * 
+ *
  * Revision 1.1  1994/09/16  12:56:24  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _COINDEV_H
@@ -116,4 +115,3 @@ unsigned int coindev_count(int CoinMechNumber);
 #define ARCADE_CONTINUE_SECONDS	60
 
 #endif
-

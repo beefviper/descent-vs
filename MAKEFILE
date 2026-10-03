@@ -13,9 +13,8 @@ SUBTARGETS = clean optimize no_mono no_debug linstall
 #SUBTARGETS = update linstall
 
 # When making clean here, delete libs
-CLEAN_TARGS = 
+CLEAN_TARGS =
 #lib\*.lib lib\*.h lib\*.inc
 
 #all Miner makefiles should include this
 %include $(INIT)\makefile.def
-

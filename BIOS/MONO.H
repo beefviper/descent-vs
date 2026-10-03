@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,22 +21,22 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: mono.h $
  * Revision 1.6  1994/12/03  17:07:37  matt
  * Made mono code turn off with either NDEBUG or NMONO
- * 
+ *
  * Revision 1.5  1994/11/27  23:07:28  matt
  * Made changes needed to be able to compile out monochrome debugging code
- * 
+ *
  * Revision 1.4  1993/12/07  12:33:28  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/09/14  20:54:50  matt
  * Made minit() check for mono card, return -1 if present, 0 if not
- * 
+ *
  * Revision 1.2  1993/07/22  13:05:40  john
  * added macros to print variables
- * 
+ *
  * Revision 1.1  1993/07/10  13:10:40  matt
  * Initial revision
- * 
+ *
  *
  */
 
@@ -101,10 +101,10 @@ void mrefresh(short n);
 #define minit()
 #define mclose(n)
 #define mopen( n, row, col, width, height, title )
-#define mDumpD(window, int_var) 
-#define mDumpX(window, int_var) 
+#define mDumpD(window, int_var)
+#define mDumpX(window, int_var)
 #define mclear( n )
-#define mprintf(args) 
+#define mprintf(args)
 #define mprintf_at(args)
 #define mputc( n, c )
 #define mputc_at( n, row, col, c )
@@ -113,5 +113,3 @@ void mrefresh(short n);
 
 #endif
 #endif
-
-

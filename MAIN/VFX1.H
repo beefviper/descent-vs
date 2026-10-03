@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,28 +15,27 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:28:52 $
- * 
+ *
  * .
- * 
+ *
  * $Log: vfx1.h $
  * Revision 2.0  1995/02/27  11:28:52  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.3  1994/09/15  16:11:26  john
  * Added support for VFX1 head tracking. Fixed bug with memory over-
  * write when using stereo mode.
- * 
+ *
  * Revision 1.2  1994/06/24  17:03:54  john
  * Added VFX support. Also took all game sequencing stuff like
  * EndGame out and put it into gameseq.c
- * 
+ *
  * Revision 1.1  1994/06/23  17:59:56  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _VFX1_H
@@ -185,7 +184,7 @@ typedef struct hmsf_struct HMSF;
 struct cfpack3_struct
 {
 unsigned char	 psiz; //Number of bytes in packet.
-unsigned char	 ptyp; //Packet type. 
+unsigned char	 ptyp; //Packet type.
 unsigned char	 dcls; // Device class
 unsigned char	 dnum; // Device number
 HMSF             hmsf; //Head mounted system flags.
@@ -203,7 +202,7 @@ signed char	     voao; //Vertical optical axis offset in units of .1 mm.
 signed char	     oar;  //Optical axis rotation in units of 0.25 deg.
 unsigned char	 mrr;  //Max refresh rate in Hz.
 unsigned char	 cvm;  //Current video mode.
-unsigned char	 reserved;	  
+unsigned char	 reserved;
 unsigned char	 vmsp; //Number of Vesa modes supported.
 unsigned short	 vmod[VMODSIZE]; //Supported VESA modes.  Field currently
 			   //allows up to 10 supported modes.  Packet in fifo
@@ -299,7 +298,7 @@ typedef struct cfpack5_struct HPD_CPKT;
 struct cfpack6_struct
 {
 unsigned char	 psiz; //Number of bytes in packet.
-unsigned char	 ptyp; //Packet type. 
+unsigned char	 ptyp; //Packet type.
 unsigned char	 dcls; // Device class
 unsigned char	 dnum; // Device number
 HMSF             hmsf; //Head mounted system flags.
@@ -308,6 +307,4 @@ unsigned char    vmod; //Head mounted video mode.
 typedef struct cfpack6_struct SVM_CPKT;
 
 
-
 #endif
-

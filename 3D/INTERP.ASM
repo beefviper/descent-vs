@@ -6,84 +6,83 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/interp.asm $
 ; $Revision: 1.21 $
 ; $Author: john $
 ; $Date: 1994/10/26 23:57:49 $
-; 
+;
 ; Polygon object interpreter
-; 
+;
 ; $Log: interp.asm $
 ; Revision 1.21  1994/10/26  23:57:49  john
 ; Took out gr_inverse_table
-; 
+;
 ; Revision 1.20  1994/09/26  14:43:31  matt
 ; Put in checks for faces with fewer than 3 vertices
-; 
+;
 ; Revision 1.19  1994/09/09  14:24:14  matt
 ; Added support for glowing textures, to add engine glow to Descent.
-; 
+;
 ; Revision 1.18  1994/08/26  16:42:03  matt
 ; Added check for how many textures used in an object
-; 
+;
 ; Revision 1.17  1994/07/29  18:29:17  matt
 ; Use instance-by-angles code, instead of building matrix here
-; 
+;
 ; Revision 1.16  1994/07/25  10:58:28  matt
 ; Fixed morph effect for new 3d point handling
-; 
+;
 ; Revision 1.15  1994/07/25  00:00:07  matt
 ; Made 3d no longer deal with point numbers, but only with pointers.
-; 
+;
 ; Revision 1.14  1994/07/22  17:57:59  matt
 ; Changed the name of the rod functions, and took out some debugging code
-; 
+;
 ; Revision 1.13  1994/06/07  16:49:36  matt
 ; Made interpreter take lighting value as parm, rather than in global var
-; 
+;
 ; Revision 1.12  1994/05/31  22:11:52  matt
 ; Fixed morphing object lighting
-; 
+;
 ; Revision 1.11  1994/05/31  18:35:52  matt
 ; Added lighting back to polygon objects
-; 
+;
 ; Revision 1.10  1994/05/31  16:03:55  matt
 ; Made uvls right for triangulated faces in morphing objects
-; 
+;
 ; Revision 1.9  1994/05/30  22:48:34  matt
 ; Added support for morph effect
-; 
+;
 ; Revision 1.8  1994/05/19  23:12:04  matt
 ; Support new uvl value ranges
-; 
+;
 ; Revision 1.7  1994/04/29  15:39:46  matt
 ; Use ebx in one place because the assembler seemed to be using it anyway
 ; even though I typed just bx.
-; 
+;
 ; Revision 1.6  1994/04/19  17:02:32  matt
 ; Made g3d_interp_outline var accessible by C
-; 
+;
 ; Revision 1.5  1994/03/30  10:22:40  matt
 ; Added outline option for polygon models
-; 
+;
 ; Revision 1.4  1994/03/25  18:23:51  matt
 ; Fixed a couple of subobject problems, and made g3_draw_polygon_model
 ; take a pointer to a list of angvecs for subobj animation.
-; 
+;
 ; Revision 1.3  1994/03/18  16:07:57  matt
 ; Added subobject and rod bitmap opcodes
-; 
+;
 ; Revision 1.2  1994/03/15  21:23:04  matt
 ; Added code
-; 
+;
 ; Revision 1.1  1994/03/14  21:26:56  matt
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -155,7 +154,6 @@ point_list	dd	MAX_POINTS_PER_POLY dup (?)
 _DATA	ends
 
 
-
 _TEXT	segment	dword public USE32 'CODE'
 
 ;get and jump to next opcode
@@ -171,7 +169,7 @@ next	macro
 	endm
 
 ;get and call the next opcode
-call_next	macro	
+call_next	macro
 	xor	ebx,ebx
 	mov	bx,[ebp]
 	ifndef	NDEBUG
@@ -188,7 +186,7 @@ g3_set_interp_points:
 	ret
 
 ;interpreter to draw polygon model
-;takes esi=ptr to object, edi=ptr to array of bitmap pointers, 
+;takes esi=ptr to object, edi=ptr to array of bitmap pointers,
 ;eax=ptr to anim angles, edx=light value, ebx=ptr to array of glow values
 g3_draw_polygon_model:
 	pushm	eax,ebx,ecx,edx,esi,edi,ebp
@@ -233,7 +231,7 @@ op_defp_start:	xor	ecx,ecx
 	mov	ax,w 4[ebp]	;starting point num
 	imulc	eax,size(g3s_point) ;get ofs of point
 	;changed the above line from "size g3s_point" to "size(g3s_point)" to make the compiler happy -KRB
-	
+
 	add	eax,Interp_point_list
 	mov	edi,eax
 	mov	cx,2[ebp]	;num points
@@ -288,7 +286,7 @@ copy_loop:	xor	eax,eax
 	call	draw_outline
 	popm	ecx,esi
 no_outline:
-	endif	
+	endif
 
 ;polygon is not facing (or we've plotted it). jump to next opcode
 flat_not_facing:	and	ecx,0fffffffeh
@@ -395,7 +393,7 @@ copy_loop2:	xor	eax,eax
 	call	draw_outline
 	popm	ecx,esi
 no_outline2:
-	endif	
+	endif
 
 ;polygon is not facing (or we've plotted it). jump to next opcode
 tmap_not_facing:	mov	ebx,ecx
@@ -452,7 +450,7 @@ sortnorm_not_facing:
 	lea	ebp,32[ebp]
 	next
 
-;draw a rod bitmap 
+;draw a rod bitmap
 op_rodbm:	lea	esi,20[ebp]	;bot point
 	lea	edi,rod_bot_p
 	call	g3_rotate_point
@@ -662,7 +660,7 @@ not_glow:
 draw_outline:	pushm	eax,ebx,ecx,edx,esi,edi
 
 	;NO_INVERSE_TABLE xor	eax,eax
-	;NO_INVERSE_TABLE mov	al,gr_inverse_table[7fffh]	;white 
+	;NO_INVERSE_TABLE mov	al,gr_inverse_table[7fffh]	;white
 	mov	eax, 255	; bright white
 	call	gr_setcolor_
 
@@ -788,7 +786,7 @@ flat_tri_loop:	xor	edi,edi	;no normal, must compute
 	dec	ecx
 	jnz	flat_tri_loop
 	jmp	flat_done_draw
-	
+
 flat_got3:
 	lea	esi,morph_pointlist
 	xor	edi,edi	;no normal, must compute
@@ -922,7 +920,7 @@ tmap_tri_loop:	xor	edi,edi	;no normal, must compute
 	dec	ecx
 	jnz	tmap_tri_loop
 	jmp	tmap_done_draw
-	
+
 tmap_got3:
 ;poke in light values
 	pusha
@@ -956,7 +954,7 @@ tmap_done_draw:	xor	ecx,ecx
 
 
 ;interpreter to draw polygon model
-;takes esi=ptr to object, edi=ptr to array of bitmap pointers, 
+;takes esi=ptr to object, edi=ptr to array of bitmap pointers,
 ;eax=ptr to anim angles, ebx=alternate points, edx=light value
 
 g3_draw_morphing_model:
@@ -994,5 +992,3 @@ g3_draw_morphing_model:
 _TEXT	ends
 
 	end
-
-

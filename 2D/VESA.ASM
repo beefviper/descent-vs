@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/2d/rcs/vesa.asm $
@@ -19,64 +19,64 @@
 ; $Log: vesa.asm $
 ; Revision 1.20  1994/07/27  15:43:37  john
 ; Fixed bug with allocation dos memory more than once.
-; 
+;
 ; Revision 1.19  1994/06/24  17:27:02  john
 ; Made rowsizes bigger than actual screen work with SVGA.
-; 
+;
 ; Revision 1.18  1994/05/31  11:10:45  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.17  1994/05/06  12:50:21  john
 ; Added supertransparency; neatend things up; took out warnings.
-; 
+;
 ; Revision 1.16  1994/03/14  16:56:29  john
 ; Changed grs_bitmap structure to include bm_flags.
-; 
+;
 ; Revision 1.15  1994/02/02  11:27:22  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.14  1994/01/25  11:40:46  john
 ; Added gr_check_mode function.
-; 
+;
 ; Revision 1.13  1994/01/13  14:41:51  unknown
 ; Fixed bug with Error 7 return Error 8.
-; 
+;
 ; Revision 1.12  1993/12/21  19:58:38  john
 ; made rep movsb in scanline be rep movsw
-; 
+;
 ; Revision 1.11  1993/12/09  16:05:51  john
 ; Made no VESA driver detection work correctly
-; 
+;
 ; Revision 1.10  1993/12/09  15:02:41  john
 ; Changed palette stuff majorly
-; 
+;
 ; Revision 1.9  1993/11/16  11:28:28  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.8  1993/10/26  13:18:03  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.7  1993/10/15  16:23:28  john
 ; y
-; 
+;
 ; Revision 1.6  1993/09/29  17:31:10  john
 ; optimized gr_vesa_pixel
-; 
+;
 ; Revision 1.5  1993/09/26  18:59:34  john
 ; fade stuff
-; 
+;
 ; Revision 1.4  1993/09/20  14:47:20  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.3  1993/09/13  17:54:07  john
 ; Minor bug fix
-; 
+;
 ; Revision 1.2  1993/09/08  15:56:06  john
 ; Started adding DPMI support for SVGA paging.
-; 
+;
 ; Revision 1.1  1993/09/08  11:41:25  john
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -500,11 +500,11 @@ Done:			popad
 PUBLIC  gr_get_dos_mem_
 
 gr_get_dos_mem_:
-			
+
 		; eax = how many bytes
 
 		push	ebx
-		
+
 		mov	ebx, eax
 		shr	ebx, 4
 		mov	eax, 0100h
@@ -518,8 +518,6 @@ gr_get_dos_mem_:
 nomem:		pop	ebx
 		mov	eax,0
 		ret
-		
-
 
 
 PUBLIC gr_vesa_setmodea_
@@ -528,7 +526,7 @@ gr_vesa_setmodea_:
 
 		; eax = mode
 		pushad
-		mov	ebx, eax				
+		mov	ebx, eax
 		mov     eax, 04f02h
 		int     10h
 		cmp     ax, 04fh
@@ -639,7 +637,6 @@ gr_vesa_setlogical_:
 			ret
 
 
-
 PUBLIC gr_vesa_scanline_
 
 gr_vesa_scanline_:
@@ -695,8 +692,8 @@ gr_vesa_scanline_:
 
 			sub     dx, bx
 			movzx   ecx, dx
-			
-			shr	ecx, 1			
+
+			shr	ecx, 1
 			rep     stosw
 			adc	ecx, ecx
 			rep	stosb
@@ -711,7 +708,7 @@ gr_vesa_scanline_:
 scanonepage:
 			movzx   ecx, dx
 
-			shr	ecx, 1			
+			shr	ecx, 1
 			rep     stosw
 			adc	ecx, ecx
 			rep	stosb
@@ -900,8 +897,6 @@ NoPageInc:  pop     ecx
 			ret
 
 
-
-
 PUBLIC gr_vesa_update_
 
 gr_vesa_update_:
@@ -1017,12 +1012,7 @@ NoPageInc3: pop     ecx
 			ret
 
 
-
-
 _TEXT   ENDS
 
 
 		END
-
-
-

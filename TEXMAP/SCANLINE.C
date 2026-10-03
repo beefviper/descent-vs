@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,17 +15,17 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.2 $
  * $Author: john $
  * $Date: 1995/02/20 18:23:39 $
- * 
+ *
  * Routines to draw the texture mapped scanlines.
- * 
+ *
  * $Log: scanline.c $
  * Revision 1.2  1995/02/20  18:23:39  john
  * Added new module for C versions of inner loops.
- * 
+ *
  * Revision 1.1  1995/02/20  17:42:27  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -82,8 +82,8 @@ void c_tmap_scanline_lin_nolight()
 
 	u = fx_u;
 	v = fx_v*64;
-	dudx = fx_du_dx; 
-	dvdx = fx_dv_dx*64; 
+	dudx = fx_du_dx;
+	dvdx = fx_dv_dx*64;
 
 	dest = (ubyte *)(write_buffer + fx_xleft + (bytes_per_row * fx_y)  );
 
@@ -115,8 +115,8 @@ void c_tmap_scanline_lin()
 
 	u = fx_u;
 	v = fx_v*64;
-	dudx = fx_du_dx; 
-	dvdx = fx_dv_dx*64; 
+	dudx = fx_du_dx;
+	dvdx = fx_dv_dx*64;
 
 	l = fx_l>>8;
 	dldx = fx_dl_dx>>8;
@@ -153,8 +153,8 @@ void c_tmap_scanline_per_nolight()
 	u = fx_u;
 	v = fx_v*64;
 	z = fx_z;
-	dudx = fx_du_dx; 
-	dvdx = fx_dv_dx*64; 
+	dudx = fx_du_dx;
+	dvdx = fx_dv_dx*64;
 	dzdx = fx_dz_dx;
 
 	dest = (ubyte *)(write_buffer + fx_xleft + (bytes_per_row * fx_y)  );
@@ -189,8 +189,8 @@ void c_tmap_scanline_per()
 	u = fx_u;
 	v = fx_v*64;
 	z = fx_z;
-	dudx = fx_du_dx; 
-	dvdx = fx_dv_dx*64; 
+	dudx = fx_du_dx;
+	dvdx = fx_dv_dx*64;
 	dzdx = fx_dz_dx;
 
 	l = fx_l>>8;
@@ -218,6 +218,3 @@ void c_tmap_scanline_per()
 		}
 	}
 }
-
-
-

@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/bios/rcs/mouse.asm $
@@ -20,16 +20,16 @@
 ; Revision 1.5  1994/04/29  12:14:12  john
 ; Locked all memory used during interrupts so that program
 ; won't hang when using virtual memory.
-; 
+;
 ; Revision 1.4  1993/07/26  10:47:03  john
 ; added sub mouse_set_pos
-; 
+;
 ; Revision 1.3  1993/07/22  13:57:13  john
 ; aligned push/pops in mouse_set_limits
-; 
+;
 ; Revision 1.2  1993/07/22  13:14:43  john
 ; added mouse set limts sub
-; 
+;
 ; Revision 1.1  1993/07/10  13:10:43  matt
 ; Initial revision
 ;
@@ -78,7 +78,6 @@ rcsid   db  "$Id: mouse.asm 1.5 1994/04/29 12:14:12 john Exp $"
 		MyEventHandler      dd  0
 
 
-
 _DATA   ENDS
 
 DGROUP  GROUP _DATA
@@ -117,7 +116,6 @@ present:
 absent:
 		mov     ax, 0
 		ret
-
 
 
 PUBLIC  mouse_get_pos_
@@ -335,7 +333,6 @@ mouse_set_pos_:
 
 
 		ret
-
 
 
 _TEXT   ENDS

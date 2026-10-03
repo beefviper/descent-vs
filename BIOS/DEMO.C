@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <i86.h>
@@ -46,7 +46,7 @@ void _far my_timer()
 	if ( size > 0 )	{
 		stuff_key( temp1[0] );
 	}
-	
+
 	k = key_inkey();
 	c = key_to_ascii(k);
 
@@ -64,7 +64,7 @@ void main()
 	int i, k,size;
 	char temp[100];
 	char temp1[512];
-	
+
 	setbuf(stdout, NULL);	// unbuffered output via printf
 	dpmi_init(0);
 	minit();
@@ -84,5 +84,3 @@ void main()
 
 	system( "4dos" );
 }
-
-

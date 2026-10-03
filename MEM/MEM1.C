@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,11 +15,11 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: $
  * $Author: $
  * $Date: $
- * 
+ *
  * Files for debugging memory allocator
- * 
+ *
  * $Log: $
- * 
+ *
  */
 
 
@@ -169,22 +169,22 @@ void mem_free( void * buffer )
 		n = i;
 		pc = (char *)buffer;
 		ec = 0;
-	
+
 		for (i=0; i<CHECKSIZE; i++ )
 		{
 			if (pc[MallocSize[n]+i] != 0xC ) ec++;
 		}
-	
+
 		if (ec > 0)
 		{
 			Warning( "MEM: %d/%d check bytes were overwritten at the end of %8x", ec, CHECKSIZE, buffer  );
 			Int3();
 		}
-	
+
 		BytesMalloced -= MallocSize[n];
-	
+
 		free( buffer );
-	
+
 		Present[n] = 0;
 		MallocBase[n] = 0;
 		MallocSize[n] = 0;
@@ -213,4 +213,3 @@ void mem_display_blocks()
 		Warning( "MEM: %d blocks were left allocated!", numleft );
 	}
 }
-

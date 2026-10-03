@@ -6,86 +6,86 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/rod.asm $
 ; $Revision: 1.22 $
 ; $Author: matt $
 ; $Date: 1995/02/09 22:00:51 $
-; 
+;
 ; Code to draw rods (facing bitmaps).
-; 
+;
 ; $Log: rod.asm $
 ; Revision 1.22  1995/02/09  22:00:51  matt
 ; Removed dependence on divide overflow handler; we now check for overflow
 ; before dividing.  This fixed problems on some TI chips.
-; 
+;
 ; Revision 1.21  1994/11/27  12:55:14  matt
 ; Tooks out some unused code
-; 
+;
 ; Revision 1.20  1994/09/01  15:34:49  matt
 ; Fixed stack mess-up when rod projection overflows
-; 
+;
 ; Revision 1.19  1994/09/01  10:41:46  matt
 ; Blob routine, renamed g3_draw_bitmap(), now takes seperate 3d width & height.
-; 
+;
 ; Revision 1.18  1994/08/01  17:23:27  matt
 ; Check for overflow after project in blob code
-; 
+;
 ; Revision 1.17  1994/07/25  15:47:13  matt
 ; Cleaned up code, and made long-broken flat-shaded rods work.
-; 
+;
 ; Revision 1.16  1994/07/25  00:00:05  matt
 ; Made 3d no longer deal with point numbers, but only with pointers.
-; 
+;
 ; Revision 1.15  1994/07/22  17:58:01  matt
 ; Changed the name of the rod functions, and took out some debugging code
-; 
+;
 ; Revision 1.14  1994/07/21  12:49:41  mike
 ; Create _blob_vertices so powerups can be outlined when selected in editor.
-; 
+;
 ; Revision 1.13  1994/06/16  09:07:29  matt
 ; Move in UV values for rods to prevent the texture mapper from reading
 ; past the edges of the bitmaps.
-; 
+;
 ; Revision 1.12  1994/05/31  18:35:29  matt
 ; Added light value to g3_draw_facing_bitmap()
-; 
+;
 ; Revision 1.11  1994/05/19  23:11:54  matt
 ; Support new uvl value ranges
-; 
+;
 ; Revision 1.10  1994/05/13  10:18:07  matt
 ; Fixed bug introduced last time
-; 
+;
 ; Revision 1.9  1994/05/11  10:10:35  matt
 ; Changed a little code in attempt to avoid overflows
-; 
+;
 ; Revision 1.8  1994/05/07  16:43:26  matt
 ; Made rods work right, maybe.
-; 
+;
 ; Revision 1.7  1994/03/23  10:25:04  matt
 ; Fixed stack messup with blob overflow, and removed debug_brk
-; 
+;
 ; Revision 1.6  1994/03/15  21:22:11  matt
 ; Put in check for div overflow in blob code
-; 
+;
 ; Revision 1.5  1994/02/21  11:04:15  matt
 ; Added check for zero-length vector
-; 
+;
 ; Revision 1.4  1994/02/15  17:37:23  matt
 ; New function, g3_draw_blob()
-; 
+;
 ; Revision 1.3  1994/02/11  20:15:04  matt
 ; Fixed matrix scale problem, removed unneeded debug_brk
-; 
+;
 ; Revision 1.2  1994/02/09  11:49:32  matt
 ; Added code for texture-mapped and flat-shaded rods
-; 
+;
 ; Revision 1.1  1994/02/02  11:27:21  matt
 ; Initial revision
-; 
-; 
+;
+;
 
 ALWAYS_USE_SCALER = 0	;if true, use scaler even when banked
 
@@ -137,7 +137,7 @@ rod_point_list	dd	rod_points
 	dd	rod_points+(size g3s_point)*3
 
 ;values here are set to be half a pixel in from the edges so the texture
-;mapper doesn't read past the bitmap  
+;mapper doesn't read past the bitmap
 uvl_list	fix	200h,200h,0
 	fix	0fe00h,200h,0
 	fix	0fe00h,0fe00h,0
@@ -149,7 +149,6 @@ uvl_list	fix	200h,200h,0
 ;;	fix	0,10000h,0
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -222,9 +221,7 @@ no_draw:
 	ret
 
 
-
-
-;draws a bitmap with the specified 3d width & height 
+;draws a bitmap with the specified 3d width & height
 ;takes esi=position, ebx=width, ecx=height, eax=bitmap
 ;modifies eax,esi,ecx
 g3_draw_bitmap:	pushm	edx,edi
@@ -291,10 +288,8 @@ blob_overflow_handler:
 	jmp	blob_off_screen
 
 
-
-
 ;compute the corners of a rod.  fills in vertbuf. ret codes in al.
-;points in esi,edi, widths in eax,edx  
+;points in esi,edi, widths in eax,edx
 ;trashes piles of registers
 calc_rod_corners:
 
@@ -332,7 +327,7 @@ calc_rod_corners:
 	lea	esi,temp_vec
 	call	vm_vec_normalize
 
-	xchg	esi,edi	
+	xchg	esi,edi
 	lea	eax,rod_norm
 	call	vm_vec_crossprod
 
@@ -427,4 +422,3 @@ new_new_off_screen:
 _TEXT	ends
 
 	end
-

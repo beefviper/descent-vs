@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -162,7 +162,6 @@ void WriteFile( char * filename, void * data, int length )
 }
 
 
-
 void InitializeMixer()
 {
 	int i;
@@ -213,7 +212,6 @@ void FillGamma() {
 }
 
 
-
 void ScanColorFrequencies( BITMAP15 * buf, char * filename )
 {
 	int i;
@@ -227,7 +225,6 @@ void ScanColorFrequencies( BITMAP15 * buf, char * filename )
 		r = ((buf->Data[i] >> 10) & 31);
 		g = ((buf->Data[i] >> 5) & 31);
 		b = (buf->Data[i] & 31);
-
 
 
 		max = 0;
@@ -961,7 +958,6 @@ void DoInterface()
 	gr_close();
 
 
-
 	for (i=0; i< AllowedColors; i++ )
 	{
 		if ((i%20)==0) getch();
@@ -1125,8 +1121,3 @@ int main(int argc, char * argv[] )
 
 	exit(1);
 }
-
-
-
-
-

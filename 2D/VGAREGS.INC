@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/2d/rcs/vgaregs.inc $
@@ -19,10 +19,10 @@
 ; $Log: vgaregs.inc $
 ; Revision 1.2  1993/10/15  16:22:45  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  11:41:00  john
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -57,4 +57,3 @@ DAC_READ_ADR    = 3C7h             ;DAC read address
 DAC_DATA        = 3C9h             ;DAC data register
 
 VERT_RESCAN     = 3DAh             ;Input status register #1
-

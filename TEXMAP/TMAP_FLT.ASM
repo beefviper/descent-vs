@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_flt.asm $
@@ -19,36 +19,36 @@
 ; $Log: tmap_flt.asm $
 ; Revision 1.10  1995/02/20  18:22:53  john
 ; Put all the externs in the assembly modules into tmap_inc.asm.
-; Also, moved all the C versions of the inner loops into a new module, 
+; Also, moved all the C versions of the inner loops into a new module,
 ; scanline.c.
-; 
+;
 ; Revision 1.9  1995/02/20  17:08:51  john
 ; Added code so that you can build the tmapper with no assembly!
-; 
+;
 ; Revision 1.8  1994/12/02  23:29:21  mike
 ; change jb/ja to jl/jg.
-; 
+;
 ; Revision 1.7  1994/11/12  16:39:35  mike
 ; jae to ja.
-; 
+;
 ; Revision 1.6  1994/08/09  11:27:53  john
 ; Added cthru mode.
-; 
+;
 ; Revision 1.5  1994/07/08  17:43:11  john
 ; Added flat-shaded-zbuffered polygon.
-; 
+;
 ; Revision 1.4  1994/04/08  16:25:43  mike
 ; optimize inner loop of flat shader.
-; 
+;
 ; Revision 1.3  1994/03/31  08:34:20  mike
 ; Optimized (well, speeded-up) inner loop for tmap-based flat shader.
-; 
+;
 ; Revision 1.2  1993/11/22  10:24:57  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  17:29:46  mike
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -173,6 +173,3 @@ flat_cthru_loop:
 _TEXT	ends
 
 	end
-
-
-

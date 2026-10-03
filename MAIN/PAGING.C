@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,92 +15,92 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.5 $
  * $Author: john $
  * $Date: 1995/10/07 13:18:21 $
- * 
+ *
  * Routines for paging in/out textures.
- * 
+ *
  * $Log: paging.c $
  * Revision 2.5  1995/10/07  13:18:21  john
  * Added PSX debugging stuff that builds .PAG files.
- * 
+ *
  * Revision 2.4  1995/08/24  13:40:03  john
- * Added code to page in vclip for powerup disapperance and to 
+ * Added code to page in vclip for powerup disapperance and to
  * fix bug that made robot makers not page in the correct bot
  * textures.
- * 
+ *
  * Revision 2.3  1995/07/26  12:09:19  john
  * Made code that pages in weapon_info->robot_hit_vclip not
  * page in unless it is a badass weapon.  Took out old functionallity
  * of using this if no robot exp1_vclip, since all robots have these.
- * 
+ *
  * Revision 2.2  1995/07/24  13:22:11  john
  * Made sure everything gets paged in at the
  * level start.  Fixed bug with robot effects not
  * getting paged in correctly.
- * 
+ *
  * Revision 2.1  1995/05/12  15:50:16  allender
  * fix to check effects dest_bm_num > -1 before paging in
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:39  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.18  1995/02/22  14:12:28  allender
  * remove anonyous union from object structure
- * 
+ *
  * Revision 1.17  1995/02/11  22:54:15  john
  * Made loading for pig not show up for demos.
- * 
+ *
  * Revision 1.16  1995/02/11  22:37:04  john
  * Made cockpit redraw.
- * 
+ *
  * Revision 1.15  1995/01/28  16:29:35  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.14  1995/01/27  17:16:18  john
  * Added code to page in all the weapons.
- * 
+ *
  * Revision 1.13  1995/01/24  21:51:22  matt
  * Clear the boxed message to fix a mem leakage
- * 
+ *
  * Revision 1.12  1995/01/23  13:00:46  john
  * Added hostage vclip paging.
- * 
+ *
  * Revision 1.11  1995/01/23  12:29:52  john
  * Added code to page in eclip on robots, dead control center,
  * gauges bitmaps, and weapon pictures.
- * 
+ *
  * Revision 1.10  1995/01/21  12:54:15  adam
  * *** empty log message ***
- * 
+ *
  * Revision 1.9  1995/01/21  12:41:29  adam
  * changed orb to loading box
- * 
+ *
  * Revision 1.8  1995/01/18  15:09:02  john
  * Added start/stop time around paging.
  * Made paging clear screen around globe.
- * 
+ *
  * Revision 1.7  1995/01/18  10:37:00  john
  * Added code to page in exploding monitors.
- * 
+ *
  * Revision 1.6  1995/01/17  19:03:35  john
  * Added cool spinning orb during loading.
- * 
+ *
  * Revision 1.5  1995/01/17  14:49:26  john
  * Paged in weapons.
- * 
+ *
  * Revision 1.4  1995/01/17  12:14:07  john
  * Made walls, object explosion vclips load at level start.
- * 
+ *
  * Revision 1.3  1995/01/15  13:23:24  john
  * First working version
- * 
+ *
  * Revision 1.2  1995/01/15  11:56:45  john
  * Working version of paging.
- * 
+ *
  * Revision 1.1  1995/01/15  11:33:37  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -198,13 +198,13 @@ void paging_touch_model( int modelnum )
 void paging_touch_weapon( int weapon_type )
 {
 	// Page in the robot's weapons.
-	
+
 	if ( (weapon_type < 0) || (weapon_type > N_weapon_types) ) return;
 
 	if ( Weapon_info[weapon_type].picture.index )	{
 		PIGGY_PAGE_IN( Weapon_info[weapon_type].picture );
-	}		
-	
+	}
+
 	if ( Weapon_info[weapon_type].flash_vclip > -1 )
 		paging_touch_vclip(&Vclip[Weapon_info[weapon_type].flash_vclip]);
 	if ( Weapon_info[weapon_type].wall_hit_vclip > -1 )
@@ -230,7 +230,6 @@ void paging_touch_weapon( int weapon_type )
 		break;
 	}
 }
-
 
 
 byte super_boss_gate_type_list[13] = {0, 1, 8, 9, 10, 11, 12, 15, 16, 18, 19, 20, 22 };
@@ -270,7 +269,7 @@ void paging_touch_object( object * obj )
 			paging_touch_model(obj->rtype.pobj_info.model_num);
 			break;
 
-		case RT_POWERUP: 
+		case RT_POWERUP:
 			if ( obj->rtype.vclip_info.vclip_num > -1 )
 				paging_touch_vclip(&Vclip[obj->rtype.vclip_info.vclip_num]);
 			break;
@@ -281,15 +280,15 @@ void paging_touch_object( object * obj )
 
 		case RT_WEAPON_VCLIP: break;
 
-		case RT_HOSTAGE: 
+		case RT_HOSTAGE:
 			paging_touch_vclip(&Vclip[obj->rtype.vclip_info.vclip_num]);
 			break;
 
 		case RT_LASER: break;
  	}
 
-	switch (obj->type) {	
-	case OBJ_PLAYER:	
+	switch (obj->type) {
+	case OBJ_PLAYER:
 		v = get_explosion_vclip(obj, 0);
 		if ( v > -1 )
 			paging_touch_vclip(&Vclip[v]);
@@ -306,7 +305,6 @@ void paging_touch_object( object * obj )
 	}
 }
 
-	
 
 void paging_touch_side( segment * segp, int sidenum )
 {
@@ -314,7 +312,7 @@ void paging_touch_side( segment * segp, int sidenum )
 
 	if (!(WALL_IS_DOORWAY(segp,sidenum) & WID_RENDER_FLAG))
 		return;
-	
+
 	tmap1 = segp->sides[sidenum].tmap_num;
 	paging_touch_wall_effects(tmap1);
 	tmap2 = segp->sides[sidenum].tmap_num2;
@@ -355,7 +353,7 @@ void paging_touch_segment(segment * segp)
 	int sn;
 	int objnum;
 
-	if ( segp->special == SEGMENT_IS_ROBOTMAKER )	
+	if ( segp->special == SEGMENT_IS_ROBOTMAKER )
 		paging_touch_robot_maker(segp);
 
 //	paging_draw_orb();
@@ -369,7 +367,6 @@ void paging_touch_segment(segment * segp)
 		paging_touch_object( &Objects[objnum] );
 	}
 }
-
 
 
 void paging_touch_walls()
@@ -393,7 +390,7 @@ void paging_touch_all()
 {
 	int black_screen;
 	int s;
-	
+
 	stop_time();
 
 	black_screen = gr_palette_faded_out;
@@ -402,17 +399,17 @@ void paging_touch_all()
 		gr_clear_canvas( 0 );
 		gr_palette_load( gr_palette );
 	}
-	
+
 	show_boxed_message(TXT_LOADING);
 
 	mprintf(( 0, "Loading all textures in mine..." ));
 	for (s=0; s<=Highest_segment_index; s++)	{
 		paging_touch_segment( &Segments[s] );
-	}	
+	}
 	paging_touch_walls();
 
 	for ( s=0; s < N_powerup_types; s++ )	{
-		if ( Powerup_info[s].vclip_num > -1 )	
+		if ( Powerup_info[s].vclip_num > -1 )
 			paging_touch_vclip(&Vclip[Powerup_info[s].vclip_num]);
 	}
 
@@ -421,7 +418,7 @@ void paging_touch_all()
 	}
 
 	for ( s=0; s < N_powerup_types; s++ )	{
-		if ( Powerup_info[s].vclip_num > -1 )	
+		if ( Powerup_info[s].vclip_num > -1 )
 			paging_touch_vclip(&Vclip[Powerup_info[s].vclip_num]);
 	}
 
@@ -455,20 +452,20 @@ void paging_touch_all()
 
 		if ( Current_level_num < 0 )
 			sprintf( fname, "levels%d.pag", -Current_level_num );
-		else	
+		else
 			sprintf( fname, "level%02d.pag", Current_level_num );
 		fp = fopen( fname, "wt" );
 		for (i=0; i<MAX_BITMAP_FILES;i++ )	{
 			int paged_in = 1;
 			piggy_get_bitmap_name(i,fname);
 
-			if (GameBitmaps[i].bm_flags & BM_FLAG_PAGED_OUT) 
+			if (GameBitmaps[i].bm_flags & BM_FLAG_PAGED_OUT)
 				paged_in = 0;
 			if (GameBitmapXlat[i]!=i)
 				paged_in = 0;
 			if ( (i==47) || (i==48) )		// Mark red mplayer ship textures as paged in.
 				paged_in = 1;
-	
+
 			if ( !paged_in )
 				fprintf( fp, "0,\t// Bitmap %d (%s)\n", i, fname );
 			else
@@ -479,4 +476,3 @@ void paging_touch_all()
 #endif
 
 }
-

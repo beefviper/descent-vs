@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 	align	4
@@ -20,13 +20,13 @@ TopOfLoop4:
 	push	ecx
 	push	ebp
 	push	edi
-	
-; Find fixed U1		
+
+; Find fixed U1
 	mov	eax, ebx
 	PDIV
 	mov	ebx, eax	; ebx = U1 until pop's
 
-; Find fixed V1		
+; Find fixed V1
 	mov	eax, ebp
 	PDIV
 	mov	ebp, eax	; ebp = V1 until pop's
@@ -40,7 +40,7 @@ TopOfLoop4:
 	mov	esi, edi
 	shl	esi, 10
 	mov	si, ax
-		
+
 ; Make EDX = DV:DU in 6:10,6:10 format
 	mov	eax, ebx
 	sub	eax, ecx
@@ -55,7 +55,7 @@ TopOfLoop4:
 	mov	V0, ebp
 
 	pop	edi	; Restore EDI before using it
-		
+
 ; LIGHTING CODE
 	mov	ebx, _fx_l
 	mov	ebp, _fx_dl_dx1
@@ -79,7 +79,7 @@ TopOfLoop4:
 			; edi = destination ptr
 			; ebp = dldx   (in fixed 24.8) (really 8.8)
 			; MEM [0..3] = (u<<16) | v  (in fixed 8.8)
-						
+
 		; Code for 8-bit destination, lighting
 			mov	al, [0]			; get u
 			mov	ah, [2]			; get v
@@ -104,7 +104,7 @@ TopOfLoop4:
 
 
 			; old way
-			mov	eax,ebp	; clear for 
+			mov	eax,ebp	; clear for
 			add	ebp,edx	; update v coordinate
 			shr	eax,26	; shift in v coordinate
 			shld	eax,ebx,6	; shift in u coordinate while shifting up v coordinate
@@ -112,7 +112,6 @@ TopOfLoop4:
 			mov	al,[esi+eax]	; get pixel from source bitmap
 			mov	[edi],al
 			inc	edi
-
 
 
 		; Code for 15-bit destination, with fade table in hardware
@@ -131,9 +130,9 @@ TopOfLoop4:
 		; Code for 15-bit destination, with RGB 15 bit in hardware...
 			mov	al, ch		; get u,v
 			mov	ah, dh		;
-			mov	al, es:[eax]	
+			mov	al, es:[eax]
 			mov	ah, bh
-			mov	ax, gs:[eax*2]	
+			mov	ax, gs:[eax*2]
 			mov	[edi], ax	; write pixel to frame buffer
 			add	edi, 2
 			add	ecx, esi
@@ -142,8 +141,6 @@ TopOfLoop4:
 			bswap 	esi
 			add	ebx, ebp
 
-
-			
 
 			mov	eax, esi	; get u,v
 			shr	eax, 26		; shift out all but int(v)
@@ -155,17 +152,10 @@ TopOfLoop4:
 
 		esi, ebp
 
-			
-	
-			esi, ebp, 
-			
+
+			esi, ebp,
 
 
-
-
-
-
-		
 			; Do odd pixel
 			mov	eax, esi	; get u,v
 			shr	eax, 26		; shift out all but int(v)
@@ -175,10 +165,10 @@ TopOfLoop4:
 			mov	ah, bh		; form lighting table lookup value
 			add	ebx, ebp	; update lighting value
 			mov	ch, fs:[eax]	; xlat thru lighting table into dest buffer
-		
+
 			ror	ecx, 16		; move to next double dest pixel position
 		ENDM
-					
+
 		mov 	[edi],ecx	; Draw 4 pixels to display
 		add 	edi,4
 	ENDM
@@ -190,7 +180,6 @@ TopOfLoop4:
 	pop	ebx
 	dec	_loop_count
 	jnz	TopOfLoop4
-
 
 
 	mov	eax, esi	; get u,v
@@ -257,7 +246,7 @@ TopOfLoop4:
 	mov	eax,esi	; get u
 	cdq
 	idiv	ecx		; eax = (u/z)
-	shl 	eax,26		
+	shl 	eax,26
 	shld 	ebx,eax,6	; ebx = v*64+u
 
 	; read 1  pixel
@@ -272,7 +261,7 @@ TopOfLoop4:
 
 	mov	[edi],al
 	inc	edi
-	
+
 ; update deltas
 	add	ebp,_fx_dv_dx
 	add	esi,_fx_du_dx
@@ -284,12 +273,10 @@ TopOfLoop4:
 	jns	tmap_loop
 
 
-
 fix fixdiv(fix a,fix b);
 #pragma aux fixdiv parm [eax] [ebx] modify exact [eax edx] = \
 	"cdq	"	\
 	"idiv	ebx"	\
-	
 
 
 	fix u = u0;
@@ -329,7 +316,7 @@ rept niters
 	cmp	zbuffer[edi], eax		; check if closer
 	jge	skip1				; don't do if z farther away
 	mov	zbuffer[edi], eax		; update z-buffer
-	mov	eax,[_fx_v]			; get v		
+	mov	eax,[_fx_v]			; get v
 	cdq					; sign extend into edx:eax
 	idiv	[_fx_z]				; eax = (v/z)
 	and	eax,63				; mask with height-1
@@ -372,8 +359,8 @@ rept niters
 	cmp	zbuffer[edi], eax		; check if closer
 	jge	skip1				; don't do if z farther away
 	mov	zbuffer[edi], eax		; update z-buffer
-	mov	eax,[_fx_v]			; get v		
-	cdq		
+	mov	eax,[_fx_v]			; get v
+	cdq
 	idiv	eax, [z]
 	mov	ebx,eax				; start build bitmap address
 	mov	eax,[_fx_u]			; get u
@@ -412,7 +399,7 @@ rept niters
 	cmp	zbuffer[edi], ecx		; check if closer
 	jge	skip1				; don't do if z farther away
 	mov	zbuffer[edi], ecx		; update z-buffer
-	mov	eax,[_fx_v]			; get v		
+	mov	eax,[_fx_v]			; get v
 	mov	edx,[_fx_u]			; get u
 	idiv	ecx				; eax = (v/z)
 	and	eax,63				; mask with height-1
@@ -436,4 +423,3 @@ skip1:	inc	edi				; go to next pixel address
 	add	ecx,[_fx_dz_dx]			; increment z
 	je	_div_0_abort			; would be dividing by 0, so abort
 endm
-

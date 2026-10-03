@@ -9,7 +9,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 We make no warranties as to the usability or correctness of this code.
@@ -37,31 +37,31 @@ Jan. 12, 1998
 
 Kevin Bentley's notes:
 
-As included in this zip file, the source should compile and run with the 
+As included in this zip file, the source should compile and run with the
 following:
 
 Watcom 10.6
 Miscrosoft Macro Assembler 6.11
 GNU (or compatible, such as Microsoft, or Borland) Make utility
 
-To build the executable, you should be able to just run maked1.bat. 
+To build the executable, you should be able to just run maked1.bat.
 Descentr.exe should be built in the main subdirectory.
 
-When you unzip the archive, make sure you use the -d option to expand subdirectories, or it will not 
+When you unzip the archive, make sure you use the -d option to expand subdirectories, or it will not
 compile.
 
-The compiled code will run fine with no sound, and no serial port functionality 
-(This means no VR equipment that uses serial interfaces, and no modem or serial 
+The compiled code will run fine with no sound, and no serial port functionality
+(This means no VR equipment that uses serial interfaces, and no modem or serial
 play games.)
 
-If you port this to another platform, please drop me a note 
-kevinb@stargatenetworks.com , I would be happy to post a copy of your port on 
-the web site. *PLEASE* make an attempt to keep the existing code compilable (ie. 
+If you port this to another platform, please drop me a note
+kevinb@stargatenetworks.com , I would be happy to post a copy of your port on
+the web site. *PLEASE* make an attempt to keep the existing code compilable (ie.
 use #IFDEFS)), so other people can benefit from your work.
 
-To build the editor, change the CCFLAGS variable in all the makefiles to 
-"CCFLAGS = /dNETWORK /dEDITOR" and rebuild all files. You will need the files 
-in editdata.zip (included in this archive) to run the editor. Also, I was only 
+To build the editor, change the CCFLAGS variable in all the makefiles to
+"CCFLAGS = /dNETWORK /dEDITOR" and rebuild all files. You will need the files
+in editdata.zip (included in this archive) to run the editor. Also, I was only
 able to get the editor to run using the -nobm command line arguement.
 
 
@@ -169,4 +169,3 @@ to do.
 Q: Any final comments?
 
 Mike: Yeah, have fun with the code.
-

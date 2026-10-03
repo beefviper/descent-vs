@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,46 +15,46 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.10 $
  * $Author: john $
  * $Date: 1995/02/27 12:31:15 $
- * 
+ *
  * Routines for drawing the radar.
- * . 
- * 
+ * .
+ *
  * $Log: radar.c $
  * Revision 1.10  1995/02/27  12:31:15  john
  * Version 2.0.
- * 
+ *
  * Revision 1.9  1995/02/01  21:03:36  john
  * Lintified.
- * 
+ *
  * Revision 1.8  1994/08/12  22:41:28  john
  * Took away Player_stats; add Players array.
- * 
+ *
  * Revision 1.7  1994/07/15  09:38:00  john
  * Moved in radar_farthest_dist.
- * 
+ *
  * Revision 1.6  1994/07/14  22:05:57  john
  * Made radar display not conflict with hostage
  * vclip talking.
- * 
+ *
  * Revision 1.5  1994/07/12  18:41:51  yuan
- * Tweaked location of radar and hostage screen... 
+ * Tweaked location of radar and hostage screen...
  * Still needs work.
- * 
- * 
+ *
+ *
  * Revision 1.4  1994/07/07  14:59:00  john
  * Made radar powerups.
- * 
- * 
+ *
+ *
  * Revision 1.3  1994/07/07  10:05:36  john
  * Pegged objects in radar to edges.
- * 
+ *
  * Revision 1.2  1994/07/06  19:36:33  john
  * Initial version of radar.
- * 
+ *
  * Revision 1.1  1994/07/06  17:22:07  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -100,7 +100,7 @@ int N_blips = 0;
 
 fix Radar_farthest_dist = (F1_0 * 20 * 15);		// 15 segments away
 
-void radar_plot_object( object * objp, int hue )	
+void radar_plot_object( object * objp, int hue )
 {
 	ubyte flags;
 	g3s_point pos;
@@ -119,7 +119,7 @@ void radar_plot_object( object * objp, int hue )
 	zdist = fix_sqrt( fixmul(pos.x,pos.x)+fixmul(pos.y,pos.y) );
 	if (zdist < 100 ) return;		// Watch for divide overflow
 
-	rscale = fix_acos( fixdiv(pos.z,dist) )/2;	 
+	rscale = fix_acos( fixdiv(pos.z,dist) )/2;
 
 	xpos = f2i(fixmul( rox+fixmul(fixdiv(pos.x,zdist),rscale), radx));
 	ypos = f2i(fixmul( roy-fixmul(fixdiv(pos.y,zdist),rscale), rady));
@@ -134,7 +134,7 @@ void radar_plot_object( object * objp, int hue )
 	N_blips++;
 }
 
-void radar_render_frame()	
+void radar_render_frame()
 {
 	int i,color;
 	object * objp;
@@ -145,7 +145,7 @@ void radar_render_frame()
 	gr_set_current_canvas(NULL);
 
 	gr_setcolor( BM_XRGB( 0, 31, 0 ) );
-	
+
 	gr_ucircle( i2f(Hostage_monitor_x+Hostage_monitor_w/2), i2f(Hostage_monitor_y+Hostage_monitor_h/2),	i2f(Hostage_monitor_w)/2);
 
 	// Erase old blips
@@ -200,4 +200,3 @@ void radar_render_frame()
 		gr_upixel( Blips[i].x, Blips[i].y );
 	}
 }
-

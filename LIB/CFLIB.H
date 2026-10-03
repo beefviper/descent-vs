@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,55 +21,55 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: cflib.h $
  * Revision 1.13  1994/02/15  12:53:06  john
  * Made numfiles stored in library be a short instead of char.
- * 
+ *
  * Revision 1.12  1993/12/08  17:06:34  yuan
  * Added CheckFile.
- * 
+ *
  * Revision 1.11  1993/10/28  15:16:54  yuan
  * Added WriteFile and AppendFile prototypes.
- * 
+ *
  * Revision 1.10  1993/10/28  14:41:13  yuan
  * New cfread functions added to cflib.
- * 
+ *
  * Revision 1.9  1993/10/27  12:41:58  yuan
  * Added prototype for ReadFileBuf.
- * 
+ *
  * Revision 1.8  1993/10/19  12:39:13  matt
  * Added '#ifndef' around body of file
  * Added new error codes
  * Included readfile.h
- * 
+ *
  * Revision 1.7  1993/09/29  17:53:38  yuan
  * lzw_compression and lzw_expand documented more clearly (hopefully)
  * some error flags added.
- * 
+ *
  * Revision 1.6  1993/09/27  17:12:21  yuan
  * Documentation for using lib_init(), lib_close(), and LibReadFile() added.
- * 
+ *
  * Revision 1.5  1993/09/21  17:22:22  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/09/21  17:16:56  yuan
  * cleaning up
- * 
+ *
  * Revision 1.3  1993/09/21  17:07:01  yuan
  * broken and unbroken
- * 
+ *
  * Revision 1.2  1993/09/20  12:26:25  yuan
  * ReadFile, WriteFile, AppendFile removed to readfile.h
- * 
+ *
  * Revision 1.1  1993/09/14  13:15:30  yuan
  * Initial revision
- * 
+ *
  * Revision 1.3  1993/09/09  15:41:22  yuan
  * pslib.exe docs removed.
- * 
+ *
  * Revision 1.2  1993/09/09  12:40:03  yuan
  * compression routine prototypes from library.h added.
- * 
+ *
  * Revision 1.1  1993/09/08  16:16:57  yuan
  * Initial revision
- * 
+ *
  *
 
         PSLIB is a system for librarying files.  We can combine data
@@ -174,5 +174,3 @@ int CheckFile( char *filename );
 //		2 - In opened library file
 
 #endif
-
-

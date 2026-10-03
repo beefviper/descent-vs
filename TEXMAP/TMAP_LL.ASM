@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_ll.asm $
@@ -19,36 +19,36 @@
 ; $Log: tmap_ll.asm $
 ; Revision 1.10  1995/02/20  18:22:54  john
 ; Put all the externs in the assembly modules into tmap_inc.asm.
-; Also, moved all the C versions of the inner loops into a new module, 
+; Also, moved all the C versions of the inner loops into a new module,
 ; scanline.c.
-; 
+;
 ; Revision 1.9  1995/02/20  17:09:06  john
 ; Added code so that you can build the tmapper with no assembly!
-; 
+;
 ; Revision 1.8  1994/11/19  23:52:56  mike
 ; rip out big unrolled loop to save 25K....remember when we cared more about speed?
-; 
+;
 ; Revision 1.7  1994/11/12  16:39:41  mike
 ; jae to ja.
-; 
+;
 ; Revision 1.6  1994/03/14  15:45:08  mike
 ; streamline code.
-; 
+;
 ; Revision 1.5  1994/01/24  13:13:12  mike
 ; dithering.
-; 
+;
 ; Revision 1.4  1994/01/14  14:02:47  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.3  1993/12/17  20:00:16  mike
 ; Change default setting of dither_intensity_lighting from 1 to 0
-; 
+;
 ; Revision 1.2  1993/11/22  10:24:50  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  17:29:52  mike
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -368,9 +368,9 @@ _start1:
 ;obsolete: 	mov	eax,ebp	; get u, v
 ;obsolete: 	shr	eax,26	; shift out all but int(v)
 ;obsolete: 	shld	ax,bp,6	; shift in u, shifting up v
-;obsolete: 
+;obsolete:
 ;obsolete: 	add	ebp,edx	; u += du, v += dv
-;obsolete: 
+;obsolete:
 ;obsolete: 	mov	al,[eax]	; get pixel from source bitmap
 ;obsolete: 	mov	ah,bh	; get lighting table
 ;obsolete: 	add	ebx,esi	; update lighting value
@@ -483,4 +483,3 @@ all_done_1:	popa
 _TEXT	ends
 
 	end
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,336 +15,336 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.5 $
  * $Author: john $
  * $Date: 1996/01/05 16:51:51 $
- * 
+ *
  * Routines to access digital sound hardware
- * 
+ *
  * $Log: digi.c $
  * Revision 2.5  1996/01/05  16:51:51  john
  * Made the midi handler lock down to +4K.
- * 
+ *
  * Revision 2.4  1996/01/05  16:46:54  john
  * Made code lock down midicallback +4K.
- * 
+ *
  * Revision 2.3  1995/05/26  16:16:03  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.2  1995/03/30  16:36:04  mike
  * text localization.
- * 
+ *
  * Revision 2.1  1995/03/15  11:41:23  john
  * Better Saturn CD-ROM support.
- * 
+ *
  * Revision 2.0  1995/02/27  11:29:15  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.172  1995/02/15  09:57:53  john
  * Fixed bug with loading new banks while song is playing.
- * 
+ *
  * Revision 1.171  1995/02/14  16:36:26  john
  * Fixed bug with countdown voice getting cut off.
- * 
+ *
  * Revision 1.170  1995/02/13  20:34:51  john
  * Lintized
- * 
+ *
  * Revision 1.169  1995/02/13  15:18:21  john
  * Added code to reset sounds.
- * 
+ *
  * Revision 1.168  1995/02/13  12:53:11  john
  * Fixed bug with demos recording wrong volumes.
- * 
+ *
  * Revision 1.167  1995/02/11  15:04:29  john
  * Made FM files load as if you have FM card.
- * 
+ *
  * Revision 1.166  1995/02/11  12:41:35  john
  * Added new song method, with FM bank switching..
- * 
+ *
  * Revision 1.165  1995/02/10  16:24:58  john
  * MAde previous change only reverse for RAP10.
- * 
+ *
  * Revision 1.164  1995/02/10  13:47:37  john
  * Made digi init before midi to maybe fix RAP10 bug.
- * 
+ *
  * Revision 1.163  1995/02/08  21:05:22  john
  * Added code that loads patches for every FM song.
- * 
+ *
  * Revision 1.162  1995/02/03  17:17:51  john
  * Made digi lowmem default to off.
- * 
+ *
  * Revision 1.161  1995/02/03  17:08:22  john
  * Changed sound stuff to allow low memory usage.
  * Also, changed so that Sounds isn't an array of digi_sounds, it
  * is a ubyte pointing into GameSounds, this way the digi.c code that
  * locks sounds won't accidentally unlock a sound that is already playing, but
  * since it's Sounds[soundno] is different, it would erroneously be unlocked.
- * 
+ *
  * Revision 1.160  1995/02/01  22:37:06  john
  * Reduced sound travel distance to 1.25 times original.
- * 
+ *
  * Revision 1.159  1995/02/01  22:20:41  john
  * Added digi_is_sound_playing.
- * 
+ *
  * Revision 1.158  1995/01/28  15:56:56  john
  * Made sounds carry 1.5 times farther.
- * 
+ *
  * Revision 1.157  1995/01/27  17:17:09  john
  * Made max sounds relate better to MAX_SOUND_OBJECTS
- * 
+ *
  * Revision 1.156  1995/01/25  12:18:06  john
  * Fixed bug with not closing MIDI files when midi volume is 0.
- * 
+ *
  * Revision 1.155  1995/01/24  17:52:17  john
  * MAde midi music stop playing when volume is 0.
- * 
+ *
  * Revision 1.154  1995/01/21  21:22:31  mike
  * Correct bogus error message.
- * 
+ *
  * Revision 1.153  1995/01/17  14:53:38  john
  * IFDEF'D out digital drums.
- * 
+ *
  * Revision 1.152  1995/01/11  16:26:50  john
  * Restored MIDI pausing to actually setting volume to 0,.
- * 
+ *
  * Revision 1.151  1995/01/10  16:38:46  john
  * Made MIDI songs pause, not lower volume when pausing, and
  * had to fix an HMI bug by clearing the TRACKINFO array or something.
- * 
+ *
  * Revision 1.150  1995/01/05  19:46:27  john
- * Added code to reset the midi tracks to use the ones 
+ * Added code to reset the midi tracks to use the ones
  * in the midi file before each song is played.
- * 
+ *
  * Revision 1.149  1994/12/21  15:08:59  matt
  * Bumped MAX_SOUND_OBJECTS back up to match v1.00 of shareware
- * 
+ *
  * Revision 1.148  1994/12/20  18:22:54  john
  * Added code to support non-looping songs, and put
  * it in for endlevel and credits.
- * 
+ *
  * Revision 1.147  1994/12/19  17:58:19  john
  * Changed Assert for too many sounds to gracefully exit.
- * 
+ *
  * Revision 1.146  1994/12/14  16:03:27  john
  * Made the digi/midi deinit in reverse order for anything
  * other than GUS.
- * 
+ *
  * Revision 1.145  1994/12/14  14:51:06  john
  * Added assert.
- * 
+ *
  * Revision 1.144  1994/12/14  12:14:40  john
  * Relplaced a bunch of (a*b)/c with fixmuldiv
  * to get rid of a overflow bug mike found.
- * 
+ *
  * Revision 1.143  1994/12/13  17:30:16  john
  * Made the timer rate be changed right after initializing it.
- * 
+ *
  * Revision 1.142  1994/12/13  14:08:35  john
  * Made Pause key set midi volume to 0.
  * Made digi_init set midi volume to proper level.
- * 
+ *
  * Revision 1.141  1994/12/13  12:42:31  jasen
  * Fixed sound priority bugs... -john
- * 
+ *
  * Revision 1.140  1994/12/13  12:11:38  john
  * Added debugging code.
- * 
+ *
  * Revision 1.139  1994/12/13  11:45:19  john
  * Disabled interrupts around the midisetvolume because awe32
  * hangs if you don't.
- * 
+ *
  * Revision 1.138  1994/12/13  11:33:45  john
  * MAde so that sounds with volumes > f1_0 don't cut off.
- * 
+ *
  * Revision 1.137  1994/12/13  02:24:29  matt
  * digi_init() now doesn't return error when no sound card
- * 
+ *
  * Revision 1.136  1994/12/13  00:46:27  john
  * Split digi and midi volume into 2 seperate functions.
- * 
+ *
  * Revision 1.135  1994/12/12  22:19:20  john
  * Made general midi versions of files load...
  * .hmq instead of .hmp.
- * 
+ *
  * Revision 1.134  1994/12/12  21:32:49  john
  * Made volume work better by making sure volumes are valid
  * and set correctly at program startup.
- * 
+ *
  * Revision 1.133  1994/12/12  20:52:35  john
  * Fixed bug with pause calling set mastervolume to 0.
- * 
+ *
  * Revision 1.132  1994/12/12  20:39:52  john
- * Changed so that instead of using MasterVolume for 
+ * Changed so that instead of using MasterVolume for
  * digital sounds, I just scale the volume I play the
  * sound by.
- * 
+ *
  * Revision 1.131  1994/12/12  13:58:21  john
  * MAde -nomusic work.
  * Fixed GUS hang at exit by deinitializing digi before midi.
- * 
+ *
  * Revision 1.130  1994/12/11  23:29:39  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.129  1994/12/11  23:18:07  john
  * Added -nomusic.
  * Added RealFrameTime.
  * Put in a pause when sound initialization error.
  * Made controlcen countdown and framerate use RealFrameTime.
- * 
+ *
  * Revision 1.128  1994/12/11  13:35:26  john
  * Let sounds play louder than F1_0.  btw, 4*f1_0 is maxed.
- * 
+ *
  * Revision 1.127  1994/12/11  00:43:45  john
  * Fixed bug with sounds taking over channels that sound objects own.
- * 
+ *
  * Revision 1.126  1994/12/10  20:35:03  john
  * Added digi_kill_sound_linked_to_object.
- * 
+ *
  * Revision 1.125  1994/12/10  15:44:20  john
  * Added max_distance passing for sound objects.
- * 
+ *
  * Revision 1.124  1994/12/09  20:16:37  john
  * Made it so that when Mike's AI code passes bogus values, the
  * digi code will saturate them.
- * 
+ *
  * Revision 1.123  1994/12/09  17:07:52  john
  * Fixed abrupt fan cutoff.
- * 
+ *
  * Revision 1.122  1994/12/08  17:19:14  yuan
  * Cfiling stuff.
- * 
+ *
  * Revision 1.121  1994/12/06  19:24:08  john
  * CLosed HMI timer after making our not call it.
- * 
+ *
  * Revision 1.120  1994/12/06  19:00:42  john
  * Moved digi_reset_sounds to reset instead of digi_close.
- * 
+ *
  * Revision 1.119  1994/12/06  18:23:48  matt
  * Don't pause midi songs, becuase it can lock up
- * 
+ *
  * Revision 1.118  1994/12/06  16:07:09  john
  * MAde the gus pats only load if using midi==midi_gus.
- * 
+ *
  * Revision 1.117  1994/12/06  10:17:07  john
  * MAde digi_close call reset_sounds.
- * 
+ *
  * Revision 1.116  1994/12/05  23:36:50  john
  * Took out lock down of GETDS, because, I, john, was wrong, and it
  * was me, not the HMI people, that was calling GETDS in an interrupt.
  * I un-formally apologize to HMI.
- * 
+ *
  * Revision 1.115  1994/12/05  22:50:09  john
  * Put in code to lock down GETDS, because the HMI
- * people don't lock it down, even tho they use it 
+ * people don't lock it down, even tho they use it
  * in their timerhandler interrupt.
- * 
+ *
  * Revision 1.114  1994/12/05  18:54:09  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.113  1994/12/05  18:52:11  john
  * Locked down the TrackMap array, since SOS references it in an interupt.
  * Added -noloadpats command line option.
- * 
+ *
  * Revision 1.112  1994/12/05  16:55:45  john
- * Made so that digi_init_System is  called before 
+ * Made so that digi_init_System is  called before
  * the timer system calls the timer handler.
- * 
+ *
  * Revision 1.111  1994/12/05  12:56:19  john
  * Made the intruments patches only load for FM devices.
- * 
+ *
  * Revision 1.110  1994/12/05  12:17:16  john
  * Added code that locks/unlocks digital sounds on demand.
- * 
+ *
  * Revision 1.109  1994/12/04  14:30:10  john
  * Added hooks for music..
- * 
+ *
  * Revision 1.108  1994/12/02  13:58:27  matt
  * Put in Int3()s when try to play a non-existant sound
- * 
+ *
  * Revision 1.107  1994/12/02  10:35:58  john
  * Took out loadpats.c
- * 
+ *
  * Revision 1.106  1994/12/01  02:22:33  john
  * Incorporated LOADPATS.EXE into our code.
- * 
+ *
  * Revision 1.105  1994/12/01  00:59:51  john
  * Fixed some pot. bugs with closing.
- * 
+ *
  * Revision 1.104  1994/11/30  23:54:40  rob
  * Tweaked some volume params due to a fix in find_connected_distance.
- * 
+ *
  * Revision 1.103  1994/11/30  19:36:44  john
  * Made Gravis Ultrasound work again.  Made the scores blink
  * at a constant rate.  Revamped the newmenu background storage,
  * which hopefully fixed some bugs.  Made menus in ame not pause
  * sound, except for the pause key.               ^== Game!
- * 
+ *
  * Revision 1.102  1994/11/30  15:14:25  rob
  * Removed unused include file..
- * 
+ *
  * Revision 1.101  1994/11/30  15:08:45  john
  * Changed some open/close stuff with sound.
- * 
+ *
  * Revision 1.100  1994/11/29  13:35:41  john
  * Test code.
- * 
+ *
  * Revision 1.99  1994/11/29  03:46:32  john
  * Added joystick sensitivity; Added sound channels to detail menu.  Removed -maxchannels
  * command line arg.
- * 
+ *
  * Revision 1.98  1994/11/28  18:37:59  john
  * Made sample play once work.
- * 
+ *
  * Revision 1.97  1994/11/28  18:35:19  john
  * Made the digi_max_channels cut of an old sound instead of
  * not playing a new sound.
- * 
+ *
  * Revision 1.96  1994/11/28  01:32:02  mike
  * use quick form of matrix function.
- * 
+ *
  * Revision 1.95  1994/11/27  23:12:14  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.94  1994/11/22  17:13:31  john
  * Fixed bug with the digital drums hanging.
- * 
+ *
  * Revision 1.93  1994/11/21  19:09:21  john
  * Made so if digi and midi both 0, same as -nosound.
- * 
+ *
  * Revision 1.92  1994/11/21  16:46:46  john
  * Limited digital channels to 10.
- * 
+ *
  * Revision 1.91  1994/11/21  16:28:42  john
  * Fixed bug with digi_close hanging.
- * 
+ *
  * Revision 1.90  1994/11/21  15:40:28  john
  * Locked down the instrument data.
- * 
+ *
  * Revision 1.89  1994/11/21  14:43:55  john
  * Fixed some bugs with setting volumes even when -nosound was used. Duh!
- * 
+ *
  * Revision 1.88  1994/11/21  11:55:26  john
  * Fixed some sound pausing in menus bugs.
- * 
+ *
  * Revision 1.87  1994/11/21  11:02:21  john
  * Made fan sounds be 1/2 the volume so that they
  * don'
  * don't carry as far.
- * 
+ *
  * Revision 1.86  1994/11/20  17:47:51  john
  * Fixed a potential bug with sound initializing.
- * 
+ *
  * Revision 1.85  1994/11/20  17:29:07  john
  * Fixed bug with page fault during digi_close.
- * 
+ *
  * Revision 1.84  1994/11/19  15:19:24  mike
  * rip out unused code and data.
- * 
+ *
  * Revision 1.83  1994/11/16  23:38:33  mike
  * new improved boss teleportation behavior.
- * 
+ *
  * Revision 1.82  1994/11/14  18:12:46  john
  * Took out some sound objects stuff.
- * 
+ *
  */
 
 
@@ -355,11 +355,11 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #include<stdlib.h>
 #include<stdio.h>
 #include<dos.h>
-#include<fcntl.h> 
-#include<malloc.h> 
+#include<fcntl.h>
+#include<malloc.h>
 #include<bios.h>
 #include<io.h>
-#include<conio.h> 
+#include<conio.h>
 #include<string.h>
 #include<ctype.h>
 
@@ -387,8 +387,8 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 //*************************************************
 //#include "sos.h"
 //#include "sosm.h"
-//The above two includes are part of a commercial 
-//sound library, so they cannot be included in a public 
+//The above two includes are part of a commercial
+//sound library, so they cannot be included in a public
 //release of the source code. -KRB
 #include "no_sos.h" //Added by KRB
 //*************************************************
@@ -406,7 +406,7 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #define  _DRUM_PATCH          "drum.bnk"
 #define  _DIGDRUM_PATCH       "drum32.dig"
 
- 
+
 static int	Digi_initialized 		= 0;
 static int	digi_atexit_called	= 0;			// Set to 1 if atexit(digi_close) was called
 
@@ -431,7 +431,7 @@ char digi_last_midi_song[16] = "";
 char digi_last_melodic_bank[16] = "";
 char digi_last_drum_bank[16] = "";
 LPSTR digi_driver_path = NULL;//Was _NULL -KRB
-static WORD						hSOSDigiDriver = 0xffff;			// handle for the SOS driver being used 
+static WORD						hSOSDigiDriver = 0xffff;			// handle for the SOS driver being used
 static WORD     				hSOSMidiDriver = 0xffff;			// handle for the loaded MIDI driver
 static WORD						hTimerEventHandle = 0xffff;		// handle for the timer function
 
@@ -440,23 +440,23 @@ static int InstrumentSize = 0;
 static void * lpDrums = NULL;				// pointer to the drum file
 static int DrumSize = 0;
 // track mapping structure, this is used to map which track goes
-// out which device. this can also be mapped by the name of the 
+// out which device. this can also be mapped by the name of the
 // midi track. to map by the name of the midi track use the define
-// _MIDI_MAP_TRACK for each of the tracks 
+// _MIDI_MAP_TRACK for each of the tracks
 /*
-static _SOS_MIDI_TRACK_DEVICE   sSOSTrackMap = { 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
+static _SOS_MIDI_TRACK_DEVICE   sSOSTrackMap = {
    _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, 
-   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK 
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK,
+   _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK, _MIDI_MAP_TRACK
 };
 */
 // handle for the initialized MIDI song
-WORD     wSongHandle = 0xffff;         
+WORD     wSongHandle = 0xffff;
 ubyte		*SongData=NULL;
 int		SongSize;
 
@@ -476,10 +476,10 @@ typedef struct sound_object {
 	int			pan;				// Pan value that this sound is playing at
 	WORD			handle;			// What handle this sound is playing on.  Valid only if SOF_PLAYING is set.
 	short			soundnum;		// The sound number that is playing
-	union {	
+	union {
 		struct {
 			short			segnum;				// Used if SOF_LINK_TO_POS field is used
-			short			sidenum;				
+			short			sidenum;
 			vms_vector	position;
 		};
 		struct {
@@ -555,7 +555,7 @@ void digi_close_midi()
 
 		if ( midi_system_initialized )	{
 		   // uninitialize the MIDI system
-		   sosMIDIUnInitSystem(); 
+		   sosMIDIUnInitSystem();
 			midi_system_initialized = 0;
 		}
 	}
@@ -613,12 +613,12 @@ void digi_close()
 extern int loadpats( char * filename );
 
 int digi_load_fm_banks( char * melodic_file, char * drum_file )
-{	
+{
 /*
    WORD     wError;                 // error code returned from functions
 
 	// set the instrument file for the MIDI driver to use, since we are using
-	// the FM driver two instrument files are needed, the first is for 
+	// the FM driver two instrument files are needed, the first is for
 	// all melodic instruments and the second is for events on channel 10
 	// which is the drum track.
 	// set the drum instruments
@@ -626,7 +626,7 @@ int digi_load_fm_banks( char * melodic_file, char * drum_file )
 		dpmi_unlock_region(lpInstruments, InstrumentSize);
 		free( lpInstruments );
 	}
-			
+
 	lpInstruments = testLoadFile( melodic_file, &InstrumentSize );
 	if ( !lpInstruments )	{
 		printf( "%s '%s'\n", TXT_SOUND_ERROR_OPEN, melodic_file );
@@ -637,17 +637,17 @@ int digi_load_fm_banks( char * melodic_file, char * drum_file )
 		printf( "%s '%s', ptr=0x%8x, len=%d bytes\n", TXT_SOUND_ERROR_LOCK, melodic_file, lpInstruments, InstrumentSize );
 		return 0;
 	}
-	
+
 	if( ( wError =  sosMIDISetInsData( hSOSMidiDriver, lpInstruments, 0x01  ) ) ) 	{
 		printf( "%s %s \n", TXT_SOUND_ERROR_HMI, sosGetErrorString( wError ) );
 		return 0;
 	}
-	
+
 	if (lpDrums)	{
 		dpmi_unlock_region(lpDrums, DrumSize);
 		free( lpDrums );
 	}
-			
+
 	lpDrums = testLoadFile( drum_file, &DrumSize );
 	if ( !lpDrums )	{
 		printf( "%s '%s'\n", TXT_SOUND_ERROR_OPEN, drum_file );
@@ -658,13 +658,13 @@ int digi_load_fm_banks( char * melodic_file, char * drum_file )
 		printf( "%s  '%s', ptr=0x%8x, len=%d bytes\n", TXT_SOUND_ERROR_LOCK_DRUMS, drum_file, lpDrums, DrumSize );
 		return 0;
 	}
-	
+
 	 // set the drum instruments
 	if( ( wError =  sosMIDISetInsData( hSOSMidiDriver, lpDrums, 0x01  ) ) )	{
 		printf( "%s %s\n", TXT_SOUND_ERROR_HMI, sosGetErrorString( wError ) );
 		return 0;
 	}
-	
+
 	return 1;
 */
 	return 0;//KRB Comment out...
@@ -675,7 +675,7 @@ int digi_init_midi()
 {
 /*
    WORD     wError;                 // error code returned from functions
-	_SOS_MIDI_INIT_DRIVER			sSOSMIDIInitDriver;	// structure for the MIDI driver initialization function 
+	_SOS_MIDI_INIT_DRIVER			sSOSMIDIInitDriver;	// structure for the MIDI driver initialization function
 	_SOS_MIDI_HARDWARE				sSOSMIDIHardware; 	// structure for the MIDI driver hardware
 
 	if ( digi_midi_type > 0 )	{
@@ -697,15 +697,15 @@ int digi_init_midi()
 	   sosMIDIInitSystem( digi_driver_path, _SOS_DEBUG_NORMAL );
 		midi_system_initialized = 1;
 
-	   // set the pointer to the driver memory for the MIDI driver to 
+	   // set the pointer to the driver memory for the MIDI driver to
 	   // _NULL. this will tell the load driver routine to allocate new
 	   // memory for the MIDI driver
 	   sSOSMIDIInitDriver.lpDriverMemory  = _NULL;
 		sSOSMIDIInitDriver.sDIGIInitInfo = _NULL;
-	
+
 		sSOSMIDIHardware.wPort = digi_midi_port;
-	
-	   // load and initialize the MIDI driver 
+
+	   // load and initialize the MIDI driver
 	   if( ( wError = sosMIDIInitDriver( digi_midi_type, &sSOSMIDIHardware, &sSOSMIDIInitDriver, &hSOSMidiDriver ) ) )	{
 	      printf( "SOUND: (HMI) '%s'\n", sosGetErrorString( wError ) );
 			digi_close();
@@ -735,7 +735,7 @@ int digi_init_digi()
 		sSOSInitDriver.wSampleRate			= digi_driver_rate;
 		sSOSInitDriver.lpDriverMemory		= _NULL;
 		sSOSInitDriver.lpTimerMemory		= _NULL;
-	
+
 		sSOSHardwareSettings.wPort = digi_driver_port;
 		sSOSHardwareSettings.wIRQ = digi_driver_irq;
 		sSOSHardwareSettings.wDMA = digi_driver_dma;
@@ -764,9 +764,9 @@ int digi_init()
 	int i;
 /*
 #ifdef USE_CD
-	{ 
+	{
 		FILE * fp;
-		fp = fopen( "hmimdrv.386", "rb" );	
+		fp = fopen( "hmimdrv.386", "rb" );
 		if ( fp )
 			fclose(fp);
 		else
@@ -774,10 +774,10 @@ int digi_init()
 	}
 #endif
 
-	if ( FindArg( "-nomusic" )) 
+	if ( FindArg( "-nomusic" ))
 		digi_midi_type = 0;
 
-	if ( (digi_midi_type<1) && (digi_driver_board<1) )	
+	if ( (digi_midi_type<1) && (digi_driver_board<1) )
 		return 0;
 
 	if ( !FindArg( "-noloadpats" ) )	{
@@ -790,7 +790,7 @@ int digi_init()
 				if ( fp )
 					fclose(fp);
 				else {
-					strcpy( fname, destsat_cdpath );	
+					strcpy( fname, destsat_cdpath );
 					strcat( fname, "DESCENTG.INI" );
 				}
 			}
@@ -809,7 +809,7 @@ int digi_init()
 	sosTIMERInitSystem( 0, _SOS_DEBUG_NO_TIMER );
 	timer_set_function( sosTIMERHandler );		// New way
 	timer_system_initialized = 1;
-	
+
 	if ( digi_driver_board == _RAP10_8_MONO )	{
 		if (digi_init_digi()) return 1;
 		if (digi_init_midi()) return 1;
@@ -837,7 +837,7 @@ int digi_init()
 }
 
 // Toggles sound system on/off
-void digi_reset()	
+void digi_reset()
 {
 /*
 	if ( Digi_initialized )	{
@@ -954,9 +954,9 @@ void digi_set_max_channels(int n)
 /*
 	digi_max_channels	= n;
 
-	if ( digi_max_channels < 1 ) 
+	if ( digi_max_channels < 1 )
 		digi_max_channels = 1;
-	if ( digi_max_channels > (32-MAX_SOUND_OBJECTS) ) 
+	if ( digi_max_channels > (32-MAX_SOUND_OBJECTS) )
 		digi_max_channels = (32-MAX_SOUND_OBJECTS);
 
 	if ( !Digi_initialized ) return;
@@ -1010,7 +1010,7 @@ TryNextChannel:
 
 //	sampledata->lpSamplePtr = sound_expand_sound( soundnum,  &i );
 //	sampledata->wSampleID = i;
-	
+
 	digi_lock_sound_data(soundnum);
 	sHandle = sosDIGIStartSample( hSOSDigiDriver, sampledata );
 	if ( sHandle == _ERR_NO_SLOTS )	{
@@ -1073,7 +1073,7 @@ int digi_is_sound_playing(int soundno)
 	return 0;//KRB Comment out...
 }
 
-void digi_play_sample_once( int soundno, fix max_volume )	
+void digi_play_sample_once( int soundno, fix max_volume )
 {
 /*
 	WORD SampleHandle;
@@ -1094,7 +1094,7 @@ void digi_play_sample_once( int soundno, fix max_volume )
 		Int3();
 		return;
 	}
-		
+
 	SampleHandle = sosDIGIGetSampleHandle( hSOSDigiDriver, soundno );
 	if ( (SampleHandle < _MAX_VOICES) && (!sosDIGISampleDone( hSOSDigiDriver, SampleHandle)) )	{
 		sosDIGIStopSample(hSOSDigiDriver, SampleHandle);
@@ -1116,7 +1116,7 @@ void digi_play_sample_once( int soundno, fix max_volume )
 
 //	if ( sosDIGISamplesPlaying(hSOSDigiDriver) >= digi_max_channels )
 //		return;
-	
+
    // start the sample playing
 	digi_start_sound( &sSOSSampleData, soundno );
 	*/
@@ -1166,7 +1166,7 @@ void digi_play_sample( int soundno, fix max_volume )
 }
 
 
-void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )	
+void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )
 {
 /*
 	_SOS_START_SAMPLE sSOSSampleData;
@@ -1256,8 +1256,8 @@ void digi_set_digi_volume( int dvolume )
 }
 
 
-// 0-0x7FFF 
-void digi_set_volume( int dvolume, int mvolume )	
+// 0-0x7FFF
+void digi_set_volume( int dvolume, int mvolume )
 {
 /*
 	digi_set_midi_volume( mvolume );
@@ -1273,7 +1273,7 @@ void * testLoadFile( char * szFileName, int * length )
 /*
    PSTR  pDataPtr;
 	CFILE * fp;
-	
+
    // open file
    fp  =  cfopen( szFileName, "rb" );
 	if ( !fp ) return NULL;
@@ -1289,7 +1289,7 @@ void * testLoadFile( char * szFileName, int * length )
    // close driver file
    cfclose( fp );
 
-   // return 
+   // return
    return( pDataPtr );
    */
    return NULL;//KRB Comment out...
@@ -1301,7 +1301,7 @@ VOID _far sosMIDICallback( WORD PassedSongHandle )
 {
 	//sosMIDIStartSong(PassedSongHandle);
 	return;//KRB comment out
-} 
+}
 
 VOID sosEndMIDICallback()		// Used to mark the end of sosMIDICallBack
 {
@@ -1353,10 +1353,10 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 
 	fp = NULL;
 
-	if ( (digi_midi_type==_MIDI_FM)||(digi_midi_type==_MIDI_OPL3) )	{	
+	if ( (digi_midi_type==_MIDI_FM)||(digi_midi_type==_MIDI_OPL3) )	{
 		int sl;
 		sl = strlen( filename );
-		strcpy( fname, filename );	
+		strcpy( fname, filename );
 		fname[sl-1] = 'q';
 		fp = cfopen( fname, "rb" );
 	}
@@ -1388,12 +1388,12 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 	}
 	cfclose(fp);
 
-	if ( (digi_midi_type==_MIDI_FM)||(digi_midi_type==_MIDI_OPL3) )	{	
+	if ( (digi_midi_type==_MIDI_FM)||(digi_midi_type==_MIDI_OPL3) )	{
 		if ( !digi_load_fm_banks(melodic_bank, drum_bank) )	{
 			return;
 		}
 	}
-		
+
 	if (!dpmi_lock_region(SongData, SongSize))	{
 		mprintf( (1, "Error locking midi file, '%s'", filename ));
 		free(SongData);
@@ -1410,7 +1410,7 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 
 	for ( i=0; i<32; i++ )
 		sSOSTrackMap.wTrackDevice[i] = _MIDI_MAP_TRACK;
-			
+
 	for ( i=0; i<_SOS_MIDI_MAX_TRACKS; i++ )
 		_lpSOSMIDITrack[0][i] = _NULL;
 
@@ -1423,7 +1423,7 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 	}
 
 	Assert( wSongHandle == 0 );
-	 
+
   // start the song playing
    if( ( wError = sosMIDIStartSong( wSongHandle ) ) ) {
 		mprintf( (1, "\nHMI Error : %s", sosGetErrorString( wError ) ));
@@ -1436,8 +1436,8 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
    */
 }
 
-void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )	
-{	  
+void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )
+{
 /*
 	vms_vector	vector_to_sound;
 	fix angle_from_ear, cosang,sinang;
@@ -1451,7 +1451,7 @@ void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int l
 
 	//	Warning: Made the vm_vec_normalized_dir be vm_vec_normalized_dir_quick and got illegal values to acos in the fang computation.
 	distance = vm_vec_normalized_dir_quick( &vector_to_sound, sound_pos, listener_pos );
-		
+
 	if (distance < max_distance )	{
 		int num_search_segs = f2i(max_distance/20);
 		if ( num_search_segs < 1 ) num_search_segs = 1;
@@ -1470,7 +1470,7 @@ void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int l
 				*volume = 0;
 			}
 		}
-	}																					  
+	}
 	*/
 }
 
@@ -1500,7 +1500,7 @@ void digi_init_sounds()
 void digi_start_sound_object(int i)
 {
 /*
-	// start sample structures 
+	// start sample structures
 	_SOS_START_SAMPLE sSOSSampleData;
 
 	memset( &sSOSSampleData, 0, sizeof(_SOS_START_SAMPLE));
@@ -1510,7 +1510,7 @@ void digi_start_sound_object(int i)
 
 	if (!dpmi_lock_region( GameSounds[SoundObjects[i].soundnum].data, GameSounds[SoundObjects[i].soundnum].length ))
 		Error( "Error locking sound object %d\n", SoundObjects[i].soundnum );
-	
+
 	// Sound is not playing, so we must start it again
 	SoundObjects[i].signature=next_signature++;
 	sSOSSampleData.wChannel 		= _CENTER_CHANNEL;
@@ -1527,8 +1527,8 @@ void digi_start_sound_object(int i)
 		sSOSSampleData.wSampleFlags |= _LOOPING; 		// Mark it as a looper.
 	}
 			// start the sample playing
-	
-	//SoundObjects[i].handle = digi_start_sound( &sSOSSampleData );	
+
+	//SoundObjects[i].handle = digi_start_sound( &sSOSSampleData );
 	SoundObjects[i].handle = sosDIGIStartSample( hSOSDigiDriver, &sSOSSampleData );
 	if (SoundObjects[i].handle != _ERR_NO_SLOTS )		{
 		SoundObjects[i].flags |= SOF_PLAYING;
@@ -1574,7 +1574,7 @@ int digi_link_sound_to_object2( int org_soundnum, short objnum, int forever, fix
 	for (i=0; i<MAX_SOUND_OBJECTS; i++ )
 		if (SoundObjects[i].flags==0)
 			break;
-	
+
 	if (i==MAX_SOUND_OBJECTS) {
 		mprintf((1, "Too many sound objects!\n" ));
 		return -1;
@@ -1593,7 +1593,7 @@ int digi_link_sound_to_object2( int org_soundnum, short objnum, int forever, fix
 	SoundObjects[i].soundnum = soundnum;
 
 	objp = &Objects[SoundObjects[i].objnum];
-	digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum, 
+	digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum,
                        &objp->pos, objp->segnum, SoundObjects[i].max_volume,
                        &SoundObjects[i].volume, &SoundObjects[i].pan, SoundObjects[i].max_distance );
 
@@ -1642,7 +1642,7 @@ int digi_link_sound_to_pos2( int org_soundnum, short segnum, short sidenum, vms_
 	for (i=0; i<MAX_SOUND_OBJECTS; i++ )
 		if (SoundObjects[i].flags==0)
 			break;
-	
+
 	if (i==MAX_SOUND_OBJECTS) {
 		mprintf((1, "Too many sound objects!\n" ));
 		return -1;
@@ -1661,10 +1661,10 @@ int digi_link_sound_to_pos2( int org_soundnum, short segnum, short sidenum, vms_
 	SoundObjects[i].max_distance = max_distance;
 	SoundObjects[i].volume = 0;
 	SoundObjects[i].pan = 0;
-	digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum, 
+	digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum,
                        &SoundObjects[i].position, SoundObjects[i].segnum, SoundObjects[i].max_volume,
                        &SoundObjects[i].volume, &SoundObjects[i].pan, SoundObjects[i].max_distance );
-	
+
 	digi_start_sound_object(i);
 
 	return SoundObjects[i].signature;
@@ -1675,7 +1675,7 @@ int digi_link_sound_to_pos2( int org_soundnum, short segnum, short sidenum, vms_
 int digi_link_sound_to_pos( int soundnum, short segnum, short sidenum, vms_vector * pos, int forever, fix max_volume )
 {
 	//return digi_link_sound_to_pos2( soundnum, segnum, sidenum, pos, forever, max_volume, F1_0 * 256 );
-	return 0;//KRB comment out project...	
+	return 0;//KRB comment out project...
 }
 
 
@@ -1744,7 +1744,7 @@ void digi_kill_sound_linked_to_object( int objnum )
 //--unused-- {
 //--unused-- 	int i;
 //--unused-- 	if (!Digi_initialized) return;
-//--unused-- 
+//--unused--
 //--unused-- 	for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
 //--unused-- 		if ( SoundObjects[i].flags & SOF_USED )	{
 //--unused-- 			if (SoundObjects[i].signature == signature )	{
@@ -1775,7 +1775,7 @@ void digi_sync_sounds()
 //NOT_MIDI_CHECK					mprintf(( 0, "MIDI[%d] CHANGED FROM 0x%x to 0x%x\n", i, MIDI_SAVED_DATA[i], SongData[i] ));
 //NOT_MIDI_CHECK					MIDI_SAVED_DATA[i] = SongData[i];
 //NOT_MIDI_CHECK				}
-//NOT_MIDI_CHECK			}		
+//NOT_MIDI_CHECK			}
 //NOT_MIDI_CHECK			//Int3();		// Midi data changed!!!!
 //NOT_MIDI_CHECK			MIDI_CRC=new_crc;
 //NOT_MIDI_CHECK		}
@@ -1794,18 +1794,18 @@ void digi_sync_sounds()
 						continue;		// Go on to next sound...
 					}
 				}
-			}			
-		
+			}
+
 			if ( SoundObjects[i].flags & SOF_LINK_TO_POS )	{
-				digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum, 
+				digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum,
                                 &SoundObjects[i].position, SoundObjects[i].segnum, SoundObjects[i].max_volume,
                                 &SoundObjects[i].volume, &SoundObjects[i].pan, SoundObjects[i].max_distance );
 
 			} else if ( SoundObjects[i].flags & SOF_LINK_TO_OBJ )	{
 				object * objp;
-	
+
 				objp = &Objects[SoundObjects[i].objnum];
-		
+
 				if ((objp->type==OBJ_NONE) || (objp->signature!=SoundObjects[i].objsignature))	{
 					// The object that this is linked to is dead, so just end this sound if it is looping.
 					if ( (SoundObjects[i].flags & SOF_PLAYING)  && (SoundObjects[i].flags & SOF_PLAY_FOREVER))	{
@@ -1814,12 +1814,12 @@ void digi_sync_sounds()
 					SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 					continue;		// Go on to next sound...
 				} else {
-					digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum, 
+					digi_get_sound_loc( &Viewer->orient, &Viewer->pos, Viewer->segnum,
 	                                &objp->pos, objp->segnum, SoundObjects[i].max_volume,
                                    &SoundObjects[i].volume, &SoundObjects[i].pan, SoundObjects[i].max_distance );
 				}
 			}
-			 
+
 			if (oldvolume != SoundObjects[i].volume) 	{
 				if ( SoundObjects[i].volume < 1 )	{
 					// Sound is too far away, so stop it from playing.
@@ -1835,7 +1835,7 @@ void digi_sync_sounds()
 					}
 				}
 			}
-				
+
 			if (oldpan != SoundObjects[i].pan) 	{
 				if (SoundObjects[i].flags & SOF_PLAYING)
 					sosDIGISetPanLocation( hSOSDigiDriver, SoundObjects[i].handle, SoundObjects[i].pan );
@@ -1877,7 +1877,7 @@ void digi_pause_all()
 				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) )	{
 					sosDIGIStopSample( hSOSDigiDriver, SoundObjects[i].handle );
 					SoundObjects[i].flags &= ~SOF_PLAYING;		// Mark sound as not playing
-				}			
+				}
 			}
 		}
 	}
@@ -1967,4 +1967,3 @@ int verify_sound_channel_free( int channel )
 	return 0;
 }
 #endif
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,19 +21,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: gpixel.c $
  * Revision 1.5  1994/11/18  22:50:20  john
  * Changed shorts to ints in parameters.
- * 
+ *
  * Revision 1.4  1994/05/06  12:50:08  john
  * Added supertransparency; neatend things up; took out warnings.
- * 
+ *
  * Revision 1.3  1993/10/15  16:22:50  john
  * y
- * 
+ *
  * Revision 1.2  1993/09/29  16:15:00  john
  * optimized
- * 
+ *
  * Revision 1.1  1993/09/08  11:43:40  john
  * Initial revision
- * 
+ *
  *
  */
 #include "mem.h"
@@ -87,4 +87,3 @@ unsigned char gr_gpixel( grs_bitmap * bitmap, int x, int y )
 	}
 	return 0;
 }
-

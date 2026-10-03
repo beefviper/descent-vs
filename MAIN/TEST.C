@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /* test.c */
@@ -23,7 +23,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 void main(int argc,char ** argv) {
 TrackerData td;
 TrackerStatus ts;
-  
+
   ts = initTracker(&td,TP_COM1,9600,timerSecs(2));
   printf("%s.\n",trackerInfo(ts));
   if (ts != TS_OK) {
@@ -87,7 +87,7 @@ TrackerStatus ts;
     closeTracker(&td);
     exit(0);
   } // if
-#endif  
+#endif
 
   ts = readTrackerAllVars(&td);
   if (ts != TS_OK) {
@@ -113,7 +113,7 @@ TrackerStatus ts;
   while (1) {
     float y,p,p2,r;
     if (kbhit() && getch() == 'q') break;
-//delayTime(10);    
+//delayTime(10);
     ts = readTracker(&td,timerSecs(1));
     if (ts != TS_OK) {
       printf("\n%s.\n",trackerInfo(ts));
@@ -125,15 +125,15 @@ TrackerStatus ts;
     y = TOFLOAT(td.euler.y);
     p = TOFLOAT(td.euler.x);
     r = TOFLOAT(td.euler.z);
-    
+
     p2 = compAngle(p);
-    
+
 //    printf("x %5d y %5d z %5d y %4.2f p %4.2f p2 %4.2f r %4.2f\n",
 //      td.magnetic.x,td.magnetic.y,td.magnetic.z,y,p,p2,r);
     printf("x %6d y %6d z %6d y %6.2f p %6.2f r %6.2f\n",
       td.magnetic.x,td.magnetic.y,td.magnetic.z,y,p,r);
-  
-  
+
+
   } // while
 
   closeTracker(&td);
@@ -141,4 +141,3 @@ TrackerStatus ts;
 } // main
 
 /* test.c */
-

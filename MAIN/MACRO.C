@@ -3,52 +3,52 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:09 $
- * 
+ *
  * Routines for recording/playing/saving macros
- * 
+ *
  * $Log: macro.c $
  * Revision 2.0  1995/02/27  11:35:09  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.12  1993/11/15  14:46:37  john
  * Changed Menu to MenuX
- * 
+ *
  * Revision 1.11  1993/11/05  17:32:44  john
  * added funcs
  * .,
- * 
+ *
  * Revision 1.10  1993/10/28  16:23:20  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.9  1993/10/28  13:03:12  john
  * ..
- * 
+ *
  * Revision 1.8  1993/10/25  16:02:35  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.7  1993/10/22  13:35:29  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.6  1993/10/21  17:10:09  john
  * Fixed bug w/ load macro.
- * 
+ *
  * Revision 1.5  1993/10/19  12:58:47  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/10/19  12:55:02  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/10/19  12:49:49  john
  * made EventBuffer dynamic, use ReadFile, WriteFile
- * 
+ *
  * Revision 1.2  1993/10/15  17:42:20  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/10/15  17:28:06  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -169,7 +169,7 @@ int MacroLoad()
 
 void macro_free_buffer()
 {
-	if ( RecordBuffer ) 
+	if ( RecordBuffer )
 		free(RecordBuffer);
 }
 
@@ -208,5 +208,3 @@ int MacroMenu()
 	}
 	return 1;
 }
-
-

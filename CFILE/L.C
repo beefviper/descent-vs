@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,35 +15,35 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.7 $
  * $Author: matt $
  * $Date: 1994/04/13 23:44:59 $
- * 
+ *
  * Functions for accessing compressed files.
- * 
+ *
  * $Log: cfile.c $
  * Revision 1.7  1994/04/13  23:44:59  matt
  * When file cannot be opened, free up the buffer for that file.
- * 
+ *
  * Revision 1.6  1994/02/18  12:38:20  john
  * Optimized a bit
- * 
+ *
  * Revision 1.5  1994/02/15  18:13:20  john
  * Fixed more bugs.
- * 
+ *
  * Revision 1.4  1994/02/15  13:27:58  john
  * Works ok...
- * 
+ *
  * Revision 1.3  1994/02/15  12:51:57  john
  * Crappy inbetween version
- * 
+ *
  * Revision 1.2  1994/02/14  20:12:29  john
  * First version working with new cfile stuff.
- * 
+ *
  * Revision 1.1  1994/02/14  15:51:33  john
  * Initial revision
- * 
+ *
  * Revision 1.1  1994/02/10  15:45:12  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -94,7 +94,7 @@ int raw_seek( CFILE * cfile, int pos )
 }
 
 int raw_getc( CFILE * cfile )
-{	
+{
 	int c;
 
 //	if (cfile->others_use)
@@ -103,7 +103,7 @@ int raw_getc( CFILE * cfile )
 	if (cfile->raw_position >= cfile->org_size ) return EOF;
 
 	c = getc( cfile->file );
-	if (c!=EOF) 
+	if (c!=EOF)
 		cfile->raw_position++;
 
 //	Assert( cfile->raw_position==(ftell(cfile->file)-cfile->lib_offset) );
@@ -120,7 +120,7 @@ int raw_putc( int c, CFILE * cfile )
 
 	r = fputc( c, cfile->file );
 
- 	if (r!=EOF) 
+ 	if (r!=EOF)
 		cfile->raw_position++;
 
 	Assert( cfile->raw_position==(ftell(cfile->file)-cfile->lib_offset) );
@@ -218,7 +218,7 @@ int compress_input_bit( CFILE *bit_file ) {
 
     if ( bit_file->mask == 0x80 ) {
         bit_file->rack = raw_getc( bit_file );
-        if ( bit_file->rack == EOF ) 
+        if ( bit_file->rack == EOF )
 				return END_OF_STREAM;
         //Error( "Fatal error in compress_input_bit!" );
     }
@@ -238,7 +238,7 @@ unsigned int compress_input_bits( CFILE *bit_file, int bit_count ) {
 	while ( mask != 0)	{
 		if ( bit_file->mask == 0x80 ) {
 			bit_file->rack = raw_getc( bit_file );
-			if ( bit_file->rack == EOF ) 
+			if ( bit_file->rack == EOF )
 				return END_OF_STREAM;
 			//Error( "Fatal error in compress_input_bit!" );
     	}
@@ -261,7 +261,7 @@ CFILE * cfopen(char * filename, char * mode ) {
 	cfile->rack = 0;
 	cfile->mask = 0x80;
 	MALLOC(cfile->buffer,char,4096*2);
-		
+
 	if (strcmpi( mode, "rc")==0 )	{
 		cfile->file = LibraryGetFileInfo( filename, &cfile->others_use, &cfile->lib_offset, &cfile->compressed_size, &cfile->org_size, &cfile->compressed, cfile->buffer );
 		if (cfile->file==NULL )	{
@@ -308,7 +308,7 @@ CFILE * cfopen(char * filename, char * mode ) {
 	setvbuf( cfile->file, cfile->buffer, _IOFBF, 4096*2 );
 	cfile->org_size = filelength( fileno( cfile->file ));
 	cfile->compressed_size = cfile->org_size;
-	cfile->readonly=0;	
+	cfile->readonly=0;
 	cfile->position = 0;
 	cfile->raw_position = 0;
 	cfile->compressed = 0;
@@ -340,7 +340,7 @@ int cfputc( int c, CFILE *fp )
 		fp->position++;
 		return character;
 	}
-	
+
 	fp->position++;
 	index = compress_find_child_node( fp, fp->string_code, character );
 	if ( fp->dict[ index ].code_value != - 1 )
@@ -406,7 +406,7 @@ int cfgetc( CFILE * fp ) {
 		case END_OF_STREAM:
 			fp->position = fp->org_size;
 			return EOF;
-	
+
 		case FLUSH_CODE:
 			compress_init_dict(fp);
 			fp->old_code = (unsigned int) compress_input_bits( fp, fp->current_code_bits );
@@ -418,7 +418,7 @@ int cfgetc( CFILE * fp ) {
 			fp->character = fp->old_code;
 			fp->position++;
 			return fp->character;
-			
+
 		case BUMP_CODE:
 			fp->current_code_bits++;
 			break;
@@ -430,7 +430,7 @@ int cfgetc( CFILE * fp ) {
 			} else {
 				fp->count = compress_decode_string( fp, 0, fp->new_code );
 			}
-	            
+
 			fp->character = fp->decode_stack[ fp->count - 1 ];
 
 			new_character = ( unsigned char )fp->decode_stack[ --fp->count ];
@@ -446,7 +446,7 @@ int cfgetc( CFILE * fp ) {
 	}
 }
 
-size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp ) 
+size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp )
 {
 	int c, i = 0;
 	unsigned char * buffer = (unsigned char *)buf;
@@ -457,7 +457,7 @@ size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp )
 		//fp->raw_position += i*elsize;
 		//	return i;
 		//return raw_fread( buf, elsize, nelem, fp->file );
-		
+
 		for ( i=0; i<(elsize*nelem); i++ )
 		{
 			c = raw_getc( fp );
@@ -478,7 +478,7 @@ size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp )
 
 	return nelem;
 }
-		
+
 size_t cfwrite( const void * buf, size_t elsize, size_t nelem, CFILE *fp )
 {
 	int c, i = 0;
@@ -494,7 +494,7 @@ size_t cfwrite( const void * buf, size_t elsize, size_t nelem, CFILE *fp )
 		}
 		return nelem;
 	}
-	
+
 	for ( i=0; i<(elsize*nelem); i++ )
 	{
 		c = *buffer++;
@@ -533,7 +533,7 @@ int cfseek( CFILE *fp, long int offset, int where )
 		break;
 	default:
 		return 1;
-	}	
+	}
 
 	if ( !fp->compressed )	{
 		c = fseek( fp->file, fp->lib_offset + goal_position, SEEK_SET );
@@ -541,13 +541,13 @@ int cfseek( CFILE *fp, long int offset, int where )
 		return c;
 	}
 
-	
+
 	if ( (goal_position<0) || (goal_position>=fp->org_size) )
 		return 1;
 
-	if ( goal_position == fp->position ) 
+	if ( goal_position == fp->position )
 		return 0;	// Already there!
-	
+
 	if ( goal_position < fp->position ) 	{
 		// We need to back track...
 		compress_init_dict(fp);
@@ -562,7 +562,7 @@ int cfseek( CFILE *fp, long int offset, int where )
 		//if (signature != 0xCFCF )	return 1;
 		//fread( &fp->compressed_size, sizeof(int), 1, fp->file );
 	}
-	
+
 	// Read forward to goal_position...
 	while( fp->position < goal_position  )
 	{
@@ -572,7 +572,7 @@ int cfseek( CFILE *fp, long int offset, int where )
 	return 0;
 }
 
-void cfclose( CFILE * fp ) {	
+void cfclose( CFILE * fp ) {
 	char signature[3] = "CF";
 
 	Assert( fp!=NULL );
@@ -585,13 +585,13 @@ void cfclose( CFILE * fp ) {
 		return;
 	}
 
-	if (!fp->readonly)	{	
+	if (!fp->readonly)	{
 		compress_output_bits( fp, (unsigned long) fp->string_code, fp->current_code_bits );
 		compress_output_bits( fp, (unsigned long) END_OF_STREAM, fp->current_code_bits);
 		if ( fp->mask != 0x80 )	{
 			if ( putc( fp->rack, fp->file ) != fp->rack )
 				Error( "Fatal error in CloseBitFile" );
-		}		 
+		}
 		fp->org_size = fp->position;
 		fseek( fp->file, 0L, SEEK_SET );
 		fwrite( signature, 2, sizeof(char), fp->file );
@@ -605,6 +605,3 @@ void cfclose( CFILE * fp ) {
 	free(fp);
 
 }
-
-
-

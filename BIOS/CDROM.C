@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdio.h>
@@ -31,12 +31,12 @@ typedef struct _Dev_Hdr {
 	char dev_letr;
 	char dev_units;
 } dev_header;
-	
+
 
 void find_cdrom()
 {
 	dpmi_real_regs rregs;
-		
+
 	// Get dos memory for call...
 	dev_list * buf;
 	dev_header *device;
@@ -55,7 +55,7 @@ void find_cdrom()
 	}
 	num_drives = rregs.ebx;
 
-	buf = (dev_list *)dpmi_get_temp_low_buffer( sizeof(dev_list)*26 );	
+	buf = (dev_list *)dpmi_get_temp_low_buffer( sizeof(dev_list)*26 );
 
 	rregs.es = DPMI_real_segment(buf);
 	rregs.ebx = DPMI_real_offset(buf);
@@ -71,7 +71,7 @@ void find_cdrom()
 			//if (pig_found)
 			cdrom_drive = device->dev_letr;
 			printf( "Found cd-rom drive %c:\n", cdrom_drive + 'A' -1 );
-		}				
+		}
 	}
 	if (cdrom_drive == 0)
 		printf("Descent CD not detected in any connected CDROM device\n");
@@ -81,4 +81,3 @@ void main()
 {
 	find_cdrom();
 }
-

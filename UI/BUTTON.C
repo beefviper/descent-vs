@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,34 +21,34 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: button.c $
  * Revision 1.10  1994/11/18  23:07:32  john
  * Changed a bunch of shorts to ints.
- * 
+ *
  * Revision 1.9  1994/09/22  18:18:42  john
  * Fixed bug with Enter being pressed when a window opens.
- * 
+ *
  * Revision 1.8  1994/06/09  12:18:28  john
  * Took out keyboard flushes.
- * 
+ *
  * Revision 1.7  1994/04/22  11:10:11  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.6  1993/12/10  14:16:29  john
  * made buttons have 2 user-functions.
- * 
+ *
  * Revision 1.5  1993/12/07  12:31:18  john
  * new version.
- * 
+ *
  * Revision 1.4  1993/10/26  13:45:56  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1993/10/05  17:30:21  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/09/20  10:34:49  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/09/20  10:27:15  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -106,7 +106,7 @@ void ui_draw_button( UI_GADGET_BUTTON * button )
 		{
 			if ((button->user_function==NULL) && button->dim_if_no_function )
 				gr_set_fontcolor( CGREY, -1 );
-			else 
+			else
 				gr_set_fontcolor( CBLACK, -1 );
 		}
 
@@ -121,7 +121,7 @@ void ui_draw_button( UI_GADGET_BUTTON * button )
 				gr_rect( 0, 0, button->width, button->height );
 				gr_setcolor( color );
 				gr_rect( 1, 1, button->width-1, button->height-1 );
-			}				
+			}
 		} else {
 			if (button->text )	{
 				ui_draw_box_in( 0, 0, button->width-1, button->height-1 );
@@ -131,7 +131,7 @@ void ui_draw_button( UI_GADGET_BUTTON * button )
 				gr_rect( 0, 0, button->width, button->height );
 				gr_setcolor( color );
 				gr_rect( 2, 2, button->width, button->height );
-			}			
+			}
 		}
 		button->canvas->cv_color = color;
 		ui_mouse_show();
@@ -162,7 +162,7 @@ UI_GADGET_BUTTON * ui_add_gadget_button( UI_WINDOW * wnd, short x, short y, shor
 	button->user_function1 = NULL;
 	button->hotkey1= -1;
 	button->dim_if_no_function = 0;
-	
+
 	return button;
 
 }
@@ -207,14 +207,14 @@ void ui_button_do( UI_GADGET_BUTTON * button, int keypress )
 		last_keypress = 0;
 	}
 
-	
+
 	//if ((CurWindow->keyboard_focus_gadget==(UI_GADGET *)button) && (keyd_pressed[KEY_SPACEBAR] || keyd_pressed[KEY_ENTER] ) )
 	//	button->position = 2;
 
 	if ((CurWindow->keyboard_focus_gadget==(UI_GADGET *)button) && ((keypress==KEY_SPACEBAR) || (keypress==KEY_ENTER)) )
 		button->position = 2;
 
-	if (CurWindow->keyboard_focus_gadget==(UI_GADGET *)button)	
+	if (CurWindow->keyboard_focus_gadget==(UI_GADGET *)button)
 		if ((button->oldposition==2) && (keyd_pressed[KEY_SPACEBAR] || keyd_pressed[KEY_ENTER] )  )
 			button->position = 2;
 
@@ -234,9 +234,3 @@ void ui_button_do( UI_GADGET_BUTTON * button, int keypress )
 		result = button->user_function();
 	}
 }
-
-
-
-
-
-

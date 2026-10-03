@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,50 +15,50 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.12 $
  * $Author: john $
  * $Date: 1995/03/14 15:14:11 $
- * 
+ *
  * Routines for scaling a bitmap.
- * 
+ *
  * $Log: scale.c $
  * Revision 1.12  1995/03/14  15:14:11  john
  * Increased max scanline length to 640.
  * ..
- * 
+ *
  * Revision 1.11  1994/11/27  12:56:39  matt
  * Took out unneeded include of 3d.h
- * 
+ *
  * Revision 1.10  1994/11/18  22:50:25  john
  * Changed shorts to ints in parameters.
- * 
+ *
  * Revision 1.9  1994/11/09  16:35:02  john
  * First version with working RLE bitmaps.
- * 
+ *
  * Revision 1.8  1994/06/09  13:15:17  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.7  1994/06/07  11:47:02  john
  * Added back in the fast code for scaling up bitmaps.
- * 
+ *
  * Revision 1.6  1994/02/18  15:32:36  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.5  1994/01/22  14:35:01  john
  * Added transparency as color index 255.
- * 
+ *
  * Revision 1.4  1994/01/17  16:59:12  john
  * once again...
- * 
+ *
  * Revision 1.3  1994/01/17  16:51:17  john
  * Added check so we don't draw outsibe
  * the source bitmap's v coordinate... kind
  * of a hack, but works.
- * 
+ *
  * Revision 1.2  1994/01/12  18:03:26  john
  * The first iteration of fast scaler..
- * 
+ *
  * Revision 1.1  1994/01/11  14:48:42  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -110,13 +110,13 @@ void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 
 		if ( c != Transparency_color )
 			*dbits = c;
-			
+
 		dbits++;
 		u += du;
 	}
 }
 
-// esi, edi = source, dest	
+// esi, edi = source, dest
 // ecx = width
 // ebx = u
 // edx = du
@@ -208,7 +208,7 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 		clipped_v1 = FIND_SCALED_NUM(ymax,y0,y1,v0,v1);
 		clipped_y1 = ymax;
 	}
-	
+
 	dx0 = f2i(clipped_x0); dx1 = f2i(clipped_x1);
 	dy0 = f2i(clipped_y0); dy1 = f2i(clipped_y1);
 
@@ -258,7 +258,7 @@ void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0
 	for (y=y0; y<=y1; y++ )			{
 		sbits = &source_bmp->bm_data[source_bmp->bm_rowsize*f2i(v)];
 		dbits = &dest_bmp->bm_data[dest_bmp->bm_rowsize*y+x0];
-		u = u0; 
+		u = u0;
 		v += dv;
 		for (x=x0; x<=x1; x++ )			{
 			*dbits++ = sbits[ u >> 16 ];
@@ -288,7 +288,7 @@ ubyte scale_rle_data[640];
 void decode_row( grs_bitmap * bmp, int y )
 {
 	int i, offset=4+bmp->bm_h;
-	
+
 	for (i=0; i<y; i++ )
 		offset += bmp->bm_data[4+i];
 	gr_rle_decode( &bmp->bm_data[offset], scale_rle_data );
@@ -321,7 +321,7 @@ void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, i
 	int y;
 
 	dv = (v1-v0) / (y1-y0);
-		
+
 	rls_stretch_scanline_setup( (int)(x1-x0), f2i(u1)-f2i(u0) );
 	if ( scale_ydelta_minus_1 < 1 ) return;
 	rls_do_cc_setup_asm();
@@ -342,7 +342,7 @@ void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x
 	int y, last_row = -1;
 
 	dv = (v1-v0) / (y1-y0);
-		
+
 	rls_stretch_scanline_setup( (int)(x1-x0), f2i(u1)-f2i(u0) );
 	if ( scale_ydelta_minus_1 < 1 ) return;
 	rls_do_cc_setup_asm();
@@ -363,8 +363,7 @@ void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x
 }
 
 
-
-// Run-length slice bitmap scan line stretcher 
+// Run-length slice bitmap scan line stretcher
 
 void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
 {
@@ -457,8 +456,6 @@ void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
 }
 
 
-
-
 void rls_stretch_scanline_setup( int XDelta, int YDelta )
 {
 		scale_trans_color = Transparency_color & 0xFF;
@@ -504,4 +501,3 @@ void rls_stretch_scanline_setup( int XDelta, int YDelta )
       }
 
 }
-

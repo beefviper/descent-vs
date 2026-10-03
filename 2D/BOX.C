@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,13 +21,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: box.c $
  * Revision 1.3  1994/11/18  22:50:19  john
  * Changed shorts to ints in parameters.
- * 
+ *
  * Revision 1.2  1993/10/15  16:23:31  john
  * y
- * 
+ *
  * Revision 1.1  1993/09/08  11:43:11  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -72,7 +72,7 @@ void gr_box0(int left,int top,int right,int bot)
     if (bot < MINY ) return;
     if (left > MAXX ) return;
     if (right < MINX ) return;
-    
+
 	if (top < MINY) top = MINY;
     if (bot > MAXY ) bot = MAXY;
 	if (left < MINX) left = MINX;
@@ -104,14 +104,14 @@ void gr_box12(int left,int top,int right,int bot)
     if (bot < MINY ) return;
     if (left > MAXX ) return;
     if (right < MINX ) return;
-    
+
 	if (top < MINY) top = MINY;
     if (bot > MAXY ) bot = MAXY;
 	if (left < MINX) left = MINX;
     if (right > MAXX ) right = MAXX;
-        
+
 	gr_ubox12(left, top, right, bot );
-    
+
 }
 
 void gr_ubox(int left,int top,int right,int bot)
@@ -133,8 +133,7 @@ void gr_box(int left,int top,int right,int bot)
 
 	else if ( TYPE == BM_MODEX )
 		gr_box12( left, top, right, bot );
-    
+
 	else
 		gr_ubox12( left, top, right, bot );
 }
-

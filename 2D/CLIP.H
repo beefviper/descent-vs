@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,13 +21,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: clip.h $
  * Revision 1.3  1993/10/15  16:22:28  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/09/29  16:14:31  john
  * made work with fix point
- * 
+ *
  * Revision 1.1  1993/09/08  11:40:53  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -86,7 +86,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
     if(x2 > XMAX) { x2 = XMAX; WHEN_CLIPPED; }              \
     if(y2 > YMAX) { y2 = YMAX; WHEN_CLIPPED; }              \
 }
-    
+
 #define CLIPLINE(x1,y1,x2,y2,XMIN,YMIN,XMAX,YMAX,WHEN_OUTSIDE,WHEN_CLIPPED,MY_SCALE) do {                                    \
     register int temp;                                                  \
                                                                         \

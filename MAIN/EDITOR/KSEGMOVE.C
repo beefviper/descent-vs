@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -22,24 +22,24 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * Revision 2.0  1995/02/27  11:33:37  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.5  1993/12/02  12:39:36  matt
  * Removed extra includes
- * 
+ *
  * Revision 1.4  1993/11/12  16:40:23  mike
  * Use rotate_segment_new in place of med_rotate_segment_ang.
- * 
+ *
  * Revision 1.3  1993/11/05  17:32:54  john
  * added funcs
  * .,
- * 
+ *
  * Revision 1.2  1993/10/26  11:28:41  mike
  * Write common routine SegOrientCommon so all movement can pass
  * through the same routine to check for concavity, among other things.
- * 
+ *
  * Revision 1.1  1993/10/13  18:53:21  john
  * Initial revision
- * 
+ *
  *
  */
 

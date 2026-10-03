@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -48,7 +48,7 @@ void *ReadFile( char *filename, int *length )
 
 	handle = open( filename, O_RDONLY | O_BINARY );
 	if (handle == -1 )
-        Error("File %s, %s ",filename,strerror(errno)); 
+        Error("File %s, %s ",filename,strerror(errno));
 
     *length = filelength( handle );
 
@@ -63,7 +63,7 @@ void *ReadFile( char *filename, int *length )
     if (read( handle, FileData, *length ) != *length )    {
 		free( FileData );
 		close( handle );
-      Error("File %s, %s ",filename,strerror(errno)); 
+      Error("File %s, %s ",filename,strerror(errno));
 	}
 	close( handle );
 

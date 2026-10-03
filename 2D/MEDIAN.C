@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -50,7 +50,7 @@ int Frequency[32768];
 static unsigned char * VideoMemory = (unsigned char *)0xA0000;
 
 static void Shrink( int BoxIndex ) {
-		
+
 	int RedIndex, BlueIndex, GreenIndex, Index;
 
 	int RedLo = BoxRedLo[BoxIndex];
@@ -61,15 +61,15 @@ static void Shrink( int BoxIndex ) {
 
 	int BlueLo = BoxBlueLo[BoxIndex];
 	int BlueHi = BoxBlueHi[BoxIndex];
-	
-	for (RedIndex=RedLo; RedIndex<=RedHi; RedIndex++ )	
+
+	for (RedIndex=RedLo; RedIndex<=RedHi; RedIndex++ )
 		for (BlueIndex=BlueLo; BlueIndex<=BlueHi; BlueIndex++ )	{
 			Index = (RedIndex<<(BITS+BITS)) + (GreenLo<<BITS) + BlueIndex;
 			for (GreenIndex=GreenLo; GreenIndex<=GreenHi; GreenIndex++, Index+=32 )
 				if ( Frequency[ Index ]  )
 					goto Next1;
 		}
- 
+
 Next1:
 	  BoxRedLo[BoxIndex] = RedIndex;
 	  RedLo = RedIndex;
@@ -84,7 +84,7 @@ Next2:
 
 	  BoxRedHi[BoxIndex] = RedIndex;
 		RedHi = RedIndex;
-	  for (BlueIndex=BlueLo; BlueIndex<=BlueHi; BlueIndex++ ) 
+	  for (BlueIndex=BlueLo; BlueIndex<=BlueHi; BlueIndex++ )
 		  for (RedIndex=RedLo; RedIndex<=RedHi; RedIndex++ ) 	{
 			  Index = (RedIndex<<(BITS+BITS)) + BlueIndex + (GreenLo<<BITS);
 			  for (GreenIndex=GreenLo; GreenIndex<=GreenHi; GreenIndex++, Index += 32 )
@@ -96,7 +96,7 @@ Next3:
 
 	  BoxBlueLo[BoxIndex] = BlueIndex;
 		BlueLo = BlueIndex;
-	  for (BlueIndex=BlueHi; BlueIndex>=BlueLo; BlueIndex-- )   
+	  for (BlueIndex=BlueHi; BlueIndex>=BlueLo; BlueIndex-- )
 		  for (RedIndex=RedHi; RedIndex>=RedLo; RedIndex-- )    {
 			  Index=(RedIndex<<(BITS+BITS)) + (GreenHi<<BITS) + BlueIndex;
 			  for (GreenIndex=GreenHi; GreenIndex>=GreenLo; GreenIndex--, Index -= 32 )
@@ -107,7 +107,7 @@ Next3:
 Next4:
 	  BoxBlueHi[BoxIndex] = BlueIndex;
 		BlueHi = BlueIndex;
-	  for (GreenIndex=GreenLo; GreenIndex<=GreenHi; GreenIndex++ )    
+	  for (GreenIndex=GreenLo; GreenIndex<=GreenHi; GreenIndex++ )
 		  for (RedIndex=RedLo; RedIndex<=RedHi; RedIndex++ )    {
 			  Index=(RedIndex<<(BITS+BITS)) + (GreenIndex<<BITS) + BlueLo;
 			  for (BlueIndex=BlueLo; BlueIndex<=BlueHi; BlueIndex++, Index++ )
@@ -118,7 +118,7 @@ Next4:
 Next5:
 	  BoxGreenLo[BoxIndex] = GreenIndex;
 		GreenLo = GreenIndex;
-	  for (GreenIndex=GreenHi; GreenIndex>=GreenLo; GreenIndex-- )   
+	  for (GreenIndex=GreenHi; GreenIndex>=GreenLo; GreenIndex-- )
 		  for (RedIndex=RedHi; RedIndex>=RedLo; RedIndex-- )	{
 			  Index=(RedIndex<<(BITS+BITS)) + (GreenIndex<<BITS) + BlueHi;
 			  for (BlueIndex=BlueHi; BlueIndex>=BlueLo; BlueIndex--, Index-- )
@@ -135,18 +135,18 @@ Next6:
 		NewRedLo = RedHi; NewRedHi = RedLo;
 		NewBlueLo = BlueHi; NewBlueHi = BlueLo;
 
-	  for (GreenIndex=GreenHi; GreenIndex>=GreenLo; GreenIndex-- )   
+	  for (GreenIndex=GreenHi; GreenIndex>=GreenLo; GreenIndex-- )
 		  for (RedIndex=RedHi; RedIndex>=RedLo; RedIndex-- )	{
 			  Index=(RedIndex<<(BITS+BITS)) + (GreenIndex<<BITS) + BlueHi;
 			  for (BlueIndex=BlueHi; BlueIndex>=BlueLo; BlueIndex--, Index-- )	{
-					f = Frequency[ Index ]					
-					
+					f = Frequency[ Index ]
+
 					if ( f )	{
 						if ( RedIndex < NewRedLo ) NewRedLo = RedIndex;
 						if ( GreenIndex < NewGreenLo ) NewGreenLo = GreenIndex;
 						if ( BlueIndex < NewBlueLo ) NewBlueLo = BlueIndex;
 					}
-	
+
 				}
 
 	*/
@@ -201,10 +201,10 @@ static int FindNextBoxToSplit(int NumBoxes)
 		// if none, we're done...
 
 	  for (c=0; c<NumBoxes; c++ )    {
-		  if ( (BoxNumElements[c] > LongMax) && 
+		  if ( (BoxNumElements[c] > LongMax) &&
 					(	(BoxRedLo[c] != BoxRedHi[c]) ||
-						(BoxBlueLo[c] != BoxBlueHi[c]) || 
-						(BoxGreenLo[c] != BoxGreenHi[c]) ))	
+						(BoxBlueLo[c] != BoxBlueHi[c]) ||
+						(BoxGreenLo[c] != BoxGreenHi[c]) ))
 		  {
 			  LongMax = BoxNumElements[c];
 			  SelectedBox = c;
@@ -347,10 +347,10 @@ static int FindTargetBox( int NumBoxes )
 {
 	int c;
 
-	for (c=0; c<NumBoxes; c++ ) 
-		if (BoxNumElements[c] == 0 )  
+	for (c=0; c<NumBoxes; c++ )
+		if (BoxNumElements[c] == 0 )
 			return c;
-	
+
 	return NumBoxes;
 }
 
@@ -422,12 +422,12 @@ void mediancut( WORD * data, int num_pixels, int num_colors, void * dest_bitmap,
 				BoxRedLo[0] = r;
 			else if( r > BoxRedHi[0] )
 				BoxRedHi[0] = r;
-	
+
 			if ( g < BoxGreenLo[0] )
 				BoxGreenLo[0] = g;
 			else if( g > BoxGreenHi[0] )
 				BoxGreenHi[0] = g;
-	
+
 			if ( b < BoxBlueLo[0] )
 				BoxBlueLo[0] = b;
 			else if( b > BoxBlueHi[0] )
@@ -438,17 +438,17 @@ void mediancut( WORD * data, int num_pixels, int num_colors, void * dest_bitmap,
 
   BoxNumElements[0] = TotalPixels;
   NumBoxes = 1;
-	
-  //for ( i=0; i< TotalPixels; i++ )	
+
+  //for ( i=0; i< TotalPixels; i++ )
   //	Frequency[ data[i] ]++;
   //MedianReadFrequencies( data,TotalPixels );
   Shrink(0);
 
   while(NumBoxes < TargetColors )    {
-							 
+
 		SelectedBox = FindNextBoxToSplit(NumBoxes);
 		if (SelectedBox == -1 ) break;
-		
+
 		TargetBox	= FindTargetBox( NumBoxes );
 		axis			= FindAxisToSplit( SelectedBox );
 
@@ -463,7 +463,7 @@ void mediancut( WORD * data, int num_pixels, int num_colors, void * dest_bitmap,
 
 		Shrink(SelectedBox);
 		Shrink(TargetBox);
-	
+
 		if (TargetBox == NumBoxes )  NumBoxes++;
 
   }
@@ -474,5 +474,3 @@ void mediancut( WORD * data, int num_pixels, int num_colors, void * dest_bitmap,
  	MedianSetPalette( NumBoxes, palette );
 //	MedianPutImage( data, dest_bitmap, TotalPixels );
 }
-
-

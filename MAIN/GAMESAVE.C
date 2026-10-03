@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,264 +15,264 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.2 $
  * $Author: john $
  * $Date: 1995/04/23 14:53:12 $
- * 
+ *
  * Save game information
- * 
+ *
  * $Log: gamesave.c $
  * Revision 2.2  1995/04/23  14:53:12  john
  * Made some mine structures read in with no structure packing problems.
- * 
+ *
  * Revision 2.1  1995/03/20  18:15:43  john
  * Added code to not store the normals in the segment structure.
- * 
+ *
  * Revision 2.0  1995/02/27  11:29:50  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.207  1995/02/23  10:17:36  allender
  * fixed parameter mismatch with compute_segment_center
- * 
+ *
  * Revision 1.206  1995/02/22  14:51:17  allender
  * fixed some things that I missed
- * 
+ *
  * Revision 1.205  1995/02/22  13:31:38  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.204  1995/02/01  20:58:08  john
  * Made editor check hog.
- * 
+ *
  * Revision 1.203  1995/01/28  17:40:34  mike
  * correct level names (use rdl, sdl) for dumpmine stuff.
- * 
+ *
  * Revision 1.202  1995/01/25  20:03:46  matt
  * Moved matrix check to avoid orthogonalizing an uninitialize matrix
- * 
+ *
  * Revision 1.201  1995/01/20  16:56:53  mike
  * remove some mprintfs.
- * 
+ *
  * Revision 1.200  1995/01/15  19:42:13  matt
  * Ripped out hostage faces for registered version
- * 
+ *
  * Revision 1.199  1995/01/05  16:59:09  yuan
  * Make it so if editor is loaded, don't get error from typo
  * in filename.
- * 
+ *
  * Revision 1.198  1994/12/19  12:49:46  mike
  * Change fgets to cfgets.  fgets was getting a pointer mismatch warning.
- * 
+ *
  * Revision 1.197  1994/12/12  01:20:03  matt
  * Took out object size hack for green claw guys
- * 
+ *
  * Revision 1.196  1994/12/11  13:19:37  matt
  * Restored calls to fix_object_segs() when debugging is turned off, since
  * it's not a big routine, and could fix some possibly bad problems.
- * 
+ *
  * Revision 1.195  1994/12/10  16:17:24  mike
  * fix editor bug that was converting transparent walls into rock.
- * 
+ *
  * Revision 1.194  1994/12/09  14:59:27  matt
  * Added system to attach a fireball to another object for rendering purposes,
  * so the fireball always renders on top of (after) the object.
- * 
+ *
  * Revision 1.193  1994/12/08  17:19:02  yuan
  * Cfiling stuff.
- * 
+ *
  * Revision 1.192  1994/12/02  20:01:05  matt
  * Always give vulcan cannon powerup same amount of ammo, regardless of
  * how much it was saved with
- * 
+ *
  * Revision 1.191  1994/11/30  17:45:57  yuan
  * Saving files now creates RDL/SDLs instead of CDLs.
- * 
+ *
  * Revision 1.190  1994/11/30  17:22:14  matt
  * Ripped out hostage faces in shareware version
- * 
+ *
  * Revision 1.189  1994/11/28  00:09:30  allender
  * commented out call to newdemo_record_start_demo in load_level...what is
  * this doing here anyway?????
- * 
+ *
  * Revision 1.188  1994/11/27  23:13:48  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.187  1994/11/27  18:06:20  matt
  * Cleaned up LVL/CDL file loading
- * 
+ *
  * Revision 1.186  1994/11/25  22:46:29  matt
  * Allow ESC out of compiled/normal menu (esc=compiled).
- * 
+ *
  * Revision 1.185  1994/11/23  12:18:35  mike
  * move level names here...a more logical place than dumpmine.
- * 
+ *
  * Revision 1.184  1994/11/21  20:29:19  matt
  * If hostage info is bad, fix it.
- * 
+ *
  * Revision 1.183  1994/11/21  20:26:07  matt
  * Fixed bug, I hope
- * 
+ *
  * Revision 1.182  1994/11/21  20:20:37  matt
  * Fixed stupid mistake
- * 
+ *
  * Revision 1.181  1994/11/21  20:18:40  matt
  * Fixed (hopefully) totally bogus writing of hostage data
- * 
+ *
  * Revision 1.180  1994/11/20  14:11:56  matt
  * Gracefully handle two hostages having same id
- * 
+ *
  * Revision 1.179  1994/11/19  23:55:05  mike
  * remove Assert, put in comment for Matt.
- * 
+ *
  * Revision 1.178  1994/11/19  19:53:24  matt
  * Added code to full support different hostage head clip & message for
  * each hostage.
- * 
+ *
  * Revision 1.177  1994/11/19  15:15:21  mike
  * remove unused code and data
- * 
+ *
  * Revision 1.176  1994/11/19  10:28:28  matt
  * Took out write routines when editor compiled out
- * 
+ *
  * Revision 1.175  1994/11/17  20:38:25  john
  * Took out warning.
- * 
+ *
  * Revision 1.174  1994/11/17  20:36:34  john
  * Made it so that saving a mine will write the .cdl even
  * if .lvl gets error.
- * 
+ *
  * Revision 1.173  1994/11/17  20:26:19  john
  * Made the game load whichever of .cdl or .lvl exists,
  * and if they both exist, prompt the user for which one.
- * 
+ *
  * Revision 1.172  1994/11/17  20:11:20  john
  * Fixed warning.
- * 
+ *
  * Revision 1.171  1994/11/17  20:09:26  john
  * Added new compiled level format.
- * 
+ *
  * Revision 1.170  1994/11/17  14:57:21  mike
  * moved segment validation functions from editor to main.
- * 
+ *
  * Revision 1.169  1994/11/17  11:39:21  matt
  * Ripped out code to load old mines
- * 
+ *
  * Revision 1.168  1994/11/16  11:24:53  matt
  * Made attack-type robots have smaller radius, so they get closer to player
- * 
+ *
  * Revision 1.167  1994/11/15  21:42:47  mike
  * better error messages.
- * 
+ *
  * Revision 1.166  1994/11/15  15:30:41  matt
  * Save ptr to name of level being loaded
- * 
+ *
  * Revision 1.165  1994/11/14  20:47:46  john
- * Attempted to strip out all the code in the game 
+ * Attempted to strip out all the code in the game
  * directory that uses any ui code.
- * 
+ *
  * Revision 1.164  1994/11/14  14:34:23  matt
  * Fixed up handling when textures can't be found during remap
- * 
+ *
  * Revision 1.163  1994/11/10  14:02:49  matt
  * Hacked in support for player ships with different textures
- * 
+ *
  * Revision 1.162  1994/11/06  14:38:17  mike
  * Remove an apparently unnecessary mprintf.
- * 
+ *
  * Revision 1.161  1994/10/30  14:11:28  mike
  * ripout local segments stuff.
- * 
+ *
  * Revision 1.160  1994/10/28  12:10:41  matt
  * Check that was supposed to happen only when editor was in was happening
  * only when editor was out.
- * 
+ *
  * Revision 1.159  1994/10/27  11:25:32  matt
  * Only do connectivity error check when editor in
- * 
+ *
  * Revision 1.158  1994/10/27  10:54:00  matt
  * Made connectivity error checking put up warning if errors found
- * 
+ *
  * Revision 1.157  1994/10/25  10:50:54  matt
  * Vulcan cannon powerups now contain ammo count
- * 
+ *
  * Revision 1.156  1994/10/23  02:10:43  matt
  * Got rid of obsolete hostage_info stuff
- * 
+ *
  * Revision 1.155  1994/10/22  18:57:26  matt
  * Added call to check_segment_connections()
- * 
+ *
  * Revision 1.154  1994/10/21  12:19:23  matt
  * Clear transient objects when saving (& loading) games
- * 
+ *
  * Revision 1.153  1994/10/21  11:25:10  mike
  * Use new constant IMMORTAL_TIME.
- * 
+ *
  * Revision 1.152  1994/10/20  12:46:59  matt
  * Replace old save files (MIN/SAV/HOT) with new LVL files
- * 
+ *
  * Revision 1.151  1994/10/19  19:26:32  matt
  * Fixed stupid bug
- * 
+ *
  * Revision 1.150  1994/10/19  16:46:21  matt
  * Made tmap overrides for robots remap texture numbers
- * 
+ *
  * Revision 1.149  1994/10/18  08:50:27  yuan
  * Fixed correct variable this time.
- * 
+ *
  * Revision 1.148  1994/10/18  08:45:02  yuan
  * Oops. forgot load function.
- * 
+ *
  * Revision 1.147  1994/10/18  08:42:10  yuan
  * Avoid the int3.
- * 
+ *
  * Revision 1.146  1994/10/17  21:34:57  matt
  * Added support for new Control Center/Main Reactor
- * 
+ *
  * Revision 1.145  1994/10/15  19:06:34  mike
  * Fix bug, maybe, having to do with something or other, ...
- * 
+ *
  * Revision 1.144  1994/10/12  21:07:33  matt
  * Killed unused field in object structure
- * 
+ *
  * Revision 1.143  1994/10/06  14:52:55  mike
  * Put check in to detect possibly bogus walls in last segment which leaked through an earlier check
  * due to misuse of Highest_segment_index.
- * 
+ *
  * Revision 1.142  1994/10/05  22:12:44  mike
  * Put in cleanup for matcen/fuelcen links.
- * 
+ *
  * Revision 1.141  1994/10/03  11:30:05  matt
  * Make sure player in a valid segment before saving
- * 
+ *
  * Revision 1.140  1994/09/28  11:14:41  mike
  * Better error messaging on bogus mines: Only bring up dialog box if a "real" (level??.*) level.
- * 
+ *
  * Revision 1.139  1994/09/28  09:22:58  mike
  * Comment out a mprintf.
- * 
+ *
  * Revision 1.138  1994/09/27  17:08:36  mike
  * Message boxes when you load bogus mines.
- * 
+ *
  * Revision 1.137  1994/09/27  15:43:45  mike
  * Move the dump stuff to dumpmine.
- * 
+ *
  * Revision 1.136  1994/09/27  00:02:31  mike
  * Dump text files (".txm") when loading a mine, showing all kinds of useful mine info.
- * 
+ *
  * Revision 1.135  1994/09/26  11:30:41  matt
  * Took out code which loaded bogus player structure
- * 
+ *
  * Revision 1.134  1994/09/26  11:18:44  john
  * Fixed some conflicts with newseg.
- * 
+ *
  * Revision 1.133  1994/09/26  10:56:58  matt
  * Fixed inconsistancies in lifeleft for immortal objects
- * 
+ *
  * Revision 1.132  1994/09/25  23:41:10  matt
  * Changed the object load & save code to read/write the structure fields one
  * at a time (rather than the whole structure at once).  This mean that the
  * object structure can be changed without breaking the load/save functions.
- * As a result of this change, the local_object data can be and has been 
- * incorporated into the object array.  Also, timeleft is now a property 
+ * As a result of this change, the local_object data can be and has been
+ * incorporated into the object array.  Also, timeleft is now a property
  * of all objects, and the object structure has been otherwise cleaned up.
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -386,20 +386,20 @@ char Gamesave_current_filename[128];
 
 typedef struct v16_wall {
 	byte  type; 			  	// What kind of special wall.
-	byte	flags;				// Flags for the wall.		
-	fix   hps;				  	// "Hit points" of the wall. 
+	byte	flags;				// Flags for the wall.
+	fix   hps;				  	// "Hit points" of the wall.
 	byte	trigger;				// Which trigger is associated with the wall.
-	byte	clip_num;			// Which	animation associated with the wall. 
+	byte	clip_num;			// Which	animation associated with the wall.
 	byte	keys;
 	} v16_wall;
 
 typedef struct v19_wall {
 	int	segnum,sidenum;	// Seg & side for this wall
 	byte	type; 			  	// What kind of special wall.
-	byte	flags;				// Flags for the wall.		
-	fix   hps;				  	// "Hit points" of the wall. 
+	byte	flags;				// Flags for the wall.
+	fix   hps;				  	// "Hit points" of the wall.
 	byte	trigger;				// Which trigger is associated with the wall.
-	byte	clip_num;			// Which	animation associated with the wall. 
+	byte	clip_num;			// Which	animation associated with the wall.
 	byte	keys;
 	int	linked_wall;		// number of linked wall
 	} v19_wall;
@@ -429,8 +429,8 @@ struct {
 	int		player_offset;				// Player info
 	int		player_sizeof;
 	int		object_offset;				// Object info
-	int		object_howmany;    	
-	int		object_sizeof;  
+	int		object_howmany;
+	int		object_sizeof;
 	int		walls_offset;
 	int		walls_howmany;
 	int		walls_sizeof;
@@ -531,8 +531,6 @@ void convert_name_to_CDL( char *dest, char *src )
 #endif
 
 
-
-
 }
 #endif
 
@@ -588,7 +586,7 @@ void verify_object( object * obj )	{
 		if ( obj->id >= N_robot_types )
 			obj->id = obj->id % N_robot_types;
 
-		// Make sure model number & size are correct...		
+		// Make sure model number & size are correct...
 		if ( obj->render_type == RT_POLYOBJ ) {
 			obj->rtype.pobj_info.model_num = Robot_info[obj->id].model_num;
 			obj->size = Polygon_models[obj->rtype.pobj_info.model_num].rad;
@@ -609,7 +607,7 @@ void verify_object( object * obj )	{
 			char *name = Save_pof_names[obj->rtype.pobj_info.model_num];
 
 			for (i=0;i<N_polygon_models;i++)
-				if (!stricmp(Pof_names[i],name)) {		//found it!	
+				if (!stricmp(Pof_names[i],name)) {		//found it!
 					// mprintf((0,"Mapping <%s> to %d (was %d)\n",name,i,obj->rtype.pobj_info.model_num));
 					obj->rtype.pobj_info.model_num = i;
 					break;
@@ -647,12 +645,12 @@ void verify_object( object * obj )	{
 		obj->render_type = RT_POLYOBJ;
 		obj->control_type = CT_CNTRLCEN;
 
-		// Make model number is correct...	
-		for (i=0; i<Num_total_object_types; i++ )	
+		// Make model number is correct...
+		for (i=0; i<Num_total_object_types; i++ )
 			if ( ObjType[i] == OL_CONTROL_CENTER )		{
 				obj->rtype.pobj_info.model_num = ObjId[i];
 				obj->shields = ObjStrength[i];
-				break;		
+				break;
 			}
 	}
 
@@ -661,7 +659,7 @@ void verify_object( object * obj )	{
 
 		//Assert(obj == Player);
 
-		if ( obj == ConsoleObject )		
+		if ( obj == ConsoleObject )
 			init_player_object();
 		else
 			if (obj->render_type == RT_POLYOBJ)	//recover from Matt's pof file matchup bug
@@ -954,7 +952,7 @@ read_object(object *obj,CFILE *f,int version)
 		case CT_REPAIRCEN:
 		default:
 			Int3();
-	
+
 	}
 
 	switch (obj->render_type) {
@@ -1142,7 +1140,7 @@ write_object(object *obj,FILE *f)
 		case CT_FLYTHROUGH:
 		default:
 			Int3();
-	
+
 	}
 
 	switch (obj->render_type) {
@@ -1189,7 +1187,7 @@ write_object(object *obj,FILE *f)
 #endif
 
 // -----------------------------------------------------------------------------
-// Load game 
+// Load game
 // Loads all the relevant data for a level.
 // If level != -1, it loads the filename with extension changed to .min
 // Otherwise it loads the appropriate level mine.
@@ -1209,16 +1207,16 @@ load_game_data(CFILE *LoadFile)
 	game_fileinfo.player_sizeof		=	sizeof(player);
  	game_fileinfo.object_offset		=	-1;
 	game_fileinfo.object_howmany		=	0;
-	game_fileinfo.object_sizeof		=	sizeof(object);  
+	game_fileinfo.object_sizeof		=	sizeof(object);
 	game_fileinfo.walls_offset			=	-1;
 	game_fileinfo.walls_howmany		=	0;
-	game_fileinfo.walls_sizeof			=	sizeof(wall);  
+	game_fileinfo.walls_sizeof			=	sizeof(wall);
 	game_fileinfo.doors_offset			=	-1;
 	game_fileinfo.doors_howmany		=	0;
-	game_fileinfo.doors_sizeof			=	sizeof(active_door);  
+	game_fileinfo.doors_sizeof			=	sizeof(active_door);
 	game_fileinfo.triggers_offset		=	-1;
 	game_fileinfo.triggers_howmany	=	0;
-	game_fileinfo.triggers_sizeof		=	sizeof(trigger);  
+	game_fileinfo.triggers_sizeof		=	sizeof(trigger);
 	game_fileinfo.control_offset		=	-1;
 	game_fileinfo.control_howmany		=	0;
 	game_fileinfo.control_sizeof		=	sizeof(control_center_triggers);
@@ -1228,8 +1226,8 @@ load_game_data(CFILE *LoadFile)
 
 	// Read in game_top_fileinfo to get size of saved fileinfo.
 
-	if (cfseek( LoadFile, start_offset, SEEK_SET )) 
-		Error( "Error seeking in gamesave.c" ); 
+	if (cfseek( LoadFile, start_offset, SEEK_SET ))
+		Error( "Error seeking in gamesave.c" );
 
 	if (cfread( &game_top_fileinfo, sizeof(game_top_fileinfo), 1, LoadFile) != 1)
 		Error( "Error reading game_top_fileinfo in gamesave.c" );
@@ -1243,7 +1241,7 @@ load_game_data(CFILE *LoadFile)
 		return -1;
 
 	// Now, Read in the fileinfo
-	if (cfseek( LoadFile, start_offset, SEEK_SET )) 
+	if (cfseek( LoadFile, start_offset, SEEK_SET ))
 		Error( "Error seeking to game_fileinfo in gamesave.c" );
 
 	game_fileinfo.fileinfo_signature = read_short(LoadFile);
@@ -1256,8 +1254,8 @@ load_game_data(CFILE *LoadFile)
 	game_fileinfo.player_offset = read_int(LoadFile);				// Player info
 	game_fileinfo.player_sizeof = read_int(LoadFile);
 	game_fileinfo.object_offset = read_int(LoadFile);				// Object info
-	game_fileinfo.object_howmany = read_int(LoadFile);    	
-	game_fileinfo.object_sizeof = read_int(LoadFile);  
+	game_fileinfo.object_howmany = read_int(LoadFile);
+	game_fileinfo.object_sizeof = read_int(LoadFile);
 	game_fileinfo.walls_offset = read_int(LoadFile);
 	game_fileinfo.walls_howmany = read_int(LoadFile);
 	game_fileinfo.walls_sizeof = read_int(LoadFile);
@@ -1302,9 +1300,9 @@ load_game_data(CFILE *LoadFile)
 	Gamesave_num_players = 0;
 
 	if (game_fileinfo.object_offset > -1) {
-		if (cfseek( LoadFile, game_fileinfo.object_offset, SEEK_SET )) 
+		if (cfseek( LoadFile, game_fileinfo.object_offset, SEEK_SET ))
 			Error( "Error seeking to object_offset in gamesave.c" );
-	
+
 		for (i=0;i<game_fileinfo.object_howmany;i++)	{
 
 			read_object(&Objects[i],LoadFile,game_top_fileinfo.fileinfo_version);
@@ -1428,7 +1426,7 @@ load_game_data(CFILE *LoadFile)
 				Triggers[i].time = read_int(LoadFile);
 				Triggers[i].link_num = read_byte(LoadFile);
 				Triggers[i].num_links = read_short(LoadFile);
-				for (j=0; j<MAX_WALLS_PER_LINK; j++ )	
+				for (j=0; j<MAX_WALLS_PER_LINK; j++ )
 					Triggers[i].seg[j] = read_short(LoadFile);
 				for (j=0; j<MAX_WALLS_PER_LINK; j++ )
 					Triggers[i].side[j] = read_short(LoadFile);
@@ -1624,7 +1622,7 @@ int load_level(char * filename_passed)
 	if ( (!cfexist(filename)) && use_compiled_level )	{
 		convert_name_to_LVL(filename,filename_passed);
 		use_compiled_level = 0;
-	}		
+	}
 	#endif
 
 	LoadFile = cfopen( filename, "rb" );
@@ -1721,7 +1719,7 @@ int load_level(char * filename_passed)
 
 	#ifdef EDITOR
 	if (check_segment_connections())
-		nm_messagebox( "ERROR", 1, "Ok", 
+		nm_messagebox( "ERROR", 1, "Ok",
 				"Connectivity errors detected in\n"
 				"mine.  See monochrome screen for\n"
 				"details, and contact Matt or Mike." );
@@ -1910,11 +1908,11 @@ int save_level_sub(char * filename, int compiled_version)
 		if (Errors_in_mine) {
 			if (is_real_level(filename)) {
 				char  ErrorMessage[200];
-	
+
 				sprintf( ErrorMessage, "Warning: %i errors in this mine!\n", Errors_in_mine );
 				stop_time();
 				gr_palette_load(gr_palette);
-	 
+
 				if (nm_messagebox( NULL, 2, "Cancel Save", "Save", ErrorMessage )!=1)	{
 					start_time();
 					return 1;
@@ -1937,7 +1935,7 @@ int save_level_sub(char * filename, int compiled_version)
 		_splitpath( temp_filename, NULL, NULL, fname, NULL );
 
 		sprintf( ErrorMessage, \
-			"ERROR: Cannot write to '%s'.\nYou probably need to check out a locked\nversion of the file. You should save\nthis under a different filename, and then\ncheck out a locked copy by typing\n\'co -l %s.lvl'\nat the DOS prompt.\n" 
+			"ERROR: Cannot write to '%s'.\nYou probably need to check out a locked\nversion of the file. You should save\nthis under a different filename, and then\ncheck out a locked copy by typing\n\'co -l %s.lvl'\nat the DOS prompt.\n"
 			, temp_filename, fname );
 		stop_time();
 		gr_palette_load(gr_palette);
@@ -1959,7 +1957,7 @@ int save_level_sub(char * filename, int compiled_version)
 			ConsoleObject->segnum = 0;
 		compute_segment_center(&ConsoleObject->pos,&(Segments[ConsoleObject->segnum]));
 	}
- 
+
 	fix_object_segs();
 
 	//Write the header
@@ -1975,7 +1973,7 @@ int save_level_sub(char * filename, int compiled_version)
 	//Now write the damn data
 
 	minedata_offset = ftell(SaveFile);
-	if ( !compiled_version )	
+	if ( !compiled_version )
 		save_mine_data(SaveFile);
 	else
 		save_mine_data_compiled(SaveFile);
@@ -2165,5 +2163,3 @@ void load_hostage_data(CFILE * fp,int do_read)
 
 }
 #endif	//HOSTAGE_FACES
-
-

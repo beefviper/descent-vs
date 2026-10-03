@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,19 +21,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: radio.c $
  * Revision 1.5  1994/04/22  11:10:15  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/12/07  12:29:40  john
  * new version.
- * 
+ *
  * Revision 1.3  1993/10/26  13:46:39  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1993/10/05  17:31:42  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.1  1993/09/20  10:35:36  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -71,10 +71,10 @@ void ui_draw_radio( UI_GADGET_RADIO * radio )
 		if (radio->position == 0 )
 		{
 			ui_draw_box_out( 0, 0, radio->width-1, radio->height-1 );
-			ui_string_centered(  Middle(radio->width), Middle(radio->height), "þ" );
+			ui_string_centered(  Middle(radio->width), Middle(radio->height), "\376" );
 		} else {
 			ui_draw_box_in( 0, 0, radio->width-1, radio->height-1 );
-			ui_string_centered(  Middle(radio->width)+1, Middle(radio->height)+1, "þ" );
+			ui_string_centered(  Middle(radio->width)+1, Middle(radio->height)+1, "\376" );
 		}
 
 		if (CurWindow->keyboard_focus_gadget == (UI_GADGET *)radio)
@@ -173,6 +173,3 @@ void ui_radio_do( UI_GADGET_RADIO * radio, int keypress )
 	ui_draw_radio( radio );
 
 }
-
-
-

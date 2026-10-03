@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,92 +21,92 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: bitblt.c $
  * Revision 1.29  1995/03/14  12:14:28  john
  * Added code to double horz/vert bitblts.
- * 
+ *
  * Revision 1.28  1995/03/13  09:01:48  john
  * Fixed bug with VFX1 screen not tall enough.
- * 
+ *
  * Revision 1.27  1995/03/01  15:38:10  john
  * Better ModeX support.
- * 
+ *
  * Revision 1.26  1994/12/15  12:19:00  john
  * Added gr_bm_bitblt (clipped!) function.
- * 
+ *
  * Revision 1.25  1994/12/09  18:58:42  matt
  * Took out include of 3d.h
- * 
+ *
  * Revision 1.24  1994/11/28  17:08:32  john
  * Took out some unused functions in linear.asm, moved
  * gr_linear_movsd from linear.asm to bitblt.c, made sure that
  * the code in ibiblt.c sets the direction flags before rep movsing.
- * 
+ *
  * Revision 1.22  1994/11/23  16:04:00  john
  * Fixed generic rle'ing to use new bit method.
- * 
+ *
  * Revision 1.21  1994/11/18  22:51:03  john
  * Changed a bunch of shorts to ints in calls.
- * 
+ *
  * Revision 1.20  1994/11/10  15:59:48  john
  * Fixed bugs with canvas's being created with bogus bm_flags.
- * 
+ *
  * Revision 1.19  1994/11/09  21:03:35  john
  * Added RLE for svga gr_ubitmap.
- * 
+ *
  * Revision 1.18  1994/11/09  17:41:29  john
  * Made a slow version of rle bitblt to svga, modex.
- * 
+ *
  * Revision 1.17  1994/11/09  16:35:15  john
  * First version with working RLE bitmaps.
- * 
+ *
  * Revision 1.16  1994/11/04  10:06:58  john
  * Added fade table for fading fonts. Made font that partially clips
  * not print a warning message.
- * 
+ *
  * Revision 1.15  1994/09/22  16:08:38  john
  * Fixed some palette stuff.
- * 
+ *
  * Revision 1.14  1994/09/19  11:44:27  john
  * Changed call to allocate selector to the dpmi module.
- * 
+ *
  * Revision 1.13  1994/08/08  13:03:00  john
- * Fixed bug in gr_bitmap in modex 
- * 
+ * Fixed bug in gr_bitmap in modex
+ *
  * Revision 1.12  1994/07/13  19:47:23  john
  * Fixed bug with modex bitblt to page 2 not working.
- * 
+ *
  * Revision 1.11  1994/05/31  11:10:52  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.10  1994/03/18  15:24:34  matt
  * Removed interlace stuff
- * 
+ *
  * Revision 1.9  1994/02/18  15:32:20  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.8  1994/02/01  13:22:54  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.7  1994/01/13  08:28:25  mike
  * Modify rect copy to copy alternate scanlines when in interlaced mode.
- * 
+ *
  * Revision 1.6  1993/12/28  12:09:46  john
  * added lbitblt.asm
- * 
+ *
  * Revision 1.5  1993/10/26  13:18:09  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  1993/10/15  16:23:30  john
  * y
- * 
+ *
  * Revision 1.3  1993/09/13  17:52:58  john
  * Fixed bug in BitBlt linear to SVGA
- * 
+ *
  * Revision 1.2  1993/09/08  14:47:00  john
  * Made bitmap00 add rowsize instead of bitmap width.
  * Other routines might have this problem too.
- * 
+ *
  * Revision 1.1  1993/09/08  11:43:01  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -194,7 +194,6 @@ void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels );
 "done:"
 
 
-
 void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
 #pragma aux modex_copy_column parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
 "nextpixel:"							\
@@ -203,7 +202,7 @@ void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsiz
 	"mov	[edi], al"	\
 	"add	edi, edx"	\
 	"dec	ecx"			\
-	"jne	nextpixel"	
+	"jne	nextpixel"
 
 void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
 #pragma aux modex_copy_column_m parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
@@ -216,7 +215,7 @@ void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rows
 "skip_itx:"				\
 	"add	edi, edx"	\
 	"dec	ecx"			\
-	"jne	nextpixel"	
+	"jne	nextpixel"
 
 
 void gr_ubitmap00( int x, int y, grs_bitmap *bm )
@@ -347,7 +346,6 @@ void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels );
 "done2:								";
 
 
-
 // From Linear to ModeX
 void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
@@ -370,7 +368,7 @@ void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 			w1 = w >> 2;
 			if ( (w&3) > plane ) w1++;
 			for (y=dy; y < dy+h; y++ )		{
-				modex_copy_scanline( sbits, dbits, w1 );		
+				modex_copy_scanline( sbits, dbits, w1 );
 				dbits += dstep;
 				sbits += sstep;
 			}
@@ -383,7 +381,7 @@ void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 			w1 = w >> 2;
 			if ( (w&3) > plane ) w1++;
 			for (y=dy; y < dy+h; y++ )		{
-				modex_copy_scanline_2x( sbits, dbits, w1 );		
+				modex_copy_scanline_2x( sbits, dbits, w1 );
 				dbits += dstep;
 				sbits += sstep;
 			}
@@ -397,7 +395,7 @@ void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *
 {
 	//ubyte * dbits1;
 	//ubyte * sbits1;
-	
+
 	ubyte * dbits;
 	ubyte * sbits;
 
@@ -407,7 +405,7 @@ void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *
 	sbits =   src->bm_data  + (src->bm_rowsize * sy) + sx;
 	dbits =   &gr_video_memory[(dest->bm_rowsize * dy) + dx/4];
 
-	for (x=dx; x < dx+w; x++ )	{	
+	for (x=dx; x < dx+w; x++ )	{
 		gr_modex_setplane( x&3 );
 
 		//sbits1 = sbits;
@@ -424,8 +422,6 @@ void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *
 			dbits++;
 	}
 }
-
-
 
 
 void gr_ubitmap012( int x, int y, grs_bitmap *bm )
@@ -553,7 +549,6 @@ void gr_ubitmapm( int x, int y, grs_bitmap *bm )
 		gr_ubitmapGENERICm(x, y, bm);
 	}
 }
-
 
 
 // From linear to SVGA
@@ -753,7 +748,7 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 
 	if ( (src->bm_type == BM_LINEAR) && (dest->bm_type == BM_LINEAR ))
 	{
-		if ( src->bm_flags & BM_FLAG_RLE )	
+		if ( src->bm_flags & BM_FLAG_RLE )
 			gr_bm_ubitblt00_rle( w, h, dx, dy, sx, sy, src, dest );
 		else
 			gr_bm_ubitblt00( w, h, dx, dy, sx, sy, src, dest );
@@ -790,7 +785,7 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 	}
 }
 
-// Clipped bitmap ... 
+// Clipped bitmap ...
 
 void gr_bitmap( int x, int y, grs_bitmap *bm )
 {
@@ -804,7 +799,7 @@ void gr_bitmap( int x, int y, grs_bitmap *bm )
 	if ( dy1 < 0 ) { sy = -dy1; dy1 = 0; }
 	if ( dx2 >= grd_curcanv->cv_bitmap.bm_w )	{ dx2 = grd_curcanv->cv_bitmap.bm_w-1; }
 	if ( dy2 >= grd_curcanv->cv_bitmap.bm_h )	{ dy2 = grd_curcanv->cv_bitmap.bm_h-1; }
-		
+
 	// Draw bitmap bm[x,y] into (dx1,dy1)-(dx2,dy2)
 
 	gr_bm_ubitblt(dx2-dx1+1,dy2-dy1+1, dx1, dy1, sx, sy, bm, &grd_curcanv->cv_bitmap );
@@ -823,12 +818,12 @@ void gr_bitmapm( int x, int y, grs_bitmap *bm )
 	if ( dy1 < 0 ) { sy = -dy1; dy1 = 0; }
 	if ( dx2 >= grd_curcanv->cv_bitmap.bm_w )	{ dx2 = grd_curcanv->cv_bitmap.bm_w-1; }
 	if ( dy2 >= grd_curcanv->cv_bitmap.bm_h )	{ dy2 = grd_curcanv->cv_bitmap.bm_h-1; }
-		
+
 	// Draw bitmap bm[x,y] into (dx1,dy1)-(dx2,dy2)
 
 	if ( (bm->bm_type == BM_LINEAR) && (grd_curcanv->cv_bitmap.bm_type == BM_LINEAR ))
 	{
-		if ( bm->bm_flags & BM_FLAG_RLE )	
+		if ( bm->bm_flags & BM_FLAG_RLE )
 			gr_bm_ubitblt00m_rle(dx2-dx1+1,dy2-dy1+1, dx1, dy1, sx, sy, bm, &grd_curcanv->cv_bitmap );
 		else
 			gr_bm_ubitblt00m(dx2-dx1+1,dy2-dy1+1, dx1, dy1, sx, sy, bm, &grd_curcanv->cv_bitmap );
@@ -857,51 +852,51 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 //-NOT-used void gr_bm_ubitblt02_2x(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 //-NOT-used {
 //-NOT-used 	unsigned char * sbits;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	unsigned int offset, EndingOffset, VideoLocation;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	int sbpr, dbpr, y1, page, BytesToMove;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	sbpr = src->bm_rowsize;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	dbpr = dest->bm_rowsize << gr_bitblt_dest_step_shift;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	VideoLocation = (unsigned int)dest->bm_data + (dest->bm_rowsize * dy) + dx;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	sbits = src->bm_data + ( sbpr*sy ) + sx;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	for (y1=0; y1 < h; y1++ )    {
-//-NOT-used 
+//-NOT-used
 //-NOT-used 		page    = VideoLocation >> 16;
 //-NOT-used 		offset  = VideoLocation & 0xFFFF;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 		gr_vesa_setpage( page );
-//-NOT-used 
+//-NOT-used
 //-NOT-used 		EndingOffset = offset+w-1;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 		if ( EndingOffset <= 0xFFFF )
 //-NOT-used 		{
 //-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), w );
-//-NOT-used 
+//-NOT-used
 //-NOT-used 			VideoLocation += dbpr;
 //-NOT-used 			sbits += sbpr;
 //-NOT-used 		}
 //-NOT-used 		else
 //-NOT-used 		{
 //-NOT-used 			BytesToMove = 0xFFFF-offset+1;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), BytesToMove );
-//-NOT-used 
+//-NOT-used
 //-NOT-used 			page++;
 //-NOT-used 			gr_vesa_setpage(page);
-//-NOT-used 
+//-NOT-used
 //-NOT-used 			gr_linear_rep_movsd_2x( (void *)(sbits+BytesToMove/2), (void *)0xA0000, EndingOffset - 0xFFFF );
-//-NOT-used 
+//-NOT-used
 //-NOT-used 			VideoLocation += dbpr;
 //-NOT-used 			sbits += sbpr;
 //-NOT-used 		}
-//-NOT-used 
-//-NOT-used 
+//-NOT-used
+//-NOT-used
 //-NOT-used 	}
 //-NOT-used }
 
@@ -912,16 +907,16 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 //-NOT-used 	unsigned char * dbits;
 //-NOT-used 	unsigned char * sbits;
 //-NOT-used 	//int	src_bm_rowsize_2, dest_bm_rowsize_2;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	int i;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	sbits =   src->bm_data  + (src->bm_rowsize * sy) + sx;
 //-NOT-used 	dbits =   dest->bm_data + (dest->bm_rowsize * dy) + dx;
-//-NOT-used 
+//-NOT-used
 //-NOT-used 	// No interlacing, copy the whole buffer.
 //-NOT-used 	for (i=0; i < h; i++ )    {
 //-NOT-used 		gr_linear_rep_movsd_2x( sbits, dbits, w );
-//-NOT-used 
+//-NOT-used
 //-NOT-used 		sbits += src->bm_rowsize;
 //-NOT-used 		dbits += dest->bm_rowsize << gr_bitblt_dest_step_shift;
 //-NOT-used 	}
@@ -992,6 +987,3 @@ void gr_bm_ubitblt0x_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitma
 	}
 
 }
-
-
-

@@ -7,28 +7,28 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
-/*								
+/*
  * $Source: f:/miner/source/texmap/rcs/tmapz.c $
  * $Revision: 1.3 $
  * $Author: mike $
  * $Date: 1994/11/28 13:34:26 $
- * 
+ *
  * .
- * 
+ *
  * $Log: tmapz.c $
  * Revision 1.3  1994/11/28  13:34:26  mike
  * optimizations.
- * 
+ *
  * Revision 1.2  1994/07/08  17:43:13  john
  * Added flat-shaded-zbuffered polygon.
- * 
+ *
  * Revision 1.1  1994/07/08  10:45:13  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -87,7 +87,7 @@ void tmap_scanline_flat_z(int y, fix xleft, fix xright, fix zleft, fix zright )
 	fx_dz_dx = fixmul(zright - zleft,recip_dx);
 	fx_xleft = xleft;
 	fx_xright = xright;
-	
+
 	asm_tmap_scanline_flat_z();
 
 }
@@ -196,7 +196,7 @@ void draw_tmap_z(grs_bitmap *bp,int nverts,g3s_point **vertbuf)
 	Assert(nverts <= MAX_TMAP_VERTS);
 
 	bp = NULL;
-	
+
 	if (tmap_z_buffer==NULL) return;
 
 	//--now called from g3_start_frame-- init_interface_vars_to_assembler();
@@ -224,5 +224,5 @@ void draw_tmap_z(grs_bitmap *bp,int nverts,g3s_point **vertbuf)
 	}
 
 	texture_map_flat_z( &Tmap1, COLOR );
-	
+
 }

@@ -13,6 +13,4 @@ CLEAN_TARGS = $(OBJDIR)\*.obj
 
 PROGS = hogfile
 
-HOGFILE_SRCS = hogfile.c 
-
-
+HOGFILE_SRCS = hogfile.c

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,31 +21,31 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: library.h $
  * Revision 1.9  1993/09/29  17:54:09  yuan
  * ReadFileRaw, etc. prototypes imported.
- * 
+ *
  * Revision 1.8  1993/09/27  17:12:48  yuan
  * Cleaned up... function prototypes internal to pslib.c removed.
- * 
+ *
  * Revision 1.7  1993/09/21  17:22:14  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.6  1993/09/21  17:16:50  yuan
  * cleaning up
- * 
+ *
  * Revision 1.5  1993/09/21  17:07:11  yuan
  * broken and unbroken
- * 
+ *
  * Revision 1.4  1993/09/14  14:19:08  yuan
  * header fixed.
- * 
+ *
  * Revision 1.3  1993/09/14  13:16:37  yuan
  * Minor function prototype modifications were made.
- * 
+ *
  * Revision 1.2  1993/09/09  12:39:19  yuan
  * compression routine prototypes moved to pslib.h
- * 
+ *
  * Revision 1.1  1993/09/08  16:16:07  yuan
  * Initial revision
- * 
+ *
  *
  */
 
@@ -168,6 +168,3 @@ int AppendFile( char *filename, void *data, int length );
 int ReadFileBuf( char *filename, byte *buf, int bufsize );
 // ReadFileBuf reads bufize bytes of 'filename' into the address of 'buf'
 //  returns an error code < 0 if there is an error.
-
-
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,26 +21,26 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: scanline.c $
  * Revision 1.7  1994/11/18  22:50:48  john
  * Changed a bunch of shorts to ints in calls.
- * 
+ *
  * Revision 1.6  1994/09/02  11:40:32  john
  * fixed bug with urect scanline drakening still
  * only using 16 levels of fade.
- * 
+ *
  * Revision 1.5  1994/04/08  16:59:12  john
  * Add fading poly's; Made palette fade 32 instead of 16.
- * 
+ *
  * Revision 1.4  1994/03/22  18:36:27  john
  * Added darkening scanlines
- * 
+ *
  * Revision 1.3  1993/10/15  16:22:52  john
  * y
- * 
+ *
  * Revision 1.2  1993/09/08  11:56:29  john
  * neatened
- * 
+ *
  * Revision 1.1  1993/09/08  11:44:27  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -60,7 +60,7 @@ void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fad
 "					mov	[edi], al				"	\
 "					inc	edi						"	\
 "					dec	ecx						"	\
-"					jnz	gld_loop					"	
+"					jnz	gld_loop					"
 
 void gr_uscanline( int x1, int x2, int y )
 {
@@ -133,5 +133,3 @@ void gr_scanline( int x1, int x2, int y )
 		}
 	}
 }
-
-

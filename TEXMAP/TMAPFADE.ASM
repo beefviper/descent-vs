@@ -6,39 +6,39 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmapfade.asm $
 ; $Revision: 1.6 $
 ; $Author: john $
 ; $Date: 1995/02/20 18:23:01 $
-; 
+;
 ; .
-; 
+;
 ; $Log: tmapfade.asm $
 ; Revision 1.6  1995/02/20  18:23:01  john
 ; Put all the externs in the assembly modules into tmap_inc.asm.
-; Also, moved all the C versions of the inner loops into a new module, 
+; Also, moved all the C versions of the inner loops into a new module,
 ; scanline.c.
-; 
+;
 ; Revision 1.5  1995/02/20  17:09:15  john
 ; Added code so that you can build the tmapper with no assembly!
-; 
+;
 ; Revision 1.4  1994/12/02  23:29:36  mike
 ; change jb/ja to jl/jg.
-; 
+;
 ; Revision 1.3  1994/11/30  00:57:36  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.2  1994/10/06  18:38:49  john
 ; Added the ability to fade a scanline by calling gr_upoly_tmap
 ; with Gr_scanline_darkening_level with a value < MAX_FADE_LEVELS.
-; 
+;
 ; Revision 1.1  1994/10/06  18:04:42  john
 ; Initial revision
-; 
-; 
+;
+;
 	.386
 
 	public	asm_tmap_scanline_shaded_
@@ -46,7 +46,7 @@
 	include	tmap_inc.asm
 
 _DATA	SEGMENT DWORD PUBLIC USE32 'DATA'
-		
+
 _loop_count		dd	0
 
 _DATA	ENDS
@@ -117,7 +117,7 @@ _ok_to_do:
 	mov	ecx, 0
 	mov	ch,_tmap_flat_shade_value
 	and	ch, 31
-	
+
 _size = (_end1 - _start1)/num_iters
 	mov	eax,num_iters-1
 	sub	eax,_loop_count
@@ -150,4 +150,3 @@ _none_to_do:	popa
 _TEXT	ends
 
 	end
-

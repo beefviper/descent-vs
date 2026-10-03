@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,151 +15,151 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.10 $
  * $Author: john $
  * $Date: 1995/03/29 17:27:55 $
- * 
+ *
  * Routines for IPX communications.
- * 
+ *
  * $Log: ipx.c $
  * Revision 2.10  1995/03/29  17:27:55  john
  * Added code to not duplicate broadcasts.
- * 
+ *
  * Revision 2.9  1995/03/29  15:32:07  john
  * NEatened.
- * 
+ *
  * Revision 2.8  1995/03/29  15:07:31  john
  * Added network support.
- * 
+ *
  * Revision 2.7  1995/03/29  11:22:27  john
  * Added broadcasting over a net.
- * 
+ *
  * Revision 2.6  1995/03/28  20:05:03  john
  * Took away alternate server stuff.
- * 
+ *
  * Revision 2.5  1995/03/23  19:14:29  john
  * Added better MAX_USERS message.
- * 
+ *
  * Revision 2.4  1995/03/23  19:00:02  john
  * Added user list capabitly.
- * 
+ *
  * Revision 2.3  1995/03/23  12:27:05  john
  * Move IPX into bios lib.
- * 
+ *
  * Revision 2.2  1995/03/22  19:08:15  john
  * Added code to fix sending packets over router... now
  * we just need to make broadcasts go over router!!
- * 
+ *
  * Revision 2.1  1995/03/21  08:40:16  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.0  1995/02/27  11:30:45  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.31  1995/02/16  17:35:03  john
  * Added code to allow dynamic socket changing.
- * 
+ *
  * Revision 1.30  1995/02/01  21:03:45  john
  * Lintified.
- * 
+ *
  * Revision 1.29  1995/01/22  14:31:05  john
  * Added key.h
- * 
+ *
  * Revision 1.28  1995/01/22  14:29:26  john
  * Added code to bypass broadcast messages.
- * 
+ *
  * Revision 1.27  1995/01/03  13:46:16  john
  * Added code that should make ipx work over different servers,
  * but ifdef'd it out with SHAREWARE in ipx.c.  I haven't tested
  * this, and I hope it doesn't introduce net bugs.
- * 
+ *
  * Revision 1.26  1994/12/14  11:54:37  rob
  * Reduce # of ipx packets.
- * 
+ *
  * Revision 1.25  1994/12/11  00:43:28  john
  * Locked down DOS ipx buffers... probably not necessary, tho.
- * 
+ *
  * Revision 1.24  1994/12/08  15:49:58  rob
  * Bumped up the # of ipx packets.
- * 
+ *
  * Revision 1.23  1994/12/04  15:23:54  rob
  * Reduced packet # constants.
- * 
+ *
  * Revision 1.22  1994/11/27  23:12:39  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.21  1994/11/19  15:15:19  mike
  * remove unused code and data
- * 
+ *
  * Revision 1.20  1994/11/10  11:06:07  rob
  * Raised number of ipx packets to 64 and buffers to 128 (for 8-way games)
  * Removed (commented out) all the spx support stuff.
- * 
+ *
  * Revision 1.19  1994/11/07  17:50:12  rob
  * Bumped up max_packets and ipx_num_packets to double their previous
  * values.
- * 
+ *
  * Revision 1.18  1994/11/07  15:39:01  rob
  * Removed temporary hacked ipx_send_object function.
  * Replaced with a more general thing.
- * 
+ *
  * Revision 1.17  1994/11/05  16:08:40  rob
  * Made a change necessary for object syncing on rejoin.
- * 
+ *
  * Revision 1.16  1994/11/01  15:57:12  rob
  * Added support for SPX sockets for critical messages.
- * 
+ *
  * Revision 1.15  1994/10/31  19:21:01  rob
  * Added a routine for sending objects via ipx.  Its a hack and shoukld
  * be replaced by something more general time permitting.
- * 
+ *
  * Revision 1.14  1994/10/20  14:57:42  john
  * Some test stuff.
- * 
+ *
  * Revision 1.13  1994/10/20  11:22:45  john
- * Tweaked the number of waiting packets. Added code to print 
+ * Tweaked the number of waiting packets. Added code to print
  * total packets missed, and to limit the packet send rate to
  * 10 packets per second unless firing.
- * 
+ *
  * Revision 1.12  1994/10/03  20:50:11  john
  * Started adding sound pause functions.
- * 
+ *
  * Revision 1.11  1994/09/15  08:54:24  mike
  * comment out a mprintf.
- * 
+ *
  * Revision 1.10  1994/09/12  19:38:20  john
  * Made some stuff that prints to the DOS screen go to the
  * mono instead, since it really is debugging info.
- * 
+ *
  * Revision 1.9  1994/09/07  13:32:03  john
  * Made ipx_close explicitly close the socket we were using,
  * because it seems that VLM's don't automatically close them
  * like the older NETX stuff did (Going from Novell 3.11 driver
  * to 3.12 anyway).
- * 
+ *
  * Revision 1.8  1994/09/06  19:29:20  john
  * Added trial version of rejoin function.
- * 
+ *
  * Revision 1.7  1994/08/09  19:31:50  john
  * Networking changes.
- * 
+ *
  * Revision 1.6  1994/08/05  16:11:41  john
  * Psuedo working version of networking.
- * 
+ *
  * Revision 1.5  1994/08/04  19:17:21  john
  * Inbetween version of network stuff.
- * 
+ *
  * Revision 1.4  1994/07/29  16:08:57  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1994/07/25  12:33:31  john
  * Network "pinging" in.
- * 
+ *
  * Revision 1.2  1994/07/20  15:58:28  john
  * First installment of ipx stuff.
- * 
+ *
  * Revision 1.1  1994/07/19  15:42:00  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -192,7 +192,7 @@ typedef struct local_address {
 } local_address;
 
 typedef struct net_address {
-	BYTE				network_id[4];			
+	BYTE				network_id[4];
 	local_address	node_id;
 	WORD				socket_id;
 } net_address;
@@ -212,7 +212,7 @@ typedef struct ecb_header {
 	BYTE			in_use;
 	BYTE			completion_code;
 	WORD			socket_id;
-	BYTE			ipx_reserved[14];        
+	BYTE			ipx_reserved[14];
 	WORD			connection_id;
 	local_address immediate_address;
 	WORD    		fragment_count;
@@ -274,7 +274,7 @@ void free_packet( int id )
 {
 	packet_buffers[id].packetnum = -1;
 	packet_free_list[ --num_packets ] = id;
-	if (largest_packet_index==id)	
+	if (largest_packet_index==id)
 		while ((--largest_packet_index>0) && (packet_buffers[largest_packet_index].packetnum == -1 ));
 }
 
@@ -287,7 +287,7 @@ int ipx_get_packet_data( ubyte * data )
 			got_new_packet( &packets[i].ecb );
 			packets[i].ecb.in_use = 0;
 			ipx_listen_for_packet(&packets[i].ecb);
-		}			
+		}
 	}
 
 	best = -1;
@@ -301,7 +301,7 @@ int ipx_get_packet_data( ubyte * data )
 				best = packet_buffers[i].packetnum;
 				best_id = i;
 			}
-		}			
+		}
 	}
 
 	//mprintf( (0, "Best id = %d, pn = %d, last_ecb = %x, len=%x, ne = %d\n", best_id, best, last_ecb, lastlen, neterrors ));
@@ -333,7 +333,7 @@ void got_new_packet( ecb_header * ecb )
 	if	( p->ecb.completion_code )	{ neterrors++; return; }
 
 	//	Error( "Recieve error %d for completion code", p->ecb.completion_code );
-	
+
 	if ( memcmp( &p->ipx.source.node_id, &ipx_my_node, 6 ) )	{
 		datasize=swap_short(p->ipx.length);
 		lastlen=datasize;
@@ -344,7 +344,7 @@ void got_new_packet( ecb_header * ecb )
 				//printf( 1, "IPX: Packet buffer overrun!!!\n" );
 				neterrors++;
 				return;
-			}		
+			}
 			id = packet_free_list[ num_packets++ ];
 			if (id > largest_packet_index ) largest_packet_index = id;
 			packet_size[id] = datasize-sizeof(int);
@@ -354,7 +354,7 @@ void got_new_packet( ecb_header * ecb )
 		} else {
 			neterrors++; return;
 		}
-	} 
+	}
 	// Repost the ecb
 	p->ecb.in_use = 0;
 	//ipx_listen_for_packet(&p->ecb);
@@ -370,7 +370,7 @@ ubyte * ipx_get_my_server_address()
 	return (ubyte *)&ipx_network;
 }
 
-void ipx_listen_for_packet(ecb_header * ecb )	
+void ipx_listen_for_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs;
 	ecb->in_use = 0x1d;
@@ -381,7 +381,7 @@ void ipx_listen_for_packet(ecb_header * ecb )
 	dpmi_real_int386x( 0x7A, &rregs );
 }
 
-void ipx_cancel_listen_for_packet(ecb_header * ecb )	
+void ipx_cancel_listen_for_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
@@ -392,7 +392,7 @@ void ipx_cancel_listen_for_packet(ecb_header * ecb )
 }
 
 
-void ipx_send_packet(ecb_header * ecb )	
+void ipx_send_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
@@ -412,16 +412,16 @@ void ipx_get_local_target( ubyte * server, ubyte * node, ubyte * local_target )
 {
 	net_xlat_info * info;
 	dpmi_real_regs rregs;
-		
+
 	// Get dos memory for call...
-	info = (net_xlat_info *)dpmi_get_temp_low_buffer( sizeof(net_xlat_info) );	
+	info = (net_xlat_info *)dpmi_get_temp_low_buffer( sizeof(net_xlat_info) );
 	assert( info != NULL );
 	memcpy( info->network, server, 4 );
 	memcpy( info->node, node, 6 );
-	
+
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 
-	rregs.ebx = 2;		// Get Local Target	
+	rregs.ebx = 2;		// Get Local Target
 	rregs.es = DPMI_real_segment(info);
 	rregs.esi = DPMI_real_offset(info->network);
 	rregs.edi = DPMI_real_offset(info->local_target);
@@ -449,7 +449,7 @@ void ipx_close()
 
 
 //---------------------------------------------------------------
-// Initializes all IPX internals. 
+// Initializes all IPX internals.
 // If socket_number==0, then opens next available socket.
 // Returns:	0  if successful.
 //				-1 if socket already open.
@@ -482,7 +482,7 @@ int ipx_init( int socket_number, int show_address )
 	dpmi_real_int386x( 0x2f, &rregs );
 
 	if ( (rregs.eax & 0xFF) != 0xFF )	{
-		return 3;   
+		return 3;
 	}
 	ipx_vector_offset = rregs.edi & 0xFFFF;
 	ipx_vector_segment = rregs.es;
@@ -496,14 +496,14 @@ int ipx_init( int socket_number, int show_address )
 	rregs.eax = ipx_socket_life;
 	rregs.ebx = 0;	// Open socket
 	dpmi_real_int386x( 0x7A, &rregs );
-	
+
 	ipx_socket = rregs.edx & 0xFFFF;
-	
+
 	if ( rregs.eax & 0xFF )	{
 		//mprintf( (1, "IPX error opening channel %d\n", socket_number-IPX_DEFAULT_SOCKET ));
 		return -2;
 	}
-	
+
 	ipx_installed = 1;
 
 	// Find our internetwork address
@@ -585,7 +585,7 @@ void ipx_send_packet_data( ubyte * data, int datasize, ubyte *network, ubyte *ad
 	while( packets[0].ecb.in_use )
 	{
 	}
-	
+
 	if (packets[0].ecb.completion_code)	{
 		printf( "Send error %d for completion code\n", packets[0].ecb.completion_code );
 		exit(1);
@@ -613,7 +613,7 @@ void ipx_send_packet_data( ubyte * data, int datasize, ubyte *network, ubyte *ad
 
 }
 
-void ipx_send_broadcast_packet_data( ubyte * data, int datasize )	
+void ipx_send_broadcast_packet_data( ubyte * data, int datasize )
 {
 	int i, j;
 	ubyte broadcast[] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
@@ -667,16 +667,16 @@ int ipx_change_default_socket( ushort socket_number )
 
 	if ( !ipx_installed ) return -3;
 
-	// Open a new socket	
+	// Open a new socket
 	memset(&rregs,0,sizeof(dpmi_real_regs));
 	swab( (char *)&socket_number,(char *)&new_ipx_socket, 2 );
 	rregs.edx = new_ipx_socket;
 	rregs.eax = ipx_socket_life;
 	rregs.ebx = 0;	// Open socket
 	dpmi_real_int386x( 0x7A, &rregs );
-	
+
 	new_ipx_socket = rregs.edx & 0xFFFF;
-	
+
 	if ( rregs.eax & 0xFF )	{
 		//printf( (1, "IPX error opening channel %d\n", socket_number-IPX_DEFAULT_SOCKET ));
 		return -2;
@@ -694,7 +694,7 @@ int ipx_change_default_socket( ushort socket_number )
 
 	ipx_socket = new_ipx_socket;
 
-	// Repost all listen requests on the new socket...	
+	// Repost all listen requests on the new socket...
 	for (i=1; i<ipx_num_packets; i++ )	{
 		packets[i].ecb.in_use = 0;
 		packets[i].ecb.socket_id = ipx_socket;
@@ -780,7 +780,7 @@ void ipx_read_network_file(char * filename)
 		if ( n != 4 ) continue;
 		if ( Ipx_num_networks < MAX_NETWORKS  )	{
 			int j;
-			for (j=0; j<Ipx_num_networks; j++ )	
+			for (j=0; j<Ipx_num_networks; j++ )
 				if ( !memcmp( &Ipx_networks[j], tmp.network, 4 ) )
 					break;
 			if ( j >= Ipx_num_networks )	{
@@ -822,7 +822,7 @@ void ipx_read_network_file(char * filename)
 //---	while( packets[0].ecb.in_use )
 //---	{
 //---	}
-//---	
+//---
 //---	if (packets[0].ecb.completion_code)	{
 //---		printf( "AAAA:Send error %d for completion code\n", packets[0].ecb.completion_code );
 //---		//exit(1);
@@ -879,4 +879,3 @@ void ipx_read_network_file(char * filename)
 //---}
 //---
 //---
-

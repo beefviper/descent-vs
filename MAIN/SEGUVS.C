@@ -3,116 +3,116 @@
  * $Revision: 2.1 $
  * $Author: mike $
  * $Date: 1995/05/08 10:49:34 $
- * 
+ *
  * u,v coordinate computation for segment faces
- * 
+ *
  * $Log: seguvs.c $
  * Revision 2.1  1995/05/08  10:49:34  mike
  * fix lighting bug: oblong segments could be very dark.
- * 
+ *
  * Revision 2.0  1995/02/27  11:36:37  john
  * Version 2.0. Ansi-fied.
- * 
+ *
  * Revision 1.84  1994/11/27  23:17:18  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.83  1994/11/17  14:48:02  mike
  * validation functions moved from editor to game.
- * 
+ *
  * Revision 1.82  1994/10/15  19:08:26  mike
  * Disable exhaustive search mprintfs in find_point_seg during lighting.
- * 
+ *
  * Revision 1.81  1994/08/25  21:55:50  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.80  1994/08/04  19:13:22  matt
  * Changed a bunch of vecmat calls to use multiple-function routines, and to
  * allow the use of C macros for some functions
- * 
+ *
  * Revision 1.79  1994/08/03  10:31:33  mike
  * Texture map propagation without uv assignment.
- * 
+ *
  * Revision 1.78  1994/08/01  13:31:12  matt
  * Made fvi() check holes in transparent walls, and changed fvi() calling
  * parms to take all input data in query structure.
- * 
+ *
  * Revision 1.77  1994/07/08  14:31:24  matt
  * New parms for FVI
- * 
+ *
  * Revision 1.76  1994/06/23  14:01:04  mike
  * Fix cache bug which caused some vertices to not get light, mainly
  * noticeable at joints which had doors.
- * 
+ *
  * Revision 1.75  1994/06/22  17:33:11  mike
  * Make position of light (which is always towards center of segment from
  * actual light panel) constant, not dependent on segment size, which fixes
  * bug of dark light panels in very large segments.
- * 
+ *
  * Revision 1.74  1994/06/21  18:58:18  mike
  * Fix stupid bug in light propagation, was using wrong vector in fvi caching.
- * 
+ *
  * Revision 1.73  1994/06/20  11:20:24  mike
  * Fix stupid lighting bug introduced when I went to cached fvi results.
- * 
+ *
  * Revision 1.72  1994/06/19  16:26:37  mike
  * Speed up lighting by storing and hashing fvi results.
- * 
+ *
  * Revision 1.71  1994/06/17  16:05:56  mike
  * Support optional quick lighting propagation: no find_vector_intersection.
- * 
+ *
  * Revision 1.70  1994/06/15  15:42:30  mike
  * Propagate static_light.
- * 
+ *
  * Revision 1.69  1994/06/14  16:59:37  mike
  * Fix references to tmap_num2, must strip off orientation bits.
- * 
+ *
  * Revision 1.68  1994/06/09  09:58:58  matt
  * Moved find_vector_intersection() from physics.c to new file fvi.c
- * 
- * 
+ *
+ *
  * Revision 1.67  1994/06/08  18:14:02  mike
  * mprintf a dot in light casting.
- * 
+ *
  * Revision 1.66  1994/06/08  14:37:45  mike
  * double static light value in going from value (a short) to static_light (a fix).
- * 
+ *
  * Revision 1.65  1994/06/08  14:29:44  matt
  * Added static_light field to segment structure, and padded side struct
  * to be longword aligned.
- * 
+ *
  * Revision 1.64  1994/06/08  11:45:24  mike
  * New, supercool, superslow lighting function.
- * 
+ *
  * Revision 1.63  1994/06/07  09:38:11  mike
  * Make lighting function yet better by calling find_vector_intersection.
- * 
+ *
  * Revision 1.62  1994/06/06  13:14:33  mike
  * Make illusory walls cast light.
- * 
+ *
  * Revision 1.61  1994/06/05  20:39:47  mike
  * Add new distance and dot product based lighting function.
- * 
+ *
  * Revision 1.60  1994/05/31  12:31:18  mike
  * fix bugs in lighting, though it's not perfect, will be changing all
  * lighting to be distance based.  Bug had to do with not handling one
  * of the return values from WALL_IS_DOORWAY, so assuming light couldn't
  * be recursively propagated almost all the time.
- * 
+ *
  * Revision 1.59  1994/05/19  23:35:26  mike
  * Support uv coordinates in range 0..1.0.
- * 
+ *
  * Revision 1.58  1994/05/19  12:10:21  matt
  * Use new vecmat macros and globals
- * 
+ *
  * Revision 1.57  1994/05/04  19:15:53  mike
  * Error checking for degenerate segments.
- * 
+ *
  * Revision 1.56  1994/05/03  11:02:34  mike
  * Change how default texture map assignment works; now pixels are constant size.
- * 
+ *
  * Revision 1.55  1994/04/28  23:25:26  yuan
  * Obliterated warnings.
- * 
+ *
  */
 
 
@@ -699,21 +699,21 @@ void assign_uvs_to_side(segment *segp, int sidenum, uvl *uva, uvl *uvb, int va, 
 		editor_status("U, V bogosity in segment #%i, probably on side #%i.  CLEAN UP YOUR MESS!", segp-Segments, sidenum);
 	else {
 		vm_vec_sub(&tvec,&Vertices[v2],&Vertices[v1]);
-		uvls[(vhi+1)%4].u = uvhi.u + 
+		uvls[(vhi+1)%4].u = uvhi.u +
 			fixdiv(fixmul(ruvmag.u,vm_vec_dotprod(&rvec,&tvec)),mag01) +
 			fixdiv(fixmul(fuvmag.u,vm_vec_dotprod(&fvec,&tvec)),mag01);
 
-		uvls[(vhi+1)%4].v = uvhi.v + 
+		uvls[(vhi+1)%4].v = uvhi.v +
 			fixdiv(fixmul(ruvmag.v,vm_vec_dotprod(&rvec,&tvec)),mag01) +
 			fixdiv(fixmul(fuvmag.v,vm_vec_dotprod(&fvec,&tvec)),mag01);
 
 
 		vm_vec_sub(&tvec,&Vertices[v3],&Vertices[v0]);
-		uvls[(vhi+2)%4].u = uvlo.u + 
+		uvls[(vhi+2)%4].u = uvlo.u +
 			fixdiv(fixmul(ruvmag.u,vm_vec_dotprod(&rvec,&tvec)),mag01) +
 			fixdiv(fixmul(fuvmag.u,vm_vec_dotprod(&fvec,&tvec)),mag01);
 
-		uvls[(vhi+2)%4].v = uvlo.v + 
+		uvls[(vhi+2)%4].v = uvlo.v +
 			fixdiv(fixmul(ruvmag.v,vm_vec_dotprod(&rvec,&tvec)),mag01) +
 			fixdiv(fixmul(fuvmag.v,vm_vec_dotprod(&fvec,&tvec)),mag01);
 
@@ -791,7 +791,7 @@ void assign_default_uvs_to_segment(segment *segp)
 // -- mk021394 -- void get_face_and_vert(segment *base_seg, int base_common_side, int v1, int *ff, int *vv, int *pi)
 // -- mk021394 -- {
 // -- mk021394 -- 	int	p,f,v;
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 	for (f=0; f<base_seg->sides[base_common_side].num_faces; f++) {
 // -- mk021394 -- 		face *fp = &base_seg->sides[base_common_side].faces[f];
 // -- mk021394 -- 		for (p=0; p<fp->num_polys; p++) {
@@ -805,7 +805,7 @@ void assign_default_uvs_to_segment(segment *segp)
 // -- mk021394 -- 				}
 // -- mk021394 -- 		}
 // -- mk021394 -- 	}
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 	Assert(0);	// Error -- Couldn't find face:vertex which matched vertex v1 on base_seg:base_common_side
 // -- mk021394 -- }
 
@@ -815,10 +815,10 @@ void assign_default_uvs_to_segment(segment *segp)
 // -- mk021394 -- void get_side_vert(segment *base_seg,int base_common_side,int v1,int *vv)
 // -- mk021394 -- {
 // -- mk021394 -- 	int	p,f,v;
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 	Assert((base_seg->sides[base_common_side].tri_edge == 0) || (base_seg->sides[base_common_side].tri_edge == 1));
 // -- mk021394 -- 	Assert(base_seg->sides[base_common_side].num_faces <= 2);
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 	for (f=0; f<base_seg->sides[base_common_side].num_faces; f++) {
 // -- mk021394 -- 		face *fp = &base_seg->sides[base_common_side].faces[f];
 // -- mk021394 -- 		for (p=0; p<fp->num_polys; p++) {
@@ -829,7 +829,7 @@ void assign_default_uvs_to_segment(segment *segp)
 // -- mk021394 -- 						*vv = v;
 // -- mk021394 -- 						return;
 // -- mk021394 -- 					}
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 					if (base_seg->sides[base_common_side].tri_edge == 0) {	// triangulated 012, 023, so if f==0, *vv = v, if f==1, *vv = v if v=0, else v+1
 // -- mk021394 -- 						if ((f == 1) && (v > 0))
 // -- mk021394 -- 							v++;
@@ -847,7 +847,7 @@ void assign_default_uvs_to_segment(segment *segp)
 // -- mk021394 -- 				}
 // -- mk021394 -- 		}
 // -- mk021394 -- 	}
-// -- mk021394 -- 
+// -- mk021394 --
 // -- mk021394 -- 	Assert(0);	// Error -- Couldn't find face:vertex which matched vertex v1 on base_seg:base_common_side
 // -- mk021394 -- }
 
@@ -856,19 +856,19 @@ void assign_default_uvs_to_segment(segment *segp)
 //--rotate_uvs-- void rotate_uvs(uvl *uva, uvl *uvb, vms_vector *rvec)
 //--rotate_uvs-- {
 //--rotate_uvs-- 	uvl	uvc, uva1, uvb1;
-//--rotate_uvs-- 
+//--rotate_uvs--
 //--rotate_uvs-- 	uvc.u = (uva->u + uvb->u)/2;
 //--rotate_uvs-- 	uvc.v = (uva->v + uvb->v)/2;
-//--rotate_uvs-- 
+//--rotate_uvs--
 //--rotate_uvs-- 	uva1.u = fixmul(uva->u - uvc.u, rvec->x) - fixmul(uva->v - uvc.v, rvec->z);
 //--rotate_uvs-- 	uva1.v = fixmul(uva->u - uvc.u, rvec->z) + fixmul(uva->v - uvc.v, rvec->x);
-//--rotate_uvs-- 
+//--rotate_uvs--
 //--rotate_uvs-- 	uva->u = uva1.u + uvc.u;
 //--rotate_uvs-- 	uva->v = uva1.v + uvc.v;
-//--rotate_uvs-- 
+//--rotate_uvs--
 //--rotate_uvs-- 	uvb1.u = fixmul(uvb->u - uvc.u, rvec->x) - fixmul(uvb->v - uvc.v, rvec->z);
 //--rotate_uvs-- 	uvb1.v = fixmul(uvb->u - uvc.u, rvec->z) + fixmul(uvb->v - uvc.v, rvec->x);
-//--rotate_uvs-- 
+//--rotate_uvs--
 //--rotate_uvs-- 	uvb->u = uvb1.u + uvc.u;
 //--rotate_uvs-- 	uvb->v = uvb1.v + uvc.v;
 //--rotate_uvs-- }
@@ -1545,7 +1545,7 @@ void cast_all_light_in_mine(int quick_flag)
 }
 
 // int	Fvit_num = 1000;
-// 
+//
 // fix find_vector_intersection_test(void)
 // {
 // 	int		i;
@@ -1554,22 +1554,22 @@ void cast_all_light_in_mine(int quick_flag)
 // 	fix		rad;
 // 	int		start_time = timer_get_milliseconds();;
 // 	vms_vector	p0,p1;
-// 
+//
 // 	ignore_obj = 1;
 // 	check_obj_flag = 0;
 // 	this_objnum = -1;
 // 	rad = F1_0/4;
-// 
+//
 // 	for (i=0; i<Fvit_num; i++) {
 // 		p0_seg = rand()*(Highest_segment_index+1)/32768;
 // 		compute_segment_center(&p0, &Segments[p0_seg]);
-// 
+//
 // 		p1_seg = rand()*(Highest_segment_index+1)/32768;
 // 		compute_segment_center(&p1, &Segments[p1_seg]);
-// 
+//
 // 		find_vector_intersection(&hit_data, &p0, p0_seg, &p1, rad, this_objnum, ignore_obj, check_obj_flag);
 // 	}
-// 
+//
 // 	return timer_get_milliseconds() - start_time;
 // }
 
@@ -1617,4 +1617,3 @@ void print_normals(void)
 		}
 
 }
-

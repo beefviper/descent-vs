@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/3d/rcs/horizon.asm $
@@ -19,19 +19,19 @@
 ; $Log: horizon.asm $
 ; Revision 1.5  1994/06/14  18:14:40  matt
 ; Use texture-mapper flat shader
-; 
+;
 ; Revision 1.4  1994/02/10  18:00:42  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.3  1994/01/22  18:22:16  matt
 ; Fixed bug in horizon bitmap code
-; 
+;
 ; Revision 1.2  1994/01/20  17:21:47  matt
 ; New function g3_compute_sky_polygon()
-; 
+;
 ; Revision 1.1  1994/01/14  17:22:08  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -211,7 +211,7 @@ sky_up:	mov	top_color,eax
 	mov	8[ebx],eax	;edge 0
 	add	ebx,12
 not_left:
-	
+
 ;check intersection with top edge
 
 	mov	eax,up_left
@@ -229,7 +229,7 @@ not_left:
 	mov	8[ebx],eax	;edge 1
 	add	ebx,12
 not_top:
-	
+
 ;check intersection with right edge
 
 	mov	eax,up_right
@@ -250,7 +250,7 @@ not_top:
 	mov	8[ebx],eax	;edge 2
 	add	ebx,12
 not_right:
-	
+
 ;check intersection with bottom edge
 
 	mov	eax,down_right
@@ -323,7 +323,7 @@ no_draw_bot:
 ;;	mov	ebx,right_point
 ;;	mov	ecx,right_point+4
 ;;	call	gr_line_
-	
+
 done_horizon:	popm	eax,ebx,ecx,edx,esi,edi
 	ret
 
@@ -380,14 +380,14 @@ no_wrap:	loop	corner_loop
  call gr_upoly_tmap_
 	ret
 
-;return information on the polygon that is the sky. 
+;return information on the polygon that is the sky.
 ;takes ebx=ptr to x,y pairs, ecx=ptr to vecs for each point
 ;returns eax=number of points
 ;IMPORTANT: g3_draw_horizon() must be called before this routine.
 g3_compute_sky_polygon:
 	test	sky_ground_flag,-1	;what was drawn
 	js	was_all_ground
-	jg	was_all_sky	
+	jg	was_all_sky
 
 	pushm	ebx,ecx,edx,esi,edi
 
@@ -539,7 +539,7 @@ compute_horz_end_vec:
 ;x is bigger, so do as z/x
 
 	fixdiv	ebx
-	
+
 ;now eax = z/x ratio.  Compute vector by normalizing and correcting sign
 
 	push	eax	;save ratio
@@ -565,7 +565,7 @@ compute_horz_end_vec:
 do_xz:
 	xchg	eax,ebx
 	fixdiv	ebx
-	
+
 ;now eax = x/z ratio.  Compute vector by normalizing and correcting sign
 
 	push	eax	;save ratio
@@ -637,7 +637,7 @@ neg_x:
 	neg	ebx
 	neg	ecx
 	neg	edx
-no_neg_x:	
+no_neg_x:
 	sub	ebx,View_matrix.m3
 	mov	m13,ebx	;m1-m3
 	sub	ecx,View_matrix.m6
@@ -655,7 +655,7 @@ neg_y:
 	neg	ebx
 	neg	ecx
 	neg	edx
-no_neg_y:	
+no_neg_y:
 	sub	ebx,View_matrix.m6
 	mov	m56,ebx	;m5-m6
 	sub	ecx,View_matrix.m3

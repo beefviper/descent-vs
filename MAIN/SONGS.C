@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,24 +15,24 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.1 $
  * $Author: john $
  * $Date: 1995/05/02 16:15:21 $
- * 
+ *
  * Routines to manage the songs in Descent.
- * 
+ *
  * $Log: songs.c $
  * Revision 2.1  1995/05/02  16:15:21  john
  * Took out printf.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:13  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.2  1995/02/11  12:42:12  john
  * Added new song method, with FM bank switching..
- * 
+ *
  * Revision 1.1  1995/02/11  10:20:33  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -95,12 +95,11 @@ void songs_play_level_song( int levelnum )
 
 	if ( !Songs_initialized ) songs_init();
 
-	if (levelnum < 0)	
+	if (levelnum < 0)
 		songnum = (-levelnum) % NUM_GAME_SONGS;
-	else 
+	else
 		songnum = (levelnum-1) % NUM_GAME_SONGS;
-	
+
 	songnum += SONG_LEVEL_MUSIC;
 	digi_play_midi_song( Songs[songnum].filename, Songs[songnum].melodic_bank_file, Songs[songnum].drum_bank_file, 1 );
 }
-

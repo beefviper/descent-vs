@@ -6,30 +6,29 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/main/rcs/cockpit.asm $
 ; $Revision: 2.0 $
 ; $Author: john $
 ; $Date: 1995/02/27 11:26:51 $
-; 
+;
 ; Routine to copy the 3d view to the screen, leaving out
 ; parts that are in the cockpit.
-; 
+;
 ; $Log: cockpit.asm $
 ; Revision 2.0  1995/02/27  11:26:51  john
 ; New version 2.0, which has no anonymous unions, builds with
 ; Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
-; 
+;
 ; Revision 1.2  1994/01/24  18:55:36  john
 ; initial version.
-; 
+;
 ; Revision 1.1  1994/01/24  17:58:16  john
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -48,7 +47,6 @@ rcsid	db	"$Id: cockpit.asm 2.0 1995/02/27 11:26:51 john Exp $"
 	align	4
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -73,11 +71,8 @@ cockpit_copy_:
 	pop	edi
 	pop	esi
 	ret
-	
 
 
 _TEXT	ends
 
 	end
-
-

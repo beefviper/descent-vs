@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -22,123 +22,123 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * Revision 2.0  1995/02/27  11:35:21  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.191  1995/02/22  15:28:30  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.190  1995/02/02  02:59:40  yuan
  * Working on exterminating bogus matcen_nums... (harmless though)
- * 
+ *
  * Revision 1.189  1995/02/01  16:29:51  yuan
  * Stabilizing triggers and matcens.
- * 
+ *
  * Revision 1.188  1995/02/01  11:31:47  yuan
  * Trigger bug fixed.
- * 
+ *
  * Revision 1.187  1994/11/27  23:17:24  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.186  1994/11/17  14:48:12  mike
  * validation functions moved from editor to game.
- * 
+ *
  * Revision 1.185  1994/10/30  14:13:17  mike
  * rip out local segment stuff.
- * 
+ *
  * Revision 1.184  1994/10/27  10:04:24  matt
  * When triangulating, don't use WID() to see if connected, look at children
- * 
+ *
  * Revision 1.183  1994/10/26  13:40:23  mike
  * debug code for matt.
- * 
+ *
  * Revision 1.182  1994/10/24  16:34:00  mike
  * Force render after mine compress to prevent bugs in segment selection via clicking in 3d window.
- * 
+ *
  * Revision 1.181  1994/10/20  18:16:15  mike
  * Initialize ControlCenterTriggers.num_links in create_new_mine.
- * 
+ *
  * Revision 1.180  1994/10/18  16:29:14  mike
  * Write function to automatically fix bogus segnums in segment array.
- * 
+ *
  * Revision 1.179  1994/10/08  17:10:41  matt
  * Correctly set current_level_num when loading/creating mine in editor
- * 
+ *
  * Revision 1.178  1994/09/25  14:17:51  mike
  * Initialize (to 0) Num_robot_centers and Num_open_doors at mine creation.
- * 
+ *
  * Revision 1.177  1994/09/20  14:36:06  mike
  * Write function to find overlapping segments.
- * 
+ *
  * Revision 1.176  1994/08/25  21:55:57  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.175  1994/08/23  15:28:03  mike
  * Fix peculiarity in med_combine_duplicate_vertices.
- * 
+ *
  * Revision 1.174  1994/08/09  16:06:17  john
  * Added the ability to place players.  Made old
  * Player variable be ConsoleObject.
- * 
+ *
  * Revision 1.173  1994/08/05  21:18:10  matt
  * Allow two doors to be linked together
- * 
+ *
  * Revision 1.172  1994/08/04  19:13:16  matt
  * Changed a bunch of vecmat calls to use multiple-function routines, and to
  * allow the use of C macros for some functions
- * 
+ *
  * Revision 1.171  1994/07/22  12:37:00  matt
  * Cleaned up editor/game interactions some more.
- * 
+ *
  * Revision 1.170  1994/07/22  11:20:08  mike
  * Set Lsegments validity.
- * 
+ *
  * Revision 1.169  1994/07/21  19:02:49  mike
  * lsegment stuff.
- * 
+ *
  * Revision 1.168  1994/07/21  13:27:17  matt
  * Ripped out remants of old demo system, and added demo
  * disables object movement and game options from menu.
- * 
+ *
  * Revision 1.167  1994/07/19  20:15:48  matt
  * Name for each level now saved in the .SAV file & stored in Current_level_name
- * 
+ *
  * Revision 1.166  1994/07/06  12:42:45  john
  * Made generic messages for hostages.
- * 
+ *
  * Revision 1.165  1994/06/24  17:04:29  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.164  1994/06/15  15:42:40  mike
  * Initialize static_light field in new segments.
- * 
+ *
  * Revision 1.163  1994/06/13  17:49:19  mike
  * Fix bug in med_validate_side which was toasting lighting for removable walls.
- * 
+ *
  * Revision 1.162  1994/06/13  10:52:20  mike
  * Fix bug in triangulation of sides between connected segments.
  * Was assigning SIDE_IS_02 regardless of how triangulated, was
  * causing physics bugs.
- * 
+ *
  * Revision 1.161  1994/06/08  18:14:16  mike
  * Fix triangulation of sides in hallways (ie, where there is no wall),
  * so they get triangulated the same way, so find_new_seg doesn't get
  * stuck in an infinite recursion.
- * 
+ *
  * Revision 1.160  1994/06/08  11:44:31  mike
  * Fix bug in normals not being opposite on opposite sides of a segment.
  * Problem occurred due to difference in handling of remainder in signed divide.
- * 
+ *
  * Revision 1.159  1994/05/31  19:00:15  yuan
  * Fixed gamestate restore.
- * 
+ *
  * Revision 1.158  1994/05/30  20:22:36  yuan
  * New triggers.
- * 
+ *
  * Revision 1.157  1994/05/26  19:32:51  mike
  * Add bfs_parse.
- * 
+ *
  * Revision 1.156  1994/05/23  14:56:46  mike
  * make current segment be add segment.,
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -376,7 +376,7 @@ void ToggleBottom(void)
 	Render_only_bottom = !Render_only_bottom;
 	Update_flags = UF_WORLD_CHANGED;
 }
-		
+
 // ---------------------------------------------------------------------------------------------
 //           ---------- Segment interrogation functions ----------
 // ----------------------------------------------------------------------------
@@ -554,7 +554,7 @@ int med_create_duplicate_segment(segment *sp)
 
 	segnum = get_free_segment_number();
 
-	Segments[segnum] = *sp;	
+	Segments[segnum] = *sp;
 
 	return segnum;
 }
@@ -609,7 +609,6 @@ int med_set_vertex(int vnum,vms_vector *vp)
 
 	return vnum;
 }
-
 
 
 //	----
@@ -873,7 +872,7 @@ void change_vertex_occurrences(int dest, int src)
 	int	g,s,v;
 
 	// Fix vertices in groups
-	for (g=0;g<num_groups;g++) 
+	for (g=0;g<num_groups;g++)
 		for (v=0; v<GroupList[g].num_vertices; v++)
 			if (GroupList[g].vertices[v] == src)
 				GroupList[g].vertices[v] = dest;
@@ -907,7 +906,7 @@ void compress_vertices(void)
 				// Ok, hole is the index of a hole, vert is the index of a vertex which follows it.
 				// Copy vert into hole, update pointers to it.
 				Vertices[hole] = Vertices[vert];
-				
+
 				change_vertex_occurrences(hole, vert);
 
 				vert--;
@@ -950,7 +949,7 @@ void compress_segments(void)
 					Markedsegp = &Segments[hole];
 
 				// Fix segments in groups
-				for (g=0;g<num_groups;g++) 
+				for (g=0;g<num_groups;g++)
 					for (s=0; s<GroupList[g].num_segments; s++)
 						if (GroupList[g].segments[s] == seg)
 							GroupList[g].segments[s] = hole;
@@ -1110,7 +1109,7 @@ int med_attach_segment_rotated(segment *destseg, segment *newseg, int destside, 
 	// clear all connections
 	for (side=0; side<MAX_SIDES_PER_SEGMENT; side++) {
 		nsp->children[side] = -1;
-		nsp->sides[side].wall_num = -1;	
+		nsp->sides[side].wall_num = -1;
 	}
 
 	// Form the connection
@@ -1330,7 +1329,7 @@ int med_delete_segment(segment *sp)
 
 	// If deleted segment has walls on any side, wipe out the wall.
 	for (side=0; side < MAX_SIDES_PER_SEGMENT; side++)
-		if (sp->sides[side].wall_num != -1) 
+		if (sp->sides[side].wall_num != -1)
 			wall_remove_side(sp, side);
 
 	// Find out what this segment was connected to and break those connections at the other end.
@@ -1356,14 +1355,14 @@ int med_delete_segment(segment *sp)
 	// If deleted segment = marked segment, then say there is no marked segment
 	if (sp == Markedsegp)
 		Markedsegp = 0;
-	
+
 	//	If deleted segment = a Group segment ptr, then wipe it out.
-	for (s=0;s<num_groups;s++) 
-		if (sp == Groupsegp[s]) 
+	for (s=0;s<num_groups;s++)
+		if (sp == Groupsegp[s])
 			Groupsegp[s] = 0;
 
 	// If deleted segment = group segment, wipe it off the group list.
-	if (sp->group > -1) 
+	if (sp->group > -1)
 			delete_segment_from_group(sp-Segments, sp->group);
 
 	// If we deleted something which was not connected to anything, must now select a new current segment.
@@ -1453,7 +1452,7 @@ int med_rotate_segment(segment *seg, vms_matrix *rotmat)
 	destside = 0;
 	while ((destseg->children[destside] != seg-Segments) && (destside < MAX_SIDES_PER_SEGMENT))
 		destside++;
-		
+
 	// Before deleting the segment, copy its texture maps to New_segment
 	copy_tmaps_to_segment(&New_segment,seg);
 
@@ -1603,7 +1602,7 @@ int med_form_joint(segment *seg1, int side1, segment *seg2, int side2)
 	if (IS_CHILD(seg1->children[side1]) || IS_CHILD(seg2->children[side2]))
 		return 2;
 
-	// Make sure there is no wall there 
+	// Make sure there is no wall there
 	if ((seg1->sides[side1].wall_num != -1) || (seg2->sides[side2].wall_num != -1))
 		return 2;
 
@@ -1939,8 +1938,8 @@ int create_new_mine(void)
 	Markedsegp = 0;		// Say there is no marked segment.
 	Markedside = WBACK;	//	Shouldn't matter since Markedsegp == 0, but just in case...
 	for (s=0;s<MAX_GROUPS+1;s++) {
-		GroupList[s].num_segments = 0;		
-		GroupList[s].num_vertices = 0;		
+		GroupList[s].num_segments = 0;
+		GroupList[s].num_vertices = 0;
 		Groupsegp[s] = NULL;
 		Groupside[s] = 0;
 	}
@@ -2161,16 +2160,16 @@ int med_find_closest_threshold_segment_side(segment *sp, int side, segment **adj
 	if (IS_CHILD(sp->children[side]))
 		return 0;
 
-	compute_center_point_on_side(&vsc, sp, side); 
+	compute_center_point_on_side(&vsc, sp, side);
 
 	closest_seg_dist = JOINT_THRESHOLD;
 
 	//	Scan all segments, looking for a segment which contains the four abs_verts
-	for (seg=0; seg<=Highest_segment_index; seg++) 
-		if (seg != sp-Segments) 
+	for (seg=0; seg<=Highest_segment_index; seg++)
+		if (seg != sp-Segments)
 			for (s=0;s<MAX_SIDES_PER_SEGMENT;s++) {
 				if (!IS_CHILD(Segments[seg].children[s])) {
-					compute_center_point_on_side(&vtc, &Segments[seg], s); 
+					compute_center_point_on_side(&vtc, &Segments[seg], s);
 					current_dist = vm_vec_dist( &vsc, &vtc );
 					if (current_dist < closest_seg_dist) {
 						*adj_sp = &Segments[seg];
@@ -2178,14 +2177,13 @@ int med_find_closest_threshold_segment_side(segment *sp, int side, segment **adj
 						closest_seg_dist = current_dist;
 					}
 				}
-			}	
+			}
 
 	if (closest_seg_dist < threshold)
 		return 1;
 	else
 		return 0;
 }
-
 
 
 void med_check_all_vertices()
@@ -2201,7 +2199,7 @@ void med_check_all_vertices()
 		if (sp->segnum != -1)
 			for (v=0; v<MAX_VERTICES_PER_SEGMENT; v++)
 				Assert(sp->verts[v] <= Highest_vertex_index);
-					
+
 	}
 
 }
@@ -2254,5 +2252,3 @@ void check_for_overlapping_segments(void)
 
 	mprintf((0, "\nDone!\n"));
 }
-
-

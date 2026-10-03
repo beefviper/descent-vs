@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,21 +15,21 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:32 $
- * 
+ *
  * .
- * 
+ *
  * $Log: garage.c $
  * Revision 2.0  1995/02/27  11:30:32  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.2  1994/08/17  16:50:28  john
  * Added damaging fireballs, missiles.
- * 
+ *
  * Revision 1.1  1994/08/16  12:45:12  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -78,23 +78,23 @@ void garage_tweak_ship()
 	sprintf( high_thrust, "%.1f", f2fl(Player_ship->high_thrust) );
 	sprintf( reverse_thrust, "%.1f", f2fl(Player_ship->reverse_thrust) );
 	sprintf( rot_speed, "%d", Player_ship->rot_speed );
-	
-	m[0].type=NM_TYPE_TEXT; m[0].text = "Mass (Default:4.0)"; 
+
+	m[0].type=NM_TYPE_TEXT; m[0].text = "Mass (Default:4.0)";
 	m[1].type=NM_TYPE_INPUT; m[1].text = mass; m[1].text_len = 10;
 
-	m[2].type=NM_TYPE_TEXT; m[2].text = "Drag (Default:2.0)"; 
+	m[2].type=NM_TYPE_TEXT; m[2].text = "Drag (Default:2.0)";
 	m[3].type=NM_TYPE_INPUT; m[3].text = drag; m[3].text_len = 10;
 
-	m[4].type=NM_TYPE_TEXT; m[4].text = "Low thrust (Default:200.0)"; 
+	m[4].type=NM_TYPE_TEXT; m[4].text = "Low thrust (Default:200.0)";
 	m[5].type=NM_TYPE_INPUT; m[5].text = low_thrust; m[5].text_len = 10;
 
-	m[6].type=NM_TYPE_TEXT; m[6].text = "High thrust (Default:500.0)"; 
+	m[6].type=NM_TYPE_TEXT; m[6].text = "High thrust (Default:500.0)";
 	m[7].type=NM_TYPE_INPUT; m[7].text = high_thrust; m[7].text_len = 10;
 
-	m[8].type=NM_TYPE_TEXT; m[8].text = "Reverse thrust (Default:300.0)"; 
+	m[8].type=NM_TYPE_TEXT; m[8].text = "Reverse thrust (Default:300.0)";
 	m[9].type=NM_TYPE_INPUT; m[9].text = reverse_thrust; m[9].text_len = 10;
 
-	m[10].type=NM_TYPE_TEXT; m[10].text = "Rotation speed (Default:20)"; 
+	m[10].type=NM_TYPE_TEXT; m[10].text = "Rotation speed (Default:20)";
 	m[11].type=NM_TYPE_INPUT; m[11].text = rot_speed; m[11].text_len = 10;
 
 	r = newmenu_do( "Garage", NULL, 12, m, NULL );
@@ -109,18 +109,3 @@ void garage_tweak_ship()
 	Player_ship->rot_speed = (int)atof(rot_speed);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

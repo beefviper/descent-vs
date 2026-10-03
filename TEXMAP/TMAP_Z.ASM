@@ -6,30 +6,30 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_z.asm $
 ; $Revision: 1.4 $
 ; $Author: mike $
 ; $Date: 1994/11/30 00:57:06 $
-; 
+;
 ; Assembly routines to do a flat-shaded z-buffer tmap.
-; 
+;
 ; $Log: tmap_z.asm $
 ; Revision 1.4  1994/11/30  00:57:06  mike
 ; optimization.
-; 
+;
 ; Revision 1.3  1994/11/12  16:41:14  mike
 ; jae -> ja.
-; 
+;
 ; Revision 1.2  1994/07/08  17:43:14  john
 ; Added flat-shaded-zbuffered polygon.
-; 
+;
 ; Revision 1.1  1994/07/08  10:58:18  john
 ; Initial revision
-; 
-; 
+;
+;
 
 	.386
 
@@ -46,7 +46,7 @@ _DATA	SEGMENT DWORD PUBLIC USE32 'DATA'
 	extrn	_fx_xright:dword
 	extrn	_fx_z:dword
 	extrn	_fx_dz_dx:dword
-		
+
 ;**	extrn	_pixptr:dword
 
 _tmap_flat_color_z	db	?
@@ -129,7 +129,7 @@ _ok_to_do:
 	mov	edx, _fx_z
 	mov	ebp, _fx_dz_dx
 	mov	ebx, 4
-	
+
 _size = (_end1 - _start1)/num_iters
 	mov	eax,num_iters-1
 	sub	eax,_loop_count

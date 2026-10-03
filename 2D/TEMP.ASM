@@ -6,25 +6,24 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/2d/rcs/temp.asm $
 ; $Revision: 1.2 $
 ; $Author: john $
 ; $Date: 1994/01/18 10:56:48 $
-; 
+;
 ; .
-; 
+;
 ; $Log: temp.asm $
 ; Revision 1.2  1994/01/18  10:56:48  john
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1994/01/12  14:38:08  john
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -38,7 +37,6 @@ rcsid	db	"$Id: temp.asm 1.2 1994/01/18 10:56:48 john Exp $"
 	align	4
 
 _DATA	ends
-
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -60,14 +58,12 @@ _TEXT	segment	dword public USE32 'CODE'
 			je	@f
 			rep	stosb
 		@@:	add	edi, ecx
-		
+
 			pop	edx
 			pop	ecx
 			pop	ebx
-			ret	
+			ret
 
 _TEXT	ends
 
 	end
-
-

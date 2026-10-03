@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,88 +15,88 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.2 $
  * $Author: john $
  * $Date: 1995/03/21 14:39:57 $
- * 
+ *
  * Code for rendering & otherwise dealing with explosions
- * 
+ *
  * $Log: fireball.c $
  * Revision 2.2  1995/03/21  14:39:57  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.1  1995/03/20  18:15:47  john
  * Added code to not store the normals in the segment structure.
- * 
+ *
  * Revision 2.0  1995/02/27  11:30:34  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.200  1995/02/22  13:18:41  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.199  1995/02/14  19:58:32  mike
  * comment out "something bad has happened" int3.
- * 
+ *
  * Revision 1.198  1995/02/09  13:11:01  mike
  * remove an annoying mprintf and Int3().
- * 
+ *
  * Revision 1.197  1995/02/08  17:10:14  mike
  * don't drop cloaks if one nearby.
- * 
+ *
  * Revision 1.196  1995/02/08  13:27:14  rob
  * Give keys dropped by robots 0 velocity in coop game.
- * 
+ *
  * Revision 1.195  1995/02/08  11:57:40  mike
  * determine whether debris object failed to create because buffer was
  * exhausted or because limit was hit.
- * 
+ *
  * Revision 1.194  1995/02/08  11:37:58  mike
  * Check for failures in call to obj_create.
- * 
+ *
  * Revision 1.193  1995/02/07  21:09:41  mike
  * only replace weapon with energy 1/2 time.
- * 
+ *
  * Revision 1.192  1995/01/30  18:21:52  rob
  * Replace extra life powerups in multiplayer to invul when
  * dropped by robots.
- * 
+ *
  * Revision 1.191  1995/01/28  17:40:59  mike
  * fix stupidity in converting quad lasers to energy.
- * 
+ *
  * Revision 1.190  1995/01/27  15:05:59  rob
  * Trying to fix a bug with damaging robots with player badass explosions.
- * 
+ *
  * Revision 1.189  1995/01/26  18:59:04  rob
  * Powerups were flying too far in robot-cooperative games.
- * 
+ *
  * Revision 1.188  1995/01/25  10:53:35  mike
  * make badass damage go through grates.
- * 
+ *
  * Revision 1.187  1995/01/25  09:37:23  mike
  * fix objects containing robots, worked for powerups, bad {} placement.
- * 
+ *
  * Revision 1.186  1995/01/23  22:51:20  mike
  * drop energy instead of primary weapon if you already have primary weapon.
- * 
+ *
  * Revision 1.185  1995/01/20  16:56:37  mike
  * Cut damage done by badass weapons.
- * 
+ *
  * Revision 1.184  1995/01/19  17:44:57  mike
  * damage_force removed, that information coming from strength field.
- * 
+ *
  * Revision 1.183  1995/01/16  21:06:54  mike
  * Move function pick_random_point_in_segment from fireball.c to gameseg.c.
- * 
+ *
  * Revision 1.182  1995/01/16  19:24:04  mike
  * If a gated-in robot and going to drop energy powerup, don't!
- * 
+ *
  * Revision 1.181  1995/01/15  20:48:03  mike
  * drop energy in place of quad lasers if player already has quad lasers.
- * 
+ *
  * Revision 1.180  1995/01/14  19:32:19  rob
  * Fixed an error.
- * 
+ *
  * Revision 1.179  1995/01/14  18:50:55  rob
  * Make robot egg creation suitable for mutliplayer situations.
- * 
+ *
  * Revision 1.178  1995/01/14  14:55:07  rob
  * Make weapons/keys/etc never disappear in network mode.
  */
@@ -140,7 +140,7 @@ static char rcsid[] = "$Id: fireball.c 2.2 1995/03/21 14:39:57 john Exp $";
 #include "fuelcen.h"
 #include "gameseg.h"
 
-#define EXPLOSION_SCALE fl2f(2.5)		//explosion is the obj size times this  
+#define EXPLOSION_SCALE fl2f(2.5)		//explosion is the obj size times this
 
 //--unused-- ubyte	Frame_processed[MAX_OBJECTS];
 
@@ -174,7 +174,7 @@ object *object_create_explosion_sub(object *objp, short segnum, vms_vector * pos
 		fix damage;
 		int i;
 		object * obj0p = &Objects[0];
-					  
+
 		// -- now legal for badass explosions on a wall. Assert(objp != NULL);
 
 		for (i=0; i<=Highest_object_index; i++ )	{
@@ -188,22 +188,22 @@ object *object_create_explosion_sub(object *objp, short segnum, vms_vector * pos
 					if (object_to_object_visibility(obj, obj0p, FQ_TRANSWALL)) {
 						damage = maxdamage - fixmuldiv( dist, maxdamage, maxdistance );
 						force = maxforce - fixmuldiv( dist, maxforce, maxdistance );
-						
+
 						// Find the force vector on the object
 						vm_vec_sub( &vforce, &obj0p->pos, &obj->pos );
 						vm_vec_normalize_quick(&vforce);
 						vm_vec_scale(&vforce, force );
-	
+
 						// Find where the point of impact is... ( pos_hit )
 						vm_vec_scale(vm_vec_sub(&pos_hit, &obj->pos, &obj0p->pos), fixdiv(obj0p->size, obj0p->size + dist));
-	
+
 						switch ( obj0p->type )	{
 							case OBJ_ROBOT:
 								phys_apply_force(obj0p,&vforce);
 
 								//	When a robot gets whacked by a badass force, he looks towards it because robots tend to get blasted from behind.
 								{
-									vms_vector neg_vforce; 
+									vms_vector neg_vforce;
 									neg_vforce.x = vforce.x * -2 * (7 - Difficulty_level)/8;
 									neg_vforce.y = vforce.y * -2 * (7 - Difficulty_level)/8;
 									neg_vforce.z = vforce.z * -2 * (7 - Difficulty_level)/8;
@@ -221,7 +221,7 @@ object *object_create_explosion_sub(object *objp, short segnum, vms_vector * pos
 								}
 								break;
 							case OBJ_PLAYER:	{
-								object * killer=NULL; 
+								object * killer=NULL;
 								vms_vector	vforce2;
 								if ((objp != NULL) && (Game_mode & GM_MULTI) && (objp->type == OBJ_PLAYER)) {
 //									mprintf((0, "Damaged by player %d's explosion.\n", objp->id));
@@ -293,10 +293,10 @@ object *explode_badass_weapon(object *obj)
 
 	digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, obj-Objects, 0, F1_0);
 
-	return object_create_badass_explosion( obj, obj->segnum, &obj->pos, 
-					wi->impact_size, 
-					wi->robot_hit_vclip, 
-					wi->strength[Difficulty_level], 
+	return object_create_badass_explosion( obj, obj->segnum, &obj->pos,
+					wi->impact_size,
+					wi->robot_hit_vclip,
+					wi->strength[Difficulty_level],
 					wi->damage_radius,wi->strength[Difficulty_level],
 					obj->ctype.laser_info.parent_num );
 
@@ -310,7 +310,7 @@ object *explode_badass_player(object *objp)
 
 	rval = object_create_badass_explosion(objp, objp->segnum, &objp->pos, objp->size,
 					get_explosion_vclip(objp, 0),
-					F1_0*50, F1_0*40, F1_0*150, 
+					F1_0*50, F1_0*40, F1_0*150,
 					objp-Objects);
 	if (rval)
 		digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, rval-Objects, 0, F1_0);
@@ -343,7 +343,7 @@ object *object_create_debris(object *parent, int subobj_num)
 
 	Assert(subobj_num < 32);
 
-	//Set polygon-object-specific data 
+	//Set polygon-object-specific data
 
 	obj->rtype.pobj_info.model_num = parent->rtype.pobj_info.model_num;
 	obj->rtype.pobj_info.subobj_flags = 1<<subobj_num;
@@ -700,7 +700,7 @@ int object_create_egg(object *objp)
 
 //	maybe_replace_powerup_with_energy(objp);
 
-//	if (Game_mode & GM_NETWORK) 
+//	if (Game_mode & GM_NETWORK)
 //	{
 //		char	type_str[16], id_str[16];
 //		if (objp->contains_type == OBJ_POWERUP) {
@@ -748,7 +748,7 @@ int object_create_egg(object *objp)
 
 				#ifdef NETWORK
 				if (Game_mode & GM_MULTI)
-				{	
+				{
 					if (Net_create_loc >= MAX_NET_CREATE_OBJECTS)
 					{
 					 	mprintf( (0, "Not enough slots to drop all powerups!\n" ));
@@ -850,13 +850,13 @@ mprintf((0, "Object %2i, Scatter vector = [%7.3f %7.3f %7.3f]\n", objnum, f2fl(n
 
 				obj = &Objects[objnum];
 
-				//Set polygon-object-specific data 
+				//Set polygon-object-specific data
 
 				obj->rtype.pobj_info.model_num = Robot_info[obj->id].model_num;
 				obj->rtype.pobj_info.subobj_flags = 0;
 
 				//set Physics info
-		
+
 				obj->mtype.phys_info.velocity = new_velocity;
 
 				obj->mtype.phys_info.mass = Robot_info[obj->id].mass;
@@ -963,18 +963,18 @@ void explode_object(object *hitobj,fix delay_time)
 
 		objnum = obj_create( OBJ_FIREBALL,-1,hitobj->segnum,&hitobj->pos,&vmd_identity_matrix,0,
 						CT_EXPLOSION,MT_NONE,RT_NONE);
-	
+
 		if (objnum < 0 ) {
 			maybe_delete_object(hitobj);		//no explosion, die instantly
 			mprintf((1,"Couldn't start explosion, deleting object now\n"));
 			Int3();
 			return;
 		}
-	
+
 		obj = &Objects[objnum];
-	
+
 		//now set explosion-specific data
-	
+
 		obj->lifeleft = delay_time;
 		obj->ctype.expl_info.delete_objnum = hitobj-Objects;
 #ifndef NDEBUG
@@ -992,7 +992,7 @@ void explode_object(object *hitobj,fix delay_time)
 		vclip_num = get_explosion_vclip(hitobj,0);
 
 		expl_obj = object_create_explosion(hitobj->segnum, &hitobj->pos, fixmul(hitobj->size,EXPLOSION_SCALE), vclip_num );
-	
+
 		if (! expl_obj) {
 			maybe_delete_object(hitobj);		//no explosion, die instantly
 			mprintf((0,"Couldn't start explosion, deleting object now\n"));
@@ -1001,12 +1001,12 @@ void explode_object(object *hitobj,fix delay_time)
 
 		//don't make debris explosions have physics, because they often
 		//happen when the debris has hit the wall, so the fireball is trying
-		//to move into the wall, which shows off FVI problems.   	
+		//to move into the wall, which shows off FVI problems.
 		if (hitobj->type!=OBJ_DEBRIS && hitobj->movement_type==MT_PHYSICS) {
 			expl_obj->movement_type = MT_PHYSICS;
 			expl_obj->mtype.phys_info = hitobj->mtype.phys_info;
 		}
-	
+
 		if (hitobj->render_type==RT_POLYOBJ && hitobj->type!=OBJ_DEBRIS)
 			explode_model(hitobj);
 
@@ -1249,7 +1249,7 @@ void do_exploding_wall_frame()
 				size = EXPL_WALL_FIREBALL_SIZE + (2*EXPL_WALL_FIREBALL_SIZE * e / EXPL_WALL_TOTAL_FIREBALLS);
 
 				//fireballs start away from door, with subsequent ones getting closer
-				#ifdef COMPACT_SEGS	
+				#ifdef COMPACT_SEGS
 					{
 					vms_vector _vn;
 					get_side_normal(&Segments[segnum], sidenum, 0, &_vn );
@@ -1262,8 +1262,8 @@ void do_exploding_wall_frame()
 				if (e & 3)		//3 of 4 are normal
 					object_create_explosion(expl_wall_list[i].segnum,&pos,size,VCLIP_SMALL_EXPLOSION);
 				else
-					object_create_badass_explosion( NULL, expl_wall_list[i].segnum, &pos, 
-					size, 
+					object_create_badass_explosion( NULL, expl_wall_list[i].segnum, &pos,
+					size,
 					VCLIP_SMALL_EXPLOSION,
 					i2f(4),		// damage strength
 					i2f(20),		//	damage radius
@@ -1272,7 +1272,7 @@ void do_exploding_wall_frame()
 					);
 
 
-			} 
+			}
 
 			if (expl_wall_list[i].time >= EXPL_WALL_TIME)
 				expl_wall_list[i].segnum = -1;	//flag this slot as free
@@ -1281,5 +1281,3 @@ void do_exploding_wall_frame()
 	}
 
 }
-
-

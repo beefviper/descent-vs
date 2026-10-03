@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,43 +15,43 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.1 $
  * $Author: john $
  * $Date: 1995/03/06 15:23:34 $
- * 
+ *
  * Take multiple-view "photos" of an object
- * 
+ *
  * $Log: photos.c $
  * Revision 2.1  1995/03/06  15:23:34  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:29:34  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.8  1993/12/09  15:07:27  john
  * Changed palette stuff majorly... no more grd_curscreen->palette
- * 
+ *
  * Revision 1.7  1993/12/05  22:47:49  matt
  * Reworked include files in an attempt to cut down on build times
- * 
+ *
  * Revision 1.6  1993/12/01  00:27:08  yuan
  * Implemented new bitmap structure system...
  * overall bitmap scheme still needs some work.
- * 
+ *
  * Revision 1.5  1993/11/29  19:50:11  matt
  * Change vertex allocation
- * 
+ *
  * Revision 1.4  1993/11/29  18:57:49  matt
  * Changed vertex numbering around a bit
- * 
+ *
  * Revision 1.3  1993/11/23  14:35:50  matt
  * Don't do perspecive on photos; save up vectors to file
- * 
+ *
  * Revision 1.2  1993/11/22  10:53:05  matt
  * Now use correct uvl structure (not just array of uvs)
- * 
+ *
  * Revision 1.1  1993/11/21  22:53:24  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -125,7 +125,7 @@ draw_cube()
 
 	for (i=0;i<8;i++)
 		Segment_points[cube_vert_nums[i]].z = Segment_points[cube_vert_nums[8]].z;
-	
+
 	//draw six sides
 
 	for (sn=0;sn<6;sn++) {
@@ -221,5 +221,3 @@ gr_set_current_canvas(photo_canvas);
 	fclose(upvfile);
 
 }
-
-

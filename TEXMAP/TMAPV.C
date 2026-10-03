@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,26 +15,26 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.5 $
  * $Author: mike $
  * $Date: 1994/11/28 13:34:30 $
- * 
+ *
  * Vertical scanning in inner loop analogue to tmap.c
- * 
+ *
  * $Log: tmapv.c $
  * Revision 1.5  1994/11/28  13:34:30  mike
  * optimizations.
- * 
+ *
  * Revision 1.4  1994/05/24  17:31:01  mike
  * Vertical scanning texture mapper, hyperbolic in outer loop, linear in inner.
- * 
+ *
  * Revision 1.3  1994/05/24  11:02:54  mike
  * Fix bugs in vertically scanning texture mapper, hack in Do_vertical_scan.
- * 
+ *
  * Revision 1.2  1994/01/31  15:42:02  mike
  * Vertical scanning version of texture mapper.
- * 
+ *
  * Revision 1.1  1994/01/30  13:56:44  mike
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -548,5 +548,3 @@ if ((srcb->bm_w == 1024) && (srcb->bm_h == 128))
 	}
 	tmap_scanline_lin_sky_v(srcb,x,yleft,yright,uleft,uright,vleft,vright);
 }
-
-

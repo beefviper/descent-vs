@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /* xlftab.h - xlisp function table */
@@ -97,7 +97,7 @@ extern LVAL
 #endif
 #ifdef SRCHFCN
   extern LVAL xsearch(V);
-#endif   
+#endif
 #ifdef POSFCNS
   extern LVAL xcountif(V), xfindif(V), xpositionif(V);
 #endif
@@ -116,21 +116,21 @@ extern LVAL
 #endif
 
 /* functions specific to xldmem.c */
-extern LVAL 
+extern LVAL
     xgc(V),xexpand(V),xalloc(V),xmem(V);
 
 #ifdef SAVERESTORE
-extern LVAL 
+extern LVAL
     xsave(V),xrestore(V);
 #endif
 
 #ifdef APPLYHOOK
-extern LVAL 
+extern LVAL
     xapplyhook(V);
 #endif
 
 #ifdef SETS
-extern LVAL 
+extern LVAL
     xadjoin(V), xunion(V), xintersection(V), xsubsetp(V),
     xset_difference(V);
 #endif

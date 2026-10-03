@@ -6,34 +6,34 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_sky.asm $
 ; $Revision: 1.5 $
 ; $Author: mike $
 ; $Date: 1994/11/30 00:57:04 $
-; 
+;
 ; Sky texture mapper.
-; 
+;
 ; $Log: tmap_sky.asm $
 ; Revision 1.5  1994/11/30  00:57:04  mike
 ; optimization.
-; 
+;
 ; Revision 1.4  1994/11/12  16:41:14  mike
 ; jae -> ja.
-; 
+;
 ; Revision 1.3  1994/03/25  17:08:48  matt
 ; Attempt to make this code work on wide windows, but I don't think
 ; it did.
-; 
+;
 ; Revision 1.2  1994/01/18  10:49:54  mike
 ; Modified linear texture mapper for sky plotting.
-; 
+;
 ; Revision 1.1  1994/01/14  15:07:03  mike
 ; Initial revision
-; 
-; 
+;
+;
 
 DEBUG_ON	=	1
 
@@ -204,7 +204,7 @@ _start1:
 ;	esi	pointer to source bitmap
 ;	edi	write address
  rept big_num_iters
-	mov	eax,ebp	; clear for 
+	mov	eax,ebp	; clear for
 	add	ebp,edx	; update v coordinate
 	shr	eax,32-height_log_2	; shift in v coordinate
 	shld	eax,ebx,width_log_2	; shift in u coordinate while shifting up v coordinate

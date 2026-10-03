@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,464 +15,464 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.8 $
  * $Author: john $
  * $Date: 1995/05/26 16:16:28 $
- * 
+ *
  * Routines for menus.
- * 
+ *
  * $Log: newmenu.c $
  * Revision 2.8  1995/05/26  16:16:28  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.7  1995/04/23  14:54:17  john
  * Fixed bug with background breaking in first menu.
- * 
+ *
  * Revision 2.6  1995/03/21  14:38:46  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.5  1995/03/15  14:33:29  john
  * Added code to force the Descent CD-rom in the drive.
- * 
+ *
  * Revision 2.4  1995/03/14  18:24:28  john
  * Force Destination Saturn to use CD-ROM drive.
- * 
+ *
  * Revision 2.3  1995/03/14  16:22:23  john
  * Added cdrom alternate directory stuff.
- * 
+ *
  * Revision 2.2  1995/03/06  18:30:51  john
  * Fixed bug with newmenu trashing editor font.
- * 
+ *
  * Revision 2.1  1995/03/06  15:23:17  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:55  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.129  1995/02/11  16:19:56  john
  * Added code to make the default mission be the one last played.
- * 
+ *
  * Revision 1.128  1995/02/02  19:41:33  john
  * Added 10 save game slots.
- * 
+ *
  * Revision 1.127  1995/02/01  18:13:52  john
  * Fixed some constants.
- * 
+ *
  * Revision 1.126  1995/02/01  18:04:01  yuan
  * Added 50 characters to list.
- * 
+ *
  * Revision 1.125  1995/02/01  13:39:35  john
  * Made menu text that changes not overwrite.
- * 
+ *
  * Revision 1.124  1995/01/31  10:47:57  john
  * Added menu that you can specify the width of the menu.
- * 
+ *
  * Revision 1.123  1995/01/28  17:18:12  john
  * Added file list box.
- * 
+ *
  * Revision 1.122  1995/01/27  17:15:55  john
  * Made prev comment actually work.
- * 
+ *
  * Revision 1.121  1995/01/27  16:49:03  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.120  1995/01/27  16:46:40  john
  * Made so that input_menu only clears text if -empty-.
- * 
+ *
  * Revision 1.119  1995/01/27  15:25:04  john
  * Delete saved game when deleteing a pilot file.
- * 
+ *
  * Revision 1.118  1995/01/25  16:36:09  john
  * Made so that when you hit enter during
  * game save, -empty- goes away.
- * 
+ *
  * Revision 1.117  1995/01/24  16:59:30  john
  * took out mono debugging text.
- * 
+ *
  * Revision 1.116  1995/01/24  16:23:16  john
  * Fixed some bugs with listboxes.
- * 
+ *
  * Revision 1.115  1995/01/23  23:47:36  matt
  * Made keypad enter work in menus
- * 
+ *
  * Revision 1.114  1995/01/23  19:29:59  john
  * Added scrolling listbox menus.
- * 
+ *
  * Revision 1.113  1995/01/19  12:33:34  john
  * Made keys jump to sliders, etc in menus.
- * 
+ *
  * Revision 1.112  1995/01/15  14:33:08  rob
  * Fixed problem with nested nm_messageboxes.
- * 
+ *
  * Revision 1.111  1995/01/03  17:33:40  john
  * Made scrolling textbox. Used it for scores cool saying.
- * 
+ *
  * Revision 1.110  1994/12/28  10:42:58  john
  * More VFX tweaking.
- * 
+ *
  * Revision 1.109  1994/12/28  10:26:39  john
  * Fixed some VFX problems.
- * 
+ *
  * Revision 1.108  1994/12/15  23:18:10  john
  * Added fix so that VFX mode doesn't hang.
- * 
+ *
  * Revision 1.107  1994/12/15  12:19:55  john
  * Made menu use clipped bitblt functions.
- * 
+ *
  * Revision 1.106  1994/12/09  00:41:30  mike
  * fix hang in automap print screen
- * 
+ *
  * Revision 1.105  1994/12/08  10:01:34  john
  * Changed the way the player callsign stuff works.
- * 
+ *
  * Revision 1.104  1994/12/04  15:34:30  john
  * Fixed bug with newmenu not restoring font properly.
- * 
+ *
  * Revision 1.103  1994/12/03  17:47:09  john
  * Fixed bug that didn't free filename mem when not .plr files found.
- * 
+ *
  * Revision 1.102  1994/12/03  15:06:15  john
  * If no pilot exists, bring up box asking for name.
- * 
+ *
  * Revision 1.101  1994/12/03  11:04:02  john
  * Changed newmenu code a bit to fix bug with bogus
  * backgrounds occcasionally.
- * 
+ *
  * Revision 1.100  1994/12/01  20:15:48  yuan
  * Localization.
- * 
+ *
  * Revision 1.99  1994/12/01  10:33:28  john
  * Fixed bug with large menu backgrounds not drawing correctly.
- * 
+ *
  * Revision 1.98  1994/12/01  02:41:56  john
  * Fixed warnining.
- * 
+ *
  * Revision 1.97  1994/11/30  22:52:43  john
  * Fixed bug in code that made the backgrounds behind menus.
- * 
+ *
  * Revision 1.96  1994/11/30  19:47:42  john
  * Added a check for out o' memory when mallocing background.
- * 
+ *
  * Revision 1.95  1994/11/30  19:39:10  john
  * ..
- * 
+ *
  * Revision 1.94  1994/11/30  19:38:27  john
  * fixed bug with previous.
- * 
+ *
  * Revision 1.93  1994/11/30  19:36:47  john
  * Made Gravis Ultrasound work again.  Made the scores blink
  * at a constant rate.  Revamped the newmenu background storage,
  * which hopefully fixed some bugs.  Made menus in ame not pause
  * sound, except for the pause key.               ^== Game!
- * 
+ *
  * Revision 1.92  1994/11/30  18:06:05  matt
  * When player types space in callsign, comes up as underscore
- * 
+ *
  * Revision 1.91  1994/11/30  12:28:22  adam
  * added PCX support
- * 
+ *
  * Revision 1.90  1994/11/30  12:10:59  adam
  * added support for PCX titles/brief screens
- * 
+ *
  * Revision 1.89  1994/11/29  00:59:12  allender
  * change newmenu_get_filename so demo files can be deleted too
- * 
+ *
  * Revision 1.88  1994/11/27  21:16:18  allender
  * made some return values in newmenu_get_filename 0 instead of -1
- * 
+ *
  * Revision 1.87  1994/11/27  16:58:17  matt
  * Made printscreen work all the time (not just when no ndebug) and made it
  * work when getting a filename.
- * 
+ *
  * Revision 1.86  1994/11/27  16:47:51  john
  * Made the call to fade in palette only happen if it needs to be, just
  * because I thought it might reduce code paging with vm in menus.
- * 
+ *
  * Revision 1.85  1994/11/26  15:30:16  matt
  * Allow escape out of change pilot menu
- * 
+ *
  * Revision 1.84  1994/11/26  14:17:26  matt
  * Player can now only enter valid chars for his name
- * 
+ *
  * Revision 1.83  1994/11/23  14:13:17  allender
  * if no demo files, displays less "techy" message
- * 
+ *
  * Revision 1.82  1994/11/21  11:55:52  john
  * Fixed some sound pausing in menus bugs.
- * 
+ *
  * Revision 1.81  1994/11/19  15:14:58  mike
  * remove unused code and data
- * 
+ *
  * Revision 1.80  1994/11/18  23:37:54  john
  * Changed some shorts to ints.
- * 
+ *
  * Revision 1.79  1994/11/15  09:29:21  john
- * Made it so that pressing a letter when selecting players moves to 
+ * Made it so that pressing a letter when selecting players moves to
  * a matching choice.
- * 
+ *
  * Revision 1.78  1994/11/14  17:12:28  adam
  * *** empty log message ***
- * 
+ *
  * Revision 1.77  1994/11/14  16:58:31  rob
  * Tried to fix a problem with save demo dialog.
- * 
+ *
  * Revision 1.76  1994/11/14  16:13:46  matt
  * Fixed handling of players with DOS device names
- * 
+ *
  * Revision 1.75  1994/11/13  18:12:53  matt
  * Fixed handling of filenames that are the same as DOS devices
- * 
+ *
  * Revision 1.74  1994/11/13  17:20:44  john
  * Fixed text a bit.
- * 
+ *
  * Revision 1.73  1994/11/13  17:18:22  john
  * Changed wording of new pilot.
- * 
+ *
  * Revision 1.72  1994/11/13  17:14:21  john
  * Fixed bug with player list box.
- * 
+ *
  * Revision 1.71  1994/11/13  17:12:48  john
  * Fixed broken demo file list.
- * 
+ *
  * Revision 1.70  1994/11/13  17:04:49  john
  * Made the callsign entry be a list box and gave the ability
  * to delete players.
- * 
+ *
  * Revision 1.69  1994/11/13  15:38:03  john
  * Added critical error handler to game.  Took out -editor command line
  * option because it didn't work anymore and wasn't worth fixing.  Made scores
  * not use MINER enviroment variable on release version, and made scores
  * not print an error if there is no descent.hi.
- * 
+ *
  * Revision 1.68  1994/11/11  18:17:03  rob
  * Made multi_menu_poll return a value to exit menus.
- * 
+ *
  * Revision 1.67  1994/11/11  11:07:06  rob
  * Added include of multi.h
- * 
+ *
  * Revision 1.66  1994/11/10  20:25:16  rob
  * John's stuff to make network menus work.
- * 
+ *
  * Revision 1.65  1994/11/08  14:51:39  john
  * Added nm_messagebox1, (like the original, only you can pass a function).
- * 
+ *
  * Revision 1.64  1994/11/08  08:30:39  john
  * Fixed bug with centering titles.
- * 
+ *
  * Revision 1.63  1994/11/08  08:27:00  john
  * Made titles and subtitles center.
- * 
+ *
  * Revision 1.62  1994/11/07  09:40:48  john
  * Neatend file list box some.
- * 
+ *
  * Revision 1.61  1994/11/05  17:22:41  john
  * Fixed lots of sequencing problems with newdemo stuff.
- * 
+ *
  * Revision 1.60  1994/11/05  15:04:08  john
  * Added non-popup menu for the main menu, so that scores and credits don't have to save
  * the background.
- * 
+ *
  * Revision 1.59  1994/11/05  14:03:52  john
  * Fixed fade transitions between all screens by making gr_palette_fade_in and out keep
  * track of whether the palette is faded in or not.  Then, wherever the code needs to fade out,
  * it just calls gr_palette_fade_out and it will fade out if it isn't already.  The same with fade_in.
  * This eliminates the need for all the flags like Menu_fade_out, game_fade_in palette, etc.
- * 
+ *
  * Revision 1.58  1994/11/04  20:11:50  john
  * Neatening up palette stuff with demos.
- * 
+ *
  * Revision 1.57  1994/11/04  13:49:24  allender
  * fixed newmenu_get_filename to work with less than 10 files
- * 
+ *
  * Revision 1.56  1994/11/03  19:37:44  john
  * Added scrolling file list box
- * 
+ *
  * Revision 1.55  1994/10/31  18:16:42  john
  * Made Pad arrows work with menus.
- * 
+ *
  * Revision 1.54  1994/10/28  14:54:25  john
  * Added forward dec. for newmenu_close.
  * .\
- * 
+ *
  * Revision 1.53  1994/10/28  14:53:00  john
  * Fixed hideous bug that would bomb if you called newmenu_draw_background
  * before any menus were ever displayed.
- * 
+ *
  * Revision 1.52  1994/10/24  19:56:53  john
  * Made the new user setup prompt for config options.
- * 
+ *
  * Revision 1.51  1994/10/24  15:15:49  john
  * Made Esc exit nm_messagebox's,
  * ,
- * 
+ *
  * Revision 1.50  1994/10/21  15:20:20  john
  * Made PrtScr do screen dump, not F2.
- * 
+ *
  * Revision 1.49  1994/10/18  12:33:38  john
  * Only used copy the item text into the saved_text field
  * if it is an inputbox or inputbox_menu.
- * 
+ *
  * Revision 1.48  1994/10/17  11:04:01  john
  * Made backtab work also.
- * 
+ *
  * Revision 1.47  1994/10/17  10:47:49  john
  * MAde Tab work like down arrow.
- * 
+ *
  * Revision 1.46  1994/10/17  10:45:10  john
  * Made the player able to abort death by pressing any button or key.
- * 
+ *
  * Revision 1.45  1994/10/13  21:52:02  john
  * Made it so that if a messagebox has 1 choice, then
  * Esc will return -1.
- * 
+ *
  * Revision 1.44  1994/10/13  11:35:38  john
  * Made Thrustmaster FCS Hat work.  Put a background behind the
  * keyboard configure.  Took out turn_sensitivity.  Changed sound/config
  * menu to new menu. Made F6 be calibrate joystick.
- * 
+ *
  * Revision 1.43  1994/10/11  17:18:52  john
  * Fixed bug with sliders always starting at -1.
- * 
+ *
  * Revision 1.42  1994/10/11  17:08:29  john
  * Added sliders for volume controls.
- * 
+ *
  * Revision 1.41  1994/10/06  16:04:40  john
  * Made text items color differently than others. Adam
  * is gonna make a diff colored font for these.
- * 
+ *
  * Revision 1.40  1994/10/06  15:08:23  rob
  * Allowed any negative key value to abort the menu and return.
- * 
+ *
  * Revision 1.39  1994/10/04  10:26:06  matt
  * Changed fade in to happen every time a global var is set
- * 
+ *
  * Revision 1.38  1994/10/04  09:16:08  john
  * If you pass -1 as choice in newmenu_do1, then
  * no item is highlighted until you press up or
  * down arrows.
- * 
+ *
  * Revision 1.37  1994/10/03  23:44:37  matt
  * Save & restore palette effect around menus & pause message
- * 
+ *
  * Revision 1.36  1994/10/03  22:59:40  matt
  * Re-enabled backspace to generate Int3()
- * 
+ *
  * Revision 1.35  1994/10/03  19:11:21  matt
  * Changed string input cursor to blinking underscore
- * 
+ *
  * Revision 1.34  1994/10/03  14:44:15  john
  * Added newmenu_do1, which allows you to pass the starting
  * item to the menu system
- * 
+ *
  * Revision 1.33  1994/09/30  11:51:21  john
  * Added Matt's NM_TYPE_INPUT_MENU
- * 
+ *
  * Revision 1.32  1994/09/28  17:22:56  matt
  * Added extra space between subtitle and menu items
  * Made shortcut key check ignore leading spaces in text
- * 
+ *
  * Revision 1.31  1994/09/15  16:11:22  john
  * Added support for VFX1 head tracking. Fixed bug with memory over-
  * write when using stereo mode.
- * 
+ *
  * Revision 1.30  1994/09/12  09:52:59  john
  * Made global flush function that flushes keyboard,mouse, and joystick.
- * 
+ *
  * Revision 1.29  1994/09/10  19:10:54  matt
  * Fixed a few things (like arrow key handling) for menus with all
  * text items, such as the key help message.
- * 
+ *
  * Revision 1.28  1994/09/01  18:55:38  john
  * freed scores.lbm
- * 
+ *
  * Revision 1.27  1994/09/01  18:03:50  john
  * Neatened up scores a bit.
- * 
+ *
  * Revision 1.26  1994/08/30  20:38:13  john
  * Passed citem in newmenu sub.
- * 
+ *
  * Revision 1.25  1994/08/30  11:13:01  john
  * Added beveled edges to menus.
- * 
+ *
  * Revision 1.24  1994/08/26  13:01:58  john
  * Put high score system in.
- * 
+ *
  * Revision 1.23  1994/08/16  00:18:44  john
  * Made pressing the first letter of a menu
  * item move to it.
- * 
+ *
  * Revision 1.22  1994/08/15  23:17:43  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.21  1994/08/15  23:15:28  john
  * Made 1 menu/checkbox return with any keypress.
- * 
+ *
  * Revision 1.20  1994/08/12  10:18:23  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.19  1994/08/12  10:09:11  john
  * Made borders better.
- * 
+ *
  * Revision 1.18  1994/08/12  03:11:16  john
  * Made network be default off; Moved network options into
  * main menu.  Made starting net game check that mines are the
  * same.
- * 
+ *
  * Revision 1.17  1994/08/11  22:14:43  john
  * Free'd up some memory that I forgot to free.
- * 
+ *
  * Revision 1.16  1994/08/11  19:27:35  john
  * Made the Backspace drop into the debugger only
  * if you're not in an inputbox.
- * 
+ *
  * Revision 1.15  1994/08/11  18:01:49  matt
  * Added F2 and BACKSPACE keys to new menu system
- * 
+ *
  * Revision 1.14  1994/08/11  14:25:58  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.13  1994/08/11  14:25:40  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.12  1994/08/11  13:47:02  john
  * Made newmenu have subtitles, passed key through to
  * the newmenu subfunctions.
- * 
+ *
  * Revision 1.11  1994/08/11  12:45:08  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.10  1994/08/11  12:25:45  john
  * Made right_offset spacing different
- * 
+ *
  * Revision 1.9  1994/08/11  12:09:49  john
  * Made work with bitmapped fonts.
- * 
+ *
  * Revision 1.8  1994/08/10  19:56:16  john
  * Changed font stuff; Took out old menu; messed up lots of
  * other stuff like game sequencing messages, etc.
- * 
+ *
  * Revision 1.7  1994/07/27  16:12:23  john
  * Changed newmenu system to have a callback function.
  * /.
- * 
+ *
  * Revision 1.6  1994/07/25  15:10:23  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.5  1994/07/25  12:33:35  john
  * Network "pinging" in.
- * 
+ *
  * Revision 1.4  1994/07/24  18:21:27  john
  * Took out first time stuff.
- * 
+ *
  * Revision 1.3  1994/07/24  17:32:47  john
  * Added percent item.  Also neatend up a bit.
- * 
+ *
  * Revision 1.2  1994/07/22  17:48:13  john
  * Added new menuing system.
- * 
+ *
  * Revision 1.1  1994/07/22  13:55:38  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -521,15 +521,15 @@ static char rcsid[] = "$Id: newmenu.c 2.8 1995/05/26 16:16:28 john Exp $";
 #define NORMAL_FONT  	(Gamefonts[GFONT_MEDIUM_1])
 #define TEXT_FONT  		(Gamefonts[GFONT_MEDIUM_3])
 
-#define NORMAL_CHECK_BOX	""
-#define CHECKED_CHECK_BOX	"‚"
-#define NORMAL_RADIO_BOX	""
-#define CHECKED_RADIO_BOX	"€"
+#define NORMAL_CHECK_BOX	"\201"
+#define CHECKED_CHECK_BOX	"\202"
+#define NORMAL_RADIO_BOX	"\177"
+#define CHECKED_RADIO_BOX	"\200"
 #define CURSOR_STRING		"_"
-#define SLIDER_LEFT			"ƒ"		// 131
-#define SLIDER_RIGHT			"„"		// 132
-#define SLIDER_MIDDLE		"…"		// 133
-#define SLIDER_MARKER		"†"		// 134
+#define SLIDER_LEFT			"\203"		// 131
+#define SLIDER_RIGHT			"\204"		// 132
+#define SLIDER_MIDDLE		"\205"		// 133
+#define SLIDER_MARKER		"\206"		// 134
 
 int Newmenu_first_time = 1;
 //--unused-- int Newmenu_fade_in = 1;
@@ -565,7 +565,7 @@ void nm_draw_background1(char * filename)
 	bmp = gr_create_sub_bitmap( &grd_curcanv->cv_bitmap, x, y, 320, 200 );
 	pcx_error = pcx_read_bitmap(filename,bmp,bmp->bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
-	
+
 	gr_free_sub_bitmap(bmp);
 }
 
@@ -579,7 +579,7 @@ void nm_draw_background(int x1, int y1, int x2, int y2 )
 		atexit( newmenu_close );
 		Newmenu_first_time = 0;
 
-		nm_background.bm_data=NULL;		
+		nm_background.bm_data=NULL;
 		pcx_error = pcx_read_bitmap("SCORES.PCX",&nm_background,BM_LINEAR,newpal);
 		Assert(pcx_error == PCX_ERROR_NONE);
 
@@ -594,7 +594,7 @@ void nm_draw_background(int x1, int y1, int x2, int y2 )
 
 	if ( w > nm_background.bm_w ) w = nm_background.bm_w;
 	if ( h > nm_background.bm_h ) h = nm_background.bm_h;
-	
+
 	x2 = x1 + w - 1;
 	y2 = y1 + h - 1;
 
@@ -659,7 +659,7 @@ void nm_string( bkg * b, int w1,int x, int y, char * s )
 	// CHANGED
 	gr_bm_bitblt(b->background->bm_w-15, h, 5, y, 5, y, b->background, &(grd_curcanv->cv_bitmap) );
 	//gr_bm_bitblt(w, h, x, y, x, y, b->background, &(grd_curcanv->cv_bitmap) );
-	
+
 	gr_string( x, y, s );
 
 	if (p && (w1>0) )	{
@@ -713,12 +713,12 @@ void nm_string_black( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	gr_get_string_size(s, &w, &h, &aw  );
-	b = b;					
+	b = b;
 	if (w1 == 0) w1 = w;
 
 	gr_setcolor( BM_XRGB(0,0,0) );
 	gr_rect( x, y, x+w1-1, y+h-1 );
-	
+
 	gr_string( x, y, s );
 }
 
@@ -736,7 +736,7 @@ void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 
 	// CHANGED
 	gr_bm_bitblt(w1, h, x-w1, y, x-w1, y, b->background, &(grd_curcanv->cv_bitmap) );
-	
+
 	gr_string( x-w, y, s );
 }
 
@@ -759,7 +759,7 @@ update_cursor( newmenu_item *item)
 		else
 			break;
 	}
-	if (*text==0) 
+	if (*text==0)
 		w = 0;
 	x = item->x+w; y = item->y;
 
@@ -798,7 +798,7 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 		grd_curcanv->cv_font = CURRENT_FONT;
 	else
 		grd_curcanv->cv_font = NORMAL_FONT;
-	
+
 	switch( item->type )	{
 	case NM_TYPE_TEXT:
 		grd_curcanv->cv_font=TEXT_FONT;
@@ -815,9 +815,9 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 			sprintf( item->saved_text, "%s%s", item->saved_text,SLIDER_MIDDLE );
 		}
 		sprintf( item->saved_text, "%s%s", item->saved_text,SLIDER_RIGHT );
-		
+
 		item->saved_text[item->value+1+strlen(item->text)+1] = SLIDER_MARKER[0];
-		
+
 		nm_string_slider( b, item->w, item->x, item->y, item->saved_text );
 		}
 		break;
@@ -835,7 +835,7 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 		nm_string( b, item->w, item->x, item->y, item->text );
 		if (item->value)
 			nm_rstring( b,item->right_offset,item->x, item->y, CHECKED_CHECK_BOX );
-		else														  
+		else
 			nm_rstring( b,item->right_offset,item->x, item->y, NORMAL_CHECK_BOX );
 		break;
 	case NM_TYPE_RADIO:
@@ -938,7 +938,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	}
 
 	save_canvas = grd_curcanv;
-	gr_set_current_canvas( NULL );			
+	gr_set_current_canvas( NULL );
 	save_font = grd_curcanv->cv_font;
 
 	tw = th = 0;
@@ -999,7 +999,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			if (w1 > item[i].right_offset)
 				item[i].right_offset = w1;
 		}
-		
+
 		if (item[i].type == NM_TYPE_RADIO ) {
 			int w1,h1,aw1;
 			nothers++;
@@ -1028,7 +1028,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			strcpy(item[i].saved_text, item[i].text );
 			nothers++;
 			string_width = item[i].text_len*grd_curcanv->cv_font->ft_w+item[i].text_len;
-			if ( string_width > MAX_TEXT_WIDTH ) 
+			if ( string_width > MAX_TEXT_WIDTH )
 				string_width = MAX_TEXT_WIDTH;
 			item[i].value = -1;
 		}
@@ -1067,7 +1067,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	}
 	if (right_offset > 0 )
 		right_offset += 3;
-	
+
 	//mprintf( 0, "Right offset = %d\n", right_offset );
 
 	//gr_get_string_size("",&string_width,&string_height,&average_width );
@@ -1079,7 +1079,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		twidth = ( tw - w )/2;
 		w = tw;
 	}
-			
+
 	// Find min point of menu border
 //	x = (grd_curscreen->sc_w-w)/2;
 //	y = (grd_curscreen->sc_h-h)/2;
@@ -1095,7 +1095,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) y = 0;
-		
+
 	if ( filename != NULL )	{
 		nm_draw_background1( filename );
 	}
@@ -1145,7 +1145,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	}
 
 	grd_curcanv->cv_font = NORMAL_FONT;
-	
+
 	// Update all item's x & y values.
 	for (i=0; i<nitems; i++ )	{
 		item[i].x = 15 + twidth + right_offset;
@@ -1159,7 +1159,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 					item[j].value = 0;
 				}
 			}
-			if ( fm>=0 )	
+			if ( fm>=0 )
 				item[fm].value=1;
 			else
 				item[i].value=1;
@@ -1175,19 +1175,19 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		if (citem < 0 ) citem = 0;
 		if (citem > nitems-1 ) citem = nitems-1;
 		choice = citem;
-	
+
 		while ( item[choice].type==NM_TYPE_TEXT )	{
 			choice++;
 			if (choice >= nitems ) {
-				choice=0; 
+				choice=0;
 			}
 			if (choice == citem ) {
-				choice=0; 
+				choice=0;
 				all_text=1;
-				break; 
+				break;
 			}
 		}
-	} 
+	}
 	done = 0;
 
 	// Clear mouse, joystick to clear button presses.
@@ -1195,7 +1195,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 	while(!done)	{
 		//network_listen();
-	
+
 
 		k = key_inkey();
 
@@ -1215,28 +1215,28 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			k = -1;
 			done = 1;
 		}
-				
+
 		switch (Config_control_type) {
 		case	CONTROL_JOYSTICK:
 		case	CONTROL_FLIGHTSTICK_PRO:
 		case	CONTROL_THRUSTMASTER_FCS:
 		case	CONTROL_GRAVIS_GAMEPAD:
-			for (i=0; i<4; i++ )	
+			for (i=0; i<4; i++ )
 		 		if (joy_get_button_down_cnt(i)>0) done=1;
 			break;
 		case	CONTROL_MOUSE:
 		case	CONTROL_CYBERMAN:
-			for (i=0; i<3; i++ )	
+			for (i=0; i<3; i++ )
 				if (mouse_button_down_count(i)>0) done=1;
 			break;
 		}
-	
+
 
 //		if ( (nmenus<2) && (k>0) && (nothers==0) )
 //			done=1;
 
 		old_choice = choice;
-	
+
 		switch( k )	{
 		case KEY_TAB + KEY_SHIFTED:
 		case KEY_UP:
@@ -1247,14 +1247,14 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 				if (choice >= nitems ) choice=0;
 				if (choice < 0 ) choice=nitems-1;
 			} while ( item[choice].type==NM_TYPE_TEXT );
-			if ((item[choice].type==NM_TYPE_INPUT) && (choice!=old_choice))	
+			if ((item[choice].type==NM_TYPE_INPUT) && (choice!=old_choice))
 				item[choice].value = -1;
 			if ((old_choice>-1) && (item[old_choice].type==NM_TYPE_INPUT_MENU) && (old_choice!=choice))	{
 				item[old_choice].group=0;
 				strcpy(item[old_choice].text, item[old_choice].saved_text );
 				item[old_choice].value = -1;
 			}
-			if (old_choice>-1) 
+			if (old_choice>-1)
 				item[old_choice].redraw = 1;
 			item[choice].redraw=1;
 			break;
@@ -1267,11 +1267,11 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 				if (choice < 0 ) choice=nitems-1;
 				if (choice >= nitems ) choice=0;
 			} while ( item[choice].type==NM_TYPE_TEXT );
-			if ((item[choice].type==NM_TYPE_INPUT) && (choice!=old_choice))	
+			if ((item[choice].type==NM_TYPE_INPUT) && (choice!=old_choice))
 				item[choice].value = -1;
 			if ( (old_choice>-1) && (item[old_choice].type==NM_TYPE_INPUT_MENU) && (old_choice!=choice))	{
 				item[old_choice].group=0;
-				strcpy(item[old_choice].text, item[old_choice].saved_text );	
+				strcpy(item[old_choice].text, item[old_choice].saved_text );
 				item[old_choice].value = -1;
 			}
 			if (old_choice>-1)
@@ -1302,7 +1302,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 					item[choice].value = 1;
 					item[choice].redraw = 1;
 					break;
-				}	
+				}
 			}
 			break;
 
@@ -1314,7 +1314,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 				if ( !strnicmp( item[choice].saved_text, TXT_EMPTY, strlen(TXT_EMPTY) ) )	{
 					item[choice].text[0] = 0;
 					item[choice].value = -1;
-				} else {	
+				} else {
 					strip_end_whitespace(item[choice].text);
 				}
 			} else
@@ -1324,7 +1324,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		case KEY_ESC:
 			if ( (choice>-1) && (item[choice].type==NM_TYPE_INPUT_MENU) && (item[choice].group==1))	{
 				item[choice].group=0;
-				strcpy(item[choice].text, item[choice].saved_text );	
+				strcpy(item[choice].text, item[choice].saved_text );
 				item[choice].redraw=1;
 				item[choice].value = -1;
 			} else {
@@ -1336,9 +1336,9 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		case KEY_PRINT_SCREEN: 		save_screen_shot(0); break;
 
 		#ifndef NDEBUG
-		case KEY_BACKSP:	
+		case KEY_BACKSP:
 			if ( (choice>-1) && (item[choice].type!=NM_TYPE_INPUT)&&(item[choice].type!=NM_TYPE_INPUT_MENU))
-				Int3(); 
+				Int3();
 			break;
 		#endif
 
@@ -1353,7 +1353,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 					if (item[choice].value > 0)
 						item[choice].value--;
 					item[choice].text[item[choice].value] = 0;
-					item[choice].redraw = 1;	
+					item[choice].redraw = 1;
 				} else {
 					ascii = key_to_ascii(k);
 					if ((ascii < 255 ) && (item[choice].value < item[choice].text_len ))
@@ -1374,7 +1374,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 						if (allowed) {
 							item[choice].text[item[choice].value++] = ascii;
 							item[choice].text[item[choice].value] = 0;
-							item[choice].redraw=1;	
+							item[choice].redraw=1;
 						}
 					}
 				}
@@ -1401,7 +1401,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 							item[choice].redraw=1;
 						}
 					} while (choice1 != choice );
-				}	
+				}
 			}
 
 			if ( (item[choice].type==NM_TYPE_NUMBER) || (item[choice].type==NM_TYPE_SLIDER)) 	{
@@ -1435,7 +1435,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 				if (ov!=item[choice].value)
 					item[choice].redraw=1;
 			}
-	
+
 		}
 
 		gr_set_current_canvas(bg.menu_canvas);
@@ -1453,24 +1453,24 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			gr_palette_fade_in( gr_palette, 32, 0 );
 		}
 	}
-	
+
 	// Restore everything...
 	gr_set_current_canvas(bg.menu_canvas);
 	if ( filename == NULL )	{
 		// Save the background under the menu...
-		gr_bitmap(0, 0, bg.saved); 	
+		gr_bitmap(0, 0, bg.saved);
 		gr_free_bitmap(bg.saved);
 		free( bg.background );
 	} else {
-		gr_bitmap(0, 0, bg.background); 	
+		gr_bitmap(0, 0, bg.background);
 		gr_free_bitmap(bg.background);
 	}
 
 	gr_free_sub_canvas( bg.menu_canvas );
 
-	gr_set_current_canvas( NULL );			
+	gr_set_current_canvas( NULL );
 	grd_curcanv->cv_font	= save_font;
-	gr_set_current_canvas( save_canvas );			
+	gr_set_current_canvas( save_canvas );
 	keyd_repeat = old_keyd_repeat;
 
 	game_flush_inputs();
@@ -1482,7 +1482,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 //NO_SOUND_PAUSE		digi_resume_all();
 
 	return choice;
-	
+
 }
 
 
@@ -1541,8 +1541,6 @@ int nm_messagebox( char *title, int nchoices, ... )
 }
 
 
-
-
 void newmenu_file_sort( int n, char *list )
 {
 	int i, j, incr;
@@ -1571,7 +1569,7 @@ void delete_player_saved_games(char * name)
 {
 	int i;
 	char filename[16];
-	
+
 	for (i=0;i<10; i++)	{
 		sprintf( filename, "%s.sg%d", name, i );
 		unlink( filename );
@@ -1687,19 +1685,19 @@ ReadFileNames:
 		goto ExitFileMenu;
 	}
 
-	if (!initialized) {	
+	if (!initialized) {
 		set_screen_mode(SCREEN_MENU);
 		gr_set_current_canvas(NULL);
 
 		w_w = 230 - 90 + 1 + 30;
 		w_h = 170 - 30 + 1 + 30;
-	
+
 		if ( w_w > 320 ) w_w = 320;
 		if ( w_h > 200 ) w_h = 200;
-	
+
 		w_x = (grd_curcanv->cv_bitmap.bm_w-w_w)/2;
 		w_y = (grd_curcanv->cv_bitmap.bm_h-w_h)/2;
-	
+
 		if ( w_x < 0 ) w_x = 0;
 		if ( w_y < 0 ) w_y = 0;
 
@@ -1770,11 +1768,11 @@ ReadFileNames:
 			break;
 		case KEY_UP:
 		case KEY_PAD8:
-			citem--;			
+			citem--;
 			break;
 		case KEY_DOWN:
 		case KEY_PAD2:
-			citem++;			
+			citem++;
 			break;
  		case KEY_PAGEDOWN:
 		case KEY_PAD3:
@@ -1794,7 +1792,7 @@ ReadFileNames:
 		case KEY_PADENTER:
 			done = 1;
 			break;
-		default:	
+		default:
 			{
 				int ascii = key_to_ascii(key);
 				if ( ascii < 255 )	{
@@ -1806,7 +1804,7 @@ ReadFileNames:
 						if ( cc < 0 ) cc = 0;
 						if ( cc >= NumFiles ) cc = 0;
 						if ( citem == cc ) break;
-	
+
 						if ( toupper(filenames[cc*14]) == toupper(ascii) )	{
 							citem = cc;
 							break;
@@ -1847,24 +1845,24 @@ ReadFileNames:
 					gr_setcolor( BM_XRGB(0,0,0));
 					gr_rect( 100, y-1, 220, y+11 );
 				} else {
-					if ( i == citem )	
+					if ( i == citem )
 						grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-					else	
+					else
 						grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 					gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 					gr_rect( 100, y-1, 220, y+11 );
 					gr_string( 105, y, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 				}
-			}		
+			}
 		} else if ( citem != ocitem )	{
 			int w, h, aw, y;
 
 			i = ocitem;
 			if ( (i>=0) && (i<NumFiles) )	{
 				y = (i-first_item)*12+w_y+45;
-				if ( i == citem )	
+				if ( i == citem )
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-				else	
+				else
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 				gr_rect( 100, y-1, 220, y+11 );
@@ -1873,9 +1871,9 @@ ReadFileNames:
 			i = citem;
 			if ( (i>=0) && (i<NumFiles) )	{
 				y = (i-first_item)*12+w_y+45;
-				if ( i == citem )	
+				if ( i == citem )
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-				else	
+				else
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 				gr_rect( 100, y-1, 220, y+11 );
@@ -1890,7 +1888,7 @@ ExitFileMenuEarly:
 		exit_value = 1;
 	} else {
 		exit_value = 0;
-	}											 
+	}
 
 ExitFileMenu:
 	keyd_repeat = old_keyd_repeat;
@@ -1911,7 +1909,7 @@ ExitFileMenu:
 // int lb_callback( int * citem, int *nitems, char * items[], int *keypress )
 // {
 // 	int i;
-// 
+//
 // 	if ( *keypress = KEY_CTRLED+KEY_D )	{
 // 		if ( *nitems > 1 )	{
 // 			unlink( items[*citem] );		// Delete the file
@@ -1924,7 +1922,7 @@ ExitFileMenu:
 // 			return 1;	// redraw;
 // 		}
 //			*keypress = 0;
-// 	}			
+// 	}
 // 	return 0;
 // }
 
@@ -1950,7 +1948,7 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 	width = 0;
 	for (i=0; i<nitems; i++ )	{
 		int w, h, aw;
-		gr_get_string_size( items[i], &w, &h, &aw );		
+		gr_get_string_size( items[i], &w, &h, &aw );
 		if ( w > width )
 			width = w;
 	}
@@ -1958,16 +1956,16 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 
 	{
 		int w, h, aw;
-		gr_get_string_size( title, &w, &h, &aw );		
+		gr_get_string_size( title, &w, &h, &aw );
 		if ( w > width )
 			width = w;
 		title_height = h + 5;
 	}
-		
+
 	width += 10;
 	if ( width > 320 - 30 )
 		width = 320 - 30;
-	
+
 	wx = (grd_curcanv->cv_bitmap.bm_w-width)/2;
 	wy = (grd_curcanv->cv_bitmap.bm_h-(height+title_height))/2 + title_height;
 	if ( wy < title_height )
@@ -2002,8 +2000,8 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 		}
 
 		switch(key)	{
-		case KEY_PRINT_SCREEN: 		
-			save_screen_shot(0); 
+		case KEY_PRINT_SCREEN:
+			save_screen_shot(0);
 			break;
 		case KEY_HOME:
 		case KEY_PAD7:
@@ -2015,11 +2013,11 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 			break;
 		case KEY_UP:
 		case KEY_PAD8:
-			citem--;			
+			citem--;
 			break;
 		case KEY_DOWN:
 		case KEY_PAD2:
-			citem++;			
+			citem++;
 			break;
  		case KEY_PAGEDOWN:
 		case KEY_PAD3:
@@ -2039,7 +2037,7 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 		case KEY_PADENTER:
 			done = 1;
 			break;
-		default:	
+		default:
 			if ( key > 0 )	{
 				int ascii = key_to_ascii(key);
 				if ( ascii < 255 )	{
@@ -2051,7 +2049,7 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 						if ( cc < 0 ) cc = 0;
 						if ( cc >= nitems ) cc = 0;
 						if ( citem == cc ) break;
-	
+
 						if ( toupper( items[cc][0] ) == toupper(ascii) )	{
 							citem = cc;
 							break;
@@ -2091,24 +2089,24 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 					gr_setcolor( BM_XRGB(0,0,0));
 					gr_rect( wx, y-1, wx+width-1, y+11 );
 				} else {
-					if ( i == citem )	
+					if ( i == citem )
 						grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-					else	
+					else
 						grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 					gr_get_string_size(items[i], &w, &h, &aw  );
 					gr_rect( wx, y-1, wx+width-1, y+11 );
 					gr_string( wx+5, y, items[i]  );
 				}
-			}		
+			}
 		} else if ( citem != ocitem )	{
 			int w, h, aw, y;
 
 			i = ocitem;
 			if ( (i>=0) && (i<nitems) )	{
 				y = (i-first_item)*12+wy;
-				if ( i == citem )	
+				if ( i == citem )
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-				else	
+				else
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size(items[i], &w, &h, &aw  );
 				gr_rect( wx, y-1, wx+width-1, y+11 );
@@ -2117,9 +2115,9 @@ int newmenu_listbox1( char * title, int nitems, char * items[], int allow_abort_
 			i = citem;
 			if ( (i>=0) && (i<nitems) )	{
 				y = (i-first_item)*12+wy;
-				if ( i == citem )	
+				if ( i == citem )
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_2];
-				else	
+				else
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size( items[i], &w, &h, &aw  );
 				gr_rect( wx, y-1, wx+width-1, y+11 );
@@ -2159,8 +2157,6 @@ int newmenu_filelist( char * title, char * filespec, char * filename )
 	if ( i > -1 )	{
 		strcpy( filename, Filenames[i] );
 		return 1;
-	} 
+	}
 	return 0;
 }
-
-

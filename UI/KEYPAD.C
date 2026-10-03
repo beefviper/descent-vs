@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
@@ -71,7 +71,7 @@ void ui_pad_close()
 			for (j=0; j<17; j++ )
 				free(KeyPad[i]->buttontext[j]);
 			free( KeyPad[i] );
-			KeyPad[i] = NULL;	
+			KeyPad[i] = NULL;
 		}
 
 }
@@ -90,10 +90,10 @@ void LineParse( int n, char * dest, char * source )
 	while ( source[i] != 179 )
 	{
 		dest[j] = source[i++];
-		j++;		
+		j++;
 	}
 
-	// Null-terminate	
+	// Null-terminate
 	dest[j++] = 0;
 }
 
@@ -112,7 +112,7 @@ void ui_pad_activate( UI_WINDOW * wnd, int x, int y )
 
 	desc_x = x+2;
 	desc_y = y-17;
-		
+
 	n=0; row = 0; col = 0; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
@@ -125,22 +125,22 @@ void ui_pad_activate( UI_WINDOW * wnd, int x, int y )
 	n=3; row = 0; col = 3; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=4; row = 1; col = 0; w = 1; h = 1; 
+	n=4; row = 1; col = 0; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=5; row = 1; col = 1; w = 1; h = 1; 
+	n=5; row = 1; col = 1; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=6; row = 1; col = 2; w = 1; h = 1; 
+	n=6; row = 1; col = 2; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=7; row = 1; col = 3; w = 1; h = 2; 
+	n=7; row = 1; col = 3; w = 1; h = 2;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=8; row = 2; col = 0; w = 1; h = 1; 
+	n=8; row = 2; col = 0; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=9; row = 2; col = 1; w = 1; h = 1; 
+	n=9; row = 2; col = 1; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
 	n=10; row = 2; col = 2; w = 1; h = 1;
@@ -155,13 +155,13 @@ void ui_pad_activate( UI_WINDOW * wnd, int x, int y )
 	n=13; row = 3; col = 2; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=14; row = 3; col = 3; w = 1; h = 2; 
+	n=14; row = 3; col = 3; w = 1; h = 2;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
 	n=15; row = 4; col = 0; w = 2; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
-	n=16; row = 4; col = 2; w = 1; h = 1; 
+	n=16; row = 4; col = 2; w = 1; h = 1;
 	Pad[n] = ui_add_gadget_button( wnd, x+(bw*col), y+(bh*row), bw*w, bh*h, NULL, NULL );
 	Pad[n]->canvas->cv_font = ui_small_font;
 
@@ -222,14 +222,13 @@ static void ui_pad_set_active( int n )
 	char * name;
 	int i, j;
 
-	
 
 	gr_set_current_canvas( NULL );
 	gr_setcolor( CWHITE );
 	gr_urect( desc_x, desc_y, desc_x+ 56*4-1, desc_y+15 );
 	gr_set_fontcolor( CBLACK, CWHITE );
 	gr_ustring( desc_x, desc_y, KeyPad[n]->description );
-		
+
 	for (i=0; i<17; i++ )
 	{
 		Pad[i]->text = KeyPad[n]->buttontext[i];
@@ -237,7 +236,7 @@ static void ui_pad_set_active( int n )
 		Pad[i]->user_function = NULL;
 		Pad[i]->dim_if_no_function = 1;
 		Pad[i]->hotkey = -1;
-				
+
 		for (j=0; j< KeyPad[n]->numkeys; j++ )
 		{
 			if (HotKey[i] == KeyPad[n]->keycode[j] )
@@ -267,7 +266,7 @@ void ui_pad_goto_next()
 
 	i = active_pad + 1;
 	si = i;
-	
+
 	while( KeyPad[i]==NULL )
 	{
 		i++;
@@ -283,13 +282,13 @@ void ui_pad_goto_prev()
 {
 	int i, si;
 
-	if (active_pad == -1 ) 
+	if (active_pad == -1 )
 		active_pad = MAX_NUM_PADS;
-	
+
 	i = active_pad - 1;
 	if (i<0) i= MAX_NUM_PADS - 1;
 	si = i;
-	
+
 	while( KeyPad[i]==NULL )
 	{
 		i--;
@@ -316,11 +315,11 @@ void ui_pad_read( int n, char * filename )
 		Warning( "Couldn't find %s", filename );
 		return;
 	}
-					  
+
 	//MALLOC( KeyPad[n], UI_KEYPAD, 1 );//Hack by KRB
 	KeyPad[n]=(UI_KEYPAD *)malloc(1*sizeof(UI_KEYPAD));
 
-			
+
 	for (i=0; i < 17; i++ ) {
 		//MALLOC( KeyPad[n]->buttontext[i], char, 100 );//Hack by KRB
 		KeyPad[n]->buttontext[i]=(char *)malloc(100*sizeof(char));
@@ -358,7 +357,7 @@ void ui_pad_read( int n, char * filename )
 		case 4:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[0], "%s%s\n", KeyPad[n]->buttontext[0],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[1], "%s%s\n", KeyPad[n]->buttontext[1],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[2], "%s%s\n", KeyPad[n]->buttontext[2],text );
@@ -368,7 +367,7 @@ void ui_pad_read( int n, char * filename )
 		case 5:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[0], "%s%s", KeyPad[n]->buttontext[0],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[1], "%s%s", KeyPad[n]->buttontext[1],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[2], "%s%s", KeyPad[n]->buttontext[2],text );
@@ -379,9 +378,9 @@ void ui_pad_read( int n, char * filename )
 		case 7:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[4], "%s\n", text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[5], "%s\n", text );
-			LineParse( 3, text, buffer);	   
+			LineParse( 3, text, buffer);
 			sprintf( KeyPad[n]->buttontext[6], "%s\n", text );
 			LineParse( 4, text, buffer );
 			sprintf( KeyPad[n]->buttontext[7], "%s\n", text );
@@ -389,7 +388,7 @@ void ui_pad_read( int n, char * filename )
 		case 8:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[4], "%s%s\n", KeyPad[n]->buttontext[4],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[5], "%s%s\n", KeyPad[n]->buttontext[5],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[6], "%s%s\n", KeyPad[n]->buttontext[6],text );
@@ -399,7 +398,7 @@ void ui_pad_read( int n, char * filename )
 		case 9:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[4], "%s%s", KeyPad[n]->buttontext[4],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[5], "%s%s", KeyPad[n]->buttontext[5],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[6], "%s%s", KeyPad[n]->buttontext[6],text );
@@ -416,9 +415,9 @@ void ui_pad_read( int n, char * filename )
 		case 11:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[8], "%s\n", text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[9], "%s\n", text );
-			LineParse( 3, text, buffer);	   
+			LineParse( 3, text, buffer);
 			sprintf( KeyPad[n]->buttontext[10], "%s\n", text );
 			LineParse( 4, text, buffer );
 			sprintf( KeyPad[n]->buttontext[7], "%s%s\n", KeyPad[n]->buttontext[7],text );
@@ -426,7 +425,7 @@ void ui_pad_read( int n, char * filename )
 		case 12:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[8], "%s%s\n", KeyPad[n]->buttontext[8],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[9], "%s%s\n", KeyPad[n]->buttontext[9],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[10], "%s%s\n", KeyPad[n]->buttontext[10],text );
@@ -436,7 +435,7 @@ void ui_pad_read( int n, char * filename )
 		case 13:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[8], "%s%s", KeyPad[n]->buttontext[8],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[9], "%s%s", KeyPad[n]->buttontext[9],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[10], "%s%s", KeyPad[n]->buttontext[10],text );
@@ -447,9 +446,9 @@ void ui_pad_read( int n, char * filename )
 		case 15:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[11], "%s\n", text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[12], "%s\n", text );
-			LineParse( 3, text, buffer);	   
+			LineParse( 3, text, buffer);
 			sprintf( KeyPad[n]->buttontext[13], "%s\n", text );
 			LineParse( 4, text, buffer );
 			sprintf( KeyPad[n]->buttontext[14], "%s\n", text );
@@ -457,7 +456,7 @@ void ui_pad_read( int n, char * filename )
 		case 16:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[11], "%s%s\n", KeyPad[n]->buttontext[11],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[12], "%s%s\n", KeyPad[n]->buttontext[12],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[13], "%s%s\n", KeyPad[n]->buttontext[13],text );
@@ -467,7 +466,7 @@ void ui_pad_read( int n, char * filename )
 		case 17:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[11], "%s%s", KeyPad[n]->buttontext[11],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[12], "%s%s", KeyPad[n]->buttontext[12],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[13], "%s%s", KeyPad[n]->buttontext[13],text );
@@ -484,7 +483,7 @@ void ui_pad_read( int n, char * filename )
 		case 19:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[15], "%s\n", text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[16], "%s\n", text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[14], "%s%s\n", KeyPad[n]->buttontext[14],text );
@@ -492,7 +491,7 @@ void ui_pad_read( int n, char * filename )
 		case 20:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[15], "%s%s\n", KeyPad[n]->buttontext[15],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[16], "%s%s\n", KeyPad[n]->buttontext[16],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[14], "%s%s\n", KeyPad[n]->buttontext[14],text );
@@ -500,20 +499,20 @@ void ui_pad_read( int n, char * filename )
 		case 21:
 			LineParse( 1, text, buffer );
 			sprintf( KeyPad[n]->buttontext[15], "%s%s", KeyPad[n]->buttontext[15],text );
-			LineParse( 2, text, buffer );	 
+			LineParse( 2, text, buffer );
 			sprintf( KeyPad[n]->buttontext[16], "%s%s", KeyPad[n]->buttontext[16],text );
 			LineParse( 3, text, buffer );
 			sprintf( KeyPad[n]->buttontext[14], "%s%s", KeyPad[n]->buttontext[14],text );
 			break;
 		}
-										
-		linenumber++;	
+
+		linenumber++;
 	}
 
 	// Get the keycodes...
 
 	while (fscanf( infile, " %s %s ", text, buffer )!=EOF)
-	{	
+	{
 		keycode = DecodeKeyText(text);
 		functionnumber = func_get_index(buffer);
 		if (functionnumber==-1)
@@ -530,22 +529,10 @@ void ui_pad_read( int n, char * filename )
 			KeyPad[n]->numkeys++;
 		}
 	}
-	
+
 	fclose(infile);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*
@@ -554,21 +541,20 @@ void ui_pad_read( int n, char * filename )
 
 	ui_pad_read( 0, "curve.pad" );
 	ui_pad_read( 1, "segmove.pad" );
-	
-	
+
+
 	//open window
-		
+
 		ui_pad_activate();
 
-		
+
 			ui_pad_goto( n );
 			ui_pad_goto_next( n );
 			ui_pad_goto_previous( n );
-	
+
 
 		ui_pad_deactivate();
-		
-	
+
 
 	//close window
 
@@ -576,4 +562,3 @@ void ui_pad_read( int n, char * filename )
 
 	exit();
 */
-

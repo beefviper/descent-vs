@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -48,7 +48,7 @@ void main (void)
 	joy_flush();
 
 	t1 = timer_get_fixed_seconds();
-	
+
 	t1 = t2 = 0;
 	k = JOY_ALL_AXIS;
 	while (!key_inkey())	{
@@ -67,7 +67,7 @@ void main (void)
 
 /*
 Normal joystick
-	-2 buttons					
+	-2 buttons
 	-2 analog channels
 
 Dual joysticks
@@ -78,10 +78,10 @@ Thrustmaster (Pro) Flight Control System Mark I
 	-4 buttons
 	-If not used with WCS Mark II, then has a hat switch on channel BY
     that returns 4 digital values.
-	
+
 Thrustmaster Weapons Control System Mark II
 	-adds analog throttle on BY, but makes the FCS hat switch return
-	 
+
 CH Flightstick Pro
 	-4 buttons + hat switch (buttons use bit combinations)
 	-Analog throttle on BY.
@@ -106,9 +106,4 @@ analog slide up/down	   [modifier]{analog axis}
 analog slide left/right [modifier]{analog axis}
 
 
-	
-
-
 */
-
-

@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/includes/rcs/psmacros.inc $
@@ -19,43 +19,43 @@
 ; $Log: psmacros.inc $
 ; Revision 1.12  1994/12/06  14:32:19  matt
 ; Made mprintf turn off if NMONO set
-; 
+;
 ; Revision 1.11  1994/11/27  23:18:19  matt
 ; Made mprintf go away when debugging turned off
-; 
+;
 ; Revision 1.10  1994/03/25  18:00:34  matt
 ; Added imulc of 6
-; 
+;
 ; Revision 1.9  1994/02/10  18:00:58  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.8  1993/11/22  23:47:06  matt
 ; debug macros were trashing eax
-; 
+;
 ; Revision 1.7  1993/11/04  12:39:25  mike
 ; Modify imulc macro to support fast multiply by 36
 ; and multiply anything using imul, but give warning.
-; 
+;
 ; Revision 1.6  1993/10/19  21:17:31  matt
 ; Added abs_eax macro
-; 
+;
 ; Revision 1.5  1993/09/26  22:28:21  matt
 ; Removed extra register pushes in mprintf
 ; Make DEBUG_ON all uppercase since we seem to have case sensitivity on
-; 
+;
 ; Revision 1.4  1993/09/26  19:22:30  matt
 ; Added imulc macro, to multiply a register by a constant.  It does not
 ; at this time support arbitrary constants, only 0,1,3,5,9, and powers of 2
-; 
+;
 ; Revision 1.3  1993/09/13  11:50:57  matt
 ; Added 'b' & 'w', aliases for 'byte ptr' and 'word ptr'
-; 
+;
 ; Revision 1.2  1993/09/03  19:00:03  matt
 ; Added breakpoint macros
-; 
+;
 ; Revision 1.1  1993/08/24  12:51:52  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -65,8 +65,8 @@ w equ word ptr
 b equ byte ptr
 
 
-;The macros @ArgCount() & @ArgRev() are from the file MACROS.INC, provided 
-;with MASM.  I have included them here because MACROS.INC has bugs, so I 
+;The macros @ArgCount() & @ArgRev() are from the file MACROS.INC, provided
+;with MASM.  I have included them here because MACROS.INC has bugs, so I
 ;couldn't just include it.
 
 ; Utility Macros - Version 1.0 - for Microsoft Macro Assembler 6.0
@@ -117,7 +117,7 @@ extdef	macro	type,syms:vararg
 	endm
 	endm
 
-;this macro is used to generate ext<type> macros 
+;this macro is used to generate ext<type> macros
 extgen	macro	type,id
 ext&id	macro	syms:vararg
 	extdef	type,syms
@@ -293,7 +293,7 @@ debug_at	macro	row,col,format:req,args:vararg
 
 ;Debugging breakpoint macros
 
-;print a message, and do an int3 to pop into the debugger  
+;print a message, and do an int3 to pop into the debugger
 debug_brk	macro	str
 	ifndef	NDEBUG
 	 debug	str
@@ -378,4 +378,3 @@ imulc	macro	reg,c
 	endif
 
 	endm
-

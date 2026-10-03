@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/vecmat/rcs/vecmat.asm $
@@ -19,175 +19,175 @@
 ; $Log: vecmat.asm $
 ; Revision 1.54  1995/01/31  00:14:50  matt
 ; Took out int3 from dotprod overflow, since it saturates now
-; 
+;
 ; Revision 1.53  1994/12/14  18:29:33  matt
 ; Made dotprod overflow check stay in, and return saturated value
-; 
+;
 ; Revision 1.52  1994/12/14  12:34:13  matt
 ; Disabled now-unused vector_2_matrix_norm()
-; 
+;
 ; Revision 1.51  1994/12/13  16:55:13  matt
 ; Ripped out optimization from last version, which was bogus
-; 
+;
 ; Revision 1.50  1994/12/13  14:55:18  matt
 ; Use quick normalize in a couple of places where it was safe to do so
-; 
+;
 ; Revision 1.49  1994/12/13  14:44:12  matt
 ; Added vm_vector_2_matrix_norm()
-; 
+;
 ; Revision 1.48  1994/12/13  13:26:49  matt
 ; Fixed overflow check
-; 
+;
 ; Revision 1.47  1994/12/03  15:39:54  matt
 ; Gracefully handle some vector_2_matrix problems
-; 
+;
 ; Revision 1.46  1994/11/19  17:15:05  matt
 ; Assemble out some code not used in DESCENT
-; 
+;
 ; Revision 1.45  1994/11/17  11:41:05  matt
 ; Put handling in extract_angles_from_matrix to deal with bad matrices
-; 
+;
 ; Revision 1.44  1994/11/16  11:48:10  matt
 ; Added error checking to vm_extract_angles_matrix()
-; 
+;
 ; Revision 1.43  1994/09/19  22:00:10  matt
 ; Fixed register trash
-; 
+;
 ; Revision 1.42  1994/09/11  19:23:05  matt
 ; Added vm_vec_normalized_dir_quick()
-; 
+;
 ; Revision 1.41  1994/08/14  13:28:38  matt
 ; Put in check for zero-length vector in extract angles
-; 
+;
 ; Revision 1.40  1994/07/19  18:52:53  matt
 ; Added vm_vec_normalize_quick() and vm_vec_copy_normalize_quick()
-; 
+;
 ; Revision 1.39  1994/06/16  18:24:22  matt
 ; Added vm_vec_mag_quick()
-; 
+;
 ; Revision 1.38  1994/06/10  23:18:38  matt
 ; Added new code for vm_vec_ang_2_matrix() which may be better, but may
 ; not be.
-; 
+;
 ; Revision 1.37  1994/05/22  18:17:29  mike
 ; Optimize vm_vec_dist_quick, using jns in place of abs_eax.
-; 
+;
 ; Revision 1.36  1994/05/19  12:07:04  matt
 ; Fixed globals and macros and added a constant
-; 
+;
 ; Revision 1.35  1994/05/19  09:19:00  matt
 ; Made vm_vec_normalized_dir() return mag of vector
-; 
+;
 ; Revision 1.34  1994/05/18  22:28:01  matt
 ; Added function vm_vec_normalized_dir()
 ; Added C macros IS_ZERO_VEC(), vm_vec_zero(), and vm_set_identity()
 ; Added C global static vars vmd_zero_vector & vmd_identity_matrix
-; 
+;
 ; Revision 1.33  1994/05/18  21:44:16  matt
 ; Added functions:
 ;   vm_extract_angles_vector()
 ;   vm_extract_angles_vector_normalized()
 ;   vm_vec_copy_normalize()
-; 
+;
 ; Revision 1.32  1994/05/13  12:41:51  matt
 ; Added new function, vm_vec_dist_quick(), which does an approximation.
-; 
+;
 ; Revision 1.31  1994/05/04  17:41:31  mike
 ; Comment out debug_brk on null vector.
-; 
+;
 ; Revision 1.30  1994/04/15  21:41:31  matt
 ; Check for foward vector straigt up in extract angles routine
-; 
+;
 ; Revision 1.29  1994/03/30  15:45:05  matt
 ; Added two functions, vm_vec_scale_add() & vm_vec_scale_add2()
-; 
+;
 ; Revision 1.28  1994/02/26  19:23:35  matt
 ; Do an int3 when we get a null vector when computing surface normal
-; 
+;
 ; Revision 1.27  1994/02/10  18:29:45  matt
 ; Changed 'if DEBUG_ON' to 'ifndef NDEBUG'
-; 
+;
 ; Revision 1.26  1994/02/10  18:28:55  matt
 ; Fixed bugs in extract angles function
-; 
+;
 ; Revision 1.25  1994/01/31  22:46:07  matt
 ; Added vm_extract_angles_matrix() function
-; 
+;
 ; Revision 1.24  1994/01/30  19:29:55  matt
 ; Put in debug_brk when vm_vec_2_matrix got zero-length vector
-; 
+;
 ; Revision 1.23  1994/01/25  15:27:59  matt
 ; Added debugging check for dotprod overflow
-; 
+;
 ; Revision 1.22  1994/01/24  11:52:59  matt
 ; Added checking for dest==src for several functions where this is not allowed
-; 
+;
 ; Revision 1.21  1994/01/19  23:13:02  matt
 ; Fixed bug in vm_vec_ang_2_matrix()
-; 
+;
 ; Revision 1.20  1994/01/04  12:33:43  mike
 ; Prevent divide overflow in vm_vec_scale2
-; 
+;
 ; Revision 1.19  1993/12/21  19:46:26  matt
 ; Added function vm_dist_to_plane()
-; 
+;
 ; Revision 1.18  1993/12/13  17:26:23  matt
 ; Added vm_vec_dist()
-; 
+;
 ; Revision 1.17  1993/12/02  12:43:39  matt
 ; New functions: vm_vec_copy_scale(), vm_vec_scale2()
-; 
+;
 ; Revision 1.16  1993/10/29  22:39:29  matt
 ; Changed matrix order, making direction vectors the rows
-; 
+;
 ; Revision 1.15  1993/10/29  18:06:01  matt
 ; Fixed vm_vector_2_matrix() bug when forward vector was straight down
-; 
+;
 ; Revision 1.14  1993/10/26  18:51:26  matt
 ; Fixed some register trashes in vm_vec_ang_2_matrix()
-; 
+;
 ; Revision 1.13  1993/10/25  11:49:37  matt
 ; Made vm_vec_delta_ang() take optional forward vector to return signed delta
-; 
+;
 ; Revision 1.12  1993/10/20  01:09:42  matt
 ; Added vm_vec_delta_ang(), vm_vec_delta_ang_norm(), and vm_vec_ang_2_matrix()
-; 
+;
 ; Revision 1.11  1993/10/17  17:03:08  matt
 ; vm_vector_2_matrix() now takes optional right vector
-; 
+;
 ; Revision 1.10  1993/10/10  18:11:42  matt
-; Changed angles_2_matrix so that heading & bank rotate in the 
+; Changed angles_2_matrix so that heading & bank rotate in the
 ; correct directions.
-; 
+;
 ; Revision 1.9  1993/09/30  16:17:59  matt
 ; Fixed bug in vector_2_matrix() by adding another normalize
-; 
+;
 ; Revision 1.8  1993/09/29  10:51:58  matt
 ; Fixed bad register trashes in crossprod, perp, & normal
-; 
+;
 ; Revision 1.7  1993/09/28  12:16:46  matt
 ; Fixed bugs in cross product
 ; Added func vm_vector_2_matrix()
-; 
+;
 ; Revision 1.6  1993/09/24  21:19:37  matt
 ; Added vm_vec_avg() and vm_vec_avg4()
-; 
+;
 ; Revision 1.5  1993/09/20  18:15:07  matt
 ; Trap zero-length vectors in vm_vec_normalize(), vm_vec_perp(), and vm_vec_normal()
-; 
+;
 ; Revision 1.4  1993/09/20  14:56:43  matt
 ; Fixed bug in vm_vec_normal(), made that routine normalize the results,
 ; and added new function vm_vec_perp().
-; 
+;
 ; Revision 1.3  1993/09/20  10:12:06  mike
 ; no changes
-; 
+;
 ; Revision 1.2  1993/09/17  11:10:33  matt
 ; Added vm_vec_add2() and vm_vec_sub2(), which take 2 args (dest==src0)
-; 
+;
 ; Revision 1.1  1993/09/16  20:10:24  matt
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -236,9 +236,8 @@ _vmd_identity_matrix label	vms_matrix
 	fix	f1_0,0,0
 	fix	0,f1_0,0
 	fix	0,0,f1_0
- 
-_DATA	ends
 
+_DATA	ends
 
 
 _TEXT	segment	dword public USE32 'CODE'
@@ -562,7 +561,7 @@ no_div2:
 	popm	ebp,eax,ebx,edx
 	ret
 
-	
+
 ;save as vm_vec_normalized_dir, but with quick sqrt
 ;takes edi=dest, esi=endpoint, ebx=startpoint.  Returns mag of dir vec
 vm_vec_normalized_dir_quick:
@@ -580,7 +579,6 @@ vm_vec_normalized_dir_quick:
 	popm	eax,edi,esi
 	ret
 
-	
 
 ;normalize a vector in place.  takes esi=vector
 ;returns ecx=mag of source vec. trashes edi
@@ -680,7 +678,7 @@ vm_vec_dotprod:	pushm	ebx,ecx,edx
 	;always do overflow check, and return saturated value
 	sar	edx,16	;get real sign from high word
 	mov	ebx,edx
-	cdq		;get sign of our result 
+	cdq		;get sign of our result
 	cmp	bx,dx	;same sign?
 	je	no_oflow
 	;;debug_brk	'overflow in vm_vec_dotprod'
@@ -852,11 +850,11 @@ null_vector:
 
 ;computes surface normal from three points. takes ebx=dest, eax,esi,edi=vecs
 ;returns eax=dest. Result vector is NOT normalized, but this routine does
-;make an effort that cross product does not overflow or underflow  
+;make an effort that cross product does not overflow or underflow
 vm_vec_perp:	pushm	esi,edi	;save for return
 
 	push	eax	;save src0
-	
+
 	xchg	esi,edi
 	lea	eax,tempv1
 	call	vm_vec_sub	;src2 - src1
@@ -883,8 +881,8 @@ vm_vec_perp:	pushm	esi,edi	;save for return
 	ret
 
 
-;compute a rotation matrix from three angles. takes edi=dest matrix, 
-;esi=angles vector.  returns edi=dest matrix. 
+;compute a rotation matrix from three angles. takes edi=dest matrix,
+;esi=angles vector.  returns edi=dest matrix.
 vm_angles_2_matrix:
 	pushm	eax,edx,ebx,ecx,esi
 
@@ -904,7 +902,7 @@ vm_angles_2_matrix:
 	mov	sinh,eax
 	mov	cosh,ebx
 
-;alternate entry point with sines & cosines already computed.  
+;alternate entry point with sines & cosines already computed.
 ;Note all the registers already pushed.
 sincos_2_matrix:
 
@@ -978,12 +976,12 @@ m2m_neg	macro	dest,src
 	mov	dest,eax
 	endm
 
-;create a rotation matrix from one or two vectors. 
+;create a rotation matrix from one or two vectors.
 ;requires forward vec, and assumes zero bank if up & right vecs==NULL
 ;up/right vector need not be exactly perpendicular to forward vec
-;takes edi=matrix, esi=forward vec, eax=up vec, ebx=right vec. 
+;takes edi=matrix, esi=forward vec, eax=up vec, ebx=right vec.
 ;returns edi=matrix.  trashes eax,ebx,esi
-;Note: this routine loses precision as the forward vector approaches 
+;Note: this routine loses precision as the forward vector approaches
 ;straigt up or down (I think)
 vm_vector_2_matrix:
 	pushm	ecx
@@ -1332,7 +1330,6 @@ vm_transpose_matrix:
 	ret
 
 
-
 ;copy and transpose a matrix.  Takes edi=dest, esi=src. returns edi=dest
 vm_copy_transpose_matrix:
 	push	eax
@@ -1367,7 +1364,6 @@ vm_copy_transpose_matrix:
 	pop	eax
 
 	ret
-
 
 
 ;mulitply 2 matrices, fill in dest.  returns eax=ptr to dest
@@ -1415,7 +1411,7 @@ vm_matrix_x_matrix:
 ;returns ax=delta angle
 ;if the forward vector is NULL, the absolute values of the delta angle
 ;is returned.  If it is specified, the rotation around that vector from
-;esi to edi is returned. 
+;esi to edi is returned.
 vm_vec_delta_ang:	push	eax	;save forward vec
 
 	push	ecx	;trashed by normalize
@@ -1451,7 +1447,7 @@ done_vda:	ret
 
 
 ;compute a rotation matrix from the forward vector and a rotation around
-;that vector. takes esi=vector, ax=angle, edi=matrix. returns edi=dest matrix. 
+;that vector. takes esi=vector, ax=angle, edi=matrix. returns edi=dest matrix.
 ;trashes esi,eax
 vm_vec_ang_2_matrix:
 	pushm	eax,edx,ebx,ecx,esi
@@ -1513,7 +1509,7 @@ vm_extract_angles_matrix:
 	jz	zero_head	;zero, use head=0
 	call	fix_atan2
 zero_head:	mov	[edi].head,ax	;save heading
-	
+
 	call	fix_sincos	;get back sh
 
 	push	eax	;save sine
@@ -1575,7 +1571,7 @@ cp_zero:	mov	[edi].bank,0	;no bank
 	ret
 
 
-;extract the angles from a vector, assuming zero bank. 
+;extract the angles from a vector, assuming zero bank.
 ;takes esi=vec, edi=angvec
 ;note versions for normalized and not normalized vector
 ;unnormalized version TRASHES ESI

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,51 +15,51 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.13 $
  * $Author: matt $
  * $Date: 1994/11/27 23:17:15 $
- * 
+ *
  * Routines for displaying texture pages
- * 
+ *
  * $Log: texpage.c $
  * Revision 1.13  1994/11/27  23:17:15  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.12  1994/11/23  15:49:00  mike
  * fix bug in tmapnum == 0 always getting reassigned.
- * 
+ *
  * Revision 1.11  1994/11/23  12:17:34  mike
  * changing texture maps in all mines.
- * 
+ *
  * Revision 1.10  1994/11/19  00:04:42  john
  * Changed some shorts to ints.
- * 
+ *
  * Revision 1.9  1994/11/16  17:59:36  john
  * Fixed bug with writing to canvas before initing it.
- * 
+ *
  * Revision 1.8  1994/11/16  13:15:21  matt
  * Fixed grab bug, and cleaned up code
- * 
+ *
  * Revision 1.7  1994/08/05  12:26:37  matt
  * Fixed overplot problem with texture names
- * 
+ *
  * Revision 1.6  1994/04/11  12:01:58  yuan
  * Fixed resetting to first texture on page annoyance.
- * 
+ *
  * Revision 1.5  1994/04/01  11:15:53  yuan
  * Added objects to objpage. Added buttons for easier tmap scrolling.
  * Objects are selected fully from objpage and add object menu or pad.
- * 
+ *
  * Revision 1.4  1994/03/15  16:33:37  yuan
  * Fixed bm loader (might have some changes in walls and switches)
- * 
+ *
  * Revision 1.3  1993/12/16  17:25:46  john
  * Moved texture and object selection to texpage and objpage
- * 
+ *
  * Revision 1.2  1993/12/16  15:57:39  john
  * moved texture selection stuff to texpage.c
- * 
+ *
  * Revision 1.1  1993/12/16  15:06:56  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #include <stdlib.h>
@@ -102,7 +102,7 @@ static int TexturePage = 0;
 static grs_canvas * TmapnameCanvas;
 static char tmap_filename[13];
 
-static void texpage_print_name( char name[13] ) 
+static void texpage_print_name( char name[13] )
 {
 	 int w,h,aw;
 	int i;
@@ -110,13 +110,13 @@ static void texpage_print_name( char name[13] )
 	for (i=strlen(name);i<12;i++)
 		name[i]=' ';
 	name[i]=0;
-	
+
     gr_set_current_canvas( TmapnameCanvas );
     gr_get_string_size( name, &w, &h, &aw );
-    gr_string( 0, 0, name );			  
+    gr_string( 0, 0, name );
 }
 
-static void texpage_display_name( char *format, ... ) 
+static void texpage_display_name( char *format, ... )
 {
 	va_list ap;
 
@@ -137,7 +137,7 @@ texpage_redraw()
 		gr_set_current_canvas(TmapBox[i]->canvas);
 		if (i+TexturePage*TMAPS_PER_PAGE < Num_tmaps )
 			gr_ubitmap(0,0, Textures[TmapList[i+TexturePage*TMAPS_PER_PAGE]]);
-		else 
+		else
 			gr_clear_canvas( CGREY );
 		}
 }
@@ -217,14 +217,14 @@ int texpage_grab_current(int n)
 			break;
 		}
 	Assert(i!=Num_tmaps);
-	
+
 	TexturePage = CurrentTmap / TMAPS_PER_PAGE;
-	
+
 	if (TexturePage*TMAPS_PER_PAGE < Num_tmaps )
 		texpage_redraw();
 
 	texpage_show_current();
-	
+
 	return 1;
 }
 
@@ -242,7 +242,7 @@ void texpage_init( UI_WINDOW * win )
 	ui_add_gadget_button( win, TMAPCURBOX_X + 17, TMAPCURBOX_Y - 48, 15, 20, "M", texpage_goto_metals );
 	ui_add_gadget_button( win, TMAPCURBOX_X + 34, TMAPCURBOX_Y - 48, 15, 20, "L", texpage_goto_lights );
 	ui_add_gadget_button( win, TMAPCURBOX_X + 51, TMAPCURBOX_Y - 48, 15, 20, "E", texpage_goto_effects );
-	
+
 
 	for (i=0;i<TMAPS_PER_PAGE;i++)
 		TmapBox[i] = ui_add_gadget_userbox( win, TMAPBOX_X + (i/3)*(2+TMAPBOX_W), TMAPBOX_Y + (i%3)*(2+TMAPBOX_H), TMAPBOX_W, TMAPBOX_H);
@@ -251,7 +251,7 @@ void texpage_init( UI_WINDOW * win )
 
 	TmapnameCanvas = gr_create_sub_canvas(&grd_curscreen->sc_canvas, TMAPCURBOX_X , TMAPCURBOX_Y + TMAPBOX_H + 10, 100, 20);
 	gr_set_current_canvas( TmapnameCanvas );
-	gr_set_curfont( ui_small_font ); 
+	gr_set_curfont( ui_small_font );
    gr_set_fontcolor( CBLACK, CWHITE );
 
 	texpage_redraw();
@@ -333,7 +333,7 @@ void do_replacements(void)
 				}
 				if ((sidep->tmap_num2 != 0) && ((sidep->tmap_num2 & 0x3fff) == old_tmap_num)) {
 					if (new_tmap_num == 0) {
-						Int3();	//	Error.  You have tried to replace a tmap_num2 with 
+						Int3();	//	Error.  You have tried to replace a tmap_num2 with
 									//	the 0th tmap_num2 which is ILLEGAL!
 					} else {
 						sidep->tmap_num2 = new_tmap_num | (sidep->tmap_num2 & 0xc000);
@@ -363,5 +363,3 @@ void do_replacements_all(void)
 	}
 
 }
-
-

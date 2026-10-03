@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -22,223 +22,223 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * Revision 2.11  1995/07/09  11:15:48  john
  * Put in Mike's code to fix bug where bosses don't gate in bots after
  * 32767 seconds of playing.
- * 
+ *
  * Revision 2.10  1995/06/15  12:31:08  john
  * Fixed bug with cheats getting enabled when you type
  * the whole alphabet.
- * 
+ *
  * Revision 2.9  1995/05/26  16:16:18  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.8  1995/04/06  15:12:27  john
  * Fixed bug with insane not working.
- * 
+ *
  * Revision 2.7  1995/03/30  16:36:44  mike
  * text localization.
- * 
+ *
  * Revision 2.6  1995/03/28  11:22:24  john
  * Added cheats to save file. Changed lunacy text.
- * 
+ *
  * Revision 2.5  1995/03/27  16:45:07  john
  * Fixed some cheat bugs.  Added astral cheat.
- * 
+ *
  * Revision 2.4  1995/03/24  15:29:17  mike
  * add new cheats.
- * 
+ *
  * Revision 2.3  1995/03/21  14:39:45  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.2  1995/03/14  18:24:39  john
  * Force Destination Saturn to use CD-ROM drive.
- * 
+ *
  * Revision 2.1  1995/03/06  16:47:14  mike
  * destination saturn
- * 
+ *
  * Revision 2.0  1995/02/27  11:30:01  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.295  1995/02/22  13:23:04  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.294  1995/02/13  11:00:43  rob
  * Make brain guys high enough to get an open slot.
- * 
+ *
  * Revision 1.293  1995/02/13  10:31:55  mike
  * Make brains understand they can't open locked doors.
- * 
+ *
  * Revision 1.292  1995/02/13  10:18:01  rob
  * Reduced brain guy's level of awareness to keep him from hogging slots.
- * 
+ *
  * Revision 1.291  1995/02/11  12:27:12  mike
  * fix path-to-exit cheat.
- * 
+ *
  * Revision 1.290  1995/02/11  01:56:30  mike
  * robots don't fire cheat.
- * 
+ *
  * Revision 1.289  1995/02/10  17:15:09  rob
  * Fixed some stuff with 64 awareness stuff.
- * 
+ *
  * Revision 1.288  1995/02/10  16:31:32  mike
  * oops.
- * 
+ *
  * Revision 1.287  1995/02/10  16:24:45  mike
  * fix the network follow path fix.
- * 
+ *
  * Revision 1.286  1995/02/10  16:11:40  mike
  * in serial or modem games, follow path guys don't move if far away and
  * can't see player.
- * 
+ *
  * Revision 1.285  1995/02/09  13:11:35  mike
  * comment out a bunch of mprintfs.
  * add toaster (drops prox bombs, runs away) to boss gate list.
- * 
+ *
  * Revision 1.284  1995/02/08  22:44:53  rob
  * Lowerd anger level for follow path of any sort.
- * 
+ *
  * Revision 1.283  1995/02/08  22:30:43  mike
  * lower awareness on station guys if they are returning home (multiplayer).
- * 
+ *
  * Revision 1.282  1995/02/08  17:01:06  rob
  * Fixed problem with toasters dropping of proximity bombs.
- * 
+ *
  * Revision 1.281  1995/02/08  11:49:35  rob
  * Reduce Green-guy attack awareness level so we don't let him attack us too.
- * 
+ *
  * Revision 1.280  1995/02/08  11:37:52  mike
  * Check for failures in call to obj_create.
- * 
+ *
  * Revision 1.279  1995/02/07  20:38:46  mike
  * fix toasters in multiplayer
- * 
- * 
+ *
+ *
  * Revision 1.278  1995/02/07  16:51:07  mike
  * fix sound time play bug.
- * 
+ *
  * Revision 1.277  1995/02/06  22:33:04  mike
  * make robots follow path better in cooperative/roboarchy.
- * 
+ *
  * Revision 1.276  1995/02/06  18:15:42  rob
  * Added forced sends for evasion movemnet.
- * 
+ *
  * Revision 1.275  1995/02/06  16:41:22  rob
  * Change some positioning calls.
- * 
+ *
  * Revision 1.274  1995/02/06  11:40:33  mike
  * replace some lint-related hacks with clean, proper code.
- * 
+ *
  * Revision 1.273  1995/02/04  17:28:19  mike
  * make station guys return better.
- * 
+ *
  * Revision 1.272  1995/02/03  17:40:55  mike
  * fix problem with robots falling asleep if you sit in game overnight, not in pause...bah.
- * 
+ *
  * Revision 1.271  1995/02/02  21:11:25  rob
  * Tweaking stuff for multiplayer ai.
- * 
+ *
  * Revision 1.270  1995/02/02  17:32:06  john
  * Added Hack for Assert that Mike put in after using Lint to find
  * uninitialized variables.
- * 
+ *
  * Revision 1.269  1995/02/02  16:46:31  mike
  * fix boss gating.
- * 
+ *
  * Revision 1.268  1995/02/02  16:27:29  mike
  * make boss not put out infinite robots.
- * 
+ *
  * Revision 1.267  1995/02/01  21:10:02  mike
  * lint found bug! player_visibility not initialized!
- * 
+ *
  * Revision 1.266  1995/02/01  20:51:27  john
  * Lintized
- * 
+ *
  * Revision 1.265  1995/02/01  17:14:05  mike
  * fix robot sounds.
- * 
+ *
  * Revision 1.264  1995/01/31  16:16:40  mike
  * Comment out "Darn you, John" Int3().
- * 
+ *
  * Revision 1.263  1995/01/30  20:55:04  mike
  * fix nonsense in robot firing when a player is cloaked.
- * 
+ *
  * Revision 1.262  1995/01/30  17:15:10  rob
  * Fixed problems with bigboss eclip messages.
  * Tweaked robot position sending for modem purposes.
- * 
+ *
  * Revision 1.261  1995/01/30  15:30:31  rob
  * Prevent non-master players from gating in robots.
- * 
+ *
  * Revision 1.260  1995/01/30  13:30:55  mike
  * new cases for firing at other players were bogus, could send position
  * without permission.
- * 
+ *
  * Revision 1.259  1995/01/30  13:01:17  mike
  * Make robots fire at player other than one they are controlled by sometimes.
- * 
+ *
  * Revision 1.258  1995/01/29  16:09:17  rob
  * Trying to get robots to shoot at non-controlling players.
- * 
+ *
  * Revision 1.257  1995/01/29  13:47:05  mike
  * Make boss have more fireballs on death, have until end (though silent at end).
  * Fix bug which was preventing him from teleporting until hit, so he'd always
  * be in the same place when the player enters the room.
- * 
+ *
  * Revision 1.256  1995/01/28  17:40:18  mike
  * make boss teleport & gate before you see him.
- * 
+ *
  * Revision 1.255  1995/01/27  17:02:08  mike
  * move code around, was sending one frame (or worse!) old robot information.
- * 
+ *
  * Revision 1.254  1995/01/26  17:02:43  mike
  * make fusion cannon have more chrome, make fusion, mega rock you!
- * 
+ *
  * Revision 1.253  1995/01/26  15:11:17  rob
  * Shutup!  I fixed it!
- * 
+ *
  * Revision 1.252  1995/01/26  15:08:55  rob
  * Changed robot gating to accomodate multiplayer.
- * 
+ *
  * Revision 1.251  1995/01/26  14:49:04  rob
  * Increase awareness level for firing to 94.
- * 
+ *
  * Revision 1.250  1995/01/26  12:41:20  mike
  * fix bogus multiplayer code, would send permission without getting permission.
- * 
+ *
  * Revision 1.249  1995/01/26  12:23:23  rob
  * Removed defines that were moved to ai.h
- * 
+ *
  * Revision 1.248  1995/01/25  23:38:48  mike
  * modify list of robots gated in by super boss.
- * 
+ *
  * Revision 1.247  1995/01/25  21:21:13  rob
  * Trying to let robots fire at a player even if they're not in control.
- * 
+ *
  * Revision 1.246  1995/01/25  13:50:37  mike
  * Robots make angry sounds.
- * 
+ *
  * Revision 1.245  1995/01/25  10:53:47  mike
  * better handling of robots which poke out of mine and try to recover.
- * 
+ *
  * Revision 1.244  1995/01/24  22:03:02  mike
  * Tricky code to move a robot to a legal position if he is poking out of
  * the mine, even if it means moving him to another segment.
- * 
+ *
  * Revision 1.243  1995/01/24  20:12:06  rob
  * Changed robot fire awareness level from 74 to 94.
- * 
+ *
  * Revision 1.242  1995/01/24  13:22:32  mike
  * make robots accelerate faster, and Difficulty_level dependent.
- * 
+ *
  * Revision 1.241  1995/01/24  12:09:39  mike
  * make robots animate in multiplayer.
- * 
+ *
  * Revision 1.240  1995/01/21  21:21:10  mike
  * Make boss only gate robots into specified segments.
- * 
+ *
  * Revision 1.239  1995/01/20  20:21:26  mike
  * prevent unnecessary boss cloaking.
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -297,11 +297,11 @@ static char rcsid[] = "$Id: ai.c 2.11 1995/07/09 11:15:48 john Exp $";
 #define	JOHN_CHEATS_SIZE_2	6
 #define	JOHN_CHEATS_SIZE_3	6
 
-ubyte	john_cheats_1[JOHN_CHEATS_SIZE_1] = { 	KEY_P ^ 0x00 ^ 0x34, 
-															KEY_O ^ 0x10 ^ 0x34, 
-															KEY_B ^ 0x20 ^ 0x34, 
-															KEY_O ^ 0x30 ^ 0x34, 
-															KEY_Y ^ 0x40 ^ 0x34, 
+ubyte	john_cheats_1[JOHN_CHEATS_SIZE_1] = { 	KEY_P ^ 0x00 ^ 0x34,
+															KEY_O ^ 0x10 ^ 0x34,
+															KEY_B ^ 0x20 ^ 0x34,
+															KEY_O ^ 0x30 ^ 0x34,
+															KEY_Y ^ 0x40 ^ 0x34,
 															KEY_S ^ 0x50 ^ 0x34 };
 
 #define	PARALLAX	0		//	If !0, then special debugging info for Parallax eyes only enabled.
@@ -407,12 +407,12 @@ int	Robot_firing_enabled = 1;
 extern	int	Ugly_robot_cheat, Ugly_robot_texture, Laser_rapid_fire;
 extern	byte	Enable_john_cheat_1, Enable_john_cheat_2, Enable_john_cheat_3, Enable_john_cheat_4;
 
-ubyte	john_cheats_3[2*JOHN_CHEATS_SIZE_3+1] = { KEY_Y ^ 0x67, 
-																KEY_E ^ 0x66, 
-																KEY_C ^ 0x65, 
-																KEY_A ^ 0x64, 
-																KEY_N ^ 0x63, 
-																KEY_U ^ 0x62, 
+ubyte	john_cheats_3[2*JOHN_CHEATS_SIZE_3+1] = { KEY_Y ^ 0x67,
+																KEY_E ^ 0x66,
+																KEY_C ^ 0x65,
+																KEY_A ^ 0x64,
+																KEY_N ^ 0x63,
+																KEY_U ^ 0x62,
 																KEY_L ^ 0x61 };
 
 
@@ -533,11 +533,11 @@ byte Ai_transition_table[AI_MAX_EVENT][AI_MAX_STATE][AI_MAX_STATE] = {
 	}
 };
 
-ubyte	john_cheats_2[2*JOHN_CHEATS_SIZE_2] = { 	KEY_P ^ 0x00 ^ 0x43, 0x66, 
-																KEY_O ^ 0x10 ^ 0x43, 0x11, 
-																KEY_R ^ 0x20 ^ 0x43, 0x8, 
-																KEY_G ^ 0x30 ^ 0x43, 0x2, 
-																KEY_Y ^ 0x40 ^ 0x43, 0x0, 
+ubyte	john_cheats_2[2*JOHN_CHEATS_SIZE_2] = { 	KEY_P ^ 0x00 ^ 0x43, 0x66,
+																KEY_O ^ 0x10 ^ 0x43, 0x11,
+																KEY_R ^ 0x20 ^ 0x43, 0x8,
+																KEY_G ^ 0x30 ^ 0x43, 0x2,
+																KEY_Y ^ 0x40 ^ 0x43, 0x0,
 																KEY_S ^ 0x50 ^ 0x43 };
 
 // ---------------------------------------------------------
@@ -671,7 +671,7 @@ void init_ai_object(int objnum, int behavior, int hide_segment)
 		aip->CLOAKED = 0;
 
 	objp->mtype.phys_info.flags |= (PF_BOUNCE | PF_TURNROLL);
-	
+
 	aip->REMOTE_OWNER = -1;
 }
 
@@ -740,7 +740,7 @@ void do_lunacy_on(void)
 		for (i=0; i<MAX_ROBOT_TYPES; i++) {
 			Firing_wait_copy[i] = Robot_info[i].firing_wait[NDL-1];
 			Rapidfire_count_copy[i] = Robot_info[i].rapidfire_count[NDL-1];
-	
+
 			Robot_info[i].firing_wait[NDL-1] = Robot_info[i].firing_wait[1];
 			Robot_info[i].rapidfire_count[NDL-1] = Robot_info[i].rapidfire_count[1];
 		}
@@ -926,14 +926,14 @@ void john_cheat_func_4(int key)
 			else
 				john_cheats_index_4 = 0;
 			break;
-	
+
 		case 2:
 			if (key == KEY_E)
 				john_cheats_index_4++;
 			else
 				john_cheats_index_4 = 0;
 			break;
-	
+
 		case 0:
 			if (key == KEY_P)
 				john_cheats_index_4++;
@@ -946,14 +946,14 @@ void john_cheat_func_4(int key)
 			else
 				john_cheats_index_4 = 0;
 			break;
-	
+
 		case 5:
 			if (key == KEY_H)
 				john_cheats_index_4++;
 			else
 				john_cheats_index_4 = 0;
 			break;
-	
+
 		case 6:
 			Ugly_robot_texture = 0;
 		case 7:
@@ -976,7 +976,7 @@ void john_cheat_func_4(int key)
 				}
 			} else
 				john_cheats_index_4 = 0;
-		
+
 			break;
 		default:
 			john_cheats_index_4 = 0;
@@ -1884,7 +1884,7 @@ void compute_vis_and_vec(object *objp, vms_vector *pos, ai_local *ailp, vms_vect
 					digi_link_sound_to_pos( robptr->attack_sound, objp->segnum, 0, pos, 0 , Robot_sound_volume);
 					ailp->time_player_sound_attacked = GameTime;
 				}
-			} 
+			}
 
 			if ((*player_visibility == 2) && (ailp->next_misc_sound_time < GameTime)) {
 				// mprintf((0, "ATTACK! "));
@@ -2039,7 +2039,7 @@ int openable_doors_in_segment(object *objp)
 //--unused-- {
 //--unused-- 	int	i;
 //--unused-- 	int	segnum = objp->segnum;
-//--unused-- 
+//--unused--
 //--unused-- 	for (i=0; i<MAX_SIDES_PER_SEGMENT; i++)
 //--unused-- 		if (Segments[segnum].sides[i].wall_num != -1) {
 //--unused-- 			int	wall_num = Segments[segnum].sides[i].wall_num;
@@ -2329,7 +2329,7 @@ void init_boss_segments(short segptr[], int *num_segs, int size_check)
 						} else
 							if (head+QUEUE_SIZE == tail + QUEUE_SIZE-1)
 								Int3();	//	queue overflow.  Make it bigger!
-	
+
 						if ((!size_check) || boss_fits_in_seg(boss_objp, segp->children[sidenum])) {
 							segptr[(*num_segs)++] = segp->children[sidenum];
 							#ifdef EDITOR
@@ -2363,7 +2363,7 @@ void teleport_boss(object *objp)
 	Assert(Num_boss_teleport_segs > 0);
 
 	//	Pick a random segment from the list of boss-teleportable-to segments.
-	rand_seg = (rand() * Num_boss_teleport_segs) >> 15;	
+	rand_seg = (rand() * Num_boss_teleport_segs) >> 15;
 	rand_segnum = Boss_teleport_segs[rand_seg];
 	Assert((rand_segnum >= 0) && (rand_segnum <= Highest_segment_index));
 
@@ -2437,7 +2437,7 @@ void do_boss_dying_frame(object *objp)
 	}
 }
 
-#ifndef SHAREWARE 
+#ifndef SHAREWARE
 #ifdef NETWORK
 // --------------------------------------------------------------------------------------------------------------------
 //	Called for an AI object if it is fairly aware of the player.
@@ -2541,7 +2541,7 @@ void do_super_boss_stuff(object *objp, fix dist_to_player, int player_visibility
 	// Only master player can cause gating to occur.
 	#ifdef NETWORK
 	if ((Game_mode & GM_MULTI) && !network_i_am_master())
-		return; 
+		return;
 	#endif
 
 	if ((dist_to_player < BOSS_TO_PLAYER_GATE_DISTANCE) || player_visibility || (Game_mode & GM_MULTI)) {
@@ -2587,7 +2587,7 @@ void do_super_boss_stuff(object *objp, fix dist_to_player, int player_visibility
 				}
 #endif
 #endif
-			}	
+			}
 	}
 }
 
@@ -2603,7 +2603,7 @@ void ai_multi_send_robot_position(int objnum, int force)
 {
 #ifndef SHAREWARE
 #ifdef NETWORK
-	if (Game_mode & GM_MULTI) 
+	if (Game_mode & GM_MULTI)
 	{
 		if (force != -1)
 			multi_send_robot_position(objnum, 1);
@@ -2844,7 +2844,7 @@ void do_ai_frame(object *obj)
 				case AIM_STILL:
 					if (!((aip->behavior == AIB_STILL) || (aip->behavior == AIB_STATION)))	//	Behavior is still, so don't follow path.
 						attempt_to_resume_path(obj);
-					break;	
+					break;
 				case AIM_FOLLOW_PATH:
 						// mprintf((0, "Object %i following path got %i retries in frame %i\n", obj-Objects, ailp->consecutive_retries, FrameCount));
 					if (Game_mode & GM_MULTI)
@@ -3169,9 +3169,9 @@ void do_ai_frame(object *obj)
 					ai_multi_send_robot_position(objnum, 1);
 					ai_evaded = 0;
 				}
-				else 
+				else
 					ai_multi_send_robot_position(objnum, -1);
-				
+
 				do_firing_stuff(obj, player_visibility, &vec_to_player);
 			}
 			break;
@@ -3216,14 +3216,14 @@ void do_ai_frame(object *obj)
 
 				Laser_create_new_easy( &fire_vec, &fire_pos, obj-Objects, PROXIMITY_ID, 1);
 				ailp->next_fire = F1_0*5;		//	Drop a proximity bomb every 5 seconds.
-				
+
 				#ifdef NETWORK
 				if (Game_mode & GM_MULTI)
 				{
 					ai_multi_send_robot_position(obj-Objects, -1);
 					multi_send_robot_fire(obj-Objects, -1, &fire_vec);
-				}				  
-				#endif	
+				}
+				#endif
 			}
 			break;
 
@@ -3342,7 +3342,7 @@ void do_ai_frame(object *obj)
 							ai_multi_send_robot_position(objnum, -1);
 							ai_evaded = 0;
 						}
-						else				
+						else
 							ai_multi_send_robot_position(objnum, -1);
 					}
 				} else if ((obj->segnum != aip->hide_segment) && (dist_to_player > F1_0*80) && (!(Game_mode & GM_MULTI))) {
@@ -3484,7 +3484,7 @@ void do_ai_frame(object *obj)
 				compute_vis_and_vec(obj, &vis_vec_pos, ailp, &vec_to_player, &player_visibility, robptr, &visibility_and_vec_computed);
 
 				if (player_visibility) {
-					if (!ai_multiplayer_awareness(obj, (ROBOT_FIRE_AGITATION-1))) 
+					if (!ai_multiplayer_awareness(obj, (ROBOT_FIRE_AGITATION-1)))
 					{
 						if (Game_mode & GM_MULTI) {
 							ai_do_actual_firing_stuff(obj, aip, ailp, robptr, &vec_to_player, dist_to_player, &gun_point, player_visibility, object_animates);
@@ -3542,7 +3542,7 @@ void do_ai_frame(object *obj)
 //--mk, 121094 -- 		robot->phys_info.rotvel.y = 0x2336;
 //--mk, 121094 -- 		robot->phys_info.rotvel.z = 0x3737;
 //--mk, 121094 -- 	}
-//--mk, 121094 -- 
+//--mk, 121094 --
 //--mk, 121094 -- }
 
 //	-----------------------------------------------------------------------------------
@@ -3750,7 +3750,7 @@ void do_ai_frame_all(void)
 //--unused-- 	int		i;
 //--unused-- 	//ai_static	*aip = &objp->ctype.ai_info;
 //--unused-- 	ai_local		*ailp = &Ai_local_info[objp-Objects];
-//--unused-- 
+//--unused--
 //--unused-- 	ailp->wait_time = 0;
 //--unused-- 	ailp->next_fire = 0;
 //--unused-- 	ailp->player_awareness_type = 0;
@@ -3824,5 +3824,3 @@ int ai_restore_state( FILE * fp )
 // -- 	mprintf((0, "[pl: %i cur: st: %i]\n", ConsoleObject->segnum, objp->segnum, aip->hide_segment));
 
 // -- }
-
-

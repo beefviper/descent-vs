@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,39 +15,39 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.1 $
  * $Author: mike $
  * $Date: 1995/03/30 16:36:21 $
- * 
+ *
  * .
- * 
+ *
  * $Log: serial.c $
  * Revision 2.1  1995/03/30  16:36:21  mike
  * text localization.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:38  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.7  1994/11/19  15:15:11  mike
  * remove unused code and data
- * 
+ *
  * Revision 1.6  1994/11/12  19:58:17  john
  * Turned off stack checking around interrupt.
- * 
+ *
  * Revision 1.5  1994/11/12  19:47:20  matt
  * Added paren
- * 
+ *
  * Revision 1.4  1994/11/12  19:46:16  john
  * Fixed buug that didn't lock down isr data.
- * 
+ *
  * Revision 1.3  1994/11/12  17:59:54  john
  * Added code to lock down interrupt code and data for serial isr.
- * 
+ *
  * Revision 1.2  1994/07/21  21:31:32  john
  * First cheapo version of VictorMaxx tracking.
- * 
+ *
  * Revision 1.1  1994/07/21  18:40:38  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -126,7 +126,7 @@ typedef struct  {
 static PORT port;
 
 #pragma off (check_stack)
-void __interrupt __far serial_isr()   
+void __interrupt __far serial_isr()
 {
 	unsigned char c;
 
@@ -183,7 +183,7 @@ void serial_open(int port_number, long speed, char parity, int data, int stopbit
 		printf( "%s\n", TXT_ERROR_SERIAL_LOCK_2 );
 		exit(1);
 	}
-	
+
 	switch( port_number )   {
 	case 1:
 		address = COM1_UART;
@@ -278,7 +278,7 @@ void serial_close( )
 //--unused-- 		outp( port.uart_base + IER, IER_THRE | IER_RX_DATA );
 //--unused-- 	return( c );
 //--unused-- }
-//--unused-- 
+//--unused--
 
 int serial_getc()  {
 	if (port.in.write_index == port.in.read_index )
@@ -291,4 +291,3 @@ void serial_test()
 {
 
 }
-

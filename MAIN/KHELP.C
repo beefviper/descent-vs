@@ -10,23 +10,23 @@
  * Revision 2.0  1995/02/27  11:34:27  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.5  1993/12/02  12:39:30  matt
  * Removed extra includes
- * 
+ *
  * Revision 1.4  1993/11/05  17:32:57  john
  * added funcs
  * .,
- * 
+ *
  * Revision 1.3  1993/11/03  13:42:41  yuan
  * Updated help commands
- * 
+ *
  * Revision 1.2  1993/10/22  19:48:07  yuan
  * added ctrl-shift-keypad comment in help.
- * 
+ *
  * Revision 1.1  1993/10/13  18:53:16  john
  * Initial revision
- * 
+ *
  *
  */
 

@@ -6,29 +6,28 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/main/rcs/ipx_esr.asm $
 ; $Revision: 2.0 $
 ; $Author: john $
 ; $Date: 1995/02/27 11:32:31 $
-; 
+;
 ; Ipx esr
-; 
+;
 ; $Log: ipx_esr.asm $
 ; Revision 2.0  1995/02/27  11:32:31  john
 ; New version 2.0, which has no anonymous unions, builds with
 ; Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
-; 
+;
 ; Revision 1.2  1994/08/04  19:17:25  john
 ; Inbetween version of network stuff.
-; 
+;
 ; Revision 1.1  1994/08/02  11:41:09  john
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -76,7 +75,7 @@ _TEXT	segment	dword public USE32 'CODE'
 
 	public ipx_esr_
 
-ipx_esr_:	
+ipx_esr_:
 ;	pusha
 ;	push ds
 ;	push es
@@ -103,22 +102,22 @@ ipx_esr_:
 	mov	ds, bx
 	mov	ebx, 0b0000h
 	mov	eax, es:[edi].RealEAX
-	mov	byte ptr ds:[ebx], al 
+	mov	byte ptr ds:[ebx], al
 	pop	ebx
 	pop	ds
 
 good:
-	and 	esi, 0ffffh	
-	mov	ax, ds:[esi]	
+	and 	esi, 0ffffh
+	mov	ax, ds:[esi]
 	add	esi, 2
 	mov	es:[edi].RealIP, ax
 
-	mov	ax, ds:[esi]	
+	mov	ax, ds:[esi]
 	add	esi, 2
 	mov	es:[edi].RealCS, ax
 
 	mov	es:[edi].RealSP, si
-	
+
 	pop	esi
 	pop	eax
 ;	pop gs
@@ -126,11 +125,9 @@ good:
 ;	pop es
 ;	pop ds
 ;	popa
-	
+
 	iretd
 
 _TEXT	ends
 
 	end
-
-

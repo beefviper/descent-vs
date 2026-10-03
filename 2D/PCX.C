@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,29 +15,29 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.6 $
  * $Author: john $
  * $Date: 1995/03/01 15:38:12 $
- * 
+ *
  * Routines to read/write pcx images.
- * 
+ *
  * $Log: pcx.c $
  * Revision 1.6  1995/03/01  15:38:12  john
  * Better ModeX support.
- * 
+ *
  * Revision 1.5  1995/01/21  17:54:17  john
  * Added pcx reader for modes other than modex.
- * 
+ *
  * Revision 1.4  1994/12/08  19:03:56  john
  * Made functions use cfile.
- * 
+ *
  * Revision 1.3  1994/11/29  02:53:24  john
  * Added error messages; made call be more similiar to iff.
- * 
+ *
  * Revision 1.2  1994/11/28  20:03:50  john
  * Added PCX functions.
- * 
+ *
  * Revision 1.1  1994/11/28  19:57:56  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -120,13 +120,13 @@ int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * 
 			pixdata = &bmp->bm_data[bmp->bm_rowsize*row];
 			for (col=0; col< xsize ; )      {
 				if (cfread( &data, 1, 1, PCXfile )!=1 )	{
-					cfclose( PCXfile );	
+					cfclose( PCXfile );
 					return PCX_ERROR_READING;
 				}
 				if ((data & 0xC0) == 0xC0)     {
 					count =  data & 0x3F;
 					if (cfread( &data, 1, 1, PCXfile )!=1 )	{
-						cfclose( PCXfile );	
+						cfclose( PCXfile );
 						return PCX_ERROR_READING;
 					}
 					memset( pixdata, data, count );
@@ -142,13 +142,13 @@ int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * 
 		for (row=0; row< ysize ; row++)      {
 			for (col=0; col< xsize ; )      {
 				if (cfread( &data, 1, 1, PCXfile )!=1 )	{
-					cfclose( PCXfile );	
+					cfclose( PCXfile );
 					return PCX_ERROR_READING;
 				}
 				if ((data & 0xC0) == 0xC0)     {
 					count =  data & 0x3F;
 					if (cfread( &data, 1, 1, PCXfile )!=1 )	{
-						cfclose( PCXfile );	
+						cfclose( PCXfile );
 						return PCX_ERROR_READING;
 					}
 					for (i=0;i<count;i++)
@@ -175,7 +175,7 @@ int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * 
 					palette[i] >>= 2;
 			}
 		} else {
-			cfclose( PCXfile );	
+			cfclose( PCXfile );
 			return PCX_ERROR_NO_PALETTE;
 		}
 	}
@@ -218,7 +218,7 @@ int pcx_write_bitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 		}
 	}
 
-	// Mark an extended palette	
+	// Mark an extended palette
 	data = 12;
 	if (fwrite( &data, 1, 1, PCXfile )!=1)	{
 		fclose( PCXfile );
@@ -226,12 +226,12 @@ int pcx_write_bitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 	}
 
 	// Write the extended palette
-	for (i=0; i<768; i++ )	
+	for (i=0; i<768; i++ )
 		palette[i] <<= 2;
-	
+
 	retval = fwrite( palette, 768, 1, PCXfile );
 
-	for (i=0; i<768; i++ )	
+	for (i=0; i<768; i++ )
 		palette[i] >>= 2;
 
 	if (retval !=1)	{
@@ -244,15 +244,15 @@ int pcx_write_bitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 
 }
 
-// returns number of bytes written into outBuff, 0 if failed 
+// returns number of bytes written into outBuff, 0 if failed
 int pcx_encode_line(ubyte *inBuff, int inLen, FILE * fp)
-{  
+{
 	ubyte this, last;
 	int srcIndex, i;
 	register int total;
 	register ubyte runCount; 	// max single runlength is 63
 	total = 0;
-	last = *(inBuff);		
+	last = *(inBuff);
 	runCount = 1;
 
 	for (srcIndex = 1; srcIndex < inLen; srcIndex++) {
@@ -274,7 +274,7 @@ int pcx_encode_line(ubyte *inBuff, int inLen, FILE * fp)
 			last = this;
 			runCount = 1;
 		}
-	}	
+	}
 
 	if (runCount)	{		// finish up
 		if (!(i=pcx_encode_byte(last, runCount, fp)))
@@ -284,9 +284,9 @@ int pcx_encode_line(ubyte *inBuff, int inLen, FILE * fp)
 	return total;
 }
 
-// subroutine for writing an encoded byte pair 
+// subroutine for writing an encoded byte pair
 // returns count of bytes written, 0 if error
-int pcx_encode_byte(ubyte byt, ubyte cnt, FILE * fid) 
+int pcx_encode_byte(ubyte byt, ubyte cnt, FILE * fid)
 {
 	if (cnt) {
 		if ( (cnt==1) && (0xc0 != (0xc0 & byt)) )	{
@@ -332,4 +332,3 @@ char *pcx_errormsg(int error_number)
 	return p;
 
 }
-

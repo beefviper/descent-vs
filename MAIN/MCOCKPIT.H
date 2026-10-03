@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,26 +15,25 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:30:24 $
- * 
+ *
  * .
- * 
+ *
  * $Log: mcockpit.h $
  * Revision 2.0  1995/02/27  11:30:24  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.3  1994/05/30  19:28:16  john
  * Moved functionality of mcockpit into 2d, ibitblt.
- * 
+ *
  * Revision 1.2  1994/05/11  11:19:21  john
  * Made cockpit code be created at runtime.
- * 
+ *
  * Revision 1.1  1994/05/11  10:38:56  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _MCOCKPIT_H
@@ -48,4 +47,3 @@ void mcockpit_find_extents( grs_bitmap * bmp, int *minx, int *miny, int *maxx, i
 */
 
 #endif
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,198 +15,198 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.14 $
  * $Author: john $
  * $Date: 1995/05/26 16:16:10 $
- * 
+ *
  * Functions to save/restore game state.
- * 
+ *
  * $Log: state.c $
  * Revision 2.14  1995/05/26  16:16:10  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.13  1995/04/06  15:12:20  john
  * Fixed bug with lunacy not working.
- * 
+ *
  * Revision 2.12  1995/04/04  13:33:05  john
  * Removed multiplayer save.
- * 
+ *
  * Revision 2.11  1995/03/31  13:42:10  john
  * Made saved games from the bogus saturn version read in
  * correctly.
- * 
+ *
  * Revision 2.10  1995/03/31  12:45:28  john
  * Fixed bug with previous.
- * 
+ *
  * Revision 2.9  1995/03/31  12:24:40  john
  * I had changed alt_textures from a pointer to a byte. This hosed old
  * saved games, so I restored it to an int.
- * 
+ *
  * Revision 2.8  1995/03/28  11:22:47  john
  * Added cheats to save file. Changed lunacy text.
- * 
+ *
  * Revision 2.7  1995/03/27  21:41:03  john
  * Added code to verify that the proper multi save file
  * is used when restoring a network game.
- * 
+ *
  * Revision 2.6  1995/03/27  18:04:18  john
  * Made multi save/restore require the -multisave command line arg.
- * 
+ *
  * Revision 2.5  1995/03/27  17:01:52  john
  * Made deafult choice work better.
- * 
+ *
  * Revision 2.4  1995/03/27  15:49:44  john
  * Added slots to save games.
- * 
+ *
  * Revision 2.3  1995/03/27  12:59:19  john
  * Initial version of multiplayer save games.
- * 
+ *
  * Revision 2.2  1995/03/24  13:11:35  john
  * Added save game during briefing screens.
- * 
+ *
  * Revision 2.1  1995/03/21  14:38:36  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:00  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.43  1995/02/22  14:32:41  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.42  1995/02/13  20:34:33  john
  * Lintized
- * 
+ *
  * Revision 1.41  1995/02/13  10:37:30  john
  * Saved Buggin' cheat mode to save file.
- * 
+ *
  * Revision 1.40  1995/02/09  10:24:25  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.39  1995/02/09  10:22:20  john
  * Fixed bug with callsign getting trashed if you copy somebody else
  * 's save game file into your directory.
- * 
+ *
  * Revision 1.38  1995/02/08  21:01:27  john
  * Closed state file around the code that shows briefing screens so that the
  * code works on machines with clean boot with only 5 file handles.
- * 
+ *
  * Revision 1.37  1995/02/07  14:02:33  john
  * Added code to verify game restore.
- * 
+ *
  * Revision 1.36  1995/02/07  11:07:43  john
  * Added hooks for confirm on game state restore.
- * 
+ *
  * Revision 1.35  1995/02/03  11:27:36  john
  * Made inbetween level save's thumbnail's have correct aspect.
- * 
+ *
  * Revision 1.34  1995/02/03  10:58:43  john
  * Added code to save shareware style saved games into new format...
  * Also, made new player file format not have the saved game array in it.
- * 
+ *
  * Revision 1.33  1995/02/02  19:40:52  john
  * Added 10 save game slots.
- * 
+ *
  * Revision 1.32  1995/02/02  12:23:20  john
  * Made between level saves have picture.
- * 
+ *
  * Revision 1.31  1995/01/31  11:21:43  john
  * Added code for fixed with menus.
- * 
+ *
  * Revision 1.30  1995/01/29  21:37:29  mike
  * initialize variables on game load so you don't drain your energy when you fire.
- * 
+ *
  * Revision 1.29  1995/01/29  13:47:58  mike
  * Restore some variables on game load (in game).
- * 
+ *
  * Revision 1.28  1995/01/26  10:46:57  john
  * Fixed bug with state names getting hosed.
- * 
+ *
  * Revision 1.27  1995/01/26  09:51:23  john
  * Fixed bug with game descriptions getting hosed.
- * 
+ *
  * Revision 1.26  1995/01/25  16:35:49  john
  * Made so that when you hit enter during
  * game save, -empty- goes away.
- * 
+ *
  * Revision 1.25  1995/01/25  15:01:39  john
  * Upped the save file version.
- * 
+ *
  * Revision 1.24  1995/01/24  20:35:35  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.23  1995/01/24  20:34:24  john
  * Fixed bug with player stats not being set right for in
  * between level saves.
- * 
+ *
  * Revision 1.22  1995/01/23  10:39:03  john
  * Added mission stuff to game saves.
- * 
+ *
  * Revision 1.21  1995/01/22  16:07:12  mike
  * localization.
- * 
+ *
  * Revision 1.20  1995/01/22  15:58:32  mike
  * localization
- * 
+ *
  * Revision 1.19  1995/01/20  11:04:40  john
  * Upped state save version.
- * 
+ *
  * Revision 1.18  1995/01/19  17:00:44  john
  * Made save game work between levels.
- * 
+ *
  * Revision 1.17  1995/01/17  14:27:33  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.16  1995/01/17  13:36:37  john
  * Moved pig loading into StartNewLevelSub.
- * 
+ *
  * Revision 1.15  1995/01/16  16:53:38  john
  * Added code to save cheat state during save game.
- * 
+ *
  * Revision 1.14  1995/01/15  16:55:22  john
  * Improved mine texture parsing.
- * 
+ *
  * Revision 1.13  1995/01/12  10:45:15  john
  * Added difficulty level to save/restore game.
- * 
+ *
  * Revision 1.12  1995/01/05  15:46:55  john
  * Made weapons not rearm when starting a saved game.
- * 
+ *
  * Revision 1.11  1995/01/05  11:51:45  john
  * Added better Abort game menu.
  * Made save state return success or nopt.
- * 
+ *
  * Revision 1.10  1995/01/05  11:34:51  john
  * Took out endlevel save stuff for registered.
- * 
+ *
  * Revision 1.9  1995/01/04  18:19:52  john
  * Added automap visited list saving.
- * 
+ *
  * Revision 1.8  1995/01/04  17:29:56  john
  * Made save/restore ALT+F?. Also made them not work
- * in network mode, and if recording a demo, will 
+ * in network mode, and if recording a demo, will
  * quit recording.
- * 
+ *
  * Revision 1.7  1995/01/04  13:18:31  john
  * Added cool 6 game save.
- * 
+ *
  * Revision 1.6  1995/01/03  20:38:46  john
  * Saved morph objects.
- * 
+ *
  * Revision 1.5  1995/01/03  20:19:29  john
  * Pretty good working version of game save.
- * 
+ *
  * Revision 1.4  1995/01/03  14:18:18  matt
  * ifdefs added to compile code add.  Added by Mike, I think.
- * 
+ *
  * Revision 1.3  1994/12/29  18:40:19  john
  * Initial version.
- * 
+ *
  * Revision 1.2  1994/12/29  15:26:40  john
  * Put in hooks for saving/restoring game state.
- * 
+ *
  * Revision 1.1  1994/12/29  15:16:02  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -231,7 +231,7 @@ static char rcsid[] = "$Id: state.c 2.14 1995/05/26 16:16:10 john Exp $";
 #include "switch.h"
 #include "game.h"
 #include "newmenu.h"
-#include "cfile.h"		
+#include "cfile.h"
 #include "fuelcen.h"
 #include "hash.h"
 #include "key.h"
@@ -301,7 +301,7 @@ void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 {
 	nitems = nitems;
 	last_key = last_key;
-	
+
 //	if ( sc_last_item != citem )	{
 //		sc_last_item = citem;
 		if ( citem > 0 )	{
@@ -310,7 +310,7 @@ void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 				gr_bitmap( (grd_curcanv->cv_bitmap.bm_w-THUMBNAIL_W)/2,items[0].y-5, sc_bmp[citem-1] );
 			}
 		}
-//	}	
+//	}
 }
 
 void rpad_string( char * string, int max_chars )
@@ -337,7 +337,7 @@ int state_get_save_file(char * fname, char * dsc, int multi )
 	char desc[NUM_SAVES][DESC_LENGTH+16];
 	char id[5];
 	int valid=0;
-	
+
 	for (i=0;i<NUM_SAVES; i++ )	{
 		sc_bmp[i] = NULL;
 		if ( !multi )
@@ -361,7 +361,7 @@ int state_get_save_file(char * fname, char * dsc, int multi )
 					//fread( sc_bmp[i]->bm_data, THUMBNAIL_W * THUMBNAIL_H, 1, fp );
 					valid = 1;
 				}
-			} 
+			}
 			fclose(fp);
 		}
 		if (!valid) {
@@ -399,7 +399,7 @@ int state_get_restore_file(char * fname, int multi )
 	int valid;
 
 	nsaves=0;
-	m[0].type = NM_TYPE_TEXT; m[0].text = "\n\n\n\n";	
+	m[0].type = NM_TYPE_TEXT; m[0].text = "\n\n\n\n";
 	for (i=0;i<NUM_SAVES; i++ )	{
 		sc_bmp[i] = NULL;
 		if (!multi)
@@ -424,10 +424,10 @@ int state_get_restore_file(char * fname, int multi )
 					fread( sc_bmp[i]->bm_data, THUMBNAIL_W * THUMBNAIL_H, 1, fp );
 					nsaves++;
 					valid = 1;
-				} 
+				}
 			}
 			fclose(fp);
-		} 
+		}
 		if (!valid) {
 			strcpy( desc[i], TXT_EMPTY );
 			//rpad_string( desc[i], DESC_LENGTH-1 );
@@ -456,8 +456,8 @@ int state_get_restore_file(char * fname, int multi )
 	return 0;
 }
 
-int state_save_old_game(int slotnum, char * sg_name, player * sg_player, 
-                        int sg_difficulty_level, int sg_primary_weapon, 
+int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
+                        int sg_difficulty_level, int sg_primary_weapon,
                         int sg_secondary_weapon, int sg_next_level_num  	)
 {
 	int i;
@@ -482,7 +482,7 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 //Save description
 	strncpy( desc, sg_name, DESC_LENGTH );
 	fwrite( desc, sizeof(char)*DESC_LENGTH, 1, fp );
-	
+
 // Save the current screen shot...
 	cnv = gr_create_canvas( THUMBNAIL_W, THUMBNAIL_H );
 	if ( cnv )	{
@@ -512,7 +512,7 @@ int state_save_old_game(int slotnum, char * sg_name, player * sg_player,
 	} else {
 	 	ubyte color = 0;
 	 	for ( i=0; i<THUMBNAIL_W*THUMBNAIL_H; i++ )
-	 		fwrite( &color, sizeof(ubyte), 1, fp );		
+	 		fwrite( &color, sizeof(ubyte), 1, fp );
 	}
 
 // Save the Between levels flag...
@@ -573,20 +573,20 @@ int state_save_all(int between_levels)
 		if ( FindArg( "-multisave" ) )
 			multi_initiate_save_game();
 		else
-#endif  
+#endif
 			HUD_init_message( "Can't save in a multiplayer game!" );
 		return 0;
 	}
 
 	mprintf(( 0, "CL=%d, NL=%d\n", Current_level_num, Next_level_num ));
-	
+
 	stop_time();
 
 	if (!state_get_save_file(filename,desc,0))	{
 		start_time();
 		return 0;
 	}
-		
+
 	return state_save_all_sub(filename, desc, between_levels);
 }
 
@@ -598,8 +598,8 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
-		if ( !FindArg( "-multisave" ) ) 
-#endif  
+		if ( !FindArg( "-multisave" ) )
+#endif
 			return 0;
 	}
 
@@ -618,7 +618,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 
 //Save description
 	fwrite( desc, sizeof(char)*DESC_LENGTH, 1, fp );
-	
+
 // Save the current screen shot...
 	cnv = gr_create_canvas( THUMBNAIL_W, THUMBNAIL_H );
 	if ( cnv )	{
@@ -651,7 +651,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 	} else {
 	 	ubyte color = 0;
 	 	for ( i=0; i<THUMBNAIL_W*THUMBNAIL_H; i++ )
-	 		fwrite( &color, sizeof(ubyte), 1, fp );		
+	 		fwrite( &color, sizeof(ubyte), 1, fp );
 	}
 
 // Save the Between levels flag...
@@ -689,7 +689,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 			if ( (Objects[i].type != OBJ_NONE) && (Objects[i].render_type==RT_MORPH))	{
 				morph_data *md;
 				md = find_morph_data(&Objects[i]);
-				if (md) {					
+				if (md) {
 					md->obj->control_type = md->morph_save_control_type;
 					md->obj->movement_type = md->morph_save_movement_type;
 					md->obj->render_type = RT_POLYOBJ;
@@ -703,26 +703,26 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 				}
 			}
 		}
-	
+
 	//Save object info
 		i = Highest_object_index+1;
 		fwrite( &i, sizeof(int), 1, fp );
 		fwrite( Objects, sizeof(object)*i, 1, fp );
-		
+
 	//Save wall info
 		i = Num_walls;
 		fwrite( &i, sizeof(int), 1, fp );
 		fwrite( Walls, sizeof(wall)*i, 1, fp );
-	
+
 	//Save door info
 		i = Num_open_doors;
 		fwrite( &i, sizeof(int), 1, fp );
 		fwrite( ActiveDoors, sizeof(active_door)*i, 1, fp );
-	
+
 	//Save trigger info
 		fwrite( &Num_triggers, sizeof(int), 1, fp );
 		fwrite( Triggers, sizeof(trigger)*Num_triggers, 1, fp );
-	
+
 	//Save tmap info
 		for (i=0; i<=Highest_segment_index; i++ )	{
 			for (j=0; j<6; j++ )	{
@@ -731,7 +731,7 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 				fwrite( &Segments[i].sides[j].tmap_num2, sizeof(short), 1, fp );
 			}
 		}
-	
+
 	// Save the fuelcen info
 		fwrite( &Fuelcen_control_center_destroyed, sizeof(int), 1, fp );
 		fwrite( &Fuelcen_seconds_left, sizeof(int), 1, fp );
@@ -740,17 +740,17 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 		fwrite( &ControlCenterTriggers, sizeof(control_center_triggers), 1, fp );
 		fwrite( &Num_fuelcenters, sizeof(int), 1, fp );
 		fwrite( Station, sizeof(FuelCenter)*Num_fuelcenters, 1, fp );
-	
+
 	// Save the control cen info
 		fwrite( &Control_center_been_hit, sizeof(int), 1, fp );
 		fwrite( &Control_center_player_been_seen, sizeof(int), 1, fp );
 		fwrite( &Control_center_next_fire_time, sizeof(int), 1, fp );
 		fwrite( &Control_center_present, sizeof(int), 1, fp );
 		fwrite( &Dead_controlcen_object_num, sizeof(int), 1, fp );
-	
+
 	// Save the AI state
 		ai_save_state( fp );
-	
+
 	// Save the automap visited info
 		fwrite( Automap_visited, sizeof(ubyte)*MAX_SEGMENTS, 1, fp );
 	}
@@ -776,7 +776,7 @@ int state_restore_all(int in_game)
 #ifdef MULTI_SAVE
 		if ( FindArg( "-multisave" ) )
 			multi_initiate_restore_game();
-		else	
+		else
 #endif
 			HUD_init_message( "Can't restore in a multiplayer game!" );
 		return 0;
@@ -824,7 +824,7 @@ int state_restore_all_sub(char *filename, int multi)
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
-		if ( !FindArg( "-multisave" ) ) 
+		if ( !FindArg( "-multisave" ) )
 #endif
 			return 0;
 	}
@@ -895,9 +895,9 @@ int state_restore_all_sub(char *filename, int multi)
 		do_briefing_screens(next_level);
 		fp = fopen( filename, "rb" );
 		fseek( fp, saved_offset, SEEK_SET );
- 		StartNewLevelSub( next_level, 0 );		
+ 		StartNewLevelSub( next_level, 0 );
 	} else {
-		StartNewLevelSub(current_level, 0);		
+		StartNewLevelSub(current_level, 0);
 		fread( &Players[Player_num], sizeof(player), 1, fp );
 	}
 	strcpy( Players[Player_num].callsign, org_callsign );
@@ -929,11 +929,11 @@ RetryObjectLoading:
 		for (segnum=0; segnum <= Highest_segment_index; segnum++)
 			Segments[segnum].objects = -1;
 		reset_objects(1);
-	
+
 		//Read objects, and pop 'em into their respective segments.
 		fread( &i, sizeof(int), 1, fp );
 		Highest_object_index = i-1;
-		if ( !BogusSaturnShit )	
+		if ( !BogusSaturnShit )
 			fread( Objects, sizeof(object)*i, 1, fp );
 		else {
 			ubyte tmp_object[sizeof(object)];
@@ -944,7 +944,7 @@ RetryObjectLoading:
 				Objects[i].rtype.pobj_info.alt_textures = -1;
 			}
 		}
-	
+
 		Object_next_signature = 0;
 		for (i=0; i<=Highest_object_index; i++ )	{
 			obj = &Objects[i];
@@ -965,10 +965,10 @@ RetryObjectLoading:
 				if ( obj->signature > Object_next_signature )
 					Object_next_signature = obj->signature;
 			}
-		}	
+		}
 		special_reset_objects();
 		Object_next_signature++;
-	
+
 		//Restore wall info
 		fread( &i, sizeof(int), 1, fp );
 		Num_walls = i;
@@ -994,16 +994,16 @@ RetryObjectLoading:
 				}
 			}
 		}
-	
+
 		//Restore door info
 		fread( &i, sizeof(int), 1, fp );
 		Num_open_doors = i;
 		fread( ActiveDoors, sizeof(active_door)*Num_open_doors, 1, fp );
-	
+
 		//Restore trigger info
 		fread( &Num_triggers, sizeof(int), 1, fp );
 		fread( Triggers, sizeof(trigger)*Num_triggers, 1, fp );
-	
+
 		//Restore tmap info
 		for (i=0; i<=Highest_segment_index; i++ )	{
 			for (j=0; j<6; j++ )	{
@@ -1012,7 +1012,7 @@ RetryObjectLoading:
 				fread( &Segments[i].sides[j].tmap_num2, sizeof(short), 1, fp );
 			}
 		}
-	
+
 		//Restore the fuelcen info
 		fread( &Fuelcen_control_center_destroyed, sizeof(int), 1, fp );
 		fread( &Fuelcen_seconds_left, sizeof(int), 1, fp );
@@ -1021,17 +1021,17 @@ RetryObjectLoading:
 		fread( &ControlCenterTriggers, sizeof(control_center_triggers), 1, fp );
 		fread( &Num_fuelcenters, sizeof(int), 1, fp );
 		fread( Station, sizeof(FuelCenter)*Num_fuelcenters, 1, fp );
-	
+
 		// Restore the control cen info
 		fread( &Control_center_been_hit, sizeof(int), 1, fp );
 		fread( &Control_center_player_been_seen, sizeof(int), 1, fp );
 		fread( &Control_center_next_fire_time, sizeof(int), 1, fp );
 		fread( &Control_center_present, sizeof(int), 1, fp );
 		fread( &Dead_controlcen_object_num, sizeof(int), 1, fp );
-	
+
 		// Restore the AI state
 		ai_restore_state( fp );
-	
+
 		// Restore the automap visited info
 		fread( Automap_visited, sizeof(ubyte)*MAX_SEGMENTS, 1, fp );
 
@@ -1067,4 +1067,3 @@ RetryObjectLoading:
 
 
 #endif
-

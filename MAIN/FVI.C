@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 
@@ -18,195 +18,195 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.3 $
  * $Author: john $
  * $Date: 1995/03/24 14:49:04 $
- * 
+ *
  * New home for find_vector_intersection()
- * 
+ *
  * $Log: fvi.c $
  * Revision 2.3  1995/03/24  14:49:04  john
  * Added cheat for player to go thru walls.
- * 
+ *
  * Revision 2.2  1995/03/21  17:58:32  john
  * Fixed bug with normals..
- * 
- * 
+ *
+ *
  * Revision 2.1  1995/03/20  18:15:37  john
  * Added code to not store the normals in the segment structure.
- * 
+ *
  * Revision 2.0  1995/02/27  11:27:41  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.49  1995/02/22  14:45:47  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.48  1995/02/22  13:24:50  john
  * Removed the vecmat anonymous unions.
- * 
+ *
  * Revision 1.47  1995/02/07  16:17:26  matt
  * Disabled all robot-robot collisions except those involving two green
  * guys.  Used to do collisions if either robot was green guy.
- * 
+ *
  * Revision 1.46  1995/02/02  14:07:53  matt
- * Fixed confusion about which segment you are touching when you're 
+ * Fixed confusion about which segment you are touching when you're
  * touching a wall.  This manifested itself in spurious lava burns.
- * 
+ *
  * Revision 1.45  1995/02/02  13:45:53  matt
  * Made a bunch of lint-inspired changes
- * 
+ *
  * Revision 1.44  1995/01/24  12:10:17  matt
  * Fudged collisions for player/player, and player weapon/other player in
  * coop games.
- * 
+ *
  * Revision 1.43  1995/01/14  19:16:45  john
  * First version of new bitmap paging code.
- * 
+ *
  * Revision 1.42  1994/12/15  12:22:40  matt
  * Small change which may or may not help
- * 
+ *
  * Revision 1.41  1994/12/14  11:45:51  matt
  * Fixed (hopefully) little bug with invalid segnum
- * 
+ *
  * Revision 1.40  1994/12/13  17:12:01  matt
  * Increased edge tolerance a bunch more
- * 
+ *
  * Revision 1.39  1994/12/13  14:37:59  matt
  * Fixed another stupid little bug
- * 
+ *
  * Revision 1.38  1994/12/13  13:25:44  matt
  * Increased tolerance massively to avoid catching on corners
- * 
+ *
  * Revision 1.37  1994/12/13  12:02:20  matt
  * Fixed small bug
- * 
+ *
  * Revision 1.36  1994/12/13  11:17:35  matt
  * Lots of changes to hopefully fix objects leaving the mine.  Note that
  * this code should be considered somewhat experimental - one problem I
  * know about is that you can get stuck on edges more easily than before.
  * There may be other problems I don't know about yet.
- * 
+ *
  * Revision 1.35  1994/12/12  01:20:57  matt
  * Added hack in object-object collisions that treats claw guys as
  * if they have 3/4 of their actual radius.
- * 
+ *
  * Revision 1.34  1994/12/04  22:48:39  matt
- * Physics & FVI now only build seglist for player objects, and they 
+ * Physics & FVI now only build seglist for player objects, and they
  * responsilby deal with buffer full conditions
- * 
+ *
  * Revision 1.33  1994/12/04  22:07:05  matt
  * Added better handing of buffer full condition
- * 
+ *
  * Revision 1.32  1994/12/01  21:06:33  matt
  * Several important changes:
  *  (1) Checking against triangulated sides has been standardized a bit
  *  (2) Code has been added to de-triangulate some sides
  *  (3) BIG ONE: the tolerance for checking a point against a plane has
  *      been drastically relaxed
- * 
- * 
+ *
+ *
  * Revision 1.31  1994/11/27  23:15:03  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.30  1994/11/19  15:20:30  mike
  * rip out unused code and data
- * 
+ *
  * Revision 1.29  1994/11/16  12:18:17  mike
  * hack for green_guy:green_guy collision detection.
- * 
+ *
  * Revision 1.28  1994/11/10  13:08:54  matt
  * Added support for new run-length-encoded bitmaps
- * 
+ *
  * Revision 1.27  1994/10/31  12:27:51  matt
  * Added new function object_intersects_wall()
- * 
+ *
  * Revision 1.26  1994/10/20  13:59:27  matt
  * Added assert
- * 
+ *
  * Revision 1.25  1994/10/09  23:51:09  matt
  * Made find_hitpoint_uv() work with triangulated sides
- * 
+ *
  * Revision 1.24  1994/09/25  00:39:29  matt
  * Took out mprintf's
- * 
+ *
  * Revision 1.23  1994/09/25  00:37:53  matt
  * Made the 'find the point in the bitmap where something hit' system
  * publicly accessible.
- * 
+ *
  * Revision 1.22  1994/09/21  16:58:22  matt
- * Fixed bug in trans wall check that was checking against verically 
+ * Fixed bug in trans wall check that was checking against verically
  * flipped bitmap (i.e., the y coord was negative when checking).
- * 
+ *
  * Revision 1.21  1994/09/02  11:31:40  matt
  * Fixed object/object collisions, so you can't fly through robots anymore.
  * Cleaned up object damage system.
- * 
+ *
  * Revision 1.20  1994/08/26  09:42:03  matt
  * Increased the size of a buffer
- * 
+ *
  * Revision 1.19  1994/08/11  18:57:53  mike
  * Convert shorts to ints for optimization.
- * 
+ *
  * Revision 1.18  1994/08/08  21:38:24  matt
  * Put in small optimization
- * 
+ *
  * Revision 1.17  1994/08/08  12:21:52  yuan
  * Fixed assert
- * 
+ *
  * Revision 1.16  1994/08/08  11:47:04  matt
  * Cleaned up fvi and physics a little
- * 
+ *
  * Revision 1.15  1994/08/04  00:21:04  matt
  * Cleaned up fvi & physics error handling; put in code to make sure objects
  * are in correct segment; simplified segment finding for objects and points
- * 
+ *
  * Revision 1.14  1994/08/02  19:04:26  matt
  * Cleaned up vertex list functions
- * 
+ *
  * Revision 1.13  1994/08/02  09:56:28  matt
  * Put in check for bad value find_plane_line_intersection()
- * 
+ *
  * Revision 1.12  1994/08/01  17:27:26  matt
  * Added support for triangulated walls in trans point check
- * 
+ *
  * Revision 1.11  1994/08/01  13:30:40  matt
  * Made fvi() check holes in transparent walls, and changed fvi() calling
  * parms to take all input data in query structure.
- * 
+ *
  * Revision 1.10  1994/07/13  21:47:17  matt
  * FVI() and physics now keep lists of segments passed through which the
  * trigger code uses.
- * 
+ *
  * Revision 1.9  1994/07/09  21:21:40  matt
  * Fixed, hopefull, bugs in sphere-to-vector intersection code
- * 
+ *
  * Revision 1.8  1994/07/08  14:26:42  matt
  * Non-needed powerups don't get picked up now; this required changing FVI to
  * take a list of ingore objects rather than just one ignore object.
- * 
+ *
  * Revision 1.7  1994/07/06  20:02:37  matt
  * Made change to match gameseg that uses lowest point number as reference
  * point when checking against a plane
- * 
+ *
  * Revision 1.6  1994/06/29  15:43:58  matt
  * When computing intersection of vector and sphere, use the radii of both
  * objects.
- * 
+ *
  * Revision 1.5  1994/06/14  15:57:58  matt
  * Took out asserts, and added other hacks, pending real bug fixes
- * 
+ *
  * Revision 1.4  1994/06/13  23:10:08  matt
  * Fixed problems with triangulated sides
- * 
+ *
  * Revision 1.3  1994/06/09  12:11:14  matt
  * Fixed confusing use of two variables, hit_objnum & fvi_hit_object, to
  * keep the same information in different ways.
- * 
+ *
  * Revision 1.2  1994/06/09  09:58:38  matt
  * Moved find_vector_intersection() from physics.c to new file fvi.c
- * 
+ *
  * Revision 1.1  1994/06/09  09:25:57  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -282,7 +282,7 @@ int find_plane_line_intersection(vms_vector *new_pnt,vms_vector *plane_pnt,vms_v
 		     (-num>>15)>=den) ||	//will overflow (large negative)
 		  (den<0 && num<den))		//frac greater than one
 		return 0;
- 
+
 //if (num>0) {mprintf(1,"HEY! num>0 in FVI!!!"); return 0;}
 //??	Assert(num>=0);
 //    Assert(num >= den);
@@ -299,7 +299,7 @@ int find_plane_line_intersection(vms_vector *new_pnt,vms_vector *plane_pnt,vms_v
 //		Assert(k>=0);
 		if (oflow_check(d.x,k) || oflow_check(d.y,k) || oflow_check(d.z,k)) return 0;
 		//Note: it is ok for k to be greater than 1, since this might mean
-		//that an object with a non-zero radius that moved from p0 to p1 
+		//that an object with a non-zero radius that moved from p0 to p1
 		//actually hit the wall on the "other side" of p0.
 	}
 
@@ -430,7 +430,7 @@ check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum,int nv,fix
 
 		vm_vec_sub(&checkvec,&checkp,v0);
 		edgelen = vm_vec_normalized_dir(&edgevec,v1,v0);
-		
+
 		//find point dist from planes of ends of edge
 
 		d = vm_vec_dot(&edgevec,&checkvec);
@@ -525,7 +525,7 @@ fix calc_det_value(vms_matrix *det)
 			 	fixmul(det->rvec.z,fixmul(det->uvec.y,det->fvec.x));
 }
 
-//computes the parameters of closest approach of two lines 
+//computes the parameters of closest approach of two lines
 //fill in two parameters, t0 & t1.  returns 0 if lines are parallel, else 1
 check_line_to_line(fix *t1,fix *t2,vms_vector *p1,vms_vector *v1,vms_vector *p2,vms_vector *v2)
 {
@@ -581,7 +581,7 @@ int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,se
 		return check_line_to_face(newp,p0,p1,seg,side,facenum,nv,rad);
 
 	//calc some basic stuff
- 
+
 	create_abs_vertex_lists(&num_faces,vertex_list,seg-Segments,side);
 	vm_vec_sub(&move_vec,p1,p0);
 
@@ -624,10 +624,10 @@ int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,se
 		edge_t2 = 0;
 	else
 		edge_t2 = edge_t;
-	
+
 	if (edge_t2 > edge_len)		//saturate at points
 		edge_t2 = edge_len;
-	
+
 	//now, edge_t & move_t determine closest points.  calculate the points.
 
 	vm_vec_scale_add(&closest_point_edge,edge_v0,&edge_vec,edge_t2);
@@ -658,7 +658,7 @@ int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,se
 //maybe this routine should just return the distance and let the caller
 //decide it it's close enough to hit
 //determine if and where a vector intersects with a sphere
-//vector defined by p0,p1 
+//vector defined by p0,p1
 //returns dist if intersects, and fills in intp
 //else returns 0
 int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_vector *sphere_pos,fix sphere_rad)
@@ -771,7 +771,7 @@ int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_
 //$$
 //$$
 //$$//determine if and where a vector intersects with a sphere
-//$$//vector defined by p0,p1 
+//$$//vector defined by p0,p1
 //$$//returns dist if intersects, and fills in intp. if no intersect, return 0
 //$$fix check_vector_to_sphere_2(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_vector *sphere_pos,fix sphere_rad)
 //$${
@@ -840,7 +840,7 @@ fix check_vector_to_object(vms_vector *intp,vms_vector *p0,vms_vector *p1,fix ra
 		size = (size*3)/4;
 
 	//if obj is player, and bumping into other player or a weapon of another coop player, reduce radius
-	if (obj->type == OBJ_PLAYER && 
+	if (obj->type == OBJ_PLAYER &&
 		 	((otherobj->type == OBJ_PLAYER) ||
 	 		((Game_mode&GM_MULTI_COOP) && otherobj->type == OBJ_WEAPON && otherobj->ctype.laser_info.parent_type == OBJ_PLAYER)))
 		size = size/2;
@@ -974,13 +974,13 @@ if (hit_seg!=-1 && fq->flags&FQ_GET_SEGLIST)
 //
 //	Assert(hit_data->seglist[hit_data->n_segs-1] == hit_seg);
 //}
-	
+
 
 //MATT: PUT THESE ASSERTS BACK IN AND FIX THE BUGS!
 //!!	Assert(hit_seg!=-1);
 //!!	Assert(!((hit_type==HIT_WALL) && (hit_seg == -1)));
-	//When this assert happens, get Matt.  Matt:  Look at hit_seg2 & 
-	//fvi_hit_seg.  At least one of these should be set.  Why didn't 
+	//When this assert happens, get Matt.  Matt:  Look at hit_seg2 &
+	//fvi_hit_seg.  At least one of these should be set.  Why didn't
 	//find_new_seg() find something?
 
 //	Assert(fvi_hit_seg==-1 || fvi_hit_seg == hit_seg);
@@ -1038,14 +1038,14 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 	//fvi_hit_object = -1;
 
-	if ( stackavail() < 1024 )                      
+	if ( stackavail() < 1024 )
 	{
 		mprintf( (0, "In fvi_sub, stack left is < 1k !\n" ));
 		Int3();
 	}
 
 	if (flags&FQ_GET_SEGLIST)
-		*seglist = startseg; 
+		*seglist = startseg;
 	*n_segs=1;
 
 	seg = &Segments[startseg];
@@ -1074,7 +1074,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 					fudged_rad = (rad*3)/4;
 
 				//if obj is player, and bumping into other player or a weapon of another coop player, reduce radius
-				if (Objects[thisobjnum].type == OBJ_PLAYER && 
+				if (Objects[thisobjnum].type == OBJ_PLAYER &&
 						((Objects[objnum].type == OBJ_PLAYER) ||
 						((Game_mode&GM_MULTI_COOP) &&  Objects[objnum].type == OBJ_WEAPON && Objects[objnum].ctype.laser_info.parent_type == OBJ_PLAYER)))
 					fudged_rad = rad/2;	//(rad*3)/4;
@@ -1083,10 +1083,10 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 				if (d)          //we have intersection
 					if (d < closest_d) {
-						fvi_hit_object = objnum; 
+						fvi_hit_object = objnum;
 						Assert(fvi_hit_object!=-1);
-						closest_d = d; 
-						closest_hit_point = hit_point; 
+						closest_d = d;
+						closest_hit_point = hit_point;
 						hit_type=HIT_OBJECT;
 					}
 			}
@@ -1145,7 +1145,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 										face,
 										((num_faces==1)?4:3),rad);
 
-	
+
 					if (face_hit_type) {            //through this wall/door
 						int wid_flag;
 
@@ -1153,14 +1153,14 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 						if ( (thisobjnum == Players[Player_num].objnum) && (Physics_cheat_flag==0xBADA55) )	{
 							wid_flag = WALL_IS_DOORWAY(seg, side);
-							if (seg->children[side] >= 0 ) 
+							if (seg->children[side] >= 0 )
  								wid_flag |= WID_FLY_FLAG;
 						} else {
 							wid_flag = WALL_IS_DOORWAY(seg, side);
 						}
 
 						if ((wid_flag & WID_FLY_FLAG) ||
-							((wid_flag == WID_TRANSPARENT_WALL) && 
+							((wid_flag == WID_TRANSPARENT_WALL) &&
 								((flags & FQ_TRANSWALL) || (flags & FQ_TRANSPOINT && check_trans_wall(&hit_point,seg,side,face))))) {
 
 							int newsegnum;
@@ -1178,7 +1178,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 							if (i==n_segs_visited) {                //haven't visited here yet
 								int temp_seglist[MAX_FVI_SEGS],temp_n_segs;
-								
+
 								segs_visited[n_segs_visited++] = newsegnum;
 
 								if (n_segs_visited >= MAX_SEGS_VISITED)
@@ -1192,7 +1192,7 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 									if (d < closest_d) {
 
-										closest_d = d; 
+										closest_d = d;
 										closest_hit_point = sub_hit_point;
 										hit_type = sub_hit_type;
 										if (sub_hit_seg!=-1) hit_seg = sub_hit_seg;
@@ -1226,23 +1226,23 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 							}
 						}
 						else {          //a wall
-																
+
 								//is this the closest hit?
-	
+
 								d = vm_vec_dist(&hit_point,p0);
-	
+
 								if (d < closest_d) {
-									closest_d = d; 
+									closest_d = d;
 									closest_hit_point = hit_point;
 									hit_type = HIT_WALL;
-									
+
 									#ifdef COMPACT_SEGS
 										get_side_normal(seg, side, face, &wall_norm );
 									#else
-										wall_norm = seg->sides[side].normals[face];	
+										wall_norm = seg->sides[side].normals[face];
 									#endif
-									
-	
+
+
 									if (get_seg_masks(&hit_point,startseg,rad).centermask==0)
 										hit_seg = startseg;             //hit in this segment
 									else
@@ -1326,12 +1326,12 @@ quit_looking:
 //--unused-- fix normalize_2d(vec2d *v)
 //--unused-- {
 //--unused-- 	fix mag;
-//--unused-- 
+//--unused--
 //--unused-- 	mag = mag2d(v);
-//--unused-- 
+//--unused--
 //--unused-- 	v->i = fixdiv(v->i,mag);
 //--unused-- 	v->j = fixdiv(v->j,mag);
-//--unused-- 
+//--unused--
 //--unused-- 	return mag;
 //--unused-- }
 
@@ -1453,8 +1453,8 @@ int check_trans_wall(vms_vector *pnt,segment *seg,int sidenum,int facenum)
 	bmx = ((unsigned) f2i(u*bm->bm_w)) % bm->bm_w;
 	bmy = ((unsigned) f2i(v*bm->bm_h)) % bm->bm_h;
 
-//note: the line above had -v, but that was wrong, so I changed it.  if 
-//something doesn't work, and you want to make it negative again, you 
+//note: the line above had -v, but that was wrong, so I changed it.  if
+//something doesn't work, and you want to make it negative again, you
 //should figure out what's going on.
 
 	//mprintf(0," bmx,y  = %d,%d, color=%x\n",bmx,bmy,bm->bm_data[bmy*64+bmx]);
@@ -1531,5 +1531,3 @@ int object_intersects_wall(object *objp)
 
 	return sphere_intersects_wall(&objp->pos,objp->segnum,objp->size);
 }
-
-

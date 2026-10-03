@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,20 +15,20 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.3 $
  * $Author: john $
  * $Date: 1994/11/18 22:51:01 $
- * 
+ *
  * .
- * 
+ *
  * $Log: circle.c $
  * Revision 1.3  1994/11/18  22:51:01  john
  * Changed a bunch of shorts to ints in calls.
- * 
+ *
  * Revision 1.2  1994/05/12  17:33:18  john
  * Added circle code.
- * 
+ *
  * Revision 1.1  1994/05/12  17:21:49  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -66,7 +66,7 @@ int gr_circle(fix xc1,fix yc1,fix r1)
 		gr_pixel( xc-y, yc+x );
 		gr_pixel( xc+y, yc+x );
 
-		if (p<0) 
+		if (p<0)
 			p=p+(x<<2)+6;
 		else	{
 			// Draw the second octant
@@ -107,7 +107,7 @@ int gr_ucircle(fix xc1,fix yc1,fix r1)
 		gr_upixel( xc-y, yc+x );
 		gr_upixel( xc+y, yc+x );
 
-		if (p<0) 
+		if (p<0)
 			p=p+(x<<2)+6;
 		else	{
 			// Draw the second octant
@@ -128,4 +128,3 @@ int gr_ucircle(fix xc1,fix yc1,fix r1)
 	}
 	return 0;
 }
-

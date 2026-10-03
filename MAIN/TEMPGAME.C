@@ -7,10 +7,10 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
-/*											   
+/*
  * $Source: f:/miner/source/main/rcs/tempgame.c $
  * $Revision: 2.0 $
  * $Author: john $
@@ -22,73 +22,73 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * Revision 2.0  1995/02/27  11:28:06  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.747  1995/02/06  12:24:45  allender
  * force Endlevel_sequence in game() to fix rare bug
- * 
+ *
  * Revision 1.745  1995/02/02  15:57:52  john
  * Added turbo mode cheat.
- * 
+ *
  * Revision 1.744  1995/02/02  14:43:39  john
  * Uppped frametime limit to 150 Hz.
- * 
+ *
  * Revision 1.743  1995/02/02  13:37:16  mike
  * move T-?? message down in certain modes.
- * 
+ *
  * Revision 1.742  1995/02/02  01:26:59  john
  * Took out no key repeating.
- * 
+ *
  * Revision 1.741  1995/01/29  21:36:44  mike
  * make fusion cannon not make pitching slow.
- * 
+ *
  * Revision 1.740  1995/01/28  15:57:57  john
  * Made joystick calibration be only when wrong detected in
  * menu or joystick axis changed.
- * 
+ *
  * Revision 1.739  1995/01/28  15:21:03  yuan
  * Added X-tra life cheat.
- * 
+ *
  * Revision 1.738  1995/01/27  14:08:31  rob
  * Fixed a bug.
- * 
+ *
  * Revision 1.737  1995/01/27  14:04:59  rob
  * Its not my fault, Mark told me to do it!
- * 
+ *
  * Revision 1.736  1995/01/27  13:12:18  rob
  * Added charging noises to play across net.
- * 
+ *
  * Revision 1.735  1995/01/27  11:48:28  allender
  * check for newdemo_state to be paused and stop recording.  We might be
  * in between levels
- * 
+ *
  * Revision 1.734  1995/01/26  22:11:41  mike
  * Purple chromo-blaster (ie, fusion cannon) spruce up (chromification)
- * 
+ *
  * Revision 1.733  1995/01/26  17:03:04  mike
  * make fusion cannon have more chrome, make fusion, mega rock you!
- * 
+ *
  * Revision 1.732  1995/01/25  14:37:25  john
  * Made joystick only prompt for calibration once...
- * 
+ *
  * Revision 1.731  1995/01/24  15:49:14  john
- * Made typeing in long net messages wrap on 
+ * Made typeing in long net messages wrap on
  * small screen sizes.
- * 
+ *
  * Revision 1.730  1995/01/24  15:23:42  mike
  * network message tweaking.
- * 
+ *
  * Revision 1.729  1995/01/24  12:00:47  john
  * Fixed bug with defing macro passing keys to controls.
- * 
+ *
  * Revision 1.728  1995/01/24  11:53:35  john
  * Added better macro defining code.
- * 
+ *
  * Revision 1.727  1995/01/23  22:17:15  john
  * Fixed bug with not clearing key buffer when leaving f8.
- * 
+ *
  * Revision 1.726  1995/01/23  22:07:09  john
  * Added flush to game inputs during F8.
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -220,7 +220,7 @@ grs_canvas _canv_3d_offscrn;            //the 3d window, off screen
 
 //these are pointers to our canvases
 grs_canvas *Canv_game=NULL;                          //what you acutally see on screen
-grs_canvas *Canv_game_offscrn=NULL;  //off-screen buffer the size of the screen 
+grs_canvas *Canv_game_offscrn=NULL;  //off-screen buffer the size of the screen
 grs_canvas *Canv_3d=&_canv_3d;  //the 3d window, on screen
 grs_canvas *Canv_3d_offscrn=NULL;            //the 3d window, off screen
 #ifdef VFX
@@ -321,7 +321,7 @@ void speedtest_frame(void)
 	Speedtest_segnum++;
 
 	if (Speedtest_segnum > Highest_segment_index) {
-		mprintf((0, "\nSpeedtest done:  %i frames, %7.3f seconds, %7.3f frames/second.\n", 
+		mprintf((0, "\nSpeedtest done:  %i frames, %7.3f seconds, %7.3f frames/second.\n",
 			FrameCount-Speedtest_frame_start,
 			f2fl(timer_get_fixed_seconds() - Speedtest_start_time),
 			(float) (FrameCount-Speedtest_frame_start) / f2fl(timer_get_fixed_seconds() - Speedtest_start_time)));
@@ -330,7 +330,7 @@ void speedtest_frame(void)
 			Speedtest_on = 0;
 		else
 			speedtest_init();
-	}				
+	}
 
 }
 
@@ -398,7 +398,7 @@ game_show_warning(char *s)
 }
 
 
-//these should be in gr.h 
+//these should be in gr.h
 #define cv_w  cv_bitmap.bm_w
 #define cv_h  cv_bitmap.bm_h
 
@@ -432,7 +432,7 @@ void update_cockpits(int force_redraw)
 	case CM_REAR_VIEW:
 		gr_set_current_canvas(Canv_game);
 		PIGGY_PAGE_IN(cockpit_bitmap[Cockpit_mode]);
-		gr_ubitmapm(0,0, cockpit_bitmap[Cockpit_mode]);	
+		gr_ubitmapm(0,0, cockpit_bitmap[Cockpit_mode]);
 		break;
 	case CM_FULL_SCREEN:
 		break;
@@ -453,7 +453,7 @@ void update_cockpits(int force_redraw)
 	}
 
 	gr_set_current_canvas(Canv_game);
-	
+
 	if (Cockpit_mode==CM_FULL_COCKPIT || Cockpit_mode==CM_STATUS_BAR)
 		init_gauges();
 
@@ -476,7 +476,7 @@ void init_game_screen()
 			if (Game_cockpit_copy_code)
 				free(Game_cockpit_copy_code);
 			Game_cockpit_copy_code  = NULL;
-		
+
 			if (Cockpit_mode==CM_FULL_COCKPIT ||  Cockpit_mode==CM_REAR_VIEW) {
 				grs_bitmap *bm = cockpit_bitmap[Cockpit_mode];
 
@@ -529,11 +529,11 @@ void init_game_screen()
 			}
 			else if (Cockpit_mode == CM_LETTERBOX) {
 				int x,y,w,h;
-			
+
 				x = 0; w = Canv_game->cv_bitmap.bm_w;
 				h = LETTERBOX_HEIGHT;
 				y = (Canv_game->cv_bitmap.bm_h-h)/2;
-			
+
 				gr_init_sub_canvas(&_canv_3d_offscrn, Canv_game_offscrn, x, y, w, h );
 			}
 
@@ -571,7 +571,7 @@ void init_game_screen()
 				Beam_brightness=0x38000;
 
 			Cockpit_mode = CM_FULL_SCREEN;
-	
+
 			if ( Game_vfx_flag == 1 )	{
 				minx = 0; miny = 0;
 				maxx = 159; maxy = 119;
@@ -589,14 +589,14 @@ void init_game_screen()
 			break;
 		}
 		#endif
-	
+
 		#ifdef VICTOR
 		case SCREEN_VICTOR:
 			//minx = (Canv_game->cv_bitmap.bm_w - Game_window_w)/2;
 			//miny = (max_window_h - Game_window_h)/2;
 			//maxx = minx + Game_window_w - 1;
 			//maxy = miny + Game_window_h - 1;
-		
+
 			minx = 0; miny = 0;
 			maxx = 319; maxy = 199;
 
@@ -607,7 +607,7 @@ void init_game_screen()
 			gr_init_sub_canvas( &_canv_3d, Canv_game, bmp->bm_x, bmp->bm_y, bmp->bm_w, bmp->bm_h );
 			Canv_3d = &_canv_3d;
 			Canv_3d_offscrn = &_canv_3d_offscrn;
-	
+
 			if (Canv_victor[0]==NULL)
 				Canv_victor[0] = gr_create_canvas( 320,100 );
 			if (Canv_victor[1]==NULL)
@@ -615,13 +615,13 @@ void init_game_screen()
 
 			gr_init_sub_canvas(&Canv_victor_3d[0], Canv_victor[0], 0, 0, maxx-minx+1, (maxy-miny+1)/2 );
 			gr_init_sub_canvas(&Canv_victor_3d[1], Canv_victor[1], 0, 0, maxx-minx+1, (maxy-miny+1)/2 );
-	
+
 			Assert( Canv_victor[0] != NULL );
 			Assert( Canv_victor[1] != NULL );
-	
+
 			break;
 		#endif
-	
+
 		case SCREEN_EDITOR:
 			Canv_3d = Canv_game;
 			Canv_3d_offscrn = Canv_game_offscrn;
@@ -629,7 +629,7 @@ void init_game_screen()
 
 		default:
 			Error( "Invalid screen type in game.c" );
-	
+
 	}
 }
 
@@ -728,7 +728,7 @@ grow_window()
 		Game_window_w = w;
 		Game_window_h = h;
 
-		//@@init_reticle();			
+		//@@init_reticle();
 	}
 HUD_clear_messages();	//	@mk, 11/11/94
 }
@@ -764,7 +764,7 @@ copy_background_rect(int left,int top,int right,int bot)
 
 			//w = (right < dest_x+bm->bm_w)?(right-dest_x+1):(bm->bm_w-ofs_x);
 			w = min(right-dest_x+1,bm->bm_w-ofs_x);
-		
+
 			gr_bm_ubitblt(w,h,dest_x,dest_y,ofs_x,ofs_y,
 					&background_bitmap,&grd_curcanv->cv_bitmap);
 
@@ -829,7 +829,7 @@ shrink_window()
 		Game_window_w = w;
 		Game_window_h = h;
 
-		//@@init_reticle();			
+		//@@init_reticle();
 	}
 
 	HUD_clear_messages();
@@ -843,12 +843,12 @@ shrink_window()
 int set_screen_mode(int sm)
 {
 	#ifdef VFX
-	if ( (sm==SCREEN_GAME) && (Game_vfx_flag) ) 
+	if ( (sm==SCREEN_GAME) && (Game_vfx_flag) )
 		sm=SCREEN_VFX;
 	#endif
 
 	#ifdef VICTOR
-	if ( (sm==SCREEN_GAME) && (Game_victor_flag) ) 
+	if ( (sm==SCREEN_GAME) && (Game_victor_flag) )
 		sm=SCREEN_VICTOR;
 	#endif
 
@@ -869,7 +869,7 @@ int set_screen_mode(int sm)
 
 	switch( sm )	{
 	case SCREEN_GAME:
-		if (grd_curscreen->sc_mode != GRMODE_GAME )	
+		if (grd_curscreen->sc_mode != GRMODE_GAME )
 			if (gr_set_mode(GRMODE_GAME)) Error(TXT_CANNOT_SET_SCREEN);
 
 		Canv_game = &grd_curscreen->sc_canvas;
@@ -886,7 +886,7 @@ int set_screen_mode(int sm)
 
 	#ifdef VFX
 	case SCREEN_VFX:
-		if (grd_curscreen->sc_mode != GRMODE_VFX)	
+		if (grd_curscreen->sc_mode != GRMODE_VFX)
 			if (gr_set_mode(GRMODE_VFX)) Error("Cannot set screen mode for vfx mode");
 		Cockpit_mode = CM_FULL_SCREEN;
 
@@ -901,7 +901,7 @@ int set_screen_mode(int sm)
 		Canv_vfx[1][1]->cv_bitmap.bm_rowsize *= 2;
 
 		vfx_init_graphics();
-	
+
 		Canv_game = &grd_curscreen->sc_canvas;
 		Canv_game->cv_bitmap.bm_rowsize *= 2;
 
@@ -915,21 +915,21 @@ int set_screen_mode(int sm)
 
 	#ifdef VICTOR
 	case SCREEN_VICTOR:
-		if (grd_curscreen->sc_mode != GRMODE_VICTOR)	
+		if (grd_curscreen->sc_mode != GRMODE_VICTOR)
 			if (gr_set_mode(GRMODE_VICTOR)) Error("Cannot set screen mode for victor mode");
 		Cockpit_mode = CM_FULL_SCREEN;
 
 		//victor_init_graphics();
-		
+
 		{
 			char *vswitch = getenv( "CYBERMAXX" );
 			if ( vswitch )	{
-				char *p = strstr( vswitch, "/E:R" ); 
+				char *p = strstr( vswitch, "/E:R" );
 				if ( p )	{
 					Victor_eye_switch = 1;
-				} else 
+				} else
 					Victor_eye_switch = 0;
-			} else {		
+			} else {
 			 	Victor_eye_switch = 0;
 			}
 		}
@@ -946,7 +946,7 @@ int set_screen_mode(int sm)
 	#ifdef EDITOR
 	case SCREEN_EDITOR:	{
 		int gr_error;
-		if (grd_curscreen->sc_mode != GRMODE_EDITOR)	
+		if (grd_curscreen->sc_mode != GRMODE_EDITOR)
 			if ((gr_error=gr_set_mode(GRMODE_EDITOR))!=0) { //force into game scrren
 				Warning("Cannot init editor screen (error=%d)",gr_error);
 				return set_screen_mode(SCREEN_GAME);
@@ -976,14 +976,14 @@ int frame_time_cntr=0;
 show_framerate()
 {
 	float rate;
-			
+
 	frame_time_total += RealFrameTime - frame_time_list[frame_time_cntr];
 	frame_time_list[frame_time_cntr] = RealFrameTime;
 	frame_time_cntr = (frame_time_cntr+1)%8;
 
 	rate = f2fl(fixdiv(f1_0*8,frame_time_total));
 
-	gr_set_curfont( GAME_FONT );	
+	gr_set_curfont( GAME_FONT );
 	gr_set_fontcolor(gr_getcolor(0,31,0),-1 );
 
 	gr_printf(grd_curcanv->cv_w-50,grd_curcanv->cv_h-20,"FPS: %2.2f ",rate);
@@ -991,7 +991,7 @@ show_framerate()
 }
 #endif
 
-static timer_paused=0;		
+static timer_paused=0;
 
 void stop_time()
 {
@@ -1043,7 +1043,7 @@ void game_flush_inputs()
 {
 	int dx,dy;
 	key_flush();
-	joy_flush();			
+	joy_flush();
 	mouse_flush();
 	mouse_get_delta( &dx, &dy );	// Read mouse
 	memset(&Controls,0,sizeof(control_info));
@@ -1069,7 +1069,7 @@ void calc_frame_time()
 	#if defined(TIMER_TEST) && !defined(NDEBUG)
 	_timer_value = timer_value;
 	#endif
-	
+
 	#ifndef NDEBUG
 	if (!(((FrameTime > 0) && (FrameTime <= F1_0)) || (Function_mode == FMODE_EDITOR) || (Newdemo_state == ND_STATE_PLAYBACK))) {
 		mprintf((1,"Bad FrameTime - value = %x\n",FrameTime));
@@ -1108,7 +1108,7 @@ void calc_frame_time()
 		c = 0;
 		while( c==0 )
 			c = key_peekkey();
-			
+
 		if ( c == KEY_P )       {
 			Debug_pause = 0;
 			c = key_inkey();
@@ -1148,7 +1148,7 @@ void move_player_2_segment(segment *seg,int side)
 	vm_vector_2_matrix(&ConsoleObject->orient,&vp,NULL,NULL);
 
 	obj_relink( ConsoleObject-Objects, SEG_PTR_2_NUM(seg) );
-	
+
 }
 
 fix Show_view_text_timer = -1;
@@ -1244,16 +1244,16 @@ game_render_frame_stereo_vfx()
 		h = Canv_3d_offscrn->cv_bitmap.bm_h;
 
 		if ( Game_vfx_flag == 1 )	{
-			for (y=0; y<h; y++ )	{	
+			for (y=0; y<h; y++ )	{
 				gr_bm_ubitblt02_2x( w*2, 1, 0, y*2, 0, y, &Canv_3d_offscrn->cv_bitmap, &Canv_3d->cv_bitmap);
 				gr_bm_ubitblt02_2x( w*2, 1, 0, y*2+1, 0, y, &Canv_3d_offscrn->cv_bitmap, &Canv_3d->cv_bitmap);
 			}
 		} else {
-			for (y=0; y<h; y++ )	{	
+			for (y=0; y<h; y++ )	{
 				gr_bm_ubitblt02_2x( w*2, 1, 0, y, 0, y, &Canv_3d_offscrn->cv_bitmap, &Canv_3d->cv_bitmap);
 			}
 			//gr_bm_ubitblt( w, h, 0, 0, 0, 0, &Canv_3d_offscrn->cv_bitmap, &Canv_3d->cv_bitmap);
-		} 
+		}
 	}
 
 	vfx_set_page(vfx_page);		// 0 or 1
@@ -1296,7 +1296,7 @@ game_render_frame_stereo_victor()
 			gr_bm_ubitblt( w, 1, 0, y*2+1, 0, y, &Canv_victor_3d[0].cv_bitmap, &Canv_3d->cv_bitmap);
 		}
 	} else {			// switch l/r eyes
-		for (y=0; y<h/2; y++ )	{					 
+		for (y=0; y<h/2; y++ )	{
 			gr_bm_ubitblt( w, 1, 0, y*2+0, 0, y, &Canv_victor_3d[0].cv_bitmap, &Canv_3d->cv_bitmap);
 			gr_bm_ubitblt( w, 1, 0, y*2+1, 0, y, &Canv_victor_3d[1].cv_bitmap, &Canv_3d->cv_bitmap);
 		}
@@ -1388,7 +1388,7 @@ void game_render_frame_mono(void)
 	if ( Viewer->type == OBJ_PLAYER )
 		laser_do_crosshair(Viewer);
 	#endif
-	
+
 	#ifndef NDEBUG
 	draw_window_label();
 	#endif
@@ -1418,7 +1418,7 @@ void game_render_frame_mono(void)
 			} else {
 				sprintf (message, "");
 			}
-		} else 
+		} else
 			sprintf (message, TXT_DEMO_RECORDING);
 
 		gr_set_curfont( GAME_FONT );    //GAME_FONT );
@@ -1503,7 +1503,7 @@ void game_render_frame_mono(void)
 		w = Canv_3d_offscrn->cv_bitmap.bm_w;
 		h = Canv_3d_offscrn->cv_bitmap.bm_h;
 
-		for (y=0; y<h; y++ )	{	
+		for (y=0; y<h; y++ )	{
 			gr_bm_ubitblt00_2x( w*2, 1, 0, y*2, 0, y, &Canv_3d_offscrn->cv_bitmap, &Canv_game->cv_bitmap);
 			gr_bm_ubitblt00_2x( w*2, 1, 0, y*2+1, 0, y, &Canv_3d_offscrn->cv_bitmap, &Canv_game->cv_bitmap);
 		}
@@ -1557,22 +1557,22 @@ void game_render_frame()
 
 	update_cockpits(0);
 
-	#ifdef VFX									
-	if (Screen_mode == SCREEN_VFX) 
+	#ifdef VFX
+	if (Screen_mode == SCREEN_VFX)
 		game_render_frame_stereo_vfx();
 	#endif
 
 	#ifdef VICTOR
-	if (Screen_mode == SCREEN_VICTOR) 
+	if (Screen_mode == SCREEN_VICTOR)
 		game_render_frame_stereo_victor();
 	#endif
 
 	if (Screen_mode == SCREEN_GAME )
-		game_render_frame_mono();		
+		game_render_frame_mono();
 
 	#ifdef EDITOR
 	if (Screen_mode == SCREEN_EDITOR )
-		game_render_frame_mono();		
+		game_render_frame_mono();
 	#endif
 
 	// Make sure palette is faded in
@@ -1654,7 +1654,7 @@ fly_init(object *obj)
 	vm_vec_zero(&obj->phys_info.rotvel);
 	vm_vec_zero(&obj->phys_info.rotthrust);
 }
-	
+
 //void morph_test(), morph_step();
 
 int sound_nums[] = {10,11,20,21,30,31,32,33,40,41,50,51,60,61,62,70,80,81,82,83,90,91};
@@ -1755,7 +1755,7 @@ void do_invulnerable_stuff(void)
 		}
 	}
 }
-	
+
 //--killed--//	------------------------------------------------------------------------------------
 //--killed--void do_afterburner_stuff(void)
 //--killed--{
@@ -1871,7 +1871,7 @@ do_cheat_menu()
 			Players[Player_num].invulnerable_time = GameTime+i2f(1000);
 		} else
 			Players[Player_num].flags &= ~PLAYER_FLAGS_INVULNERABLE;
-		if ( mm[1].value ) 
+		if ( mm[1].value )
 			Players[Player_num].flags |= PLAYER_FLAGS_IMMATERIAL;
 		else
 			Players[Player_num].flags &= ~PLAYER_FLAGS_IMMATERIAL;
@@ -1940,7 +1940,7 @@ bkg bg = {0,0,0,0,NULL};
 
 //show a message in a nice little box
 show_boxed_message(char *msg)
-{	
+{
 	int w,h,aw;
 	int x,y;
 
@@ -2091,7 +2091,7 @@ void arcade_frame_info()
 		gr_set_fontcolor(gr_getcolor(0,31,0), -1 );
 		gr_printf(0x8000, 5, "Insert Coins to Play" );
 		return;
-	} 
+	}
 
 	if (Arcade_timer > 0 )	{
 		gr_set_curfont( GAME_FONT );
@@ -2100,11 +2100,11 @@ void arcade_frame_info()
  	} else {
 		gr_set_curfont( Gamefonts[GFONT_BIG_1] );    //GAME_FONT );
 		gr_printf(0x8000, 40, "Game Over" );
-	
+
 		gr_set_curfont( Gamefonts[GFONT_MEDIUM_2] );    //GAME_FONT );
 		gr_printf(0x8000, 60, "Insert Coins to Continue" );
 		gr_printf(0x8000, 75, "%d", f2i(Arcade_timer)+10 );
-	}	
+	}
 }
 #endif
 
@@ -2157,7 +2157,7 @@ check_rear_view()
 			if (leave_mode==1 && Rear_view) {
 				Rear_view = 0;
 				if (Cockpit_mode==CM_REAR_VIEW) {
-					select_cockpit(old_cockpit_mode); 
+					select_cockpit(old_cockpit_mode);
 				}
 				if (Newdemo_state == ND_STATE_RECORDING)
 					newdemo_record_restore_rearview();
@@ -2325,7 +2325,7 @@ void game()
 			if (Config_menu_flag) 	{
 				if (!(Game_mode&GM_MULTI)) palette_save();
 				do_options_menu();
-				if (!(Game_mode&GM_MULTI)) palette_restore();		
+				if (!(Game_mode&GM_MULTI)) palette_restore();
 			}
 
 			if (Automap_flag) {
@@ -2344,14 +2344,14 @@ void game()
 				choice=nm_messagebox( NULL, 2, TXT_YES, TXT_NO, TXT_ABORT_AUTODEMO );
 				Function_mode = fmode;
 				if (choice==0)	{
-					Auto_demo = 0;	
+					Auto_demo = 0;
 					newdemo_stop_playback();
 					Function_mode = FMODE_MENU;
 				} else {
 					Function_mode = FMODE_GAME;
 				}
 			}
-	
+
 			if ( (Function_mode != FMODE_GAME ) && (Newdemo_state != ND_STATE_PLAYBACK ) && (Function_mode!=FMODE_EDITOR) )		{
 				int choice, fmode;
 				fmode = Function_mode;
@@ -2365,7 +2365,7 @@ void game()
 			if (Function_mode != FMODE_GAME)
 				longjmp(LeaveGame,0);
 		}
-	} 
+	}
 
 	digi_stop_all();
 
@@ -2374,7 +2374,7 @@ void game()
 
 	multi_leave_game();
 
-	if ( Newdemo_state == ND_STATE_PLAYBACK )	
+	if ( Newdemo_state == ND_STATE_PLAYBACK )
  		newdemo_stop_playback();
 
 	if (Function_mode != FMODE_EDITOR)
@@ -2391,7 +2391,7 @@ void game()
 }
 
 //called at the end of the program
-void close_game() 
+void close_game()
 {
 
 	gr_free_canvas(Canv_game_offscrn);
@@ -2501,10 +2501,10 @@ void ReadControls()
 					controls_read_all();		//NOTE LINK TO ABOVE!!!
 
 			check_rear_view();
-						
+
 			//	If automap key pressed, enable automap unless you are in network mode, control center destroyed and < 10 seconds left
 			if ( Controls.automap_down_count && !((Game_mode & GM_MULTI) && Fuelcen_control_center_destroyed && (Fuelcen_seconds_left < 10)))
-				Automap_flag = 1;			
+				Automap_flag = 1;
 
 			if (Controls.fire_flare_down_count)
 				if (allowed_to_fire_flare())
@@ -2535,17 +2535,17 @@ void ReadControls()
 			if (exploding_flag==0)	{
 				exploding_flag = 1;	 		// When player starts exploding, clear all input devices...
 				game_flush_inputs();
-			} else {	
+			} else {
 				int i;
 				if (key_down_count(KEY_BACKSP))
 					Int3();
 				if (key_down_count(KEY_PRINT_SCREEN))
 					save_screen_shot(0);
-				for (i=0; i<4; i++ )	
+				for (i=0; i<4; i++ )
 					if (joy_get_button_down_cnt(i)>0) Death_sequence_aborted = 1;
-				for (i=0; i<3; i++ )	
+				for (i=0; i<3; i++ )
 					if (mouse_button_down_count(i)>0) Death_sequence_aborted = 1;
-				for (i=0; i<256; i++ )	
+				for (i=0; i<256; i++ )
 					if (key_down_count(i)>0) Death_sequence_aborted = 1;
 				if (Death_sequence_aborted)
 					game_flush_inputs();
@@ -2605,10 +2605,10 @@ void ReadControls()
 
 						for (i=0; i<MAX_PRIMARY_WEAPONS; i++)
 							Players[Player_num].primary_ammo[i] = Primary_ammo_max[i];
-						
+
 						for (i=0; i<MAX_SECONDARY_WEAPONS; i++)
 							Players[Player_num].secondary_ammo[i] = Secondary_ammo_max[i];
-						
+
 						if (Newdemo_state == ND_STATE_RECORDING)
 							newdemo_record_laser_level(Players[Player_num].laser_level, MAX_LASER_LEVEL);
 
@@ -2706,7 +2706,7 @@ void ReadControls()
 				sprintf( Network_message, "%s %s", TXT_I_AM_A, TXT_CHEATER);
 			}
 			#endif
-	
+
 			if (Endlevel_sequence) {
 
 	  			if (key==KEY_PRINT_SCREEN)
@@ -2736,9 +2736,9 @@ void ReadControls()
 					key = do_game_pause(0);		//so esc from pause will end level
 					Death_sequence_aborted  = 0;		// Clear because code above sets this for any key.
 				}
-					
+
 				if (key == KEY_ESC) {
-					if (ConsoleObject->flags & OF_EXPLODING)	
+					if (ConsoleObject->flags & OF_EXPLODING)
 						Death_sequence_aborted = 1;
 				}
 
@@ -2781,7 +2781,7 @@ void ReadControls()
 						#endif
 						Function_mode=FMODE_EXIT;
 					}
-				} 
+				}
 				continue;
 			}
 			#endif
@@ -2790,7 +2790,7 @@ void ReadControls()
 			if (Newdemo_state == ND_STATE_PLAYBACK )	{
 				switch (key) {
 
-				case KEY_DEBUGGED + KEY_I:	
+				case KEY_DEBUGGED + KEY_I:
 					Newdemo_do_interpolate = !Newdemo_do_interpolate;
 					if (Newdemo_do_interpolate)
 						mprintf ((0, "demo playback interpolation now on\n"));
@@ -2803,13 +2803,13 @@ void ReadControls()
 				case KEY_SHIFTED+KEY_EQUAL:
 				case KEY_EQUAL:			grow_window();				break;
 				case KEY_F2:				Config_menu_flag = 1;	break;
-				case KEY_F7:				
+				case KEY_F7:
 					Show_kill_list = (Show_kill_list+1) % ((Newdemo_game_mode & GM_TEAM) ? 3 : 2);
 					break;
 				case KEY_BACKSP:
 					Int3();
 					break;
-				case KEY_ESC: 				
+				case KEY_ESC:
 					Function_mode = FMODE_MENU;
 					break;
 				case KEY_UP:
@@ -2834,7 +2834,7 @@ void ReadControls()
 					break;
 	  			case KEY_PRINT_SCREEN: {
 					int old_state;
-			
+
 					old_state = Newdemo_vcr_state;
 					Newdemo_vcr_state = ND_STATE_PRINTSCREEN;
 					game_render_frame_mono();
@@ -2866,10 +2866,10 @@ void ReadControls()
 
 						for (i=0; i<MAX_PRIMARY_WEAPONS; i++)
 							Players[Player_num].primary_ammo[i] = Primary_ammo_max[i];
-						
+
 						for (i=0; i<MAX_SECONDARY_WEAPONS; i++)
 							Players[Player_num].secondary_ammo[i] = Secondary_ammo_max[i];
-						
+
 						if (Newdemo_state == ND_STATE_RECORDING)
 							newdemo_record_laser_level(Players[Player_num].laser_level, MAX_LASER_LEVEL);
 
@@ -2880,18 +2880,18 @@ void ReadControls()
 
 						break;
 					}
-	
+
 					case KEY_ALTED+KEY_2:
 						HUD_init_message(TXT_ALL_KEYS);
 						Players[Player_num].flags |= PLAYER_FLAGS_BLUE_KEY | PLAYER_FLAGS_RED_KEY | PLAYER_FLAGS_GOLD_KEY;
 						break;
-	
+
 					case KEY_ALTED+KEY_3:
 						Players[Player_num].flags ^= PLAYER_FLAGS_INVULNERABLE;
 						HUD_init_message("%s %s!", TXT_INVULNERABILITY, (Players[Player_num].flags&PLAYER_FLAGS_INVULNERABLE)?TXT_ON:TXT_OFF);
 						Players[Player_num].invulnerable_time = GameTime+i2f(1000);
 						break;
-	
+
 					case KEY_ALTED+KEY_4:
 						Players[Player_num].flags ^= PLAYER_FLAGS_CLOAKED;
 						HUD_init_message("%s %s!", TXT_CLOAK, (Players[Player_num].flags&PLAYER_FLAGS_CLOAKED)?TXT_ON:TXT_OFF);
@@ -2933,26 +2933,26 @@ void ReadControls()
 
 				//--killed--case KEY_SHIFTED+KEY_A:	toggle_afterburner_status();	break;
 				case KEY_ESC:
-					Game_aborted=1; 				
+					Game_aborted=1;
 					Function_mode = FMODE_MENU;
 					break;
 				case KEY_F1: 				do_show_help();			break;
 				case KEY_F2:				Config_menu_flag = 1;	break;
 				case KEY_F3:				toggle_cockpit();			break;
 				case KEY_F4:				palette_save(); joydefs_calibrate(); palette_restore(); break;
-				case KEY_F5:	
+				case KEY_F5:
 						if ( Newdemo_state == ND_STATE_RECORDING )
 							newdemo_stop_recording();
-						else if ( Newdemo_state == ND_STATE_NORMAL )			
+						else if ( Newdemo_state == ND_STATE_NORMAL )
 							newdemo_start_recording();
 						break;
-				case KEY_F6:				
+				case KEY_F6:
 					Show_reticle_name = (Show_reticle_name+1)%2;
-					break;	
-				case KEY_F7:				
+					break;
+				case KEY_F7:
 					Show_kill_list = (Show_kill_list+1) % ((Game_mode & GM_TEAM) ? 3 : 2);
 					break;
-				case KEY_F8:	
+				case KEY_F8:
 					multi_send_message_start();
 					break;
 				case KEY_F9:
@@ -2961,7 +2961,7 @@ void ReadControls()
 				case KEY_F12:
 					multi_send_macro(key);
 					break;		// send taunt macros
-	
+
 				case KEY_ALTED + KEY_F9:
 					multi_send_audio_taunt(0);
 					break;
@@ -3037,7 +3037,7 @@ void ReadControls()
 				//ALL KEYS BELOW HERE GO AWAY IN RELEASE VERSION
 
 			#ifndef RELEASE
-	
+
 				case KEY_DEBUGGED+KEY_0:	show_weapon_status();	break;
 
 				case KEY_DEBUGGED+KEY_1:	create_special_path();	break;
@@ -3068,7 +3068,7 @@ void ReadControls()
 	 				else
 	 					Game_suspended |= SUSP_ROBOTS;          //robots don't move
 					break;
-	
+
 #ifdef VICTOR
 				case KEY_V + KEY_ALTED:
 					victor_init_graphics();
@@ -3077,8 +3077,8 @@ void ReadControls()
 					Victor_eye_switch = !Victor_eye_switch;
 					break;
 #endif
-	
-	
+
+
 				case KEY_DEBUGGED+KEY_K:	Players[Player_num].shields = 1;	break;						//	a virtual kill
 				case KEY_DEBUGGED+KEY_SHIFTED + KEY_K:	Players[Player_num].shields = -1;	break;	//	an actual kill
 				case KEY_DEBUGGED+KEY_X: Players[Player_num].lives++; break; // Extra life cheat key.
@@ -3105,34 +3105,34 @@ void ReadControls()
 
 					case KEY_E + KEY_DEBUGGED:
 							network_leave_game();
-							Function_mode = FMODE_EDITOR; 
+							Function_mode = FMODE_EDITOR;
 							break;
-	
-					case KEY_C + KEY_SHIFTED + KEY_DEBUGGED: 
+
+					case KEY_C + KEY_SHIFTED + KEY_DEBUGGED:
 						if (!( Game_mode & GM_MULTI ))
-							move_player_2_segment(Cursegp,Curside); 
+							move_player_2_segment(Cursegp,Curside);
 						break;   //move eye to curseg
-	
+
 					case KEY_S + KEY_SHIFTED + KEY_DEBUGGED:	//toggle screen (between editor & game screens)
-						if (Screen_mode == SCREEN_EDITOR )      
+						if (Screen_mode == SCREEN_EDITOR )
 							close_editor_screen();
 						set_screen_mode(Screen_mode ^ (SCREEN_GAME^SCREEN_EDITOR));
 						break;
-	
+
 					case KEY_DEBUGGED+KEY_W:	draw_world_from_game();	break;
 
 				#endif	//#ifdef EDITOR
-	
+
 				//flythrough keys
 				// case KEY_DEBUGGED+KEY_SHIFTED+KEY_F:	toggle_flythrough(); break;
 				// case KEY_LEFT:          ft_preference=FP_LEFT; break;
 				// case KEY_RIGHT: 			ft_preference=FP_RIGHT; break;
 				// case KEY_UP:            ft_preference=FP_UP; break;
 				// case KEY_DOWN:          ft_preference=FP_DOWN; break;
-	
+
 				case KEY_DEBUGGED+KEY_LAPOSTRO: Show_view_text_timer = 0x30000; object_goto_next_viewer(); break;
 				case KEY_DEBUGGED+KEY_SHIFTED+KEY_LAPOSTRO: Viewer=ConsoleObject; break;
-	
+
 #ifndef NDEBUG
 	  			case KEY_DEBUGGED+KEY_O: toggle_outline_mode(); break;
 #endif
@@ -3140,12 +3140,12 @@ void ReadControls()
 					*Toggle_var = !*Toggle_var;
 					mprintf((0, "Variable at %08x set to %i\n", Toggle_var, *Toggle_var));
 					break;
-	  			case KEY_DEBUGGED + KEY_L: 
+	  			case KEY_DEBUGGED + KEY_L:
 					if (++Lighting_on >= 2) Lighting_on = 0; break;
-	  			case KEY_DEBUGGED + KEY_SHIFTED + KEY_L: 
+	  			case KEY_DEBUGGED + KEY_SHIFTED + KEY_L:
 					Beam_brightness=0x38000-Beam_brightness; break;
 	  			case KEY_PAD5: slew_stop(); break;
-	
+
 	  			case KEY_DEBUGGED + KEY_F11: play_test_sound(); break;
 	  			case KEY_DEBUGGED + KEY_SHIFTED+KEY_F11: advance_sound(); play_test_sound(); break;
 
@@ -3156,7 +3156,7 @@ void ReadControls()
 					//find_vector_intersection(&hit_data,&p0,0x1b9,&p1,0x40000,0x0,NULL,-1);
 					break;
 				}
-	
+
 				case KEY_DEBUGGED + KEY_M:
 					Debug_spew = !Debug_spew;
 					if (Debug_spew) {
@@ -3166,11 +3166,11 @@ void ReadControls()
 						mclose( 0 );
 						HUD_init_message( "Debug Spew: OFF" );
 					}
-					break;		
-	
-				case KEY_DEBUGGED + KEY_C:	
+					break;
 
-						do_cheat_menu(); 
+				case KEY_DEBUGGED + KEY_C:
+
+						do_cheat_menu();
 						break;
 				case KEY_DEBUGGED + KEY_A:	{
 						do_megawow_powerup();
@@ -3183,9 +3183,9 @@ void ReadControls()
 //						}
 						break;
 				}
-	
+
 	 			case KEY_DEBUGGED+KEY_F:	framerate_on = !framerate_on; break;
- 	
+
  				case KEY_DEBUGGED+KEY_SPACEBAR:              //KEY_F7:                       // Toggle physics flying
  					slew_stop();
 					game_flush_inputs();
@@ -3197,12 +3197,12 @@ void ReadControls()
  						Game_suspended |= SUSP_ROBOTS;          //robots don't move
 					}
 					break;
-		
+
 				case KEY_DEBUGGED+KEY_COMMA: Render_zoom = fixmul(Render_zoom,62259); break;
 				case KEY_DEBUGGED+KEY_PERIOD: Render_zoom = fixmul(Render_zoom,68985); break;
-	
+
 				case KEY_DEBUGGED+KEY_P+KEY_SHIFTED: Debug_pause = 1; break;
-	
+
 				//case KEY_F7: {
 				//	char mystr[30];
 				//	sprintf(mystr,"mark %i start",Mark_count);
@@ -3216,8 +3216,8 @@ void ReadControls()
 				//	_MARK_(mystr);
 				//	break;
 				//}
-	
-		
+
+
 #ifndef NDEBUG
 				case KEY_DEBUGGED+KEY_F8: speedtest_init(); Speedtest_count = 1;	break;
 				case KEY_DEBUGGED+KEY_F9: speedtest_init(); Speedtest_count = 10;	break;
@@ -3242,8 +3242,6 @@ void ReadControls()
 
 			}       //switch (key)
 		}
-
-
 
 
 }
@@ -3280,7 +3278,7 @@ void GameLoop(int RenderFlag, int ReadControlsFlag )
 			if (!(--desc_dead_countdown))  // if so, at zero, then pull the plug
 				Error ("Loading overlay -- error number: %d\n", (int)desc_id_exit_num);
 		}
-				
+
 		#ifndef RELEASE
 		if (FindArg("-invulnerability"))
 			Players[Player_num].flags |= PLAYER_FLAGS_INVULNERABLE;
@@ -3298,7 +3296,7 @@ player_follow_path(ConsoleObject);
 #endif
 		if (Game_mode & GM_MULTI)
 			multi_do_frame();
-	
+
 		if (RenderFlag) {
 			if (force_cockpit_redraw) {			//screen need redrawing?
 				init_game_screen();
@@ -3352,7 +3350,7 @@ player_follow_path(ConsoleObject);
 				newdemo_record_control_center_destroyed();
 			flash_frame();
 		}
-		
+
 		if ( Newdemo_state == ND_STATE_PLAYBACK )	{
 			newdemo_playback_one_frame();
 			if ( Newdemo_state != ND_STATE_PLAYBACK )		{
@@ -3370,12 +3368,12 @@ player_follow_path(ConsoleObject);
 //					newdemo_toggle_playback();			//NOTE LINK TO ABOVE!
 				longjmp( LeaveGame, 0 );		// Go back to menu
 			}
-		} else	
+		} else
 		{ // Note the link to above!
 
 			Players[Player_num].homing_object_dist = -1;		//	Assume not being tracked.  Laser_do_weapon_sequence modifies this.
 
-			object_move_all();	
+			object_move_all();
 			powerup_grab_cheat_all();
 
 			if (Endlevel_sequence)	//might have been started during move
@@ -3504,4 +3502,3 @@ void powerup_grab_cheat_all(void)
 	objnum = segp->objects;
 
 	while (
-

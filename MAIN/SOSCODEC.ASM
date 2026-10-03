@@ -6,29 +6,28 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/main/rcs/soscodec.asm $
 ; $Revision: 2.0 $
 ; $Author: john $
 ; $Date: 1995/02/27 11:29:36 $
-; 
+;
 ; Routines for compressing digital sounds.
-; 
+;
 ; $Log: soscodec.asm $
 ; Revision 2.0  1995/02/27  11:29:36  john
 ; New version 2.0, which has no anonymous unions, builds with
 ; Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
-; 
+;
 ; Revision 1.2  1994/11/30  14:08:46  john
 ; First version.
-; 
+;
 ; Revision 1.1  1994/11/29  14:33:51  john
 ; Initial revision
-; 
-; 
-
+;
+;
 
 
 .386
@@ -108,16 +107,14 @@ dwCODECTempStep         dd    0
 _DATA	ends
 
 
-
 _TEXT	segment	dword public USE32 'CODE'
-
 
 
 sosCODECInitStream_:
                         ; save used registers
                         push  ebx
 
-                        ; 
+                        ;
                         ; set up pointer to _SOS_COMPRESS_INFO
                         ; structure in EBX.
                         ;
@@ -135,7 +132,7 @@ sosCODECInitStream_:
                         pop   ebx
 
                         ret
- 
+
 ;
 ; DWORD sosCODECDecompressData( _SOS_COMPRESS_INFO * sSOSInfo, DWORD wBytes )
 ;
@@ -157,7 +154,7 @@ sosCODECDecompressData_:
                         push  edx
 
                         ;
-                        ; set up EBX as a pointer to 
+                        ; set up EBX as a pointer to
                         ; info structure.
                         ;
                         mov   ebx, eax
@@ -173,7 +170,7 @@ sosCODECDecompressData_:
                         mov   wCODECByteIndex, eax
 
                         ;
-                        ; set up source and destination 
+                        ; set up source and destination
                         ; pointers
                         ;
                         mov	esi, [ ebx ].Source
@@ -189,7 +186,7 @@ Decompmainloop:
                         je    short DecompfetchToken
 
                         ;
-                        ; get token 
+                        ; get token
                         ;
                         movzx eax, word ptr [ ebx ].wCodeBuf
                         shr   eax, 4
@@ -217,7 +214,7 @@ DecompcalcDifference:
                         ;
                         movzx ecx, word ptr [ ebx ].wStep
 
-                        ; 
+                        ;
                         ; check for wCode & 4
                         ;
                         test  eax, 4
@@ -273,7 +270,7 @@ Decompno8:
                         add   eax, [ ebx ].dwDifference
 
                         ;
-                        ; make sure there is no under or 
+                        ; make sure there is no under or
                         ; overflow.
                         ;
                         cmp   eax, 7fffh
@@ -294,7 +291,7 @@ DecompnoUnderflow:
                         stosb
 
                         ;
-                        ; adjust index 
+                        ; adjust index
                         ;
                         movzx ecx, word ptr [ ebx ].wCode
                         movzx eax, word ptr wCODECIndexTab[ ecx * 2 ]
@@ -371,7 +368,7 @@ DecompadjustStep:
 ;
 ;
 sosCODECCompressData_:
-		; eax = sSOSInfo 
+		; eax = sSOSInfo
 		; edx = wBytes
 
                         ;
@@ -384,7 +381,7 @@ sosCODECCompressData_:
                         push  edx
 
                         ;
-                        ; set up EBX as a pointer to 
+                        ; set up EBX as a pointer to
                         ; info structure.
                         ;
                         mov   ebx, eax
@@ -411,7 +408,7 @@ CompskipByteDivide:
                         mov   wCODECByteIndex, eax
 
                         ;
-                        ; set up source and destination 
+                        ; set up source and destination
                         ; pointers
                         ;
                         mov	esi, [ ebx ].Source
@@ -466,7 +463,7 @@ Comppositive:
                         mov   word ptr [ ebx ].wCode, cx
 
                         ;
-                        ; set up to quantize difference. initialize 
+                        ; set up to quantize difference. initialize
                         ; wCODECTempStep = step value.
                         ;
                         movsx ecx, word ptr [ ebx ].wStep
@@ -510,7 +507,7 @@ CompnextQLoop:
                         jne   short CompstoreToken
 
                         ;
-                        ; get token 
+                        ; get token
                         ;
                         movzx eax, word ptr [ ebx ].wCode
                         and   eax, 0fh
@@ -541,7 +538,7 @@ CompcalcDifference:
                         ;
                         movzx eax, word ptr [ ebx ].wCode
 
-                        ; 
+                        ;
                         ; check for wCode & 4
                         ;
                         test  eax, 4
@@ -597,7 +594,7 @@ Compno8:
                         add   eax, [ ebx ].dwDifference
 
                         ;
-                        ; make sure there is no under or 
+                        ; make sure there is no under or
                         ; overflow.
                         ;
                         cmp   eax, 7fffh
@@ -611,7 +608,7 @@ CompnoUnderflow:
                         mov   dword ptr [ ebx ].dwPredicted, eax
 
                         ;
-                        ; adjust index 
+                        ; adjust index
                         ;
                         movzx ecx, word ptr [ ebx ].wCode
                         movzx eax, word ptr wCODECIndexTab[ ecx * 2 ]
@@ -685,5 +682,3 @@ CompadjustStep:
 _TEXT	ends
 
 	end
-
-

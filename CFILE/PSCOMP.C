@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,14 +15,14 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.1 $
  * $Author: john $
  * $Date: 1994/02/10 15:54:38 $
- * 
+ *
  * Test program...
- * 
+ *
  * $Log: test.c $
  * Revision 1.1  1994/02/10  15:54:38  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -39,7 +39,7 @@ static char rcsid[] = "$Id: test.c 1.1 1994/02/10 15:54:38 john Exp $";
 #include "cflib.h"
 
 int main(int argc, char * argv[] )
-{	
+{
 	int size, size1;
 	CFILE * cfile;
 	void * buffer;
@@ -81,4 +81,3 @@ int main(int argc, char * argv[] )
 		free(buffer);
 	}
 }
-

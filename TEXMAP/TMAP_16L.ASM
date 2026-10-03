@@ -6,7 +6,7 @@
 ;SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 ;FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 ;CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+;AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 ;COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 ;
 ; $Source: f:/miner/source/texmap/rcs/tmap_16l.asm $
@@ -19,16 +19,16 @@
 ; $Log: tmap_16l.asm $
 ; Revision 1.4  1994/11/30  00:56:39  mike
 ; optimization.
-; 
+;
 ; Revision 1.3  1994/11/12  16:39:31  mike
 ; jae to ja.
-; 
+;
 ; Revision 1.2  1993/11/22  10:24:32  mike
 ; *** empty log message ***
-; 
+;
 ; Revision 1.1  1993/09/08  17:29:20  mike
 ; Initial revision
-; 
+;
 ;
 ;
 
@@ -300,5 +300,3 @@ _none_to_do:	popa
 _TEXT	ends
 
 	end
-
-

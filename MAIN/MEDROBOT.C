@@ -3,69 +3,69 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:59 $
- * 
+ *
  * Dialog box to edit robot properties.
- * 
+ *
  * $Log: medrobot.c $
  * Revision 2.0  1995/02/27  11:35:59  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.46  1995/02/22  15:22:03  allender
  * remove anonyous unions from object structure
- * 
+ *
  * Revision 1.45  1994/11/27  23:17:32  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.44  1994/11/14  11:39:57  mike
  * fix default robot behavior
- * 
+ *
  * Revision 1.43  1994/11/02  16:18:47  matt
  * Moved draw_model_picture() out of editor, and cleaned up code
- * 
+ *
  * Revision 1.42  1994/10/10  17:23:23  mike
  * Verify that not placing too many player objects.
- * 
+ *
  * Revision 1.41  1994/10/09  22:04:38  mike
  * Maybe improve, maybe not, robot selection in shift-R menu.
- * 
+ *
  * Revision 1.40  1994/09/30  21:49:01  mike
  * Fix stupid shift-R dialog bug which caused lots of mprintf and selecting of object and frustration.
- * 
+ *
  * Revision 1.39  1994/09/30  11:51:33  mike
  * Fix boolean logic on an error trap.
- * 
+ *
  * Revision 1.38  1994/09/20  14:36:32  mike
  * Clean up Robot dialog.
- * 
+ *
  * Revision 1.37  1994/09/12  19:11:56  mike
  * Fix stupid bugs in selecting objects.
- * 
+ *
  * Revision 1.36  1994/09/01  17:05:51  matt
  * Don't force redraw if object select fails
- * 
+ *
  * Revision 1.35  1994/08/31  19:24:40  mike
  * Fix hang bug when only objects in mine are not robots.
- * 
+ *
  * Revision 1.34  1994/08/25  21:56:38  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.33  1994/08/23  16:39:29  mike
  * mode replaced by behavior in ai_info.
- * 
+ *
  * Revision 1.32  1994/08/15  23:47:16  mike
  * fix bugs.
- * 
+ *
  * Revision 1.31  1994/08/13  17:32:45  mike
  * set to still function.
- * 
+ *
  * Revision 1.30  1994/08/09  16:06:02  john
  * Added the ability to place players.  Made old
  * Player variable be ConsoleObject.
- * 
+ *
  * Revision 1.29  1994/08/02  16:22:48  matt
  * Finished object editor dialog
- * 
+ *
  */
 
 
@@ -224,7 +224,7 @@ int RobotPrevType()
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
 			object * obj = &Objects[Cur_object_index];
-			if (obj->id == 0 ) 
+			if (obj->id == 0 )
 				obj->id = N_robot_types-1;
 			else
 				obj->id--;
@@ -552,7 +552,7 @@ int do_robot_dialog()
 
 	// Only open 1 instance of this window...
 	if ( MainWindow != NULL ) return 0;
-	
+
 	// Close other windows
 	close_all_windows();
 	Cur_goody_count = 0;
@@ -586,16 +586,16 @@ int do_robot_dialog()
 	// A bunch of buttons...
 	i = 135;
 	ui_add_gadget_button( MainWindow,190,i,53, 26, "<<Typ", 			RobotPrevType );
-	ui_add_gadget_button( MainWindow,247,i,53, 26, "Typ>>", 			RobotNextType );							i += 29;		
-	ui_add_gadget_button( MainWindow,190,i,110, 26, "Next in Seg", LocalObjectSelectNextinSegment );	i += 29;		
+	ui_add_gadget_button( MainWindow,247,i,53, 26, "Typ>>", 			RobotNextType );							i += 29;
+	ui_add_gadget_button( MainWindow,190,i,110, 26, "Next in Seg", LocalObjectSelectNextinSegment );	i += 29;
 
 	ui_add_gadget_button( MainWindow,190,i,53, 26, "<<Obj",		 	LocalObjectSelectPrevinMine );
-	ui_add_gadget_button( MainWindow,247,i,53, 26, ">>Obj",			LocalObjectSelectNextinMine ); 		i += 29;		
+	ui_add_gadget_button( MainWindow,247,i,53, 26, ">>Obj",			LocalObjectSelectNextinMine ); 		i += 29;
 
-	ui_add_gadget_button( MainWindow,190,i,110, 26, "Delete", 		LocalObjectDelete );						i += 29;		
-	ui_add_gadget_button( MainWindow,190,i,110, 26, "Create New", 	LocalObjectPlaceObject );				i += 29;		
+	ui_add_gadget_button( MainWindow,190,i,110, 26, "Delete", 		LocalObjectDelete );						i += 29;
+	ui_add_gadget_button( MainWindow,190,i,110, 26, "Create New", 	LocalObjectPlaceObject );				i += 29;
 	ui_add_gadget_button( MainWindow,190,i,110, 26, "Set Path", 	med_set_ai_path );
-	
+
 	Time = timer_get_fixed_seconds();
 
 	old_object = -2;		// Set to some dummy value so everything works ok on the first frame.
@@ -666,7 +666,7 @@ void do_robot_window()
 	// update the cooresponding AI state.
 	//------------------------------------------------------------
 	for (	i=0; i < NUM_BOXES; i++ )	{
-		if ( InitialMode[i]->flag == 1 )	
+		if ( InitialMode[i]->flag == 1 )
 			if (Objects[Cur_object_index].ctype.ai_info.behavior != MIN_BEHAVIOR+i) {
 				Objects[Cur_object_index].ctype.ai_info.behavior = MIN_BEHAVIOR+i;		// Set the ai_state to the cooresponding radio button
 				call_init_ai_object(&Objects[Cur_object_index], MIN_BEHAVIOR+i);
@@ -687,7 +687,7 @@ void do_robot_window()
 		int id;
 		gr_set_current_canvas( RobotViewBox->canvas );
 		id = get_object_id(&Objects[Cur_object_index]);
-		if ( id > -1 )	
+		if ( id > -1 )
 			draw_robot_picture(id, &angles, -1 );
 		else
 			gr_clear_canvas( CGREY );
@@ -802,7 +802,7 @@ void do_robot_window()
 	if ( QuitButton->pressed || (last_keypress==KEY_ESC))	{
 		robot_close_window();
 		return;
-	}		
+	}
 
 	old_object = Cur_object_index;
 }
@@ -840,7 +840,7 @@ int do_object_dialog()
 	// Only open 1 instance of this window...
 	if ( MattWindow != NULL )
 		return 0;
-	
+
 	Cur_goody_count = 0;
 
 	// Open a window with a quit button
@@ -902,7 +902,7 @@ void do_object_window()
 
 		object_close_window();
 		return;
-	}		
+	}
 
 	old_object = Cur_object_index;
 }
@@ -915,5 +915,3 @@ void set_all_modes_to_hover(void)
 		if (Objects[i].control_type == CT_AI)
 			Objects[i].ctype.ai_info.behavior = AIB_STILL;
 }
-
-

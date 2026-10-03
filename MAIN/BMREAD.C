@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,30 +15,30 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.4 $
  * $Author: john $
  * $Date: 1995/03/28 18:05:29 $
- * 
+ *
  * Routines to parse bitmaps.tbl
- * 
+ *
  * $Log: bmread.c $
  * Revision 2.4  1995/03/28  18:05:29  john
  * Fixed it so you don't have to delete pig after changing bitmaps.tbl
- * 
+ *
  * Revision 2.3  1995/03/07  16:52:03  john
  * Fixed robots not moving without edtiro bug.
- * 
+ *
  * Revision 2.2  1995/03/06  16:10:20  mike
  * Fix compile errors if building without editor.
- * 
+ *
  * Revision 2.1  1995/03/02  14:55:40  john
  * Fixed bug with EDITOR never defined.
- * 
+ *
  * Revision 2.0  1995/02/27  11:33:10  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.1  1995/02/25  14:02:36  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -151,14 +151,13 @@ static int			tmap1_flag;		//flag if this is used as tmap_num (not tmap_num2)
 static int			num_sounds=0;
 
 
-
 //------------------- Useful macros and variables ---------------
 #define REMOVE_EOL(s)		remove_char((s),'\n')
 #define REMOVE_COMMENTS(s)	remove_char((s),';')
 #define REMOVE_DOTS(s)  	remove_char((s),'.')
 
 #define IFTOK(str) if (!strcmp(arg, str))
-char *space = { " \t" };	
+char *space = { " \t" };
 //--unused-- char *equal = { "=" };
 char *equal_space = { " \t=" };
 
@@ -270,11 +269,11 @@ void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 
 
 	_splitpath( filename, NULL, NULL, fname, NULL );
-	
+
 	for (i=0; i<MAX_BITMAPS_PER_BRUSH; i++ )	{
 		sprintf( tempname, "%s#%d", fname, i );
 		bi = piggy_find_bitmap( tempname );
-		if ( !bi.index )	
+		if ( !bi.index )
 			break;
 		bmp[i] = bi;
 		//mprintf(( 0, "Found animation frame %d, %s, in piggy file\n", i, tempname ));
@@ -459,7 +458,7 @@ int bm_init_use_tbl()
 		have_bin_tbl = 1;
 	}
 	linenum = 0;
-	
+
 	cfseek( InfoFile, 0L, SEEK_SET);
 
 	while (cfgets(inputline, LINEBUF_SIZE, InfoFile)) {
@@ -566,7 +565,7 @@ int bm_init_use_tbl()
 
 				// Remove any illegal/unwanted spaces and tabs at this point.
 				while ((*arg=='\t') || (*arg==' ')) arg++;
-				if (*arg == '\0') { break; }	
+				if (*arg == '\0') { break; }
 
 				// Otherwise, 'arg' is apparently a bitmap filename.
 				// Load bitmap and process it below:
@@ -581,7 +580,7 @@ int bm_init_use_tbl()
 
 	NumTextures = texture_count;
 	Num_tmaps = tmap_count;
-	
+
 	cfclose( InfoFile );
 
 	atexit(bm_close);
@@ -589,14 +588,14 @@ int bm_init_use_tbl()
 	Assert(N_robot_types == Num_robot_ais);		//should be one ai info per robot
 
 	init_endlevel();		//this is here so endlevel bitmaps go into pig
-	
+
 	verify_textures();
 
 	//check for refereced but unused clip count
 	for (i=0; i<MAX_EFFECTS; i++ )
 		if (	(
 				  (Effects[i].changing_wall_texture!=-1) ||
-				  (Effects[i].changing_object_texture!=-1)     
+				  (Effects[i].changing_object_texture!=-1)
              )
 			 && (Effects[i].vc.num_frames==-1) )
 			Error("EClip %d referenced (by polygon object?), but not defined",i);
@@ -630,7 +629,7 @@ void verify_textures()
 		if ( (bmp->bm_w!=64)||(bmp->bm_h!=64)||(bmp->bm_rowsize!=64) )	{
 			mprintf( (1, "ERROR: Texture '%s' isn't 64x64 !\n", TmapInfo[i].filename ));
 			j++;
-		} 
+		}
 	}
 	if (j) exit(1);
 }
@@ -642,15 +641,15 @@ void verify_textures()
 //--unused-- 	ubyte * p;
 //--unused-- 	fp = fopen( "XPARENT.LST", "wt" );
 //--unused-- 	for (i=0; i<Num_tmaps; i++ )	{
-//--unused-- 		k = 0; 
+//--unused-- 		k = 0;
 //--unused-- 		p = Textures[i]->bm_data;
 //--unused-- 		for (j=0; j<64*64; j++ )
 //--unused-- 			if ( (*p++)==255 ) k++;
 //--unused-- 		if ( k )	{
 //--unused-- 			fprintf( fp, "'%s' has %d transparent pixels\n", TmapInfo[i].filename, k );
-//--unused-- 		}				
+//--unused-- 		}
 //--unused-- 	}
-//--unused-- 	fclose(fp);	
+//--unused-- 	fclose(fp);
 //--unused-- }
 
 
@@ -688,7 +687,7 @@ void bm_read_eclip()
 
 	Effects[clip_num].flags = 0;
 
-	if (!abm_flag)	{ 
+	if (!abm_flag)	{
 		bitmap = bm_load_sub(arg);
 
 		Effects[clip_num].vc.play_time = fl2f(time);
@@ -726,7 +725,7 @@ void bm_read_eclip()
 		Effects[clip_num].vc.play_time = fl2f(time);
 		Effects[clip_num].vc.frame_time = Effects[clip_num].vc.play_time/Effects[clip_num].vc.num_frames;
 
-		clip_count = 0;	
+		clip_count = 0;
 		set_lighting_flag( &GameBitmaps[bm[clip_count].index].bm_flags);
 		Effects[clip_num].vc.frames[clip_count] = bm[clip_count];
 
@@ -752,7 +751,7 @@ void bm_read_eclip()
 			ObjBitmaps[Effects[clip_num].changing_object_texture] = Effects[clip_num].vc.frames[0];
 		}
 
-		//if for an object, Effects_bm_ptrs set in object load 
+		//if for an object, Effects_bm_ptrs set in object load
 
 		for(clip_count=1;clip_count < Effects[clip_num].vc.num_frames; clip_count++) {
 			set_lighting_flag( &GameBitmaps[bm[clip_count].index].bm_flags);
@@ -806,7 +805,7 @@ void bm_read_gauges()
 	bitmap_index bitmap;
 	int i, num_abm_frames;
 
-	if (!abm_flag)	{ 
+	if (!abm_flag)	{
 		bitmap = bm_load_sub(arg);
 		Assert(clip_count < MAX_GAUGE_BMS);
 		Gauges[clip_count] = bitmap;
@@ -869,7 +868,7 @@ void bm_read_wclip()
 
 		WallAnims[clip_num].close_sound = wall_close_sound;
 		strcpy(WallAnims[clip_num].filename, arg);
-		REMOVE_DOTS(WallAnims[clip_num].filename);	
+		REMOVE_DOTS(WallAnims[clip_num].filename);
 
 		if (clip_num >= Num_wall_anims) Num_wall_anims = clip_num+1;
 
@@ -909,7 +908,7 @@ void bm_read_vclip()
 		if (rod_flag) {
 			rod_flag=0;
 			Vclip[clip_num].flags |= VF_ROD;
-		}			
+		}
 
 	} else	{
 		bitmap_index bm[MAX_BITMAPS_PER_BRUSH];
@@ -922,7 +921,7 @@ void bm_read_vclip()
 			//int i;
 			rod_flag=0;
 			Vclip[clip_num].flags |= VF_ROD;
-		}			
+		}
 		//printf("VC");
 		Vclip[clip_num].play_time = fl2f(time);
 		Vclip[clip_num].frame_time = fl2f(time)/Vclip[clip_num].num_frames;
@@ -1020,7 +1019,7 @@ bm_read_sound()
 }
 
 // ------------------------------------------------------------------------------
-void bm_read_robot_ai()	
+void bm_read_robot_ai()
 {
 	char			*robotnum_text;
 	int			robotnum;
@@ -1094,7 +1093,7 @@ grs_bitmap *load_polymodel_bitmap(char *name)
 #define MAX_MODEL_VARIANTS	4
 
 // ------------------------------------------------------------------------------
-void bm_read_robot()	
+void bm_read_robot()
 {
 	char			*model_name[MAX_MODEL_VARIANTS];
 	int			n_models,i;
@@ -1136,9 +1135,9 @@ void bm_read_robot()
 	first_bitmap_num[0] = N_ObjBitmapPtrs;
 	n_models = 1;
 
-	// Process bitmaps 
+	// Process bitmaps
 	bm_flag=BM_ROBOT;
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 	while (arg!=NULL)	{
 		equal_ptr = strchr( arg, '=' );
 		if ( equal_ptr )	{
@@ -1199,7 +1198,7 @@ void bm_read_robot()
 				n_models++;
 			} else {
 				mprintf( (1, "Invalid parameter, %s=%s in bitmaps.tbl\n", arg, equal_ptr ));
-			}		
+			}
 		} else {			// Must be a texture specification...
 			load_polymodel_bitmap(arg);
 		}
@@ -1279,9 +1278,9 @@ void bm_read_object()
 
 	model_name = strtok( NULL, space );
 
-	// Process bitmaps 
+	// Process bitmaps
 	bm_flag = BM_NONE;
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 	first_bitmap_num = N_ObjBitmapPtrs;
 
 	while (arg!=NULL)	{
@@ -1319,7 +1318,7 @@ void bm_read_object()
 				strength = fl2f(atof(equal_ptr));
 			} else {
 				mprintf( (1, "Invalid parameter, %s=%s in bitmaps.tbl\n", arg, equal_ptr ));
-			}		
+			}
 		} else {			// Must be a texture specification...
 			load_polymodel_bitmap(arg);
 		}
@@ -1335,7 +1334,7 @@ void bm_read_object()
 
 	if (type == OL_CONTROL_CENTER)
 		N_controlcen_guns = read_model_guns(model_name,controlcen_gun_points,controlcen_gun_dirs,NULL);
- 
+
 	if ( model_name_dead )
 		Dead_modelnums[model_num]  = load_polygon_model(model_name_dead,N_ObjBitmapPtrs-first_bitmap_num_dead,first_bitmap_num_dead,NULL);
 	else
@@ -1347,7 +1346,7 @@ void bm_read_object()
 	ObjType[Num_total_object_types] = type;
 	ObjId[Num_total_object_types] = model_num;
 	ObjStrength[Num_total_object_types] = strength;
-	
+
 	//printf( "Object type %d is a control center\n", Num_total_object_types );
 	Num_total_object_types++;
 
@@ -1368,10 +1367,10 @@ void bm_read_player_ship()
 	robot_info ri;
 	int last_multi_bitmap_num=-1;
 
-	// Process bitmaps 
+	// Process bitmaps
 	bm_flag = BM_NONE;
 
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 
 	Player_ship->mass = Player_ship->drag = 0;	//stupid defaults
 	Player_ship->expl_vclip_num = -1;
@@ -1422,7 +1421,7 @@ void bm_read_player_ship()
 				Player_ship->expl_vclip_num=atoi(equal_ptr);
 			else {
 				mprintf( (1, "Invalid parameter, %s=%s in bitmaps.tbl\n", arg, equal_ptr ));
-			}		
+			}
 		}
 		else if (!stricmp( arg, "multi_textures" )) {
 
@@ -1478,7 +1477,7 @@ void bm_read_player_ship()
 		vms_vector pnt;
 		int mn;				//submodel number
 		int gun_num;
-	
+
 		r = &ri;
 		pm = &Polygon_models[Player_ship->model_num];
 
@@ -1486,7 +1485,7 @@ void bm_read_player_ship()
 
 			pnt = r->gun_points[gun_num];
 			mn = r->gun_submodels[gun_num];
-		
+
 			//instance up the tree for this gun
 			while (mn != 0) {
 				vm_vec_add2(&pnt,&pm->submodel_offsets[mn]);
@@ -1494,7 +1493,7 @@ void bm_read_player_ship()
 			}
 
 			Player_ship->gun_points[gun_num] = pnt;
-		
+
 		}
 	}
 
@@ -1522,7 +1521,7 @@ void bm_read_some_file()
 		break;
 	case BM_VCLIP:
 		bm_read_vclip();
-		break;					
+		break;
 	case BM_ECLIP:
 		bm_read_eclip();
 		break;
@@ -1616,7 +1615,7 @@ void bm_read_weapon(int unused_flag)
 	Weapon_info[n].homing_flag = 0;
 
 	// Process arguments
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 
 	lighted = 1;			//assume first texture is lighted
 
@@ -1731,7 +1730,7 @@ void bm_read_weapon(int unused_flag)
 				Weapon_info[n].homing_flag = !!atoi(equal_ptr);
 			} else {
 				mprintf( (1, "Invalid parameter, %s=%s in bitmaps.tbl\n", arg, equal_ptr ));
-			}		
+			}
 		} else {			// Must be a texture specification...
 			grs_bitmap *bm;
 
@@ -1776,9 +1775,6 @@ void bm_read_weapon(int unused_flag)
 }
 
 
-
-
-
 // ------------------------------------------------------------------------------
 #define DEFAULT_POWERUP_SIZE i2f(3)
 
@@ -1805,7 +1801,7 @@ void bm_read_powerup(int unused_flag)
 	Powerup_names[n][0] = 0;
 
 	// Process arguments
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 
 	while (arg!=NULL)	{
 		equal_ptr = strchr( arg, '=' );
@@ -1827,7 +1823,7 @@ void bm_read_powerup(int unused_flag)
 				Powerup_info[n].size = fl2f(atof(equal_ptr));
 			} else {
 				mprintf( (1, "Invalid parameter, %s=%s in bitmaps.tbl\n", arg, equal_ptr ));
-			}		
+			}
 		} else {			// Must be a texture specification...
 			mprintf( (1, "Invalid argument, %s in bitmaps.tbl\n", arg ));
 		}
@@ -1841,7 +1837,7 @@ void bm_read_powerup(int unused_flag)
 
 }
 
-void bm_read_hostage()	
+void bm_read_hostage()
 {
 	int n;
 	char 	*equal_ptr;
@@ -1852,7 +1848,7 @@ void bm_read_hostage()
 	N_hostage_types++;
 
 	// Process arguments
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 
 	while (arg!=NULL)	{
 		equal_ptr = strchr( arg, '=' );
@@ -1882,7 +1878,7 @@ void bm_read_hostage()
 }
 
 
-void bm_read_hostage_face()	
+void bm_read_hostage_face()
 {
 	char *abm_name,*equal_ptr;
 	int clip_num=-1,sound_num=-1;
@@ -1890,7 +1886,7 @@ void bm_read_hostage_face()
 
 	abm_name = strtok( NULL, space );
 
-	arg = strtok( NULL, space ); 
+	arg = strtok( NULL, space );
 	while (arg!=NULL)	{
 		equal_ptr = strchr( arg, '=' );
 		if ( equal_ptr )	{
@@ -1957,7 +1953,7 @@ void bm_write_all(FILE *fp)
 
 	fwrite( &N_powerup_types, sizeof(int), 1, fp );
 	fwrite( Powerup_info, sizeof(powerup_type_info), MAX_POWERUP_TYPES, fp );
-	
+
 	fwrite( &N_polygon_models, sizeof(int), 1, fp );
 	fwrite( Polygon_models, sizeof(polymodel), N_polygon_models, fp );
 
@@ -1996,4 +1992,3 @@ void bm_write_all(FILE *fp)
 }
 
 #endif
-

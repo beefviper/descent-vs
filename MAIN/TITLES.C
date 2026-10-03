@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,149 +15,149 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.10 $
  * $Author: john $
  * $Date: 1995/06/15 12:14:16 $
- * 
+ *
  * Routines to display title screens...
- * 
+ *
  * $Log: titles.c $
  * Revision 2.10  1995/06/15  12:14:16  john
  * Made end game, win game and title sequences all go
  * on after 5 minutes automatically.
- * 
+ *
  * Revision 2.9  1995/06/14  17:25:48  john
  * Fixed bug with VFX palette not getting loaded for credits, titles.
- * 
+ *
  * Revision 2.8  1995/05/26  16:16:30  john
  * Split SATURN into define's for requiring cd, using cd, etc.
  * Also started adding all the Rockwell stuff.
- * 
+ *
  * Revision 2.7  1995/03/24  13:11:36  john
  * Added save game during briefing screens.
- * 
+ *
  * Revision 2.6  1995/03/21  14:41:17  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.5  1995/03/15  14:33:45  john
  * Added code to force the Descent CD-rom in the drive.
- * 
+ *
  * Revision 2.4  1995/03/14  18:24:50  john
  * Force Destination Saturn to use CD-ROM drive.
- * 
+ *
  * Revision 2.3  1995/03/10  13:05:52  john
  * Added code so that palette is correct for VFX1 helmets.
- * 
+ *
  * Revision 2.2  1995/03/07  14:19:28  mike
  * More destination saturn stuff.
- * 
+ *
  * Revision 2.1  1995/03/06  15:24:16  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:32:50  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.95  1995/02/12  04:07:19  matt
  * After freeing Robot_canv, set ptr to NULL
- * 
+ *
  * Revision 1.94  1995/02/11  12:41:57  john
  * Added new song method, with FM bank switching..
- * 
+ *
  * Revision 1.93  1995/02/11  09:51:59  john
  * Stripped out all SVGA references.
- * 
+ *
  * Revision 1.92  1995/02/07  09:56:10  john
  * Fixed bug with wrong title screen drawing during save btwn lvls.
- * 
+ *
  * Revision 1.91  1995/02/04  13:53:16  john
  * Added code to display the correct titles between levels
  * that have robot maps..
- * 
+ *
  * Revision 1.90  1995/02/02  16:36:33  adam
  * *** empty log message ***
- * 
+ *
  * Revision 1.89  1995/02/02  12:23:30  john
  * Made between level saves have picture.
- * 
+ *
  * Revision 1.88  1995/02/02  01:50:16  adam
  * rearranged robot briefings.
- * 
+ *
  * Revision 1.87  1995/02/01  22:28:54  mike
  * *** empty log message ***
- * 
+ *
  * Revision 1.86  1995/02/01  17:12:21  mike
  * Make score come after endgame screens.
- * 
+ *
  * Revision 1.85  1995/02/01  14:04:17  adam
  * mucked with screens
- * 
+ *
  * Revision 1.84  1995/01/28  16:59:30  adam
  * added hook for special first briefing music
- * 
+ *
  * Revision 1.83  1995/01/21  17:04:35  mike
  * fix endgame text bogosity.
- * 
+ *
  * Revision 1.82  1995/01/21  16:26:29  matt
  * Made endlevel briefing work with missions
- * 
+ *
  * Revision 1.81  1995/01/21  13:15:20  adam
  * added new robot briefings.
- * 
+ *
  * Revision 1.80  1995/01/20  22:47:33  matt
  * Mission system implemented, though imcompletely
- * 
+ *
  * Revision 1.79  1995/01/20  14:57:52  mike
  * support arbitrary number of screens/level.
- * 
+ *
  * Revision 1.78  1995/01/15  14:29:12  john
  * Made the exit door page in.
- * 
+ *
  * Revision 1.77  1995/01/15  14:27:09  adam
  * messed with endgame stuff
- * 
+ *
  * Revision 1.76  1995/01/14  15:42:49  mike
  * Make endgame for registered support 3 screens.
- * 
+ *
  * Revision 1.75  1995/01/14  14:00:59  adam
  * *** empty log message ***
- * 
+ *
  * Revision 1.74  1995/01/09  11:28:53  mike
  * Support new $O thingy for bitmaps which cycle and are not the exit door.
- * 
+ *
  * Revision 1.73  1995/01/02  12:39:13  mike
  * fix secret level sequencing.
- * 
+ *
  * Revision 1.72  1994/12/12  19:44:14  rob
  * Added kill matrix to end of game sequence.
- * 
+ *
  * Revision 1.71  1994/12/09  22:32:57  adam
  * messed with text positioning
- * 
+ *
  * Revision 1.70  1994/12/09  14:08:37  mike
  * make briefing text work with hog files.
- * 
+ *
  * Revision 1.69  1994/12/09  00:41:47  mike
  * fix hang in automap print screen.
- * 
+ *
  * Revision 1.68  1994/12/08  20:56:36  john
  * More cfile stuff.
- * 
+ *
  * Revision 1.67  1994/12/08  17:19:11  yuan
  * Cfiling stuff.
- * 
+ *
  * Revision 1.66  1994/12/07  11:28:00  matt
  * Did a localization suppport
- * 
+ *
  * Revision 1.65  1994/12/06  17:10:23  yuan
  * Fixed missing )
- * 
+ *
  * Revision 1.64  1994/12/06  17:00:45  rob
  * Fixed problem with finishing the game in modem/serial mode.
- * 
+ *
  * Revision 1.63  1994/12/06  16:58:37  matt
  * Killed warnings
- * 
+ *
  * Revision 1.62  1994/12/06  15:54:28  mike
  * fix guy at end...
- * 
+ *
  */
 
 #pragma off (unreferenced)
@@ -238,7 +238,7 @@ int local_key_inkey(void)
 	return rval;
 }
 
-int show_title_screen( char * filename, int allow_keys )	
+int show_title_screen( char * filename, int allow_keys )
 {
 	fix timer;
 	int pcx_error;
@@ -253,10 +253,10 @@ int show_title_screen( char * filename, int allow_keys )
 	}
 
 	vfx_set_palette_sub( New_pal );
-	gr_palette_clear();	
+	gr_palette_clear();
 	gr_set_current_canvas( NULL );
 	gr_bitmap( 0, 0, &title_bm );
-	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
+	if (gr_palette_fade_in( New_pal, 32, allow_keys ))
 		return 1;
 
 	gr_palette_load( New_pal );
@@ -277,7 +277,7 @@ int show_title_screen( char * filename, int allow_keys )
 			}
 		}
 		#endif
-	}			
+	}
 	if (gr_palette_fade_out( New_pal, 32, allow_keys ))
 		return 1;
 	free(title_bm.bm_data);
@@ -386,8 +386,6 @@ char * get_briefing_screen( int level_num )
 	}
 	return NULL;
 }
-
-
 
 
 int	Briefing_text_x, Briefing_text_y;
@@ -657,7 +655,7 @@ void title_save_game()
 	ubyte palette[768];
 
 	if ( Next_level_num == 0 ) return;
-	
+
 	save_canv = grd_curcanv;
 	save_font = grd_curcanv->cv_font;
 
@@ -670,7 +668,7 @@ void title_save_game()
 	gr_palette_load( gr_palette );
 	state_save_all(1);
 	gr_palette_clear();
-	
+
 	gr_set_current_canvas(save_canv);
 	gr_ubitmap(0,0,&save_canv_data->cv_bitmap);
 	gr_palette_load( palette );
@@ -732,7 +730,7 @@ int show_briefing_message(int screen_num, char *message)
 	Current_color = 0;
 
 	// mprintf((0, "Going to print message [%s] at x=%i, y=%i\n", message, x, y));
-	gr_set_curfont( GAME_FONT );    
+	gr_set_curfont( GAME_FONT );
 
 	init_char_pos(bsp->text_ulx, bsp->text_uly);
 
@@ -877,7 +875,7 @@ int show_briefing_message(int screen_num, char *message)
 			done = 1;
 		}
 
-		if ( key_check == KEY_ALTED+KEY_F2 )	
+		if ( key_check == KEY_ALTED+KEY_F2 )
 			title_save_game();
 
 		if ((key_check == KEY_SPACEBAR) || (key_check == KEY_ENTER))
@@ -1038,7 +1036,7 @@ int show_briefing_screen( int screen_num, int allow_keys)
 		return 0;
 	}
 
-	briefing_bm.bm_data=NULL;	
+	briefing_bm.bm_data=NULL;
 	if ((pcx_error=pcx_read_bitmap( &Briefing_screens[screen_num].bs_name, &briefing_bm, BM_LINEAR, New_pal ))!=PCX_ERROR_NONE)	{
 		printf( "PCX load error: %s.  File '%s'\n\n", pcx_errormsg(pcx_error), Briefing_screens[screen_num].bs_name);
 		mprintf((0, "File '%s', PCX load error: %s (%i)\n  (It's a briefing screen.  Does this cause you pain?)\n",Briefing_screens[screen_num].bs_name, pcx_errormsg(pcx_error), pcx_error));
@@ -1050,7 +1048,7 @@ int show_briefing_screen( int screen_num, int allow_keys)
 	gr_palette_clear();
 	gr_bitmap( 0, 0, &briefing_bm );
 
-	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
+	if (gr_palette_fade_in( New_pal, 32, allow_keys ))
 		return 1;
 
 	rval = show_briefing_text(screen_num);
@@ -1119,12 +1117,12 @@ void do_registered_end_game(void)
 	{
 		// Special ending for deathmatch!!
 		int len = 40;
-		
+
 		//MALLOC(Briefing_text, char, len);//Unable to compile -KRB
 		Briefing_text=(char *)malloc(len*sizeof(char));//my hack -KRB
 		sprintf(Briefing_text, "Test");
 	}
-		
+
 	load_screen_text(Ending_text_filename, &Briefing_text);
 
 	for (cur_briefing_screen = 0; cur_briefing_screen < MAX_BRIEFING_SCREEN; cur_briefing_screen++)
@@ -1145,13 +1143,13 @@ void do_shareware_end_game(void)
 //		// Special ending for deathmatch!!
 //		int len = 120;
 //		int i;
-//		int max_kills = Players[0].net_kills_total;		
+//		int max_kills = Players[0].net_kills_total;
 //		int winner = 0;
 //
 //		for (i=1; i < N_players; i++)
 //		{
 //			if (Players[i].net_kills_total > max_kills)
-//			{	
+//			{
 //				winner = i;
 //				max_kills = Players[i].net_kills_total;
 //			}
@@ -1164,7 +1162,7 @@ void do_shareware_end_game(void)
 		kmatrix_view();
 		return;
 	}
-	else 
+	else
 #endif
 	{
 #ifdef DEST_SAT
@@ -1223,5 +1221,3 @@ void do_end_game(void)
 #endif
 
 }
-
-

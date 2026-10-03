@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,104 +15,104 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:08 $
- * 
+ *
  * Routines to cache merged textures.
- * 
+ *
  * $Log: texmerge.c $
  * Revision 2.0  1995/02/27  11:31:08  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.28  1995/01/14  19:16:56  john
  * First version of new bitmap paging code.
- * 
+ *
  * Revision 1.27  1994/12/14  18:21:58  yuan
  * *** empty log message ***
- * 
+ *
  * Revision 1.26  1994/12/13  09:50:08  john
  * Added Asserts to stop if wall looks like door.
- * 
+ *
  * Revision 1.25  1994/12/07  00:35:24  mike
  * change how flat shading average color is computed for paste-ons.
- * 
+ *
  * Revision 1.24  1994/11/19  15:20:29  mike
  * rip out unused code and data
- * 
+ *
  * Revision 1.23  1994/11/12  16:38:51  mike
  * deal with avg_color in texture merging.
- * 
+ *
  * Revision 1.22  1994/11/09  19:55:39  john
  * Added full rle support with texture rle caching.
- * 
+ *
  * Revision 1.21  1994/10/20  15:21:16  john
  * Took out the texmerge caching.
- * 
+ *
  * Revision 1.20  1994/10/10  19:00:57  john
  * Made caching info print every 1000 frames.
- * 
+ *
  * Revision 1.19  1994/10/10  18:41:21  john
  * Printed out texture caching info.
- * 
+ *
  * Revision 1.18  1994/08/11  18:59:02  mike
  * Use new assembler version of merge functions.
- * 
+ *
  * Revision 1.17  1994/06/09  12:13:14  john
  * Changed selectors so that all bitmaps have a selector of
  * 0, but inside the texture mapper they get a selector set.
- * 
+ *
  * Revision 1.16  1994/05/14  17:15:15  matt
  * Got rid of externs in source (non-header) files
- * 
+ *
  * Revision 1.15  1994/05/09  17:21:09  john
  * Took out mprintf with cache hits/misses.
- * 
+ *
  * Revision 1.14  1994/05/05  12:55:07  john
  * Made SuperTransparency work.
- * 
+ *
  * Revision 1.13  1994/05/04  11:15:37  john
  * Added Super Transparency
- * 
+ *
  * Revision 1.12  1994/04/28  23:36:04  john
  * Took out a debugging mprintf.
- * 
+ *
  * Revision 1.11  1994/04/22  17:44:48  john
  * Made top 2 bits of paste-ons pick the
  * orientation of the bitmap.
- * 
+ *
  * Revision 1.10  1994/03/31  12:05:51  matt
  * Cleaned up includes
- * 
+ *
  * Revision 1.9  1994/03/15  16:31:52  yuan
  * Cleaned up bm-loading code.
  * (And structures)
- * 
+ *
  * Revision 1.8  1994/01/24  13:15:19  john
  * Made caching work with pointers, not texture numbers,
  * that way, the animated textures cache.
- * 
+ *
  * Revision 1.7  1994/01/21  16:38:10  john
  * Took out debug info.
- * 
+ *
  * Revision 1.6  1994/01/21  16:28:43  john
  * added warning to print cache hit/miss.
- * 
+ *
  * Revision 1.5  1994/01/21  16:22:30  john
  * Put in caching/
- * 
+ *
  * Revision 1.4  1994/01/21  15:34:49  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1994/01/21  15:33:08  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.2  1994/01/21  15:15:35  john
- * Created new module texmerge, that merges textures together and 
+ * Created new module texmerge, that merges textures together and
  * caches the results.
- * 
+ *
  * Revision 1.1  1994/01/21  14:55:29  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -131,7 +131,7 @@ static char rcsid[] = "$Id: texmerge.c 2.0 1995/02/27 11:31:08 john Exp $";
 
 #define MAX_NUM_CACHE_BITMAPS 50
 
-//static grs_bitmap * cache_bitmaps[MAX_NUM_CACHE_BITMAPS];                     
+//static grs_bitmap * cache_bitmaps[MAX_NUM_CACHE_BITMAPS];
 
 typedef struct	{
 	grs_bitmap * bitmap;
@@ -160,7 +160,7 @@ int texmerge_init(int num_cached_textures)
 		num_cache_entries = num_cached_textures;
 	else
 		num_cache_entries = MAX_NUM_CACHE_BITMAPS;
-	
+
 	for (i=0; i<num_cache_entries; i++ )	{
 			// Make temp tmap for use when combining
 		Cache[i].bitmap = gr_create_bitmap( 64, 64 );
@@ -220,18 +220,18 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 
 	bitmap_top = &GameBitmaps[Textures[tmap_top&0x3FFF].index];
 	bitmap_bottom = &GameBitmaps[Textures[tmap_bottom].index];
-	
+
 	orient = ((tmap_top&0xC000)>>14) & 3;
 
 	least_recently_used = 0;
 	lowest_frame_count = Cache[0].last_frame_used;
-	
+
 	for (i=0; i<num_cache_entries; i++ )	{
 		if ( (Cache[i].last_frame_used > -1) && (Cache[i].top_bmp==bitmap_top) && (Cache[i].bottom_bmp==bitmap_bottom) && (Cache[i].orient==orient ))	{
 			cache_hits++;
 			Cache[i].last_frame_used = FrameCount;
 			return Cache[i].bitmap;
-		}	
+		}
 		if ( Cache[i].last_frame_used < lowest_frame_count )	{
 			lowest_frame_count = Cache[i].last_frame_used;
 			least_recently_used = i;
@@ -265,7 +265,7 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 		Cache[least_recently_used].bitmap->bm_flags = bitmap_bottom->bm_flags & (~BM_FLAG_RLE);
 		Cache[least_recently_used].bitmap->avg_color = bitmap_bottom->avg_color;
 	}
-		
+
 	Cache[least_recently_used].top_bmp = bitmap_top;
 	Cache[least_recently_used].bottom_bmp = bitmap_bottom;
 	Cache[least_recently_used].last_frame_used = FrameCount;
@@ -298,7 +298,7 @@ void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp
 	switch( type )	{
 		case 0:
 			// Normal
-			
+
 
 			gr_merge_textures( bottom_data, top_data, dest_data );
 			break;
@@ -307,7 +307,7 @@ void merge_textures_new( int type, grs_bitmap * bottom_bmp, grs_bitmap * top_bmp
 
 //			for (y=0; y<64; y++ )
 //				for (x=0; x<64; x++ )	{
-//					c = top_data[ 64*x+(63-y) ];		
+//					c = top_data[ 64*x+(63-y) ];
 //					if (c==255)
 //						c = bottom_data[ 64*y+x ];
 //					*dest_data++ = c;
@@ -358,13 +358,13 @@ void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap
 
 	//mprintf( 0, "SuperX remapping type=%d\n", type );
 	//Int3();
-	 
+
 	switch( type )	{
 		case 0:
 			// Normal
 			for (y=0; y<64; y++ )
 				for (x=0; x<64; x++ )	{
-					c = top_data[ 64*y+x ];		
+					c = top_data[ 64*y+x ];
 					if (c==255)
 						c = bottom_data[ 64*y+x ];
 					else if (c==254)
@@ -373,10 +373,10 @@ void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap
 				}
 			break;
 		case 1:
-			// 
+			//
 			for (y=0; y<64; y++ )
 				for (x=0; x<64; x++ )	{
-					c = top_data[ 64*x+(63-y) ];		
+					c = top_data[ 64*x+(63-y) ];
 					if (c==255)
 						c = bottom_data[ 64*y+x ];
 					else if (c==254)
@@ -410,4 +410,3 @@ void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap
 			break;
 	}
 }
-

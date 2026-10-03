@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,23 +15,22 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:26:46 $
- * 
+ *
  * .
- * 
+ *
  * $Log: hash.h $
  * Revision 2.0  1995/02/27  11:26:46  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.2  1994/05/03  16:45:24  john
  * Added hash table lookup to speed up loading.
- * 
+ *
  * Revision 1.1  1994/05/03  11:35:16  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _HASH_H
@@ -52,4 +51,3 @@ int hashtable_search( hashtable *ht, char *key );
 void hashtable_insert( hashtable *ht, char *key, int value );
 
 #endif
-

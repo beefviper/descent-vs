@@ -3,81 +3,81 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:35:14 $
- * 
+ *
  * Editor object functions.
- * 
+ *
  * $Log: eobject.c $
  * Revision 2.0  1995/02/27  11:35:14  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.93  1995/02/22  15:09:04  allender
  * remove anonymous unions from object structure
- * 
+ *
  * Revision 1.92  1995/01/12  12:10:32  yuan
  * Added coop object capability.
- * 
+ *
  * Revision 1.91  1994/12/20  17:57:02  yuan
  * Multiplayer object stuff.
- * 
+ *
  * Revision 1.90  1994/11/27  23:17:49  matt
  * Made changes for new mprintf calling convention
- * 
+ *
  * Revision 1.89  1994/11/17  14:48:06  mike
  * validation functions moved from editor to game.
- * 
+ *
  * Revision 1.88  1994/11/14  11:40:03  mike
  * fix default robot behavior.
- * 
+ *
  * Revision 1.87  1994/10/25  10:51:31  matt
  * Vulcan cannon powerups now contain ammo count
- * 
+ *
  * Revision 1.86  1994/10/23  02:11:40  matt
  * Got rid of obsolete hostage_info stuff
- * 
+ *
  * Revision 1.85  1994/10/17  21:35:32  matt
  * Added support for new Control Center/Main Reactor
- * 
+ *
  * Revision 1.84  1994/10/10  17:23:13  mike
  * Verify that not placing too many player objects.
- * 
+ *
  * Revision 1.83  1994/09/24  14:15:35  mike
  * Custom colored object support.
- * 
+ *
  * Revision 1.82  1994/09/15  22:58:12  matt
  * Made new objects be oriented to their segment
  * Added keypad function to flip an object upside-down
- * 
+ *
  * Revision 1.81  1994/09/01  10:58:41  matt
  * Sizes for powerups now specified in bitmaps.tbl; blob bitmaps now plot
  * correctly if width & height of bitmap are different.
- * 
+ *
  * Revision 1.80  1994/08/25  21:58:14  mike
  * Write ObjectSelectPrevInMine and something else, I think...
- * 
+ *
  * Revision 1.79  1994/08/16  20:19:54  mike
  * Make STILL default (from CHASE_OBJECT).
- * 
+ *
  * Revision 1.78  1994/08/14  23:15:45  matt
  * Added animating bitmap hostages, and cleaned up vclips a bit
- * 
+ *
  * Revision 1.77  1994/08/13  14:58:43  matt
  * Finished adding support for miscellaneous objects
- * 
+ *
  * Revision 1.76  1994/08/12  22:24:58  matt
  * Generalized polygon objects (such as control center)
- * 
+ *
  * Revision 1.75  1994/08/09  16:06:11  john
  * Added the ability to place players.  Made old
  * Player variable be ConsoleObject.
- * 
+ *
  * Revision 1.74  1994/08/05  18:18:55  matt
  * Made object rotation have 4x resolution, and SHIFT+rotate do old resolution.
- * 
+ *
  * Revision 1.73  1994/08/01  13:30:56  matt
  * Made fvi() check holes in transparent walls, and changed fvi() calling
  * parms to take all input data in query structure.
- * 
+ *
  */
 
 
@@ -189,7 +189,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 		case OL_HOSTAGE:
 
-			objnum = obj_create(OBJ_HOSTAGE, -1, 
+			objnum = obj_create(OBJ_HOSTAGE, -1,
 					segp-Segments,object_pos,&seg_matrix,HOSTAGE_SIZE,
 					CT_NONE,MT_NONE,RT_HOSTAGE);
 
@@ -200,9 +200,9 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 			// Fill in obj->id and other hostage info
 			hostage_init_info( objnum );
-		
+
 			obj->control_type = CT_POWERUP;
-			
+
 			obj->rtype.vclip_info.vclip_num = Hostage_vclip_num[ObjId[object_type]];
 			obj->rtype.vclip_info.frametime = Vclip[obj->rtype.vclip_info.vclip_num].frame_time;
 			obj->rtype.vclip_info.framenum = 0;
@@ -220,13 +220,13 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 			obj = &Objects[objnum];
 
-			//Set polygon-object-specific data 
+			//Set polygon-object-specific data
 
 			obj->rtype.pobj_info.model_num = Robot_info[obj->id].model_num;
 			obj->rtype.pobj_info.subobj_flags = 0;
 
 			//set Physics info
-		
+
 			obj->mtype.phys_info.mass = Robot_info[obj->id].mass;
 			obj->mtype.phys_info.drag = Robot_info[obj->id].drag;
 
@@ -272,7 +272,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 			break;
 
 		case OL_CLUTTER:
-		case OL_CONTROL_CENTER: 
+		case OL_CONTROL_CENTER:
 		{
 			int obj_type,control_type;
 
@@ -296,7 +296,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 			obj->shields = ObjStrength[object_type];
 
-			//Set polygon-object-specific data 
+			//Set polygon-object-specific data
 			obj->shields = ObjStrength[object_type];
 			obj->rtype.pobj_info.model_num = ObjId[object_type];
 			obj->rtype.pobj_info.subobj_flags = 0;
@@ -314,7 +314,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 			obj = &Objects[objnum];
 
-			//Set polygon-object-specific data 
+			//Set polygon-object-specific data
 
 			obj->rtype.pobj_info.model_num = Player_ship->model_num;
 			obj->rtype.pobj_info.subobj_flags = 0;
@@ -332,7 +332,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 			break;
 		}
 		default:
-			break;	
+			break;
 		}
 
 	Cur_object_index = objnum;
@@ -437,7 +437,7 @@ int ObjectPlaceObjectTmap(void)
 		Objects[Cur_object_index].rtype.pobj_info.tmap_override = CurrentTexture;
 	else
 		editor_status("Unable to apply current texture map to this object.");
-	
+
 	return rval;
 }
 
@@ -792,7 +792,7 @@ int	ObjectMakeSmaller(void)
 		cur_size = OBJ_DEL_SIZE;
 
 	Objects[Cur_object_index].size = cur_size;
-	
+
 	Update_flags |= UF_WORLD_CHANGED;
 
 	return 1;
@@ -810,7 +810,7 @@ int	ObjectMakeLarger(void)
 	cur_size += OBJ_DEL_SIZE;
 
 	Objects[Cur_object_index].size = cur_size;
-	
+
 	Update_flags |= UF_WORLD_CHANGED;
 
 	return 1;
@@ -823,7 +823,7 @@ int rotate_object(short objnum, int p, int b, int h)
 	object *obj = &Objects[objnum];
 	vms_angvec ang;
 	vms_matrix rotmat,tempm;
-	
+
 //	vm_extract_angles_matrix( &ang,&obj->orient);
 
 //	ang.p += p;
@@ -853,7 +853,6 @@ void reset_object(short objnum)
 	med_extract_matrix_from_segment(&Segments[obj->segnum],&obj->orient);
 
 }
-
 
 
 int ObjectResetObject()
@@ -926,30 +925,30 @@ int ObjectIncreaseHeadingBig()	{return rotate_object(Cur_object_index, 0, 0, (RO
 // 	vms_vector	Fnorm, Vnorm;
 // 	fix			num, denom;
 // 	// float			test_plane;
-// 
+//
 // 	print_vec(E, "E");
 // 	print_vec(V, "V");
 // 	print_vec(O, "O");
 // 	print_vec(F, "F");
-// 
+//
 // 	Fnorm = *F;	vm_vec_normalize(&Fnorm);
 // 	Vnorm = *V;	vm_vec_normalize(&Vnorm);
-// 
+//
 // 	D = (fixmul(O->x, Fnorm.x) + fixmul(O->y, Fnorm.y) + fixmul(O->z, Fnorm.z));
 // 	mprintf((0, "D = %9.5f\n", f2fl(D)));
-// 
+//
 // 	num = fixmul(Fnorm.x, E->x) + fixmul(Fnorm.y, E->y) + fixmul(Fnorm.z, E->z) - D;
 // 	denom = vm_vec_dot(&Vnorm, &Fnorm);
 // 	t = - num/denom;
-// 
+//
 // 	mprintf((0, "num = %9.5f, denom = %9.5f, t = %9.5f\n", f2fl(num), f2fl(denom), f2fl(t)));
-// 
+//
 // 	result->x = E->x + fixmul(t, Vnorm.x);
 // 	result->y = E->y + fixmul(t, Vnorm.y);
 // 	result->z = E->z + fixmul(t, Vnorm.z);
-// 
+//
 // 	print_vec(result, "result");
-// 
+//
 // 	// test_plane = fixmul(result->x, Fnorm.x) + fixmul(result->y, Fnorm.y) + fixmul(result->z, Fnorm.z) - D;
 // 	// if (abs(test_plane) > .001)
 // 	// 	printf("OOPS: test_plane = %9.5f\n", test_plane);
@@ -1100,7 +1099,7 @@ int	ObjectMoveNearer(void)
 	vm_vec_normalize(&result);
 	move_object_to_vector(&result, -4*F1_0);
 
-	return 1;	
+	return 1;
 }
 
 int	ObjectMoveFurther(void)
@@ -1118,7 +1117,5 @@ int	ObjectMoveFurther(void)
 	vm_vec_normalize(&result);
 	move_object_to_vector(&result, 4*F1_0);
 
-	return 1;	
+	return 1;
 }
-
-

@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,30 +15,30 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:28:01 $
- * 
+ *
  * Functions to do hash table lookup.
- * 
+ *
  * $Log: hash.c $
  * Revision 2.0  1995/02/27  11:28:01  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.5  1994/12/05  23:37:06  matt
  * Took out calls to warning() function
- * 
+ *
  * Revision 1.4  1994/05/09  20:02:33  john
  * Fixed bug w/ upper/lower case.
- * 
+ *
  * Revision 1.3  1994/05/06  15:31:51  john
  * Don't add duplicate names to the hash table.
- * 
+ *
  * Revision 1.2  1994/05/03  16:45:35  john
  * Added hash table lookup to speed up loading.
- * 
+ *
  * Revision 1.1  1994/05/03  10:36:41  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #pragma off (unreferenced)
@@ -53,7 +53,7 @@ static char rcsid[] = "$Id: hash.c 2.0 1995/02/27 11:28:01 john Exp $";
 #include "mono.h"
 #include "hash.h"
 #include "key.h"
-	
+
 int hashtable_init( hashtable *ht, int size )	{
 	int i;
 
@@ -115,7 +115,7 @@ int hashtable_search( hashtable *ht, char *key )	{
 
 	k = hashtable_getkey( key );
 	i = 0;
-	
+
 	while(i < ht->size )	{
 		j = (k+(i++)) & ht->and_mask;
 		if ( ht->key[j] == NULL )

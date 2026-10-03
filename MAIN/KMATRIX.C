@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,82 +15,82 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.3 $
  * $Author: john $
  * $Date: 1995/05/02 17:01:22 $
- * 
+ *
  * Kill matrix displayed at end of level.
- * 
+ *
  * $Log: kmatrix.c $
  * Revision 2.3  1995/05/02  17:01:22  john
  * Fixed bug with kill list not showing up in VFX mode.
- * 
+ *
  * Revision 2.2  1995/03/21  14:38:20  john
  * Ifdef'd out the NETWORK code.
- * 
+ *
  * Revision 2.1  1995/03/06  15:22:54  john
  * New screen techniques.
- * 
+ *
  * Revision 2.0  1995/02/27  11:25:56  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.19  1995/02/15  14:47:23  john
  * Added code to keep track of kills during endlevel.
- * 
+ *
  * Revision 1.18  1995/02/08  11:00:06  rob
  * Moved string to localized file
- * 
+ *
  * Revision 1.17  1995/02/01  23:45:55  rob
  * Fixed string.
- * 
+ *
  * Revision 1.16  1995/01/30  21:47:11  rob
  * Added a line of instructions.
- * 
+ *
  * Revision 1.15  1995/01/20  16:58:43  rob
- * careless careless careless... 
- * 
- * 
+ * careless careless careless...
+ *
+ *
  * Revision 1.14  1995/01/20  13:43:48  rob
  * Longer time to view.
- * 
+ *
  * Revision 1.13  1995/01/20  13:42:34  rob
  * Fixed sorting bug.
- * 
+ *
  * Revision 1.12  1995/01/19  17:35:21  rob
  * Fixed coloration of player names in team mode.
- * 
+ *
  * Revision 1.11  1995/01/16  21:26:15  rob
  * Fixed it!!
- * 
+ *
  * Revision 1.10  1995/01/16  18:55:41  rob
  * Added include of network.h
- * 
+ *
  * Revision 1.9  1995/01/16  18:22:35  rob
  * Fixed problem with signs.
- * 
+ *
  * Revision 1.8  1995/01/12  16:07:51  rob
  * ADded sorting before display.
- * 
+ *
  * Revision 1.7  1995/01/04  08:46:53  rob
  * JOHN CHECKED IN FOR ROB !!!
- * 
+ *
  * Revision 1.6  1994/12/09  20:17:20  yuan
  * Touched up
- * 
+ *
  * Revision 1.5  1994/12/09  19:46:35  yuan
  * Localized the sucker.
- * 
+ *
  * Revision 1.4  1994/12/09  19:24:58  rob
  * Yuan's fix to the centering.
- * 
+ *
  * Revision 1.3  1994/12/09  19:02:37  yuan
  * Cleaned up a bit.
- * 
+ *
  * Revision 1.2  1994/12/09  16:19:46  yuan
  * kill matrix stuff.
- * 
+ *
  * Revision 1.1  1994/12/09  15:08:58  yuan
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -170,7 +170,7 @@ void kmatrix_draw_item( int  i, int *sorted )
 		}
 
 	}
-	
+
 	x = 70 + CENTERING_OFFSET(N_players) + N_players*25;
 	gr_set_fontcolor( BM_XRGB(25,25,25),-1 );
 	gr_printf( x ,y,"%4d",Players[sorted[i]].net_kills_total);
@@ -179,7 +179,7 @@ void kmatrix_draw_item( int  i, int *sorted )
 void kmatrix_draw_names(int *sorted)
 {
 	int j, x;
-	
+
 	int color;
 
 	for (j=0; j<N_players; j++) {
@@ -196,14 +196,14 @@ void kmatrix_draw_names(int *sorted)
 	x = 70 + CENTERING_OFFSET(N_players) + N_players*25;
 	gr_set_fontcolor( BM_XRGB(31,31,31),-1 );
 	gr_printf( x, 40, TXT_KILLS);
-		
+
 }
 
 
 void kmatrix_draw_deaths(int *sorted)
 {
 	int j, x, y;
-	
+
 	y = 55 + N_players * 9;
 
 //	gr_set_fontcolor(gr_getcolor(player_rgb[j].r,player_rgb[j].g,player_rgb[j].b),-1 );
@@ -222,7 +222,7 @@ void kmatrix_draw_deaths(int *sorted)
 
 	{
 		int sw, sh, aw;
-		gr_get_string_size(TXT_PRESS_ANY_KEY2, &sw, &sh, &aw);	
+		gr_get_string_size(TXT_PRESS_ANY_KEY2, &sw, &sh, &aw);
 		gr_printf( 160-(sw/2), y, TXT_PRESS_ANY_KEY2);
 	}
 }
@@ -230,13 +230,13 @@ void kmatrix_draw_deaths(int *sorted)
 void kmatrix_redraw()
 {
 	int i, pcx_error, color;
-		
+
 	int sorted[MAX_NUM_NET_PLAYERS];
 
 	multi_sort_kill_list();
 
 	gr_set_current_canvas(NULL);
-	
+
 	pcx_error = pcx_read_bitmap("STARS.PCX",&grd_curcanv->cv_bitmap,grd_curcanv->cv_bitmap.bm_type,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
 
@@ -285,9 +285,9 @@ void kmatrix_view(int network)
 
 	while(!done)	{
 
-		for (i=0; i<4; i++ )	
+		for (i=0; i<4; i++ )
 			if (joy_get_button_down_cnt(i)>0) done=1;
-		for (i=0; i<3; i++ )	
+		for (i=0; i<3; i++ )
 			if (mouse_button_down_count(i)>0) done=1;
 
 		k = key_inkey();
@@ -327,4 +327,3 @@ void kmatrix_view(int network)
 	game_flush_inputs();
 }
 #endif
-

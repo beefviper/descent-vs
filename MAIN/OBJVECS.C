@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,17 +15,17 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 1.2 $
  * $Author: matt $
  * $Date: 1993/12/07 23:55:26 $
- * 
+ *
  * Vectors for multiple-view bitmaps
- * 
+ *
  * $Log: objvecs.c $
  * Revision 1.2  1993/12/07  23:55:26  matt
  * Added tables from files from 3d
- * 
+ *
  * Revision 1.1  1993/12/07  23:02:54  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -2156,7 +2156,6 @@ char Vector_to_viewnum2[32768] = {
 };
 
 
-
 #include "vecmat.h"
 
 vms_vector up_vecs[] = {
@@ -2243,8 +2242,6 @@ vms_vector up_vecs[] = {
 		};
 
 
-
-
 #include "vecmat.h"
 
 vms_vector up_vecs2[] = {
@@ -2301,5 +2298,3 @@ vms_vector up_vecs2[] = {
 	{0x00000000,0x00000000,0x00010000},
 	{0x00008a05,0x0000735a,0x0000b625},
 };
-
-

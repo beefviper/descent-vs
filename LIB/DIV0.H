@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,10 +21,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: div0.h $
  * Revision 1.2  1994/01/14  15:34:25  john
  * Added counters for number of overflows.
- * 
+ *
  * Revision 1.1  1993/09/17  12:37:58  john
  * Initial revision
- * 
+ *
  *
  */
 
@@ -69,7 +69,7 @@ extern int div0_set_saturate( void *div_addr );
 
 //==========================================================================
 // These three variables count the number of times the divide by zero handler
-// has been used. 
+// has been used.
 //   - div0_num_handled_by_cblist is the number of times a divide exception
 //     has occurred and was corrected by calling a user-specified function.
 //   - div0_num_handled_by_satlist is the number of times a divide exception
@@ -82,8 +82,3 @@ extern int div0_set_saturate( void *div_addr );
 extern int div0_num_handled_by_cblist;
 extern int div0_num_handled_by_satlist;
 extern int div0_num_saturated;
-
-
-
-
-

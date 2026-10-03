@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,39 +15,39 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:29:12 $
- * 
+ *
  * Routines for arcade version
- * 
+ *
  * $Log: arcade.c $
  * Revision 2.0  1995/02/27  11:29:12  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.7  1994/09/21  15:48:52  matt
  * Made digital joystick less "soft"
- * 
+ *
  * Revision 1.6  1994/09/16  18:50:47  matt
  * Read vfx1 head sensing when in arcade mode
- * 
+ *
  * Revision 1.5  1994/09/16  16:15:00  john
  * Added acrade sequencing.
- * 
+ *
  * Revision 1.4  1994/09/16  12:52:07  mike
  * fix compile errors.
- * 
+ *
  * Revision 1.3  1994/09/16  12:36:48  john
  * Fixed ramping pitch, heading.
- * 
+ *
  * Revision 1.2  1994/09/16  11:51:00  john
  * Added first version of arcade joystick support;
  * Also fixed some bugs in kconfig.c, such as reading non-present
  * joysticks, which killed frame rate, and not reading key_down_time
  * when in slide mode or bank mode.
- * 
+ *
  * Revision 1.1  1994/09/16  09:59:16  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 
@@ -105,9 +105,9 @@ void arcade_read_controls()
 	memset( &Controls, 0, sizeof(control_info) );
 	Controls.pitch_time = pitch;
 	Controls.heading_time = heading;
-	
+
 	pitch = heading = 0;
-				
+
 //----------- Read fire_primary_down_count
 	Controls.fire_primary_down_count += joy_get_button_down_cnt(20);
 
@@ -154,5 +154,3 @@ void arcade_read_controls()
 
 	read_vfx1_sense();
 }
-
-

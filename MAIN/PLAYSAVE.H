@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,45 +15,45 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:31:24 $
- * 
+ *
  * Header for playsave.c
- * 
+ *
  * $Log: playsave.h $
  * Revision 2.0  1995/02/27  11:31:24  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.10  1995/01/22  18:57:04  matt
  * Made player highest level work with missions
- * 
+ *
  * Revision 1.9  1994/12/12  11:37:15  matt
  * Fixed auto leveling defaults & saving
- * 
+ *
  * Revision 1.8  1994/12/08  10:01:37  john
  * Changed the way the player callsign stuff works.
- * 
+ *
  * Revision 1.7  1994/11/25  22:46:56  matt
  * Made saved game descriptions longer
- * 
+ *
  * Revision 1.6  1994/10/24  20:00:02  john
  * Added prototype for read_player_file.
- * 
+ *
  * Revision 1.5  1994/10/17  13:07:12  john
  * Moved the descent.cfg info into the player config file.
- * 
+ *
  * Revision 1.4  1994/10/09  14:54:32  matt
  * Made player cockpit state & window size save/restore with saved games & automap
- * 
+ *
  * Revision 1.3  1994/10/08  23:08:09  matt
  * Added error check & handling for game load/save disk io
- * 
+ *
  * Revision 1.2  1994/09/28  17:25:06  matt
  * Added first draft of game save/load system
- * 
+ *
  * Revision 1.1  1994/09/27  15:47:23  matt
  * Initial revision
- * 
- * 
+ *
+ *
  */
 
 #ifndef _PLAYSAVE_H

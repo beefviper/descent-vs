@@ -3,69 +3,69 @@
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:34:42 $
- * 
+ *
  * Med drawing functions.
- * 
+ *
  * $Log: meddraw.c $
  * Revision 2.0  1995/02/27  11:34:42  john
  * Version 2.0! No anonymous unions, Watcom 10.0, with no need
  * for bitmaps.tbl.
- * 
+ *
  * Revision 1.34  1994/11/09  11:46:30  matt
  * Don't draw non-existant special segments
- * 
+ *
  * Revision 1.33  1994/10/27  10:06:38  mike
  * adapt to no inverse table.
- * 
+ *
  * Revision 1.32  1994/10/17  18:06:23  john
  * Made net player objects draw in dark green.
- * 
+ *
  * Revision 1.31  1994/09/26  16:44:33  yuan
  * Colored special segments.
- * 
+ *
  * Revision 1.30  1994/09/01  17:02:41  matt
  * Redraw pointer after world draw
- * 
+ *
  * Revision 1.29  1994/08/25  21:56:21  mike
  * IS_CHILD stuff.
- * 
+ *
  * Revision 1.28  1994/08/11  18:59:46  mike
  * Adapt to new int (vs short) version of gameseg functions.
- * 
+ *
  * Revision 1.27  1994/08/09  16:06:03  john
  * Added the ability to place players.  Made old
  * Player variable be ConsoleObject.
- * 
+ *
  * Revision 1.26  1994/07/25  00:03:05  matt
  * Various changes to accomodate new 3d, which no longer takes point numbers
  * as parms, and now only takes pointers to points.
- * 
+ *
  * Revision 1.25  1994/07/09  17:38:13  mike
  * comment out mprintf(0, "\n");
- * 
+ *
  * Revision 1.24  1994/07/07  19:34:47  matt
  * These changes are mostly Mike's, but I fixed a little bug that caused
  * some edges to think they were never used.
- * 
+ *
  * Revision 1.23  1994/07/06  16:36:18  mike
  * Optionally only draw segment lines which are in only one segment.
- * 
+ *
  * Revision 1.22  1994/05/27  10:34:28  yuan
  * Added new Dialog boxes for Walls and Triggers.
- * 
+ *
  * Revision 1.21  1994/05/14  18:00:56  matt
  * Got rid of externs in source (non-header) files
- * 
+ *
  * Revision 1.20  1994/05/09  23:35:21  mike
  * Change order of drawing found and selected segments.
- * 
+ *
  * Revision 1.19  1994/05/05  12:55:38  yuan
  * Fixed a bunch of group bugs.
- * 
+ *
  * Revision 1.18  1994/05/04  13:07:52  matt
  * Made current edge draw in green in wire-frame window
  * Also, moved a bunch of color constants here from editor.h
- * 
+ *
  */
 
 
@@ -121,7 +121,7 @@ static char rcsid[] = "$Id: meddraw.c 2.0 1995/02/27 11:34:42 john Exp $";
 #define	CUREDGE_COLOR		BM_XRGB(  0   , 63/2 ,  0  )
 #define	GROUPSEG_COLOR		BM_XRGB(	 0/2 ,  0/2 , 63/2)
 #define  GROUPSIDE_COLOR 	BM_XRGB(	63/2 ,  0/2 , 45/2)
-#define 	GROUP_COLOR			BM_XRGB(  0/2 , 45/2 ,  0/2)	
+#define 	GROUP_COLOR			BM_XRGB(  0/2 , 45/2 ,  0/2)
 #define	ROBOT_COLOR			BM_XRGB( 31   ,  0   ,  0  )
 #define	PLAYER_COLOR		BM_XRGB(  0   ,  0   , 31  )
 
@@ -205,7 +205,7 @@ void check_segment(segment *seg)
 
 		for (fn=0;fn<6;fn++) {
 			g3s_point *vert_list[4];
-			
+
 			vert_list[0] = &Segment_points[seg->verts[Side_to_verts[fn][0]]];
 			vert_list[1] = &Segment_points[seg->verts[Side_to_verts[fn][1]]];
 			vert_list[2] = &Segment_points[seg->verts[Side_to_verts[fn][2]]];
@@ -222,7 +222,7 @@ void check_segment(segment *seg)
 				Found_segs[N_found_segs++] = SEG_PTR_2_NUM(seg);
 			else
 				Warning("Found too many segs! (limit=%d)",MAX_FOUND_SEGS);
-		
+
 	}
 }
 
@@ -266,7 +266,7 @@ int Show_triangulations=0;
 #define ET_FACING		0	//this edge on a facing face
 #define ET_NOTFACING	1	//this edge on a non-facing face
 #define ET_NOTUSED	2	//no face uses this edge
-#define ET_NOTEXTANT	3	//would exist if side were triangulated 
+#define ET_NOTEXTANT	3	//would exist if side were triangulated
 
 #define ET_EMPTY		255	//this entry in array is empty
 
@@ -276,7 +276,7 @@ int Show_triangulations=0;
 //							BM_RGB(45/4,45/4,45/4)};	//BM_RGB(0,45,0)};	//
 
 int edge_colors[] = { 54, 59, 64 };
-							
+
 
 typedef struct seg_edge {
 	union {
@@ -471,7 +471,7 @@ void add_edges(segment *seg)
 
 					// en = find_edge_num(vertex_list[fn*3 + vn], vertex_list[fn*3 + (vn+1)%num_vertices]);
 					en = find_edge_num(*v0, *(v0+1));
-					
+
 					if (en!=-1)
 						if (flag < edge_flags[en]) edge_flags[en] = flag;
 
@@ -486,7 +486,7 @@ void add_edges(segment *seg)
 		for (i=0; i<N_EDGES_PER_SEGMENT; i++)
 			if (i<N_NORMAL_EDGES || (edge_flags[i]!=ET_NOTEXTANT && Show_triangulations))
 				add_edge(seg->verts[edges[i]/8],seg->verts[edges[i]&7],edge_flags[i]);
-		
+
 
 	}
 }
@@ -543,11 +543,11 @@ void draw_special_wall( segment *seg, int side )
 	gr_setcolor(PLAINSEG_COLOR);
 
 	if (Walls[seg->sides[side].wall_num].type == WALL_BLASTABLE)
-		gr_setcolor(WALL_BLASTABLE_COLOR);	
+		gr_setcolor(WALL_BLASTABLE_COLOR);
 	if (Walls[seg->sides[side].wall_num].type == WALL_DOOR)
 		gr_setcolor(WALL_DOOR_COLOR);
 	if (Walls[seg->sides[side].wall_num].type == WALL_ILLUSION)
-		gr_setcolor(GROUPSIDE_COLOR);	
+		gr_setcolor(GROUPSIDE_COLOR);
 	if (Walls[seg->sides[side].wall_num].flags & WALL_DOOR_LOCKED)
 		gr_setcolor(WALL_DOOR_LOCKED_COLOR);
 	if (Walls[seg->sides[side].wall_num].flags & WALL_DOOR_AUTO)
@@ -557,7 +557,7 @@ void draw_special_wall( segment *seg, int side )
 		gr_setcolor(WALL_AUTO_DOOR_LOCKED_COLOR);
 	if (Walls[seg->sides[side].wall_num].type == WALL_OPEN)
 		gr_setcolor(PLAINSEG_COLOR);
-	
+
 	draw_wall_side(seg,side);
 
 	if (Walls[seg->sides[side].wall_num].trigger != -1) {
@@ -757,7 +757,7 @@ void draw_special_segments(void)
 				break;
 			}
 }
-		
+
 
 //find a free vertex. returns the vertex number
 int alloc_vert()
@@ -954,7 +954,7 @@ void draw_world(grs_canvas *screen_canvas,editor_view *v,segment *mine_ptr,int d
 				case 0: gr_ustring( 85, 5, "-- TOP");	break;
 				case 1: gr_ustring( 85, 5, "-- FRONT");	break;
 				case 2: gr_ustring( 85, 5, "-- RIGHT");	break;
-			}			
+			}
 		} else
 #if ORTHO_VIEWS
 		 else if ( screen_canvas == TopViewBox->canvas )

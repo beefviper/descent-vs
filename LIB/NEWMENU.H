@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -15,99 +15,98 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Revision: 2.0 $
  * $Author: john $
  * $Date: 1995/02/27 11:32:28 $
- * 
+ *
  * Routines for menus.
- * 
+ *
  * $Log: newmenu.h $
  * Revision 2.0  1995/02/27  11:32:28  john
  * New version 2.0, which has no anonymous unions, builds with
  * Watcom 10.0, and doesn't require parsing BITMAPS.TBL.
- * 
+ *
  * Revision 1.24  1995/02/11  16:20:05  john
  * Added code to make the default mission be the one last played.
- * 
+ *
  * Revision 1.23  1995/01/31  10:21:41  john
  * Added code to specify width, height.
- * 
+ *
  * Revision 1.22  1995/01/28  17:09:21  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.21  1995/01/23  18:38:43  john
  * Added listbox function.
- * 
+ *
  * Revision 1.20  1994/11/26  15:29:55  matt
  * Allow escape out of change pilot menu
- * 
+ *
  * Revision 1.19  1994/11/26  14:17:05  matt
  * Player can now only enter valid chars for his name
- * 
+ *
  * Revision 1.18  1994/11/18  16:17:13  mike
  * prototype Max_linear_depth_objects.
- * 
+ *
  * Revision 1.17  1994/11/08  14:51:17  john
  * Added nm_messagebox1, (like the original, only you can pass a function).
- * 
+ *
  * Revision 1.16  1994/11/05  14:31:45  john
  * Added a new menu function for the background.
- * 
+ *
  * Revision 1.15  1994/11/05  14:05:46  john
  * Fixed fade transitions between all screens by making gr_palette_fade_in and out keep
  * track of whether the palette is faded in or not.  Then, wherever the code needs to fade out,
  * it just calls gr_palette_fade_out and it will fade out if it isn't already.  The same with fade_in.
  * This eliminates the need for all the flags like Menu_fade_out, game_fade_in palette, etc.
- * 
+ *
  * Revision 1.14  1994/11/03  19:37:35  john
  * Added scrolling file list box
- * 
+ *
  * Revision 1.13  1994/10/13  11:34:03  john
  * Made Thrustmaster FCS Hat work.  Put a background behind the
  * keyboard configure.  Took out turn_sensitivity.  Changed sound/config
  * menu to new menu. Made F6 be calibrate joystick.
- * 
+ *
  * Revision 1.12  1994/10/11  17:08:32  john
  * Added sliders for volume controls.
- * 
+ *
  * Revision 1.11  1994/10/04  10:26:23  matt
  * Changed fade in to happen every time a global var is set
- * 
+ *
  * Revision 1.10  1994/10/03  14:43:56  john
  * Added newmenu_do1, which allows you to pass the starting
  * item to the menu system
- * 
+ *
  * Revision 1.9  1994/09/30  11:51:33  john
  * Added Matt's NM_TYPE_INPUT_MENU
- * 
+ *
  * Revision 1.8  1994/08/30  20:38:28  john
  * Passed citem in newmenu sub.
- * 
+ *
  * Revision 1.7  1994/08/12  03:11:00  john
  * Made network be default off; Moved network options into
  * main menu.  Made starting net game check that mines are the
  * same.
- * 
+ *
  * Revision 1.6  1994/08/11  13:47:05  john
  * Made newmenu have subtitles, passed key through to
  * the newmenu subfunctions.
- * 
+ *
  * Revision 1.5  1994/07/27  16:12:24  john
  * Changed newmenu system to have a callback function.
  * /.
- * 
+ *
  * Revision 1.4  1994/07/24  17:41:38  john
  * *** empty log message ***
- * 
+ *
  * Revision 1.3  1994/07/24  17:33:01  john
  * Added percent item.  Also neatend up a bit.
- * 
+ *
  * Revision 1.2  1994/07/22  17:48:12  john
  * Added new menuing system.
- * 
+ *
  * Revision 1.1  1994/07/22  13:55:51  john
  * Initial revision
- * 
- * 
+ *
+ *
  */
-
 
 
 #ifndef _NEWMENU_H
@@ -132,7 +131,7 @@ typedef struct newmenu_item {
 	int	text_len;		// The maximum length of characters that can be entered by this inputboxes
 	char	*text;			// The text associated with this item.
 	// The rest of these are used internally by by the menu system, so don't set 'em!!
-	short	x, y;			
+	short	x, y;
 	short w, h;
 	short right_offset;
 	ubyte redraw;
@@ -140,7 +139,7 @@ typedef struct newmenu_item {
 } newmenu_item;
 
 // Pass an array of newmenu_items and it processes the menu. It will
-// return a -1 if Esc is pressed, otherwise, it returns the index of 
+// return a -1 if Esc is pressed, otherwise, it returns the index of
 // the item that was current when Enter was was selected.
 // The subfunction function gets called constantly, so you can dynamically
 // change the text of an item.  Just pass NULL if you don't want this.
@@ -164,7 +163,7 @@ extern int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item 
 			int mmn;
 			newmenu_item mm[8];
 			char xtext[21];
-	
+
 			strcpy( xtext, "John" );
 
 			mm[0].type=NM_TYPE_MENU; mm[0].text="Play game";
@@ -205,7 +204,7 @@ extern char *Newmenu_allowed_chars;
 // int lb_callback( int * citem, int *nitems, char * items[], int *keypress )
 // {
 // 	int i;
-// 
+//
 // 	if ( *keypress = KEY_CTRLED+KEY_D )	{
 // 		if ( *nitems > 1 )	{
 // 			unlink( items[*citem] );		// Delete the file
@@ -218,7 +217,7 @@ extern char *Newmenu_allowed_chars;
 // 			return 1;	// redraw;
 // 		}
 //			*keypress = 0;
-// 	}			
+// 	}
 // 	return 0;
 // }
 
@@ -228,4 +227,3 @@ extern int newmenu_listbox1( char * title, int nitems, char * items[], int allow
 extern int newmenu_filelist( char * title, char * filespace, char * filename );
 
 #endif
-

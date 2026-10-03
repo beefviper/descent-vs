@@ -7,7 +7,7 @@ IN USING, DISPLAYING,  AND CREATING DERIVATIVE WORKS THEREOF, SO LONG AS
 SUCH USE, DISPLAY OR CREATION IS FOR NON-COMMERCIAL, ROYALTY OR REVENUE
 FREE PURPOSES.  IN NO EVENT SHALL THE END-USER USE THE COMPUTER CODE
 CONTAINED HEREIN FOR REVENUE-BEARING PURPOSES.  THE END-USER UNDERSTANDS
-AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.  
+AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
@@ -21,7 +21,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * $Log: parsarg.c $
  * Revision 1.1  1993/09/09  17:32:03  matt
  * Initial revision
- * 
+ *
  *
  */
 
@@ -124,17 +124,17 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 				done = _dos_findfirst(*argv,0,&ffblk);
 
 				if (done) handler_func(*argv);
-			
+
 				else while (!done) {
 
 					strcpy(nptr,ffblk.name);	//copy name after path
 
 					handler_func(filename);
-			
+
 					done = _dos_findnext(&ffblk);
-			
+
 				}
-	
+
 			}
 			else
 				handler_func(*argv);
@@ -142,5 +142,3 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 	}
 
 }
-
-
