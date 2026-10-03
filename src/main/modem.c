@@ -1993,7 +1993,7 @@ void add_phone_number( char * src, char * num )
 {
 	char p;
 	int l;
-	l = strlen(num);
+	l = (int)strlen(num);
 	if ( l<15)	{
 		strcat( src, num );
 		return;

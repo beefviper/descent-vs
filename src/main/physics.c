@@ -385,7 +385,7 @@ void do_physics_align_object( object * obj )
 		if (abs(delta_ang) > DAMP_ANG) {
 			vms_matrix rotmat, new_pm;
 
-			roll_ang = fixmul(FrameTime,ROLL_RATE);
+			roll_ang = (fixang)(fixmul(FrameTime,ROLL_RATE));
 
 			if (abs(delta_ang) < roll_ang) roll_ang = delta_ang;
 			else if (delta_ang<0) roll_ang = -roll_ang;
@@ -405,12 +405,12 @@ void set_object_turnroll(object *obj)
 {
 	fixang desired_bank;
 
-	desired_bank = -fixmul(obj->mtype.phys_info.rotvel.y,TURNROLL_SCALE);
+	desired_bank = (fixang)(-fixmul(obj->mtype.phys_info.rotvel.y,TURNROLL_SCALE));
 
 	if (obj->mtype.phys_info.turnroll != desired_bank) {
 		fixang delta_ang,max_roll;
 
-		max_roll = fixmul(ROLL_RATE,FrameTime);
+		max_roll = (fixang)(fixmul(ROLL_RATE,FrameTime));
 
 		delta_ang = desired_bank - obj->mtype.phys_info.turnroll;
 
@@ -523,9 +523,9 @@ void do_physics_sim_rot(object *obj)
 		obj->orient = new_pm;
 	}
 
-	tangles.p = fixmul(obj->mtype.phys_info.rotvel.x,FrameTime);
-	tangles.h = fixmul(obj->mtype.phys_info.rotvel.y,FrameTime);
-	tangles.b  = fixmul(obj->mtype.phys_info.rotvel.z,FrameTime);
+	tangles.p = (fixang)(fixmul(obj->mtype.phys_info.rotvel.x,FrameTime));
+	tangles.h = (fixang)(fixmul(obj->mtype.phys_info.rotvel.y,FrameTime));
+	tangles.b = (fixang)(fixmul(obj->mtype.phys_info.rotvel.z,FrameTime));
 
 	vm_angles_2_matrix(&rotmat,&tangles);
 	vm_matrix_x_matrix(&new_orient,&obj->orient,&rotmat);
@@ -590,7 +590,7 @@ if (Dont_move_ai_objects)
 	if (!(pi->velocity.x || pi->velocity.y || pi->velocity.z || pi->thrust.x || pi->thrust.y || pi->thrust.z))
 		return;
 
-	objnum = obj-Objects;
+	objnum = (int)(obj-Objects);
 
 	n_phys_segs = 0;
 

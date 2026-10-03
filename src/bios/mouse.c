@@ -362,7 +362,7 @@ int mouse_init(int enable_cyberman)
 		printf( "Unable to lock mouse data region" );
 		exit(1);
 	}
-	if (!dpmi_lock_region((void near *)mouse_handler,(char *)mouse_handler_end - (char near *)mouse_handler))	{
+	if (!dpmi_lock_region((void near *)mouse_handler,(unsigned int)((char *)mouse_handler_end - (char near *)mouse_handler)))	{
 		printf( "Unable to lock mouse handler" );
 		exit(1);
 	}

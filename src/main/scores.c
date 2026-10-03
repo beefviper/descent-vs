@@ -389,7 +389,7 @@ void int_to_string( int number, char *dest )
 
 	sprintf( buffer, "%d", number );
 
-	l = strlen(buffer);
+	l = (int)strlen(buffer);
 	if (l<=3) {
 		// Don't bother with less than 3 digits
 		sprintf( dest, "%d", number );

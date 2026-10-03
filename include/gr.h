@@ -185,6 +185,10 @@ typedef struct _grs_font {
 	ubyte *	ft_filedata;	// Font file contents the pointers above point into
 } grs_font;
 
+// Bitmap types. The video-memory types (BM_MODEX, BM_SVGA, BM_SVGA15)
+// keep an offset into video memory in bm_data rather than a pointer, which
+// is why their code casts bm_data to an integer. gr_set_mode() no longer
+// creates them: every screen is BM_LINEAR now.
 #define BM_LINEAR   0
 #define BM_MODEX    1
 #define BM_SVGA     2

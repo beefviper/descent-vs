@@ -39,7 +39,7 @@ void hog_add_file( char * filename )
 		fclose( HogFile );
 		exit(1);
 	}
-	i = fread( data, length, 1, fp );
+	i = (int)fread( data, length, 1, fp );
 	if ( i != 1 )	{
 		printf( "Error reading '%s'... not added!\n", filename );
 		fclose(fp);

@@ -389,7 +389,7 @@ ubyte *extract( char *library, char *filename ) {
 
 int read_data( FILE *fp, struct file_header *p )
     {
-        return( fread( p, sizeof(*p), 1, fp ) );
+        return( (int)fread( p, sizeof(*p), 1, fp ) );
     }
 
 

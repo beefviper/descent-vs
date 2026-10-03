@@ -1355,7 +1355,7 @@ void move_player_2_segment(segment *seg,int side)
 	vm_vec_sub2(&vp,&ConsoleObject->pos);
 	vm_vector_2_matrix(&ConsoleObject->orient,&vp,NULL,NULL);
 
-	obj_relink( ConsoleObject-Objects, SEG_PTR_2_NUM(seg) );
+	obj_relink( (int)(ConsoleObject-Objects), SEG_PTR_2_NUM(seg) );
 
 }
 
@@ -1460,7 +1460,7 @@ void draw_centered_text( int y, char * s )
 	char p;
 
 
-	l = strlen(s);
+	l = (int)strlen(s);
 
 	if ( string_width( s, l ) < grd_curcanv->cv_bitmap.bm_w )	{
 		gr_string( 0x8000, y, s );
@@ -4206,7 +4206,7 @@ int mark_player_path_to_segment(int segnum)
 		return 0;
 	}
 
-	player_hide_index = Point_segs_free_ptr - Point_segs;
+	player_hide_index = (int)(Point_segs_free_ptr-Point_segs);
 	Point_segs_free_ptr += player_path_length;
 
 	if (Point_segs_free_ptr - Point_segs + MAX_PATH_LENGTH*2 > MAX_POINT_SEGS) {

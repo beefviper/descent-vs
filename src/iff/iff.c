@@ -385,7 +385,7 @@ int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 	bmheader->pagewidth = get_word(ifile);
 	bmheader->pageheight = get_word(ifile);
 
-	iff_transparent_color = bmheader->transparentcolor;
+	iff_transparent_color = (ubyte)(bmheader->transparentcolor);
 
 	iff_has_transparency = 0;
 
@@ -861,11 +861,12 @@ void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 	bm->bm_x = bm->bm_y = 0;
 	bm->bm_w = bmheader->w;
 	bm->bm_h = bmheader->h;
-	bm->bm_type = bmheader->type;
+	bm->bm_type = (byte)(bmheader->type);
 	bm->bm_rowsize = bmheader->w;
 	bm->bm_data = bmheader->raw_data;
 
-	bm->bm_flags = bm->bm_selector = 0;
+	bm->bm_flags = 0;
+	bm->bm_selector = 0;
 }
 
 //if bm->bm_data is set, use it (making sure w & h are correct), else
@@ -1096,7 +1097,7 @@ int rle_span(ubyte *dest,ubyte *src,int len)
 	else if (lit_cnt > 1)
 		*cnt_ptr = lit_cnt-1;
 
-	return dptr-dest;
+	return (int)(dptr-dest);
 }
 
 #define EVEN(a) ((a+1)&0xfffffffel)

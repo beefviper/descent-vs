@@ -609,7 +609,7 @@ void ipx_send_packet_data( ubyte * data, int datasize, ubyte *network, ubyte *ad
 	packets[0].pd.packetnum = ipx_packetnum++;
 
 	// Fill in data to send
-	packets[0].ecb.fragment_size = sizeof(ipx_header) + sizeof(int) + datasize;
+	packets[0].ecb.fragment_size = (WORD)(sizeof(ipx_header) + sizeof(int) + datasize);
 
 	assert( datasize > 1 );
 	assert( packets[0].ecb.fragment_size <= 576 );

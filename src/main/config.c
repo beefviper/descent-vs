@@ -228,17 +228,17 @@ int ReadConfigFile()
 			else if (!strcmp(token, digi_dma_str))
 				digi_driver_dma = strtol(value, NULL, 10);
 			else if (!strcmp(token, digi_volume_str))
-				Config_digi_volume = strtol(value, NULL, 10);
+				Config_digi_volume = (ubyte)(strtol(value, NULL, 10));
 			else if (!strcmp(token, midi_dev_str))
 				digi_midi_type = strtol(value, NULL, 16);
 			else if (!strcmp(token, midi_port_str))
 				digi_midi_port = strtol(value, NULL, 16);
 			else if (!strcmp(token, midi_volume_str))
-				Config_midi_volume = strtol(value, NULL, 10);
+				Config_midi_volume = (ubyte)(strtol(value, NULL, 10));
 			else if (!strcmp(token, stereo_rev_str))
-				Config_channels_reversed = strtol(value, NULL, 10);
+				Config_channels_reversed = (ubyte)(strtol(value, NULL, 10));
 			else if (!strcmp(token, gamma_level_str)) {
-				gamma = strtol(value, NULL, 10);
+				gamma = (ubyte)(strtol(value, NULL, 10));
 				gr_palette_set_gamma( gamma );
 			}
 			else if (!strcmp(token, detail_level_str)) {

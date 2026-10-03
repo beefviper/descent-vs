@@ -794,7 +794,7 @@ void create_small_fireball_on_object(object *objp, fix size_scale, int sound_fla
 			if (objp->type == OBJ_ROBOT)
 				vol *= 2;
 			else if (sound_flag)
-				digi_link_sound_to_object(SOUND_EXPLODING_WALL, objp-Objects, 0, vol);
+				digi_link_sound_to_object(SOUND_EXPLODING_WALL, (short)(objp-Objects), 0, vol);
 		}
 	}
 }
@@ -1043,7 +1043,7 @@ void init_objects()
 	ConsoleObject = Viewer = &Objects[0];
 
 	init_player_object();
-	obj_link(ConsoleObject-Objects,0);	//put in the world in segment 0
+	obj_link((int)(ConsoleObject-Objects),0);	//put in the world in segment 0
 
 	num_objects = 1;						//just the player
 	Highest_object_index = 0;
@@ -1587,7 +1587,7 @@ void dead_player_end(void)
 
 	Player_is_dead = 0;
 	Player_exploded = 0;
-	obj_delete(Dead_player_camera-Objects);
+	obj_delete((int)(Dead_player_camera-Objects));
 	Dead_player_camera = NULL;
 	select_cockpit(cockpit_mode_save);
 	Viewer = Viewer_save;
@@ -1640,7 +1640,7 @@ void set_camera_pos(vms_vector *camera_pos, object *objp)
 			fq.p1 = &local_p1;
 			fq.startseg = objp->segnum;
 			fq.rad = 0;
-			fq.thisobjnum = objp-Objects;
+			fq.thisobjnum = (short)(objp-Objects);
 			fq.ignore_obj_list = NULL;
 			fq.flags = 0;
 			find_vector_intersection( &fq, &hit_data);
@@ -1786,7 +1786,7 @@ void start_player_death_sequence(object *player)
 		HUD_clear_messages();
 
 	Killed_in_frame = FrameCount;
-	Killed_objnum = player-Objects;
+	Killed_objnum = (int)(player-Objects);
 	Death_sequence_aborted = 0;
 
 	#ifdef NETWORK
@@ -1849,7 +1849,7 @@ void obj_delete_all_that_should_be_dead()
 				if ( objp->id == Player_num ) {
 					if (local_dead_player_object == -1) {
 						start_player_death_sequence(objp);
-						local_dead_player_object = objp-Objects;
+						local_dead_player_object = (int)(objp-Objects);
 					} else
 						Int3();	//	Contact Mike: Illegal, killed player twice in this frame!
 									// Ok to continue, won't start death sequence again!
@@ -1889,9 +1889,9 @@ void spin_object(object *obj)
 
 	Assert(obj->movement_type == MT_SPINNING);
 
-	rotangs.p = fixmul(obj->mtype.spin_rate.x,FrameTime);
-	rotangs.h = fixmul(obj->mtype.spin_rate.y,FrameTime);
-	rotangs.b = fixmul(obj->mtype.spin_rate.z,FrameTime);
+	rotangs.p = (fixang)(fixmul(obj->mtype.spin_rate.x,FrameTime));
+	rotangs.h = (fixang)(fixmul(obj->mtype.spin_rate.y,FrameTime));
+	rotangs.b = (fixang)(fixmul(obj->mtype.spin_rate.z,FrameTime));
 
 	vm_angles_2_matrix(&rotmat,&rotangs);
 
@@ -2016,7 +2016,7 @@ void object_move_one( object * obj )
 			for (i=0;i<n_phys_segs-1;i++) {
 				connect_side = find_connect_side(&Segments[phys_seglist[i+1]], &Segments[phys_seglist[i]]);
 				if (connect_side != -1)
-					check_trigger(&Segments[phys_seglist[i]], connect_side, obj-Objects);
+					check_trigger(&Segments[phys_seglist[i]], connect_side, (short)(obj-Objects));
 					//check_trigger(&Segments[previous_segment], connect_side, obj-Objects);
 				#ifndef NDEBUG
 				else {	// segments are not directly connected, so do binary subdivision until you find connected segments.
@@ -2167,7 +2167,7 @@ int update_object_seg(object * obj )
 		return 0;
 
 	if ( newseg != obj->segnum )
-		obj_relink(obj-Objects, newseg );
+		obj_relink((int)(obj-Objects), newseg );
 
 	return 1;
 }
@@ -2262,11 +2262,11 @@ void obj_attach(object *parent,object *sub)
 	sub->ctype.expl_info.next_attach = parent->attached_obj;
 
 	if (sub->ctype.expl_info.next_attach != -1)
-		Objects[sub->ctype.expl_info.next_attach].ctype.expl_info.prev_attach = sub-Objects;
+		Objects[sub->ctype.expl_info.next_attach].ctype.expl_info.prev_attach = (short)(sub-Objects);
 
-	parent->attached_obj = sub-Objects;
+	parent->attached_obj = (short)(sub-Objects);
 
-	sub->ctype.expl_info.attach_parent = parent-Objects;
+	sub->ctype.expl_info.attach_parent = (short)(parent-Objects);
 	sub->flags |= OF_ATTACHED;
 
 	Assert(sub->ctype.expl_info.next_attach != sub-Objects);

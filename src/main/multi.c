@@ -1147,7 +1147,7 @@ void multi_message_input_sub( int key )
 							strcpy( pcolon+1, ptext );
 						else
 							strcpy( Network_message, ptext );
-						multi_message_index = strlen( Network_message );
+						multi_message_index = (int)strlen( Network_message );
 					}
 				}
 			}

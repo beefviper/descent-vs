@@ -319,12 +319,12 @@ void wall_set_tmap_num(segment *seg,int side,segment *csegp,int cside,int anim_n
 	if (anim->flags & WCF_TMAP1)	{
 		seg->sides[side].tmap_num = csegp->sides[cside].tmap_num = tmap;
 		if ( Newdemo_state == ND_STATE_RECORDING )
-			newdemo_record_wall_set_tmap_num1(seg-Segments,side,csegp-Segments,cside,tmap);
+			newdemo_record_wall_set_tmap_num1((short)(seg-Segments),side,(short)(csegp-Segments),cside,tmap);
 	} else	{
 		Assert(tmap!=0 && seg->sides[side].tmap_num2!=0);
 		seg->sides[side].tmap_num2 = csegp->sides[cside].tmap_num2 = tmap;
 		if ( Newdemo_state == ND_STATE_RECORDING )
-			newdemo_record_wall_set_tmap_num2(seg-Segments,side,csegp-Segments,cside,tmap);
+			newdemo_record_wall_set_tmap_num2((short)(seg-Segments),side,(short)(csegp-Segments),cside,tmap);
 	}
 }
 
@@ -357,7 +357,7 @@ void blast_blastable_wall(segment *seg, int side)
 
 	//if this is an exploding wall, explode it
 	if (WallAnims[Walls[seg->sides[side].wall_num].clip_num].flags & WCF_EXPLODES)
-		explode_wall(seg-Segments,side);
+		explode_wall((int)(seg-Segments),side);
 }
 
 
@@ -407,7 +407,7 @@ void wall_damage(segment *seg, int side, fix damage)
 			blast_blastable_wall( seg, side );
 			#ifdef NETWORK
 			if (Game_mode & GM_MULTI)
-				multi_send_door_open(seg-Segments, side);
+				multi_send_door_open((int)(seg-Segments), side);
 			#endif
 		}
 		else
@@ -488,7 +488,7 @@ void wall_open_door(segment *seg, int side)
 
 #ifndef SHAREWARE
 	if (Newdemo_state == ND_STATE_RECORDING) {
-		newdemo_record_door_opening(seg-Segments, side);
+		newdemo_record_door_opening((int)(seg-Segments), side);
 	}
 #endif
 
@@ -523,7 +523,7 @@ void wall_open_door(segment *seg, int side)
 		vms_vector cp;
 		compute_center_point_on_side(&cp, seg, side );
 		if (WallAnims[w->clip_num].open_sound > -1 )
-			digi_link_sound_to_pos( WallAnims[w->clip_num].open_sound, seg-Segments, side, &cp, 0, F1_0 );
+			digi_link_sound_to_pos( WallAnims[w->clip_num].open_sound, (short)(seg-Segments), side, &cp, 0, F1_0 );
 
 	}
 }
@@ -689,11 +689,11 @@ void do_door_close(int door_num)
 			//it pokes into the connecting seg
 
 			for (objnum=seg->objects;objnum!=-1;objnum=Objects[objnum].next)
-				if (check_poke(objnum,seg-Segments,side))
+				if (check_poke(objnum,(int)(seg-Segments),side))
 					return;		//abort!
 
 			for (objnum=csegp->objects;objnum!=-1;objnum=Objects[objnum].next)
-				if (check_poke(objnum,csegp-Segments,Connectside))
+				if (check_poke(objnum,(int)(csegp-Segments),Connectside))
 					return;		//abort!
 		}
 
@@ -730,7 +730,7 @@ void do_door_close(int door_num)
 					vms_vector cp;
 					compute_center_point_on_side(&cp, seg, side );
 					if (WallAnims[w->clip_num].close_sound  > -1 )
-						digi_link_sound_to_pos( WallAnims[Walls[seg->sides[side].wall_num].clip_num].close_sound, seg-Segments, side, &cp, 0, F1_0 );
+						digi_link_sound_to_pos( WallAnims[Walls[seg->sides[side].wall_num].clip_num].close_sound, (short)(seg-Segments), side, &cp, 0, F1_0 );
 				}
 
 		d->time += FrameTime;
@@ -835,7 +835,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 	w = &Walls[seg->sides[side].wall_num];
 
 	if ( Newdemo_state == ND_STATE_RECORDING )
-		newdemo_record_wall_hit_process( seg-Segments, side, damage, playernum );
+		newdemo_record_wall_hit_process( (int)(seg-Segments), side, damage, playernum );
 
 	if (w->type == WALL_BLASTABLE) {
 		wall_damage(seg, side, damage);
@@ -879,7 +879,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 		}
 
 	if (w->type == WALL_DOOR)
-		if ((w->flags & WALL_DOOR_LOCKED ) && !(special_boss_opening_allowed(seg-Segments, side)) ) {
+		if ((w->flags & WALL_DOOR_LOCKED ) && !(special_boss_opening_allowed((int)(seg-Segments), side)) ) {
 			if ( playernum==Player_num )
 				if (show_message)
 					HUD_init_message(TXT_CANT_OPEN_DOOR);
@@ -891,7 +891,7 @@ int wall_hit_process(segment *seg, int side, fix damage, int playernum, object *
 				wall_open_door(seg, side);
 			#ifdef NETWORK
 				if (Game_mode & GM_MULTI)
-					multi_send_door_open(seg-Segments, side);
+					multi_send_door_open((int)(seg-Segments), side);
 			#endif
 			}
 			return WHP_DOOR;
@@ -918,7 +918,7 @@ void wall_toggle(segment *seg, int side)
 	}
 
 	if ( Newdemo_state == ND_STATE_RECORDING )
-		newdemo_record_wall_toggle(seg-Segments, side );
+		newdemo_record_wall_toggle((int)(seg-Segments), side );
 
 	if (Walls[wall_num].type == WALL_BLASTABLE)
 		wall_destroy(seg, side);
@@ -994,7 +994,7 @@ void add_stuck_object(object *objp, int segnum, int sidenum)
 		for (i=0; i<MAX_STUCK_OBJECTS; i++) {
 			if (Stuck_objects[i].wallnum == -1) {
 				Stuck_objects[i].wallnum = wallnum;
-				Stuck_objects[i].objnum = objp-Objects;
+				Stuck_objects[i].objnum = (short)(objp-Objects);
 				Stuck_objects[i].signature = objp->signature;
 				// mprintf((0, "Added wall %i at index %i\n", wallnum, i));
 				Num_stuck_objects++;

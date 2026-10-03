@@ -1014,7 +1014,7 @@ int player_is_visible_from_object(object *objp, vms_vector *pos, fix field_of_vi
 		fq.startseg			= objp->segnum;
 	fq.p1						= &Believed_player_pos;
 	fq.rad					= F1_0/4;
-	fq.thisobjnum			= objp-Objects;
+	fq.thisobjnum			= (short)(objp-Objects);
 	fq.ignore_obj_list	= NULL;
 	fq.flags					= FQ_TRANSWALL | FQ_CHECK_OBJS;		//what about trans walls???
 
@@ -1043,7 +1043,7 @@ int player_is_visible_from_object(object *objp, vms_vector *pos, fix field_of_vi
 //	Return 1 if animates, else return 0
 int do_silly_animation(object *objp)
 {
-	int				objnum = objp-Objects;
+	int				objnum = (int)(objp-Objects);
 	jointpos 		*jp_list;
 	int				robot_type, gun_num, robot_state, num_joint_positions;
 	polyobj_info	*pobj_info = &objp->rtype.pobj_info;
@@ -1105,7 +1105,7 @@ int do_silly_animation(object *objp)
 				if (flinch_attack_scale != 1)
 					delta_2 *= flinch_attack_scale;
 
-				Ai_local_info[objnum].delta_angles[jointnum].p = delta_2/DELTA_ANG_SCALE;		// complete revolutions per second
+				Ai_local_info[objnum].delta_angles[jointnum].p = (fixang)(delta_2/DELTA_ANG_SCALE);		// complete revolutions per second
 			}
 
 			if (jp->b != pobjp->b) {
@@ -1126,7 +1126,7 @@ int do_silly_animation(object *objp)
 				if (flinch_attack_scale != 1)
 					delta_2 *= flinch_attack_scale;
 
-				Ai_local_info[objnum].delta_angles[jointnum].b = delta_2/DELTA_ANG_SCALE;		// complete revolutions per second
+				Ai_local_info[objnum].delta_angles[jointnum].b = (fixang)(delta_2/DELTA_ANG_SCALE);		// complete revolutions per second
 			}
 
 			if (jp->h != pobjp->h) {
@@ -1147,7 +1147,7 @@ int do_silly_animation(object *objp)
 				if (flinch_attack_scale != 1)
 					delta_2 *= flinch_attack_scale;
 
-				Ai_local_info[objnum].delta_angles[jointnum].h = delta_2/DELTA_ANG_SCALE;		// complete revolutions per second
+				Ai_local_info[objnum].delta_angles[jointnum].h = (fixang)(delta_2/DELTA_ANG_SCALE);		// complete revolutions per second
 			}
 		}
 
@@ -1177,7 +1177,7 @@ int do_silly_animation(object *objp)
 //	Delta orientation of object is at:		ai_info.delta_angles
 void ai_frame_animation(object *objp)
 {
-	int	objnum = objp-Objects;
+	int	objnum = (int)(objp-Objects);
 	int	joint;
 	int	num_joints;
 
@@ -1203,7 +1203,7 @@ if (Ai_animation_test) {
 
 		if (delta_to_goal) {
 			scaled_delta_angle = fixmul(deltaangp->p, FrameTime) * DELTA_ANG_SCALE;
-			curangp->p += scaled_delta_angle;
+			curangp->p += (fixang)(scaled_delta_angle);
 			if (abs(delta_to_goal) < abs(scaled_delta_angle))
 				curangp->p = goalangp->p;
 		}
@@ -1216,7 +1216,7 @@ if (Ai_animation_test) {
 
 		if (delta_to_goal) {
 			scaled_delta_angle = fixmul(deltaangp->b, FrameTime) * DELTA_ANG_SCALE;
-			curangp->b += scaled_delta_angle;
+			curangp->b += (fixang)(scaled_delta_angle);
 			if (abs(delta_to_goal) < abs(scaled_delta_angle))
 				curangp->b = goalangp->b;
 		}
@@ -1229,7 +1229,7 @@ if (Ai_animation_test) {
 
 		if (delta_to_goal) {
 			scaled_delta_angle = fixmul(deltaangp->h, FrameTime) * DELTA_ANG_SCALE;
-			curangp->h += scaled_delta_angle;
+			curangp->h += (fixang)(scaled_delta_angle);
 			if (abs(delta_to_goal) < abs(scaled_delta_angle))
 				curangp->h = goalangp->h;
 		}
@@ -1289,7 +1289,7 @@ extern int Player_exploded;
 //	When this routine is complete, the parameter vec_to_player should not be necessary.
 void ai_fire_laser_at_player(object *obj, vms_vector *fire_point)
 {
-	int			objnum = obj-Objects;
+	int			objnum = (int)(obj-Objects);
 	ai_local		*ailp = &Ai_local_info[objnum];
 	robot_info	*robptr = &Robot_info[obj->id];
 	vms_vector	fire_vec;
@@ -1383,7 +1383,7 @@ void ai_fire_laser_at_player(object *obj, vms_vector *fire_point)
 //		mprintf((0, "Boss (%i) fires!\n", obj-Objects));
 //#endif
 
-	Laser_create_new_easy( &fire_vec, fire_point, obj-Objects, robptr->weapon_type, 1);
+	Laser_create_new_easy( &fire_vec, fire_point, (int)(obj-Objects), robptr->weapon_type, 1);
 
 #ifndef SHAREWARE
 #ifdef NETWORK
@@ -1462,7 +1462,7 @@ void move_around_player(object *objp, vms_vector *vec_to_player, int fast_flag)
 	physics_info	*pptr = &objp->mtype.phys_info;
 	fix				speed;
 	robot_info		*robptr = &Robot_info[objp->id];
-	int				objnum = objp-Objects;
+	int				objnum = (int)(objp-Objects);
 	int				dir;
 	int				dir_change;
 	fix				ft;
@@ -1931,7 +1931,7 @@ void move_object_to_legal_spot(object *objp)
 				int	new_segnum = find_point_seg(&objp->pos, objp->segnum);
 
 				if (new_segnum != -1) {
-					obj_relink(objp-Objects, new_segnum);
+					obj_relink((int)(objp-Objects), new_segnum);
 					return;
 				}
 			} else
@@ -1942,7 +1942,7 @@ void move_object_to_legal_spot(object *objp)
 	// Int3();		//	Darn you John, you done it again!  (But contact Mike)
 	mprintf((0, "Note: Killing robot #%i because he's badly stuck outside the mine.\n", objp-Objects));
 
-	apply_damage_to_robot(objp, objp->shields*2, objp-Objects);
+	apply_damage_to_robot(objp, objp->shields*2, (int)(objp-Objects));
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -2140,7 +2140,7 @@ int create_gated_robot( int segnum, int object_id)
 	}
 
 	compute_segment_center(&object_pos, segp);
-	pick_random_point_in_seg(&object_pos, segp-Segments);
+	pick_random_point_in_seg(&object_pos, (int)(segp-Segments));
 
 	//	See if legal to place object here.  If not, move about in segment and try again.
 	if (check_object_object_intersection(&object_pos, objsize, segp)) {
@@ -2184,7 +2184,7 @@ int create_gated_robot( int segnum, int object_id)
 	if (object_id == 10)						//	This is a toaster guy!
 		default_behavior = AIB_RUN_FROM;
 
-	init_ai_object(objp-Objects, default_behavior, -1 );		//	Note, -1 = segment this robot goes to to hide, should probably be something useful
+	init_ai_object((int)(objp-Objects), default_behavior, -1 );		//	Note, -1 = segment this robot goes to to hide, should probably be something useful
 
 	object_create_explosion(segnum, &object_pos, i2f(10), VCLIP_MORPHING_ROBOT );
 	digi_link_sound_to_pos( Vclip[VCLIP_MORPHING_ROBOT].sound_num, segnum, 0, &object_pos, 0 , F1_0);
@@ -2242,7 +2242,7 @@ int gate_in_robot(int type, int segnum)
 int boss_fits_in_seg(object *boss_objp, int segnum)
 {
 	vms_vector	segcenter;
-	int			boss_objnum = boss_objp-Objects;
+	int			boss_objnum = (int)(boss_objp-Objects);
 	int			posnum;
 
 	compute_segment_center(&segcenter, &Segments[segnum]);
@@ -2375,12 +2375,12 @@ void teleport_boss(object *objp)
 #ifndef SHAREWARE
 #ifdef NETWORK
 	if (Game_mode & GM_MULTI)
-		multi_send_boss_actions(objp-Objects, 1, rand_seg, 0);
+		multi_send_boss_actions((int)(objp-Objects), 1, rand_seg, 0);
 #endif
 #endif
 
 	compute_segment_center(&objp->pos, &Segments[rand_segnum]);
-	obj_relink(objp-Objects, rand_segnum);
+	obj_relink((int)(objp-Objects), rand_segnum);
 
 	Last_teleport_time = GameTime;
 
@@ -2389,8 +2389,8 @@ void teleport_boss(object *objp)
 	vm_vector_2_matrix(&objp->orient, &boss_dir, NULL, NULL);
 
 	digi_link_sound_to_pos( Vclip[VCLIP_MORPHING_ROBOT].sound_num, rand_segnum, 0, &objp->pos, 0 , F1_0);
-	digi_kill_sound_linked_to_object( objp-Objects);
-	digi_link_sound_to_object2( SOUND_BOSS_SHARE_SEE, objp-Objects, 1, F1_0, F1_0*512 );	//	F1_0*512 means play twice as loud
+	digi_kill_sound_linked_to_object( (int)(objp-Objects));
+	digi_link_sound_to_object2( SOUND_BOSS_SHARE_SEE, (short)(objp-Objects), 1, F1_0, F1_0*512 );	//	F1_0*512 means play twice as loud
 	#ifndef NDEBUG
 	mprintf((0, "Boss teleported to segment %i\n", rand_segnum));
 	#endif
@@ -2429,7 +2429,7 @@ void do_boss_dying_frame(object *objp)
 		if (!Boss_dying_sound_playing) {
 			mprintf((0, "Starting boss death sound!\n"));
 			Boss_dying_sound_playing = 1;
-			digi_link_sound_to_object2( SOUND_BOSS_SHARE_DIE, objp-Objects, 0, F1_0*4, F1_0*1024 );	//	F1_0*512 means play twice as loud
+			digi_link_sound_to_object2( SOUND_BOSS_SHARE_DIE, (short)(objp-Objects), 0, F1_0*4, F1_0*1024 );	//	F1_0*512 means play twice as loud
 		} else if (rand() < FrameTime*16)
 			create_small_fireball_on_object(objp, (F1_0 + rand()) * 8, 0);
 	} else if (rand() < FrameTime*8)
@@ -2438,7 +2438,7 @@ void do_boss_dying_frame(object *objp)
 	if (Boss_dying_start_time + BOSS_DEATH_DURATION < GameTime) {
 		do_controlcen_destroyed_stuff(NULL);
 		explode_object(objp, F1_0/4);
-		digi_link_sound_to_object2(SOUND_BADASS_EXPLOSION, objp-Objects, 0, F2_0, F1_0*512);
+		digi_link_sound_to_object2(SOUND_BADASS_EXPLOSION, (short)(objp-Objects), 0, F2_0, F1_0*512);
 	}
 }
 
@@ -2462,7 +2462,7 @@ int ai_multiplayer_awareness(object *objp, int awareness_level)
 	if (Game_mode & GM_MULTI) {
 		if (awareness_level == 0)
 			return 0;
-		rval = multi_can_move_robot(objp-Objects, awareness_level);
+		rval = multi_can_move_robot((int)(objp-Objects), awareness_level);
 	}
 #endif
 
@@ -2521,7 +2521,7 @@ void do_boss_stuff(object *objp)
 #ifndef SHAREWARE
 #ifdef NETWORK
 					if (Game_mode & GM_MULTI)
-						multi_send_boss_actions(objp-Objects, 2, 0, 0);
+						multi_send_boss_actions((int)(objp-Objects), 2, 0, 0);
 #endif
 #endif
 				}
@@ -2555,7 +2555,7 @@ void do_super_boss_stuff(object *objp, fix dist_to_player, int player_visibility
 #ifndef SHAREWARE
 #ifdef NETWORK
 			if (eclip_state == 0) {
-				multi_send_boss_actions(objp-Objects, 4, 0, 0);
+				multi_send_boss_actions((int)(objp-Objects), 4, 0, 0);
 				eclip_state = 1;
 			}
 #endif
@@ -2566,7 +2566,7 @@ void do_super_boss_stuff(object *objp, fix dist_to_player, int player_visibility
 #ifndef SHAREWARE
 #ifdef NETWORK
 			if (eclip_state == 1) {
-				multi_send_boss_actions(objp-Objects, 5, 0, 0);
+				multi_send_boss_actions((int)(objp-Objects), 5, 0, 0);
 				eclip_state = 0;
 			}
 #endif
@@ -2587,7 +2587,7 @@ void do_super_boss_stuff(object *objp, fix dist_to_player, int player_visibility
 #ifdef NETWORK
 				if (rtval && (Game_mode & GM_MULTI))
 				{
-					multi_send_boss_actions(objp-Objects, 3, randtype, Net_create_objnums[0]);
+					multi_send_boss_actions((int)(objp-Objects), 3, randtype, Net_create_objnums[0]);
 					map_objnum_local_to_local(Net_create_objnums[0]);
 				}
 #endif
@@ -2707,7 +2707,7 @@ void ai_do_actual_firing_stuff(object *obj, ai_static *aip, ai_local *ailp, robo
 // --------------------------------------------------------------------------------------------------------------------
 void do_ai_frame(object *obj)
 {
-	int			objnum = obj-Objects;
+	int			objnum = (int)(obj-Objects);
 	ai_static	*aip = &obj->ctype.ai_info;
 	ai_local		*ailp = &Ai_local_info[objnum];
 	fix			dist_to_player;
@@ -3219,14 +3219,14 @@ void do_ai_frame(object *obj)
 				vm_vec_negate(&fire_vec);
 				vm_vec_add(&fire_pos, &obj->pos, &fire_vec);
 
-				Laser_create_new_easy( &fire_vec, &fire_pos, obj-Objects, PROXIMITY_ID, 1);
+				Laser_create_new_easy( &fire_vec, &fire_pos, (int)(obj-Objects), PROXIMITY_ID, 1);
 				ailp->next_fire = F1_0*5;		//	Drop a proximity bomb every 5 seconds.
 
 				#ifdef NETWORK
 				if (Game_mode & GM_MULTI)
 				{
-					ai_multi_send_robot_position(obj-Objects, -1);
-					multi_send_robot_fire(obj-Objects, -1, &fire_vec);
+					ai_multi_send_robot_position((int)(obj-Objects), -1);
+					multi_send_robot_fire((int)(obj-Objects), -1, &fire_vec);
 				}
 				#endif
 			}

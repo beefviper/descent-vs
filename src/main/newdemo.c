@@ -901,7 +901,7 @@ void my_extract_shortpos(object *objp, shortpos *spp)
 int newdemo_read( void *buffer, int elsize, int nelem )
 {
 	int num_read;
-	num_read = fread( buffer,elsize,nelem, infile );
+	num_read = (int)fread( buffer,elsize,nelem, infile );
  	if (ferror(infile) || feof(infile))
 		nd_bad_read = -1;
 
@@ -915,7 +915,7 @@ int newdemo_write( void *buffer, int elsize, int nelem )
 	total_size = elsize * nelem;
 	frame_bytes_written += total_size;
 	Newdemo_num_written += total_size;
-	num_written = fwrite( buffer, elsize, nelem, outfile );
+	num_written = (int)fwrite( buffer, elsize, nelem, outfile );
 //	if (((unsigned int)Newdemo_num_written > Newdemo_size) && !Newdemo_no_space) {
 //		Newdemo_no_space=1;
 //		newdemo_stop_recording();
@@ -954,8 +954,8 @@ static void nd_write_int(int i)
 
 static void nd_write_string(char *str)
 {
-	nd_write_byte(strlen(str) + 1);
-	newdemo_write(str, strlen(str) + 1, 1);
+	nd_write_byte((byte)(strlen(str) + 1));
+	newdemo_write(str, (int)strlen(str) + 1, 1);
 }
 
 static void nd_write_fix(fix f)
@@ -2178,7 +2178,7 @@ int newdemo_read_frame_information()
 
 				if (segnum > Highest_segment_index)
 					segnum = 0;
-				obj_link(Viewer-Objects,segnum);
+				obj_link((int)(Viewer-Objects),segnum);
 			}
 			break;
 
@@ -2199,7 +2199,7 @@ int newdemo_read_frame_information()
 				if (segnum > Highest_segment_index)
 					break;
 
-				obj_link(obj-Objects,segnum);
+				obj_link((int)(obj-Objects),segnum);
 				#ifdef NETWORK
 				if ((obj->type == OBJ_PLAYER) && (Newdemo_game_mode & GM_MULTI)) {
 					int player;
@@ -2308,7 +2308,7 @@ int newdemo_read_frame_information()
 				if (Newdemo_vcr_state != ND_STATE_PAUSED) {
 					segnum = obj->segnum;
 					obj->next = obj->prev = obj->segnum = -1;
-					obj_link(obj-Objects,segnum);
+					obj_link((int)(obj-Objects),segnum);
 				}
 			}
 			break;
@@ -3464,7 +3464,7 @@ void newdemo_stop_recording()
 		byte_count++;
 		for (l = 0; l < N_players; l++) {
 			nd_write_string(Players[l].callsign);
-			byte_count += (strlen(Players[l].callsign) + 2);
+			byte_count += (unsigned short)(strlen(Players[l].callsign) + 2);
 			nd_write_byte(Players[l].connected);
 			if (Game_mode & GM_MULTI_COOP) {
 				nd_write_int(Players[l].score);
@@ -3491,7 +3491,7 @@ void newdemo_stop_recording()
 	gr_palette_load( gr_palette );
 
 	if (filename[0] != '\0') {
- 		int num, i = strlen(filename) - 1;
+ 		int num, i = (int)strlen(filename) - 1;
  		char newfile[15];
 
  		while (isdigit(filename[i])) {

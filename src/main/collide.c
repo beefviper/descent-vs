@@ -534,13 +534,13 @@ void apply_force_damage(object *obj,fix force,object *other_obj)
 				if (other_obj->type == OBJ_WEAPON)
 					result = apply_damage_to_robot(obj,damage/4, other_obj->ctype.laser_info.parent_num);
 				else
-					result = apply_damage_to_robot(obj,damage/4, other_obj-Objects);
+					result = apply_damage_to_robot(obj,damage/4, (int)(other_obj-Objects));
 			}
 			else {
 				if (other_obj->type == OBJ_WEAPON)
 					result = apply_damage_to_robot(obj,damage/2, other_obj->ctype.laser_info.parent_num);
 				else
-					result = apply_damage_to_robot(obj,damage/2, other_obj-Objects);
+					result = apply_damage_to_robot(obj,damage/2, (int)(other_obj-Objects));
 			}
 
 			if (result && (other_obj->ctype.laser_info.parent_signature == ConsoleObject->signature))
@@ -559,7 +559,7 @@ void apply_force_damage(object *obj,fix force,object *other_obj)
 
 		case OBJ_CNTRLCEN:
 
-			apply_damage_to_controlcen(obj,damage, other_obj-Objects);
+			apply_damage_to_controlcen(obj,damage, (short)(other_obj-Objects));
 			break;
 
 		case OBJ_WEAPON:
@@ -804,17 +804,17 @@ int check_effect_blowup(segment *seg,int side,vms_vector *pnt)
 					//mprintf((0,"  HIT!\n"));
 
 					if (Newdemo_state == ND_STATE_RECORDING)
-						newdemo_record_effect_blowup( seg-Segments, side, pnt);
+						newdemo_record_effect_blowup( (short)(seg-Segments), side, pnt);
 
 					vc = Effects[ec].dest_vclip;
 
-					object_create_explosion( seg-Segments, pnt, Effects[ec].dest_size, vc );
+					object_create_explosion( (short)(seg-Segments), pnt, Effects[ec].dest_size, vc );
 
 					if ((sound_num = Vclip[vc].sound_num) != -1)
-			  			digi_link_sound_to_pos( sound_num, seg-Segments, 0, pnt,  0, F1_0 );
+			  			digi_link_sound_to_pos( sound_num, (short)(seg-Segments), 0, pnt,  0, F1_0 );
 
 					if ((sound_num=Effects[ec].sound_num)!=-1)		//kill sound
-						digi_kill_sound_linked_to_segment(seg-Segments,side,sound_num);
+						digi_kill_sound_linked_to_segment((int)(seg-Segments),side,sound_num);
 
 					if (Effects[ec].dest_eclip!=-1 && Effects[Effects[ec].dest_eclip].segnum==-1) {
 						int bm_num;
@@ -827,7 +827,7 @@ int check_effect_blowup(segment *seg,int side,vms_vector *pnt)
 
 						new_ec->time_left = new_ec->vc.frame_time;
 						new_ec->frame_count = 0;
-						new_ec->segnum = seg-Segments;
+						new_ec->segnum = (int)(seg-Segments);
 						new_ec->sidenum = side;
 						new_ec->flags |= EF_ONE_SHOT;
 						new_ec->dest_bm_num = Effects[ec].dest_bm_num;
@@ -1245,9 +1245,9 @@ int apply_damage_to_robot(object *robot, fix damage, int killer_objnum)
 #ifndef SHAREWARE
 #ifdef NETWORK
 		if (Game_mode & GM_MULTI) {
-			if (multi_explode_robot_sub(robot-Objects, killer_objnum))
+			if (multi_explode_robot_sub((int)(robot-Objects), killer_objnum))
 			{
-				multi_send_robot_explode(robot-Objects, killer_objnum);
+				multi_send_robot_explode((int)(robot-Objects), killer_objnum);
 				return 1;
 			}
 			else
@@ -1285,7 +1285,7 @@ void collide_robot_and_weapon( object * robot, object * weapon, vms_vector *coll
 		if (weapon->ctype.laser_info.last_hitobj == robot-Objects)
 			return;
 		else
-			weapon->ctype.laser_info.last_hitobj = robot-Objects;
+			weapon->ctype.laser_info.last_hitobj = (short)(robot-Objects);
 
 		// mprintf((0, "weapon #%i with power %i hits robot #%i.\n", weapon - Objects, f2i(weapon->shields), robot - Objects));
 	}
@@ -1373,7 +1373,7 @@ void collide_hostage_and_player( object * hostage, object * player, vms_vector *
 
 		#ifdef NETWORK
 		if (Game_mode & GM_MULTI)
-			multi_send_remobj(hostage-Objects);
+			multi_send_remobj((int)(hostage-Objects));
 		#endif
 	}
 	return;
@@ -1576,7 +1576,7 @@ void apply_damage_to_player(object *player, object *killer, fix damage)
 
 		if (Players[Player_num].shields < 0)	{
 
-  			Players[Player_num].killer_objnum = killer-Objects;
+  			Players[Player_num].killer_objnum = (short)(killer-Objects);
 
 //			if ( killer && (killer->type == OBJ_PLAYER))
 //				Players[Player_num].killer_objnum = killer-Objects;
@@ -1601,7 +1601,7 @@ void collide_player_and_weapon( object * player, object * weapon, vms_vector *co
 		if (weapon->ctype.laser_info.last_hitobj == player-Objects)
 			return;
 		else
-			weapon->ctype.laser_info.last_hitobj = player-Objects;
+			weapon->ctype.laser_info.last_hitobj = (short)(player-Objects);
 
 	if (player->id == Player_num)
 	{
@@ -1742,7 +1742,7 @@ void collide_player_and_powerup( object * player, object * powerup, vms_vector *
 			powerup->flags |= OF_SHOULD_BE_DEAD;
 			#ifdef NETWORK
 			if (Game_mode & GM_MULTI)
-				multi_send_remobj(powerup-Objects);
+				multi_send_remobj((int)(powerup-Objects));
 			#endif
 		}
 	}

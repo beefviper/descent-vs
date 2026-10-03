@@ -883,7 +883,7 @@ char_allowed(char c)
 void strip_end_whitespace( char * text )
 {
 	int i,l;
-	l = strlen( text );
+	l = (int)strlen( text );
 	for (i=l-1; i>=0; i-- )	{
 		if ( isspace(text[i]) )
 			text[i] = 0;
@@ -1349,7 +1349,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 			if ( ((item[choice].type==NM_TYPE_INPUT)||((item[choice].type==NM_TYPE_INPUT_MENU)&&(item[choice].group==1)) )&& (old_choice==choice) )	{
 				if ( k==KEY_LEFT || k==KEY_BACKSP || k==KEY_PAD4 )	{
-					if (item[choice].value==-1) item[choice].value = strlen(item[choice].text);
+					if (item[choice].value==-1) item[choice].value = (int)strlen(item[choice].text);
 					if (item[choice].value > 0)
 						item[choice].value--;
 					item[choice].text[item[choice].value] = 0;

@@ -500,7 +500,7 @@ int joy_init()
 		joystick.last_value = 0;
 
 		//--------------- lock everything for the virtal memory ----------------------------------
-		if (!dpmi_lock_region ((void near *)joy_handler, (char *)joy_handler_end - (char near *)joy_handler))	{
+		if (!dpmi_lock_region ((void near *)joy_handler, (unsigned int)((char *)joy_handler_end - (char near *)joy_handler)))	{
 			printf( "Error locking joystick handler!\n" );
 			exit(1);
 		}

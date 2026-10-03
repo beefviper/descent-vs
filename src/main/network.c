@@ -1543,7 +1543,7 @@ void network_read_object_packet( ubyte *data )
 				obj->next = obj->prev = obj->segnum = -1;
 				obj->attached_obj = -1;
 				if (segnum > -1)
-					obj_link(obj-Objects,segnum);
+					obj_link((int)(obj-Objects),segnum);
 				if (obj_owner == my_pnum)
 					map_objnum_local_to_local(objnum);
 				else if (obj_owner != -1)

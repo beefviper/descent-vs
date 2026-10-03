@@ -259,7 +259,7 @@ void compute_segment_center(vms_vector *vp,segment *sp)
 int find_connect_side(segment *base_seg, segment *con_seg)
 {
 	int	s;
-	short	base_seg_num = base_seg - Segments;
+	short	base_seg_num = (short)(base_seg-Segments);
 	short *childs = con_seg->children;
 
 	for (s=0; s<MAX_SIDES_PER_SEGMENT; s++) {
@@ -495,7 +495,9 @@ segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 
 	//check point against each side of segment. return bitmask
 
-	masks.sidemask = masks.facemask = masks.centermask = 0;
+	masks.sidemask = 0;
+	masks.facemask = 0;
+	masks.centermask = 0;
 
 	for (sn=0,facebit=sidebit=1;sn<6;sn++,sidebit<<=1) {
 		#ifndef COMPACT_SEGS
@@ -1259,7 +1261,7 @@ byte convert_to_byte(fix f)
 	else if (f <= -0x00010000)
 		return -MATRIX_MAX;
 	else
-		return f >> MATRIX_PRECISION;
+		return (byte)(f >> MATRIX_PRECISION);
 }
 
 #define VEL_PRECISION 12
@@ -1285,15 +1287,15 @@ void create_shortpos(shortpos *spp, object *objp)
 	*sp++ = convert_to_byte(objp->orient.uvec.z);
 	*sp++ = convert_to_byte(objp->orient.fvec.z);
 
-	spp->xo = (objp->pos.x - Vertices[Segments[objp->segnum].verts[0]].x) >> RELPOS_PRECISION;
-	spp->yo = (objp->pos.y - Vertices[Segments[objp->segnum].verts[0]].y) >> RELPOS_PRECISION;
-	spp->zo = (objp->pos.z - Vertices[Segments[objp->segnum].verts[0]].z) >> RELPOS_PRECISION;
+	spp->xo = (short)((objp->pos.x - Vertices[Segments[objp->segnum].verts[0]].x) >> RELPOS_PRECISION);
+	spp->yo = (short)((objp->pos.y - Vertices[Segments[objp->segnum].verts[0]].y) >> RELPOS_PRECISION);
+	spp->zo = (short)((objp->pos.z - Vertices[Segments[objp->segnum].verts[0]].z) >> RELPOS_PRECISION);
 
 	spp->segment = objp->segnum;
 
- 	spp->velx = (objp->mtype.phys_info.velocity.x) >> VEL_PRECISION;
-	spp->vely = (objp->mtype.phys_info.velocity.y) >> VEL_PRECISION;
-	spp->velz = (objp->mtype.phys_info.velocity.z) >> VEL_PRECISION;
+ 	spp->velx = (short)((objp->mtype.phys_info.velocity.x) >> VEL_PRECISION);
+	spp->vely = (short)((objp->mtype.phys_info.velocity.y) >> VEL_PRECISION);
+	spp->velz = (short)((objp->mtype.phys_info.velocity.z) >> VEL_PRECISION);
 
 //	mprintf((0, "Matrix: %08x %08x %08x    %08x %08x %08x\n", objp->orient.m1,objp->orient.m2,objp->orient.m3,
 //					spp->bytemat[0] << MATRIX_PRECISION,spp->bytemat[1] << MATRIX_PRECISION,spp->bytemat[2] << MATRIX_PRECISION));
@@ -1341,7 +1343,7 @@ void extract_shortpos(object *objp, shortpos *spp)
 	objp->mtype.phys_info.velocity.y = (spp->vely << VEL_PRECISION);
 	objp->mtype.phys_info.velocity.z = (spp->velz << VEL_PRECISION);
 
-	obj_relink(objp-Objects, segnum);
+	obj_relink((int)(objp-Objects), segnum);
 
 //	mprintf((0, "Matrix: %08x %08x %08x    %08x %08x %08x\n", objp->orient.m1,objp->orient.m2,objp->orient.m3,
 //					spp->bytemat[0],spp->bytemat[1],spp->bytemat[2]));
@@ -1649,7 +1651,7 @@ void create_walls_on_side(segment *sp, int sidenum)
 			int			vertnum;
 			side			*s;
 
-			create_abs_vertex_lists( &num_faces, vertex_list, sp-Segments, sidenum);
+			create_abs_vertex_lists( &num_faces, vertex_list, (int)(sp-Segments), sidenum);
 
 			Assert(num_faces == 2);
 

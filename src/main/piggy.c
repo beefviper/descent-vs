@@ -871,7 +871,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 		if ( bmp->bm_flags & BM_FLAG_RLE )	{
 			int zsize = 0;
 			descent_critical_error = 0;
-			temp = cfread( &zsize, 1, sizeof(int), Piggy_fp );
+			temp = (int)cfread( &zsize, 1, sizeof(int), Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -886,7 +886,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 			memcpy( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], &zsize, sizeof(int) );
 			Piggy_bitmap_cache_next += sizeof(int);
 			descent_critical_error = 0;
-			temp = cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, zsize-4, Piggy_fp );
+			temp = (int)cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, zsize-4, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;
@@ -900,7 +900,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 				goto ReDoIt;
 			}
 			descent_critical_error = 0;
-			temp = cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, bmp->bm_h*bmp->bm_w, Piggy_fp );
+			temp = (int)cfread( &Piggy_bitmap_cache_data[Piggy_bitmap_cache_next], 1, bmp->bm_h*bmp->bm_w, Piggy_fp );
 			if ( descent_critical_error )	{
 				piggy_critical_error();
 				goto ReDoIt;

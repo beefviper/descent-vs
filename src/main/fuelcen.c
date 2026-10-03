@@ -367,7 +367,7 @@ void fuelcen_create( segment * segp)
 	Station[Num_fuelcenters].Type = station_type;
 	Station[Num_fuelcenters].MaxCapacity = Fuelcen_max_amount;
 	Station[Num_fuelcenters].Capacity = Station[Num_fuelcenters].MaxCapacity;
-	Station[Num_fuelcenters].segnum = segp-Segments;
+	Station[Num_fuelcenters].segnum = (int)(segp-Segments);
 	Station[Num_fuelcenters].Timer = -1;
 	Station[Num_fuelcenters].Flag = 0;
 //	Station[Num_fuelcenters].NextRobotType = -1;
@@ -401,7 +401,7 @@ void matcen_create( segment * segp)
 	Station[Num_fuelcenters].Capacity = i2f(Difficulty_level + 3);
 	Station[Num_fuelcenters].MaxCapacity = Station[Num_fuelcenters].Capacity;
 
-	Station[Num_fuelcenters].segnum = segp-Segments;
+	Station[Num_fuelcenters].segnum = (int)(segp-Segments);
 	Station[Num_fuelcenters].Timer = -1;
 	Station[Num_fuelcenters].Flag = 0;
 //	Station[Num_fuelcenters].NextRobotType = -1;
@@ -414,7 +414,7 @@ void matcen_create( segment * segp)
 
 	RobotCenters[segp->matcen_num].hit_points = MATCEN_HP_DEFAULT;
 	RobotCenters[segp->matcen_num].interval = MATCEN_INTERVAL_DEFAULT;
-	RobotCenters[segp->matcen_num].segnum = segp-Segments;
+	RobotCenters[segp->matcen_num].segnum = (short)(segp-Segments);
 	RobotCenters[segp->matcen_num].fuelcen_num = Num_fuelcenters;
 
 	//mprintf( (0, "Segment %d is assigned to be fuel center %d.\n", Station[Num_fuelcenters].segnum, Num_fuelcenters ));
@@ -534,7 +534,7 @@ object * create_morph_robot( segment *segp, vms_vector *object_pos, int object_i
 	Players[Player_num].num_robots_level++;
 	Players[Player_num].num_robots_total++;
 
-	objnum = obj_create(OBJ_ROBOT, object_id, segp-Segments, object_pos,
+	objnum = obj_create(OBJ_ROBOT, object_id, (int)(segp-Segments), object_pos,
 				&vmd_identity_matrix, Polygon_models[Robot_info[object_id].model_num].rad,
 				CT_AI, MT_PHYSICS, RT_POLYOBJ);
 
@@ -564,7 +564,7 @@ object * create_morph_robot( segment *segp, vms_vector *object_pos, int object_i
 	if (object_id == 10)						//	This is a toaster guy!
 		default_behavior = AIB_RUN_FROM;
 
-	init_ai_object(obj-Objects, default_behavior, -1 );		//	Note, -1 = segment this robot goes to to hide, should probably be something useful
+	init_ai_object((int)(obj-Objects), default_behavior, -1 );		//	Note, -1 = segment this robot goes to to hide, should probably be something useful
 
 	create_n_segment_path(obj, 6, -1);		//	Create a 6 segment path from creation point.
 
@@ -666,7 +666,7 @@ void robotmaker_proc( FuelCenter * robotcen )
 
 		if (robotcen->Timer > top_time )	{
 			int	count=0;
-			int	i, my_station_num = robotcen-Station;
+			int	i, my_station_num = (int)(robotcen-Station);
 			object *obj;
 
 			//	Make sure this robotmaker hasn't put out its max without having any of them killed.
@@ -758,10 +758,10 @@ void robotmaker_proc( FuelCenter * robotcen )
 #ifndef SHAREWARE
 #ifdef NETWORK
 					if (Game_mode & GM_MULTI)
-						multi_send_create_robot(robotcen-Station, obj-Objects, type);
+						multi_send_create_robot((int)(robotcen-Station), (int)(obj-Objects), type);
 #endif
 #endif
-					obj->matcen_creator = robotcen-Station | 0x80;
+					obj->matcen_creator = (byte)((robotcen-Station) | 0x80);
 
 					// Make object faces player...
 					vm_vec_sub( &direction, &ConsoleObject->pos,&obj->pos );

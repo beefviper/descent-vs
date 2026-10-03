@@ -574,9 +574,9 @@ int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 	}
 	else
 		if (delta_angs.p > 0)
-			cur_angles->p += frame_turn;
+			cur_angles->p += (fixang)(frame_turn);
 		else
-			cur_angles->p -= frame_turn;
+			cur_angles->p -= (fixang)(frame_turn);
 
 	if (abs(delta_angs.b) < frame_turn) {
 		cur_angles->b = desired_angles->b;
@@ -584,9 +584,9 @@ int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 	}
 	else
 		if (delta_angs.b > 0)
-			cur_angles->b += frame_turn;
+			cur_angles->b += (fixang)(frame_turn);
 		else
-			cur_angles->b -= frame_turn;
+			cur_angles->b -= (fixang)(frame_turn);
 //cur_angles->b = 0;
 
 	if (abs(delta_angs.h) < frame_turn) {
@@ -595,9 +595,9 @@ int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 	}
 	else
 		if (delta_angs.h > 0)
-			cur_angles->h += frame_turn;
+			cur_angles->h += (fixang)(frame_turn);
 		else
-			cur_angles->h -= frame_turn;
+			cur_angles->h -= (fixang)(frame_turn);
 
 	return mask;
 }
@@ -852,7 +852,7 @@ void do_endlevel_frame()
 			vm_vec_scale_add2(&endlevel_camera->pos,&endlevel_camera->orient.uvec,fixmul(FrameTime,-cur_fly_speed/10));
 
 			vm_extract_angles_matrix(&cam_angles,&endlevel_camera->orient);
-			cam_angles.b += fixmul(bank_rate,FrameTime);
+			cam_angles.b += (fixang)(fixmul(bank_rate,FrameTime));
 			vm_angles_2_matrix(&endlevel_camera->orient,&cam_angles);
 #endif
 
@@ -1274,9 +1274,9 @@ void start_endlevel_flythrough(int n,object *obj,fix speed)
 
 static vms_angvec *angvec_add2_scale(vms_angvec *dest,vms_vector *src,fix s)
 {
-	dest->p += fixmul(src->x,s);
-	dest->b  += fixmul(src->z,s);
-	dest->h  += fixmul(src->y,s);
+	dest->p += (fixang)(fixmul(src->x,s));
+	dest->b += (fixang)(fixmul(src->z,s));
+	dest->h += (fixang)(fixmul(src->y,s));
 
 	return dest;
 }

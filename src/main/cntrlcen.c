@@ -224,7 +224,7 @@ void do_controlcen_destroyed_stuff(object *objp)
 		return;
 
 	if (objp != NULL)
-		Dead_controlcen_object_num = objp-Objects;
+		Dead_controlcen_object_num = (int)(objp-Objects);
 
 }
 
@@ -311,9 +311,9 @@ void do_controlcen_frame(object *obj)
 
 			#ifdef NETWORK
 			if (Game_mode & GM_MULTI)
-				multi_send_controlcen_fire(&vec_to_goal, best_gun_num, obj-Objects);
+				multi_send_controlcen_fire(&vec_to_goal, best_gun_num, (int)(obj-Objects));
 			#endif
-			Laser_create_new_easy( &vec_to_goal, &Gun_pos[best_gun_num], obj-Objects, CONTROLCEN_WEAPON_NUM, 1);
+			Laser_create_new_easy( &vec_to_goal, &Gun_pos[best_gun_num], (int)(obj-Objects), CONTROLCEN_WEAPON_NUM, 1);
 
 			//	1/4 of time, fire another thing, not directly at player, so it might hit him if he's constantly moving.
 			if (rand() < 32767/4) {
@@ -324,9 +324,9 @@ void do_controlcen_frame(object *obj)
 				vm_vec_normalize_quick(&vec_to_goal);
 				#ifdef NETWORK
 				if (Game_mode & GM_MULTI)
-					multi_send_controlcen_fire(&vec_to_goal, best_gun_num, obj-Objects);
+					multi_send_controlcen_fire(&vec_to_goal, best_gun_num, (int)(obj-Objects));
 				#endif
-				Laser_create_new_easy( &vec_to_goal, &Gun_pos[best_gun_num], obj-Objects, CONTROLCEN_WEAPON_NUM, 1);
+				Laser_create_new_easy( &vec_to_goal, &Gun_pos[best_gun_num], (int)(obj-Objects), CONTROLCEN_WEAPON_NUM, 1);
 			}
 
 			delta_fire_time = (NDL - Difficulty_level) * F1_0/4;

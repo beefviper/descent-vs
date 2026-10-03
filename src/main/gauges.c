@@ -1884,7 +1884,7 @@ void show_reticle(int force_big_one)
 		vm_vec_add2(&orient, fq.p0);
 		fq.p1 		= &orient;
 		fq.rad 		= 0;
-		fq.thisobjnum = ConsoleObject - Objects;
+		fq.thisobjnum = (short)(ConsoleObject-Objects);
 		fq.flags 	= FQ_TRANSWALL | FQ_CHECK_OBJS;
 		fq.startseg	= ConsoleObject->segnum;
 		fq.ignore_obj_list = NULL;

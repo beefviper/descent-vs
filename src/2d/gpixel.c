@@ -56,7 +56,7 @@ unsigned char gr_ugpixel( grs_bitmap * bitmap, int x, int y )
 	case BM_SVGA:
 		{
 		unsigned int offset;
-		offset = (unsigned int)bitmap->bm_data + (unsigned int)bitmap->bm_rowsize * y + x;
+		offset = (unsigned int)(uintptr_t)bitmap->bm_data + (unsigned int)bitmap->bm_rowsize * y + x;
 		gr_vesa_setpage( offset >> 16 );
 		return gr_video_memory[offset & 0xFFFF];
 		}
@@ -80,7 +80,7 @@ unsigned char gr_gpixel( grs_bitmap * bitmap, int x, int y )
 	case BM_SVGA:
 		{
 		unsigned int offset;
-		offset = (unsigned int)bitmap->bm_data + (unsigned int)bitmap->bm_rowsize * y + x;
+		offset = (unsigned int)(uintptr_t)bitmap->bm_data + (unsigned int)bitmap->bm_rowsize * y + x;
 		gr_vesa_setpage( offset >> 16 );
 		return gr_video_memory[offset & 0xFFFF];
 		}

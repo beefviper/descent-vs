@@ -182,18 +182,18 @@ int do_slew_movement(object *obj, int check_keys, int check_joy )
 			obj->mtype.phys_info.velocity.y += VEL_SPEED * (key_down_time(KEY_PADMINUS) - key_down_time(KEY_PADPLUS));
 			obj->mtype.phys_info.velocity.z += VEL_SPEED * (key_down_time(KEY_PAD8) - key_down_time(KEY_PAD2));
 
-			rotang.p = (key_down_time(KEY_LBRACKET) - key_down_time(KEY_RBRACKET))/ROT_SPEED ;
-			rotang.b  = (key_down_time(KEY_PAD1) - key_down_time(KEY_PAD3))/ROT_SPEED;
-			rotang.h  = (key_down_time(KEY_PAD6) - key_down_time(KEY_PAD4))/ROT_SPEED;
+			rotang.p = (fixang)((key_down_time(KEY_LBRACKET) - key_down_time(KEY_RBRACKET))/ROT_SPEED );
+			rotang.b = (fixang)((key_down_time(KEY_PAD1) - key_down_time(KEY_PAD3))/ROT_SPEED);
+			rotang.h = (fixang)((key_down_time(KEY_PAD6) - key_down_time(KEY_PAD4))/ROT_SPEED);
 		}
 		else {
 			obj->mtype.phys_info.velocity.x += VEL_SPEED * Controls.sideways_thrust_time;
 			obj->mtype.phys_info.velocity.y += VEL_SPEED * Controls.vertical_thrust_time;
 			obj->mtype.phys_info.velocity.z += VEL_SPEED * Controls.forward_thrust_time;
 
-			rotang.p = Controls.pitch_time/ROT_SPEED ;
-			rotang.b  = Controls.bank_time/ROT_SPEED;
-			rotang.h  = Controls.heading_time/ROT_SPEED;
+			rotang.p = (fixang)(Controls.pitch_time/ROT_SPEED );
+			rotang.b = (fixang)(Controls.bank_time/ROT_SPEED);
+			rotang.h = (fixang)(Controls.heading_time/ROT_SPEED);
 		}
 	}
 	else
@@ -212,11 +212,11 @@ int do_slew_movement(object *obj, int check_keys, int check_joy )
 		if (abs(joy_y) < JOY_NULL) joy_y = 0;
 
 		if (btns)
-			if (!rotang.p) rotang.p = fixmul(-joy_y * 512,FrameTime); else;
+			if (!rotang.p) rotang.p = (fixang)(fixmul(-joy_y * 512,FrameTime)); else;
 		else
 			if (joyy_moved) obj->mtype.phys_info.velocity.z = -joy_y * 8192;
 
-		if (!rotang.h) rotang.h = fixmul(joy_x * 512,FrameTime);
+		if (!rotang.h) rotang.h = (fixang)(fixmul(joy_x * 512,FrameTime));
 
 		if (joyx_moved) old_joy_x = joy_x;
 		if (joyy_moved) old_joy_y = joy_y;

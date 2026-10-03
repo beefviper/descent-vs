@@ -481,7 +481,7 @@ int check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,segment *s
 		norm = seg->sides[side].normals[facenum];
 	#endif
 
-	create_abs_vertex_lists(&num_faces,vertex_list,seg-Segments,side);
+	create_abs_vertex_lists(&num_faces,vertex_list,(int)(seg-Segments),side);
 
 	//use lowest point number
 	if (num_faces==2) {
@@ -578,7 +578,7 @@ int special_check_line_to_face(vms_vector *newp,vms_vector *p0,vms_vector *p1,se
 
 	//calc some basic stuff
 
-	create_abs_vertex_lists(&num_faces,vertex_list,seg-Segments,side);
+	create_abs_vertex_lists(&num_faces,vertex_list,(int)(seg-Segments),side);
 	vm_vec_sub(&move_vec,p1,p0);
 
 	//figure out which edge(s) to check against
@@ -1346,7 +1346,7 @@ void find_hitpoint_uv(fix *u,fix *v,vms_vector *pnt,segment *seg,int sidenum,int
 {
 	vms_vector_array *pnt_array;
 	vms_vector_array normal_array;
-	int segnum = seg-Segments;
+	int segnum = (int)(seg-Segments);
 	int num_faces;
 	int biggest,ii,jj;
 	side *side = &seg->sides[sidenum];
@@ -1491,7 +1491,7 @@ int sphere_intersects_wall(vms_vector *pnt,int segnum,fix rad)
 
 					//did we go through this wall/door?
 
-					create_abs_vertex_lists(&num_faces,vertex_list,seg-Segments,side);
+					create_abs_vertex_lists(&num_faces,vertex_list,(int)(seg-Segments),side);
 
 					face_hit_type = check_sphere_to_face( pnt,seg,&seg->sides[side],
 										face,((num_faces==1)?4:3),rad,vertex_list);

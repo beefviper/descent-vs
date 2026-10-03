@@ -291,7 +291,7 @@ object *explode_badass_weapon(object *obj)
 
 	Assert(wi->damage_radius);
 
-	digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, obj-Objects, 0, F1_0);
+	digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, (short)(obj-Objects), 0, F1_0);
 
 	return object_create_badass_explosion( obj, obj->segnum, &obj->pos,
 					wi->impact_size,
@@ -311,9 +311,9 @@ object *explode_badass_player(object *objp)
 	rval = object_create_badass_explosion(objp, objp->segnum, &objp->pos, objp->size,
 					get_explosion_vclip(objp, 0),
 					F1_0*50, F1_0*40, F1_0*150,
-					objp-Objects);
+					(int)(objp-Objects));
 	if (rval)
-		digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, rval-Objects, 0, F1_0);
+		digi_link_sound_to_object(SOUND_BADASS_EXPLOSION, (short)(rval-Objects), 0, F1_0);
 	return (rval);
 }
 
@@ -976,7 +976,7 @@ void explode_object(object *hitobj,fix delay_time)
 		//now set explosion-specific data
 
 		obj->lifeleft = delay_time;
-		obj->ctype.expl_info.delete_objnum = hitobj-Objects;
+		obj->ctype.expl_info.delete_objnum = (short)(hitobj-Objects);
 #ifndef NDEBUG
 		if (obj->ctype.expl_info.delete_objnum < 0)
 		 Int3(); // See Rob!
@@ -1109,7 +1109,7 @@ void do_explosion_sequence(object *obj)
 			}
 
 			expl_obj->ctype.expl_info.delete_time = expl_obj->lifeleft/2;
-			expl_obj->ctype.expl_info.delete_objnum = del_obj-Objects;
+			expl_obj->ctype.expl_info.delete_objnum = (short)(del_obj-Objects);
 #ifndef NDEBUG
 			if (obj->ctype.expl_info.delete_objnum < 0)
 		  		Int3(); // See Rob!

@@ -274,15 +274,15 @@ int iglasses_read_headset( fix *yaw, fix *pitch, fix *roll )
 	p  =  (short)(buff[7] << 8) | buff[8];
 	r  =  (short)(buff[9] << 8) | buff[10];
 
-	fx = (float)x/FBITS;
-	fy = (float)y/FBITS;
-	fz = (float)z/FBITS;
-	radPitch = (float)p*TO_RADIANS;
-	radRoll  = (float)r*TO_RADIANS;
-	sinPitch = sin(radPitch);
-	cosPitch = cos(radPitch);
-	sinRoll  = sin(radRoll);
-	cosRoll  = cos(radRoll);
+	fx = (float)(x/FBITS);
+	fy = (float)(y/FBITS);
+	fz = (float)(z/FBITS);
+	radPitch = (float)(p*TO_RADIANS);
+	radRoll  = (float)(r*TO_RADIANS);
+	sinPitch = (float)(sin(radPitch));
+	cosPitch = (float)(cos(radPitch));
+	sinRoll = (float)(sin(radRoll));
+	cosRoll = (float)(cos(radRoll));
 
 	roty = cosPitch*fy - sinPitch*fz;
 	rotz = sinPitch*fy + cosPitch*fz;

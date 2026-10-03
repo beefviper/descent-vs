@@ -809,8 +809,8 @@ multi_explode_robot_sub(int botnum, int killer)
 	}
 	else if (robot->ctype.ai_info.REMOTE_OWNER == Player_num)
 	{
-		multi_drop_robot_powerups(robot-Objects);
-		multi_delete_controlled_robot(robot-Objects);
+		multi_drop_robot_powerups((int)(robot-Objects));
+		multi_delete_controlled_robot((int)(robot-Objects));
 	}
 
 	if (Robot_info[robot->id].boss_flag) {
@@ -899,14 +899,14 @@ multi_do_create_robot(char *buf)
 	if (obj == NULL)
 		return; // Cannot create object!
 
-	obj->matcen_creator = robotcen-Station | 0x80;
+	obj->matcen_creator = (byte)((robotcen-Station) | 0x80);
 //	extract_orient_from_segment(&obj->orient, &Segments[robotcen->segnum]);
 	vm_vec_sub( &direction, &ConsoleObject->pos, &obj->pos );
 	vm_vector_2_matrix( &obj->orient, &direction, &obj->orient.uvec, NULL);
 	morph_start( obj );
 
 	mprintf((1, "matcen created robot %d (remote %d)\n", obj-Objects, objnum));
-	map_objnum_local_to_remote(obj-Objects, objnum, pnum);
+	map_objnum_local_to_remote((int)(obj-Objects), objnum, pnum);
 
 	Assert(obj->ctype.ai_info.REMOTE_OWNER == -1);
 }
@@ -966,15 +966,15 @@ multi_do_boss_actions(char *buf)
 					return;
 				}
 				compute_segment_center(&boss_obj->pos, &Segments[teleport_segnum]);
-				obj_relink(boss_obj-Objects, teleport_segnum);
+				obj_relink((int)(boss_obj-Objects), teleport_segnum);
 				Last_teleport_time = GameTime;
 
 				vm_vec_sub(&boss_dir, &Objects[Players[pnum].objnum].pos, &boss_obj->pos);
 				vm_vector_2_matrix(&boss_obj->orient, &boss_dir, NULL, NULL);
 
 				digi_link_sound_to_pos( Vclip[VCLIP_MORPHING_ROBOT].sound_num, teleport_segnum, 0, &boss_obj->pos, 0 , F1_0);
-				digi_kill_sound_linked_to_object( boss_obj-Objects);
-				digi_link_sound_to_object2( SOUND_BOSS_SHARE_SEE, boss_obj-Objects, 1, F1_0, F1_0*512 );	//	F1_0*512 means play twice as loud
+				digi_kill_sound_linked_to_object( (int)(boss_obj-Objects));
+				digi_link_sound_to_object2( SOUND_BOSS_SHARE_SEE, (short)(boss_obj-Objects), 1, F1_0, F1_0*512 );	//	F1_0*512 means play twice as loud
 				Ai_local_info[boss_obj-Objects].next_fire = 0;
 
 				if (boss_obj->ctype.ai_info.REMOTE_OWNER == Player_num)
@@ -1150,7 +1150,7 @@ void multi_robot_request_change(object *robot, int player_num)
 		return;
 	}
 
-	remote_objnum = objnum_local_to_remote(robot-Objects, &dummy);
+	remote_objnum = objnum_local_to_remote((int)(robot-Objects), &dummy);
 	if (remote_objnum < 0)
 		return;
 

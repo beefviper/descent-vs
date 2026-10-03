@@ -432,7 +432,7 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 			fade_palette[i] -= fade_palette_delta[i];
 			if (fade_palette[i] < 0 )
 				fade_palette[i] = 0;
-			c = f2i(fade_palette[i]);
+			c = (ubyte)(f2i(fade_palette[i]));
 			if ( c > 63 ) c = 63;
 			outp( 0x3c9, c );
 		}
@@ -466,7 +466,7 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 			fade_palette[i] += fade_palette_delta[i];
 			if (fade_palette[i] > i2f(pal[i]+gr_palette_gamma) )
 				fade_palette[i] = i2f(pal[i]+gr_palette_gamma);
-			c = f2i(fade_palette[i]);
+			c = (ubyte)(f2i(fade_palette[i]));
 			if ( c > 63 ) c = 63;
 			outp( 0x3c9, c );
 		}

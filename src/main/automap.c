@@ -430,7 +430,7 @@ grs_canvas *print_to_canvas(char *s,grs_font *font, int fc, int bc)
 
 	save_canv = grd_curcanv;
 
-	temp_canv = gr_create_canvas(font->ft_w*strlen(s),font->ft_h*2);
+	temp_canv = gr_create_canvas(font->ft_w*(int)strlen(s),font->ft_h*2);
 
 	gr_set_current_canvas(temp_canv);
 	gr_set_curfont(font);
@@ -681,9 +681,9 @@ void do_automap( int key_code )	{
 
 		ViewDist -= Controls.forward_thrust_time*ZOOM_SPEED_FACTOR;
 
-		tangles.p += fixdiv( Controls.pitch_time, ROT_SPEED_DIVISOR );
-		tangles.h  += fixdiv( Controls.heading_time, ROT_SPEED_DIVISOR );
-		tangles.b  += fixdiv( Controls.bank_time, ROT_SPEED_DIVISOR*2 );
+		tangles.p += (fixang)(fixdiv( Controls.pitch_time, ROT_SPEED_DIVISOR ));
+		tangles.h += (fixang)(fixdiv( Controls.heading_time, ROT_SPEED_DIVISOR ));
+		tangles.b += (fixang)(fixdiv( Controls.bank_time, ROT_SPEED_DIVISOR*2 ));
 
 		if ( Controls.vertical_thrust_time || Controls.sideways_thrust_time )	{
 			vms_angvec	tangles1;
@@ -802,7 +802,7 @@ void draw_all_edges()
 
 			if ( nfacing && nnfacing )	{
 				// a contour line
-				DrawingListBright[nbright++] = e-Edges;
+				DrawingListBright[nbright++] = (short)(e-Edges);
 			} else if ( e->flags&(EF_DEFINING|EF_GRATE) )	{
 				if ( nfacing == 0 )	{
 					if ( e->flags & EF_NO_FADE )
@@ -811,7 +811,7 @@ void draw_all_edges()
 						gr_setcolor( gr_fade_table[e->color+256*8] );
 					g3_draw_line( &Segment_points[e->verts[0]], &Segment_points[e->verts[1]] );
 				} 	else {
-					DrawingListBright[nbright++] = e-Edges;
+					DrawingListBright[nbright++] = (short)(e-Edges);
 				}
 			}
 		}
@@ -948,7 +948,7 @@ void add_one_edge( short va, short vb, ubyte color, ubyte side, short segnum, in
 		e->segnum[0] = segnum;
 		//Edge_used_list[Num_edges] = e-Edges;
 		if ( (e-Edges) > Highest_edge_index )
-			Highest_edge_index = e - Edges;
+			Highest_edge_index = (int)(e-Edges);
 		Num_edges++;
 	} else {
 		//Assert(e->num_faces < 8 );
@@ -994,7 +994,7 @@ void add_segment_edges(segment *seg)
 	int 	is_grate, no_fade;
 	ubyte	color;
 	int	sn;
-	int	segnum = seg-Segments;
+	int	segnum = (int)(seg-Segments);
 	int	hidden_flag;
 
 	for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++) {
@@ -1102,7 +1102,7 @@ void add_segment_edges(segment *seg)
 void add_unknown_segment_edges(segment *seg)
 {
 	int sn;
-	int segnum = seg-Segments;
+	int segnum = (int)(seg-Segments);
 
 	for (sn=0;sn<MAX_SIDES_PER_SEGMENT;sn++) {
 		short	vertex_list[4];

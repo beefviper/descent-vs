@@ -781,7 +781,7 @@ void create_player_appearance_effect(object *player_obj)
 		effect_obj->orient = player_obj->orient;
 
 		if ( Vclip[VCLIP_PLAYER_APPEARANCE].sound_num > -1 )
-			digi_link_sound_to_object( Vclip[VCLIP_PLAYER_APPEARANCE].sound_num, effect_obj-Objects, 0, F1_0);
+			digi_link_sound_to_object( Vclip[VCLIP_PLAYER_APPEARANCE].sound_num, (short)(effect_obj-Objects), 0, F1_0);
 	}
 }
 
@@ -1590,7 +1590,7 @@ void InitPlayerPosition(int random)
 
 	mprintf((0, "Re-starting in location %d of %d.\n", NewPlayer+1, NumNetPlayerPositions));
 
- 	obj_relink(ConsoleObject-Objects,Player_init[NewPlayer].segnum);
+ 	obj_relink((int)(ConsoleObject-Objects),Player_init[NewPlayer].segnum);
 
 done:
 	reset_player_object();

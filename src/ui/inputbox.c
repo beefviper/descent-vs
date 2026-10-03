@@ -58,7 +58,7 @@ static char rcsid[] = "$Id: inputbox.c 1.6 1994/11/18 23:07:30 john Exp $";
 void strcins(char *s, int p, char c)
 {
 	int n;
-	for (n=strlen(s)-p; n>=0; n-- )
+	for (n=(int)strlen(s)-p; n>=0; n-- )
 		*(s+p+n+1) = *(s+p+n);   // Move everything over
 	*(s+p) = c;         // then insert the character
 }
@@ -122,7 +122,7 @@ UI_GADGET_INPUTBOX * ui_add_gadget_inputbox( UI_WINDOW * wnd, short x, short y, 
 
 	inputbox->text = malloc( length + 1);
 	strncpy( inputbox->text, text, length );
-	inputbox->position = strlen(inputbox->text);
+	inputbox->position = (short)strlen(inputbox->text);
 	inputbox->oldposition = inputbox->position;
 	inputbox->width = aw*slength;
 	inputbox->height = h+4;

@@ -284,7 +284,7 @@ int gr_internal_string0(int x, int y, char *s )
 
 				if (underline)
 					for (i=0; i< width; i++ )
-						DATA[VideoOffset++] = FG_COLOR;
+						DATA[VideoOffset++] = (ubyte)FG_COLOR;
 				else
 				{
 					fp += BITS_TO_BYTES(width)*r;
@@ -299,9 +299,9 @@ int gr_internal_string0(int x, int y, char *s )
 						}
 
 						if (bits & BitMask)
-							DATA[VideoOffset++] = FG_COLOR;
+							DATA[VideoOffset++] = (ubyte)FG_COLOR;
 						else
-							DATA[VideoOffset++] = BG_COLOR;
+							DATA[VideoOffset++] = (ubyte)BG_COLOR;
 						BitMask >>= 1;
 					}
 				}
@@ -379,7 +379,7 @@ int gr_internal_string0m(int x, int y, char *s )
 
 				if (underline)
 					for (i=0; i< width; i++ )
-						DATA[VideoOffset++] = FG_COLOR;
+						DATA[VideoOffset++] = (ubyte)FG_COLOR;
 				else
 				{
 					fp += BITS_TO_BYTES(width)*r;
@@ -394,7 +394,7 @@ int gr_internal_string0m(int x, int y, char *s )
 						}
 
 						if (bits & BitMask)
-							DATA[VideoOffset++] = FG_COLOR;
+							DATA[VideoOffset++] = (ubyte)FG_COLOR;
 						else
 							VideoOffset++;
 						BitMask >>= 1;
@@ -421,7 +421,7 @@ int gr_internal_string2(int x, int y, char *s )
 
 	unsigned int VideoOffset, VideoOffset1;
 
-	VideoOffset1 = (unsigned int)DATA + y * ROWSIZE + x;
+	VideoOffset1 = (unsigned int)(uintptr_t)DATA + y * ROWSIZE + x;
 
 	gr_vesa_setpage(VideoOffset1 >> 16);
 
@@ -488,7 +488,7 @@ int gr_internal_string2(int x, int y, char *s )
 					{
 						for (i=0; i< width; i++ )
 						{
-							gr_video_memory[VideoOffset++] = FG_COLOR;
+							gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 
 							if (VideoOffset > 0xFFFF )
 							{
@@ -501,7 +501,7 @@ int gr_internal_string2(int x, int y, char *s )
 					else
 					{
 						for (i=0; i< width; i++ )
-							gr_video_memory[VideoOffset++] = FG_COLOR;
+							gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 					}
 				}
 				else
@@ -524,9 +524,9 @@ int gr_internal_string2(int x, int y, char *s )
 							}
 
 							if (bits & BitMask)
-								gr_video_memory[VideoOffset++] = FG_COLOR;
+								gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 							else
-								gr_video_memory[VideoOffset++] = BG_COLOR;
+								gr_video_memory[VideoOffset++] = (ubyte)BG_COLOR;
 
 							BitMask >>= 1;
 
@@ -544,29 +544,29 @@ int gr_internal_string2(int x, int y, char *s )
 						{
 							bits = *fp++;
 
-							if (bits & 0x80) gr_video_memory[VideoOffset+0] = FG_COLOR;
-							else gr_video_memory[VideoOffset+0] = BG_COLOR;
+							if (bits & 0x80) gr_video_memory[VideoOffset+0] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+0] = (ubyte)BG_COLOR;
 
-							if (bits & 0x40) gr_video_memory[VideoOffset+1] = FG_COLOR;
-							else gr_video_memory[VideoOffset+1] = BG_COLOR;
+							if (bits & 0x40) gr_video_memory[VideoOffset+1] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+1] = (ubyte)BG_COLOR;
 
-							if (bits & 0x20) gr_video_memory[VideoOffset+2] = FG_COLOR;
-							else gr_video_memory[VideoOffset+2] = BG_COLOR;
+							if (bits & 0x20) gr_video_memory[VideoOffset+2] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+2] = (ubyte)BG_COLOR;
 
-							if (bits & 0x10) gr_video_memory[VideoOffset+3] = FG_COLOR;
-							else gr_video_memory[VideoOffset+3] = BG_COLOR;
+							if (bits & 0x10) gr_video_memory[VideoOffset+3] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+3] = (ubyte)BG_COLOR;
 
-							if (bits & 0x08) gr_video_memory[VideoOffset+4] = FG_COLOR;
-							else gr_video_memory[VideoOffset+4] = BG_COLOR;
+							if (bits & 0x08) gr_video_memory[VideoOffset+4] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+4] = (ubyte)BG_COLOR;
 
-							if (bits & 0x04) gr_video_memory[VideoOffset+5] = FG_COLOR;
-							else gr_video_memory[VideoOffset+5] = BG_COLOR;
+							if (bits & 0x04) gr_video_memory[VideoOffset+5] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+5] = (ubyte)BG_COLOR;
 
-							if (bits & 0x02) gr_video_memory[VideoOffset+6] = FG_COLOR;
-							else gr_video_memory[VideoOffset+6] = BG_COLOR;
+							if (bits & 0x02) gr_video_memory[VideoOffset+6] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+6] = (ubyte)BG_COLOR;
 
-							if (bits & 0x01) gr_video_memory[VideoOffset+7] = FG_COLOR;
-							else gr_video_memory[VideoOffset+7] = BG_COLOR;
+							if (bits & 0x01) gr_video_memory[VideoOffset+7] = (ubyte)FG_COLOR;
+							else gr_video_memory[VideoOffset+7] = (ubyte)BG_COLOR;
 
 							VideoOffset += 8;
 						} else {
@@ -578,9 +578,9 @@ int gr_internal_string2(int x, int y, char *s )
 								}
 
 								if (bits & BitMask)
-									gr_video_memory[VideoOffset++] = FG_COLOR;
+									gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 								else
-									gr_video_memory[VideoOffset++] = BG_COLOR;
+									gr_video_memory[VideoOffset++] = (ubyte)BG_COLOR;
 								BitMask >>= 1;
 
 
@@ -592,9 +592,9 @@ int gr_internal_string2(int x, int y, char *s )
 								}
 
 								if (bits & BitMask)
-									gr_video_memory[VideoOffset++] = FG_COLOR;
+									gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 								else
-									gr_video_memory[VideoOffset++] = BG_COLOR;
+									gr_video_memory[VideoOffset++] = (ubyte)BG_COLOR;
 								BitMask >>= 1;
 							}
 						}
@@ -624,7 +624,7 @@ int gr_internal_string2m(int x, int y, char *s )
 
 	unsigned int VideoOffset, VideoOffset1;
 
-	VideoOffset1 = (unsigned int)DATA + y * ROWSIZE + x;
+	VideoOffset1 = (unsigned int)(uintptr_t)DATA + y * ROWSIZE + x;
 
 	gr_vesa_setpage(VideoOffset1 >> 16);
 
@@ -689,7 +689,7 @@ int gr_internal_string2m(int x, int y, char *s )
 					{
 						for (i=0; i< width; i++ )
 						{
-							gr_video_memory[VideoOffset++] = FG_COLOR;
+							gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 
 							if (VideoOffset > 0xFFFF )
 							{
@@ -702,7 +702,7 @@ int gr_internal_string2m(int x, int y, char *s )
 					else
 					{
 						for (i=0; i< width; i++ )
-							gr_video_memory[VideoOffset++] = FG_COLOR;
+							gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 					}
 				}
 				else
@@ -721,7 +721,7 @@ int gr_internal_string2m(int x, int y, char *s )
 							}
 
 							if (bits & BitMask)
-								gr_video_memory[VideoOffset++] = FG_COLOR;
+								gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 							else
 								VideoOffset++;
 
@@ -744,7 +744,7 @@ int gr_internal_string2m(int x, int y, char *s )
 							}
 
 							if (bits & BitMask)
-								gr_video_memory[VideoOffset++] = FG_COLOR;
+								gr_video_memory[VideoOffset++] = (ubyte)FG_COLOR;
 							else
 								VideoOffset++;;
 							BitMask >>= 1;
@@ -1085,7 +1085,7 @@ grs_font * gr_init_font( char * fontname )
 
 		colormap[255] = 255;
 
-		decode_data_asm(font->ft_data, ptr-font->ft_data, colormap, freq );
+		decode_data_asm(font->ft_data, (int)(ptr-font->ft_data), colormap, freq );
 	}
 
 	cfclose(fontfile);

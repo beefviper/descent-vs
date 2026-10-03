@@ -93,7 +93,7 @@ extern unsigned char * gr_video_memory;
 #define XOFFSET grd_curcanv->cv_bitmap.bm_x
 #define YOFFSET grd_curcanv->cv_bitmap.bm_y
 #define ROWSIZE grd_curcanv->cv_bitmap.bm_rowsize
-#define COLOR   grd_curcanv->cv_color
+#define COLOR   ((ubyte)grd_curcanv->cv_color)	// as a pixel value
 
 
 void order( int *x1, int *x2 );

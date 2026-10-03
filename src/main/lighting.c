@@ -219,7 +219,7 @@ void cast_muzzle_flash_light(int n_render_vertices, short *render_vertices)
 
 	for (i=0; i<MUZZLE_QUEUE_MAX; i++) {
 		if (Muzzle_data[i].create_time) {
-			time_since_flash = current_time - Muzzle_data[i].create_time;
+			time_since_flash = (short)(current_time - Muzzle_data[i].create_time);
 			if (time_since_flash < FLASH_LEN_FIXED_SECONDS)
 				apply_light((FLASH_LEN_FIXED_SECONDS - time_since_flash) * FLASH_SCALE, Muzzle_data[i].segnum, &Muzzle_data[i].pos, n_render_vertices, render_vertices);
 			else
@@ -427,7 +427,7 @@ fix compute_object_light(object *obj,vms_vector *rotated_pnt)
 {
 	fix light;
 	g3s_point objpnt;
-	int objnum = obj-Objects;
+	int objnum = (int)(obj-Objects);
 
 	if (!rotated_pnt) {
 		g3_rotate_point(&objpnt,&obj->pos);

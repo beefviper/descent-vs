@@ -441,7 +441,7 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 			if (ListBox1->current_item >= 0 )
 			{
 				strcpy(UserFile->text, filename_list[ListBox1->current_item] );
-				UserFile->position = strlen(UserFile->text);
+				UserFile->position = (short)strlen(UserFile->text);
 				UserFile->oldposition = UserFile->position;
 				UserFile->status=1;
 				UserFile->first_time = 1;
@@ -456,7 +456,7 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 					sprintf( UserFile->text, "%s%s", directory_list[ListBox2->current_item], Filespec );
 				else
 					sprintf( UserFile->text, "%s\\%s", directory_list[ListBox2->current_item], Filespec );
-				UserFile->position = strlen(UserFile->text);
+				UserFile->position = (short)strlen(UserFile->text);
 				UserFile->oldposition = UserFile->position;
 				UserFile->status=1;
 				UserFile->first_time = 1;
@@ -524,7 +524,7 @@ int ui_get_filename( char * filename, char * Filespec, char * message  )
 				NumFiles = file_getfilelist( 300, filename_list, fullfname );
 
 				strcpy(UserFile->text, fullfname );
-				UserFile->position = strlen(UserFile->text);
+				UserFile->position = (short)strlen(UserFile->text);
 				UserFile->oldposition = UserFile->position;
 				UserFile->status=1;
 				UserFile->first_time = 1;

@@ -202,12 +202,12 @@ void cfile_init_hogfile(char *fname, hogfile * hog_files, int * nfiles )
 			fclose(fp);
 			exit(1);
 		}
-		i = fread( hog_files[*nfiles].name, 13, 1, fp );
+		i = (int)fread( hog_files[*nfiles].name, 13, 1, fp );
 		if ( i != 1 )	{
 			fclose(fp);
 			return;
 		}
-		i = fread( &len, 4, 1, fp );
+		i = (int)fread( &len, 4, 1, fp );
 		if ( i != 1 )	{
 			fclose(fp);
 			return;
@@ -372,8 +372,8 @@ size_t cfread( void * buf, size_t elsize, size_t nelem, CFILE * fp )
 {
 	int i;
 	if ((fp->raw_position+(elsize*nelem)) > fp->size ) return EOF;
-	i = fread( buf, elsize, nelem, fp->file );
-	fp->raw_position += i*elsize;
+	i = (int)fread( buf, elsize, nelem, fp->file );
+	fp->raw_position += (int)(i*elsize);
 	return i;
 }
 

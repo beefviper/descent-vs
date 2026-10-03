@@ -565,7 +565,7 @@ void create_path(object *objp)
 		; //mprintf((0, "Object %i, hide_segment = -1, not creating path.\n", objp-Objects));
 	} else {
 		create_path_points(objp, start_seg, end_seg, Point_segs_free_ptr, &aip->path_length, -1, 0, 0, -1);
-		aip->hide_index = Point_segs_free_ptr - Point_segs;
+		aip->hide_index = (short)(Point_segs_free_ptr-Point_segs);
 		aip->cur_path_index = 0;
 #ifndef NDEBUG
 		validate_path(5, Point_segs_free_ptr, aip->path_length);
@@ -615,7 +615,7 @@ void create_path_to_player(object *objp, int max_length, int safety_flag)
 point_seg *pseg0 = Point_segs_free_ptr;
 #endif
 		create_path_points(objp, start_seg, end_seg, Point_segs_free_ptr, &aip->path_length, max_length, 1, safety_flag, -1);
-		aip->hide_index = Point_segs_free_ptr - Point_segs;
+		aip->hide_index = (short)(Point_segs_free_ptr-Point_segs);
 		aip->cur_path_index = 0;
 #ifndef NDEBUG
 //Enclosed this Assert in an ifdef, because if NDEBUG isn't defined,
@@ -672,7 +672,7 @@ void create_path_to_station(object *objp, int max_length)
 		; //mprintf((0, "Object %i, hide_segment = -1, not creating path.\n", objp-Objects));
 	} else {
 		create_path_points(objp, start_seg, end_seg, Point_segs_free_ptr, &aip->path_length, max_length, 1, 1, -1);
-		aip->hide_index = Point_segs_free_ptr - Point_segs;
+		aip->hide_index = (short)(Point_segs_free_ptr-Point_segs);
 		aip->cur_path_index = 0;
 #ifndef NDEBUG
 		validate_path(7, Point_segs_free_ptr, aip->path_length);
@@ -718,7 +718,7 @@ void create_n_segment_path(object *objp, int path_length, int avoid_seg)
 		}
 	}
 
-	aip->hide_index = Point_segs_free_ptr - Point_segs;
+	aip->hide_index = (short)(Point_segs_free_ptr-Point_segs);
 	aip->cur_path_index = 0;
 #ifndef NDEBUG
 	validate_path(8, Point_segs_free_ptr, aip->path_length);
@@ -816,7 +816,7 @@ void move_object_to_goal(object *objp, vms_vector *goal_point, int goal_seg)
 		//	Hack, move object to center of segment it used to be in.
 		compute_segment_center(&objp->pos, &Segments[objp->segnum]);
 	} else
-		obj_relink(objp-Objects, segnum);
+		obj_relink((int)(objp-Objects), segnum);
 }
 
 //	----------------------------------------------------------------------------------------------------------
@@ -1021,7 +1021,7 @@ if ((aip->hide_index + aip->path_length > Point_segs_free_ptr - Point_segs) && (
 				fq.startseg				= objp->segnum;
 				fq.p1						= opposite_end_point;
 				fq.rad					= objp->size;
-				fq.thisobjnum			= objp-Objects;
+				fq.thisobjnum			= (short)(objp-Objects);
 				fq.ignore_obj_list	= NULL;
 				fq.flags					= 0; 				//what about trans walls???
 

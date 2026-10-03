@@ -961,7 +961,7 @@ void mem_int_to_string( int number, char *dest )
 
 	sprintf( buffer, "%d", number );
 
-	l = strlen(buffer);
+	l = (int)strlen(buffer);
 	if (l<=3) {
 		// Don't bother with less than 3 digits
 		sprintf( dest, "%d", number );
@@ -1126,7 +1126,7 @@ int main(int argc,char **argv)
 	if (Inferno_verbose) printf( "\n" );
 
 	if (Inferno_verbose) printf( "\n%s...", TXT_INITIALIZING_CRIT);
-	if (!dpmi_lock_region((void near *)descent_critical_error_handler,(char *)chandler_end - (char near *)descent_critical_error_handler))	{
+	if (!dpmi_lock_region((void near *)descent_critical_error_handler,(unsigned int)((char *)chandler_end - (char near *)descent_critical_error_handler)))	{
 		Error( "Unable to lock critial error handler" );
 	}
 	if (!dpmi_lock_region(&descent_critical_error,sizeof(int)))	{

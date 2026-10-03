@@ -315,7 +315,7 @@ int gr_uline(fix _a1, fix _b1, fix _a2, fix _b2)
 		modex_line_y1 = b1+YOFFSET;
 		modex_line_x2 = a2+XOFFSET;
 		modex_line_y2 = b2+YOFFSET;
-		modex_line_Color = grd_curcanv->cv_color;
+		modex_line_Color = (ubyte)(grd_curcanv->cv_color);
 		gr_modex_line();
 		return 0;
 	default:

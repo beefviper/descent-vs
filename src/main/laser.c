@@ -366,7 +366,7 @@ int Laser_create_new( vms_vector * direction, vms_vector * position, int segnum,
 			// mprintf(0, "Warning: Laser tip not in same segment as player.\n");
 			if (end_segnum != -1) {
 				obj->pos = end_pos;
-				obj_relink(obj-Objects, end_segnum);
+				obj_relink((int)(obj-Objects), end_segnum);
 			} else
 				mprintf((0, "Warning: Laser tip outside mine.  Laser not being moved to end of gun.\n"));
 		} else
@@ -437,7 +437,7 @@ int Laser_create_new_easy( vms_vector * direction, vms_vector * position, int pa
 	fq.startseg				= pobjp->segnum;
 	fq.p1						= position;
 	fq.rad					= 0;
-	fq.thisobjnum			= pobjp-Objects;
+	fq.thisobjnum			= (short)(pobjp-Objects);
 	fq.ignore_obj_list	= NULL;
 	fq.flags					= FQ_TRANSWALL | FQ_CHECK_OBJS;		//what about trans walls???
 
@@ -468,7 +468,7 @@ int object_to_object_visibility(object *obj1, object *obj2, int trans_type)
 	fq.startseg				= obj1->segnum;
 	fq.p1						= &obj2->pos;
 	fq.rad					= 0x10;
-	fq.thisobjnum			= obj1-Objects;
+	fq.thisobjnum			= (short)(obj1-Objects);
 	fq.ignore_obj_list	= NULL;
 	fq.flags					= trans_type;
 
@@ -563,7 +563,7 @@ int find_homing_object(vms_vector *curpos, object *tracker)
 		//	Not in network mode.  If not fired by player, then track player.
 		if (tracker->ctype.laser_info.parent_num != Players[Player_num].objnum) {
 			if (!(Players[Player_num].flags & PLAYER_FLAGS_CLOAKED))
-				best_objnum = ConsoleObject - Objects;
+				best_objnum = (int)(ConsoleObject-Objects);
 		} else {
 			//	Not in network mode and fired by player.
 			for (i=Num_rendered_objects-1; i>=0; i--) {
@@ -768,7 +768,7 @@ void Laser_player_fire_spread_delay(object *obj, int laser_type, int gun_num, fi
 	fq.startseg				= obj->segnum;
 	fq.p1						= &LaserPos;
 	fq.rad					= 0x10;
-	fq.thisobjnum			= obj-Objects;
+	fq.thisobjnum			= (short)(obj-Objects);
 	fq.ignore_obj_list	= NULL;
 	fq.flags					= FQ_CHECK_OBJS;
 
@@ -808,7 +808,7 @@ void Laser_player_fire_spread_delay(object *obj, int laser_type, int gun_num, fi
 		vm_vec_scale_add2(&LaserDir, &obj->orient.uvec, spreadu);
 	}
 
-	objnum = Laser_create_new( &LaserDir, &LaserPos, LaserSeg, obj-Objects, laser_type, make_sound );
+	objnum = Laser_create_new( &LaserDir, &LaserPos, LaserSeg, (int)(obj-Objects), laser_type, make_sound );
 	if (objnum == -1)
 		return;
 
@@ -927,7 +927,7 @@ void Laser_do_weapon_sequence(object *obj)
 			(obj->id != FLARE_ID) &&
 			(Weapon_info[obj->id].speed[Difficulty_level] > 0) &&
 			(vm_vec_mag_quick(&obj->mtype.phys_info.velocity) < F2_0)) {
-		obj_delete(obj-Objects);
+		obj_delete((int)(obj-Objects));
 		return;
 	}
 
@@ -1253,7 +1253,7 @@ int create_homing_missile(object *objp, int goal_obj, int objtype, int make_soun
 	}
 
 	//	Create a vector towards the goal, then add some noise to it.
-	objnum = Laser_create_new(&vector_to_goal, &objp->pos, objp->segnum, objp-Objects, objtype, make_sound);
+	objnum = Laser_create_new(&vector_to_goal, &objp->pos, objp->segnum, (int)(objp-Objects), objtype, make_sound);
 	if (objnum == -1)
 		return -1;
 

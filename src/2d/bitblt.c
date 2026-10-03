@@ -512,7 +512,7 @@ void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 
 	dbpr = dest->bm_rowsize << gr_bitblt_dest_step_shift;
 
-	VideoLocation = (unsigned int)dest->bm_data + (dest->bm_rowsize * dy) + dx;
+	VideoLocation = (unsigned int)(uintptr_t)dest->bm_data + (dest->bm_rowsize * dy) + dx;
 
 	sbits = src->bm_data + ( sbpr*sy ) + sx;
 
@@ -528,9 +528,9 @@ void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 		if ( EndingOffset <= 0xFFFF )
 		{
 			if ( gr_bitblt_double )
-				gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), w );
+				gr_linear_rep_movsd_2x( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), w );
 			else
-				gr_linear_movsd( (void *)sbits, (void *)(offset+0xA0000), w );
+				gr_linear_movsd( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), w );
 
 			VideoLocation += dbpr;
 			sbits += sbpr;
@@ -540,17 +540,17 @@ void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 			BytesToMove = 0xFFFF-offset+1;
 
 			if ( gr_bitblt_double )
-				gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), BytesToMove );
+				gr_linear_rep_movsd_2x( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), BytesToMove );
 			else
-				gr_linear_movsd( (void *)sbits, (void *)(offset+0xA0000), BytesToMove );
+				gr_linear_movsd( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), BytesToMove );
 
 			page++;
 			gr_vesa_setpage(page);
 
 			if ( gr_bitblt_double )
-				gr_linear_rep_movsd_2x( (void *)(sbits+BytesToMove/2), (void *)0xA0000, EndingOffset - 0xFFFF );
+				gr_linear_rep_movsd_2x( (void *)(sbits+BytesToMove/2), (void *)(uintptr_t)0xA0000, EndingOffset - 0xFFFF );
 			else
-				gr_linear_movsd( (void *)(sbits+BytesToMove), (void *)0xA0000, EndingOffset - 0xFFFF );
+				gr_linear_movsd( (void *)(sbits+BytesToMove), (void *)(uintptr_t)0xA0000, EndingOffset - 0xFFFF );
 
 			VideoLocation += dbpr;
 			sbits += sbpr;
@@ -573,7 +573,7 @@ void gr_bm_ubitblt20(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 
 	for (y1=0; y1 < h; y1++ )    {
 
-		offset2 =   (unsigned int)src->bm_data  + (sbpr * (y1+sy)) + sx;
+		offset2 =   (unsigned int)(uintptr_t)src->bm_data  + (sbpr * (y1+sy)) + sx;
 		dbits   =   dest->bm_data + (dbpr * (y1+dy)) + dx;
 
 		page = offset2 >> 16;
@@ -809,7 +809,7 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 //-NOT-used
 //-NOT-used 	dbpr = dest->bm_rowsize << gr_bitblt_dest_step_shift;
 //-NOT-used
-//-NOT-used 	VideoLocation = (unsigned int)dest->bm_data + (dest->bm_rowsize * dy) + dx;
+//-NOT-used 	VideoLocation = (unsigned int)(uintptr_t)dest->bm_data + (dest->bm_rowsize * dy) + dx;
 //-NOT-used
 //-NOT-used 	sbits = src->bm_data + ( sbpr*sy ) + sx;
 //-NOT-used
@@ -824,7 +824,7 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 //-NOT-used
 //-NOT-used 		if ( EndingOffset <= 0xFFFF )
 //-NOT-used 		{
-//-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), w );
+//-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), w );
 //-NOT-used
 //-NOT-used 			VideoLocation += dbpr;
 //-NOT-used 			sbits += sbpr;
@@ -833,12 +833,12 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 //-NOT-used 		{
 //-NOT-used 			BytesToMove = 0xFFFF-offset+1;
 //-NOT-used
-//-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(offset+0xA0000), BytesToMove );
+//-NOT-used 			gr_linear_rep_movsd_2x( (void *)sbits, (void *)(uintptr_t)(offset+0xA0000), BytesToMove );
 //-NOT-used
 //-NOT-used 			page++;
 //-NOT-used 			gr_vesa_setpage(page);
 //-NOT-used
-//-NOT-used 			gr_linear_rep_movsd_2x( (void *)(sbits+BytesToMove/2), (void *)0xA0000, EndingOffset - 0xFFFF );
+//-NOT-used 			gr_linear_rep_movsd_2x( (void *)(sbits+BytesToMove/2), (void *)(uintptr_t)0xA0000, EndingOffset - 0xFFFF );
 //-NOT-used
 //-NOT-used 			VideoLocation += dbpr;
 //-NOT-used 			sbits += sbpr;

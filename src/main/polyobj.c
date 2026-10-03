@@ -188,7 +188,7 @@ size_t pof_cfread(void *dst, size_t elsize, size_t nelem, ubyte *bufp)
 
 	memcpy(dst, &bufp[Pof_addr], elsize*nelem);
 
-	Pof_addr += elsize*nelem;
+	Pof_addr += (int)(elsize*nelem);
 
 	if (Pof_addr > MODEL_BUF_SIZE)
 		Int3();
@@ -267,7 +267,7 @@ polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 	Assert(ifile->size <= MODEL_BUF_SIZE);
 
 	Pof_addr = 0;
-	Pof_file_end = cfread(model_buf, 1, cfilelength(ifile), ifile);
+	Pof_file_end = (int)cfread(model_buf, 1, cfilelength(ifile), ifile);
 	cfclose(ifile);
 
 	id = pof_read_int(model_buf);
@@ -328,7 +328,7 @@ polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 
 				Assert(n < MAX_SUBMODELS);
 
-				pm->submodel_parents[n] = pof_read_short(model_buf);
+				pm->submodel_parents[n] = (ubyte)(pof_read_short(model_buf));
 
 				pof_read_vecs(&pm->submodel_norms[n],1,model_buf);
 				pof_read_vecs(&pm->submodel_pnts[n],1,model_buf);
@@ -359,7 +359,7 @@ polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 						int id;
 
 						id = pof_read_short(model_buf);
-						r->gun_submodels[id] = pof_read_short(model_buf);
+						r->gun_submodels[id] = (ubyte)(pof_read_short(model_buf));
 						Assert(r->gun_submodels[id] != 0xff);
 						pof_read_vecs(&r->gun_points[id],1,model_buf);
 
@@ -464,7 +464,7 @@ int read_model_guns(char *filename,vms_vector *gun_points, vms_vector *gun_dirs,
 	Assert(ifile->size <= MODEL_BUF_SIZE);
 
 	Pof_addr = 0;
-	Pof_file_end = cfread(model_buf, 1, ifile->size, ifile);
+	Pof_file_end = (int)cfread(model_buf, 1, ifile->size, ifile);
 	cfclose(ifile);
 
 	id = pof_read_int(model_buf);

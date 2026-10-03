@@ -312,7 +312,7 @@ int gr_rle_encode( int org_size, ubyte *src, ubyte *dest )
 	}
 	*dest++ = RLE_CODE;
 
-	return dest-dest_start;
+	return (int)(dest-dest_start);
 }
 
 

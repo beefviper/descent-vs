@@ -518,7 +518,7 @@ void build_light_table()
 			l = get_avg_light(i,j);
 
 			if (min_l == max_l) {
-				LIGHT(i,j) = l>>8;
+				LIGHT(i,j) = (ubyte)(l>>8);
 				continue;
 			}
 
@@ -527,7 +527,7 @@ void build_light_table()
 			if (l2==f1_0)
 				l2--;
 
-			LIGHT(i,j) = l2>>8;
+			LIGHT(i,j) = (ubyte)(l2>>8);
 
 			//printf("light %2d,%2d = %4x\n",i,j,l2>>8);
 
