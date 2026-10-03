@@ -4,8 +4,8 @@ Where the port stands and what is left before the game runs on Windows.
 
 ## Current state
 
-- **It compiles and links.** The game, the editor and the tools build
-  for 32-bit and 64-bit Windows. This was checked with MinGW-w64 GCC as a
+- **It compiles, links and opens a window.** The game, the editor and
+  the tools build for 32-bit and 64-bit Windows. This was checked with MinGW-w64 GCC as a
   stand-in for MSVC; it has not been built in Visual Studio yet.
 - **No assembly is left.** The 28 `.asm` files and all Watcom `#pragma aux`
   inline assembly have been rewritten in C:
@@ -20,23 +20,36 @@ Where the port stands and what is left before the game runs on Windows.
   neutralize Watcom keywords. Interrupts, port I/O and DPMI report failure
   or succeed harmlessly. The file search functions (`_dos_findfirst` and
   friends) work on top of the C runtime.
+- **Display (SDL2).** `gr_set_mode()` asks `src/platform/sdl.c` for a
+  framebuffer in ordinary memory, so every screen mode is a linear bitmap
+  (the Mode X and VESA paths are no longer used). The palette code still
+  writes the VGA DAC ports; `src/compat/dos.c` emulates them, and the
+  backend converts the framebuffer through that palette when it presents.
+  The screen is presented on `gr_sync_display()` (an emulated 70 Hz
+  retrace, so palette fades keep their speed), on `gr_show_canvas()`
+  (page flips) and about 60 times a second while the game polls the timer
+  or keyboard. It is always shown at 4:3, as on a CRT.
+- **Keyboard (SDL2).** SDL key events are translated to the DOS
+  scancodes the game uses and fed to the body of the old int 9 handler
+  (`key_handle_event()` in `src/bios/key.c`).
+- **Debug console.** `descent` is a console program. The mono-screen
+  debug output (`mprintf`, see `src/bios/mono.c`) goes to the console:
+  window 0 ("Debug Spew") to standard output, window 1 ("Errors & Serious
+  Warnings") to standard error. Release builds compile the mono calls out
+  except `mprintf`, which also prints to the console. Positioned output
+  (`mprintf_at`) is dropped.
 - **Watcom conventions kept:** `char` is unsigned (`/J`), and structures
   are byte-packed (`/Zp1`) because the game reads data files straight
   into them.
 
 ## What still has to be written
 
-- **Display.** `src/2d/vesa.c` and `src/2d/modex.c` are stubs, and
-  `gr_set_mode()` still points the screen at the VGA window at absolute
-  address 0xA0000, which crashes on Windows. The game needs a backend
-  (for example SDL or Win32 GDI/DirectDraw) that gives `gr_set_mode()` a
-  real framebuffer and presents it. A few SVGA paths in `pixel.c`,
-  `gpixel.c`, `bitblt.c` and `gr.c` still cast pointers to `int`; they
-  only matter for the banked SVGA modes.
-- **Input.** The keyboard (`src/bios/key.c`) and mouse
-  (`src/bios/mouse.c`) drivers hook DOS interrupts 9 and 33h, which are
-  never installed now, so no input arrives. The joystick reports "not
-  present".
+- **Mouse.** `src/bios/mouse.c` still hooks DOS interrupt 33h, so no
+  mouse input arrives. It should be fed from SDL like the keyboard. The
+  joystick reports "not present".
+- **Leftover SVGA code.** A few banked-SVGA paths in `pixel.c`,
+  `gpixel.c`, `bitblt.c` and `font.c` still cast pointers to `int`; they
+  are no longer reached, since all modes are linear now.
 - **Sound and music.** `src/main/digi.c` was written against the Human
   Machine Interfaces SOS library, which Parallax removed from the release.
   Its calls are commented out and the game runs silently. Digital sound

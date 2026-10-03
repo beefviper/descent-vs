@@ -7,9 +7,10 @@ Studio project. The original release notes and license are in
 non-commercial purposes.
 
 The code compiles and links for 32-bit and 64-bit Windows, with all of the
-original assembly rewritten in C, but it does not run yet: it still needs a
-display, input and sound backend in place of the DOS hardware code. See
-[docs/porting-notes.md](docs/porting-notes.md).
+original assembly rewritten in C. It opens an SDL2 window for the graphics
+and keyboard, and a console window that shows the debug output the
+original sent to a monochrome monitor. Mouse, sound and networking are
+not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 
 ## Layout
 
@@ -26,6 +27,7 @@ display, input and sound backend in place of the DOS hardware code. See
 | `src/cfile/`, `src/iff/`, `src/mem/`, `src/misc/` | File access, IFF images, memory and error helpers |
 | `src/ui/`       | The editor's user interface toolkit (`ui`)                      |
 | `src/pslib/`    | Compressed library archiver and its `cflib`/`readfile` libraries |
+| `src/platform/` | SDL2 window, display and keyboard backend (`platform`)         |
 | `src/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
 | `src/tools/`    | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
 | `data/`         | `editdata.exe`, a self-extracting archive of the editor's data files |
@@ -36,9 +38,21 @@ produced. Headers used by only one module live next to its sources.
 
 ## Generating a Visual Studio solution
 
-    cmake -S . -B build -G "Visual Studio 17 2022" -A Win32
+The game needs SDL2. The easiest way to get it is vcpkg, which comes with
+Visual Studio 2022: the `vcpkg.json` manifest makes CMake fetch and build
+SDL2 automatically.
 
-Use `-A x64` for a 64-bit build.
+    cmake -S . -B build -G "Visual Studio 17 2022" -A Win32 ^
+        -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake
+
+Use `-A x64` for a 64-bit build. Without vcpkg, download the SDL2 VC
+development package from https://github.com/libsdl-org/SDL/releases and
+pass `-DSDL2_DIR=<path>/cmake` instead of the toolchain file. The build
+copies `SDL2.dll` next to `descent.exe`.
+
+Run `descent.exe` from the directory holding the game data
+(`descent.hog`, `descent.pig`). In Visual Studio, set the debugger's
+working directory to that folder.
 
 Options:
 
