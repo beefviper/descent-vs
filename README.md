@@ -8,8 +8,8 @@ non-commercial purposes.
 
 The code compiles and links for 32-bit and 64-bit Windows, with all of the
 original assembly rewritten in C. It opens an SDL2 window for the graphics,
-keyboard, sound effects and music, and a console window that shows the
-debug output the original sent to a monochrome monitor. Mouse and
+keyboard, mouse, sound effects and music, and a console window that shows
+the debug output the original sent to a monochrome monitor. Joystick and
 networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 
 ## Layout
@@ -27,7 +27,7 @@ networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 | `source/cfile/`, `source/iff/`, `source/mem/`, `source/misc/` | File access, IFF images, memory and error helpers |
 | `source/ui/`    | The editor's user interface toolkit (`ui`)                      |
 | `source/pslib/` | Compressed library archiver and its `cflib`/`readfile` libraries |
-| `source/platform/` | SDL2 window, display, keyboard, sound and music backend (`platform`) |
+| `source/platform/` | SDL2 window, display, keyboard, mouse, sound and music backend (`platform`) |
 | `source/compat/`, `include/compat/` | Replacements for Watcom/DOS headers and runtime functions |
 | `source/tools/` | `hogfile`, `lbmcomp` and `xcolor` data tools                    |
 | `data/`         | `editdata.exe`, a self-extracting archive of the editor's data files |

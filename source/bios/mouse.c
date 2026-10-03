@@ -65,315 +65,69 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <conio.h>
-#include <dos.h>
-#include <i86.h>
 #include <string.h>
 
 #include "error.h"
 #include "fix.h"
-#include "dpmi.h"
 #include "mouse.h"
 #include "timer.h"
+#include "platform.h"
 
-#define ME_CURSOR_MOVED	(1<<0)
-#define ME_LB_P 			(1<<1)
-#define ME_LB_R 			(1<<2)
-#define ME_RB_P 			(1<<3)
-#define ME_RB_R 			(1<<4)
-#define ME_MB_P 			(1<<5)
-#define ME_MB_R 			(1<<6)
-#define ME_OB_P 			(1<<7)
-#define ME_OB_R 			(1<<8)
-#define ME_X_C 			(1<<9)
-#define ME_Y_C 			(1<<10)
-#define ME_Z_C 			(1<<11)
-#define ME_P_C 			(1<<12)
-#define ME_B_C 			(1<<13)
-#define ME_H_C 			(1<<14)
-#define ME_O_C 			(1<<15)
+// The DOS version installed an int 33h event handler. Mouse events now come
+// from SDL (source/platform/sdl.c): button presses through
+// mouse_button_event(), the same bookkeeping the handler did, and motion
+// through plat_mouse_get_delta(). There is no Cyberman.
 
 #define MOUSE_MAX_BUTTONS	11
 
-typedef struct event_info {
-	short x;
-	short y;
-	short z;
-	short pitch;
-	short bank;
-	short heading;
-	ushort button_status;
-	ushort device_dependant;
-} event_info;
-
 typedef struct mouse_info {
 	fix		ctime;
-	ubyte		cyberman;
 	int		num_buttons;
 	ubyte		pressed[MOUSE_MAX_BUTTONS];
 	fix		time_went_down[MOUSE_MAX_BUTTONS];
 	fix		time_held_down[MOUSE_MAX_BUTTONS];
 	uint		num_downs[MOUSE_MAX_BUTTONS];
 	uint		num_ups[MOUSE_MAX_BUTTONS];
-	event_info *x_info;
-	ushort	button_status;
 } mouse_info;
-
-typedef struct cyberman_info {
-	ubyte device_type;
-	ubyte major_version;
-	ubyte minor_version;
-	ubyte x_descriptor;
-	ubyte y_descriptor;
-	ubyte z_descriptor;
-	ubyte pitch_descriptor;
-	ubyte roll_descriptor;
-	ubyte yaw_descriptor;
-	ubyte reserved;
-} cyberman_info;
 
 static mouse_info Mouse;
 
 static int Mouse_installed = 0;
 
-#pragma off (check_stack)
-static void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, int mdi)
+static void mouse_button_event(int button, int down)
 {
+	if (button < 0 || button >= MOUSE_MAX_BUTTONS)
+		return;
 
 	Mouse.ctime = timer_get_fixed_secondsX();
 
-	if (m_ax & ME_LB_P)	{	// left button pressed
-		if (!Mouse.pressed[MB_LEFT])	{
-			Mouse.pressed[MB_LEFT] = 1;
-			Mouse.time_went_down[MB_LEFT] = Mouse.ctime;
+	if (down)	{
+		if (!Mouse.pressed[button])	{
+			Mouse.pressed[button] = 1;
+			Mouse.time_went_down[button] = Mouse.ctime;
 		}
-		Mouse.num_downs[MB_LEFT]++;
-	} else if (m_ax & ME_LB_R )	{  // left button released
-		if (Mouse.pressed[MB_LEFT])	{
-			Mouse.pressed[MB_LEFT] = 0;
-			Mouse.time_held_down[MB_LEFT] += Mouse.ctime-Mouse.time_went_down[MB_LEFT];
+		Mouse.num_downs[button]++;
+	} else {
+		if (Mouse.pressed[button])	{
+			Mouse.pressed[button] = 0;
+			Mouse.time_held_down[button] += Mouse.ctime-Mouse.time_went_down[button];
 		}
-		Mouse.num_ups[MB_LEFT]++;
+		Mouse.num_ups[button]++;
 	}
-
-	if (m_ax & ME_RB_P ) {	// right button pressed
-		if (!Mouse.pressed[MB_RIGHT])	{
-			Mouse.pressed[MB_RIGHT] = 1;
-			Mouse.time_went_down[MB_RIGHT] = Mouse.ctime;
-		}
-		Mouse.num_downs[MB_RIGHT]++;
-	} else if (m_ax & ME_RB_R )	{// right button released
-		if (Mouse.pressed[MB_RIGHT])	{
-			Mouse.pressed[MB_RIGHT] = 0;
-			Mouse.time_held_down[MB_RIGHT] += Mouse.ctime-Mouse.time_went_down[MB_RIGHT];
-		}
-		Mouse.num_ups[MB_RIGHT]++;
-	}
-
-	if (m_ax & ME_MB_P )	{ // middle button pressed
-		if (!Mouse.pressed[MB_MIDDLE])	{
-			Mouse.pressed[MB_MIDDLE] = 1;
-			Mouse.time_went_down[MB_MIDDLE] = Mouse.ctime;
-		}
-		Mouse.num_downs[MB_MIDDLE]++;
-	} else if (m_ax & ME_MB_R )	{ // middle button released
-		if (Mouse.pressed[MB_MIDDLE])	{
-			Mouse.pressed[MB_MIDDLE] = 0;
-			Mouse.time_held_down[MB_MIDDLE] += Mouse.ctime-Mouse.time_went_down[MB_MIDDLE];
-		}
-		Mouse.num_ups[MB_MIDDLE]++;
-	}
-
-	if (Mouse.cyberman && (m_ax & (ME_Z_C|ME_P_C|ME_B_C|ME_H_C)))	{
-		Mouse.x_info = (event_info *)(size_t)((msi & 0xFFFF) << 4);
-
-		if (m_ax & ME_Z_C )	{ // z axis changed
-			if (Mouse.pressed[MB_Z_UP])	{
-			 	// z up released
-				Mouse.pressed[MB_Z_UP] = 0;
-				Mouse.time_held_down[MB_Z_UP] += Mouse.ctime-Mouse.time_went_down[MB_Z_UP];
-				Mouse.num_ups[MB_Z_UP]++;
-			}  else if ( Mouse.x_info->z>0 )	{
-			 	// z up pressed
-				Mouse.pressed[MB_Z_UP] = 1;
-				Mouse.time_went_down[MB_Z_UP]=Mouse.ctime;
-				Mouse.num_downs[MB_Z_UP]++;
-			}
-			if (Mouse.pressed[MB_Z_DOWN])	{
-			 	// z down released
-				Mouse.pressed[MB_Z_DOWN] = 0;
-				Mouse.time_held_down[MB_Z_DOWN] += Mouse.ctime-Mouse.time_went_down[MB_Z_DOWN];
-				Mouse.num_ups[MB_Z_DOWN]++;
-			}  else if ( Mouse.x_info->z<0 )	{
-			 	// z down pressed
-				Mouse.pressed[MB_Z_DOWN] = 1;
-				Mouse.time_went_down[MB_Z_DOWN]=Mouse.ctime;
-				Mouse.num_downs[MB_Z_DOWN]++;
-			}
-		}
-		if (m_ax & ME_P_C )	{ // pitch changed
-			if (Mouse.pressed[MB_PITCH_BACKWARD])	{
-			 	// pitch backward released
-				Mouse.pressed[MB_PITCH_BACKWARD] = 0;
-				Mouse.time_held_down[MB_PITCH_BACKWARD] += Mouse.ctime-Mouse.time_went_down[MB_PITCH_BACKWARD];
-				Mouse.num_ups[MB_PITCH_BACKWARD]++;
-			}  else if ( Mouse.x_info->pitch>0 )	{
-			 	// pitch backward pressed
-				Mouse.pressed[MB_PITCH_BACKWARD] = 1;
-				Mouse.time_went_down[MB_PITCH_BACKWARD]=Mouse.ctime;
-				Mouse.num_downs[MB_PITCH_BACKWARD]++;
-			}
-			if (Mouse.pressed[MB_PITCH_FORWARD])	{
-			 	// pitch forward released
-				Mouse.pressed[MB_PITCH_FORWARD] = 0;
-				Mouse.time_held_down[MB_PITCH_FORWARD] += Mouse.ctime-Mouse.time_went_down[MB_PITCH_FORWARD];
-				Mouse.num_ups[MB_PITCH_FORWARD]++;
-			}  else if ( Mouse.x_info->pitch<0 )	{
-			 	// pitch forward pressed
-				Mouse.pressed[MB_PITCH_FORWARD] = 1;
-				Mouse.time_went_down[MB_PITCH_FORWARD]=Mouse.ctime;
-				Mouse.num_downs[MB_PITCH_FORWARD]++;
-			}
-		}
-
-		if (m_ax & ME_B_C )	{ // bank changed
-			if (Mouse.pressed[MB_BANK_LEFT])	{
-			 	// bank left released
-				Mouse.pressed[MB_BANK_LEFT] = 0;
-				Mouse.time_held_down[MB_BANK_LEFT] += Mouse.ctime-Mouse.time_went_down[MB_BANK_LEFT];
-				Mouse.num_ups[MB_BANK_LEFT]++;
-			}  else if ( Mouse.x_info->bank>0 )	{
-			 	// bank left pressed
-				Mouse.pressed[MB_BANK_LEFT] = 1;
-				Mouse.time_went_down[MB_BANK_LEFT]=Mouse.ctime;
-				Mouse.num_downs[MB_BANK_LEFT]++;
-			}
-			if (Mouse.pressed[MB_BANK_RIGHT])	{
-			 	// bank right released
-				Mouse.pressed[MB_BANK_RIGHT] = 0;
-				Mouse.time_held_down[MB_BANK_RIGHT] += Mouse.ctime-Mouse.time_went_down[MB_BANK_RIGHT];
-				Mouse.num_ups[MB_BANK_RIGHT]++;
-			}  else if ( Mouse.x_info->bank<0 )	{
-			 	// bank right pressed
-				Mouse.pressed[MB_BANK_RIGHT] = 1;
-				Mouse.time_went_down[MB_BANK_RIGHT]=Mouse.ctime;
-				Mouse.num_downs[MB_BANK_RIGHT]++;
-			}
-		}
-
-		if (m_ax & ME_H_C )	{ // heading changed
-			if (Mouse.pressed[MB_HEAD_LEFT])	{
-			 	// head left released
-				Mouse.pressed[MB_HEAD_LEFT] = 0;
-				Mouse.time_held_down[MB_HEAD_LEFT] += Mouse.ctime-Mouse.time_went_down[MB_HEAD_LEFT];
-				Mouse.num_ups[MB_HEAD_LEFT]++;
-			}  else if ( Mouse.x_info->heading>0 )	{
-			 	// head left pressed
-				Mouse.pressed[MB_HEAD_LEFT] = 1;
-				Mouse.time_went_down[MB_HEAD_LEFT]=Mouse.ctime;
-				Mouse.num_downs[MB_HEAD_LEFT]++;
-			}
-			if (Mouse.pressed[MB_HEAD_RIGHT])	{
-			 	// head right released
-				Mouse.pressed[MB_HEAD_RIGHT] = 0;
-				Mouse.time_held_down[MB_HEAD_RIGHT] += Mouse.ctime-Mouse.time_went_down[MB_HEAD_RIGHT];
-				Mouse.num_ups[MB_HEAD_RIGHT]++;
-			}  else if ( Mouse.x_info->heading<0 )	{
-			 	// head right pressed
-				Mouse.pressed[MB_HEAD_RIGHT] = 1;
-				Mouse.time_went_down[MB_HEAD_RIGHT]=Mouse.ctime;
-				Mouse.num_downs[MB_HEAD_RIGHT]++;
-			}
-		}
-	}
-
 }
-
-
-static void mouse_handler_end (void)  // dummy functions
-{
-}
-#pragma on (check_stack)
 
 //--------------------------------------------------------
 // returns 0 if no mouse
 //           else number of buttons
 int mouse_init(int enable_cyberman)
 {
-	dpmi_real_regs rr = {0};
-	cyberman_info *ci;
-	struct SREGS sregs = {0};
-	union REGS inregs = {0}, outregs = {0};
-	ubyte *Mouse_dos_mem;
+	(void)enable_cyberman;
 
 	if (Mouse_installed)
 		return Mouse.num_buttons;
 
-   if (_dos_getvect(0x33) == NULL) {
-      // No mouse driver loaded
-      return 0;
-   }
-
-	// Reset the mouse driver
-	memset( &inregs, 0, sizeof(inregs) );
-	inregs.w.ax = 0;
-	int386(0x33, &inregs, &outregs);
-	if (outregs.w.ax != 0xffff)
-		return 0;
-
-	Mouse.num_buttons = outregs.w.bx;
-	Mouse.cyberman = 0;
-
-	// Enable mouse driver
-	memset( &inregs, 0, sizeof(inregs) );
-	inregs.w.ax = 0x0020;
-	int386(0x33, &inregs, &outregs);
-	if (outregs.w.ax != 0xffff )
-		return 0;
-
-	if ( enable_cyberman )	{
-		Mouse_dos_mem = dpmi_get_temp_low_buffer( 64 );
-		if (Mouse_dos_mem==NULL)	{
-			printf( "Unable to allocate DOS buffer in mouse.c\n" );
-		} else {
-			// Check for Cyberman...
-			memset( &rr, 0, sizeof(dpmi_real_regs) );
-			rr.es = DPMI_real_segment(Mouse_dos_mem);
-			rr.edx = DPMI_real_offset(Mouse_dos_mem);
-			rr.eax = 0x53c1;
-			dpmi_real_int386x( 0x33, &rr );
-			if (rr.eax==1)	{
-				// SWIFT functions supported
-				ci	= (cyberman_info *)Mouse_dos_mem;
-				if (ci->device_type==1)	{	// Cyberman
-					Mouse.cyberman = 1;
-					//printf( "Cyberman mouse detected\n" );
-					Mouse.num_buttons = 11;
-				}
-			}
-		}
-	}
-
-	if (!dpmi_lock_region(&Mouse,sizeof(mouse_info)))	{
-		printf( "Unable to lock mouse data region" );
-		exit(1);
-	}
-	if (!dpmi_lock_region((void near *)mouse_handler,(unsigned int)((char *)mouse_handler_end - (char near *)mouse_handler)))	{
-		printf( "Unable to lock mouse handler" );
-		exit(1);
-	}
-
-	// Install mouse handler
-	memset( &inregs, 0, sizeof(inregs));
-	memset( &sregs, 0, sizeof(sregs));
-	inregs.w.ax 	= 0xC;
-	inregs.w.cx 	= ME_LB_P|ME_LB_R|ME_RB_P|ME_RB_R|ME_MB_P|ME_MB_R;	// watch all 3 button ups/downs
-	if (Mouse.cyberman)
-		inregs.w.cx 	|= ME_Z_C| ME_P_C| ME_B_C| ME_H_C;	// if using a cyberman, also watch z, pitch, bank, heading.
-	inregs.x.edx	= FP_OFF(mouse_handler);
-	sregs.es 		= FP_SEG(mouse_handler);
-	int386x(0x33, &inregs, &outregs, &sregs);
+	Mouse.num_buttons = 3;
+	plat_set_mouse_button_handler( mouse_button_event );
 
 	Mouse_installed = 1;
 
@@ -387,71 +141,35 @@ int mouse_init(int enable_cyberman)
 
 void mouse_close(void)
 {
-	struct SREGS sregs = {0};
-	union REGS inregs = {0}, outregs = {0};
-
 	if (Mouse_installed)	{
 		Mouse_installed = 0;
-		// clear mouse handler by setting flags to 0.
-		memset( &inregs, 0, sizeof(inregs));
-		memset( &sregs, 0, sizeof(sregs));
-		inregs.w.ax 	= 0xC;
-		inregs.w.cx		= 0;		// disable event handler by setting to zero.
-		inregs.x.edx 	= 0;
-		sregs.es       = 0;
-		int386x(0x33, &inregs, &outregs, &sregs);
+		plat_set_mouse_button_handler( NULL );
 	}
 }
 
 
 void mouse_set_limits( int x1, int y1, int x2, int y2 )
 {
-	union REGS inregs = {0}, outregs = {0};
-
-	if (!Mouse_installed) return;
-
-	memset( &inregs, 0, sizeof(inregs));
-	inregs.w.ax = 0x7;	// Set Horizontal Limits for Pointer
-	inregs.w.cx = x1;
-	inregs.w.dx = x2;
-	int386(0x33, &inregs, &outregs);
-
-	memset( &inregs, 0, sizeof(inregs));
-	inregs.w.ax = 0x8;	// Set Vertical Limits for Pointer
-	inregs.w.cx = y1;
-	inregs.w.dx = y2;
-	int386(0x33, &inregs, &outregs);
+	// The pointer limits only mattered to the DOS driver's own cursor.
+	(void)x1; (void)y1; (void)x2; (void)y2;
 }
 
 void mouse_get_pos( int *x, int *y)
 {
-	union REGS inregs = {0}, outregs = {0};
-
 	if (!Mouse_installed) {
 		*x = *y = 0;
 		return;
 	}
-	memset( &inregs, 0, sizeof(inregs));
-	inregs.w.ax = 0x3;	// Get Mouse Position and Button Status
-	int386(0x33, &inregs, &outregs);
-	*x = (short)outregs.w.cx;
-	*y = (short)outregs.w.dx;
+	plat_mouse_get_pos( x, y );
 }
 
 void mouse_get_delta( int *dx, int *dy )
 {
-	union REGS inregs = {0}, outregs = {0};
-
 	if (!Mouse_installed) {
 		*dx = *dy = 0;
 		return;
 	}
-
-	memset( &inregs, 0, sizeof(inregs));
-	inregs.w.ax = 0xb;	// Read Mouse motion counters
-	int386(0x33, &inregs, &outregs);
-	*dx = (short)outregs.w.cx;
-	*dy = (short)outregs.w.dx;
+	plat_mouse_get_delta( dx, dy );
 }
 
 int mouse_get_btns(void)
@@ -463,6 +181,8 @@ int mouse_get_btns(void)
 	if (!Mouse_installed)
 		return 0;
 
+	plat_pump_events();
+
 	for (i=0; i<MOUSE_MAX_BUTTONS; i++ )	{
 		if (Mouse.pressed[i])
 			status |= flag;
@@ -473,17 +193,8 @@ int mouse_get_btns(void)
 
 void mouse_set_pos( int x, int y)
 {
-	union REGS inregs = {0}, outregs = {0};
-
-	if (!Mouse_installed)
-		return;
-
-	memset( &inregs, 0, sizeof(inregs));
-	inregs.w.ax = 0x4;	// Set Mouse Pointer Position
-	inregs.w.cx = x;
-	inregs.w.dx = y;
-	int386(0x33, &inregs, &outregs);
-
+	// The game draws its own pointer from the motion counters.
+	(void)x; (void)y;
 }
 
 void mouse_flush(void)
@@ -494,8 +205,6 @@ void mouse_flush(void)
 	if (!Mouse_installed)
 		return;
 
-	_disable();
-
 	//Clear the mouse data
 	CurTime =timer_get_fixed_secondsX();
 	for (i=0; i<MOUSE_MAX_BUTTONS; i++ )	{
@@ -505,7 +214,6 @@ void mouse_flush(void)
 		Mouse.num_downs[i]=0;
 		Mouse.num_ups[i]=0;
 	}
-	_enable();
 }
 
 
@@ -514,15 +222,13 @@ int mouse_button_down_count(int button)
 {
 	int count;
 
-	if (!Mouse_installed)
+	if (!Mouse_installed || button < 0 || button >= MOUSE_MAX_BUTTONS)
 		return 0;
 
-	_disable();
+	plat_pump_events();
 
 	count = Mouse.num_downs[button];
 	Mouse.num_downs[button]=0;
-
-	_enable();
 
 	return count;
 }
@@ -530,18 +236,12 @@ int mouse_button_down_count(int button)
 // Returns 1 if this button is currently down
 int mouse_button_state(int button)
 {
-	int state;
-
-	if (!Mouse_installed)
+	if (!Mouse_installed || button < 0 || button >= MOUSE_MAX_BUTTONS)
 		return 0;
 
-	_disable();
+	plat_pump_events();
 
-	state = Mouse.pressed[button];
-
-	_enable();
-
-	return state;
+	return Mouse.pressed[button];
 }
 
 
@@ -550,10 +250,10 @@ fix mouse_button_down_time(int button)
 {
 	fix time_down, time;
 
-	if (!Mouse_installed)
+	if (!Mouse_installed || button < 0 || button >= MOUSE_MAX_BUTTONS)
 		return 0;
 
-	_disable();
+	plat_pump_events();
 
 	if ( !Mouse.pressed[button] )	{
 		time_down = Mouse.time_held_down[button];
@@ -564,39 +264,10 @@ fix mouse_button_down_time(int button)
 		Mouse.time_went_down[button] = time;
 	}
 
-	_enable();
-
 	return time_down;
 }
 
 void mouse_get_cyberman_pos( int *x, int *y )
 {
-	dpmi_real_regs rr = {0};
-	event_info * ei;
-	ubyte *Mouse_dos_mem;
-
-	if ( (!Mouse_installed) || (!Mouse.cyberman) ) {
-		*x = *y = 0;
-		return;
-	}
-
-	Mouse_dos_mem = dpmi_get_temp_low_buffer( 64 );
-
-	if ( !Mouse_dos_mem )	{
-		*x = *y = 0;
-		return;
-	}
-
-
-	memset( &rr, 0, sizeof(dpmi_real_regs) );
-	rr.es = DPMI_real_segment(Mouse_dos_mem);
-	rr.edx = DPMI_real_offset(Mouse_dos_mem);
-	rr.eax = 0x5301;
-	dpmi_real_int386x( 0x33, &rr );
-
-	ei = (event_info *)Mouse_dos_mem;
-
-	*x = (((ei->x+8128)*256)/(8064+8128+1)) - 127;
-	*y = (((ei->y+8128)*256)/(8064+8128+1)) - 127;
-
+	*x = *y = 0;
 }

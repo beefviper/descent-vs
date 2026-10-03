@@ -25,6 +25,8 @@ COMPAT_PACK_DEFAULT_END
 
 #define RETRACE_HZ		70		// VGA mode 13h refresh rate
 #define PRESENT_MS		16		// present at about 60 Hz from plat_pump_events
+#define MOUSE_GRAB_MS	100		// two motion reads this close together grab the mouse
+#define MOUSE_FREE_MS	250		// and a gap this long without one lets it go
 
 static int sdl_ready;
 static SDL_Window *window;
@@ -44,6 +46,10 @@ static Uint64 next_retrace;
 static int in_pump;
 
 static plat_key_handler key_handler;
+static plat_mouse_button_handler mouse_button_handler;
+static int mouse_dx, mouse_dy;			// motion not yet read
+static int mouse_grabbed;
+static Uint32 mouse_last_read;
 
 static void sdl_shutdown(void)
 {
@@ -359,6 +365,67 @@ void plat_set_key_handler(plat_key_handler handler)
 	key_handler = handler;
 }
 
+void plat_set_mouse_button_handler(plat_mouse_button_handler handler)
+{
+	mouse_button_handler = handler;
+}
+
+static void grab_mouse(int grab)
+{
+	if (grab == mouse_grabbed)
+		return;
+	mouse_grabbed = grab;
+	SDL_SetRelativeMouseMode(grab ? SDL_TRUE : SDL_FALSE);
+}
+
+void plat_mouse_get_delta(int *dx, int *dy)
+{
+	Uint32 now;
+
+	plat_pump_events();
+	*dx = mouse_dx;
+	*dy = mouse_dy;
+	mouse_dx = mouse_dy = 0;
+
+	// Steady reads mean the game is steering with the mouse: capture it,
+	// as the DOS game had the mouse to itself. A one-off read (flushing
+	// input) does not.
+	now = SDL_GetTicks();
+	if (window && (SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) &&
+		now - mouse_last_read < MOUSE_GRAB_MS)
+		grab_mouse(1);
+	mouse_last_read = now;
+}
+
+void plat_mouse_get_pos(int *x, int *y)
+{
+	SDL_Rect rect;
+	int mx, my, ww, wh, ow, oh;
+
+	*x = *y = 0;
+	if (!window || !renderer || !screen_w || !screen_h)
+		return;
+
+	plat_pump_events();
+	SDL_GetMouseState(&mx, &my);
+	SDL_GetWindowSize(window, &ww, &wh);
+	SDL_GetRendererOutputSize(renderer, &ow, &oh);
+	if (ww <= 0 || wh <= 0)
+		return;
+	mx = mx * ow / ww;				// window points to output pixels
+	my = my * oh / wh;
+
+	display_rect(&rect);
+	if (rect.w <= 0 || rect.h <= 0)
+		return;
+	*x = (mx - rect.x) * screen_w / rect.w;
+	*y = (my - rect.y) * screen_h / rect.h;
+	if (*x < 0) *x = 0;
+	if (*y < 0) *y = 0;
+	if (*x >= screen_w) *x = screen_w - 1;
+	if (*y >= screen_h) *y = screen_h - 1;
+}
+
 void plat_pump_events(void)
 {
 	SDL_Event event;
@@ -380,13 +447,31 @@ void plat_pump_events(void)
 				key_handler(keycode, event.type == SDL_KEYDOWN);
 			break;
 		}
+		case SDL_MOUSEMOTION:
+			mouse_dx += event.motion.xrel;
+			mouse_dy += event.motion.yrel;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP: {
+			int button = event.button.button == SDL_BUTTON_LEFT ? 0 :
+				event.button.button == SDL_BUTTON_RIGHT ? 1 :
+				event.button.button == SDL_BUTTON_MIDDLE ? 2 : -1;
+			if (button >= 0 && mouse_button_handler)
+				mouse_button_handler(button, event.type == SDL_MOUSEBUTTONDOWN);
+			break;
+		}
 		case SDL_WINDOWEVENT:
 			if (event.window.event == SDL_WINDOWEVENT_EXPOSED ||
 				event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
 				last_present = 0;	// redraw now
+			else if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+				grab_mouse(0);
 			break;
 		}
 	}
+
+	if (mouse_grabbed && SDL_GetTicks() - mouse_last_read > MOUSE_FREE_MS)
+		grab_mouse(0);
 
 	now = SDL_GetPerformanceCounter();
 	if (now - last_present >= SDL_GetPerformanceFrequency() * PRESENT_MS / 1000)

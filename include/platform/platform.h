@@ -42,6 +42,19 @@ void plat_pump_events(void);
 typedef void (*plat_key_handler)(unsigned char keycode, int down);
 void plat_set_key_handler(plat_key_handler handler);
 
+// Receives mouse button presses and releases: 0 left, 1 right, 2 middle.
+typedef void (*plat_mouse_button_handler)(int button, int down);
+void plat_set_mouse_button_handler(plat_mouse_button_handler handler);
+
+// Mouse motion since the last call, in mouse units (like the DOS driver's
+// mickeys). While the game keeps reading it (flying with the mouse, the
+// editor), the window captures the mouse; it lets go when the reads stop
+// (menus, pause) or the window loses focus.
+void plat_mouse_get_delta(int *dx, int *dy);
+
+// Where the mouse is over the game screen, in screen pixels.
+void plat_mouse_get_pos(int *x, int *y);
+
 // Sound effects. Samples are 8-bit unsigned mono and must stay in memory
 // while they play. Volume is 0..0x7fff, with 0x4000 playing a sample at
 // its own level; pan is 0 (left) .. 0x8000 (middle) .. 0xffff (right).

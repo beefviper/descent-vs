@@ -38,6 +38,13 @@ Where the port stands and what is left before the game runs on Windows.
   Warnings") to standard error. Release builds compile the mono calls out
   except `mprintf`, which also prints to the console. Positioned output
   (`mprintf_at`) is dropped.
+- **Mouse (SDL2).** `source/bios/mouse.c` no longer hooks DOS interrupt
+  33h: SDL button events go through the same bookkeeping its handler did,
+  and the motion counters come from SDL relative motion. While the game
+  keeps reading the mouse (flying with it, the editor), the window
+  captures the pointer; it lets go when the reads stop (menus, pause) or
+  the window loses focus. To fly with it, pick Mouse as the control type
+  in the Controls menu. There is no Cyberman support.
 - **Sound and music.** `source/main/sound/digi.c` was written against
   the Human Machine Interfaces SOS library, which Parallax removed from
   the release. Small stand-ins for the SOS calls at the top of `digi.c`
@@ -55,9 +62,8 @@ Where the port stands and what is left before the game runs on Windows.
 
 ## What still has to be written
 
-- **Mouse.** `source/bios/mouse.c` still hooks DOS interrupt 33h, so no
-  mouse input arrives. It should be fed from SDL like the keyboard. The
-  joystick reports "not present".
+- **Joystick.** The joystick code still reads the game port, so it
+  reports "not present". It could be fed from SDL like the mouse.
 - **Leftover SVGA code.** A few banked-SVGA paths in `pixel.c`,
   `gpixel.c`, `bitblt.c` and `font.c` still cast pointers to `int`; they
   are no longer reached, since all modes are linear now.
