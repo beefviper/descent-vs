@@ -298,7 +298,7 @@ int state_default_item = 0;
 
 uint state_game_id;
 
-void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
+static void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 {
 	nitems = nitems;
 	last_key = last_key;
@@ -314,7 +314,7 @@ void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 //	}
 }
 
-void rpad_string( char * string, int max_chars )
+static void rpad_string( char * string, int max_chars )
 {
 	int i, end_found;
 

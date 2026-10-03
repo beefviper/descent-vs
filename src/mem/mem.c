@@ -106,6 +106,12 @@ static char rcsid[] = "$Id: mem.c 1.18 1995/01/24 20:49:18 matt Exp $";
 
 #include "mono.h"
 #include "error.h"
+#include "mem.h"
+
+// mem.h routes malloc and free here; this file needs the real ones.
+#undef malloc
+#undef calloc
+#undef free
 
 //#define FULL_MEM_CHECKING
 
@@ -142,6 +148,7 @@ int out_of_memory = 0;
 
 void mem_display_blocks(void);
 
+static void mem_init();
 void mem_init()
 {
 	int i;
@@ -385,6 +392,7 @@ void mem_validate_heap()
 			mem_check_integrity( i );
 }
 
+static void mem_print_all();
 void mem_print_all()
 {
 	FILE * ef;
@@ -428,7 +436,7 @@ static unsigned int block_size( void * ptr )
 
 int show_mem_info = 0;
 
-void mem_init()
+static void mem_init()
 {
 	Initialized = 1;
 
@@ -519,7 +527,7 @@ void mem_validate_heap()
 {
 }
 
-void mem_print_all()
+static void mem_print_all()
 {
 }
 

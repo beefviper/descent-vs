@@ -149,7 +149,7 @@ void ui_gadget_delete_all( UI_WINDOW * wnd )
 }
 
 
-int is_under_another_window( UI_WINDOW * win, UI_GADGET * gadget )
+static int is_under_another_window( UI_WINDOW * win, UI_GADGET * gadget )
 {
 	UI_WINDOW * temp;
 

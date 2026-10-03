@@ -213,7 +213,7 @@ void checkforext( char * f, char *ext )
 }
 
 //	See if filename f contains an extent.  If not, add extent ext.
-void set_extension( char * f, char *ext )
+static void set_extension( char * f, char *ext )
 {
 	int i;
 
@@ -314,7 +314,7 @@ int MineMenu()
 
 // -----------------------------------------------------------------------------
 // returns 1 if error, else 0
-int med_load_situation(char * filename)
+static int med_load_situation(char * filename)
 {
 	if (filename[0] == 97)
 		Int3();
@@ -375,7 +375,7 @@ int med_load_situation(char * filename)
 }
 
 //	-----------------------------------------------------------------------------
-int med_save_situation(char * filename)
+static int med_save_situation(char * filename)
 {
 	CFILE * SaveFile;
 	char	mine_name[MAX_NAME_LENGTH];

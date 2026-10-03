@@ -278,4 +278,6 @@ extern void remove_obsolete_stuck_objects(void);
 //set the tmap_num or tmap_num2 field for a wall/door
 extern void wall_set_tmap_num(segment *seg,int side,segment *csegp,int cside,int anim_num,int frame_num);
 
+void wall_reset(segment *seg, int side);
+
 #endif

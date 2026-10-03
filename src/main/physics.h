@@ -97,4 +97,7 @@ void phys_apply_rot(object *obj,vms_vector *force_vec);
 //(hopefully) maintain the object's current velocity
 void set_thrust_from_velocity(object *obj);
 
+void check_and_fix_matrix(vms_matrix *m);
+void physics_turn_towards_vector(vms_vector *goal_vector, object *obj, fix rate);
+
 #endif

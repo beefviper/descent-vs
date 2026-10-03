@@ -77,6 +77,8 @@ static char rcsid[] = "$Id: medsel.c 2.0 1995/02/27 11:35:20 john Exp $";
 #include "editor.h"
 #include "segment.h"
 #include "object.h"
+#include "kdefs.h"
+#include "medsel.h"
 
 typedef struct sort_element {
 	short segnum;
@@ -85,7 +87,7 @@ typedef struct sort_element {
 
 //compare the distance of two segments.  slow, since it computes the
 //distance each time
-segdist_cmp(sort_element *s0,sort_element *s1)
+static int segdist_cmp(sort_element *s0,sort_element *s1)
 {
 	return (s0->dist==s1->dist)?0:((s0->dist<s1->dist)?-1:1);
 
@@ -93,7 +95,7 @@ segdist_cmp(sort_element *s0,sort_element *s1)
 
 
 //find the distance between a segment and a point
-fix compute_dist(segment *seg,vms_vector *pos)
+static fix compute_dist(segment *seg,vms_vector *pos)
 {
 	vms_vector delta;
 

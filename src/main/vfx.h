@@ -60,4 +60,6 @@ extern void vfx_read_positions(int *helmet_yaw, int *helment_pitch, int *helment
 extern void vfx_set_palette();		//download palette into VFX
 extern void vfx_set_palette_sub(ubyte * palette);
 
+void vfx_init(void);
+
 #endif

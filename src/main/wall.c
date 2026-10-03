@@ -176,7 +176,7 @@ char	Wall_names[7][10] = {
 // This function determines whether the current segment/side is transparent
 //		1 = YES
 //		0 = NO
-int check_transparency( segment * seg, int side )
+static int check_transparency( segment * seg, int side )
 {
 	if ( (seg->sides[side].tmap_num2 & 0x3FFF) == 0) {
 		if (GameBitmaps[Textures[seg->sides[side].tmap_num].index].bm_flags & BM_FLAG_TRANSPARENT )
@@ -331,7 +331,7 @@ void wall_set_tmap_num(segment *seg,int side,segment *csegp,int cside,int anim_n
 
 // -------------------------------------------------------------------------------
 //when the wall has used all its hitpoints, this will destroy it
-void blast_blastable_wall(segment *seg, int side)
+static void blast_blastable_wall(segment *seg, int side)
 {
 	int Connectside;
 	segment *csegp;
@@ -642,7 +642,7 @@ void do_door_open(int door_num)
 
 }
 
-int check_poke(int objnum,int segnum,int side)
+static int check_poke(int objnum,int segnum,int side)
 {
 	object *obj = &Objects[objnum];
 
@@ -807,7 +807,7 @@ void wall_illusion_on(segment *seg, int side)
 
 //	-----------------------------------------------------------------------------
 //	Allowed to open the normally locked special boss door if in multiplayer mode.
-int special_boss_opening_allowed(int segnum, int sidenum)
+static int special_boss_opening_allowed(int segnum, int sidenum)
 {
 	if (Game_mode & GM_MULTI)
 		return (Current_level_num == BOSS_LOCKED_DOOR_LEVEL) && (segnum == BOSS_LOCKED_DOOR_SEG) && (sidenum == BOSS_LOCKED_DOOR_SIDE);

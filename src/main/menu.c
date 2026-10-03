@@ -134,7 +134,7 @@ void do_multi_player_menu();
 void do_detail_level_menu_custom(void);
 
 
-void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int citem )
+static void autodemo_menu_check(int nitems, newmenu_item * items, int *last_key, int citem )
 {
 	int curtime;
 
@@ -173,7 +173,7 @@ static int main_menu_choice = 0;
 
 //	-----------------------------------------------------------------------------
 //	Create the main menu.
-void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num_options)
+static void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num_options)
 {
 	int	num_options;
 
@@ -270,6 +270,7 @@ int DoMenu()
 extern void show_order_form(void);	// John didn't want this in inferno.h so I just externed it.
 
 //returns flag, true means quit menu
+static void do_load_game_menu();
 void do_option ( int select)
 {
 	switch (select) {
@@ -396,7 +397,7 @@ void do_option ( int select)
 
 }
 
-int do_difficulty_menu()
+static int do_difficulty_menu()
 {
 	int s;
 	newmenu_item m[5];
@@ -469,7 +470,7 @@ void set_detail_level_parameters(int detail_level)
 }
 
 //	-----------------------------------------------------------------------------
-void do_detail_level_menu(void)
+static void do_detail_level_menu(void)
 {
 	int s;
 	newmenu_item m[7];
@@ -505,7 +506,7 @@ void do_detail_level_menu(void)
 }
 
 //	-----------------------------------------------------------------------------
-void do_detail_level_menu_custom_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
+static void do_detail_level_menu_custom_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 {
 	nitems = nitems;
 	*last_key = *last_key;
@@ -676,7 +677,7 @@ try_again:
 
 }
 
-void do_load_game_menu()
+static void do_load_game_menu()
 {
 	newmenu_item m[N_SAVE_SLOTS];
 	char *saved_text[N_SAVE_SLOTS];
@@ -751,7 +752,7 @@ void do_save_game_menu()
 
 extern void GameLoop(int, int );
 
-void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
+static void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 {
 	nitems=nitems;
 	*last_key = *last_key;

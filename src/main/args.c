@@ -62,6 +62,7 @@ static char rcsid[] = "$Id: args.c 2.0 1995/02/27 11:31:22 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "args.h"
 
 int Num_args=0;
 char * Args[100];

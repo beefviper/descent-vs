@@ -41,7 +41,7 @@ static char rcsid[] = "$Id: xcolor.c 1.1 1994/01/24 11:09:24 john Exp $";
 
 ubyte palette[768];
 
-void dofile( char * filename )
+static void dofile( char * filename )
 {
 	grs_bitmap * bitmap;
 

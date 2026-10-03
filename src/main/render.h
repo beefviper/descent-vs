@@ -155,4 +155,6 @@ g3s_codes rotate_list(int nv,short *pointnumlist);
 void project_list(int nv,short *pointnumlist);
 
 
+int draw_outline(int nverts,g3s_point **pointlist);
+
 #endif

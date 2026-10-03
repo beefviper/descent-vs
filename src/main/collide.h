@@ -129,4 +129,6 @@ extern void apply_damage_to_controlcen(object *controlcen, fix damage, short who
 extern void bump_one_object(object *obj0, vms_vector *hit_dir, fix damage);
 
 
+void drop_player_eggs(object *player);
+
 #endif

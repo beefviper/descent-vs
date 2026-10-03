@@ -130,7 +130,7 @@ extern void test_create_n_segment_path();
 
 extern void set_all_modes_to_hover(void);
 
-int Test1()
+static int Test1()
 {
 //	{ int i;
 //		for (i=Highest_segment_index+1; i<MAX_SEGMENTS; i++)
@@ -145,7 +145,7 @@ int Test1()
 
 extern void check_for_overlapping_segments(void);
 extern void init_replacements();
-int Test2()
+static int Test2()
 {
 //	mprintf((0, "\nCalling check_for_overlapping_segments.\n"));
 //	check_for_overlapping_segments();
@@ -162,7 +162,7 @@ int Test2()
 extern void do_replacements(void);
 extern void do_replacements_all(void);
 
-int Test3()
+static int Test3()
 {
 	Int3();	//	Are you sure you want to do this?
 	//	This will replace all textures in your replacement list

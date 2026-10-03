@@ -66,6 +66,7 @@ static char rcsid[] = "$Id: kview.c 2.0 1995/02/27 11:34:21 john Exp $";
 
 #include "inferno.h"
 #include "editor.h"
+#include "kdefs.h"
 
 // ---------- zoom control on current window ----------
 int ZoomIn()

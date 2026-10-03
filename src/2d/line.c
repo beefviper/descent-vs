@@ -80,14 +80,14 @@ from "Graphics Gems", Academic Press, 1990
 */
 
 /* non-zero flag indicates the pixels needing EXCHG back. */
-void plot(int x,int y,int flag)
+static void plot(int x,int y,int flag)
 {   if (flag)
 		gr_upixel(y, x);
 	else
 		gr_upixel(x, y);
 }
 
-int gr_hline(int x1, int x2, int y)
+static int gr_hline(int x1, int x2, int y)
 {   int i;
 
 	if (x1 > x2) EXCHG(x1,x2);
@@ -96,7 +96,7 @@ int gr_hline(int x1, int x2, int y)
 	return 0;
 }
 
-int gr_vline(int y1, int y2, int x)
+static int gr_vline(int y1, int y2, int x)
 {   int i;
 	if (y1 > y2) EXCHG(y1,y2);
 	for (i=y1; i<=y2; i++ )
@@ -104,7 +104,7 @@ int gr_vline(int y1, int y2, int x)
 	return 0;
 }
 
-void gr_universal_uline(int a1, int b1, int a2, int b2)
+static void gr_universal_uline(int a1, int b1, int a2, int b2)
 {
 	int dx, dy, incr1, incr2, D, x, y, xend, c, pixels_left;
 	int x1, y1;

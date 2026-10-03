@@ -464,7 +464,7 @@ int Gamesave_num_org_robots = 0;
 #ifdef EDITOR
 //	Return true if this level has a name of the form "level??"
 //	Note that a pathspec can appear at the beginning of the filename.
-int is_real_level(char *filename)
+static int is_real_level(char *filename)
 {
 	int	len = strlen(filename);
 
@@ -476,7 +476,7 @@ int is_real_level(char *filename)
 
 }
 
-void convert_name_to_CDL( char *dest, char *src )
+static void convert_name_to_CDL( char *dest, char *src )
 {
 	int i;
 
@@ -534,7 +534,7 @@ void convert_name_to_CDL( char *dest, char *src )
 }
 #endif
 
-void convert_name_to_LVL( char *dest, char *src )
+static void convert_name_to_LVL( char *dest, char *src )
 {
 	int i;
 
@@ -575,7 +575,7 @@ char Save_pof_names[MAX_POLYGON_MODELS][13];
 
 void check_and_fix_matrix(vms_matrix *m);
 
-void verify_object( object * obj )	{
+static void verify_object( object * obj )	{
 
 	obj->lifeleft = IMMORTAL_TIME;		//all loaded object are immortal, for now
 
@@ -822,7 +822,7 @@ static void gs_write_angvec(vms_angvec *v,FILE *file)
 #endif
 
 //reads one object of the given version from the given file
-void read_object(object *obj,CFILE *f,int version)
+static void read_object(object *obj,CFILE *f,int version)
 {
 	obj->type				= read_byte(f);
 	obj->id					= read_byte(f);
@@ -1018,7 +1018,7 @@ void read_object(object *obj,CFILE *f,int version)
 #ifdef EDITOR
 
 //writes one object to the given file
-write_object(object *obj,FILE *f)
+static int write_object(object *obj,FILE *f)
 {
 	gs_write_byte(obj->type,f);
 	gs_write_byte(obj->id,f);
@@ -1192,7 +1192,7 @@ write_object(object *obj,FILE *f)
 // If level != -1, it loads the filename with extension changed to .min
 // Otherwise it loads the appropriate level mine.
 // returns 0=everything ok, 1=old version, -1=error
-load_game_data(CFILE *LoadFile)
+static int load_game_data(CFILE *LoadFile)
 {
 	int i,j;
 	int start_offset;
@@ -1777,7 +1777,7 @@ int	Errors_in_mine;
 
 // -----------------------------------------------------------------------------
 // Save game
-int save_game_data(FILE * SaveFile)
+static int save_game_data(FILE * SaveFile)
 {
 	int  player_offset, object_offset, walls_offset, doors_offset, triggers_offset, control_offset, matcen_offset; //, links_offset;
 	int start_offset,end_offset;
@@ -1895,7 +1895,7 @@ int save_mine_data(FILE * SaveFile);
 
 // -----------------------------------------------------------------------------
 // Save game
-int save_level_sub(char * filename, int compiled_version)
+static int save_level_sub(char * filename, int compiled_version)
 {
 	FILE * SaveFile;
 	char temp_filename[128];

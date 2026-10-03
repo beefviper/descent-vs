@@ -54,6 +54,7 @@ static char rcsid[] = "$Id: ksegmove.c 2.0 1995/02/27 11:33:37 john Exp $";
 
 #include "inferno.h"
 #include "editor.h"
+#include "kdefs.h"
 
 // -- old -- int SegOrientCommon(fixang *ang, fix val)
 // -- old -- {
@@ -65,7 +66,7 @@ static char rcsid[] = "$Id: ksegmove.c 2.0 1995/02/27 11:33:37 john Exp $";
 // -- old -- 	return 1;
 // -- old -- }
 
-int SegOrientCommon(fixang *ang, fix val)
+static int SegOrientCommon(fixang *ang, fix val)
 {
 	Seg_orientation.p = 0;
 	Seg_orientation.b = 0;

@@ -534,7 +534,7 @@ fix	Cloak_fadein_duration;
 fix	Cloak_fadeout_duration;
 
 //do special cloaked render
-void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
+static void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fix cloak_end_time,bitmap_index * alt_textures)
 {
 	fix cloak_delta_time,total_cloaked_time;
 	fix light_scale;
@@ -616,7 +616,7 @@ void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fi
 }
 
 //draw an object which renders as a polygon model
-void draw_polygon_object(object *obj)
+static void draw_polygon_object(object *obj)
 {
 	fix light;
 	int	imsave;
@@ -744,7 +744,7 @@ int	Player_fired_laser_this_frame=-1;
 // -----------------------------------------------------------------------------
 //this routine checks to see if an robot rendered near the middle of
 //the screen, and if so and the player had fired, "warns" the robot
-void set_robot_location_info(object *objp)
+static void set_robot_location_info(object *objp)
 {
 	if (Player_fired_laser_this_frame != -1) {
 		g3s_point temp;
@@ -800,7 +800,7 @@ void create_small_fireball_on_object(object *objp, fix size_scale, int sound_fla
 }
 
 //	------------------------------------------------------------------------------------------------------------------
-void create_vclip_on_object(object *objp, fix size_scale, int vclip_num)
+static void create_vclip_on_object(object *objp, fix size_scale, int vclip_num)
 {
 	fix			size;
 	vms_vector	pos, rand_vec;
@@ -1072,7 +1072,7 @@ void special_reset_objects(void)
 }
 
 #ifndef NDEBUG
-int is_object_in_seg( int segnum, int objn )
+static int is_object_in_seg( int segnum, int objn )
 {
 	int objnum, count = 0;
 
@@ -1086,7 +1086,7 @@ int is_object_in_seg( int segnum, int objn )
 	 return count;
 }
 
-int search_all_segments_for_object( int objnum )
+static int search_all_segments_for_object( int objnum )
 {
 	int i;
 	int count = 0;
@@ -1097,7 +1097,7 @@ int search_all_segments_for_object( int objnum )
 	return count;
 }
 
-void johns_obj_unlink(int segnum, int objnum)
+static void johns_obj_unlink(int segnum, int objnum)
 {
 	object  *obj = &Objects[objnum];
 	segment *seg = &Segments[segnum];
@@ -1112,7 +1112,7 @@ void johns_obj_unlink(int segnum, int objnum)
 	if (obj->next != -1) Objects[obj->next].prev = obj->prev;
 }
 
-void remove_incorrect_objects()
+static void remove_incorrect_objects()
 {
 	int segnum, objnum, count;
 
@@ -1137,7 +1137,7 @@ void remove_incorrect_objects()
 	}
 }
 
-void remove_all_objects_but( int segnum, int objnum )
+static void remove_all_objects_but( int segnum, int objnum )
 {
 	int i;
 
@@ -1150,7 +1150,7 @@ void remove_all_objects_but( int segnum, int objnum )
 	}
 }
 
-int check_duplicate_objects()
+static int check_duplicate_objects()
 {
 	int i, count=0;
 
@@ -1170,7 +1170,7 @@ int check_duplicate_objects()
 	return count;
 }
 
-void list_seg_objects( int segnum )
+static void list_seg_objects( int segnum )
 {
 	int objnum, count = 0;
 
@@ -1291,7 +1291,7 @@ void obj_free(int objnum)
 
 //-----------------------------------------------------------------------------
 //	Scan the object list, freeing down to num_used objects
-void free_object_slots(int num_used)
+static void free_object_slots(int num_used)
 {
 	int	i, olind;
 	int	obj_list[MAX_OBJECTS];
@@ -1605,7 +1605,7 @@ void dead_player_end(void)
 
 //	------------------------------------------------------------------------------------------------------------------
 //	Camera is less than size of player away from
-void set_camera_pos(vms_vector *camera_pos, object *objp)
+static void set_camera_pos(vms_vector *camera_pos, object *objp)
 {
 	int	count = 0;
 	fix	camera_player_dist;
@@ -1769,7 +1769,7 @@ int Killed_in_frame = -1;
 int Killed_objnum = -1;
 
 //	------------------------------------------------------------------------------------------------------------------
-void start_player_death_sequence(object *player)
+static void start_player_death_sequence(object *player)
 {
 	int	objnum;
 
@@ -1882,7 +1882,7 @@ void obj_relink(int objnum,int newsegnum)
 }
 
 //process a continuously-spinning object
-void spin_object(object *obj)
+static void spin_object(object *obj)
 {
 	vms_angvec rotangs;
 	vms_matrix rotmat, new_pm;
@@ -1959,10 +1959,12 @@ void object_move_one( object * obj )
 
 		#ifndef RELEASE
 		case CT_SLEW:
-			if ( keyd_pressed[KEY_PAD5] ) slew_stop( obj );
+			if ( keyd_pressed[KEY_PAD5] ) slew_stop();
 			if ( keyd_pressed[KEY_NUMLOCK] ) 		{
-				slew_reset_orient( obj );
+				slew_reset_orient();
+				#ifdef __WATCOMC__
 				* (ubyte *) 0x417 &= ~0x20;		//kill numlock
+				#endif
 			}
 			slew_frame(0 );		// Does velocity addition for us.
 			break;

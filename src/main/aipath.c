@@ -171,7 +171,7 @@ void maybe_ai_path_garbage_collect(void);
 void ai_path_set_orient_and_vel(object* objp, vms_vector* goal_point);
 
 
-void create_random_xlate(byte *xt)
+static void create_random_xlate(byte *xt)
 {
 	int	i;
 
@@ -194,7 +194,7 @@ void create_random_xlate(byte *xt)
 //	Insert the point at the center of the side connecting two segments between the two points.
 // This is messy because we must insert into the list.  The simplest (and not too slow) way to do this is to start
 // at the end of the list and go backwards.
-void insert_center_points(point_seg *psegs, short *num_points)
+static void insert_center_points(point_seg *psegs, short *num_points)
 {
 	int	i, last_point;
 
@@ -249,6 +249,7 @@ int	Ai_path_debug=0;
 //	like to say that it ensures that the object can move between the points, but that would require knowing what
 //	the object is (which isn't passed, right?) and making fvi calls (slow, right?).  So, consider it the more_or_less_safe_flag.
 //	If end_seg == -2, then end seg will never be found and this routine will drop out due to depth (probably called by create_n_segment_path).
+static int validate_path(int debug_flag, point_seg *psegs, int num_points);
 int create_path_points(object *objp, int start_seg, int end_seg, point_seg *psegs, short *num_points, int max_depth, int random_flag, int safety_flag, int avoid_seg)
 {
 	int		cur_seg;
@@ -456,7 +457,7 @@ cpp_done1: ;
 //	Make sure that there are connections between all segments on path.
 //	Note that if path has been optimized, connections may not be direct, so this function is useless, or worse.
 //	Return true if valid, else return false.
-int validate_path(int debug_flag, point_seg *psegs, int num_points)
+static int validate_path(int debug_flag, point_seg *psegs, int num_points)
 {
 #if PARALLAX
 	int		i, curseg;
@@ -549,7 +550,7 @@ void validate_all_paths(void)
 //	Sets	objp->ctype.ai_info.hide_index,		a pointer into Point_segs, the first point_seg of the path.
 //			objp->ctype.ai_info.path_length,		length of path
 //			Point_segs_free_ptr				global pointer into Point_segs array
-void create_path(object *objp)
+static void create_path(object *objp)
 {
 	ai_static	*aip = &objp->ctype.ai_info;
 	ai_local		*ailp = &Ai_local_info[objp-Objects];
@@ -764,7 +765,7 @@ void create_n_segment_path_to_door(object *objp, int path_length, int avoid_seg)
 extern int Connected_segment_distance;
 
 //	----------------------------------------------------------------------------------------------------
-void move_object_to_goal(object *objp, vms_vector *goal_point, int goal_seg)
+static void move_object_to_goal(object *objp, vms_vector *goal_point, int goal_seg)
 {
 	ai_static	*aip = &objp->ctype.ai_info;
 	int			segnum;
@@ -1061,7 +1062,7 @@ typedef struct {
 	short	path_start, objnum;
 } obj_path;
 
-int path_index_compare(const void* i1, const void* i2)
+static int path_index_compare(const void* i1, const void* i2)
 {
 	const obj_path* ii1 = i1;
 	const obj_path* ii2 = i2;
@@ -1139,7 +1140,7 @@ int	Last_frame_garbage_collected = 0;
 
 //	----------------------------------------------------------------------------------------------------------
 //	Garbage colledion -- Free all unused records in Point_segs and compress all paths.
-void ai_path_garbage_collect(void)
+static void ai_path_garbage_collect(void)
 {
 	int	free_path_index = 0;
 	int	num_path_objects = 0;
@@ -1331,7 +1332,7 @@ void test_create_path(void)
 
 }
 
-void show_path(int start_seg, int end_seg, point_seg *psp, short length)
+static void show_path(int start_seg, int end_seg, point_seg *psp, short length)
 {
 	printf("[%3i:%3i (%3i):] ", start_seg, end_seg, length);
 
@@ -1432,7 +1433,7 @@ int	Player_following_path_flag=0;
 
 //	------------------------------------------------------------------------------------------------------------------
 //	Set orientation matrix and velocity for objp based on its desire to get to a point.
-void player_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
+static void player_path_set_orient_and_vel(object *objp, vms_vector *goal_point)
 {
 	vms_vector	cur_vel = objp->mtype.phys_info.velocity;
 	vms_vector	norm_cur_vel;
@@ -1562,7 +1563,7 @@ void player_follow_path(object *objp)
 
 //	------------------------------------------------------------------------------------------------------------------
 //	Create path for player from current segment to goal segment.
-void create_player_path_to_segment(int segnum)
+static void create_player_path_to_segment(int segnum)
 {
 	object		*objp = ConsoleObject;
 

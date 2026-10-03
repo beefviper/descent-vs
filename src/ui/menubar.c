@@ -110,7 +110,7 @@ static int menubar_hid;
 
 //------------------------- Show a menu item -------------------
 
-void item_show( MENU * menu, int n )
+static void item_show( MENU * menu, int n )
 {
 	ITEM * item = &menu->Item[n];
 
@@ -156,7 +156,7 @@ void item_show( MENU * menu, int n )
 
 //---------------------------- Show a menu ---------------------
 
-void menu_show( MENU * menu )
+static void menu_show( MENU * menu )
 {
 	int i;
 
@@ -192,7 +192,7 @@ void menu_show( MENU * menu )
 
 //-------------------------- Hide a menu -----------------------
 
-void menu_hide( MENU * menu )
+static void menu_hide( MENU * menu )
 {
 
 	// Can't hide if it's not already drawn
@@ -214,7 +214,7 @@ void menu_hide( MENU * menu )
 
 //------------------------- Move the menu bar ------------------
 
-void menu_move_bar_to( MENU * menu, int number )
+static void menu_move_bar_to( MENU * menu, int number )
 {
 	int old_item;
 
@@ -233,7 +233,7 @@ void menu_move_bar_to( MENU * menu, int number )
 }
 
 //------------------------ Match keypress to item ------------------
-int menu_match_keypress( MENU * menu, int keypress )
+static int menu_match_keypress( MENU * menu, int keypress )
 {
 	int i;
 	char c;
@@ -260,7 +260,7 @@ int menu_match_keypress( MENU * menu, int keypress )
 }
 
 
-int menu_is_mouse_on( ITEM * item )
+static int menu_is_mouse_on( ITEM * item )
 {
 	if ((Mouse.x >= item->x) &&
 		(Mouse.x < item->x + item->w ) &&
@@ -271,7 +271,7 @@ int menu_is_mouse_on( ITEM * item )
 		return 0;
 }
 
-int menu_check_mouse_item( MENU * menu )
+static int menu_check_mouse_item( MENU * menu )
 {
 	int i;
 
@@ -289,7 +289,7 @@ int menu_check_mouse_item( MENU * menu )
 }
 
 
-void menu_hide_all()
+static void menu_hide_all()
 {
  	int i;
 
@@ -305,7 +305,7 @@ void menu_hide_all()
 
 static state2_alt_down;
 
-void do_state_0( int keypress )
+static void do_state_0( int keypress )
 {
 	int i, j;
 
@@ -367,7 +367,7 @@ void do_state_0( int keypress )
 	}
 }
 
-void do_state_1( int keypress )
+static void do_state_1( int keypress )
 {
 	int i;
 
@@ -418,7 +418,7 @@ void do_state_1( int keypress )
 	}
 }
 
-void do_state_2(int keypress)
+static void do_state_2(int keypress)
 {
 	int i;
 
@@ -504,7 +504,7 @@ void do_state_2(int keypress)
 }
 
 
-void do_state_3( int keypress )
+static void do_state_3( int keypress )
 {
 	int i;
 
@@ -649,7 +649,7 @@ void menubar_do( int keypress )
 	}
 }
 
-void CommaParse( int n, char * dest, char * source )
+static void CommaParse( int n, char * dest, char * source )
 {
 	int i = 0, j=0, cn = 0;
 

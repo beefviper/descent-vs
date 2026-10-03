@@ -177,4 +177,6 @@ extern int kconfig_is_axes_used(int axis);
 extern void kconfig_init_external_controls(int intno, uintptr_t address);
 
 
+void kconfig_center_headset(void);
+
 #endif

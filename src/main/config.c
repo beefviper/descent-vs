@@ -93,6 +93,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "args.h"
 #include "player.h"
 #include "mission.h"
+#include "config.h"
 
 #ifdef __WATCOMC__					// Structure layout and stack checking for SOS
 #pragma pack (4);						// Use 32-bit packing!
@@ -142,7 +143,7 @@ void set_custom_detail_vars(void);
 #define CL_MC0 0xF8F
 #define CL_MC1 0xF8D
 
-void CrystalLakeWriteMCP( ushort mc_addr, ubyte mc_data )
+static void CrystalLakeWriteMCP( ushort mc_addr, ubyte mc_data )
 {
 	_disable();
 	outp( CL_MC0, 0xE2 );				// Write password
@@ -150,7 +151,7 @@ void CrystalLakeWriteMCP( ushort mc_addr, ubyte mc_data )
 	_enable();
 }
 
-ubyte CrystalLakeReadMCP( ushort mc_addr )
+static ubyte CrystalLakeReadMCP( ushort mc_addr )
 {
 	ubyte value;
 	_disable();
@@ -160,7 +161,7 @@ ubyte CrystalLakeReadMCP( ushort mc_addr )
 	return value;
 }
 
-void CrystalLakeSetSB(void)
+static void CrystalLakeSetSB(void)
 {
 	ubyte tmp;
 	tmp = CrystalLakeReadMCP( CL_MC1 );
@@ -168,7 +169,7 @@ void CrystalLakeSetSB(void)
 	CrystalLakeWriteMCP( CL_MC1, tmp );
 }
 
-void CrystalLakeSetWSS(void)
+static void CrystalLakeSetWSS(void)
 {
 	ubyte tmp;
 	tmp = CrystalLakeReadMCP( CL_MC1 );

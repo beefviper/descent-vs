@@ -175,4 +175,6 @@ extern int joy_get_scaled_reading( int raw, int axn );
 extern void joy_set_slow_reading( int flag );
 
 
+void joy_handler(int ticks_this_time);
+
 #endif

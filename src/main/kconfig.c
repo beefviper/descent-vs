@@ -669,7 +669,7 @@ int find_next_item_left( kc_item * items, int nitems, int citem )
 #endif
 
 
-void kconfig_sub(kc_item * items,int nitems, char * title)
+static void kconfig_sub(kc_item * items,int nitems, char * title)
 {
 	grs_canvas * save_canvas;
 	grs_font * save_font;
@@ -987,7 +987,7 @@ void kc_drawitem( kc_item *item, int is_current )
 
 static int looper=0;
 
-void kc_drawquestion( kc_item *item )
+static void kc_drawquestion( kc_item *item )
 {
 	int c, x, w, h, aw;
 
@@ -1405,7 +1405,7 @@ extern int			VR_sensitivity;
 
 int VR_sense_range[3] = { 25, 50, 75 };
 
-void read_head_tracker()
+static void read_head_tracker()
 {
 	fix yaw, pitch, roll;
 	int buttons;
@@ -1475,7 +1475,7 @@ void kconfig_init_external_controls(int intno, uintptr_t address)
 
 }
 
-void kconfig_read_external_controls()
+static void kconfig_read_external_controls()
 {
 	union REGS r;
 

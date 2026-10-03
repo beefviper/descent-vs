@@ -89,6 +89,7 @@ static char rcsid[] = "$Id: ksegsize.c 2.1 1995/03/08 16:07:21 yuan Exp $";
 #include "error.h"
 #include "segment.h"
 #include "gameseg.h"
+#include "kdefs.h"
 
 #define XDIM	0
 #define YDIM	1
@@ -99,7 +100,7 @@ int		Modified_vertices[MAX_MODIFIED_VERTICES];
 int		Modified_vertex_index = 0;
 
 // ------------------------------------------------------------------------------------------
-void validate_modified_segments(void)
+static void validate_modified_segments(void)
 {
 	int	v,w,v0,seg;
 	char	modified_segments[MAX_SEGMENTS];
@@ -134,7 +135,7 @@ void validate_modified_segments(void)
 
 // ------------------------------------------------------------------------------------------
 //	Scale vertex *vertp by vector *vp, scaled by scale factor scale_factor
-void scale_vert_aux(int vertex_ind, vms_vector *vp, fix scale_factor)
+static void scale_vert_aux(int vertex_ind, vms_vector *vp, fix scale_factor)
 {
 	vms_vector	*vertp = &Vertices[vertex_ind];
 
@@ -147,7 +148,7 @@ void scale_vert_aux(int vertex_ind, vms_vector *vp, fix scale_factor)
 }
 
 // ------------------------------------------------------------------------------------------
-void scale_vert(segment *sp, int vertex_ind, vms_vector *vp, fix scale_factor)
+static void scale_vert(segment *sp, int vertex_ind, vms_vector *vp, fix scale_factor)
 {
 	switch (SegSizeMode) {
 		case SEGSIZEMODE_FREE:
@@ -183,7 +184,7 @@ void scale_vert(segment *sp, int vertex_ind, vms_vector *vp, fix scale_factor)
 }
 
 // ------------------------------------------------------------------------------------------
-void scale_free_verts(segment *sp, vms_vector *vp, int side, fix scale_factor)
+static void scale_free_verts(segment *sp, vms_vector *vp, int side, fix scale_factor)
 {
 	int		v;
 	char		*verts;
@@ -202,7 +203,7 @@ void scale_free_verts(segment *sp, vms_vector *vp, int side, fix scale_factor)
 
 // -----------------------------------------------------------------------------
 //	Make segment *sp bigger in dimension dimension by amount amount.
-void med_scale_segment_new(segment *sp, int dimension, fix amount)
+static void med_scale_segment_new(segment *sp, int dimension, fix amount)
 {
 	vms_matrix	mat;
 
@@ -231,7 +232,7 @@ void med_scale_segment_new(segment *sp, int dimension, fix amount)
 // ------------------------------------------------------------------------------------------
 //	Extract a vector from a segment.  The vector goes from the start face to the end face.
 //	The point on each face is the average of the four points forming the face.
-void extract_vector_from_segment_side(segment *sp, int side, vms_vector *vp, int vla, int vlb, int vra, int vrb)
+static void extract_vector_from_segment_side(segment *sp, int side, vms_vector *vp, int vla, int vlb, int vra, int vrb)
 {
 	vms_vector	v1, v2;
 
@@ -263,7 +264,7 @@ void med_extract_up_vector_from_segment_side(segment *sp, int sidenum, vms_vecto
 
 // -----------------------------------------------------------------------------
 //	Increase the size of Cursegp in dimension dimension by amount
-int segsize_common(int dimension, fix amount)
+static int segsize_common(int dimension, fix amount)
 {
 	int	i;
 	int	propagated[MAX_SIDES_PER_SEGMENT];
@@ -427,7 +428,7 @@ int ToggleSegSizeMode(void)
 }
 
 //	---------------------------------------------------------------------------
-int	PerturbCursideCommon(fix amount)
+static int	PerturbCursideCommon(fix amount)
 {
 	int			saveSegSizeMode = SegSizeMode;
 	vms_vector	fvec, rvec, uvec;

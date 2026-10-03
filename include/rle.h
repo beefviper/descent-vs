@@ -54,6 +54,8 @@ void gr_rle_expand_scanline( ubyte *dest, ubyte *src, int x1, int x2  );
 
 grs_bitmap * rle_expand_texture( grs_bitmap * bmp );
 
-rle_cache_flush();
+void rle_cache_flush(void);
+
+void gr_rle_expand_scanline_generic( grs_bitmap * dest, int dx, int dy, ubyte *src, int x1, int x2  );
 
 #endif

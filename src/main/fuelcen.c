@@ -324,7 +324,7 @@ void fuelcen_reset()
 }
 
 #ifndef NDEBUG		//this is sometimes called by people from the debugger
-void reset_all_robot_centers()
+static void reset_all_robot_centers()
 {
 	int i;
 
@@ -385,7 +385,7 @@ void fuelcen_create( segment * segp)
 //------------------------------------------------------------
 // Adds a matcen that already is a special type into the Station array.
 // This function is separate from other fuelcens because we don't want values reset.
-void matcen_create( segment * segp)
+static void matcen_create( segment * segp)
 {
 	int	station_type = segp->special;
 
@@ -581,7 +581,7 @@ int	FrameCount_last_msg = 0;
 #endif
 
 //	----------------------------------------------------------------------------------------------------------
-void robotmaker_proc( FuelCenter * robotcen )
+static void robotmaker_proc( FuelCenter * robotcen )
 {
 	fix		dist_to_player;
 	vms_vector	cur_object_loc; //, direction;
@@ -788,7 +788,7 @@ void robotmaker_proc( FuelCenter * robotcen )
 
 #define COUNTDOWN_VOICE_TIME (i2f(DIFF_CONTROL_CENTER_EXPLOSION_TIME)-fl2f(12.75))
 
-void controlcen_proc( FuelCenter * controlcen )
+static void controlcen_proc( FuelCenter * controlcen )
 {
 	fix old_time;
 	int	fc;

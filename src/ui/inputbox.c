@@ -55,7 +55,7 @@ static char rcsid[] = "$Id: inputbox.c 1.6 1994/11/18 23:07:30 john Exp $";
 #include "key.h"
 
 // insert character c into string s at position p.
-void strcins(char *s, int p, char c)
+static void strcins(char *s, int p, char c)
 {
 	int n;
 	for (n=(int)strlen(s)-p; n>=0; n-- )
@@ -65,7 +65,7 @@ void strcins(char *s, int p, char c)
 
 // delete n character from string s starting at position p
 
-void strndel(char *s, int p, int n)
+static void strndel(char *s, int p, int n)
 {
 	for (; (*(s+p) = *(s+p+n)) != '\0'; s++ )
 		*(s+p+n) = '\0';    // Delete and zero fill

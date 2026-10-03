@@ -574,7 +574,7 @@ int piggy_find_sound( char * name )
 
 CFILE * Piggy_fp = NULL;
 
-void piggy_close_file(void)
+static void piggy_close_file(void)
 {
 	if ( Piggy_fp )	{
 		cfclose( Piggy_fp );
@@ -767,7 +767,7 @@ int piggy_init()
 	return 0;
 }
 
-int piggy_is_needed(int soundnum)
+static int piggy_is_needed(int soundnum)
 {
 	int i;
 
@@ -816,7 +816,7 @@ char * crit_errors[13] = { "Write Protected", "Unknown Unit", "Drive Not Ready",
 "Bad struct length", "Seek Error", "Unknown media type", "Sector not found", "Printer out of paper", "Write Fault", \
 "Read fault", "General Failure" };
 
-void piggy_critical_error()
+static void piggy_critical_error()
 {
 	grs_canvas * save_canv;
 	grs_font * save_font;
@@ -950,6 +950,7 @@ void piggy_load_level_data()
 }
 
 #ifdef EDITOR
+static int piggy_is_substitutable_bitmap( char * name, char * subst_name );
 void piggy_dump_all()
 {
 	int i, xlat_offset;
@@ -1212,7 +1213,7 @@ void piggy_close()
 
 }
 
-int piggy_does_bitmap_exist_slow( char * name )
+static int piggy_does_bitmap_exist_slow( char * name )
 {
 	int i;
 
@@ -1227,7 +1228,7 @@ int piggy_does_bitmap_exist_slow( char * name )
 #define NUM_GAUGE_BITMAPS 10
 char * gauge_bitmap_names[NUM_GAUGE_BITMAPS] = { "gauge01", "gauge02", "gauge06", "targ01", "targ02", "targ03", "targ04", "targ05", "targ06", "gauge18" };
 
-int piggy_is_gauge_bitmap( char * base_name )
+static int piggy_is_gauge_bitmap( char * base_name )
 {
 	int i;
 	for (i=0; i<NUM_GAUGE_BITMAPS; i++ )	{
@@ -1238,7 +1239,7 @@ int piggy_is_gauge_bitmap( char * base_name )
 	return 0;
 }
 
-int piggy_is_substitutable_bitmap( char * name, char * subst_name )
+static int piggy_is_substitutable_bitmap( char * name, char * subst_name )
 {
 	int frame;
 	char * p;

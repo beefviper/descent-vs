@@ -43,22 +43,22 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern int show_mem_info;//moved out of the ifdef by KRB
 
+void mem_display_blocks(void);
+extern void * mem_malloc( unsigned int size, char * var, char * file, int line, int fill_zero );
+extern void mem_free( void * buffer );
+
+// Checks to see if any blocks are overwritten
+void mem_validate_heap(void);
+
 #ifndef NDEBUG
 
 //extern int show_mem_info;
-
-void * mem_display_blocks();
-extern void * mem_malloc( unsigned int size, char * var, char * file, int line, int fill_zero );
-extern void mem_free( void * buffer );
 
 #define malloc(size)    mem_malloc((size),"Unknown", __FILE__,__LINE__, 0 )
 #define calloc(n,size)  mem_malloc((n*size),"Unknown", __FILE__,__LINE__, 1 )
 #define free(ptr)       do{ mem_free(ptr); ptr=NULL; } while(0)
 
 #define MALLOC( var, type, count )   (var=(type *)mem_malloc((count)*sizeof(type),#var, __FILE__,__LINE__,0 ))
-
-// Checks to see if any blocks are overwritten
-void mem_validate_heap();
 
 #else
 

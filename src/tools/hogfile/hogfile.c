@@ -18,7 +18,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 FILE * HogFile;
 
-void hog_add_file( char * filename )
+static void hog_add_file( char * filename )
 {
 	FILE * fp;
 	int length;
@@ -72,7 +72,7 @@ void hog_add_file( char * filename )
 #define REMOVE_COMMENTS(s)	remove_char((s),';')
 #define REMOVE_DOTS(s)  	remove_char((s),'.')
 
-void remove_char( char * s, char c )
+static void remove_char( char * s, char c )
 {
 	char *p;
 	p = strchr(s,c);

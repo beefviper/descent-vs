@@ -109,7 +109,7 @@ extern void rls_do_cc_setup_asm();
 void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta );
 void rls_stretch_scanline_setup( int XDelta, int YDelta );
 
-void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+static void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 {
 	int i;
 	ubyte c;
@@ -127,7 +127,7 @@ void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 
 // Scales a row of width pixels from sbits to dbits, stepping the 16.16
 // source position u by du.  Pixels of color 255 are not drawn.
-void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+static void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 {
 	ubyte c;
 
@@ -141,7 +141,7 @@ void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, 
 }
 
 // Same as above without transparency.
-void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+static void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 {
 	for (; width > 0; width-- )	{
 		*dbits++ = sbits[(uint32_t)u >> 16];
@@ -149,7 +149,7 @@ void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 	}
 }
 
-void rep_movsb( ubyte * sbits, ubyte * dbits, int width )
+static void rep_movsb( ubyte * sbits, ubyte * dbits, int width )
 {
 	memcpy( dbits, sbits, width );
 }
@@ -248,7 +248,7 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 }
 
 
-void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
+static void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix u, v, du, dv;
 	int x, y;
@@ -289,7 +289,7 @@ void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int 
 
 ubyte scale_rle_data[640];
 
-void decode_row( grs_bitmap * bmp, int y )
+static void decode_row( grs_bitmap * bmp, int y )
 {
 	int i, offset=4+bmp->bm_h;
 
@@ -369,7 +369,7 @@ void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x
 
 // Run-length slice bitmap scan line stretcher
 
-void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
+static void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
 {
    int i;
 
@@ -377,7 +377,7 @@ void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
       *ScreenPtr++ = Color;
 }
 
-void rep_stosb(char *ScreenPtr, int RunLength, int Color)
+static void rep_stosb(char *ScreenPtr, int RunLength, int Color)
 {
 	memset( ScreenPtr, Color, RunLength );
 }

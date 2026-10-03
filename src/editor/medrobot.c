@@ -117,6 +117,7 @@ static char rcsid[] = "$Id: medrobot.c 2.0 1995/02/27 11:35:59 john Exp $";
 #include "key.h"
 #include "centers.h"
 #include "bm.h"
+#include "medrobot.h"
 
 #define	NUM_BOXES		6			//	Number of boxes, AI modes
 
@@ -137,7 +138,7 @@ static vms_angvec angles={0,0,0}, goody_angles={0,0,0};
 // Given a pointer to an object, returns a number that cooresponds to the
 // object id as used in the objpage stuff.
 //-------------------------------------------------------------------------
-int get_object_id( object * obj )
+static int get_object_id( object * obj )
 {
  	int i;
 	int goal_type;
@@ -165,7 +166,7 @@ int get_object_id( object * obj )
 	return -1;
 }
 
-void call_init_ai_object(object *objp, int behavior)
+static void call_init_ai_object(object *objp, int behavior)
 {
 	int	hide_segment;
 
@@ -203,7 +204,7 @@ void call_init_ai_object(object *objp, int behavior)
 // Called when user presses "Next Type" button.  This only works for polygon
 // objects and it just selects the next polygon model for the current object.
 //-------------------------------------------------------------------------
-int RobotNextType()
+static int RobotNextType()
 {
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
@@ -231,7 +232,7 @@ int RobotNextType()
 // Called when user presses "Prev Type" button.  This only works for polygon
 // objects and it just selects the prev polygon model for the current object.
 //-------------------------------------------------------------------------
-int RobotPrevType()
+static int RobotPrevType()
 {
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
@@ -259,7 +260,7 @@ int RobotPrevType()
 //-------------------------------------------------------------------------
 // Dummy function for Mike to write.
 //-------------------------------------------------------------------------
-int med_set_ai_path()
+static int med_set_ai_path()
 {
 	mprintf( (0, "med-set-ai-path called -- it does nothing, paths automatically set!\n" ));
 
@@ -293,7 +294,7 @@ int		Cur_goody_type = OBJ_POWERUP;
 int		Cur_goody_id = 0;
 int		Cur_goody_count = 0;
 
-void update_goody_info(void)
+static void update_goody_info(void)
 {
 	if (Cur_object_index > -1 )	{
 		if ( Objects[Cur_object_index].type == OBJ_ROBOT )	{
@@ -320,7 +321,9 @@ void update_goody_info(void)
 // #define MAX_OBJECT_TYPES	11
 
 
-int GoodyNextType()
+static int GoodyNextID();
+static int GoodyPrevID();
+static int GoodyNextType()
 {
 	Cur_goody_type++;
 	while (!((Cur_goody_type == OBJ_ROBOT) || (Cur_goody_type == OBJ_POWERUP))) {
@@ -337,7 +340,7 @@ int GoodyNextType()
 	return 1;
 }
 
-int GoodyPrevType()
+static int GoodyPrevType()
 {
 	Cur_goody_type--;
 	while (!((Cur_goody_type == OBJ_ROBOT) || (Cur_goody_type == OBJ_POWERUP))) {
@@ -354,7 +357,7 @@ int GoodyPrevType()
 	return 1;
 }
 
-int GoodyNextID()
+static int GoodyNextID()
 {
 	Cur_goody_id++;
 	if (Cur_goody_type == OBJ_ROBOT) {
@@ -369,7 +372,7 @@ int GoodyNextID()
 	return 1;
 }
 
-int GoodyPrevID()
+static int GoodyPrevID()
 {
 	Cur_goody_id--;
 	if (Cur_goody_type == OBJ_ROBOT) {
@@ -384,7 +387,7 @@ int GoodyPrevID()
 	return 1;
 }
 
-int GoodyNextCount()
+static int GoodyNextCount()
 {
 	Cur_goody_count++;
 	if (Cur_goody_count > GOODY_COUNT_MAX)
@@ -394,7 +397,7 @@ int GoodyNextCount()
 	return 1;
 }
 
-int GoodyPrevCount()
+static int GoodyPrevCount()
 {
 	Cur_goody_count--;
 	if (Cur_goody_count < 0)
@@ -404,12 +407,12 @@ int GoodyPrevCount()
 	return 1;
 }
 
-int is_legal_type(int the_type)
+static int is_legal_type(int the_type)
 {
 	return (the_type == OBJ_ROBOT) || (the_type == OBJ_CLUTTER);
 }
 
-int is_legal_type_for_this_window(int objnum)
+static int is_legal_type_for_this_window(int objnum)
 {
 	if (objnum == -1)
 		return 1;
@@ -417,7 +420,7 @@ int is_legal_type_for_this_window(int objnum)
 		return is_legal_type(Objects[objnum].type);
 }
 
-int LocalObjectSelectNextinSegment(void)
+static int LocalObjectSelectNextinSegment(void)
 {
 	int	rval, first_obj;
 
@@ -445,7 +448,7 @@ int LocalObjectSelectNextinSegment(void)
 	return rval;
 }
 
-int LocalObjectSelectNextinMine(void)
+static int LocalObjectSelectNextinMine(void)
 {
 	int	rval, first_obj;
 
@@ -474,7 +477,7 @@ int LocalObjectSelectNextinMine(void)
 	return rval;
 }
 
-int LocalObjectSelectPrevinMine(void)
+static int LocalObjectSelectPrevinMine(void)
 {
 	int	rval, first_obj;
 
@@ -503,7 +506,7 @@ int LocalObjectSelectPrevinMine(void)
 	return rval;
 }
 
-int LocalObjectDelete(void)
+static int LocalObjectDelete(void)
 {
 	int	rval;
 
@@ -520,7 +523,7 @@ int LocalObjectDelete(void)
 	return rval;
 }
 
-int LocalObjectPlaceObject(void)
+static int LocalObjectPlaceObject(void)
 {
 	int	rval;
 

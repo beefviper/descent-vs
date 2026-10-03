@@ -868,7 +868,7 @@ int newdemo_get_percent_done()	{
 
 #define VEL_PRECISION 12
 
-void my_extract_shortpos(object *objp, shortpos *spp)
+static void my_extract_shortpos(object *objp, shortpos *spp)
 {
 	int	segnum;
 	byte	*sp;
@@ -898,7 +898,7 @@ void my_extract_shortpos(object *objp, shortpos *spp)
 	objp->mtype.phys_info.velocity.z = (spp->velz << VEL_PRECISION);
 }
 
-int newdemo_read( void *buffer, int elsize, int nelem )
+static int newdemo_read( void *buffer, int elsize, int nelem )
 {
 	int num_read;
 	num_read = (int)fread( buffer,elsize,nelem, infile );
@@ -908,7 +908,7 @@ int newdemo_read( void *buffer, int elsize, int nelem )
 	return num_read;
 }
 
-int newdemo_write( void *buffer, int elsize, int nelem )
+static int newdemo_write( void *buffer, int elsize, int nelem )
 {
 	int num_written, total_size;
 
@@ -982,7 +982,7 @@ static void nd_write_angvec(vms_angvec *v)
 	nd_write_fixang(v->h);
 }
 
-void nd_write_shortpos(object *obj)
+static void nd_write_shortpos(object *obj)
 {
 	int i;
 	shortpos sp;
@@ -1092,7 +1092,7 @@ static void nd_read_shortpos(object *obj)
 
 object *prev_obj=NULL;		//ptr to last object read in
 
-void nd_read_object(object *obj)
+static void nd_read_object(object *obj)
 {
 	memset(obj, 0, sizeof(object));
 
@@ -1306,7 +1306,7 @@ void nd_read_object(object *obj)
 	prev_obj = obj;
 }
 
-void nd_write_object(object *obj)
+static void nd_write_object(object *obj)
 {
 	int life;
 
@@ -1935,7 +1935,7 @@ void newdemo_set_new_level(int level_num)
 	start_time();
 }
 
-int newdemo_read_demo_start(int rnd_demo)
+static int newdemo_read_demo_start(int rnd_demo)
 {
 	byte i, version, game_type, laser_level;
 	char c, energy, shield;
@@ -2101,7 +2101,7 @@ int newdemo_read_demo_start(int rnd_demo)
 	return 0;
 }
 
-void newdemo_pop_ctrlcen_triggers()
+static void newdemo_pop_ctrlcen_triggers()
 {
 	int anim_num, n, i;
 	int side, cside;
@@ -2125,7 +2125,7 @@ void newdemo_pop_ctrlcen_triggers()
 #define N_PLAYER_SHIP_TEXTURES 6
 
 
-int newdemo_read_frame_information()
+static int newdemo_read_frame_information()
 {
 	int done, segnum, side, objnum, soundno, angle, volume, i;
 	object *obj;
@@ -3025,7 +3025,7 @@ void newdemo_goto_end()
 }
 #endif
 
-void newdemo_back_frames(int frames)
+static void newdemo_back_frames(int frames)
 {
 	short last_frame_length;
 	int i;
@@ -3060,7 +3060,7 @@ void newdemo_back_frames(int frames)
  *  at.
 */
 
-void interpolate_frame(fix d_play, fix d_recorded)
+static void interpolate_frame(fix d_play, fix d_recorded)
 {
 	int i, j, num_cur_objs;
 	fix factor;

@@ -86,6 +86,7 @@ static char rcsid[] = "$Id: terrain.c 2.0 1995/02/27 11:31:27 john Exp $";
 #include "object.h"
 #include "endlevel.h"
 #include "fireball.h"
+#include "terrain.h"
 
 #define GRID_MAX_SIZE	64
 #define GRID_SCALE	i2f(2*20)
@@ -126,7 +127,7 @@ int org_i,org_j;
 
 int mine_tiles_drawn;		//flags to tell if all 4 tiles under mine have drawn
 
-void draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
+static void draw_cell(int i,int j,g3s_point *p0,g3s_point *p1,g3s_point *p2,g3s_point *p3)
 {
 	g3s_point *pointlist[3];
 
@@ -196,7 +197,7 @@ ubyte yc_flags[256];
 
 extern vms_matrix surface_orient;
 
-vms_vector *get_dy_vec(int h)
+static vms_vector *get_dy_vec(int h)
 {
 	vms_vector *dyp;
 
@@ -382,7 +383,7 @@ void render_terrain(vms_vector *org_point,int org_2dx,int org_2dy)
 
 }
 
-void free_height_array(void)
+static void free_height_array(void)
 {
 	free(height_array);
 }
@@ -439,7 +440,7 @@ void load_terrain(char *filename)
 }
 
 
-void get_pnt(vms_vector *p,int i,int j)
+static void get_pnt(vms_vector *p,int i,int j)
 {
 	p->x = GRID_SCALE*i;
 	p->z = GRID_SCALE*j;
@@ -448,7 +449,7 @@ void get_pnt(vms_vector *p,int i,int j)
 
 vms_vector light = {0x2e14,0xe8f5,0x5eb8};
 
-fix get_face_light(vms_vector *p0,vms_vector *p1,vms_vector *p2)
+static fix get_face_light(vms_vector *p0,vms_vector *p1,vms_vector *p2)
 {
 	vms_vector norm;
 
@@ -459,7 +460,7 @@ fix get_face_light(vms_vector *p0,vms_vector *p1,vms_vector *p2)
 }
 
 
-fix get_avg_light(int i,int j)
+static fix get_avg_light(int i,int j)
 {
 	vms_vector pp,p[6];
 	fix sum;
@@ -479,7 +480,7 @@ fix get_avg_light(int i,int j)
 	return sum/6;
 }
 
-void free_light_table(void)
+static void free_light_table(void)
 {
 	if (light_array)
 		free(light_array);

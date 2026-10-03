@@ -115,7 +115,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "physics.h"
 #include "joydefs.h"
 #include "kconfig.h"
-//#include "slew.h"
+#include "slew.h"
 
 #pragma off (unreferenced)
 static char rcsid[] = "$Id: slew.c 2.0 1995/02/27 11:29:32 john Exp $";
@@ -131,8 +131,9 @@ object *slew_obj=NULL;	//what object is slewing, or NULL if none
 
 short old_joy_x,old_joy_y;	//position last time around
 
+#ifndef RELEASE		// in release builds slew.h makes these no-ops
 // Function Prototypes
-int slew_stop();
+int slew_stop(void);
 
 //say start slewing with this object
 void slew_init(object *obj)
@@ -146,7 +147,7 @@ void slew_init(object *obj)
 }
 
 
-int slew_stop()
+int slew_stop(void)
 {
 	if (!slew_obj || slew_obj->control_type!=CT_SLEW) return 0;
 
@@ -154,7 +155,7 @@ int slew_stop()
 	return 1;
 }
 
-void slew_reset_orient()
+void slew_reset_orient(void)
 {
 	if (!slew_obj || slew_obj->control_type!=CT_SLEW) return;
 
@@ -164,8 +165,9 @@ void slew_reset_orient()
    slew_obj->orient.uvec.z = slew_obj->orient.fvec.x = slew_obj->orient.fvec.y = 0;
 
 }
+#endif
 
-int do_slew_movement(object *obj, int check_keys, int check_joy )
+static int do_slew_movement(object *obj, int check_keys, int check_joy )
 {
 	int moved = 0;
 	vms_vector svel, movement;				//scaled velocity (per this frame)

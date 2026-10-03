@@ -142,6 +142,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _AI_H
 #define _AI_H
 
+#include <stdio.h>
+
 #include "object.h"
 
 #define	PLAYER_AWARENESS_INITIAL_TIME		(3*F1_0)
@@ -217,5 +219,19 @@ extern void start_boss_death_sequence(object *objp);
 extern void ai_init_boss_for_ship(void);
 extern int Boss_been_hit;
 extern fix AI_proc_time;
+
+void john_cheat_func_1(int key);
+void john_cheat_func_2(int key);
+void do_lunacy_on(void);
+void do_lunacy_off(void);
+void john_cheat_func_3(int key);
+void john_cheat_func_4(int key);
+int ai_save_state( FILE * fp );
+int ai_restore_state( FILE * fp );
+void test_create_path_many(void);
+void test_create_path(void);
+void test_create_all_paths(void);
+void player_follow_path(object *objp);
+void check_create_player_path(void);
 
 #endif

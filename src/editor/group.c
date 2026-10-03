@@ -141,6 +141,7 @@ static char rcsid[] = "$Id: group.c 2.0 1995/02/27 11:35:05 john Exp $";
 #include "fuelcen.h"
 
 #include "medwall.h"
+#include "kdefs.h"
 
 struct {
 	int     fileinfo_version;
@@ -407,7 +408,7 @@ extern void validate_segment_side(segment *sp, int sidenum);
 //	Return value:
 //		0	group rotated
 //		1	unable to rotate group
-void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, segment *first_seg, int first_side, segment *base_seg, int base_side, vms_matrix *orient_matrix, int orientation)
+static void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, segment *first_seg, int first_side, segment *base_seg, int base_side, vms_matrix *orient_matrix, int orientation)
 {
 	vms_matrix	rotmat2,rotmat,rotmat3,rotmat4;
 	vms_angvec	pbh = {0,0,0};
@@ -458,7 +459,7 @@ void med_create_group_rotation_matrix(vms_matrix *result_mat, int delta_flag, se
 
 // -----------------------------------------------------------------------------------------
 // Rotate all vertices and objects in group.
-void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group_size, segment *first_seg, int first_side)
+static void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group_size, segment *first_seg, int first_side)
 {
 	int			v,s, objnum;
 	byte			vertex_list[MAX_VERTICES];
@@ -505,7 +506,7 @@ void med_rotate_group(vms_matrix *rotmat, short *group_seglist, int group_size, 
 
 
 // ------------------------------------------------------------------------------------------------
-void cgl_aux(segment *segp, short *seglistp, int *num_segs, short *ignore_list, int num_ignore_segs)
+static void cgl_aux(segment *segp, short *seglistp, int *num_segs, short *ignore_list, int num_ignore_segs)
 {
 	int	i, side;
 	int	curseg = segp-Segments;
@@ -531,7 +532,7 @@ void cgl_aux(segment *segp, short *seglistp, int *num_segs, short *ignore_list, 
 
 // ------------------------------------------------------------------------------------------------
 //	Sets Been_visited[n] if n is reachable from segp
-void create_group_list(segment *segp, short *seglistp, int *num_segs, short *ignore_list, int num_ignore_segs)
+static void create_group_list(segment *segp, short *seglistp, int *num_segs, short *ignore_list, int num_ignore_segs)
 {
 	int	i;
 
@@ -546,7 +547,7 @@ void create_group_list(segment *segp, short *seglistp, int *num_segs, short *ign
 #define MXV MAX_VERTICES
 
 // ------------------------------------------------------------------------------------------------
-void duplicate_group(byte *vertex_ids, short *segment_ids, int num_segments)
+static void duplicate_group(byte *vertex_ids, short *segment_ids, int num_segments)
 {
 	int	v,s,ss,new_vertex_id,new_segment_id,sidenum;
 	short	new_segment_ids[MAX_SEGMENTS];
@@ -626,7 +627,7 @@ void duplicate_group(byte *vertex_ids, short *segment_ids, int num_segments)
 
 
 // ------------------------------------------------------------------------------------------------
-int in_group(int segnum, int group_num)
+static int in_group(int segnum, int group_num)
 {
 	int	i;
 
@@ -643,7 +644,7 @@ int in_group(int segnum, int group_num)
 //	The group is copied so group_seg:group_side is incident upon base_seg:base_side.
 //	group_seg and its vertices are bashed to coincide with base_seg.
 //	If any vertex of base_seg is contained in a segment that is reachable from group_seg, then errror.
-int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix)
+static int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix)
 {
 	int			v,s;
 	vms_vector	srcv,destv;
@@ -801,7 +802,7 @@ int med_copy_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 //	The group is moved so group_seg:group_side is incident upon base_seg:base_side.
 //	group_seg and its vertices are bashed to coincide with base_seg.
 //	If any vertex of base_seg is contained in a segment that is reachable from group_seg, then errror.
-int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix, int orientation)
+static int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *group_seg, int group_side, vms_matrix *orient_matrix, int orientation)
 {
 	int			v,vv,s,ss,c,d;
 	vms_vector	srcv,destv;
@@ -952,7 +953,7 @@ int med_move_group(int delta_flag, segment *base_seg, int base_side, segment *gr
 
 
 //	-----------------------------------------------------------------------------
-int place_new_segment_in_world(void)
+static int place_new_segment_in_world(void)
 {
 	int	v,segnum;
 
@@ -1014,7 +1015,7 @@ int AttachSegmentNew(void)
 }
 
 //	-----------------------------------------------------------------------------
-void save_selected_segs(int *num, short *segs)
+static void save_selected_segs(int *num, short *segs)
 {
 	int	i;
 
@@ -1025,7 +1026,7 @@ void save_selected_segs(int *num, short *segs)
 }
 
 //	-----------------------------------------------------------------------------
-void restore_selected_segs(int num, short *segs)
+static void restore_selected_segs(int num, short *segs)
 {
 	int	i;
 
@@ -1556,7 +1557,7 @@ int med_load_group( char *filename, short *vertex_ids, short *segment_ids, int *
 
 char group_filename[128] = "*.GRP";
 
-void checkforgrpext( char * f )
+static void checkforgrpext( char * f )
 {
 	int i;
 
@@ -1745,7 +1746,7 @@ int Degroup( void )
 	return 1;
 }
 
-void NextGroup( void )
+int NextGroup( void )
 {
 
 	if (Num_groups > 0)
@@ -1757,9 +1758,11 @@ void NextGroup( void )
 		mine_changed = 1;
 		}
 	else editor_status("No Next Group\n");
+
+	return 1;
 }
 
-void PrevGroup( void )
+int PrevGroup( void )
 {
 	if (Num_groups > 0)
 		{
@@ -1770,12 +1773,14 @@ void PrevGroup( void )
 		mine_changed = 1;
 		}
 	else editor_status("No Previous Group\n");
+
+	return 1;
 }
 
 // Returns:
 //	 0 = successfully selected
 //  1 = bad group number
-int select_group( int num )
+static int select_group( int num )
 {
 	if ((num>=0) && (num<Num_groups))
 		{

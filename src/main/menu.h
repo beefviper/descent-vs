@@ -153,4 +153,7 @@ extern int Player_default_difficulty;
 extern int Max_debris_objects;
 extern int Auto_leveling_on;
 
+void set_custom_detail_vars(void);
+void do_save_game_menu(void);
+
 #endif

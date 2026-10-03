@@ -154,7 +154,7 @@ void cfile_use_alternate_hogdir( char * path )
 // so the tools that use this library link without the game.
 int descent_critical_error = 0;
 
-FILE * cfile_get_filehandle( char * filename, char * mode )
+static FILE * cfile_get_filehandle( char * filename, char * mode )
 {
 	FILE * fp;
 	char temp[128];
@@ -178,7 +178,7 @@ FILE * cfile_get_filehandle( char * filename, char * mode )
 	return fp;
 }
 
-void cfile_init_hogfile(char *fname, hogfile * hog_files, int * nfiles )
+static void cfile_init_hogfile(char *fname, hogfile * hog_files, int * nfiles )
 {
 	char id[4];
 	FILE * fp;
@@ -220,7 +220,7 @@ void cfile_init_hogfile(char *fname, hogfile * hog_files, int * nfiles )
 	}
 }
 
-FILE * cfile_find_libfile(char * name, int * length)
+static FILE * cfile_find_libfile(char * name, int * length)
 {
 	FILE * fp;
 	int i;

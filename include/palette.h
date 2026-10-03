@@ -70,4 +70,6 @@ extern void gr_make_cthru_table(ubyte * table, ubyte r, ubyte g, ubyte b );
 extern int gr_find_closest_color_current( int r, int g, int b );
 extern void gr_palette_read(ubyte * palette);
 
+int gr_find_closest_color_15bpp( int rgb );
+
 #endif

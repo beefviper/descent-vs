@@ -217,6 +217,7 @@ static char rcsid[] = "$Id: medwall.c 2.0 1995/02/27 11:35:47 john Exp $";
 #include "ehostage.h"
 #include "centers.h"
 #include "piggy.h"
+#include "kdefs.h"
 
 //-------------------------------------------------------------------------
 // Variables for this module...
@@ -239,7 +240,7 @@ typedef struct count_wall {
 
 //---------------------------------------------------------------------
 // Add a wall (removable 2 sided)
-int add_wall(segment *seg, short side)
+static int add_wall(segment *seg, short side)
 {
 	int Connectside;
 	segment *csegp;
@@ -268,7 +269,7 @@ int add_wall(segment *seg, short side)
 	return 0;
 }
 
-int wall_assign_door(int door_type)
+static int wall_assign_door(int door_type)
 {
 	int Connectside;
 	segment *csegp;
@@ -363,7 +364,7 @@ int wall_deautomate_door()
 	return wall_remove_door_flag(WALL_DOOR_AUTO);
 }
 
-int GotoPrevWall() {
+static int GotoPrevWall() {
 	int current_wall;
 
 	if (Cursegp->sides[Curside].wall_num < 0)
@@ -392,7 +393,7 @@ int GotoPrevWall() {
 }
 
 
-int GotoNextWall() {
+static int GotoNextWall() {
 	int current_wall;
 
 	current_wall = Cursegp->sides[Curside].wall_num; // It's ok to be -1 because it will immediately become 0
@@ -419,7 +420,7 @@ int GotoNextWall() {
 }
 
 
-int PrevWall() {
+static int PrevWall() {
 	int wall_type;
 
 	if (Cursegp->sides[Curside].wall_num == -1) {
@@ -467,7 +468,7 @@ int PrevWall() {
 	return 1;
 }
 
-int NextWall() {
+static int NextWall() {
 	int wall_type;
 
 	if (Cursegp->sides[Curside].wall_num == -1) {
@@ -802,7 +803,7 @@ int wall_restore_all()
 
 //---------------------------------------------------------------------
 //	Delete a specific wall.
-int wall_delete_bogus(short wall_num)
+static int wall_delete_bogus(short wall_num)
 {
 	int w;
 	int seg, side;
@@ -1331,7 +1332,7 @@ int delete_all_walls()
 	return 0;
 }
 
-int delete_all_triggers()
+static int delete_all_triggers()
 {
 	char Message[DIAGNOSTIC_MESSAGE_MAX];
 	int w;
@@ -1349,7 +1350,7 @@ int delete_all_triggers()
 	return 0;
 }
 
-int dump_walls_info()
+static int dump_walls_info()
 {
 	int w;
 	FILE *fp;
@@ -1434,7 +1435,7 @@ int dump_walls_info()
 }
 
 // ------------------------------------------------------------------------------------------------
-void copy_old_wall_data_to_new(int owall, int nwall)
+static void copy_old_wall_data_to_new(int owall, int nwall)
 {
 	Walls[nwall].flags = Walls[owall].flags;
 	Walls[nwall].type = Walls[owall].type;

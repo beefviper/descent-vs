@@ -128,6 +128,7 @@ static char rcsid[] = "$Id: texmerge.c 2.0 1995/02/27 11:31:08 john Exp $";
 #include "mono.h"
 #include "rle.h"
 #include "piggy.h"
+#include "texmerge.h"
 
 #define MAX_NUM_CACHE_BITMAPS 50
 

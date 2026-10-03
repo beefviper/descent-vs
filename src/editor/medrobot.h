@@ -49,4 +49,6 @@ extern void object_close_window();
 extern void do_object_window();
 
 
+void set_all_modes_to_hover(void);
+
 #endif

@@ -72,4 +72,6 @@ void load_endlevel_data(int level_num);
 
 extern int exit_modelnum,destroyed_exit_modelnum;
 
+fixang delta_ang(fixang a,fixang b);
+
 #endif

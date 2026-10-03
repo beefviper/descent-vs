@@ -97,12 +97,13 @@ static char rcsid[] = "$Id: kgame.c 2.0 1995/02/27 11:34:55 john Exp $";
 #include "game.h"
 #include "gamesave.h"
 #include "gameseq.h"
+#include "kdefs.h"
 
 char game_filename[128] = "*.LVL";
 
 extern void checkforext( char * f, char *ext );
 
-void checkforgamext( char * f )
+static void checkforgamext( char * f )
 {
 	int i;
 
@@ -139,13 +140,14 @@ vms_vector Perm_player_position;
 vms_matrix Perm_player_orient;
 
 //set the player's "permanant" position from the current position
-SetPlayerPosition()
+int SetPlayerPosition(void)
 {
 	Perm_player_position = ConsoleObject->pos;
 	Perm_player_orient = ConsoleObject->orient;
 	Perm_player_segnum = ConsoleObject->segnum;
 
 	editor_status("Player initial position set");
+	return 1;
 }
 
 // Save game

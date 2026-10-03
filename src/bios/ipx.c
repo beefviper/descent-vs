@@ -275,7 +275,7 @@ void got_new_packet(ecb_header* ecb);
 void ipx_listen_for_packet(ecb_header* ecb);
 
 
-void free_packet( int id )
+static void free_packet( int id )
 {
 	packet_buffers[id].packetnum = -1;
 	packet_free_list[ --num_packets ] = id;
@@ -389,7 +389,7 @@ void ipx_listen_for_packet(ecb_header * ecb )
 	dpmi_real_int386x( 0x7A, &rregs );
 }
 
-void ipx_cancel_listen_for_packet(ecb_header * ecb )
+static void ipx_cancel_listen_for_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
@@ -400,7 +400,7 @@ void ipx_cancel_listen_for_packet(ecb_header * ecb )
 }
 
 
-void ipx_send_packet(ecb_header * ecb )
+static void ipx_send_packet(ecb_header * ecb )
 {
 	dpmi_real_regs rregs;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
@@ -440,7 +440,7 @@ void ipx_get_local_target( ubyte * server, ubyte * node, ubyte * local_target )
 	memcpy( local_target, info->local_target, 6 );
 }
 
-void ipx_close(void)
+static void ipx_close(void)
 {
 	dpmi_real_regs rregs;
 	if ( ipx_installed )	{

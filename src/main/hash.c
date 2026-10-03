@@ -98,7 +98,7 @@ void hashtable_free( hashtable *ht )	{
 	ht->size = 0;
 }
 
-int hashtable_getkey( char *key )	{
+static int hashtable_getkey( char *key )	{
 	int k = 0, i=0;
 
 	while( *key )	{

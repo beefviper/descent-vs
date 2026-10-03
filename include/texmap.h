@@ -157,4 +157,6 @@ extern int Transparency_on,per2_flag;
 //	Set to !0 to enable Sim City 2000 (or Eric's Drive Through, or Eric's Game) specific code.
 extern	int	SC2000;
 
+void draw_tmap_flat(grs_bitmap *bp,int nverts,g3s_point **vertbuf);
+
 #endif

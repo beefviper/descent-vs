@@ -593,7 +593,7 @@ gauge_box gauge_boxes[] = {
 int	Color_0_31_0 = -1;
 
 //copy a box from the off-screen buffer to the visible page
-void copy_gauge_box(gauge_box *box,grs_bitmap *bm)
+static void copy_gauge_box(gauge_box *box,grs_bitmap *bm)
 {
 
 	if (box->spanlist) {
@@ -640,7 +640,7 @@ void get_hostage_window_coords(int *x,int *y,int *w,int *h)
 extern int HUD_nmessages, hud_first; // From hud.c
 extern char HUD_messages[HUD_MAX_NUM][HUD_MESSAGE_LENGTH+5];
 
-void hud_show_score()
+static void hud_show_score()
 {
 	char	score_str[20];
 	int	w, h, aw;
@@ -664,7 +664,7 @@ void hud_show_score()
 	gr_printf(grd_curcanv->cv_w-w-2, 3, score_str);
 }
 
-void hud_show_score_added()
+static void hud_show_score_added()
 {
 	int	color;
 	int	w, h, aw;
@@ -700,7 +700,7 @@ void hud_show_score_added()
 
 }
 
-void sb_show_score()
+static void sb_show_score()
 {
 	char	score_str[20];
 	int x,y;
@@ -747,7 +747,7 @@ void sb_show_score()
 	last_x[VR_current_page] = x;
 }
 
-void sb_show_score_added()
+static void sb_show_score_added()
 {
 	int	color;
 	int w, h, aw;
@@ -830,7 +830,7 @@ void play_homing_warning(void)
 int	Last_homing_warning_shown[2]={-1,-1};
 
 //	-----------------------------------------------------------------------------
-void show_homing_warning(void)
+static void show_homing_warning(void)
 {
 	if ((Cockpit_mode == CM_STATUS_BAR) || (Endlevel_sequence)) {
 		if (Last_homing_warning_shown[VR_current_page] == 1) {
@@ -868,7 +868,7 @@ void show_homing_warning(void)
 
 #define MAX_SHOWN_LIVES 4
 
-void hud_show_homing_warning(void)
+static void hud_show_homing_warning(void)
 {
 	if (Players[Player_num].homing_object_dist >= 0) {
 
@@ -881,7 +881,7 @@ void hud_show_homing_warning(void)
 	}
 }
 
-void hud_show_keys(void)
+static void hud_show_keys(void)
 {
 
 	if (Players[Player_num].flags & PLAYER_FLAGS_BLUE_KEY) {
@@ -902,7 +902,7 @@ void hud_show_keys(void)
 
 }
 
-void hud_show_energy(void)
+static void hud_show_energy(void)
 {
 	//gr_set_current_canvas(&VR_render_sub_buffer[0]);	//render off-screen
 	gr_set_curfont( GAME_FONT );
@@ -926,7 +926,7 @@ void hud_show_energy(void)
 	}
 }
 
-void hud_show_weapons(void)
+static void hud_show_weapons(void)
 {
 	int	w, h, aw;
 	int	y;
@@ -1007,7 +1007,7 @@ void hud_show_weapons(void)
 	gr_printf(grd_curcanv->cv_w-5-w, y, weapon_str);
 }
 
-void hud_show_cloak_invuln(void)
+static void hud_show_cloak_invuln(void)
 {
 	if (Players[Player_num].flags & PLAYER_FLAGS_CLOAKED) {
 		int	y = grd_curcanv->cv_h;
@@ -1035,7 +1035,7 @@ void hud_show_cloak_invuln(void)
 
 }
 
-void hud_show_shield(void)
+static void hud_show_shield(void)
 {
 //	gr_set_current_canvas(&VR_render_sub_buffer[0]);	//render off-screen
 	gr_set_curfont( GAME_FONT );
@@ -1067,7 +1067,7 @@ void hud_show_shield(void)
 }
 
 //draw the icons for number of lives
-void hud_show_lives()
+static void hud_show_lives()
 {
 	if ((HUD_nmessages > 0) && (strlen(HUD_messages[hud_first]) > 38))
 		return;
@@ -1087,7 +1087,7 @@ void hud_show_lives()
 
 }
 
-void sb_show_lives()
+static void sb_show_lives()
 {
 	int x,y;
 	grs_bitmap * bm = &GameBitmaps[Gauges[GAUGE_LIVES].index];
@@ -1148,7 +1148,7 @@ void sb_show_lives()
 extern int Piggy_bitmap_cache_next;
 #endif
 
-void show_time()
+static void show_time()
 {
 	int secs = f2i(Players[Player_num].time_level) % 60;
 	int mins = f2i(Players[Player_num].time_level) / 60;
@@ -1286,7 +1286,7 @@ void init_gauges()
 	cloak_fade_state = 0;
 }
 
-void draw_energy_bar(int energy)
+static void draw_energy_bar(int energy)
 {
 	int not_energy;
 	int x1, x2, y;
@@ -1336,7 +1336,7 @@ void draw_energy_bar(int energy)
 
 }
 
-void draw_shield_bar(int shield)
+static void draw_shield_bar(int shield)
 {
 	int bm_num = shield>=100?9:(shield / 10);
 
@@ -1347,7 +1347,7 @@ void draw_shield_bar(int shield)
 
 #define CLOAK_FADE_WAIT_TIME  0x400
 
-void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
+static void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 {
 	static fix cloak_fade_timer=0;
 	static int cloak_fade_value=GR_FADE_LEVELS-1;
@@ -1421,7 +1421,7 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 
 #define INV_FRAME_TIME	(f1_0/10)		//how long for each frame
 
-void draw_numerical_display(int shield, int energy)
+static void draw_numerical_display(int shield, int energy)
 {
 	gr_set_current_canvas( Canv_NumericalGauge );
 	gr_set_curfont( GAME_FONT );
@@ -1440,7 +1440,7 @@ void draw_numerical_display(int shield, int energy)
 }
 
 
-void draw_keys()
+static void draw_keys()
 {
 	gr_set_current_canvas( get_current_game_screen() );
 
@@ -1470,7 +1470,7 @@ void draw_keys()
 }
 
 
-void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char *name,int text_x,int text_y)
+static void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char *name,int text_x,int text_y)
 {
 	grs_bitmap *bm;
 	char *p;
@@ -1514,7 +1514,7 @@ void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char
 }
 
 
-void draw_weapon_info(int weapon_type,int weapon_num)
+static void draw_weapon_info(int weapon_type,int weapon_num)
 {
 #ifdef SHAREWARE
 	if (Newdemo_state==ND_STATE_RECORDING )
@@ -1549,7 +1549,7 @@ void draw_weapon_info(int weapon_type,int weapon_num)
 				SECONDARY_W_TEXT_X,SECONDARY_W_TEXT_Y);
 }
 
-void draw_ammo_info(int x,int y,int ammo_count,int primary)
+static void draw_ammo_info(int x,int y,int ammo_count,int primary)
 {
 	int w;
 
@@ -1565,7 +1565,7 @@ void draw_ammo_info(int x,int y,int ammo_count,int primary)
 	gr_printf(x,y,"%03d",ammo_count);
 }
 
-void draw_primary_ammo_info(int ammo_count)
+static void draw_primary_ammo_info(int ammo_count)
 {
 	if (Cockpit_mode == CM_STATUS_BAR)
 		draw_ammo_info(SB_PRIMARY_AMMO_X,SB_PRIMARY_AMMO_Y,ammo_count,1);
@@ -1573,7 +1573,7 @@ void draw_primary_ammo_info(int ammo_count)
 		draw_ammo_info(PRIMARY_AMMO_X,PRIMARY_AMMO_Y,ammo_count,1);
 }
 
-void draw_secondary_ammo_info(int ammo_count)
+static void draw_secondary_ammo_info(int ammo_count)
 {
 	if (Cockpit_mode == CM_STATUS_BAR)
 		draw_ammo_info(SB_SECONDARY_AMMO_X,SB_SECONDARY_AMMO_Y,ammo_count,0);
@@ -1582,7 +1582,7 @@ void draw_secondary_ammo_info(int ammo_count)
 }
 
 //returns true if drew picture
-int draw_weapon_box(int weapon_type,int weapon_num)
+static int draw_weapon_box(int weapon_type,int weapon_num)
 {
 	int drew_flag=0;
 
@@ -1643,7 +1643,7 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 
 }
 
-void draw_weapon_boxes()
+static void draw_weapon_boxes()
 {
 	int boxofs = (Cockpit_mode==CM_STATUS_BAR)?2:0;
 	int drew;
@@ -1680,7 +1680,7 @@ void draw_weapon_boxes()
 }
 
 
-void sb_draw_energy_bar(energy)
+static void sb_draw_energy_bar(energy)
 {
 	int erase_height;
 
@@ -1704,7 +1704,7 @@ void sb_draw_energy_bar(energy)
 
 }
 
-void sb_draw_shield_num(int shield)
+static void sb_draw_shield_num(int shield)
 {
 	grs_bitmap *bm = &GameBitmaps[cockpit_bitmap[Cockpit_mode].index];
 
@@ -1721,7 +1721,7 @@ void sb_draw_shield_num(int shield)
 	gr_printf((shield>99)?SB_SHIELD_NUM_X:((shield>9)?SB_SHIELD_NUM_X+2:SB_SHIELD_NUM_X+4),SB_SHIELD_NUM_Y,"%d",shield);
 }
 
-void sb_draw_shield_bar(int shield)
+static void sb_draw_shield_bar(int shield)
 {
 	int bm_num = shield>=100?9:(shield / 10);
 
@@ -1732,7 +1732,7 @@ void sb_draw_shield_bar(int shield)
 
 }
 
-void sb_draw_keys()
+static void sb_draw_keys()
 {
 	grs_bitmap * bm;
 	int flags = Players[Player_num].flags;
@@ -1752,7 +1752,7 @@ void sb_draw_keys()
 }
 
 //	Draws invulnerable ship, or maybe the flashing ship, depending on invulnerability time left.
-void draw_invulnerable_ship()
+static void draw_invulnerable_ship()
 {
 	static fix time=0;
 
@@ -1938,7 +1938,7 @@ void show_reticle(int force_big_one)
 }
 
 #ifdef NETWORK
-void hud_show_kill_list()
+static void hud_show_kill_list()
 {
 	int n_players,player_list[MAX_NUM_NET_PLAYERS];
 	int n_left,i,x0,x1,y,save_y,fth;

@@ -397,4 +397,13 @@ extern grs_canvas	VR_screen_sub_pages[2];				//  Two sub pages of VRAM if paging
 void game_init_render_buffers(int screen_mode, int render_max_w, int render_max_h, int use_paging, int render_method, int compatible_menus );
 
 
+void dump_used_textures_all(void);
+void init_cockpit(void);
+void copy_background_rect(int left,int top,int right,int bot);
+void move_player_2_segment(segment *seg,int side);
+int string_width( char * s, int n );
+int allowed_to_fire_laser(void);
+int allowed_to_fire_missile(void);
+void game_disable_cheats(void);
+
 #endif

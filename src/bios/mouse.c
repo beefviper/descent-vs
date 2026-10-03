@@ -141,7 +141,7 @@ static mouse_info Mouse;
 static int Mouse_installed = 0;
 
 #pragma off (check_stack)
-void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, int mdi)
+static void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, int mdi)
 {
 
 	Mouse.ctime = timer_get_fixed_secondsX();
@@ -294,7 +294,7 @@ void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, in
 }
 
 
-void mouse_handler_end (void)  // dummy functions
+static void mouse_handler_end (void)  // dummy functions
 {
 }
 #pragma on (check_stack)

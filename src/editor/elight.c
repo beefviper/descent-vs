@@ -123,7 +123,7 @@ static char rcsid[] = "$Id: elight.c 2.0 1995/02/27 11:35:16 john Exp $";
 
 // -----------------------------------------------------------------------------
 //	Return light intensity at an instance of a vertex on a side in a segment.
-fix get_light_intensity(segment *segp, int sidenum, int vert)
+static fix get_light_intensity(segment *segp, int sidenum, int vert)
 {
 	Assert(sidenum <= MAX_SIDES_PER_SEGMENT);
 	Assert(vert <= 3);
@@ -133,7 +133,7 @@ fix get_light_intensity(segment *segp, int sidenum, int vert)
 
 // -----------------------------------------------------------------------------
 //	Set light intensity at a vertex, saturating in .5 to 15.5
-void set_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
+static void set_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
 {
 	Assert(sidenum <= MAX_SIDES_PER_SEGMENT);
 	Assert(vert <= 3);
@@ -152,7 +152,7 @@ void set_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
 
 // -----------------------------------------------------------------------------
 //	Add light intensity to a vertex, saturating in .5 to 15.5
-void add_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
+static void add_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
 {
 //	fix	new_intensity;
 
@@ -174,7 +174,7 @@ void add_light_intensity(segment *segp, int sidenum, int vert, fix intensity)
 //		Note that it is also possible to visit the original light-casting segment, for example
 //		going from segment 0 to 2, then from 2 to 0.  This is peculiar and probably not
 //		desired, but not entirely invalid.  2 reflects some light back to 0.
-void apply_light_intensity(segment *segp, int sidenum, fix intensity, int depth)
+static void apply_light_intensity(segment *segp, int sidenum, fix intensity, int depth)
 {
 	int	wid_result;
 
@@ -205,7 +205,7 @@ void apply_light_intensity(segment *segp, int sidenum, fix intensity, int depth)
 //	the associated intensity to segp.  It calls apply_light_intensity to apply intensity/3
 //	to all neighbors.  apply_light_intensity recursively calls itself to apply light to
 //	subsequent neighbors (and forming loops, see above).
-void propagate_light_intensity(segment *segp, int sidenum)
+static void propagate_light_intensity(segment *segp, int sidenum)
 {
 	int		v,s;
 	fix		intensity;

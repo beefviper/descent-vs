@@ -264,6 +264,7 @@ static char rcsid[] = "$Id: scores.c 2.2 1995/06/15 12:13:54 john Exp $";
 #include "timer.h"
 #include "text.h"
 #include "vfx.h"
+#include "scores.h"
 
 #define VERSION_NUMBER 		1
 #define SCORES_FILENAME 	"DESCENT.HI"
@@ -301,7 +302,7 @@ char scores_filename[128];
 void scores_view(int citem);
 
 
-char * get_scores_filename()
+static char * get_scores_filename()
 {
 #ifndef RELEASE
 	// Only use the MINER variable for internal developement
@@ -318,7 +319,7 @@ char * get_scores_filename()
 }
 
 
-void scores_read()
+static void scores_read()
 {
 	FILE * fp;
 	int fsize;
@@ -364,7 +365,7 @@ void scores_read()
 	}
 }
 
-void scores_write()
+static void scores_write()
 {
 	FILE * fp;
 
@@ -382,7 +383,7 @@ void scores_write()
 	fclose(fp);
 }
 
-void int_to_string( int number, char *dest )
+static void int_to_string( int number, char *dest )
 {
 	int i,l,c;
 	char buffer[20],*p;
@@ -410,7 +411,7 @@ void int_to_string( int number, char *dest )
 	strrev(dest);
 }
 
-void scores_fill_struct(stats_info * stats)
+static void scores_fill_struct(stats_info * stats)
 {
 		strcpy( stats->name, Players[Player_num].callsign );
 		stats->score = Players[Player_num].score;
@@ -487,7 +488,7 @@ void scores_maybe_add_player(int abort_flag)
 
 #define TEXT_FONT  		(Gamefonts[GFONT_MEDIUM_3])
 
-void scores_rprintf(int x, int y, char * format, ... )
+static void scores_rprintf(int x, int y, char * format, ... )
 {
 	va_list args;
 	char buffer[128];
@@ -508,7 +509,7 @@ void scores_rprintf(int x, int y, char * format, ... )
 }
 
 
-void scores_draw_item( int  i, stats_info * stats )
+static void scores_draw_item( int  i, stats_info * stats )
 {
 	char buffer[20];
 

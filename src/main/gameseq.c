@@ -363,7 +363,7 @@ void copy_defaults_to_robot_all(void);
 void HUD_clear_messages(); // From hud.c
 
 
-void verify_console_object()
+static void verify_console_object()
 {
 	Assert( Player_num > -1 );
 	Assert( Players[Player_num].objnum > -1 );
@@ -372,7 +372,7 @@ void verify_console_object()
 	Assert( ConsoleObject->id==Player_num );
 }
 
-int count_number_of_robots()
+static int count_number_of_robots()
 {
 	int robot_count;
 	int i;
@@ -387,7 +387,7 @@ int count_number_of_robots()
 }
 
 
-int count_number_of_hostages()
+static int count_number_of_hostages()
 {
 	int count;
 	int i;
@@ -402,7 +402,7 @@ int count_number_of_hostages()
 }
 
 
-void
+static void
 gameseq_init_network_players()
 {
 	int i,k,j;
@@ -519,7 +519,7 @@ void init_player_stats_game()
 
 }
 
-void init_ammo_and_energy(void)
+static void init_ammo_and_energy(void)
 {
 	if (Players[Player_num].energy < MAX_ENERGY)
 		Players[Player_num].energy = MAX_ENERGY;
@@ -625,7 +625,7 @@ void init_player_stats_new_ship()
 }
 
 #ifdef NETWORK
-void reset_network_objects()
+static void reset_network_objects()
 {
 	memset(local_to_remote, -1, MAX_OBJECTS*sizeof(short));
 	memset(remote_to_local, -1, MAX_NUM_NET_PLAYERS*MAX_OBJECTS*sizeof(short));
@@ -664,7 +664,7 @@ void reset_player_object();
 
 static fix time_out_value;
 #pragma off (unreferenced)
-void DoEndLevelScoreGlitzPoll( int nitems, newmenu_item * menus, int * key, int citem )
+static void DoEndLevelScoreGlitzPoll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 
 	if ( timer_get_approx_seconds() > time_out_value ) 	{
@@ -675,7 +675,7 @@ void DoEndLevelScoreGlitzPoll( int nitems, newmenu_item * menus, int * key, int 
 
 //do whatever needs to be done when a player dies in multiplayer
 
-void DoGameOver()
+static void DoGameOver()
 {
 	time_out_value = timer_get_approx_seconds() + i2f(60*5);
 	nm_messagebox1( TXT_GAME_OVER, DoEndLevelScoreGlitzPoll, 1, TXT_OK, "" );
@@ -689,7 +689,6 @@ void DoGameOver()
 
 }
 
-extern do_save_game_menu();
 
 //update various information about the player
 void update_player_stats()
@@ -728,7 +727,7 @@ void update_player_stats()
 }
 
 //go through this level and start any eclip sounds
-void set_sound_sources()
+static void set_sound_sources()
 {
 	int segnum,sidenum;
 	segment *seg;
@@ -1141,7 +1140,7 @@ void DoEndLevelScoreGlitz(int network)
 }
 
 //give the player the opportunity to save his game
-void DoEndlevelMenu()
+static void DoEndlevelMenu()
 {
 #ifdef SHAREWARE
 	if (!Cheats_enabled)
@@ -1287,7 +1286,7 @@ int AdvanceLevel(int secret_flag)
 }
 
 
-void
+static void
 died_in_mine_message(void)
 {
 	// Tell the player he died in the mine, explain why
@@ -1531,7 +1530,7 @@ void StartNewLevel(int level_num)
 }
 
 //initialize the player object position & orientation (at start of game, or new ship)
-void InitPlayerPosition(int random)
+static void InitPlayerPosition(int random)
 {
 	int NewPlayer;
 
@@ -1600,7 +1599,7 @@ done:
 //	-----------------------------------------------------------------------------------------------------
 //	Initialize default parameters for one robot, copying from Robot_info to *objp.
 //	What about setting size!?  Where does that come from?
-void copy_defaults_to_robot(object *objp)
+static void copy_defaults_to_robot(object *objp)
 {
 	robot_info	*robptr;
 	int			objid;

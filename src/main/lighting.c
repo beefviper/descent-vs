@@ -157,7 +157,7 @@ int	Do_dynamic_light=1;
 fix	Dynamic_light[MAX_VERTICES];
 
 // ----------------------------------------------------------------------------------------------
-void apply_light(fix obj_intensity, int obj_seg, vms_vector *obj_pos, int n_render_vertices, short *render_vertices)
+static void apply_light(fix obj_intensity, int obj_seg, vms_vector *obj_pos, int n_render_vertices, short *render_vertices)
 {
 	int	vv;
 
@@ -209,7 +209,7 @@ void apply_light(fix obj_intensity, int obj_seg, vms_vector *obj_pos, int n_rend
 #define	FLASH_SCALE					(3*F1_0/FLASH_LEN_FIXED_SECONDS)
 
 // ----------------------------------------------------------------------------------------------
-void cast_muzzle_flash_light(int n_render_vertices, short *render_vertices)
+static void cast_muzzle_flash_light(int n_render_vertices, short *render_vertices)
 {
 	fix current_time;
 	int	i;

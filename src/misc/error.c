@@ -79,7 +79,7 @@ char exit_message[MAX_MSG_LEN]="";
 char warn_message[MAX_MSG_LEN];
 
 //takes string in register, calls printf with string on stack
-void warn_printf(char *s)
+static void warn_printf(char *s)
 {
 	printf("%s\n",s);
 }
@@ -117,7 +117,7 @@ void _Assert(int expr,char *expr_text,char *filename,int linenum)
 
 }
 
-void print_exit_message(void)
+static void print_exit_message(void)
 {
 	if (*exit_message)
 		printf("%s\n",exit_message);

@@ -376,7 +376,7 @@ void name_end(void)	\
 
 codex(code_01s, code_01e)
 
-int detect_UART(unsigned baseaddr, int * loc, int * code )
+static int detect_UART(unsigned baseaddr, int * loc, int * code )
 {
    // this function returns 0 if no UART is installed.
    // 1: 8250, 2: 16450 or 8250 with scratch reg., 3: 16550, 4: 16550A
@@ -424,7 +424,7 @@ int detect_UART(unsigned baseaddr, int * loc, int * code )
 
 codex(code_02s, code_02e)
 
-int
+static int
 com_type_detect()
 {
 //	static long port;
@@ -630,7 +630,7 @@ com_abort(void)
 	Game_mode = GM_GAME_OVER; // Force main menu selection
 }
 
-void
+static void
 com_hangup(void)
 {
 	// Close the serial link
@@ -639,7 +639,7 @@ com_hangup(void)
 	com_abort();
 }
 
-void
+static void
 com_carrier_lost(void)
 {
 	// Carrier lost, inform and abort
@@ -662,7 +662,7 @@ codex(code_05s, code_05e)
 extern ubyte cockpit_mode_save; // From object.c
 extern int old_cockpit_mode; // From game.c
 
-void com_reset_game(void)
+static void com_reset_game(void)
 {
 	int i;
 
@@ -695,7 +695,7 @@ void com_reset_game(void)
 
 codex(code_06s, code_06e)
 
-void
+static void
 com_save_settings(void)
 {
 	FILE *settings;
@@ -745,7 +745,7 @@ error:
 
 codex(code_07s, code_07e)
 
-void
+static void
 com_load_settings(void)
 {
 	FILE *settings;
@@ -903,7 +903,7 @@ void com_send_ptr(char *ptr, int len)
 
 codex(code_09s, code_09e)
 
-void
+static void
 com_flush()
 {
 	// Get rid of all waiting data in the serial buffer
@@ -920,7 +920,7 @@ com_flush()
 	mprintf((0, "%d characters.\n", i));
 }
 
-int
+static int
 com_getchar()
 {
 	register int i;
@@ -1026,7 +1026,7 @@ skippos:
 	return;
 }
 
-int
+static int
 com_check_message(char *checkbuf, int len)
 {
 	ushort check;
@@ -1090,7 +1090,7 @@ error:
 
 codex(code_11s, code_11e)
 
-void
+static void
 com_process_menu(char *buf, int len)
 {
 	char text[80];
@@ -1191,7 +1191,7 @@ nextmessage:
 	return ;
 }
 
-int
+static int
 com_connect()
 {
 	my_sync.type = MULTI_BEGIN_SYNC;
@@ -1252,7 +1252,7 @@ com_connect()
 
 codex(code_12s, code_12e)
 
-void
+static void
 com_menu_poll(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	// Watch the serial stream if we are connected and take appropriate actions
@@ -1286,7 +1286,7 @@ void com_send_choice(int choice)
 	com_send_data(sendbuf, 2, 1);
 }
 
-void
+static void
 com_ready_to_start(void)
 {
 	newmenu_item m[2];
@@ -1310,7 +1310,7 @@ com_ready_to_start(void)
 	}
 }
 
-void
+static void
 com_process_other_menu_choice(void)
 {
 	if (other_menu_choice == SELECTION_STARTGAME)
@@ -1475,7 +1475,7 @@ newmenu:
 
 codex(code_13s, code_13e)
 
-void com_custom_param_setup(void)
+static void com_custom_param_setup(void)
 {
 	// User menu for setting up custom IRQ/Base settings for a COM port
 
@@ -1550,7 +1550,7 @@ newmenu:
 	goto newmenu;
 }
 
-void com_param_setup_poll(int nitems, newmenu_item *menus, int *key, int citem)
+static void com_param_setup_poll(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	nitems = nitems;
 	key = key;
@@ -1680,7 +1680,7 @@ codex(code_14s, code_14e)
 extern int opt_cinvul;
 extern int last_cinvul;
 
-void modem_game_param_poll( int nitems, newmenu_item * menus, int * key, int citem )
+static void modem_game_param_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	nitems = nitems;
 	key = key;
@@ -1694,7 +1694,7 @@ void modem_game_param_poll( int nitems, newmenu_item * menus, int * key, int cit
 
 // Handshaking to start a serial game, 2 players only
 
-int com_start_game_menu(void)
+static int com_start_game_menu(void)
 {
 	newmenu_item m[13];
 	char level[5];
@@ -1813,7 +1813,7 @@ newmenu:
 	return 0; // No game
 }
 
-int
+static int
 com_ask_to_start()
 {
 	// Ask the other player if its OK to start now
@@ -1933,7 +1933,7 @@ com_start_game()
 // Modem control functions, dialing, answering, etc.
 //
 
-void modem_edit_phonebook(newmenu_item *m)
+static void modem_edit_phonebook(newmenu_item *m)
 {
 	int choice, choice2;
 	newmenu_item menu[5];
@@ -2005,7 +2005,7 @@ void add_phone_number( char * src, char * num )
 	strcat( src, "..." );
 }
 
-int modem_dial_menu(void)
+static int modem_dial_menu(void)
 {
 	newmenu_item m[NUM_PHONE_NUM+2];
 	char menu_text[NUM_PHONE_NUM][80];
@@ -2055,7 +2055,7 @@ menu:
 	return(choice);
 }
 
-void
+static void
 com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	int result;
@@ -2135,7 +2135,7 @@ com_wait_for_connect(int nitems, newmenu_item *menus, int *key, int citem)
 
 codex(code_17s, code_17e)
 
-void
+static void
 com_wait_for_ring(int nitems, newmenu_item *menus, int *key, int citem)
 {
 	int result;
@@ -2156,7 +2156,7 @@ com_wait_for_ring(int nitems, newmenu_item *menus, int *key, int citem)
 
 }
 
-int modem_verify(void)
+static int modem_verify(void)
 {
 	// Is there a modem on this com port or not?
 
@@ -2498,7 +2498,7 @@ com_level_sync(void)
 
 codex(code_19s, code_19e)
 
-void
+static void
 com_send_end_sync(void)
 {
 	// Send "I got Sync" packet
@@ -2514,14 +2514,14 @@ com_send_end_sync(void)
 #endif
 }
 
-void
+static void
 com_send_begin_sync(void)
 {
 	mprintf((0, "Sending my sync.\n"));
 	com_send_data((char *)&my_sync, sizeof(com_sync_pack)-3, 1);
 }
 
-void
+static void
 com_process_end_sync(byte *buf)
 {
 	// Process incoming end-sync packet
@@ -2580,7 +2580,7 @@ void com_process_sync(char *buf, int len)
 	}
 }
 
-void
+static void
 com_send_sync(void)
 {
 	// Send sync information, depending on the situation

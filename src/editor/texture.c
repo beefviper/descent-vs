@@ -130,7 +130,7 @@ int	TexFlipY()
 }
 
 //	-----------------------------------------------------------
-int DoTexSlideLeft(int value)
+static int DoTexSlideLeft(int value)
 {
 	side	*sidep;
 	uvl	duvl03;
@@ -170,7 +170,7 @@ int TexSlideLeftBig()
 }
 
 //	-----------------------------------------------------------
-int DoTexSlideUp(int value)
+static int DoTexSlideUp(int value)
 {
 	side	*sidep;
 	uvl	duvl03;
@@ -212,7 +212,7 @@ int TexSlideUpBig()
 
 
 //	-----------------------------------------------------------
-int DoTexSlideDown(int value)
+static int DoTexSlideDown(int value)
 {
 	side	*sidep;
 	uvl	duvl03;
@@ -273,7 +273,7 @@ void compute_uv_side_center(uvl *uvcenter, segment *segp, int sidenum)
 
 //	-----------------------------------------------------------
 //	rotate point *uv by matrix rotmat, return *uvrot
-void rotate_uv_point(uvl *uvrot, fix *rotmat, uvl *uv, uvl *uvcenter)
+static void rotate_uv_point(uvl *uvrot, fix *rotmat, uvl *uv, uvl *uvcenter)
 {
 	uvrot->u = fixmul(uv->u - uvcenter->u,rotmat[0]) + fixmul(uv->v - uvcenter->v,rotmat[1]) + uvcenter->u;
 	uvrot->v = fixmul(uv->u - uvcenter->u,rotmat[2]) + fixmul(uv->v - uvcenter->v,rotmat[3]) + uvcenter->v;
@@ -296,7 +296,7 @@ void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uvl *uvce
 //	-----------------------------------------------------------
 //	ang is in 0..ffff = 0..359.999 degrees
 //	rotmat is filled in with 4 fixes
-void create_2d_rotation_matrix(fix *rotmat, fix ang)
+static void create_2d_rotation_matrix(fix *rotmat, fix ang)
 {
 	fix	sinang, cosang;
 
@@ -311,7 +311,7 @@ void create_2d_rotation_matrix(fix *rotmat, fix ang)
 
 
 //	-----------------------------------------------------------
-int DoTexRotateLeft(int value)
+static int DoTexRotateLeft(int value)
 {
 	uvl	uvcenter;
 	fix	rotmat[4];
@@ -340,7 +340,7 @@ int TexRotateLeftBig()
 
 
 //	-----------------------------------------------------------
-int DoTexSlideRight(int value)
+static int DoTexSlideRight(int value)
 {
 	side	*sidep;
 	uvl	duvl03;
@@ -380,7 +380,7 @@ int TexSlideRightBig()
 }
 
 //	-----------------------------------------------------------
-int DoTexRotateRight(int value)
+static int DoTexRotateRight(int value)
 {
 	uvl	uvcenter;
 	fix	rotmat[4];
@@ -471,7 +471,7 @@ int	TexDecreaseTiling()
 
 
 //	direction = -1 or 1 depending on direction
-int	TexStretchCommon(int direction)
+static int	TexStretchCommon(int direction)
 {
 	fix	*sptr;
 

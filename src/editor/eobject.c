@@ -126,6 +126,7 @@ static char rcsid[] = "$Id: eobject.c 2.0 1995/02/27 11:35:14 john Exp $";
 #include "medrobot.h"
 #include "player.h"
 #include "gameseg.h"
+#include "eobject.h"
 
 #define	OBJ_SCALE		(F1_0/2)
 #define	OBJ_DEL_SIZE	(F1_0/2)
@@ -134,7 +135,7 @@ static char rcsid[] = "$Id: eobject.c 2.0 1995/02/27 11:35:14 john Exp $";
 
 //segment		*Cur_object_seg = -1;
 
-void show_objects_in_segment(segment *sp)
+static void show_objects_in_segment(segment *sp)
 {
 	short		objid;
 
@@ -149,7 +150,7 @@ void show_objects_in_segment(segment *sp)
 }
 
 //returns the number of the first object in a segment, skipping the player
-int get_first_object(segment *seg)
+static int get_first_object(segment *seg)
 {
 	int id;
 
@@ -162,7 +163,7 @@ int get_first_object(segment *seg)
 }
 
 //returns the number of the next object in a segment, skipping the player
-int get_next_object(segment *seg,int id)
+static int get_next_object(segment *seg,int id)
 {
 	if (id==-1 || (id=Objects[id].next)==-1)
 		return get_first_object(seg);
@@ -359,7 +360,7 @@ int place_object(segment *segp, vms_vector *object_pos, int object_type)
 
 //	------------------------------------------------------------------------------------------------------
 //	Count number of player objects, return value.
-int compute_num_players(void)
+static int compute_num_players(void)
 {
 	int	i, count = 0;
 
@@ -561,7 +562,7 @@ int ObjectDelete(void)
 //	Object has moved to another segment, (or at least poked through).
 //	If still in mine, that is legal, so relink into new segment.
 //	Return value:	0 = in mine, 1 = not in mine
-int move_object_within_mine(object * obj, vms_vector *newpos )
+static int move_object_within_mine(object * obj, vms_vector *newpos )
 {
 	int segnum;
 
@@ -599,7 +600,7 @@ int move_object_within_mine(object * obj, vms_vector *newpos )
 
 
 //	Return 0 if object is in expected segment, else return 1
-int verify_object_seg(object *objp, vms_vector *newpos)
+static int verify_object_seg(object *objp, vms_vector *newpos)
 {
 	segmasks	result = get_seg_masks(newpos, objp->segnum, objp->size);
 
@@ -791,7 +792,7 @@ int	ObjectMoveDown(void)
 }
 
 //	------------------------------------------------------------------------------------------------------
-int	ObjectMakeSmaller(void)
+static int	ObjectMakeSmaller(void)
 {
 	fix	cur_size;
 
@@ -811,7 +812,7 @@ int	ObjectMakeSmaller(void)
 }
 
 //	------------------------------------------------------------------------------------------------------
-int	ObjectMakeLarger(void)
+static int	ObjectMakeLarger(void)
 {
 	fix	cur_size;
 
@@ -830,7 +831,7 @@ int	ObjectMakeLarger(void)
 
 //	------------------------------------------------------------------------------------------------------
 
-int rotate_object(short objnum, int p, int b, int h)
+static int rotate_object(short objnum, int p, int b, int h)
 {
 	object *obj = &Objects[objnum];
 	vms_angvec ang;
@@ -858,7 +859,7 @@ int rotate_object(short objnum, int p, int b, int h)
 }
 
 
-void reset_object(short objnum)
+static void reset_object(short objnum)
 {
 	object *obj = &Objects[objnum];
 
@@ -966,7 +967,7 @@ int ObjectIncreaseHeadingBig()	{return rotate_object(Cur_object_index, 0, 0, (RO
 // 	// 	printf("OOPS: test_plane = %9.5f\n", test_plane);
 // }
 
-void move_object_to_position(int objnum, vms_vector *newpos)
+static void move_object_to_position(int objnum, vms_vector *newpos)
 {
 	object	*objp = &Objects[objnum];
 
@@ -1060,7 +1061,7 @@ void move_object_to_position(int objnum, vms_vector *newpos)
 	Update_flags |= UF_WORLD_CHANGED;
 }
 
-void move_object_to_vector(vms_vector *vec_through_screen, fix delta_distance)
+static void move_object_to_vector(vms_vector *vec_through_screen, fix delta_distance)
 {
 	vms_vector	result;
 
@@ -1070,7 +1071,7 @@ void move_object_to_vector(vms_vector *vec_through_screen, fix delta_distance)
 
 }
 
-void move_object_to_mouse_click_delta(fix delta_distance)
+static void move_object_to_mouse_click_delta(fix delta_distance)
 {
 	short			xcrd,ycrd;
 	vms_vector	vec_through_screen;

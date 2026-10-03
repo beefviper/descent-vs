@@ -73,6 +73,7 @@ static char rcsid[] = "$Id: ksegsel.c 2.0 1995/02/27 11:35:33 john Exp $";
 
 #include "inferno.h"
 #include "editor.h"
+#include "kdefs.h"
 
 
 // ---------------------------------------------------------------------------------------

@@ -316,7 +316,7 @@ int iglasses_read_headset( fix *yaw, fix *pitch, fix *roll )
 
 
 #ifdef USE_FILTERS
-void initWeights(filter * f)
+static void initWeights(filter * f)
 {
 	fix sum;
 	long i;
@@ -341,7 +341,7 @@ void initWeights(filter * f)
 	}
 }
 
-void initHistory(filter * f)
+static void initHistory(filter * f)
 {
 	long i;
 	for (i=0; i < f->len; i++) {

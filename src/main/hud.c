@@ -167,7 +167,7 @@ int	Last_msg_height = 6;
 int	HUD_color = -1;
 
 //	-----------------------------------------------------------------------------
-void clear_background_messages(void)
+static void clear_background_messages(void)
 {
 	if ((Cockpit_mode == CM_STATUS_BAR) && (Last_msg_ycrd != -1) && (VR_render_sub_buffer[0].cv_bitmap.bm_y >= 6)) {
 		grs_canvas	*canv_save = grd_curcanv;

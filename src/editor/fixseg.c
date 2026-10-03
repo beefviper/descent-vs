@@ -74,7 +74,7 @@ static char rcsid[] = "$Id: fixseg.c 2.0 1995/02/27 11:36:25 john Exp $";
 //	Gauss-Jordan elimination solution of a system of linear equations.
 //	a[1..n][1..n] is the input matrix.  b[1..n][1..m] is input containing the m right-hand side vectors.
 //	On output, a is replaced by its matrix inverse and b is replaced by the corresponding set of solution vectors.
-void gaussj(fix **a, int n, fix **b, int m)
+static void gaussj(fix **a, int n, fix **b, int m)
 {
 	int	indxc[4], indxr[4], ipiv[4];
 	int	i, icol, irow, j, k, l, ll;
@@ -161,7 +161,7 @@ void gaussj(fix **a, int n, fix **b, int m)
 
 //	-----------------------------------------------------------------------------------------------------------------
 //	Return true if side is planar, else return false.
-int side_is_planar_p(segment *sp, int side)
+static int side_is_planar_p(segment *sp, int side)
 {
 	byte			*vp;
 	vms_vector	*v0,*v1,*v2,*v3;
@@ -182,7 +182,7 @@ int side_is_planar_p(segment *sp, int side)
 
 //	-------------------------------------------------------------------------------------------------
 //	Return coordinates of a vertex which is vertex v moved so that all sides of which it is a part become planar.
-void compute_planar_vert(segment *sp, int side, int v, vms_vector *vp)
+static void compute_planar_vert(segment *sp, int side, int v, vms_vector *vp)
 {
 	if ((sp) && (side > -3))
 		*vp = Vertices[v];
@@ -197,7 +197,7 @@ void compute_planar_vert(segment *sp, int side, int v, vms_vector *vp)
 //	Return value:
 //		0	curside made planar (or already was)
 //		1	did not make curside planar
-int make_curside_planar(void)
+static int make_curside_planar(void)
 {
 	int			v;
 	byte			*vp;

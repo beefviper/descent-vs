@@ -173,6 +173,7 @@ static char rcsid[] = "$Id: credits.c 2.2 1995/06/14 17:26:08 john Exp $";
 #include "compbit.h"
 #include "vfx.h"
 #include "songs.h"
+#include "credits.h"
 
 #define ROW_SPACING 11
 #define NUM_LINES 20			//19

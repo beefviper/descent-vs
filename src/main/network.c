@@ -166,7 +166,7 @@ void network_read_endlevel_packet(ubyte* data);
 
 int network_wait_for_snyc();
 
-void
+static void
 network_init(void)
 {
 	// So you want to play a netgame, eh?  Let's a get a few things
@@ -194,7 +194,7 @@ network_init(void)
 #define ENDLEVEL_SEND_INTERVAL F1_0*2
 #define ENDLEVEL_IDLE_TIME	F1_0*10
 
-void
+static void
 network_endlevel_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	// Polling loop for End-of-level menu
@@ -401,7 +401,7 @@ menu:
 	return(0);
 }
 
-int
+static int
 can_join_netgame(netgame_info *game)
 {
 	// Can this player rejoin a netgame in progress?
@@ -470,7 +470,7 @@ network_disconnect_player(int playernum)
 #endif
 }
 
-void
+static void
 network_new_player(sequence_packet *their)
 {
 	int objnum;
@@ -535,7 +535,7 @@ network_new_player(sequence_packet *their)
 //	create_player_appearance_effect(&Objects[objnum]);
 }
 
-void network_welcome_player(sequence_packet *their)
+static void network_welcome_player(sequence_packet *their)
 {
  	// Add a player to a game already in progress
 	ubyte local_address[6];
@@ -696,7 +696,7 @@ int network_objnum_is_past(int objnum)
 #define OBJ_PACKETS_PER_FRAME 1
 
 #ifndef SHAREWARE
-void network_send_door_updates(void)
+static void network_send_door_updates(void)
 {
 	// Send door status when new player joins
 
@@ -714,7 +714,7 @@ void network_send_door_updates(void)
 
 }
 
-void network_process_monitor_vector(int vector)
+static void network_process_monitor_vector(int vector)
 {
 	int i, j;
 	int count = 0;
@@ -744,7 +744,7 @@ void network_process_monitor_vector(int vector)
 	}
 }
 
-int network_create_monitor_vector(void)
+static int network_create_monitor_vector(void)
 {
 	int i, j, k;
 	int num_blown_bitmaps = 0;
@@ -806,7 +806,7 @@ int network_create_monitor_vector(void)
 }
 #endif
 
-void network_stop_resync(sequence_packet *their)
+static void network_stop_resync(sequence_packet *their)
 {
 	if ( (!memcmp(Network_player_rejoining.player.node, their->player.node, 6)) &&
 		  (!memcmp(Network_player_rejoining.player.server, their->player.server, 4)) &&
@@ -1022,7 +1022,7 @@ char * network_get_player_name( int objnum )
 }
 
 
-void network_add_player(sequence_packet *p)
+static void network_add_player(sequence_packet *p)
 {
 	int i;
 
@@ -1052,7 +1052,7 @@ void network_add_player(sequence_packet *p)
 
 // One of the players decided not to join the game
 
-void network_remove_player(sequence_packet *p)
+static void network_remove_player(sequence_packet *p)
 {
 	int i,pn;
 
@@ -1093,7 +1093,7 @@ void network_dump_player(ubyte * server, ubyte *node, int why)
 	ipx_send_internetwork_packet_data( (ubyte *)&temp, sizeof(sequence_packet), server, node);
 }
 
-void
+static void
 network_send_game_list_request(void)
 {
 	// Send a broadcast request for game info
@@ -1200,7 +1200,7 @@ void network_send_game_info(sequence_packet *their)
 	Netgame.game_status = old_status;
 }
 
-int network_send_request(void)
+static int network_send_request(void)
 {
 	// Send a request to join a game 'Netgame'.  Returns 0 if we can join this
 	// game, non-zero if there is some problem.
@@ -1225,7 +1225,7 @@ int network_send_request(void)
 	return i;
 }
 
-void network_process_gameinfo(ubyte *data)
+static void network_process_gameinfo(ubyte *data)
 {
 	int i, j;
 	netgame_info *new;
@@ -1259,7 +1259,7 @@ void network_process_gameinfo(ubyte *data)
 	}
 }
 
-void network_process_dump(sequence_packet *their)
+static void network_process_dump(sequence_packet *their)
 {
 	// Our request for join was denied.  Tell the user why.
 
@@ -1269,7 +1269,7 @@ void network_process_dump(sequence_packet *their)
 	Network_status = NETSTAT_MENU;
 }
 
-void network_process_request(sequence_packet *their)
+static void network_process_request(sequence_packet *their)
 {
 	// Player is ready to receieve a sync packet
 	int i;
@@ -1283,7 +1283,7 @@ void network_process_request(sequence_packet *their)
 		}
 }
 
-void network_process_packet(ubyte *data, int length )
+static void network_process_packet(ubyte *data, int length )
 {
 	sequence_packet *their = (sequence_packet *)data;
 
@@ -1368,7 +1368,7 @@ void network_process_packet(ubyte *data, int length )
 }
 
 #ifndef NDEBUG
-void dump_segments()
+static void dump_segments()
 {
 	FILE * fp;
 
@@ -1409,7 +1409,7 @@ void network_read_endlevel_packet( ubyte *data )
 //	mprintf((0, "Got endlevel packet from player %d.\n", playernum));
 }
 
-void
+static void
 network_pack_objects(void)
 {
 	// Switching modes, pack the object array
@@ -1417,7 +1417,7 @@ network_pack_objects(void)
 	special_reset_objects();
 }
 
-int
+static int
 network_verify_objects(int remote, int local)
 {
 	int i;
@@ -1555,7 +1555,7 @@ void network_read_object_packet( ubyte *data )
 	} // For each object in packet
 }
 
-void network_sync_poll( int nitems, newmenu_item * menus, int * key, int citem )
+static void network_sync_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	// Polling loop waiting for sync packet to start game
 
@@ -1586,7 +1586,7 @@ void network_sync_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	}
 }
 
-void network_start_poll( int nitems, newmenu_item * menus, int * key, int citem )
+static void network_start_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	int i,n,nm;
 
@@ -1670,7 +1670,7 @@ int last_cinvul=0;
 int opt_mode;
 
 #pragma off (unreferenced)
-void network_game_param_poll( int nitems, newmenu_item * menus, int * key, int citem )
+static void network_game_param_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 #ifdef SHAREWARE
 	return;
@@ -1697,7 +1697,7 @@ void network_game_param_poll( int nitems, newmenu_item * menus, int * key, int c
 }
 #pragma on (unreferenced)
 
-int network_get_game_params( char * game_name, int *mode, int *game_flags, int *level )
+static int network_get_game_params( char * game_name, int *mode, int *game_flags, int *level )
 {
 	int i;
 	int opt, opt_name, opt_level, opt_closed, opt_difficulty;
@@ -1842,7 +1842,7 @@ menu:
 	return i;
 }
 
-void
+static void
 network_set_game_mode(int gamemode)
 {
 	Show_kill_list = 1;
@@ -1866,7 +1866,7 @@ network_set_game_mode(int gamemode)
 		MaxNumNetPlayers = 8;
 }
 
-int
+static int
 network_find_game(void)
 {
 	// Find out whether or not there is space left on this socket
@@ -2004,7 +2004,7 @@ void network_read_sync_packet( netgame_info * sp )
 
 }
 
-void
+static void
 network_send_sync(void)
 {
 	int i, j, np;
@@ -2056,7 +2056,7 @@ network_send_sync(void)
 	network_read_sync_packet(&Netgame); // Read it myself, as if I had sent it
 }
 
-int
+static int
 network_select_teams(void)
 {
 #ifndef SHAREWARE
@@ -2133,7 +2133,7 @@ menu:
 #endif
 }
 
-int
+static int
 network_select_players(void)
 {
 	int i, j;
@@ -2298,7 +2298,7 @@ network_start_game(void)
 
 }
 
-void restart_net_searching(newmenu_item * m)
+static void restart_net_searching(newmenu_item * m)
 {
 	int i;
 	N_players = 0;
@@ -2315,7 +2315,7 @@ void restart_net_searching(newmenu_item * m)
 	Network_games_changed = 1;
 }
 
-void network_join_poll( int nitems, newmenu_item * menus, int * key, int citem )
+static void network_join_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	// Polling loop for Join Game menu
 	static fix t1 = 0;
@@ -2412,7 +2412,7 @@ void network_join_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	}
 }
 
-int
+static int
 network_wait_for_sync(void)
 {
 	char text[60];
@@ -2461,7 +2461,7 @@ menu:
 	return(0);
 }
 
-void
+static void
 network_request_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
 	// Polling loop for waiting-for-requests menu
@@ -2496,7 +2496,7 @@ network_request_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	}
 }
 
-void
+static void
 network_wait_for_requests(void)
 {
 	// Wait for other players to load the level before we send the sync
@@ -2768,7 +2768,7 @@ void network_send_data( ubyte * ptr, int len, int urgent )
 	MySyncPack.data_size += len;
 }
 
-void network_timeout_player(int playernum)
+static void network_timeout_player(int playernum)
 {
 	// Remove a player from the game if we haven't heard from them in
 	// a long time.
@@ -2891,7 +2891,7 @@ listen:
 
 int missed_packets = 0;
 
-void network_consistency_error(void)
+static void network_consistency_error(void)
 {
 	static int count = 0;
 

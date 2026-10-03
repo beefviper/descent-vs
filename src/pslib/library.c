@@ -187,7 +187,7 @@ file_header *LibHeaderList;
 FILE *InputLibInitFile; // file to read from
 short init_numfiles;    // number of files in the library
 
-int ReadFileBufRaw( char *filename, ubyte *buf, int bufsize )
+static int ReadFileBufRaw( char *filename, ubyte *buf, int bufsize )
 {
     int length;
     int handle;
@@ -601,7 +601,7 @@ int CheckFile( char *filename ) {
 
 }
 
-FILE * LibraryGetFileInfo( char *filename, int * others_use, int * lib_offset, int * file_size, int * org_size, int * compressed, char * buffer ) {
+static FILE * LibraryGetFileInfo( char *filename, int * others_use, int * lib_offset, int * file_size, int * org_size, int * compressed, char * buffer ) {
 	int i;
 	FILE * lib_file;
 	char signature[3];

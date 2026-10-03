@@ -155,6 +155,8 @@ static char rcsid[] = "$Id: medmisc.c 2.1 1995/03/06 15:20:50 john Exp $";
 #include "texpage.h"		// For texpage_goto_first
 #include "meddraw.h"		// For draw_World
 #include "game.h"
+#include "kdefs.h"
+#include "medmisc.h"
 
 //return 2d distance, i.e, sqrt(x*x + y*y)
 static long dist_2d(long x,long y)
@@ -487,7 +489,7 @@ int AttachSegment()
 	return 1;
 }
 
-int ForceTotalRedraw()
+static int ForceTotalRedraw()
 {
 	Update_flags = UF_ALL;
 	return 1;
@@ -509,7 +511,7 @@ int SyncLargeView()
 }
 #endif
 
-int DeleteCurSegment()
+static int DeleteCurSegment()
 {
 	// Delete current segment.
     med_delete_segment(Cursegp);

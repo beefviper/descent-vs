@@ -118,4 +118,6 @@ extern grs_bitmap GameBitmaps[MAX_BITMAP_FILES];
 void piggy_read_sounds();
 
 
+void piggy_get_bitmap_name( int i, char * name );
+
 #endif

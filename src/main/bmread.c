@@ -161,7 +161,7 @@ char *space = { " \t" };
 //--unused-- char *equal = { "=" };
 char *equal_space = { " \t=" };
 
-void remove_char( char * s, char c )
+static void remove_char( char * s, char c )
 {
 	char *p;
 	p = strchr(s,c);
@@ -169,7 +169,7 @@ void remove_char( char * s, char c )
 }
 
 //---------------------------------------------------------------
-int compute_average_pixel(grs_bitmap *new)
+static int compute_average_pixel(grs_bitmap *new)
 {
 	int	row, column, color;
 	char	*pptr;
@@ -200,7 +200,7 @@ int compute_average_pixel(grs_bitmap *new)
 // Loads a bitmap from either the piggy file, a r64 file, or a
 // whatever extension is passed.
 
-bitmap_index bm_load_sub( char * filename )
+static bitmap_index bm_load_sub( char * filename )
 {
 	bitmap_index bitmap_num;
 	grs_bitmap * new;
@@ -247,7 +247,7 @@ bitmap_index bm_load_sub( char * filename )
 	return bitmap_num;
 }
 
-void ab_load( char * filename, bitmap_index bmp[], int *nframes )
+static void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 {
 	grs_bitmap * bm[MAX_BITMAPS_PER_BRUSH];
 	bitmap_index bi;
@@ -307,7 +307,7 @@ void ab_load( char * filename, bitmap_index bmp[], int *nframes )
 	}
 }
 
-int ds_load( char * filename )	{
+static int ds_load( char * filename )	{
 	int i;
 	CFILE * cfp;
 	digi_sound new;
@@ -348,7 +348,7 @@ int ds_load( char * filename )	{
 }
 
 //parse a float
-float get_float()
+static float get_float()
 {
 	char *xarg;
 
@@ -357,7 +357,7 @@ float get_float()
 }
 
 //parse an int
-int get_int()
+static int get_int()
 {
 	char *xarg;
 

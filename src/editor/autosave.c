@@ -210,7 +210,7 @@ void autosave_mine(char *name) {
 }
 
 
-void print_clock( int seconds, char message[10] ) {
+static void print_clock( int seconds, char message[10] ) {
 	int w,h,aw;
 	char	*p;
 
@@ -230,7 +230,7 @@ void print_clock( int seconds, char message[10] ) {
 
 static char the_time[14];	// changed from 10, I don't think that was long enough
 
-void clock_message( int seconds, char *format, ... ) {
+static void clock_message( int seconds, char *format, ... ) {
 	va_list ap;
 
 	va_start(ap, format);

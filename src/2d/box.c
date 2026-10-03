@@ -37,7 +37,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "grdef.h"
 
-void gr_ubox0(int left,int top,int right,int bot)
+static void gr_ubox0(int left,int top,int right,int bot)
 {
 	int i, d;
 
@@ -66,7 +66,7 @@ void gr_ubox0(int left,int top,int right,int bot)
 	}
 }
 
-void gr_box0(int left,int top,int right,int bot)
+static void gr_box0(int left,int top,int right,int bot)
 {
 	if (top > MAXY ) return;
     if (bot < MINY ) return;
@@ -83,7 +83,7 @@ void gr_box0(int left,int top,int right,int bot)
 }
 
 
-void gr_ubox12(int left,int top,int right,int bot)
+static void gr_ubox12(int left,int top,int right,int bot)
 {
 	int i;
 
@@ -98,7 +98,7 @@ void gr_ubox12(int left,int top,int right,int bot)
 	gr_uscanline( left, right, bot );
 }
 
-void gr_box12(int left,int top,int right,int bot)
+static void gr_box12(int left,int top,int right,int bot)
 {
     if (top > MAXY ) return;
     if (bot < MINY ) return;

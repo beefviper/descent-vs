@@ -200,6 +200,7 @@ static char rcsid[] = "$Id: titles.c 2.10 1995/06/15 12:14:16 john Exp $";
 #include "vfx.h"
 #include "newmenu.h"
 #include "state.h"
+#include "titles.h"
 
 ubyte New_pal[768];
 int	New_pal_254_bash;
@@ -214,7 +215,9 @@ char Briefing_text_filename[13] = "briefing.tex";
 #define	SHAREWARE_ENDING_FILENAME	"ending.tex"
 
 //	Can be set by -noscreens command line option.  Causes bypassing of all briefing screens.
+#ifndef RELEASE
 int	Skip_briefing_screens=0;
+#endif
 int	Briefing_foreground_colors[MAX_BRIEFING_COLORS], Briefing_background_colors[MAX_BRIEFING_COLORS];
 int	Current_color = 0;
 int	Erase_color;
@@ -223,7 +226,7 @@ int	Erase_color;
 void title_save_game();
 
 
-int local_key_inkey(void)
+static int local_key_inkey(void)
 {
 	int	rval;
 
@@ -394,7 +397,7 @@ char * get_briefing_screen( int level_num )
 
 int	Briefing_text_x, Briefing_text_y;
 
-void init_char_pos(int x, int y)
+static void init_char_pos(int x, int y)
 {
 	Briefing_text_x = x;
 	Briefing_text_y = y;
@@ -410,7 +413,7 @@ char	Bitmap_name[32] = "";
 byte	Door_dir=1, Door_div_count=0, Animating_bitmap_type=0;
 
 //	-----------------------------------------------------------------------------
-void show_bitmap_frame(void)
+static void show_bitmap_frame(void)
 {
 	grs_canvas	*curcanv_save, *bitmap_canv = NULL;
 	grs_bitmap	*bitmap_ptr;
@@ -513,7 +516,7 @@ void show_bitmap_frame(void)
 }
 
 //	-----------------------------------------------------------------------------
-void show_briefing_bitmap(grs_bitmap *bmp)
+static void show_briefing_bitmap(grs_bitmap *bmp)
 {
 	grs_canvas	*curcanv_save, *bitmap_canv;
 
@@ -526,7 +529,7 @@ void show_briefing_bitmap(grs_bitmap *bmp)
 }
 
 //	-----------------------------------------------------------------------------
-void show_spinning_robot_frame(int robot_num)
+static void show_spinning_robot_frame(int robot_num)
 {
 	grs_canvas	*curcanv_save;
 
@@ -543,7 +546,7 @@ void show_spinning_robot_frame(int robot_num)
 }
 
 //	-----------------------------------------------------------------------------
-void init_spinning_robot(void)
+static void init_spinning_robot(void)
 {
 	Robot_angles.p += 0;
 	Robot_angles.b += 0;
@@ -553,7 +556,7 @@ void init_spinning_robot(void)
 }
 
 //	-----------------------------------------------------------------------------
-void init_briefing_bitmap(void)
+static void init_briefing_bitmap(void)
 {
 	Robot_canv = gr_create_sub_canvas(grd_curcanv, 138, 55, 166, 138);
 }
@@ -561,7 +564,7 @@ void init_briefing_bitmap(void)
 //	-----------------------------------------------------------------------------
 //	Returns char width.
 //	If show_robot_flag set, then show a frame of the spinning robot.
-int show_char_delay(char the_char, int delay, int robot_num, int cursor_flag)
+static int show_char_delay(char the_char, int delay, int robot_num, int cursor_flag)
 {
 	int	w, h, aw;
 	char	message[2];
@@ -616,7 +619,7 @@ int show_char_delay(char the_char, int delay, int robot_num, int cursor_flag)
 }
 
 //	-----------------------------------------------------------------------------
-int load_briefing_screen( int screen_num )
+static int load_briefing_screen( int screen_num )
 {
 	int	pcx_error;
 
@@ -633,7 +636,7 @@ int load_briefing_screen( int screen_num )
 #define	KEY_DELAY_DEFAULT	((F1_0*28)/1000)
 
 //	-----------------------------------------------------------------------------
-int get_message_num(char **message)
+static int get_message_num(char **message)
 {
 	int	num=0;
 
@@ -681,7 +684,7 @@ void title_save_game()
 
 
 //	-----------------------------------------------------------------------------
-void get_message_name(char **message, char *result)
+static void get_message_name(char **message, char *result)
 {
 	while (**message == ' ')
 		(*message)++;
@@ -700,7 +703,7 @@ void get_message_name(char **message, char *result)
 }
 
 //	-----------------------------------------------------------------------------
-void flash_cursor(int cursor_flag)
+static void flash_cursor(int cursor_flag)
 {
 	if (cursor_flag == 0)
 		return;
@@ -716,7 +719,7 @@ void flash_cursor(int cursor_flag)
 
 //	-----------------------------------------------------------------------------
 //	Return true if message got aborted by user (pressed ESC), else return false.
-int show_briefing_message(int screen_num, char *message)
+static int show_briefing_message(int screen_num, char *message)
 {
 	int	prev_ch=-1;
 	int	ch, done=0;
@@ -937,7 +940,7 @@ int show_briefing_message(int screen_num, char *message)
 
 //	-----------------------------------------------------------------------------
 //	Return a pointer to the start of text for screen #screen_num.
-char * get_briefing_message(int screen_num)
+static char * get_briefing_message(int screen_num)
 {
 	char	*tptr = Briefing_text;
 	int	cur_screen=0;
@@ -959,7 +962,7 @@ char * get_briefing_message(int screen_num)
 
 // -----------------------------------------------------------------------------
 //	Load Descent briefing text.
-void load_screen_text(char *filename, char **buf)
+static void load_screen_text(char *filename, char **buf)
 {
 	CFILE	*tfile;
 	CFILE *ifile;
@@ -1006,7 +1009,7 @@ void load_screen_text(char *filename, char **buf)
 
 //	-----------------------------------------------------------------------------
 //	Return true if message got aborted, else return false.
-int show_briefing_text(int screen_num)
+static int show_briefing_text(int screen_num)
 {
 	char	*message_ptr;
 
@@ -1110,7 +1113,7 @@ void do_briefing_screens(int level_num)
 }
 
 #ifndef SHAREWARE
-void do_registered_end_game(void)
+static void do_registered_end_game(void)
 {
 	int	cur_briefing_screen;
 
@@ -1137,7 +1140,7 @@ void do_registered_end_game(void)
 }
 #endif
 
-void do_shareware_end_game(void)
+static void do_shareware_end_game(void)
 {
 	int	cur_briefing_screen;
 

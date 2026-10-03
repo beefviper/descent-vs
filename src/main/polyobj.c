@@ -150,7 +150,7 @@ int	Pof_addr;
 
 #define	MODEL_BUF_SIZE	32768
 
-void _pof_cfseek(int len,int type)
+static void _pof_cfseek(int len,int type)
 {
 	switch (type) {
 		case SEEK_SET:	Pof_addr = len;	break;
@@ -167,7 +167,7 @@ void _pof_cfseek(int len,int type)
 
 #define pof_cfseek(_buf,_len,_type) _pof_cfseek((_len),(_type))
 
-int pof_read_int(ubyte *bufp)
+static int pof_read_int(ubyte *bufp)
 {
 	int i;
 
@@ -181,7 +181,7 @@ int pof_read_int(ubyte *bufp)
 //	return i;
 }
 
-size_t pof_cfread(void *dst, size_t elsize, size_t nelem, ubyte *bufp)
+static size_t pof_cfread(void *dst, size_t elsize, size_t nelem, ubyte *bufp)
 {
 	if (Pof_addr + nelem*elsize > Pof_file_end)
 		return 0;
@@ -199,7 +199,7 @@ size_t pof_cfread(void *dst, size_t elsize, size_t nelem, ubyte *bufp)
 // #define new_read_int(i,f) cfread(&(i),sizeof(i),1,(f))
 #define new_pof_read_int(i,f) pof_cfread(&(i),sizeof(i),1,(f))
 
-short pof_read_short(ubyte *bufp)
+static short pof_read_short(ubyte *bufp)
 {
 	short s;
 
@@ -212,7 +212,7 @@ short pof_read_short(ubyte *bufp)
 //	return s;
 }
 
-void pof_read_string(char *buf,int max, ubyte *bufp)
+static void pof_read_string(char *buf,int max, ubyte *bufp)
 {
 	int	i;
 
@@ -225,7 +225,7 @@ void pof_read_string(char *buf,int max, ubyte *bufp)
 
 }
 
-void pof_read_vecs(vms_vector *vecs,int n,ubyte *bufp)
+static void pof_read_vecs(vms_vector *vecs,int n,ubyte *bufp)
 {
 //	cfread(vecs,sizeof(vms_vector),n,f);
 
@@ -254,7 +254,7 @@ void robot_set_angles(robot_info *r,polymodel *pm,vms_angvec angs[N_ANIM_STATES]
 #endif
 
 //reads a binary file containing a 3d model
-polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
+static polymodel *read_model_file(polymodel *pm,char *filename,robot_info *r)
 {
 	CFILE *ifile;
 	short version;
@@ -516,7 +516,7 @@ int read_model_guns(char *filename,vms_vector *gun_points, vms_vector *gun_dirs,
 }
 
 //free up a model, getting rid of all its memory
-void free_model(polymodel *po)
+static void free_model(polymodel *po)
 {
 	free(po->model_data);
 }
@@ -614,7 +614,7 @@ void draw_polygon_model(vms_vector *pos,vms_matrix *orient,vms_angvec *anim_angl
 
 }
 
-void free_polygon_models(void)
+static void free_polygon_models(void)
 {
 	int i;
 
@@ -624,7 +624,7 @@ void free_polygon_models(void)
 
 }
 
-void polyobj_find_min_max(polymodel *pm)
+static void polyobj_find_min_max(polymodel *pm)
 {
 	ushort nverts;
 	vms_vector *vp;

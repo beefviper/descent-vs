@@ -444,4 +444,9 @@ extern char directory_list[100][13];
 
 extern int ui_button_any_drawn;
 
+void InstallErrorHandler(void);
+void ui_mouse_flip_buttons(void);
+void ui_draw_shad( short x1, short y1, short x2, short y2, short c1, short c2 );
+void ui_draw_frame( short x1, short y1, short x2, short y2 );
+
 #endif

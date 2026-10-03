@@ -161,4 +161,6 @@ typedef struct {
 
 extern rgb player_rgb[];
 
+void show_reticle(int force_big_one);
+
 #endif

@@ -138,7 +138,7 @@ void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels )
 }
 
 // Copies num_pixels bytes, skipping transparent (255) pixels.
-void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels )
+static void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels )
 {
 	ubyte c;
 
@@ -152,7 +152,7 @@ void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels )
 
 // Copies num_pixels bytes through row fade_value of the fade table,
 // skipping transparent (255) pixels.
-void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value )
+static void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value )
 {
 	ubyte *fade = &gr_fade_table[fade_value << 8];
 	ubyte c;
@@ -168,7 +168,7 @@ void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte
 
 // Copies source pixels to num_dest_pixels destination pixels, doubling each.
 // If num_dest_pixels is odd, the first source pixel is copied once.
-void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels )
+static void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels )
 {
 	int n;
 
@@ -186,7 +186,7 @@ void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels )
 }
 
 
-void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+static void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
 {
 	for (; num_pixels > 0; num_pixels-- )	{
 		*dest = *src;
@@ -195,7 +195,7 @@ void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsiz
 	}
 }
 
-void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+static void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
 {
 	for (; num_pixels > 0; num_pixels-- )	{
 		if ( *src != 255 )
@@ -206,7 +206,7 @@ void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rows
 }
 
 
-void gr_ubitmap00( int x, int y, grs_bitmap *bm )
+static void gr_ubitmap00( int x, int y, grs_bitmap *bm )
 {
 	register int y1;
 	int dest_rowsize;
@@ -229,7 +229,7 @@ void gr_ubitmap00( int x, int y, grs_bitmap *bm )
 	}
 }
 
-void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
+static void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 {
 	register int y1;
 	int dest_rowsize;
@@ -276,7 +276,7 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 */
 
 // Copies every 4th source pixel (one Mode X plane) to npixels dest pixels.
-void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels )
+static void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels )
 {
 	for (; npixels > 0; npixels-- )	{
 		*dest++ = *src;
@@ -285,7 +285,7 @@ void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels )
 }
 
 // Copies every 2nd source pixel to npixels dest pixels (doubled Mode X plane).
-void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels )
+static void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels )
 {
 	for (; npixels > 0; npixels-- )	{
 		*dest++ = *src;
@@ -295,7 +295,7 @@ void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels )
 
 
 // From Linear to ModeX
-void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	ubyte * dbits;
 	ubyte * sbits;
@@ -339,7 +339,7 @@ void gr_bm_ubitblt01(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 
 
 // From Linear to ModeX masked
-void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	//ubyte * dbits1;
 	//ubyte * sbits1;
@@ -372,7 +372,7 @@ void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *
 }
 
 
-void gr_ubitmap012( int x, int y, grs_bitmap *bm )
+static void gr_ubitmap012( int x, int y, grs_bitmap *bm )
 {
 	register int x1, y1;
 	unsigned char * src;
@@ -387,7 +387,7 @@ void gr_ubitmap012( int x, int y, grs_bitmap *bm )
 	}
 }
 
-void gr_ubitmap012m( int x, int y, grs_bitmap *bm )
+static void gr_ubitmap012m( int x, int y, grs_bitmap *bm )
 {
 	register int x1, y1;
 	unsigned char * src;
@@ -406,7 +406,7 @@ void gr_ubitmap012m( int x, int y, grs_bitmap *bm )
 }
 
 
-void gr_ubitmapGENERIC(int x, int y, grs_bitmap * bm)
+static void gr_ubitmapGENERIC(int x, int y, grs_bitmap * bm)
 {
 	register int x1, y1;
 
@@ -418,7 +418,7 @@ void gr_ubitmapGENERIC(int x, int y, grs_bitmap * bm)
 	}
 }
 
-void gr_ubitmapGENERICm(int x, int y, grs_bitmap * bm)
+static void gr_ubitmapGENERICm(int x, int y, grs_bitmap * bm)
 {
 	register int x1, y1;
 	ubyte c;
@@ -500,7 +500,7 @@ void gr_ubitmapm( int x, int y, grs_bitmap *bm )
 
 
 // From linear to SVGA
-void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	unsigned char * sbits;
 
@@ -559,7 +559,7 @@ void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 }
 
 // From SVGA to linear
-void gr_bm_ubitblt20(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt20(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	unsigned char * dbits;
 
@@ -599,7 +599,7 @@ void gr_bm_ubitblt20(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 //@extern int Interlacing_on;
 
 // From Linear to Linear
-void gr_bm_ubitblt00(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt00(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	unsigned char * dbits;
 	unsigned char * sbits;
@@ -624,7 +624,7 @@ void gr_bm_ubitblt00(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 	}
 }
 // From Linear to Linear Masked
-void gr_bm_ubitblt00m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
+static void gr_bm_ubitblt00m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
 	unsigned char * dbits;
 	unsigned char * sbits;

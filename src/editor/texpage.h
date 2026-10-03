@@ -51,4 +51,8 @@ void texpage_init( UI_WINDOW * win );
 void texpage_close();
 void texpage_do();
 
+void init_replacements(void);
+void do_replacements(void);
+void do_replacements_all(void);
+
 #endif

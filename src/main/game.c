@@ -524,7 +524,7 @@ extern void newdemo_strip_frames(char *, int);
 //	==============================================================================================
 
 #ifndef NDEBUG
-void speedtest_init(void)
+static void speedtest_init(void)
 {
 	Speedtest_start_time = timer_get_fixed_seconds();
 	Speedtest_on = 1;
@@ -535,7 +535,7 @@ void speedtest_init(void)
 	mprintf((0, "Starting speedtest.  Will be %i frames.  Each . = 10 frames.\n", Highest_segment_index+1));
 }
 
-void speedtest_frame(void)
+static void speedtest_frame(void)
 {
 	vms_vector	view_dir, center_point;
 
@@ -615,7 +615,7 @@ void reset_palette_add()
 }
 
 
-void game_show_warning(char *s)
+static void game_show_warning(char *s)
 {
 
 	if (!((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME)))
@@ -643,7 +643,7 @@ int last_drawn_cockpit[2] = { -1, -1 };
 extern int Rear_view;
 
 // This actually renders the new cockpit onto the screen.
-void update_cockpits(int force_redraw)
+static void update_cockpits(int force_redraw)
 {
 	int x, y, w, h;
 
@@ -787,7 +787,7 @@ void reset_cockpit()
 
 void HUD_clear_messages();
 
-void toggle_cockpit()
+static void toggle_cockpit()
 {
 	int new_mode = Cockpit_mode;
 
@@ -823,7 +823,7 @@ void toggle_cockpit()
 
 #define WINDOW_MIN_W		160
 
-void grow_window()
+static void grow_window()
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -920,7 +920,7 @@ void fill_background(int x,int y,int w,int h,int dx,int dy)
 	copy_background_rect(x,y+h,x+w-1,y+h+dy-1);
 }
 
-void shrink_window()
+static void shrink_window()
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -1009,7 +1009,7 @@ void game_init_render_buffers(int screen_mode, int render_w, int render_h, int u
 	}
 }
 
-void game_3dmax_off()
+static void game_3dmax_off()
 {
 	union REGS regs;
 
@@ -1032,7 +1032,7 @@ void game_3dmax_off()
 	return;
 }
 
-void game_3dmax_on()
+static void game_3dmax_on()
 {
 	union REGS regs;
 
@@ -1172,7 +1172,7 @@ fix frame_time_list[8] = {0,0,0,0,0,0,0,0};
 fix frame_time_total=0;
 int frame_time_cntr=0;
 
-void ftoa(char *string, fix f)
+static void ftoa(char *string, fix f)
 {
 	int decimal, fractional;
 
@@ -1184,7 +1184,7 @@ void ftoa(char *string, fix f)
 	sprintf( string, "%d.%02d", decimal, fractional );
 }
 
-show_framerate()
+static int show_framerate()
 {
 	char temp[50];
 	fix rate;
@@ -1383,7 +1383,7 @@ fix Show_view_text_timer = -1;
 
 #ifndef NDEBUG
 
-draw_window_label()
+static int draw_window_label()
 {
 	if ( Show_view_text_timer > 0 )
 	{
@@ -1424,7 +1424,7 @@ draw_window_label()
 #endif
 
 
-void render_countdown_gauge()
+static void render_countdown_gauge()
 {
 	if (!Endlevel_sequence && Fuelcen_control_center_destroyed  && (Fuelcen_seconds_left>-1) && (Fuelcen_seconds_left<127))	{
 		int	y;
@@ -1439,7 +1439,7 @@ void render_countdown_gauge()
 }
 
 #ifdef NETWORK
-void game_draw_multi_message()
+static void game_draw_multi_message()
 {
 	char temp_string[MAX_MULTI_MESSAGE_LEN+25];
 
@@ -1501,7 +1501,7 @@ void draw_centered_text( int y, char * s )
 
 extern fix Cruise_speed;
 
-void game_draw_hud_stuff()
+static void game_draw_hud_stuff()
 {
 
 	#ifndef NDEBUG
@@ -1609,7 +1609,7 @@ extern int gr_wait_for_retrace;
 extern int gr_bitblt_double;
 
 //render a frame for the game in stereo
-void game_render_frame_stereo_vfx()
+static void game_render_frame_stereo_vfx()
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
@@ -1677,7 +1677,7 @@ void game_render_frame_stereo_vfx()
 
 
 //render a frame for the game in stereo
-void game_render_frame_stereo_interlaced()
+static void game_render_frame_stereo_interlaced()
 {
 	int dw,dh,sw,sh;
 	fix save_aspect;
@@ -1883,7 +1883,7 @@ void game_render_frame_stereo_interlaced()
 
 
 //render a frame for the game
-void game_render_frame_mono(void)
+static void game_render_frame_mono(void)
 {
 	grs_canvas Screen_3d_window;
 
@@ -1940,7 +1940,7 @@ void game_render_frame_mono(void)
 
 }
 
-void game_render_frame()
+static void game_render_frame()
 {
 	set_screen_mode( SCREEN_GAME );
 
@@ -2032,7 +2032,7 @@ void save_screen_shot(int automap_flag)
 }
 
 //initialize flying
-void fly_init(object *obj)
+static void fly_init(object *obj)
 {
 	obj->control_type = CT_FLYING;
 	obj->movement_type = MT_PHYSICS;
@@ -2051,14 +2051,14 @@ int sound_nums[] = {10,11,20,21,30,31,32,33,40,41,50,51,60,61,62,70,80,81,82,83,
 
 int test_sound_num=0;
 
-void play_test_sound()
+static void play_test_sound()
 {
 
 	digi_play_sample(sound_nums[test_sound_num], F1_0);
 }
 
 //	------------------------------------------------------------------------------------
-void advance_sound()
+static void advance_sound()
 {
 	if (++test_sound_num == N_TEST_SOUNDS)
 		test_sound_num=0;
@@ -2109,7 +2109,7 @@ extern int been_in_editor;
 //--killed--}
 
 //	------------------------------------------------------------------------------------
-void do_cloak_stuff(void)
+static void do_cloak_stuff(void)
 {
 	int i;
 	for (i = 0; i < N_players; i++)
@@ -2132,7 +2132,7 @@ void do_cloak_stuff(void)
 }
 
 //	------------------------------------------------------------------------------------
-void do_invulnerable_stuff(void)
+static void do_invulnerable_stuff(void)
 {
 	if (Players[Player_num].flags & PLAYER_FLAGS_INVULNERABLE) {
 		if (GameTime - Players[Player_num].invulnerable_time > INVULNERABLE_TIME_MAX) {
@@ -2188,7 +2188,7 @@ void do_invulnerable_stuff(void)
 
 //	------------------------------------------------------------------------------------
 //	Diminish palette effects towards normal.
-void diminish_palette_towards_normal(void)
+static void diminish_palette_towards_normal(void)
 {
 	int	dec_amount = 0;
 
@@ -2318,7 +2318,7 @@ int allowed_to_fire_laser(void)
 
 fix	Next_flare_fire_time = 0;
 
-int allowed_to_fire_flare(void)
+static int allowed_to_fire_flare(void)
 {
 	if (Next_flare_fire_time > GameTime)
 		if (Next_flare_fire_time < GameTime + F1_0)	//	In case time is bogus, never wait > 1 second.
@@ -2396,7 +2396,7 @@ void clear_boxed_message()
 extern int Death_sequence_aborted;
 
 //Process selected keys until game unpaused. returns key that left pause (p or esc)
-int do_game_pause(int allow_menu)
+static int do_game_pause(int allow_menu)
 {
 	int paused;
 	int key;
@@ -2540,7 +2540,7 @@ void arcade_frame_info()
 extern void temp_reset_stuff_on_level();
 
 //deal with rear view - switch it on, or off, or whatever
-void check_rear_view()
+static void check_rear_view()
 {
 
 	#define LEAVE_TIME 0x4000		//how long until we decide key is down	(Used to be 0x4000)
@@ -2897,10 +2897,8 @@ grs_canvas * get_current_game_screen()
 
 ubyte exploding_flag = 0;
 
-extern dump_used_textures_all();
-extern kconfig_center_headset();
 
-void ReadControls()
+static void ReadControls()
 {
 	int key;
 	fix key_time;
@@ -4162,7 +4160,7 @@ mem_check();
 //	-------------------------------------------------------------------------------------------------------
 //	If player is close enough to objnum, which ought to be a powerup, pick it up!
 //	This could easily be made difficulty level dependent.
-void powerup_grab_cheat(object *player, int objnum)
+static void powerup_grab_cheat(object *player, int objnum)
 {
 	fix	powerup_size;
 	fix	player_size;
@@ -4212,7 +4210,7 @@ int	Last_level_path_created = -1;
 //	------------------------------------------------------------------------------------------------------------------
 //	Create path for player from current segment to goal segment.
 //	Return true if path created, else return false.
-int mark_player_path_to_segment(int segnum)
+static int mark_player_path_to_segment(int segnum)
 {
 	int		i;
 	object	*objp = ConsoleObject;

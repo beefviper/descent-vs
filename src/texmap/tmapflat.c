@@ -96,7 +96,7 @@ extern void asm_tmap_scanline_shaded();	// In tmapfade.c
 //	Texture map current scanline.
 //	Uses globals Du_dx and Dv_dx to incrementally compute u,v coordinates
 // -------------------------------------------------------------------------------------
-void tmap_scanline_flat(int y, fix xleft, fix xright)
+static void tmap_scanline_flat(int y, fix xleft, fix xright)
 {
 	if (xright < xleft)
 		return;

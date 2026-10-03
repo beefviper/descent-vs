@@ -42,20 +42,20 @@ static char rcsid[] = "$Id: parsarg.c 1.1 1993/09/09 17:32:03 matt Exp $";
 char arg_buf[ARGBUF_SIZE];
 char *ab_ptr=arg_buf;
 
-void perror_exit(int n,char *s)
+static void perror_exit(int n,char *s)
 {
 	perror(s);
 	exit(n);
 }
 
-void verror(char *s,void *first_arg_ptr)
+static void verror(char *s,void *first_arg_ptr)
 {
 	fprintf(stderr,"Error: ");
 	vfprintf(stderr,s,first_arg_ptr);
 	fprintf(stderr,"\n");
 }
 
-void error_exit(int ret_code,char *s,...)
+static void error_exit(int ret_code,char *s,...)
 {
 	verror(s,((char *) &s)+sizeof(s));	/* addr of next parm on stack */
 	exit(ret_code);

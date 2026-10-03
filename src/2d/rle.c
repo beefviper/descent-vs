@@ -104,6 +104,7 @@ static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
 #include "dpmi.h"
 #include "error.h"
 #include "key.h"
+#include "rle.h"
 
 //#define RLE_CODE 		0xC0
 //#define NOT_RLE_CODE	63
@@ -116,7 +117,7 @@ void rle_expand_texture_sub(grs_bitmap* bmp, grs_bitmap* rle_temp_bitmap_1);
 
 // Decodes one scanline of rle data from src into dest.  Returns a pointer
 // to the byte after the last one written.
-ubyte * gr_rle_decode_asm( ubyte * src, ubyte * dest )
+static ubyte * gr_rle_decode_asm( ubyte * src, ubyte * dest )
 {
 	ubyte c, count;
 
@@ -405,7 +406,7 @@ rle_cache_element rle_cache[MAX_CACHE_BITMAPS];
 int rle_hits = 0;
 int rle_misses = 0;
 
-void rle_cache_close(void)
+static void rle_cache_close(void)
 {
 	if (rle_cache_initialized)	{
 		int i;
@@ -416,7 +417,7 @@ void rle_cache_close(void)
 	}
 }
 
-void rle_cache_init()
+static void rle_cache_init()
 {
 	int i;
 	for (i=0; i<MAX_CACHE_BITMAPS; i++ )	{

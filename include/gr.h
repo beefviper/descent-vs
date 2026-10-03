@@ -552,4 +552,14 @@ extern void gr_merge_textures_1( ubyte * lower, ubyte * upper, ubyte * dest );
 extern void gr_merge_textures_2( ubyte * lower, ubyte * upper, ubyte * dest );
 extern void gr_merge_textures_3( ubyte * lower, ubyte * upper, ubyte * dest );
 
+void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest);
+void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
+void build_colormap_good(ubyte* palette, ubyte* colormap, int* freq);
+void gr_lbitblt( grs_bitmap * source, grs_bitmap * dest, int height, int width );
+void gr_modex_line(void);
+void rls_stretch_scanline_asm(void);
+void rls_do_cc_setup_asm(void);
+void scale_do_cc_scanline(void);
+void gr_vesa_bitmap( grs_bitmap * source, grs_bitmap * dest, int x, int y );
+
 #endif

@@ -68,7 +68,6 @@ extern int wall_add_removable();
 extern int wall_restore_all();
 
 // Reset a wall.
-extern void wall_reset(segment *seg, short side);
 
 // Adds a removable wall (medwall.c)
 extern int wall_add_removable();
@@ -104,5 +103,7 @@ extern void do_wall_window();
 extern wall_link_doors();
 extern wall_unlink_door();
 extern void copy_group_walls(int old_group, int new_group);
+
+void check_wall_validity(void);
 
 #endif

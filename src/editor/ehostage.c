@@ -121,6 +121,7 @@ static char rcsid[] = "$Id: ehostage.c 2.0 1995/02/27 11:35:45 john Exp $";
 #include "sounds.h"
 #include "centers.h"
 #include "piggy.h"
+#include "ehostage.h"
 
 //-------------------------------------------------------------------------
 // Variables for this module...
@@ -136,7 +137,7 @@ static fix 			Vclip_animation_time=0;			// How long the rescue sequence has been
 static fix 			Vclip_playback_speed=0;				// Calculated internally.  Frames/second of vclip.
 static vclip 		*Vclip_ptr = NULL;				// Used for the vclip on monitor
 
-void vclip_play( vclip * vc, fix frame_time )
+static void vclip_play( vclip * vc, fix frame_time )
 {
 	int bitmapnum;
 
@@ -175,7 +176,7 @@ static char HostageMessage[]  = "  ";
 
 static fix Time;
 
-int SelectPrevHostage()	{
+static int SelectPrevHostage()	{
 	int start=0;
 
 	do	{
@@ -195,7 +196,7 @@ int SelectPrevHostage()	{
 }
 
 
-int SelectNextHostage()	{
+static int SelectNextHostage()	{
 	int start=0;
 
 	do	{
@@ -215,7 +216,7 @@ int SelectNextHostage()	{
 }
 
 
-int SelectClosestHostage()	{
+static int SelectClosestHostage()	{
 	int start=0;
 
 	while ( !hostage_is_valid( CurrentHostageIndex ) )	{
@@ -235,7 +236,7 @@ int SelectClosestHostage()	{
 }
 
 
-int PlaceHostage()	{
+static int PlaceHostage()	{
 	int ctype,i;
 	vms_vector	cur_object_loc;
 
@@ -268,7 +269,7 @@ int PlaceHostage()	{
 	return 0;
 }
 
-int CompressHostages()
+static int CompressHostages()
 {
 	hostage_compress_all();
 
@@ -301,7 +302,7 @@ int CompressHostages()
 //@@	return 1;
 //@@}
 
-int SelectNextFace()
+static int SelectNextFace()
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
 
@@ -321,7 +322,7 @@ int SelectNextFace()
 	return 1;
 }
 
-int SelectPrevFace()
+static int SelectPrevFace()
 {
 	int start = Hostages[CurrentHostageIndex].vclip_num;
 
@@ -341,7 +342,7 @@ int SelectPrevFace()
 	return 1;
 }
 
-int PlayHostageSound()	{
+static int PlayHostageSound()	{
 	int sound_num;
 
 	if (!hostage_is_valid( CurrentHostageIndex ) )

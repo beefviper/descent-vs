@@ -69,6 +69,7 @@ static char rcsid[] = "$Id: vfx.c 2.4 1995/05/11 13:28:59 john Exp $";
 #include "gr.h"
 #include "error.h"
 #include "mono.h"
+#include "vfx.h"
 
 #define INDEX_SCR 	0
 #define INDEX_SRR 	1

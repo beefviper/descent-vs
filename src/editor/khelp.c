@@ -50,6 +50,7 @@ static char rcsid[] = "$Id: khelp.c 2.0 1995/02/27 11:34:27 john Exp $";
 #include "editor.h"
 
 #include "ui.h"
+#include "kdefs.h"
 
 static char MainHelpText[] = "\nMED General Functions\n\n" \
 "SPACEBAR         Full Redraw\n" \

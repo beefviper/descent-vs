@@ -220,4 +220,5 @@ void calc_gun_point(vms_vector *gun_point,object *obj,int gun_num);
 //		jp_list_ptr is stuffed with a pointer to a static array of joint positions.  This pointer is valid forever.
 extern int robot_get_anim_state(jointpos **jp_list_ptr,int robot_type,int gun_num,int state);
 
+
 #endif

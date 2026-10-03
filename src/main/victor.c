@@ -144,7 +144,7 @@ VGAatr VGAi13 = {   0x63, 0x0, 0x10, 0x5,                   // 320x200x256
 // This function sets the data defined above into proper VGA registers
 // in:  VGAatr structure
 // out: none
-void set_mode_atr(VGAatr *vga)
+static void set_mode_atr(VGAatr *vga)
 {
 	unsigned char  i;
 
@@ -249,7 +249,7 @@ void victor_close_tracking(void)	{
 
 fix v_yaw = 0, v_pitch = 0, v_roll = 0;
 
-void victor_read_headset_raw( fix *yaw, fix *pitch, fix *roll )
+static void victor_read_headset_raw( fix *yaw, fix *pitch, fix *roll )
 {
 	int y, p, r, count;
 	static unsigned char buff[6];

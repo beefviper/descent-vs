@@ -160,6 +160,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "mono.h"
 #include "fix.h"
 #include "key.h"
+#include "palette.h"
 
 extern int gr_installed;
 
@@ -233,7 +234,7 @@ color_record Computed_colors[MAX_COMPUTED_COLORS];
 //	Add a computed color (by gr_find_closest_color) to list of computed colors in Computed_colors.
 //	If list wasn't full already, increment Num_computed_colors.
 //	If was full, replace a random one.
-void add_computed_color(int r, int g, int b, int color_num)
+static void add_computed_color(int r, int g, int b, int color_num)
 {
 	int	add_index;
 
@@ -249,7 +250,7 @@ void add_computed_color(int r, int g, int b, int color_num)
 	Computed_colors[add_index].color_num = color_num;
 }
 
-void init_computed_colors(void)
+static void init_computed_colors(void)
 {
 	int	i;
 

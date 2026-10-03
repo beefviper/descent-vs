@@ -252,7 +252,7 @@ typedef struct fake_file {
 int put_byte(unsigned char c, FILE* f);
 
 
-long get_sig(FFILE *f)
+static long get_sig(FFILE *f)
 {
 	char s[4];
 
@@ -273,7 +273,7 @@ long get_sig(FFILE *f)
 	return(*((long *) s));
 }
 
-int put_sig(long sig,FILE *f)
+static int put_sig(long sig,FILE *f)
 {
 	char *s = (char *) &sig;
 
@@ -284,7 +284,7 @@ int put_sig(long sig,FILE *f)
 
 }
 
-int get_word(FFILE *f)
+static int get_word(FFILE *f)
 {
 	unsigned char c0,c1;
 
@@ -302,7 +302,7 @@ int get_word(FFILE *f)
 
 }
 
-int put_word(int n,FILE *f)
+static int put_word(int n,FILE *f)
 {
 	unsigned char c0,c1;
 
@@ -313,7 +313,7 @@ int put_word(int n,FILE *f)
 	return put_byte(c1,f);
 }
 
-int put_long(long n,FILE *f)
+static int put_long(long n,FILE *f)
 {
 	int n0,n1;
 
@@ -325,7 +325,7 @@ int put_long(long n,FILE *f)
 
 }
 
-char get_byte(FFILE *f)
+static char get_byte(FFILE *f)
 {
 	//return cfgetc(f);
 	return f->data[f->position++];
@@ -336,7 +336,7 @@ int put_byte(unsigned char c,FILE *f)
 	return fputc(c,f);
 }
 
-long get_long(FFILE *f)
+static long get_long(FFILE *f)
 {
 	unsigned char c0,c1,c2,c3;
 
@@ -362,7 +362,7 @@ long get_long(FFILE *f)
 
 }
 
-int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
+static int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 {
 	len++;  /* so no "parm not used" warning */
 
@@ -403,7 +403,7 @@ int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 
 
 //  the buffer pointed to by raw_data is stuffed with a pointer to decompressed pixel data
-int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
+static int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 {
 	unsigned char  *p=bmheader->raw_data;
 	int width = 0,depth = 0;
@@ -520,7 +520,7 @@ int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 }
 
 //modify passed bitmap
-int parse_delta(FFILE *ifile,long len,iff_bitmap_header *bmheader)
+static int parse_delta(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 {
 	unsigned char  *p=bmheader->raw_data;
 	int y;
@@ -589,7 +589,7 @@ int parse_delta(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 }
 
 //  the buffer pointed to by raw_data is stuffed with a pointer to bitplane pixel data
-void skip_chunk(FFILE *ifile,long len)
+static void skip_chunk(FFILE *ifile,long len)
 {
 	//int c,i;
 	int ilen;
@@ -611,7 +611,7 @@ void skip_chunk(FFILE *ifile,long len)
 
 //read an ILBM or PBM file
 // Pass pointer to opened file, and to empty bitmap_header structure, and form length
-int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,int form_len,grs_bitmap *prev_bm)
+static int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,int form_len,grs_bitmap *prev_bm)
 {
 	long sig,len;
 	//char ignore=0;
@@ -738,7 +738,7 @@ int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,i
 }
 
 //convert an ILBM file to a PBM file
-int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
+static int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
 {
 	int x,y,p;
 	ubyte *new_data,*destptr,*rowptr;
@@ -786,7 +786,7 @@ int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
 
 #define INDEX_TO_15BPP(i) ((short)((((palptr[(i)].r/2)&31)<<10)+(((palptr[(i)].g/2)&31)<<5)+((palptr[(i)].b/2 )&31)))
 
-int convert_rgb15(grs_bitmap *bm,iff_bitmap_header *bmheader)
+static int convert_rgb15(grs_bitmap *bm,iff_bitmap_header *bmheader)
 {
 	ushort *new_data;
 	int x,y;
@@ -819,7 +819,7 @@ int convert_rgb15(grs_bitmap *bm,iff_bitmap_header *bmheader)
 }
 
 //read in a entire file into a fake file structure
-int open_fake_file(char *ifilename,FFILE *ffile)
+static int open_fake_file(char *ifilename,FFILE *ffile)
 {
 	CFILE *ifile;
 	int ret;
@@ -847,7 +847,7 @@ int open_fake_file(char *ifilename,FFILE *ffile)
 	return ret;
 }
 
-void close_fake_file(FFILE *f)
+static void close_fake_file(FFILE *f)
 {
 	if (f->data)
 		free(f->data);
@@ -856,7 +856,7 @@ void close_fake_file(FFILE *f)
 }
 
 //copy an iff header structure to a grs_bitmap structure
-void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
+static void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 {
 	bm->bm_x = bm->bm_y = 0;
 	bm->bm_w = bmheader->w;
@@ -871,7 +871,7 @@ void copy_iff_to_grs(grs_bitmap *bm,iff_bitmap_header *bmheader)
 
 //if bm->bm_data is set, use it (making sure w & h are correct), else
 //allocate the memory
-int iff_parse_bitmap(FFILE *ifile,grs_bitmap *bm,int bitmap_type,ubyte *palette,grs_bitmap *prev_bm)
+static int iff_parse_bitmap(FFILE *ifile,grs_bitmap *bm,int bitmap_type,ubyte *palette,grs_bitmap *prev_bm)
 {
 	int ret;			//return code
 	iff_bitmap_header bmheader;
@@ -984,7 +984,7 @@ done:
 
 #define BMHD_SIZE 20
 
-int write_bmhd(FILE *ofile,iff_bitmap_header *bitmap_header)
+static int write_bmhd(FILE *ofile,iff_bitmap_header *bitmap_header)
 {
 	put_sig(bmhd_sig,ofile);
 	put_long((long) BMHD_SIZE,ofile);
@@ -1010,7 +1010,7 @@ int write_bmhd(FILE *ofile,iff_bitmap_header *bitmap_header)
 
 }
 
-int write_pal(FILE *ofile,iff_bitmap_header *bitmap_header)
+static int write_pal(FILE *ofile,iff_bitmap_header *bitmap_header)
 {
 	int	i;
 
@@ -1038,7 +1038,7 @@ int write_pal(FILE *ofile,iff_bitmap_header *bitmap_header)
 	return IFF_NO_ERROR;
 }
 
-int rle_span(ubyte *dest,ubyte *src,int len)
+static int rle_span(ubyte *dest,ubyte *src,int len)
 {
 	int n,lit_cnt,rep_cnt;
 	ubyte last,*cnt_ptr = NULL,*dptr;
@@ -1103,7 +1103,7 @@ int rle_span(ubyte *dest,ubyte *src,int len)
 #define EVEN(a) ((a+1)&0xfffffffel)
 
 //returns length of chunk
-int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
+static int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 {
 	int w=bitmap_header->w,h=bitmap_header->h;
 	int y,odd=w&1;
@@ -1199,7 +1199,7 @@ int write_tiny(CFILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 }
 #endif
 
-int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)			/* writes a pbm iff file */
+static int write_pbm(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)			/* writes a pbm iff file */
 {
 	int ret;
 	long raw_size = EVEN(bitmap_header->w) * bitmap_header->h;

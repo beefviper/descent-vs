@@ -167,6 +167,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _EDITOR_H
 #define _EDITOR_H
 
+
+#include <stdio.h>
 #include "vecmat.h"
 #include "segment.h"
 #include "inferno.h"
@@ -805,5 +807,12 @@ extern void close_all_windows(void);
 //	Amount to stretch a texture map by.
 //	The two different ones are for the two dimensions of a texture map.
 extern fix Stretch_scale_x, Stretch_scale_y;
+
+void checkforext( char * f, char *ext );
+void check_for_overlapping_segments(void);
+
+// mine.c; written with plain FILEs (nocfile.h)
+int save_mine_data(FILE * SaveFile);
+int save_mine_data_compiled(FILE * SaveFile);
 
 #endif

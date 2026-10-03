@@ -63,6 +63,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _GAMESAVE_H
 #define _GAMESAVE_H
 
+
+#include <stdio.h>
+#include "cfile.h"
 #define	NUM_SHAREWARE_LEVELS	7
 #define	NUM_REGISTERED_LEVELS	23
 
@@ -90,5 +93,6 @@ extern int Gamesave_num_org_robots;
 extern void write_game_text_file(char *filename);
 
 extern	int	Errors_in_mine;
+
 
 #endif

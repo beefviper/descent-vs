@@ -601,7 +601,7 @@ VOID sosEndMIDICallback();
 */
 
 
-int digi_xlat_sound(int soundno)
+static int digi_xlat_sound(int soundno)
 {
 	if ( soundno < 0 ) return -1;
 
@@ -614,7 +614,7 @@ int digi_xlat_sound(int soundno)
 }
 
 
-void digi_close_midi()
+static void digi_close_midi()
 {
 /*
 	if (digi_midi_type>0)	{
@@ -650,7 +650,7 @@ void digi_close_midi()
 */
 }
 
-void digi_close_digi()
+static void digi_close_digi()
 {
 	plat_audio_close();
 /*
@@ -706,7 +706,7 @@ void digi_close(void)
 
 extern int loadpats( char * filename );
 
-int digi_load_fm_banks( char * melodic_file, char * drum_file )
+static int digi_load_fm_banks( char * melodic_file, char * drum_file )
 {
 /*
    WORD     wError;                 // error code returned from functions
@@ -765,7 +765,7 @@ int digi_load_fm_banks( char * melodic_file, char * drum_file )
 
 }
 
-int digi_init_midi()
+static int digi_init_midi()
 {
 /*
    WORD     wError;                 // error code returned from functions
@@ -813,7 +813,7 @@ int digi_init_midi()
 
 }
 
-int digi_init_digi()
+static int digi_init_digi()
 {
 /*
    WORD     wError;                 // error code returned from functions
@@ -973,7 +973,7 @@ void digi_reset()
 
 int digi_total_locks = 0;
 
-ubyte * digi_lock_sound_data( int soundnum )
+static ubyte * digi_lock_sound_data( int soundnum )
 {
 	int i;
 
@@ -991,7 +991,7 @@ ubyte * digi_lock_sound_data( int soundnum )
 
 }
 
-void digi_unlock_sound_data( int soundnum )
+static void digi_unlock_sound_data( int soundnum )
 {
 	int i;
 
@@ -1038,7 +1038,7 @@ void digi_reset_digi_sounds()
 	}
 }
 
-void reset_sounds_on_channel( int channel )
+static void reset_sounds_on_channel( int channel )
 {
 	int i;
 
@@ -1079,7 +1079,7 @@ int digi_get_max_channels()
 }
 
 
-WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
+static WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
 
 {
 	int i, ntries;
@@ -1395,7 +1395,7 @@ VOID sosEndMIDICallback()		// Used to mark the end of sosMIDICallBack
 {
 }
 
-void digi_stop_current_song()
+static void digi_stop_current_song()
 {
 /*
 	// Stop last song...
@@ -1524,7 +1524,7 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
    */
 }
 
-void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )
+static void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )
 {
 	vms_vector	vector_to_sound;
 	fix angle_from_ear, cosang,sinang;
@@ -1581,7 +1581,7 @@ void digi_init_sounds()
 	digi_sounds_initialized = 1;
 }
 
-void digi_start_sound_object(int i)
+static void digi_start_sound_object(int i)
 {
 	// start sample structures
 	_SOS_START_SAMPLE sSOSSampleData;

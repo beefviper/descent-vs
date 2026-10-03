@@ -309,7 +309,7 @@ int save_mine_data(CFILE * SaveFile)
 
 #define COMPILED_MINE_VERSION 0
 
-void dump_fix_as_short( fix value, int nbits, CFILE * SaveFile )
+static void dump_fix_as_short( fix value, int nbits, CFILE * SaveFile )
 {
 	int int_value = (int)(value>>nbits);
 	short short_value;
@@ -329,7 +329,7 @@ void dump_fix_as_short( fix value, int nbits, CFILE * SaveFile )
 }
 
 //version of dump for unsigned values
-void dump_fix_as_ushort( fix value, int nbits, CFILE * SaveFile )
+static void dump_fix_as_ushort( fix value, int nbits, CFILE * SaveFile )
 {
 	uint int_value;
 	ushort short_value;
@@ -356,6 +356,7 @@ int	New_file_format_save = 1;
 
 // -----------------------------------------------------------------------------
 // saves compiled mine data to an already-open file...
+static int save_mine_data_compiled_new(FILE * SaveFile);
 int save_mine_data_compiled(FILE * SaveFile)
 {
 	short i,segnum,sidenum;
@@ -439,7 +440,7 @@ int save_mine_data_compiled(FILE * SaveFile)
 
 // -----------------------------------------------------------------------------
 // saves compiled mine data to an already-open file...
-int save_mine_data_compiled_new(FILE * SaveFile)
+static int save_mine_data_compiled_new(FILE * SaveFile)
 {
 	short		i, segnum, sidenum, temp_short;
 	ubyte 	version = COMPILED_MINE_VERSION;

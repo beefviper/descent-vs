@@ -263,4 +263,6 @@ extern void DoEndLevelScoreGlitz(int network);
 extern int MaxNumNetPlayers;
 extern int NumNetPlayerPositions;
 
+int MakeNewPlayerFile(int allow_abort);
+
 #endif

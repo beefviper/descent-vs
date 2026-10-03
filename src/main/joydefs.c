@@ -304,7 +304,7 @@ static char rcsid[] = "$Id: joydefs.c 2.2 1995/06/30 12:30:22 john Exp $";
 
 int joydefs_calibrate_flag = 0;
 
-void joy_delay()
+static void joy_delay()
 {
 	int t1 = TICKER + 19/4;			// Wait 1/4 second...
 	stop_time();
@@ -314,7 +314,7 @@ void joy_delay()
 }
 
 
-int joycal_message( char * title, char * text )
+static int joycal_message( char * title, char * text )
 {
 	int i;
 	newmenu_item	m[2];
@@ -497,7 +497,7 @@ void joydefs_calibrate()
 
 //char *control_text[CONTROL_MAX_TYPES] = { "Keyboard only", "Joystick", "Flightstick Pro", "Thrustmaster FCS", "Gravis Gamepad", "Mouse", "Cyberman" };
 
-void joydef_menuset_1(int nitems, newmenu_item * items, int *last_key, int citem )
+static void joydef_menuset_1(int nitems, newmenu_item * items, int *last_key, int citem )
 {
 	int i;
 	int oc_type = Config_control_type;

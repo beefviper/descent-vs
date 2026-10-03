@@ -151,7 +151,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 int gr_internal_string_clipped(int x, int y, char *s );
 int gr_internal_string_clipped_m(int x, int y, char *s );
 
-char *find_kern_entry(grs_font *font,char first,char second)
+static char *find_kern_entry(grs_font *font,char first,char second)
 {
 	ubyte *p=font->ft_kerndata;
 
@@ -168,7 +168,7 @@ char *find_kern_entry(grs_font *font,char first,char second)
 #define INFONT(_c) ((_c >= 0) && (_c <= FMAXCHAR-FMINCHAR))
 
 //takes the character BEFORE being offset into current font
-void get_char_width(int c,int c2,int *width,int *spacing)
+static void get_char_width(int c,int c2,int *width,int *spacing)
 {
 	int letter;
 
@@ -209,7 +209,7 @@ void get_char_width(int c,int c2,int *width,int *spacing)
 	}
 }
 
-int get_centered_x(char *s)
+static int get_centered_x(char *s)
 {
 	int w,w2,s2;
 
@@ -222,7 +222,7 @@ int get_centered_x(char *s)
 }
 
 
-int gr_internal_string0(int x, int y, char *s )
+static int gr_internal_string0(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
@@ -317,7 +317,7 @@ int gr_internal_string0(int x, int y, char *s )
 	return 0;
 }
 
-int gr_internal_string0m(int x, int y, char *s )
+static int gr_internal_string0m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
@@ -412,7 +412,7 @@ int gr_internal_string0m(int x, int y, char *s )
 }
 
 
-int gr_internal_string2(int x, int y, char *s )
+static int gr_internal_string2(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
@@ -615,7 +615,7 @@ int gr_internal_string2(int x, int y, char *s )
 	return 0;
 }
 
-int gr_internal_string2m(int x, int y, char *s )
+static int gr_internal_string2m(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;
@@ -778,7 +778,7 @@ grs_bitmap char_bm = {
 				0								//selector
 };
 
-int gr_internal_color_string(int x, int y, char *s )
+static int gr_internal_color_string(int x, int y, char *s )
 {
 	unsigned char * fp;
 	char * text_ptr, * next_row, * text_ptr1;

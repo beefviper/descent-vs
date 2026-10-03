@@ -52,7 +52,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 int Gr_scanline_darkening_level = GR_FADE_LEVELS;
 
 // Darkens count pixels at dest through row darkening_level of fade_table.
-void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table )
+static void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table )
 {
 	ubyte *row = &fade_table[(darkening_level & 0xff) << 8];
 

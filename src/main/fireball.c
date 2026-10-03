@@ -144,7 +144,7 @@ static char rcsid[] = "$Id: fireball.c 2.2 1995/03/21 14:39:57 john Exp $";
 
 //--unused-- ubyte	Frame_processed[MAX_OBJECTS];
 
-object *object_create_explosion_sub(object *objp, short segnum, vms_vector * position, fix size, int vclip_type, fix maxdamage, fix maxdistance, fix maxforce, int parent )
+static object *object_create_explosion_sub(object *objp, short segnum, vms_vector * position, fix size, int vclip_type, fix maxdamage, fix maxdistance, fix maxforce, int parent )
 {
 	int objnum;
 	object *obj;
@@ -320,7 +320,7 @@ object *explode_badass_player(object *objp)
 
 #define DEBRIS_LIFE (f1_0 * 2)		//lifespan in seconds
 
-object *object_create_debris(object *parent, int subobj_num)
+static object *object_create_debris(object *parent, int subobj_num)
 {
 	int objnum;
 	object *obj;
@@ -385,7 +385,7 @@ void draw_fireball(object *obj)
 // --------------------------------------------------------------------------------------------------------------------
 //	Return true if there is a door here and it is openable
 //	It is assumed that the player has all keys.
-int door_is_openable_by_player(segment *segp, int sidenum)
+static int door_is_openable_by_player(segment *segp, int sidenum)
 {
 	int	wall_num, wall_type;
 
@@ -408,7 +408,7 @@ int door_is_openable_by_player(segment *segp, int sidenum)
 // --------------------------------------------------------------------------------------------------------------------
 //	Return a segment %i segments away from initial segment.
 //	Returns -1 if can't find a segment that distance away.
-int pick_connected_segment(object *objp, int max_depth)
+static int pick_connected_segment(object *objp, int max_depth)
 {
 	int		i;
 	int		cur_depth;
@@ -490,7 +490,7 @@ int pick_connected_segment(object *objp, int max_depth)
 //	For all active net players, try to create a N segment path from the player.  If possible, return that
 //	segment.  If not possible, try another player.  After a few tries, use a random segment.
 //	Don't drop if control center in segment.
-int choose_drop_segment(void)
+static int choose_drop_segment(void)
 {
 	int	pnum = 0;
 	int	segnum = -1;
@@ -573,7 +573,7 @@ void maybe_drop_net_powerup(int powerup_type)
 
 //	------------------------------------------------------------------------------------------------------
 //	Return true if current segment contains some object.
-int segment_contains_object(int obj_type, int obj_id, int segnum)
+static int segment_contains_object(int obj_type, int obj_id, int segnum)
 {
 	int	objnum;
 
@@ -592,7 +592,7 @@ int segment_contains_object(int obj_type, int obj_id, int segnum)
 }
 
 //	------------------------------------------------------------------------------------------------------
-int object_nearby_aux(int segnum, int object_type, int object_id, int depth)
+static int object_nearby_aux(int segnum, int object_type, int object_id, int depth)
 {
 	int	i;
 
@@ -616,7 +616,7 @@ int object_nearby_aux(int segnum, int object_type, int object_id, int depth)
 
 //	------------------------------------------------------------------------------------------------------
 //	Return true if some powerup is nearby (within 3 segments).
-int weapon_nearby(object *objp, int weapon_id)
+static int weapon_nearby(object *objp, int weapon_id)
 {
 	return object_nearby_aux(objp->segnum, OBJ_POWERUP, weapon_id, 3);
 }
@@ -916,7 +916,7 @@ int get_explosion_vclip(object *obj,int stage)
 }
 
 //blow up a polygon model
-void explode_model(object *obj)
+static void explode_model(object *obj)
 {
 	Assert(obj->render_type == RT_POLYOBJ);
 
@@ -935,7 +935,7 @@ void explode_model(object *obj)
 }
 
 //if the object has a destroyed model, switch to it.  Otherwise, delete it.
-void maybe_delete_object(object *del_obj)
+static void maybe_delete_object(object *del_obj)
 {
 	if (Dead_modelnums[del_obj->rtype.pobj_info.model_num] != -1) {
 		del_obj->rtype.pobj_info.model_num = Dead_modelnums[del_obj->rtype.pobj_info.model_num];

@@ -78,7 +78,7 @@ static char rcsid[] = "$Id: ibitblt.c 1.6 1994/11/28 17:07:29 john Exp $";
 ubyte *Code_pointer = NULL;
 int Code_counter = 0;
 
-void move_and_count( int dsource, int ddest, int ecx )
+static void move_and_count( int dsource, int ddest, int ecx )
 {
 	int blocks;
 	if ( ecx <= 0 )
@@ -108,7 +108,7 @@ void move_and_count( int dsource, int ddest, int ecx )
 }
 
 
-void move_and_draw( int dsource, int ddest, int ecx )
+static void move_and_draw( int dsource, int ddest, int ecx )
 {
 	int blocks;
 	int * iptr;
@@ -182,7 +182,7 @@ void move_and_draw( int dsource, int ddest, int ecx )
 //-----------------------------------------------------------------------------------------
 // Given bitmap, bmp, finds the size of the code
 
-int gr_ibitblt_find_code_size( grs_bitmap * mask_bmp, int sx, int sy, int sw, int sh, int srowsize )
+static int gr_ibitblt_find_code_size( grs_bitmap * mask_bmp, int sx, int sy, int sw, int sh, int srowsize )
 {
 	int x,y;
 	ubyte pixel;
@@ -334,7 +334,7 @@ ubyte	*gr_ibitblt_create_mask( grs_bitmap * mask_bmp, int sx, int sy, int sw, in
 // The mask made by gr_ibitblt_create_mask is a block of x86 code (add esi/edi,
 // mov ecx, movs and ret instructions) that the original called directly.
 // Interpret it instead, with esi and edi as source and dest pointers.
-void gr_ibitblt_do_asm(char *start_si, char *start_di, ubyte * code)
+static void gr_ibitblt_do_asm(char *start_si, char *start_di, ubyte * code)
 {
 	ubyte *esi = (ubyte *)start_si;
 	ubyte *edi = (ubyte *)start_di;

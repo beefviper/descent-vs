@@ -174,7 +174,7 @@ int ui_recorder_status()
 	return Record;
 }
 
-void add_window_to_end( UI_WINDOW * wnd )
+static void add_window_to_end( UI_WINDOW * wnd )
 {
 	if (LastWindow) {
 		W_PREV = LastWindow;
@@ -185,7 +185,7 @@ void add_window_to_end( UI_WINDOW * wnd )
 		FirstWindow = wnd;
 }
 
-void add_window_to_beg( UI_WINDOW * wnd )
+static void add_window_to_beg( UI_WINDOW * wnd )
 {
 	if (FirstWindow) {
 		W_NEXT = FirstWindow;
@@ -197,7 +197,7 @@ void add_window_to_beg( UI_WINDOW * wnd )
 }
 
 // Add w1 after w2
-void add_window_after( UI_WINDOW * w1, UI_WINDOW * w2 )
+static void add_window_after( UI_WINDOW * w1, UI_WINDOW * w2 )
 {
 	w1->prev = w2;
 	w1->next = w2->next;
@@ -208,7 +208,7 @@ void add_window_after( UI_WINDOW * w1, UI_WINDOW * w2 )
 		w1->next->prev = w1;
 }
 
-void close_all()
+static void close_all()
 {
 	UI_WINDOW *sav, *wnd = LastWindow;
 
@@ -220,7 +220,7 @@ void close_all()
 	}
 }
 
-void remove_window( UI_WINDOW * wnd )
+static void remove_window( UI_WINDOW * wnd )
 {
 	if (W_NEXT)
 		W_NEXT->prev = W_PREV;
@@ -345,7 +345,7 @@ void ui_close_window( UI_WINDOW * wnd )
 	ui_mouse_show();
 }
 
-void restore_state()
+static void restore_state()
 {
 	int i;
 	_disable();

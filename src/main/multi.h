@@ -517,4 +517,7 @@ void change_playernum_to(int new_pnum);
 
 #endif
 
+void multi_initiate_save_game(void);
+void multi_initiate_restore_game(void);
+
 #endif

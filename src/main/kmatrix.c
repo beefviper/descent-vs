@@ -137,7 +137,7 @@ static char rcsid[] = "$Id: kmatrix.c 2.3 1995/05/02 17:01:22 john Exp $";
 
 int kmatrix_kills_changed = 0;
 
-void kmatrix_draw_item( int  i, int *sorted )
+static void kmatrix_draw_item( int  i, int *sorted )
 {
 	int j, x, y;
 
@@ -176,7 +176,7 @@ void kmatrix_draw_item( int  i, int *sorted )
 	gr_printf( x ,y,"%4d",Players[sorted[i]].net_kills_total);
 }
 
-void kmatrix_draw_names(int *sorted)
+static void kmatrix_draw_names(int *sorted)
 {
 	int j, x;
 
@@ -200,7 +200,7 @@ void kmatrix_draw_names(int *sorted)
 }
 
 
-void kmatrix_draw_deaths(int *sorted)
+static void kmatrix_draw_deaths(int *sorted)
 {
 	int j, x, y;
 
@@ -227,7 +227,7 @@ void kmatrix_draw_deaths(int *sorted)
 	}
 }
 
-void kmatrix_redraw()
+static void kmatrix_redraw()
 {
 	int i, pcx_error, color;
 

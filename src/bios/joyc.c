@@ -180,21 +180,21 @@ static char rcsid[] = "$Id: joyc.c 1.37 1995/10/07 13:22:31 john Exp $";
 int joy_bogus_reading = 0;
 int joy_retries = 0;
 
-int joy_read_stick_asm( int read_masks, int * event_buffer, int timeout )
+static int joy_read_stick_asm( int read_masks, int * event_buffer, int timeout )
 {
 	(void)read_masks; (void)event_buffer; (void)timeout;
 	joy_bogus_reading = 0;
 	return 0;
 }
 
-int joy_read_stick_friendly( int read_masks, int * event_buffer, int timeout )
+static int joy_read_stick_friendly( int read_masks, int * event_buffer, int timeout )
 {
 	(void)read_masks; (void)event_buffer; (void)timeout;
 	joy_bogus_reading = 0;
 	return 0;
 }
 
-int joy_read_stick_polled( int read_masks, int * event_buffer, int timeout )
+static int joy_read_stick_polled( int read_masks, int * event_buffer, int timeout )
 {
 	(void)read_masks; (void)event_buffer; (void)timeout;
 	joy_bogus_reading = 0;
@@ -202,7 +202,7 @@ int joy_read_stick_polled( int read_masks, int * event_buffer, int timeout )
 }
 
 // Read the axes with BIOS int 15h, function 84h: not available.
-int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout )
+static int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout )
 {
 	(void)read_masks; (void)event_buffer; (void)timeout;
 	joy_bogus_reading = 0;
@@ -210,7 +210,7 @@ int joy_read_stick_bios( int read_masks, int * event_buffer, int timeout )
 }
 
 // Read the buttons with BIOS int 15h, function 84h: no buttons pressed.
-int joy_read_buttons_bios()
+static int joy_read_buttons_bios()
 {
 	return 0;
 }
@@ -365,7 +365,7 @@ void joy_handler(int ticks_this_time)	{
 	}
 }
 
-void joy_handler_end()	{		// Dummy function to help calculate size of joystick handler function
+static void joy_handler_end()	{		// Dummy function to help calculate size of joystick handler function
 }
 
 #pragma off (check_stack)
@@ -711,7 +711,7 @@ int joy_get_btns()
 	return joy_read_raw_buttons();
 }
 
-void joy_get_btn_down_cnt( int *btn0, int *btn1 )
+static void joy_get_btn_down_cnt( int *btn0, int *btn1 )
 {
 	if ((!joy_installed)||(!joy_present)) { *btn0=*btn1=0; return; }
 
@@ -785,7 +785,7 @@ fix joy_get_button_down_time( int btn )
 	return fixmuldiv(count, 65536, 1193180 );
 }
 
-void joy_get_btn_up_cnt( int *btn0, int *btn1 )
+static void joy_get_btn_up_cnt( int *btn0, int *btn1 )
 {
 	if ((!joy_installed)||(!joy_present)) { *btn0=*btn1=0; return; }
 
@@ -808,7 +808,7 @@ void joy_set_btn_values( int btn, int state, fix timedown, int downcount, int up
 	_enable();
 }
 
-void joy_poll()
+static void joy_poll()
 {
 	if ( joystick.slow_read & JOY_BIOS_READINGS )
 		joystick.last_value = joy_read_buttons_bios();

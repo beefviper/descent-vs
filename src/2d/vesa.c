@@ -42,7 +42,7 @@ int gr_vesa_checkmode( int mode )
 }
 
 // Allocated real mode DOS memory.  Returns its address, or 0 if failed.
-int gr_get_dos_mem( int size )
+static int gr_get_dos_mem( int size )
 {
 	(void)size;
 	return 0;
@@ -61,7 +61,7 @@ void gr_vesa_setpage( int page )
 	(void)page;
 }
 
-void gr_vesa_setaddress( int address )
+static void gr_vesa_setaddress( int address )
 {
 	(void)address;
 }
@@ -82,7 +82,7 @@ int gr_vesa_setlogical( int pixels_per_scanline )
 	return pixels_per_scanline;
 }
 
-int gr_vesa_set_logical( int pixels_per_scanline )
+static int gr_vesa_set_logical( int pixels_per_scanline )
 {
 	return pixels_per_scanline;
 }

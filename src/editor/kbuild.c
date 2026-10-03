@@ -103,6 +103,7 @@ static char rcsid[] = "$Id: kbuild.c 2.0 1995/02/27 11:35:43 john Exp $";
 #include "gameseg.h"
 #include "gamesave.h"
 #include "mono.h"
+#include "kdefs.h"
 
 //  ---------- Create a bridge segment between current segment/side and marked segment/side ----------
 int CreateBridge()

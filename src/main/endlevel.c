@@ -360,7 +360,7 @@ int matt_find_connect_side(int seg0,int seg1)
 	return -1;
 }
 
-void free_endlevel_data(void)
+static void free_endlevel_data(void)
 {
 	if (terrain_bm_instance.bm_data)
 		free(terrain_bm_instance.bm_data);
@@ -530,7 +530,7 @@ vms_angvec camera_desired_angles,camera_cur_angles;
 #define CHASE_TURN_RATE (0x4000/4)		//max turn per second
 
 //returns bitmask of which angles are at dest. bits 0,1,2 = p,b,h
-int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
+static int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 {
 	vms_angvec delta_angs,alt_angles,alt_delta_angs;
 	fix total_delta,alt_total_delta;
@@ -621,7 +621,7 @@ void stop_endlevel_sequence()
 //--unused-- vms_vector upvec = {0,f1_0,0};
 
 //find the angle between the player's heading & the station
-void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *cur_pos)
+static void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *cur_pos)
 {
 	vms_vector tv;
 
@@ -1181,7 +1181,7 @@ void draw_stars()
 
 }
 
-void endlevel_render_mine(fix eye_offset)
+static void endlevel_render_mine(fix eye_offset)
 {
 	int start_seg_num;
 
@@ -1502,7 +1502,7 @@ int _do_slew_movement(object *obj, int check_keys, int check_joy )
 
 #define STATION_DIST	i2f(1024)
 
-int convert_ext( char *dest, char *ext )
+static int convert_ext( char *dest, char *ext )
 {
 	char *t;
 

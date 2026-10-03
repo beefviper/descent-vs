@@ -138,6 +138,7 @@ static char rcsid[] = "$Id: eswitch.c 2.0 1995/02/27 11:35:18 john Exp $";
 #include "ehostage.h"
 #include "centers.h"
 #include "piggy.h"
+#include "kdefs.h"
 
 //-------------------------------------------------------------------------
 // Variables for this module...
@@ -154,7 +155,7 @@ static int old_trigger_num;
 //-----------------------------------------------------------------
 // Adds a trigger to wall, and returns the trigger number.
 // If there is a trigger already present, it returns the trigger number. (To be replaced)
-int add_trigger(segment *seg, short side)
+static int add_trigger(segment *seg, short side)
 {
 	int trigger_num = Num_triggers;
 	int wall_num = seg->sides[side].wall_num;
@@ -198,7 +199,7 @@ int add_trigger(segment *seg, short side)
 // Automatically adds flag to Connectside if possible unless it is a control trigger.
 // Returns 1 if trigger flag added.
 // Returns 0 if trigger flag cannot be added.
-int trigger_add_to_Markedside(short flag) {
+static int trigger_add_to_Markedside(short flag) {
 	int trigger_num; //, ctrigger_num;
 
 	if (!Markedsegp) {
@@ -221,7 +222,7 @@ int trigger_add_to_Markedside(short flag) {
 	return 1;
 }
 
-int trigger_remove_flag_from_Markedside(short flag) {
+static int trigger_remove_flag_from_Markedside(short flag) {
 	int trigger_num; //, ctrigger_num;
 	int wall_num;
 
@@ -254,7 +255,7 @@ int trigger_remove_flag_from_Markedside(short flag) {
 }
 
 
-int bind_matcen_to_trigger() {
+static int bind_matcen_to_trigger() {
 
 	int wall_num, trigger_num, link_num;
 	int i;
@@ -389,7 +390,7 @@ int remove_trigger(segment *seg, short side)
 }
 
 
-int add_trigger_control()
+static int add_trigger_control()
 {
 	trigger_add_to_Markedside(TRIGGER_CONTROL_DOORS);
 	Update_flags = UF_WORLD_CHANGED;
@@ -403,7 +404,7 @@ int trigger_remove()
 	return 1;
 }
 
-int trigger_turn_all_ON()
+static int trigger_turn_all_ON()
 {
 	int t;
 

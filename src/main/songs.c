@@ -53,7 +53,7 @@ static char rcsid[] = "$Id: songs.c 2.1 1995/05/02 16:15:21 john Exp $";
 song_info Songs[MAX_SONGS];
 int Songs_initialized = 0;
 
-void songs_init()
+static void songs_init()
 {
 	int i;
 	char inputline[80+1];

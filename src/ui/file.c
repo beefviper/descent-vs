@@ -90,7 +90,7 @@ static char *Message[] = {
 
 static int error_mode = 0;
 
-int __far critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr )
+static int __far critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr )
 {
 	int x;
 
@@ -115,7 +115,7 @@ void InstallErrorHandler()
 	//for the compiler.
 }
 
-void file_sort( int n, char list[][13] )
+static void file_sort( int n, char list[][13] )
 {
 	int i, j, incr;
 	char t[14];
@@ -144,7 +144,7 @@ void file_sort( int n, char list[][13] )
 }
 
 
-int SingleDrive()
+static int SingleDrive()
 {
 	int FloppyPresent, FloppyNumber;
 	unsigned char b;
@@ -159,7 +159,7 @@ int SingleDrive()
 		return 0;
 }
 
-void SetFloppy(int d)
+static void SetFloppy(int d)
 {
 	if (SingleDrive())
 	{
@@ -171,7 +171,7 @@ void SetFloppy(int d)
 }
 
 
-void file_capitalize( char * s )
+static void file_capitalize( char * s )
 {
 	while( *s++ = toupper(*s) );
 }

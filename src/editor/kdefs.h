@@ -129,7 +129,7 @@ int SaveSituation();
 int LoadSituation();
 
 // In kgame.c
-void SetPlayerPosition(void);
+int SetPlayerPosition(void);
 int SaveGameData();
 int LoadGameData();
 int LoadMineOnly();
@@ -138,8 +138,8 @@ void ResetFilename();
 // In group.c
 int LoadGroup();
 int SaveGroup();
-int PrevGroup();
-int NextGroup();
+int PrevGroup(void);
+int NextGroup(void);
 int CreateGroup();
 int SubtractFromGroup();
 int DeleteGroup();

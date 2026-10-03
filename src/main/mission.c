@@ -131,7 +131,7 @@ char Level_names[MAX_LEVELS_PER_MISSION][13];
 char Secret_level_names[MAX_SECRET_LEVELS_PER_MISSION][13];
 
 //strips damn newline from end of line
-char *mfgets(char *s,int n,FILE *f)
+static char *mfgets(char *s,int n,FILE *f)
 {
 	char *r;
 
@@ -143,14 +143,14 @@ char *mfgets(char *s,int n,FILE *f)
 }
 
 //compare a string for a token. returns true if match
-int istok(char *buf,char *tok)
+static int istok(char *buf,char *tok)
 {
 	return strnicmp(buf,tok,strlen(tok)) == 0;
 
 }
 
 //adds a terminating 0 after a string at the first white space
-void add_term(char *s)
+static void add_term(char *s)
 {
 	while (*s && !isspace(*s)) s++;
 
@@ -159,7 +159,7 @@ void add_term(char *s)
 
 //returns ptr to string after '=' & white space, or NULL if no '='
 //adds 0 after parm at first white space
-char *get_value(char *buf)
+static char *get_value(char *buf)
 {
 	char *t;
 
@@ -176,7 +176,7 @@ char *get_value(char *buf)
 }
 
 //reads a line, returns ptr to value of passed parm.  returns NULL if none
-char *get_parm_value(char *parm,FILE *f)
+static char *get_parm_value(char *parm,FILE *f)
 {
 	static char buf[80];
 
@@ -189,7 +189,7 @@ char *get_parm_value(char *parm,FILE *f)
 		return NULL;
 }
 
-ml_sort_func(const void* e0, const void* e1)
+static int ml_sort_func(const void* e0, const void* e1)
 {
 	const mle* ee0 = e0;
 	const mle* ee1 = e1;

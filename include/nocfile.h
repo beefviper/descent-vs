@@ -41,6 +41,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include <stdio.h>
 #include <io.h>
+#include "cfile.h"		// first, so its declarations are not mangled by the macros below
 
 #define CFILE FILE
 

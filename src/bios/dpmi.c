@@ -101,6 +101,7 @@ static char rcsid[] = "$Id: dpmi.c 1.19 1995/02/23 09:02:57 john Exp $";
 
 #ifdef __WATCOMC__
 
+static int dpmi_find_dos_memory();
 int dpmi_find_dos_memory()
 {
 	union REGS r;
@@ -329,6 +330,7 @@ int dpmi_allocate_selector( void * address, int size, ushort * selector )
 static void * dpmi_dos_buffer = NULL;
 static ushort dpmi_dos_selector = 0;
 
+static void dpmi_close(void);
 void dpmi_close(void)
 {
 	if (dpmi_dos_selector!=0)	{
@@ -467,7 +469,7 @@ unsigned int dpmi_dos_memory = 0;
 #define MAX_REAL_BLOCKS 32
 static void * real_blocks[MAX_REAL_BLOCKS];	// indexed by selector-1
 
-int dpmi_find_dos_memory()
+static int dpmi_find_dos_memory()
 {
 	return 640*1024;
 }
@@ -548,7 +550,7 @@ int dpmi_allocate_selector( void * address, int size, ushort * selector )
 static void * dpmi_dos_buffer = NULL;
 static ushort dpmi_dos_selector = 0;
 
-void dpmi_close(void)
+static void dpmi_close(void)
 {
 	if (dpmi_dos_selector!=0)	{
 		dpmi_real_free( dpmi_dos_selector );

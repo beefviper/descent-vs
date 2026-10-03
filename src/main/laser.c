@@ -180,7 +180,7 @@ int laser_are_related( int o1, int o2 )
 //--unused-- int Muzzle_scale=2;
 int Laser_offset=0;
 
-void do_muzzle_stuff(int segnum, vms_vector *pos)
+static void do_muzzle_stuff(int segnum, vms_vector *pos)
 {
 	Muzzle_data[Muzzle_queue_index].create_time = timer_get_fixed_seconds();
 	Muzzle_data[Muzzle_queue_index].segnum = segnum;
@@ -491,7 +491,7 @@ fix	Min_trackable_dot = MIN_TRACKABLE_DOT;
 //	Return true if weapon *tracker is able to track object Objects[track_goal], else return false.
 //	In order for the object to be trackable, it must be within a reasonable turning radius for the missile
 //	and it must not be obstructed by a wall.
-int object_is_trackable(int track_goal, object *tracker)
+static int object_is_trackable(int track_goal, object *tracker)
 {
 	fix			dot; //, dist_to_goal;
 	vms_vector	vector_to_goal;
@@ -534,7 +534,7 @@ int object_is_trackable(int track_goal, object *tracker)
 //	--------------------------------------------------------------------------------------------
 //	Find object to home in on.
 //	Scan list of objects rendered last frame, find one that satisfies function of nearness to center and distance.
-int find_homing_object(vms_vector *curpos, object *tracker)
+static int find_homing_object(vms_vector *curpos, object *tracker)
 {
 	int	i;
 	fix	max_dot = -F1_0*2;
@@ -681,7 +681,7 @@ int find_homing_object_complete(vms_vector *curpos, object *tracker, int track_o
 //	------------------------------------------------------------------------------------------------------------
 //	See if legal to keep tracking currently tracked object.  If not, see if another object is trackable.  If not, return -1,
 //	else return object number of tracking object.
-int track_track_goal(int track_goal, object *tracker)
+static int track_track_goal(int track_goal, object *tracker)
 {
 	if (object_is_trackable(track_goal, tracker))
 		return track_goal;
@@ -739,7 +739,7 @@ int track_track_goal(int track_goal, object *tracker)
 
 //-------------- Initializes a laser after Fire is pressed -----------------
 
-void Laser_player_fire_spread_delay(object *obj, int laser_type, int gun_num, fix spreadr, fix spreadu, fix delay_time, int make_sound, int harmless)
+static void Laser_player_fire_spread_delay(object *obj, int laser_type, int gun_num, fix spreadr, fix spreadu, fix delay_time, int make_sound, int harmless)
 {
 	int			LaserSeg, Fate;
 	vms_vector	LaserPos, LaserDir;
@@ -893,7 +893,7 @@ void Flare_create(object *obj)
 
 //-------------------------------------------------------------------------------------------
 //	Set object *objp's orientation to (or towards if I'm ambitious) its velocity.
-void homing_missile_turn_towards_velocity(object *objp, vms_vector *norm_vel)
+static void homing_missile_turn_towards_velocity(object *objp, vms_vector *norm_vel)
 {
 	vms_vector	new_fvec;
 
@@ -1235,7 +1235,7 @@ typedef	struct {
 
 //	-------------------------------------------------------------------------------------------
 //	if goal_obj == -1, then create random vector
-int create_homing_missile(object *objp, int goal_obj, int objtype, int make_sound)
+static int create_homing_missile(object *objp, int goal_obj, int objtype, int make_sound)
 {
 	int			objnum;
 	vms_vector	vector_to_goal;

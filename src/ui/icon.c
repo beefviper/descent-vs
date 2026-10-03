@@ -48,7 +48,7 @@ static char rcsid[] = "$Id: icon.c 1.2 1994/11/18 23:07:33 john Exp $";
 
 extern void ui_draw_shad( short x1, short y1, short x2, short y2, short c1, short c2 );
 
-void ui_draw_box_in1( short x1, short y1, short x2, short y2 )
+static void ui_draw_box_in1( short x1, short y1, short x2, short y2 )
 {
 
 	gr_setcolor( CWHITE );

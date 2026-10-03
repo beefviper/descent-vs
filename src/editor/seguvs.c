@@ -154,12 +154,13 @@ static char rcsid[] = "$Id: seguvs.c 2.1 1995/05/08 10:49:34 mike Exp $";
 #include "bm.h"		//	Needed for TmapInfo
 #include	"effects.h"	//	Needed for effects_bm_num
 #include "fvi.h"
+#include "seguvs.h"
 
 //--rotate_uvs-- vms_vector Rightvec;
 
 //	---------------------------------------------------------------------------------------------
 //	Returns approximate area of a side
-fix area_on_side(side *sidep)
+static fix area_on_side(side *sidep)
 {
 	fix	du,dv,width,height;
 
@@ -181,7 +182,7 @@ fix area_on_side(side *sidep)
 //	Returns approximate area of all sides which get mapped (ie, are not a connection).
 //	I wrote this because I was curious how much memory would be required to texture map all
 //	sides individually with custom artwork.  For demo1.min on 2/18/94, it would be about 5 meg.
-int area_on_all_sides(void)
+static int area_on_all_sides(void)
 {
 	int	i,s;
 	int	total_area = 0;
@@ -197,7 +198,7 @@ int area_on_all_sides(void)
 	return total_area;
 }
 
-fix average_connectivity(void)
+static fix average_connectivity(void)
 {
 	int	i,s;
 	int	total_sides = 0, total_mapped_sides = 0;
@@ -220,7 +221,7 @@ fix average_connectivity(void)
 //	---------------------------------------------------------------------------------------------
 //	Scan all polys in all segments, return average light value for vnum.
 //	segs = output array for segments containing vertex, terminated by -1.
-fix get_average_light_at_vertex(int vnum, short *segs)
+static fix get_average_light_at_vertex(int vnum, short *segs)
 {
 	int	segnum, relvnum, sidenum;
 	fix	total_light;
@@ -270,7 +271,7 @@ fix get_average_light_at_vertex(int vnum, short *segs)
 
 }
 
-void set_average_light_at_vertex(int vnum)
+static void set_average_light_at_vertex(int vnum)
 {
 	int	relvnum, sidenum;
 	short	Segment_indices[MAX_LIGHT_SEGS];
@@ -311,7 +312,7 @@ void set_average_light_at_vertex(int vnum)
 	Update_flags |= UF_WORLD_CHANGED;
 }
 
-void set_average_light_on_side(segment *segp, int sidenum)
+static void set_average_light_on_side(segment *segp, int sidenum)
 {
 	int	v;
 
@@ -329,7 +330,7 @@ void set_average_light_on_curside(void)
 }
 
 //	-----------------------------------------------------------------------------------------
-void set_average_light_on_all_fast(void)
+static void set_average_light_on_all_fast(void)
 {
 	int	s,v,relvnum;
 	fix	al;
@@ -441,7 +442,7 @@ void set_average_light_on_all_quick(void)
 }
 
 //	---------------------------------------------------------------------------------------------
-fix compute_uv_dist(uvl *uv0, uvl *uv1)
+static fix compute_uv_dist(uvl *uv0, uvl *uv1)
 {
 	vms_vector	v0,v1;
 
@@ -459,7 +460,7 @@ fix compute_uv_dist(uvl *uv0, uvl *uv1)
 //	---------------------------------------------------------------------------------------------
 //	Given a polygon, compress the uv coordinates so that they are as close to 0 as possible.
 //	Do this by adding a constant u and v to each uv pair.
-void compress_uv_coordinates(side *sidep)
+static void compress_uv_coordinates(side *sidep)
 {
 	int	v;
 	fix	uc, vc;
@@ -485,13 +486,13 @@ void compress_uv_coordinates(side *sidep)
 }
 
 //	---------------------------------------------------------------------------------------------
-void compress_uv_coordinates_on_side(side *sidep)
+static void compress_uv_coordinates_on_side(side *sidep)
 {
 	compress_uv_coordinates(sidep);
 }
 
 //	---------------------------------------------------------------------------------------------
-void validate_uv_coordinates_on_side(segment *segp, int sidenum)
+static void validate_uv_coordinates_on_side(segment *segp, int sidenum)
 {
 //	int			v;
 //	fix			uv_dist,threed_dist;
@@ -510,7 +511,7 @@ void validate_uv_coordinates_on_side(segment *segp, int sidenum)
 	compress_uv_coordinates_on_side(sidep);
 }
 
-void compress_uv_coordinates_in_segment(segment *segp)
+static void compress_uv_coordinates_in_segment(segment *segp)
 {
 	int	side;
 
@@ -518,7 +519,7 @@ void compress_uv_coordinates_in_segment(segment *segp)
 		compress_uv_coordinates_on_side(&segp->sides[side]);
 }
 
-void compress_uv_coordinates_all(void)
+static void compress_uv_coordinates_all(void)
 {
 	int	seg;
 
@@ -527,7 +528,7 @@ void compress_uv_coordinates_all(void)
 			compress_uv_coordinates_in_segment(&Segments[seg]);
 }
 
-void check_lighting_side(segment *sp, int sidenum)
+static void check_lighting_side(segment *sp, int sidenum)
 {
 	int	v;
 	side	*sidep = &sp->sides[sidenum];
@@ -537,7 +538,7 @@ void check_lighting_side(segment *sp, int sidenum)
 			Int3(); //mprintf(0,"Bogus lighting value in segment %i, side %i, vert %i = %x\n",sp-Segments, side, v, sidep->uvls[v].l);
 }
 
-void check_lighting_segment(segment *segp)
+static void check_lighting_segment(segment *segp)
 {
 	int	side;
 
@@ -546,7 +547,7 @@ void check_lighting_segment(segment *segp)
 }
 
 //	Flag bogus lighting values.
-void check_lighting_all(void)
+static void check_lighting_all(void)
 {
 	int	seg;
 
@@ -555,7 +556,7 @@ void check_lighting_all(void)
 			check_lighting_segment(&Segments[seg]);
 }
 
-void assign_default_lighting_on_side(segment *segp, int sidenum)
+static void assign_default_lighting_on_side(segment *segp, int sidenum)
 {
 	int	v;
 	side	*sidep = &segp->sides[sidenum];
@@ -564,7 +565,7 @@ void assign_default_lighting_on_side(segment *segp, int sidenum)
 		sidep->uvls[v].l = DEFAULT_LIGHTING;
 }
 
-void assign_default_lighting(segment *segp)
+static void assign_default_lighting(segment *segp)
 {
 	int	sidenum;
 
@@ -582,7 +583,7 @@ void assign_default_lighting_all(void)
 }
 
 //	---------------------------------------------------------------------------------------------
-void validate_uv_coordinates(segment *segp)
+static void validate_uv_coordinates(segment *segp)
 {
 	int	s;
 
@@ -593,7 +594,7 @@ void validate_uv_coordinates(segment *segp)
 
 //	---------------------------------------------------------------------------------------------
 //	For all faces in side, copy uv coordinates from uvs array to face.
-void copy_uvs_from_side_to_faces(segment *segp, int sidenum, uvl uvls[])
+static void copy_uvs_from_side_to_faces(segment *segp, int sidenum, uvl uvls[])
 {
 	int	v;
 	side	*sidep = &segp->sides[sidenum];
@@ -630,7 +631,7 @@ fix	Stretch_scale_y = F1_0;
 //	(Actually, assign them to the coordinates in the faces.)
 //	va, vb = face-relative vertex indices corresponding to uva, uvb.  Ie, they are always in 0..3 and should be looked up in
 //	Side_to_verts[side] to get the segment relative index.
-void assign_uvs_to_side(segment *segp, int sidenum, uvl *uva, uvl *uvb, int va, int vb)
+static void assign_uvs_to_side(segment *segp, int sidenum, uvl *uva, uvl *uvb, int va, int vb)
 {
 	int			vlo,vhi,v0,v1,v2,v3;
 	vms_vector	fvec,rvec,tvec;
@@ -941,7 +942,7 @@ void med_assign_uvs_to_side(segment *con_seg, int con_common_side, segment *base
 //	Since we can attach any side of a segment to any side of another segment, and do so in each case in
 //	four different rotations (for a total of 6*6*4 = 144 ways), not having this nifty function will cause
 //	great confusion.
-void get_side_ids(segment *base_seg, segment *con_seg, int base_side, int con_side, int abs_id1, int abs_id2, int *base_common_side, int *con_common_side)
+static void get_side_ids(segment *base_seg, segment *con_seg, int base_side, int con_side, int abs_id1, int abs_id2, int *base_common_side, int *con_common_side)
 {
 	char		*base_vp,*con_vp;
 	int		v0,side;
@@ -985,7 +986,7 @@ void get_side_ids(segment *base_seg, segment *con_seg, int base_side, int con_si
 //	The two vertices abs_id1 and abs_id2 are the only two vertices common to the two sides.
 //	If uv_only_flag is 1, then don't assign texture map ids, only update the uv coordinates
 //	If uv_only_flag is -1, then ONLY assign texture map ids, don't update the uv coordinates
-void propagate_tmaps_to_segment_side(segment *base_seg, int base_side, segment *con_seg, int con_side, int abs_id1, int abs_id2, int uv_only_flag)
+static void propagate_tmaps_to_segment_side(segment *base_seg, int base_side, segment *con_seg, int con_side, int abs_id1, int abs_id2, int uv_only_flag)
 {
 	int		base_common_side,con_common_side;
 	int		tmap_num;
@@ -1091,7 +1092,7 @@ void fix_bogus_uvs_on_side(void)
 	med_propagate_tmaps_to_back_side(Cursegp, Curside, 1);
 }
 
-void fix_bogus_uvs_on_side1(segment *sp, int sidenum, int uvonly_flag)
+static void fix_bogus_uvs_on_side1(segment *sp, int sidenum, int uvonly_flag)
 {
 	side	*sidep = &sp->sides[sidenum];
 
@@ -1101,7 +1102,7 @@ void fix_bogus_uvs_on_side1(segment *sp, int sidenum, int uvonly_flag)
 	}
 }
 
-void fix_bogus_uvs_seg(segment *segp)
+static void fix_bogus_uvs_seg(segment *segp)
 {
 	int	s;
 
@@ -1151,7 +1152,7 @@ found1: ;
 //	from that side in base_seg to the wall in con_seg.  If the wall in base_seg is not present
 //	(ie, there is another segment connected through it), follow the connection through that
 //	segment to get the wall in the connected segment which shares the edge, and get tmap_num from there.
-void propagate_tmaps_to_segment_sides(segment *base_seg, int base_side, segment *con_seg, int con_side, int uv_only_flag)
+static void propagate_tmaps_to_segment_sides(segment *base_seg, int base_side, segment *con_seg, int con_side, int uv_only_flag)
 {
 	char		*base_vp,*con_vp;
 	short		abs_id1,abs_id2;
@@ -1244,7 +1245,7 @@ int	Hash_hits=0, Hash_retries=0, Hash_calcs=0;
 //	light surface itself, light will be properly cast on the light surface.  Otherwise, the
 //	vector V would be the null vector.
 //	If quick_light set, then don't use find_vector_intersection
-void cast_light_from_side(segment *segp, int light_side, fix light_intensity, int quick_light)
+static void cast_light_from_side(segment *segp, int light_side, fix light_intensity, int quick_light)
 {
 	vms_vector	segment_center;
 	int			segnum,sidenum,vertnum, lightnum;
@@ -1404,7 +1405,7 @@ void cast_light_from_side(segment *segp, int light_side, fix light_intensity, in
 
 //	------------------------------------------------------------------------------------------
 //	Zero all lighting values.
-void calim_zero_light_values(void)
+static void calim_zero_light_values(void)
 {
 	int	segnum, sidenum, vertnum;
 
@@ -1423,7 +1424,7 @@ void calim_zero_light_values(void)
 //	------------------------------------------------------------------------------------------
 //	Used in setting average light value in a segment, cast light from a side to the center
 //	of all segments.
-void cast_light_from_side_to_center(segment *segp, int light_side, fix light_intensity, int quick_light)
+static void cast_light_from_side_to_center(segment *segp, int light_side, fix light_intensity, int quick_light)
 {
 	vms_vector	segment_center;
 	int			segnum, lightnum;
@@ -1506,7 +1507,7 @@ void cast_light_from_side_to_center(segment *segp, int light_side, fix light_int
 
 //	------------------------------------------------------------------------------------------
 //	Process all lights.
-void calim_process_all_lights(int quick_light)
+static void calim_process_all_lights(int quick_light)
 {
 	int	segnum, sidenum;
 
@@ -1588,7 +1589,7 @@ vms_vector	Normals[MAX_SEGMENTS*12];
 
 int	Normal_nearness = 4;
 
-int normal_near(vms_vector *v1, vms_vector *v2)
+static int normal_near(vms_vector *v1, vms_vector *v2)
 {
 	if (abs(v1->x - v2->x) < Normal_nearness)
 		if (abs(v1->y - v2->y) < Normal_nearness)
@@ -1600,7 +1601,7 @@ int normal_near(vms_vector *v1, vms_vector *v2)
 int	Total_normals=0;
 int	Diff_normals=0;
 
-void print_normals(void)
+static void print_normals(void)
 {
 	int			i,j,s,n,nn;
 	// vms_vector	*normal;

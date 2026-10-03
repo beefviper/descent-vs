@@ -103,7 +103,7 @@ static char rcsid[] = "$Id: pslib.c 1.18 1994/02/15 12:53:20 john Exp $";
 #include "parsarg.h"
 #include "mem.h"
 
-void print_usage ( void ) {
+static void print_usage ( void ) {
 
      printf("    Usage: PSLIB <libfile> [<options>] <files>\n");
      printf("       options :\n");
@@ -120,7 +120,7 @@ void print_usage ( void ) {
 }
 
 
-void datetime( char *filename, ushort *date_ptr, ushort *time_ptr ) {
+static void datetime( char *filename, ushort *date_ptr, ushort *time_ptr ) {
     int handle;
     ushort date, time;
 
@@ -135,7 +135,7 @@ void datetime( char *filename, ushort *date_ptr, ushort *time_ptr ) {
 }
 
 
-void list_files( void ) {
+static void list_files( void ) {
 
     char header_buf[5];
     short numfiles;
@@ -191,7 +191,7 @@ void list_files( void ) {
     }
 
 
-void check_list( char *argv ) {
+static void check_list( char *argv ) {
     if (!strcmp( argv, "-l"))
         l_flag = LISTING;
 }
@@ -200,7 +200,7 @@ void header_count( char *argv ) {
     if (!(*argv == '-')) headers++;
 }
 
-void cfr_test( char *input, char *output ) {
+static void cfr_test( char *input, char *output ) {
     //outputbuf = cfreadfile( input, &size );
     //if (WriteFile ( output, outputbuf, size ))
     //    printf("WriteFile Error\n");
@@ -208,7 +208,7 @@ void cfr_test( char *input, char *output ) {
 }
 
 
-void cfw_test( char *input, char *output ) {
+static void cfw_test( char *input, char *output ) {
     //inputbuf = ( ubyte * ) ReadFileRaw( input, &length );
     //if (success = cfwrite( output, inputbuf, length ) )
     //    printf("    CFWRITE '%s' -> '%s' successful!\n", input, output);
@@ -216,7 +216,7 @@ void cfw_test( char *input, char *output ) {
 }
 
 
-void extract_test( char *extractname, char *extractout ) {
+static void extract_test( char *extractname, char *extractout ) {
     ubyte *buffer;
 
     printf("Extracting %s from %s\n", extractname, lib_name);
@@ -231,7 +231,7 @@ void extract_test( char *extractname, char *extractout ) {
 }
 
 
-void lib_read_test( char *extractname, char *extractout ) {
+static void lib_read_test( char *extractname, char *extractout ) {
     ubyte *buffer;
     int length;
 
@@ -250,7 +250,7 @@ void lib_read_test( char *extractname, char *extractout ) {
 }
 
 
-void process_arg( char *argv ) {
+static void process_arg( char *argv ) {
     char filename[13], ext[_MAX_EXT];
     unsigned char *input;
     unsigned char *output;

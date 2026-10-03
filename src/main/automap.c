@@ -214,6 +214,7 @@ static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
 #include "text.h"
 #include "gauges.h"
 #include "powerup.h"
+#include "automap.h"
 
 #define EF_USED			1		// This edge is used
 #define EF_DEFINING		2		// A structure defining edge that should always draw.
@@ -302,7 +303,7 @@ void automap_clear_visited()
 
 grs_canvas *name_canv;
 
-void draw_player( object * obj )
+static void draw_player( object * obj )
 {
 	vms_vector arrow_pos, head_pos;
 	g3s_point sphere_point, arrow_point, head_point;
@@ -335,7 +336,7 @@ void draw_player( object * obj )
 }
 
 
-void draw_automap()
+static void draw_automap()
 {
 	int i;
 	int color;
@@ -420,7 +421,7 @@ void draw_automap()
 #define LEAVE_TIME 0x4000
 
 //print to canvas & double height
-grs_canvas *print_to_canvas(char *s,grs_font *font, int fc, int bc)
+static grs_canvas *print_to_canvas(char *s,grs_font *font, int fc, int bc)
 {
 	int y;
 	ubyte *data;
@@ -453,7 +454,7 @@ grs_canvas *print_to_canvas(char *s,grs_font *font, int fc, int bc)
 }
 
 //print to buffer, double heights, and blit bitmap to screen
-void modex_printf(int x,int y,char *s,int fontnum)
+static void modex_printf(int x,int y,char *s,int fontnum)
 {
 	grs_canvas *temp_canv;
 
@@ -464,7 +465,7 @@ void modex_printf(int x,int y,char *s,int fontnum)
 	gr_free_canvas(temp_canv);
 }
 
-void create_name_canv()
+static void create_name_canv()
 {
 	char	name_level[128];
 
@@ -913,7 +914,7 @@ static int automap_find_edge(int v0,int v1,Edge_info **edge_ptr)
 }
 
 
-void add_one_edge( short va, short vb, ubyte color, ubyte side, short segnum, int hidden, int grate, int no_fade )	{
+static void add_one_edge( short va, short vb, ubyte color, ubyte side, short segnum, int hidden, int grate, int no_fade )	{
 	int found;
 	Edge_info *e;
 	short tmp;
@@ -970,7 +971,7 @@ void add_one_edge( short va, short vb, ubyte color, ubyte side, short segnum, in
 		e->flags |= EF_NO_FADE;
 }
 
-void add_one_unknown_edge( short va, short vb )	{
+static void add_one_unknown_edge( short va, short vb )	{
 	int found;
 	Edge_info *e;
 	short tmp;
@@ -988,7 +989,7 @@ void add_one_unknown_edge( short va, short vb )	{
 
 extern obj_position Player_init[];
 
-void add_segment_edges(segment *seg)
+static void add_segment_edges(segment *seg)
 {
 	int 	is_grate, no_fade;
 	ubyte	color;
@@ -1098,7 +1099,7 @@ void add_segment_edges(segment *seg)
 
 // Adds all the edges from a segment we haven't visited yet.
 
-void add_unknown_segment_edges(segment *seg)
+static void add_unknown_segment_edges(segment *seg)
 {
 	int sn;
 	int segnum = (int)(seg-Segments);

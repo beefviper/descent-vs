@@ -547,13 +547,13 @@ grs_bitmap nm_background;
 
 extern void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest);
 
-void newmenu_close(void)	{
+static void newmenu_close(void)	{
 	if ( nm_background.bm_data )
 		free(nm_background.bm_data);
 	Newmenu_first_time = 1;
 }
 
-void nm_draw_background1(char * filename)
+static void nm_draw_background1(char * filename)
 {
 	int pcx_error;
 	grs_bitmap *bmp;
@@ -640,7 +640,7 @@ void nm_restore_background( int x, int y, int w, int h )
 }
 
 // Draw a left justfied string
-void nm_string( bkg * b, int w1,int x, int y, char * s )
+static void nm_string( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	char *p,*s1;
@@ -674,7 +674,7 @@ void nm_string( bkg * b, int w1,int x, int y, char * s )
 
 
 // Draw a slider and it's string
-void nm_string_slider( bkg * b, int w1,int x, int y, char * s )
+static void nm_string_slider( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	char *p,*s1;
@@ -709,7 +709,7 @@ void nm_string_slider( bkg * b, int w1,int x, int y, char * s )
 
 
 // Draw a left justfied string with black background.
-void nm_string_black( bkg * b, int w1,int x, int y, char * s )
+static void nm_string_black( bkg * b, int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	gr_get_string_size(s, &w, &h, &aw  );
@@ -724,7 +724,7 @@ void nm_string_black( bkg * b, int w1,int x, int y, char * s )
 
 
 // Draw a right justfied string
-void nm_rstring( bkg * b,int w1,int x, int y, char * s )
+static void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 {
 	int w,h,aw;
 	gr_get_string_size(s, &w, &h, &aw  );
@@ -743,7 +743,7 @@ void nm_rstring( bkg * b,int w1,int x, int y, char * s )
 #include "timer.h"
 
 //for text items, constantly redraw cursor (to achieve flash)
-void update_cursor( newmenu_item *item)
+static void update_cursor( newmenu_item *item)
 {
 	int w,h,aw;
 	fix time = timer_get_approx_seconds();
@@ -772,7 +772,7 @@ void update_cursor( newmenu_item *item)
 
 }
 
-void nm_string_inputbox( bkg *b, int w, int x, int y, char * text, int current )
+static void nm_string_inputbox( bkg *b, int w, int x, int y, char * text, int current )
 {
 	int w1,h1,aw;
 
@@ -792,7 +792,7 @@ void nm_string_inputbox( bkg *b, int w, int x, int y, char * text, int current )
 	}
 }
 
-void draw_item( bkg * b, newmenu_item *item, int is_current )
+static void draw_item( bkg * b, newmenu_item *item, int is_current )
 {
 	if (is_current)
 		grd_curcanv->cv_font = CURRENT_FONT;
@@ -861,7 +861,7 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 char *Newmenu_allowed_chars=NULL;
 
 //returns true if char is allowed
-char_allowed(char c)
+static int char_allowed(char c)
 {
 	char *p = Newmenu_allowed_chars;
 
@@ -880,7 +880,7 @@ char_allowed(char c)
 	return 0;
 }
 
-void strip_end_whitespace( char * text )
+static void strip_end_whitespace( char * text )
 {
 	int i,l;
 	l = (int)strlen( text );
@@ -1541,7 +1541,7 @@ int nm_messagebox( char *title, int nchoices, ... )
 }
 
 
-void newmenu_file_sort( int n, char *list )
+static void newmenu_file_sort( int n, char *list )
 {
 	int i, j, incr;
 	char t[14];
@@ -1565,7 +1565,7 @@ void newmenu_file_sort( int n, char *list )
 	}
 }
 
-void delete_player_saved_games(char * name)
+static void delete_player_saved_games(char * name)
 {
 	int i;
 	char filename[16];

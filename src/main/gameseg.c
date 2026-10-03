@@ -626,7 +626,7 @@ segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 //this was converted from get_seg_masks()...it fills in an array of 6
 //elements for the distace behind each side, or zero if not behind
 //only gets centermask, and assumes zero rad
-ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
+static ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 {
 	int			sn,facebit,sidebit;
 	ubyte			mask;
@@ -767,7 +767,7 @@ ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 #if !defined(NDEBUG) || defined(EDITOR)		// the editor's gamesave.c calls it
 #ifndef COMPACT_SEGS
 //returns true if errors detected
-int check_norms(int segnum,int sidenum,int facenum,int csegnum,int csidenum,int cfacenum)
+static int check_norms(int segnum,int sidenum,int facenum,int csegnum,int csidenum,int cfacenum)
 {
 	vms_vector *n0,*n1;
 
@@ -915,7 +915,7 @@ int	Doing_lighting_hack_flag=0;
 
 //figure out what seg the given point is in, tracing through segments
 //returns segment number, or -1 if can't find segment
-int trace_segs(vms_vector *p0,int oldsegnum)
+static int trace_segs(vms_vector *p0,int oldsegnum)
 {
 	int centermask;
 	segment *seg;
@@ -1254,7 +1254,7 @@ fcd_done1: ;
 //--unused-- 	return rval;
 //--unused-- }
 
-byte convert_to_byte(fix f)
+static byte convert_to_byte(fix f)
 {
 	if (f >= 0x00010000)
 		return MATRIX_MAX;
@@ -1377,7 +1377,7 @@ void extract_shortpos(object *objp, shortpos *spp)
 // ------------------------------------------------------------------------------------------
 //	Extract a vector from a segment.  The vector goes from the start face to the end face.
 //	The point on each face is the average of the four points forming the face.
-void extract_vector_from_segment(segment *sp, vms_vector *vp, int start, int end)
+static void extract_vector_from_segment(segment *sp, vms_vector *vp, int start, int end)
 {
 	int			i;
 	vms_vector	vs,ve;
@@ -1436,7 +1436,7 @@ void extract_up_vector_from_segment(segment *sp,vms_vector *vp)
 }
 #endif
 
-void add_side_as_quad(segment *sp, int sidenum, vms_vector *normal)
+static void add_side_as_quad(segment *sp, int sidenum, vms_vector *normal)
 {
 	side	*sidep = &sp->sides[sidenum];
 
@@ -1463,7 +1463,7 @@ void add_side_as_quad(segment *sp, int sidenum, vms_vector *normal)
 //	Return v0, v1, v2 = 3 vertices with smallest numbers.  If *negate_flag set, then negate normal after computation.
 //	Note, you cannot just compute the normal by treating the points in the opposite direction as this introduces
 //	small differences between normals which should merely be opposites of each other.
-void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, int *v3, int *negate_flag)
+static void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int *v2, int *v3, int *negate_flag)
 {
 	int	i,j;
 	int	v[4],w[4];
@@ -1501,7 +1501,7 @@ void get_verts_for_normal(int va, int vb, int vc, int vd, int *v0, int *v1, int 
 }
 
 // -------------------------------------------------------------------------------
-void add_side_as_2_triangles(segment *sp, int sidenum)
+static void add_side_as_2_triangles(segment *sp, int sidenum)
 {
 	vms_vector	norm;
 	byte			*vs = Side_to_verts[sidenum];
@@ -1585,7 +1585,7 @@ void add_side_as_2_triangles(segment *sp, int sidenum)
 	}
 }
 
-int sign(fix v)
+static int sign(fix v)
 {
 
 	if (v > PLANE_DIST_TOLERANCE)
@@ -1862,7 +1862,7 @@ void uncached_get_side_normals(segment *sp, int sidenum, vms_vector * vm1, vms_v
 #endif
 
 // -------------------------------------------------------------------------------
-void validate_removable_wall(segment *sp, int sidenum, int tmap_num)
+static void validate_removable_wall(segment *sp, int sidenum, int tmap_num)
 {
 	create_walls_on_side(sp, sidenum);
 

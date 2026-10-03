@@ -228,7 +228,7 @@ int robot_get_anim_state(jointpos **jp_list_ptr,int robot_type,int gun_num,int s
 
 
 //for test, set a robot to a specific state
-void set_robot_state(object *obj,int state)
+static void set_robot_state(object *obj,int state)
 {
 	int g,j,jo;
 	robot_info *ri;

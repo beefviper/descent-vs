@@ -223,6 +223,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _BM_H
 #define _BM_H
 
+
+#include <stdio.h>
+#include "cfile.h"
 #include "gr.h"
 #include "piggy.h"
 
@@ -284,5 +287,7 @@ extern bitmap_index ObjBitmaps[MAX_OBJ_BITMAPS];
 extern ushort ObjBitmapPtrs[MAX_OBJ_BITMAPS];
 extern int First_multi_bitmap_num;
 
+
+void bm_read_all(CFILE * fp);
 
 #endif

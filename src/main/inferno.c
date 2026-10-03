@@ -742,7 +742,7 @@ void install_int3_handler(void);
 int __far descent_critical_error_handler( unsigned deverr, unsigned errcode, unsigned far * devhdr );
 
 #ifndef NDEBUG
-do_heap_check()
+static int do_heap_check()
 {
 	int heap_status;
 
@@ -764,7 +764,7 @@ do_heap_check()
 int registered_copy=0;
 char name_copy[sizeof(DESC_ID_STR)];
 
-void
+static void
 check_id_checksum_and_date()
 {
 	const char name[] = DESC_ID_STR;
@@ -801,7 +801,7 @@ check_id_checksum_and_date()
 	printf ("%s %s\n", TXT_REGISTRATION, name);
 }
 
-int is_3dbios_installed()
+static int is_3dbios_installed()
 {
 	dpmi_real_regs rregs;
 	memset(&rregs,0,sizeof(dpmi_real_regs));
@@ -816,7 +816,7 @@ int is_3dbios_installed()
 }
 
 
-int init_graphics()
+static int init_graphics()
 {
 	int result;
 
@@ -867,7 +867,7 @@ int init_graphics()
 extern fix fixed_frametime;
 
 // Returns 1 if ok, 0 if failed...
-int init_gameport()
+static int init_gameport()
 {
 	union REGS regs;
 
@@ -881,7 +881,7 @@ int init_gameport()
 		return 0;
 }
 
-void check_dos_version()
+static void check_dos_version()
 {
 	int major, minor;
 	union REGS regs;
@@ -900,7 +900,7 @@ void check_dos_version()
 	//printf( "\nUsing MS-DOS %d.%d...\n", major, minor );
 }
 
-void change_to_dir(char *cmd_line)
+static void change_to_dir(char *cmd_line)
 {
 	char drive[_MAX_DRIVE], dir[_MAX_DIR], curdir[_MAX_DIR];
 	unsigned total, cur_drive;
@@ -917,7 +917,7 @@ void change_to_dir(char *cmd_line)
 		chdir(dir);
 }
 
-void dos_check_file_handles(int num_required)
+static void dos_check_file_handles(int num_required)
 {
 	int i, n;
 	FILE * fp[16];
@@ -954,7 +954,7 @@ void dos_check_file_handles(int num_required)
 
 extern int piggy_low_memory;
 
-void mem_int_to_string( int number, char *dest )
+static void mem_int_to_string( int number, char *dest )
 {
 	int i,l,c;
 	char buffer[20],*p;
@@ -982,7 +982,7 @@ void mem_int_to_string( int number, char *dest )
 	strrev(dest);
 }
 
-void check_memory()
+static void check_memory()
 {
 	char text[32];
 
@@ -1079,7 +1079,7 @@ int __far descent_critical_error_handler(unsigned deverror, unsigned errcode, un
 	descent_critical_errcode = errcode;
 	return _HARDERR_FAIL;
 }
-void chandler_end (void)  // dummy functions
+static void chandler_end (void)  // dummy functions
 {
 }
 #pragma on (check_stack)

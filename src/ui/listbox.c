@@ -118,7 +118,7 @@ void ui_draw_listbox( UI_GADGET_LISTBOX * listbox )
 }
 
 
-void gr_draw_sunken_border( short x1, short y1, short x2, short y2 )
+static void gr_draw_sunken_border( short x1, short y1, short x2, short y2 )
 {
 
 	gr_setcolor( CGREY );

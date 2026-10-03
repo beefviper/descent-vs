@@ -258,4 +258,6 @@ extern newdemo_get_percent_done();
 
 #endif
 
+void newdemo_strip_frames(char *outname, int bytes_to_strip);
+
 #endif
