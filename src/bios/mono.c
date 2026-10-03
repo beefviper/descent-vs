@@ -64,383 +64,123 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: mono.c 1.12 1995/02/23 11:59:57 john Exp $";
 #pragma on (unreferenced)
 
-// Library functions for printing to mono card.
+// Debug output. The original drew windows on a second, monochrome display
+// adapter (MDA) at B0000h. That output now goes to the console window the
+// game runs in (standard output): window text is printed as it arrives,
+// and the calls that only position or redraw a window do nothing. Window
+// 1 ("Errors & Serious Warnings") goes to standard error, so the two can
+// be redirected separately.
+//
+// Builds with NDEBUG or NMONO compile the mono calls out (see mono.h),
+// except mprintf, which maps to file_mprintf below.
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
-#include <string.h>
-#include <dos.h>
-#include <conio.h>
 
-#include "key.h"
-
-// Function Prototypes
-void msetcursor(short row, short col);
-
+#include "mono.h"
 
 #define MAX_NUM_WINDOWS 2
 
-struct mono_element {
-	unsigned char character;
-	unsigned char attribute;
-};
+void file_mprintf(int n, char* format, ...);
 
-typedef struct  {
-	short   first_row;
-	short   height;
-	short   first_col;
-	short   width;
-	short   cursor_row;
-	short   cursor_col;
-	short   open;
-	struct  mono_element save_buf[25][80];
-	struct  mono_element text[25][80];
-} WINDOW;
+#if !(defined(NDEBUG) || defined(NMONO))
 
+static int window_open[MAX_NUM_WINDOWS];
 
-void scroll( short n );
-void drawbox( short n );
-
-#define ROW             Window[n].first_row
-#define HEIGHT          Window[n].height
-#define COL             Window[n].first_col
-#define WIDTH           Window[n].width
-#define CROW            Window[n].cursor_row
-#define CCOL            Window[n].cursor_col
-#define OPEN            Window[n].open
-#define CHAR(r,c)       (*monoscreen)[ROW+(r)][COL+(c)].character
-#define ATTR(r,c)       (*monoscreen)[ROW+(r)][COL+(c)].attribute
-#define XCHAR(r,c)      Window[n].text[ROW+(r)][COL+(c)].character
-#define XATTR(r,c)      Window[n].text[ROW+(r)][COL+(c)].attribute
-
-static WINDOW Window[MAX_NUM_WINDOWS];
-
-struct mono_element (*monoscreen)[25][80];
-
-void mputc( short n, char c )
+static int window_ok( int n )
 {
-	if (!OPEN) return;
-
-//	if (keyd_pressed[KEY_BACKSP])
-//		Int3();
-
-	switch (c)
-	{
-	case 8:
-		if (CCOL > 0) CCOL--;
-		break;
-	case 9:
-		CHAR( CROW, CCOL ) = ' ';
-		ATTR( CROW, CCOL ) = XATTR( CROW, CCOL );
-		XCHAR( CROW, CCOL ) = ' ';
-		CCOL++;
-		while (CCOL % 4) {
-			CHAR( CROW, CCOL ) = ' ';
-			ATTR( CROW, CCOL ) = XATTR( CROW, CCOL );
-			XCHAR( CROW, CCOL ) = ' ';
-			CCOL++;
-		}
-		break;
-	case 10:
-	case 13:
-		CCOL = 0;
-		CROW++;
-		break;
-	default:
-		CHAR( CROW, CCOL ) = c;
-		ATTR( CROW, CCOL ) = XATTR( CROW, CCOL );
-		XCHAR( CROW, CCOL ) = c;
-		CCOL++;
-	}
-
-	if ( CCOL >= WIDTH )    {
-		CCOL = 0;
-		CROW++;
-	}
-	if ( CROW >= HEIGHT )   {
-		CROW--;
-		scroll(n);
-	}
-
-	msetcursor( ROW+CROW, COL+CCOL );
-
+	return n >= 0 && n < MAX_NUM_WINDOWS && window_open[n];
 }
 
-void mputc_at( short n, short row, short col, char c )
+static FILE *window_stream( int n )
 {
-	CROW = row;
-	CCOL = col;
-
-	if (!OPEN) return;
-
-	mputc( n, c );
-
+	return n == 1 ? stderr : stdout;
 }
 
-
-// Copies nwords words from src to both dest1 and dest2.
-static void copy_row(int nwords,short *src, short *dest1, short *dest2 )
+void mputc( int n, char c )
 {
-	while (nwords-- > 0) {
-		*dest1++ = *src;
-		*dest2++ = *src++;
-	}
+	if (!window_ok(n)) return;
+	fputc(c, window_stream(n));
 }
 
-
-void scroll( short n )
+// Positioned output was for status displays that redraw in place; on a
+// scrolling console it would only add noise.
+void mputc_at( int n, int row, int col, char c )
 {
-	register row, col;
-
-	if (!OPEN) return;
-
-	col = 0;
-	for ( row = 0; row < (HEIGHT-1); row++ )
-		copy_row( WIDTH, (short *)&XCHAR(row+1,col), (short *)&CHAR(row,col), (short *)&XCHAR(row,col) );
-
-//		for ( col = 0; col < WIDTH; col++ )
-//		{
-//			CHAR( row, col ) = XCHAR( row+1, col );
-//			ATTR( row, col ) = XATTR( row+1, col );
-//			XCHAR( row, col ) = XCHAR( row+1, col );
-//			XATTR( row, col ) = XATTR( row+1, col );
-//		}
-
-	for ( col = 0; col < WIDTH; col++ )
-	{
-		CHAR( HEIGHT-1, col ) = ' ';
-		ATTR( HEIGHT-1, col ) = XATTR( HEIGHT-1, col );
-		XCHAR( HEIGHT-1, col ) = ' ';
-	}
-
+	(void)n; (void)row; (void)col; (void)c;
 }
 
-void msetcursor(short row, short col)
+void _mprintf( int n, char * format, ... )
 {
-	int pos = row*80+col;
-
-	outp( 0x3b4, 15 );
-	outp( 0x3b5, pos & 0xFF );
-	outp( 0x3b4, 14 );
-	outp( 0x3b5, (pos >> 8) & 0xff );
-}
-
-static char temp_m_buffer[1000];
-void _mprintf( short n, char * format, ... )
-{
-	char *ptr=temp_m_buffer;
 	va_list args;
 
-	if (!OPEN) return;
+	if (!window_ok(n)) return;
 
-	va_start(args, format );
-	vsprintf(temp_m_buffer,format,args);
-	while( *ptr )
-		mputc( n, *ptr++ );
-
+	va_start(args, format);
+	vfprintf(window_stream(n), format, args);
+	va_end(args);
+	fflush(window_stream(n));
 }
 
-void _mprintf_at( short n, short row, short col, char * format, ... )
+void _mprintf_at( int n, int row, int col, char * format, ... )
 {
-	int r,c;
-	char buffer[1000], *ptr=buffer;
-	va_list args;
-
-	if (!OPEN) return;
-
-	r = CROW; c = CCOL;
-
-	CROW = row;
-	CCOL = col;
-
-	va_start(args, format );
-	vsprintf(buffer,format,args);
-	while( *ptr )
-		mputc( n, *ptr++ );
-
-
-	CROW = r; CCOL = c;
-
-	msetcursor( ROW+CROW, COL+CCOL );
-
+	(void)n; (void)row; (void)col; (void)format;
 }
 
-
-void drawbox(short n)
+void msetcursor( int row, int col )
 {
-	short row, col;
+	(void)row; (void)col;
+}
 
-	if (!OPEN) return;
+void mclear( int n )
+{
+	(void)n;
+}
 
-	for (row=0; row <HEIGHT; row++ )    {
-		CHAR( row, -1 ) = 179;
-		CHAR( row, WIDTH ) = 179;
-		XCHAR( row, -1 ) = 179;
-		XCHAR( row, WIDTH ) = 179;
+void mclose( int n )
+{
+	if (n == 0) {
+		window_open[0] = window_open[1] = 0;
+		return;
 	}
-
-	for (col=0; col < WIDTH; col++ )  {
-		CHAR( -1, col ) = 196;
-		CHAR( HEIGHT, col ) = 196;
-		XCHAR( -1, col ) = 196;
-		XCHAR( HEIGHT, col ) = 196;
-	}
-
-	CHAR( -1,-1 ) = 218;
-	CHAR( -1, WIDTH ) = 191;
-	CHAR( HEIGHT, -1 ) = 192;
-	CHAR( HEIGHT, WIDTH ) = 217;
-	XCHAR( -1,-1 ) = 218;
-	XCHAR( -1, WIDTH ) = 191;
-	XCHAR( HEIGHT, -1 ) = 192;
-	XCHAR( HEIGHT, WIDTH ) = 217;
-
+	if (n > 0 && n < MAX_NUM_WINDOWS)
+		window_open[n] = 0;
 }
 
-void mclear( short n )
+void mrefresh( short n )
 {
-	short row, col;
-
-	if (!OPEN) return;
-
-	for (row=0; row<HEIGHT; row++ )
-		for (col=0; col<WIDTH; col++ )  {
-			CHAR(row,col) = 32;
-			ATTR(row,col) = 7;
-			XCHAR(row,col) = 32;
-			XATTR(row,col) = 7;
-		}
-	CCOL = 0;
-	CROW = 0;
+	(void)n;
 }
 
-void mclose(short n)
+void mopen( int n, int row, int col, int width, int height, char * title )
 {
-	short row, col;
+	(void)row; (void)col; (void)width; (void)height;
 
-	if (!OPEN) return;
+	if (n < 0 || n >= MAX_NUM_WINDOWS) return;
 
-	for (row=-1; row<HEIGHT+1; row++ )
-		for (col=-1; col<WIDTH+1; col++ )  {
-			CHAR(row,col) = 32;
-			ATTR(row,col) = 7;
-		}
-	OPEN = 0;
-	CCOL = 0;
-	CROW = 0;
-
-	msetcursor(0,0);
-
+	window_open[n] = 1;
+	if (title && *title)
+		printf("--- %s ---\n", title);
 }
 
-void mrefresh(short n)
-{
-	short row, col;
-
-	if (!OPEN) return;
-
-	for (row=-1; row<HEIGHT+1; row++ )
-		for (col=-1; col<WIDTH+1; col++ )  {
-			CHAR(row,col) = XCHAR(row,col);
-			ATTR(row,col) = XATTR(row,col);
-		}
-
-	msetcursor( ROW+CROW, COL+CCOL );
-
-}
-
-// Returns true if a mono monitor is in the system. The original asked the
-// video BIOS (int 10h, function 1Ah) for the display combination. A
-// monochrome adapter at 0xB0000 cannot be reached here, so report none;
-// the mono windows then stay closed and nothing is written to the screen.
-int mono_present()
-{
-	return 0;
-}
-
-void mopen( short n, short row, short col, short width, short height, char * title )
-{
-//	if (n==0) return;
-
-	if (! mono_present()) return;	//error! no mono card
-
-	if (OPEN) mclose(n);
-
-	OPEN = 1;
-	ROW = row;
-	COL = col;
-	WIDTH = width;
-	HEIGHT = height;
-
-	for (row=-1; row<HEIGHT+1; row++ )
-		for (col=-1; col<WIDTH+1; col++ )  {
-			CHAR(row,col) = 32;
-			ATTR(row,col) = 7;
-			XCHAR(row,col) = 32;
-			XATTR(row,col) = 7;
-		}
-
-	drawbox(n);
-	CROW=-1; CCOL=0;
-	_mprintf( n, title );
-	CROW=0; CCOL=0;
-	msetcursor( ROW+CROW, COL+CCOL );
-
-}
-
+// Returns true (-1) if the debug output is available, as it always is.
 int minit()
 {
-	short n;
-	static initialized=0;
-	//short col, row;
-
-	if (! mono_present()) return 0;	//error! no mono card
-
-	if (initialized)
-		return 1;
-
-	initialized=1;
-
-	monoscreen = (struct mono_element (*)[25][80])0xB0000;
-
-	n=0;
-	OPEN=1;
-	ROW=2;
-	COL=0;
-	WIDTH=80;
-	HEIGHT=24;
-	CCOL=0;
-	CROW=0;
-
-	mclear(0);
-
-	for (n=1; n<MAX_NUM_WINDOWS; n++ )  {
-		OPEN = 0;
-		ROW = 2;
-		COL = 1;
-		WIDTH=78;
-		HEIGHT=23;
-		CROW=0;
-		CCOL=0;
-	}
-
-	return -1;	//everything ok
+	window_open[0] = 1;
+	return -1;
 }
 
-// mprintf() that outputs to a file - beefviper
+#endif
+
+// mprintf() for builds with the mono code compiled out: prints to the
+// console too. (Originally appended to debug.txt - beefviper.)
 void file_mprintf(int n, char* format, ...)
 {
-	char temp_fm_buffer[1000];
-	FILE* pFile;
-	pFile = fopen("debug.txt", "a");
+	va_list args;
 
-	if (pFile != NULL)
-	{
-		va_list args;
-		va_start(args, format);
-		vsprintf(temp_fm_buffer, format, args);
-		fputs(temp_fm_buffer, pFile);
-		fclose(pFile);
-	}
+	(void)n;
+	va_start(args, format);
+	vprintf(format, args);
+	va_end(args);
+	fflush(stdout);
 }
