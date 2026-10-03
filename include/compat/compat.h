@@ -41,6 +41,32 @@
 #define EZERO 0
 #endif
 
+/* Unix permission bits for open()/creat(). MSVC's sys/stat.h only has
+   _S_IREAD and _S_IWRITE, and Windows has no group permissions. */
+#ifdef _MSC_VER
+#ifndef S_IRUSR
+#define S_IRUSR 0x0100		/* _S_IREAD */
+#define S_IWUSR 0x0080		/* _S_IWRITE */
+#define S_IRGRP 0
+#define S_IWGRP 0
+#endif
+#endif
+
+/* The build packs structures on byte boundaries (/Zp1), which the Windows
+   headers reject (their C_ASSERT layout checks fail). Wrap their
+   includes in these to use the default packing:
+       COMPAT_PACK_DEFAULT_BEGIN
+       #include <windows.h>
+       COMPAT_PACK_DEFAULT_END
+*/
+#ifdef _MSC_VER
+#define COMPAT_PACK_DEFAULT_BEGIN	__pragma(pack(push, 8))
+#define COMPAT_PACK_DEFAULT_END		__pragma(pack(pop))
+#else
+#define COMPAT_PACK_DEFAULT_BEGIN
+#define COMPAT_PACK_DEFAULT_END
+#endif
+
 /* Watcom made the DOS services in dos.h visible through conio.h and other
    headers as well; make them available everywhere. */
 #include "dos.h"

@@ -15,7 +15,9 @@
 #undef outp
 #undef outpw
 #define SDL_MAIN_HANDLED		// the game keeps its own main()
+COMPAT_PACK_DEFAULT_BEGIN	// see compat.h
 #include <SDL.h>
+COMPAT_PACK_DEFAULT_END
 
 #include "vga.h"
 #include "key.h"

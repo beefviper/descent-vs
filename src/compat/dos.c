@@ -22,7 +22,9 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+COMPAT_PACK_DEFAULT_BEGIN	// see compat.h
 #include <windows.h>
+COMPAT_PACK_DEFAULT_END
 #endif
 
 #include "dos.h"

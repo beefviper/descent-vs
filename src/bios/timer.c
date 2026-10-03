@@ -28,7 +28,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #undef _disable			// defined by the force-included compat.h
 #undef _enable
 #define WIN32_LEAN_AND_MEAN
+COMPAT_PACK_DEFAULT_BEGIN	// see compat.h
 #include <windows.h>
+COMPAT_PACK_DEFAULT_END
 #endif
 
 #include "types.h"
