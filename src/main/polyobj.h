@@ -162,6 +162,11 @@ typedef struct polymodel {
 //array of pointers to polygon objects
 extern polymodel Polygon_models[];
 
+// In the data files a polymodel is stored with model_data as a 32-bit
+// field: n_models and model_data_size, 4 unused bytes, then submodel_ptrs
+// onward, POLYMODEL_DISK_REST bytes. Read and write them field by field.
+#define POLYMODEL_DISK_REST		(sizeof(polymodel) - offsetof(polymodel, submodel_ptrs))
+
 //switch to simpler model when the object has depth
 //greater than this value times its radius.
 extern int Simple_model_threshhold_scale;

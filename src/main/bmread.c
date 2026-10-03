@@ -1955,7 +1955,15 @@ void bm_write_all(FILE *fp)
 	fwrite( Powerup_info, sizeof(powerup_type_info), MAX_POWERUP_TYPES, fp );
 
 	fwrite( &N_polygon_models, sizeof(int), 1, fp );
-	fwrite( Polygon_models, sizeof(polymodel), N_polygon_models, fp );
+	for (i=0; i<N_polygon_models; i++ )	{
+		polymodel *pm = &Polygon_models[i];
+		static const ubyte unused[4];
+
+		fwrite( &pm->n_models, sizeof(int), 1, fp );
+		fwrite( &pm->model_data_size, sizeof(int), 1, fp );
+		fwrite( unused, sizeof(unused), 1, fp );		// model_data
+		fwrite( pm->submodel_ptrs, POLYMODEL_DISK_REST, 1, fp );
+	}
 
 	for (i=0; i<N_polygon_models; i++ )	{
 		fwrite( Polygon_models[i].model_data, sizeof(ubyte), Polygon_models[i].model_data_size, fp );

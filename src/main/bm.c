@@ -151,7 +151,15 @@ void bm_read_all(CFILE * fp)
 	cfread( Powerup_info, sizeof(powerup_type_info), MAX_POWERUP_TYPES, fp );
 
 	cfread( &N_polygon_models, sizeof(int), 1, fp );
-	cfread( Polygon_models, sizeof(polymodel), N_polygon_models, fp );
+	for (i=0; i<N_polygon_models; i++ )	{
+		polymodel *pm = &Polygon_models[i];
+		ubyte unused[4];
+
+		cfread( &pm->n_models, sizeof(int), 1, fp );
+		cfread( &pm->model_data_size, sizeof(int), 1, fp );
+		cfread( unused, sizeof(unused), 1, fp );		// model_data
+		cfread( pm->submodel_ptrs, POLYMODEL_DISK_REST, 1, fp );
+	}
 
 	for (i=0; i<N_polygon_models; i++ )	{
 		Polygon_models[i].model_data = malloc(Polygon_models[i].model_data_size);
