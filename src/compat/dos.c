@@ -3,7 +3,8 @@
  * include/compat/dos.h.
  *
  * Hardware access (interrupts, port I/O, the PC speaker) is stubbed out:
- * those calls report failure or do nothing. The file-system calls are
+ * those calls report failure or do nothing, except the VGA palette ports,
+ * which are emulated for the video backend. The file-system calls are
  * mapped onto the C runtime.
  */
 
@@ -46,27 +47,53 @@ void segread(struct SREGS *seg)
 	memset(seg, 0, sizeof(*seg));
 }
 
+unsigned char compat_vga_dac[768];
+volatile unsigned compat_vga_dac_version;
+
+static unsigned dac_read_index, dac_write_index;	// in components (color*3)
+static int retrace;
+
 int compat_inp(unsigned short port)
 {
-	(void)port;
+	switch (port) {
+	case 0x3c9: {
+		int value = compat_vga_dac[dac_read_index];
+		dac_read_index = (dac_read_index + 1) % 768;
+		return value;
+	}
+	case 0x3da:			// input status: bit 3 = vertical retrace, bit 0 = display disabled
+		retrace = !retrace;
+		return retrace ? 0x09 : 0x00;
+	}
 	return 0;
 }
 
 unsigned short compat_inpw(unsigned short port)
 {
-	(void)port;
-	return 0;
+	return (unsigned short)compat_inp(port);
 }
 
 int compat_outp(unsigned short port, int value)
 {
-	(void)port;
+	switch (port) {
+	case 0x3c7:			// DAC read index
+		dac_read_index = (value & 0xff) * 3;
+		break;
+	case 0x3c8:			// DAC write index
+		dac_write_index = (value & 0xff) * 3;
+		break;
+	case 0x3c9:			// DAC data
+		compat_vga_dac[dac_write_index] = (unsigned char)(value & 0x3f);
+		dac_write_index = (dac_write_index + 1) % 768;
+		compat_vga_dac_version++;
+		break;
+	}
 	return value;
 }
 
 unsigned short compat_outpw(unsigned short port, unsigned short value)
 {
-	(void)port;
+	compat_outp(port, value & 0xff);
 	return value;
 }
 

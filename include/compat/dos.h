@@ -66,6 +66,8 @@ unsigned short compat_outpw(unsigned short port, unsigned short value);
 #define outp(p,v)	compat_outp((p),(v))
 #define outpw(p,v)	compat_outpw((p),(v))
 
+#include "vga.h"		/* emulated VGA palette ports */
+
 /* Interrupt flag and vectors */
 #define _disable()	((void)0)
 #define _enable()	((void)0)
