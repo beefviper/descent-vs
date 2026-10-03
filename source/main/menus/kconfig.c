@@ -1548,6 +1548,12 @@ static void kconfig_read_external_controls(void)
 	Controls.automap_state |= kc_external_control->automap_state;
 }
 
+// The mouse was tuned for DOS mice. These make it turn faster than the
+// sensitivity slider alone can: MOUSE_SCALE multiplies the motion, and
+// mouse turning may reach MOUSE_TURN_MAX times the keyboard/joystick rate.
+#define MOUSE_SCALE		2
+#define MOUSE_TURN_MAX	4
+
 void controls_read_all(void)
 {
 	int i;
@@ -1556,6 +1562,7 @@ void controls_read_all(void)
 	int idx, idy;
 	fix ctime;
 	fix mouse_axis[2] = {0};
+	fix mouse_pitch = 0, mouse_heading = 0;		// added after the clamp below
 	int raw_joy_axis[4] = {0};
 	int mouse_buttons;
 	fix k0, k1, k2, k3, kp;
@@ -1627,8 +1634,8 @@ void controls_read_all(void)
 	if (Config_control_type==5 ) {
 		//---------  Read Mouse -----------
 		mouse_get_delta( &dx, &dy );
-		mouse_axis[0] = (dx*FrameTime)/35;
-		mouse_axis[1] = (dy*FrameTime)/25;
+		mouse_axis[0] = (dx*FrameTime*MOUSE_SCALE)/35;
+		mouse_axis[1] = (dy*FrameTime*MOUSE_SCALE)/25;
 		mouse_buttons = mouse_get_btns();
 		//mprintf(( 0, "Mouse %d,%d b:%d, 0x%x\n", mouse_axis[0], mouse_axis[1], mouse_buttons, FrameTime ));
 		use_mouse=1;
@@ -1710,9 +1717,9 @@ void controls_read_all(void)
 		//mprintf(( 0, "UM: %d, PV: %d\n", use_mouse, kc_mouse[13].value ));
 		if ( (use_mouse)&&(kc_mouse[13].value < 255) )	{
 			if ( !kc_mouse[14].value )		// If not inverted...
-				Controls.pitch_time -= (mouse_axis[kc_mouse[13].value]*Config_joystick_sensitivity)/8;
+				mouse_pitch -= (mouse_axis[kc_mouse[13].value]*Config_joystick_sensitivity)/8;
 			else
-				Controls.pitch_time += (mouse_axis[kc_mouse[13].value]*Config_joystick_sensitivity)/8;
+				mouse_pitch += (mouse_axis[kc_mouse[13].value]*Config_joystick_sensitivity)/8;
 		}
 	} else {
 		Controls.pitch_time = 0;
@@ -1835,9 +1842,9 @@ void controls_read_all(void)
 		// From mouse...
 		if ( (use_mouse)&&(kc_mouse[15].value < 255 ))	{
 			if ( !kc_mouse[16].value )		// If not inverted...
-				Controls.heading_time += (mouse_axis[kc_mouse[15].value]*Config_joystick_sensitivity)/8;
+				mouse_heading += (mouse_axis[kc_mouse[15].value]*Config_joystick_sensitivity)/8;
 			else
-				Controls.heading_time -= (mouse_axis[kc_mouse[15].value]*Config_joystick_sensitivity)/8;
+				mouse_heading -= (mouse_axis[kc_mouse[15].value]*Config_joystick_sensitivity)/8;
 		}
 	} else {
 		Controls.heading_time = 0;
@@ -2114,6 +2121,16 @@ void controls_read_all(void)
 	if (Controls.bank_time < -FrameTime ) Controls.bank_time = -FrameTime;
 	if (Controls.forward_thrust_time < -FrameTime ) Controls.forward_thrust_time = -FrameTime;
 //	if (Controls.afterburner_time < -FrameTime ) Controls.afterburner_time = -FrameTime;
+
+	// Mouse turning may go past the full-stick rate the clamps above allow
+	// (a modern mouse turns as fast as it is moved), up to MOUSE_TURN_MAX
+	// times that rate.
+	if (mouse_pitch > MOUSE_TURN_MAX*FrameTime/2 ) mouse_pitch = MOUSE_TURN_MAX*FrameTime/2;
+	if (mouse_pitch < -MOUSE_TURN_MAX*FrameTime/2 ) mouse_pitch = -MOUSE_TURN_MAX*FrameTime/2;
+	if (mouse_heading > MOUSE_TURN_MAX*FrameTime ) mouse_heading = MOUSE_TURN_MAX*FrameTime;
+	if (mouse_heading < -MOUSE_TURN_MAX*FrameTime ) mouse_heading = -MOUSE_TURN_MAX*FrameTime;
+	Controls.pitch_time += mouse_pitch;
+	Controls.heading_time += mouse_heading;
 
 
 //--------- Don't do anything if in debug mode
