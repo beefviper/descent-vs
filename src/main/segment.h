@@ -232,7 +232,7 @@ extern	byte		Side_to_verts[MAX_SIDES_PER_SEGMENT][4];	// Side_to_verts[my_side] 
 extern	int		Side_to_verts_int[MAX_SIDES_PER_SEGMENT][4];	// Side_to_verts[my_side] is list of vertices forming side my_side.
 extern	char		Side_opposite[];									// Side_opposite[my_side] returns side opposite cube from my_side.
 
-#define SEG_PTR_2_NUM(segptr) (Assert((unsigned) (segptr-Segments)<MAX_SEGMENTS),(segptr)-Segments)
+#define SEG_PTR_2_NUM(segptr) (Assert((unsigned) (segptr-Segments)<MAX_SEGMENTS),(int)((segptr)-Segments))
 
 // ----------------------------------------------------------------------------------------------------------
 // --------------------------  Segment interrogation functions ------------------------
