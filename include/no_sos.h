@@ -19,6 +19,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // No_sos.h
 // Added by Kevin Bentley 1/18/98
 
-typedef short WORD;
+typedef unsigned short WORD;
 typedef void VOID;
 typedef char * LPSTR;

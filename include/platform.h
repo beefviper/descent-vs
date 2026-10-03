@@ -42,4 +42,22 @@ void plat_pump_events(void);
 typedef void (*plat_key_handler)(unsigned char keycode, int down);
 void plat_set_key_handler(plat_key_handler handler);
 
+// Sound effects. Samples are 8-bit unsigned mono and must stay in memory
+// while they play. Volume is 0..0x7fff, with 0x4000 playing a sample at
+// its own level; pan is 0 (left) .. 0x8000 (middle) .. 0xffff (right).
+#define PLAT_AUDIO_VOICES	32
+
+// Opens the audio device. Returns 1 on success, 0 if there is no sound.
+int plat_audio_init(void);
+void plat_audio_close(void);
+
+// Starts a sample on voice `voice` (-1 = any free voice), replacing what
+// it was playing. Returns the voice, or -1 if none is free.
+int plat_audio_start(int voice, const unsigned char *data, int length, int rate,
+	int volume, int pan, int loop);
+void plat_audio_stop(int voice);
+int plat_audio_playing(int voice);
+void plat_audio_set_volume(int voice, int volume);
+void plat_audio_set_pan(int voice, int pan);
+
 #endif

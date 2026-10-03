@@ -145,9 +145,9 @@ descent_add_library(3d 3d
 descent_add_library(io bios
     key.c mouse.c timer.c mono.c joyc.c dpmi.c ipx.c)
 
-# Window, display and keyboard backend
+# Window, display, keyboard and sound backend
 descent_add_library(platform platform
-    sdl.c)
+    sdl.c audio.c)
 target_link_libraries(platform PUBLIC SDL2::SDL2)
 
 descent_add_library(texmap texmap

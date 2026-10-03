@@ -394,6 +394,95 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 //release of the source code. -KRB
 #include "no_sos.h" //Added by KRB
 //*************************************************
+#include "platform.h"
+
+// The digital calls this file makes into SOS, played through the SDL2
+// mixer (src/platform/audio.c). Sample handles are mixer voices.
+#define _MAX_VOICES			PLAT_AUDIO_VOICES
+#define _ERR_NO_SLOTS		((WORD)0xffff)
+#define _CENTER_CHANNEL		0
+#define _VOLUME				0x0001
+#define _PANNING				0x0002
+#define _LOOPING				0x0004
+#define _NULL					NULL
+typedef long LONG;
+
+typedef struct {
+	WORD	wLoopCount;
+	WORD	wChannel;
+	uint	wVolume;					// 0 - 0x7fff
+	WORD	wSampleID;
+	long	dwSampleSize;
+	long	dwSampleByteLength;
+	ubyte	*lpSamplePtr;
+	void	*lpCallback;
+	uint	wSamplePanLocation;	// 0 - 0xffff
+	WORD	wSamplePanSpeed;
+	WORD	wSampleFlags;
+} _SOS_START_SAMPLE;
+
+static int digi_driver_rate;
+static WORD sos_sample_ids[_MAX_VOICES];
+
+static WORD sosDIGIStartSample( WORD hDriver, _SOS_START_SAMPLE *s )
+{
+	int voice;
+
+	(void)hDriver;
+	voice = plat_audio_start( -1, s->lpSamplePtr, (int)s->dwSampleSize, digi_driver_rate,
+		(int)s->wVolume, (int)s->wSamplePanLocation, (s->wSampleFlags & _LOOPING) != 0 );
+	if ( voice < 0 )
+		return _ERR_NO_SLOTS;
+	sos_sample_ids[voice] = s->wSampleID;
+	return (WORD)voice;
+}
+
+static void sosDIGIStopSample( WORD hDriver, WORD hSample )
+{
+	(void)hDriver;
+	plat_audio_stop( hSample );
+}
+
+static int sosDIGISampleDone( WORD hDriver, WORD hSample )
+{
+	(void)hDriver;
+	return !plat_audio_playing( hSample );
+}
+
+// Returns the voice playing sample ID wSampleID, or _ERR_NO_SLOTS.
+static WORD sosDIGIGetSampleHandle( WORD hDriver, WORD wSampleID )
+{
+	int i;
+
+	(void)hDriver;
+	for (i=0; i<_MAX_VOICES; i++ )
+		if ( plat_audio_playing(i) && sos_sample_ids[i] == wSampleID )
+			return (WORD)i;
+	return _ERR_NO_SLOTS;
+}
+
+static void sosDIGISetSampleVolume( WORD hDriver, WORD hSample, uint wVolume )
+{
+	(void)hDriver;
+	plat_audio_set_volume( hSample, (int)wVolume );
+}
+
+static void sosDIGISetPanLocation( WORD hDriver, WORD hSample, uint wLocation )
+{
+	(void)hDriver;
+	plat_audio_set_pan( hSample, (int)wLocation );
+}
+
+// No music yet; MIDI stays off (digi_midi_type is 0).
+#define sosMIDISetMasterVolume(v)	((void)(v))
+#define sosMIDIStopSong(h)			((void)(h))
+#define sosMIDIUnInitSong(h)		((void)(h))
+
+void digi_reset_digi_sounds();
+#ifndef NDEBUG
+int verify_sound_channel_free( int channel );
+#endif
+//*************************************************
 #include "kconfig.h"
 //#include "soscomp.h"
 
@@ -514,7 +603,6 @@ VOID sosEndMIDICallback();
 
 int digi_xlat_sound(int soundno)
 {
-/*
 	if ( soundno < 0 ) return -1;
 
 	if ( digi_lomem )	{
@@ -522,8 +610,6 @@ int digi_xlat_sound(int soundno)
 		if ( soundno == 255 ) return -1;
 	}
 	return Sounds[soundno];
-*/
-	return 0;//KRB Comment out...
 
 }
 
@@ -566,6 +652,7 @@ void digi_close_midi()
 
 void digi_close_digi()
 {
+	plat_audio_close();
 /*
 	if (digi_driver_board>0)	{
 		if ( hTimerEventHandle < 0xffff )	{
@@ -581,7 +668,12 @@ void digi_close_digi()
 
 void digi_close()
 {
-/*
+	if (!Digi_initialized) return;
+	Digi_initialized = 0;
+
+	digi_close_midi();
+	digi_close_digi();
+/* The SOS version:
 	if (!Digi_initialized) return;
 	Digi_initialized = 0;
 
@@ -763,7 +855,35 @@ int digi_init_digi()
 
 int digi_init()
 {
-/*
+	int i;
+
+	// Sound effects go through SDL2; there is no music yet.
+	digi_midi_type = 0;
+
+	if (!plat_audio_init())	{
+		printf( "\nSound disabled: no audio device.\n" );
+		digi_driver_board = 0;
+		return 0;
+	}
+	if ( digi_driver_board < 1 )
+		digi_driver_board = 1;		// any board: the SDL mixer stands in for it
+
+	Digi_initialized = 1;
+
+	if (!digi_atexit_called)	{
+		atexit( digi_close );
+		digi_atexit_called = 1;
+	}
+
+	digi_init_sounds();
+
+	for (i=0; i<MAX_SOUNDS; i++ )
+		digi_sound_locks[i] = 0;
+	digi_reset_digi_sounds();
+
+	return 0;
+
+/* The SOS version:
 	int i;
 
 #ifdef USE_CD
@@ -835,14 +955,12 @@ int digi_init()
 
 	return 0;
 */
-	return 0;//KRB Comment out...
 
 }
 
 // Toggles sound system on/off
 void digi_reset()
 {
-/*
 	if ( Digi_initialized )	{
 		digi_reset_digi_sounds();
 		digi_close();
@@ -851,14 +969,12 @@ void digi_reset()
 		digi_init();
 		mprintf( (0, "Sound system ENABLED.\n" ));
 	}
-*/
 }
 
 int digi_total_locks = 0;
 
 ubyte * digi_lock_sound_data( int soundnum )
 {
-/*
 	int i;
 
 	if ( !Digi_initialized ) return NULL;
@@ -872,15 +988,11 @@ ubyte * digi_lock_sound_data( int soundnum )
 	}
 	digi_sound_locks[soundnum]++;
 	return GameSounds[soundnum].data;
-*/
-	digi_total_locks=digi_total_locks;//blah -KRB
-	return 0;//KRB Comment out...
 
 }
 
 void digi_unlock_sound_data( int soundnum )
 {
-/*
 	int i;
 
 	if ( !Digi_initialized ) return;
@@ -895,18 +1007,14 @@ void digi_unlock_sound_data( int soundnum )
 		if ( !i ) Error( "Error unlocking sound %d\n", soundnum );
 	}
 	digi_sound_locks[soundnum]--;
-*/
 }
-/*
 static int next_handle = 0;
 static WORD SampleHandles[32] = { 0xffff, 0xffff, 0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff };
 static int SoundNums[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 static uint SoundVolumes[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
-//This block commented out by KRB
-*/
+
 void digi_reset_digi_sounds()
 {
-/*
 	int i;
 
 	if ( !Digi_initialized ) return;
@@ -928,12 +1036,10 @@ void digi_reset_digi_sounds()
 	for (i=0; i<MAX_SOUNDS; i++ )	{
 		Assert( digi_sound_locks[i] == 0 );
 	}
-*/
 }
 
 void reset_sounds_on_channel( int channel )
 {
-/*
 	int i;
 
 	if ( !Digi_initialized ) return;
@@ -948,13 +1054,11 @@ void reset_sounds_on_channel( int channel )
 			}
 		}
 	}
-*/
 }
 
 
 void digi_set_max_channels(int n)
 {
-/*
 	digi_max_channels	= n;
 
 	if ( digi_max_channels < 1 )
@@ -966,22 +1070,18 @@ void digi_set_max_channels(int n)
 	if ( digi_driver_board <= 0 )	return;
 
 	digi_reset_digi_sounds();
-*/
 }
 
 int digi_get_max_channels()
 {
-	//return digi_max_channels;
-	return 0;//KRB Comment out...
+	return digi_max_channels;
 
 }
 
 
-//WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum ) //This is the original modified below by KRB
-WORD digi_start_sound(void * sampledata, short soundnum )
+WORD digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum )
 
 {
-/*
 	int i, ntries;
 	WORD sHandle;
 
@@ -1048,14 +1148,11 @@ TryNextChannel:
 		next_handle = 0;
 	//mprintf(( 0, "%d samples playing\n", sosDIGISamplesPlaying(hSOSDigiDriver) ));
 	return sHandle;
-*/
-	return 0;//KRB Comment out...
 
 }
 
 int digi_is_sound_playing(int soundno)
 {
-/*
 	WORD SampleHandle;
 	soundno = digi_xlat_sound(soundno);
 
@@ -1072,13 +1169,10 @@ int digi_is_sound_playing(int soundno)
 	if ( (SampleHandle < _MAX_VOICES) && (!sosDIGISampleDone( hSOSDigiDriver, SampleHandle)) )
 		return 1;
 	return 0;
-	*/
-	return 0;//KRB Comment out...
 }
 
 void digi_play_sample_once( int soundno, fix max_volume )
 {
-/*
 	WORD SampleHandle;
 	digi_sound *snd;
 	_SOS_START_SAMPLE sSOSSampleData;
@@ -1122,13 +1216,11 @@ void digi_play_sample_once( int soundno, fix max_volume )
 
    // start the sample playing
 	digi_start_sound( &sSOSSampleData, soundno );
-	*/
 }
 
 
 void digi_play_sample( int soundno, fix max_volume )
 {
-/*
 	digi_sound *snd;
 	_SOS_START_SAMPLE sSOSSampleData;
 
@@ -1165,13 +1257,11 @@ void digi_play_sample( int soundno, fix max_volume )
 
    // start the sample playing
 	digi_start_sound( &sSOSSampleData, soundno );
-*/
 }
 
 
 void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )
 {
-/*
 	_SOS_START_SAMPLE sSOSSampleData;
 	digi_sound *snd;
 
@@ -1213,7 +1303,6 @@ void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups )
 
    // start the sample playing
 	digi_start_sound( &sSOSSampleData, soundno );
-*/
 }
 
 void digi_set_midi_volume( int mvolume )
@@ -1242,7 +1331,6 @@ void digi_set_midi_volume( int mvolume )
 
 void digi_set_digi_volume( int dvolume )
 {
-/*
 	dvolume = fixmuldiv( dvolume, _DIGI_MAX_VOLUME, 0x7fff);
 	if ( dvolume > _DIGI_MAX_VOLUME )
 		digi_volume = _DIGI_MAX_VOLUME;
@@ -1255,18 +1343,15 @@ void digi_set_digi_volume( int dvolume )
 	if ( digi_driver_board <= 0 )	return;
 
 	digi_sync_sounds();
-*/
 }
 
 
 // 0-0x7FFF
 void digi_set_volume( int dvolume, int mvolume )
 {
-/*
 	digi_set_midi_volume( mvolume );
 	digi_set_digi_volume( dvolume );
 //	mprintf(( 1, "Volume: 0x%x and 0x%x\n", digi_volume, midi_volume ));
-*/
 }
 
 // allocate memory for file, load file, create far pointer
@@ -1441,7 +1526,6 @@ void digi_play_midi_song( char * filename, char * melodic_bank, char * drum_bank
 
 void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int listener_seg, vms_vector * sound_pos, int sound_seg, fix max_volume, int *volume, int *pan, fix max_distance )
 {
-/*
 	vms_vector	vector_to_sound;
 	fix angle_from_ear, cosang,sinang;
 	fix distance;
@@ -1474,13 +1558,11 @@ void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos, int l
 			}
 		}
 	}
-	*/
 }
 
 
 void digi_init_sounds()
 {
-/*
 	int i;
 
 	if (!Digi_initialized) return;
@@ -1497,12 +1579,10 @@ void digi_init_sounds()
 		SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 	}
 	digi_sounds_initialized = 1;
-	*/
 }
 
 void digi_start_sound_object(int i)
 {
-/*
 	// start sample structures
 	_SOS_START_SAMPLE sSOSSampleData;
 
@@ -1541,13 +1621,11 @@ void digi_start_sound_object(int i)
 //	else
 //		mprintf( (1, "[Out of channels: %i] ", i ));
 
-*/
 
 }
 
 int digi_link_sound_to_object2( int org_soundnum, short objnum, int forever, fix max_volume, fix  max_distance )
 {
-/*
 	int i,volume,pan;
 	object * objp;
 	int soundnum;
@@ -1603,19 +1681,15 @@ int digi_link_sound_to_object2( int org_soundnum, short objnum, int forever, fix
 	digi_start_sound_object(i);
 
 	return SoundObjects[i].signature;
-*/
-	return 0;//KRB -Comment out
 }
 
 int digi_link_sound_to_object( int soundnum, short objnum, int forever, fix max_volume )
 {																									// 10 segs away
-	//return digi_link_sound_to_object2( soundnum, objnum, forever, max_volume, 256*F1_0  );
-	return 0;//KRB comment out 98
+	return digi_link_sound_to_object2( soundnum, objnum, forever, max_volume, 256*F1_0  );
 }
 
 int digi_link_sound_to_pos2( int org_soundnum, short segnum, short sidenum, vms_vector * pos, int forever, fix max_volume, fix max_distance )
 {
-/*
 	int i, volume, pan;
 	int soundnum;
 
@@ -1671,20 +1745,16 @@ int digi_link_sound_to_pos2( int org_soundnum, short segnum, short sidenum, vms_
 	digi_start_sound_object(i);
 
 	return SoundObjects[i].signature;
-	*/
-	return 0;//KRB comment out '98
 }
 
 int digi_link_sound_to_pos( int soundnum, short segnum, short sidenum, vms_vector * pos, int forever, fix max_volume )
 {
-	//return digi_link_sound_to_pos2( soundnum, segnum, sidenum, pos, forever, max_volume, F1_0 * 256 );
-	return 0;//KRB comment out project...
+	return digi_link_sound_to_pos2( soundnum, segnum, sidenum, pos, forever, max_volume, F1_0 * 256 );
 }
 
 
 void digi_kill_sound_linked_to_segment( int segnum, int sidenum, int soundnum )
 {
-/*
 	int i,killed;
 
 	soundnum = digi_xlat_sound(soundnum);
@@ -1710,12 +1780,10 @@ void digi_kill_sound_linked_to_segment( int segnum, int sidenum, int soundnum )
 	if ( killed > 1 )	{
 		mprintf( (1, "ERROR: More than 1 sounds were deleted from seg %d\n", segnum ));
 	}
-*/
 }
 
 void digi_kill_sound_linked_to_object( int objnum )
 {
-/*
 	int i,killed;
 
 	if (!Digi_initialized) return;
@@ -1739,7 +1807,6 @@ void digi_kill_sound_linked_to_object( int objnum )
 	if ( killed > 1 )	{
 		mprintf( (1, "ERROR: More than 1 sounds were deleted from object %d\n", objnum ));
 	}
-*/
 }
 
 
@@ -1762,7 +1829,6 @@ void digi_kill_sound_linked_to_object( int objnum )
 
 void digi_sync_sounds()
 {
-/*
 	int i;
 	int oldvolume, oldpan;
 
@@ -1848,7 +1914,6 @@ void digi_sync_sounds()
 		}
 	}
 
-*/
 }
 
 
@@ -1856,7 +1921,6 @@ int sound_paused = 0;
 
 void digi_pause_all()
 {
-/*
 	int i;
 
 	if (!Digi_initialized) return;
@@ -1885,12 +1949,10 @@ void digi_pause_all()
 		}
 	}
 	sound_paused++;
-*/
 }
 
 void digi_resume_all()
 {
-/*
 	if (!Digi_initialized) return;
 
 	Assert( sound_paused > 0 );
@@ -1911,13 +1973,11 @@ void digi_resume_all()
 		}
 	}
 	sound_paused--;
-*/
 }
 
 
 void digi_stop_all()
 {
-	/*
 	int i;
 
 	if (!Digi_initialized) return;
@@ -1946,13 +2006,11 @@ void digi_stop_all()
 			}
 		}
 	}
-	*/
 }
 
 #ifndef NDEBUG
 int verify_sound_channel_free( int channel )
 {
-	/*
 	int i;
 	if (digi_driver_board>0)	{
 		for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
@@ -1966,7 +2024,6 @@ int verify_sound_channel_free( int channel )
 			}
 		}
 	}
-	*/
 	return 0;
 }
 #endif

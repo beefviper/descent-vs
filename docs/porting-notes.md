@@ -50,15 +50,17 @@ Where the port stands and what is left before the game runs on Windows.
 - **Leftover SVGA code.** A few banked-SVGA paths in `pixel.c`,
   `gpixel.c`, `bitblt.c` and `font.c` still cast pointers to `int`; they
   are no longer reached, since all modes are linear now.
-- **Sound and music.** `src/main/digi.c` was written against the Human
-  Machine Interfaces SOS library, which Parallax removed from the release.
-  Its calls are commented out and the game runs silently. Digital sound
-  and MIDI need a new backend.
+- **Music.** `src/main/digi.c` was written against the Human Machine
+  Interfaces SOS library, which Parallax removed from the release. Sound
+  effects now go through an SDL2 mixer (`src/platform/audio.c`), with
+  small stand-ins for the SOS calls at the top of `digi.c`. The MIDI half
+  is still commented out: the songs are HMP files that need converting to
+  MIDI and a synthesizer to play them.
 - **Networking.** IPX goes through real-mode interrupts and reports
   "no IPX". Modem and serial play used the Greenleaf CommLib, which is not
   in the release; `src/main/nocomlib.h` only has dummy values.
 - **Timer interrupt.** The function set with `timer_set_function()`
-  (used by the sound code) and the joystick poller are never called.
+  (used by the SOS sound code, no longer needed) and the joystick poller are never called.
 - **Game data.** The release contains no `descent.hog` or `descent.pig`; a
   copy of the registered game is needed to run anything.
 

@@ -212,6 +212,12 @@ int dpmi_unlock_region(void *address, unsigned length)
 	union REGS regs;
 	unsigned int linear;
 
+#ifndef __WATCOMC__
+	// Protected-mode Windows memory never needs locking for interrupts.
+	(void)regs; (void)linear; (void)address;
+	total_bytes -= length;
+	return 1;
+#endif
 	linear = (unsigned int) address;
 
 	total_bytes -= length;
@@ -233,6 +239,12 @@ int dpmi_lock_region(void *address, unsigned length)
 	union REGS regs;
 	unsigned int linear;
 
+#ifndef __WATCOMC__
+	// Protected-mode Windows memory never needs locking for interrupts.
+	(void)regs; (void)linear; (void)address;
+	total_bytes += length;
+	return 1;
+#endif
 	linear = (unsigned int) address;
 
 	total_bytes += length;

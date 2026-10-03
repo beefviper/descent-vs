@@ -8,9 +8,9 @@ non-commercial purposes.
 
 The code compiles and links for 32-bit and 64-bit Windows, with all of the
 original assembly rewritten in C. It opens an SDL2 window for the graphics
-and keyboard, and a console window that shows the debug output the
-original sent to a monochrome monitor. Mouse, sound and networking are
-not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
+keyboard and sound effects, and a console window that shows the debug
+output the original sent to a monochrome monitor. Mouse, music and
+networking are not done yet. See [docs/porting-notes.md](docs/porting-notes.md).
 
 ## Layout
 
