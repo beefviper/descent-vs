@@ -1242,6 +1242,7 @@ int main(int argc,char **argv)
 
 	Lighting_on = 1;
 
+#ifdef __WATCOMC__		// DOS version, file handle and DOS memory checks
 	if ( !FindArg( "-nodoscheck" ))
 		check_dos_version();
 
@@ -1250,6 +1251,7 @@ int main(int argc,char **argv)
 
 	if ( !FindArg( "-nomemcheck" ))
 		check_memory();
+#endif
 
 	strcpy(Menu_pcx_name, "menu.pcx");	//	Used to be menu2.pcx.
 
