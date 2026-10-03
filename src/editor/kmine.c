@@ -238,7 +238,7 @@ int SaveMine()
 #endif
 
 #if !MINESAVE_CRIPPLED
-int SaveMine()
+int SaveMine(void)
 {
 	// Save mine
 //	med_save_mine("TEMP.MIN");
@@ -254,7 +254,7 @@ int SaveMine()
 }
 #endif
 
-int CreateNewMine()
+int CreateNewMine(void)
 {
 	if (SafetyCheck())  {
 		texpage_goto_first();
@@ -278,7 +278,7 @@ int CreateNewMine()
 	return 1;
 }
 
-int MineMenu()
+int MineMenu(void)
 {
 	int x;
 	char * MenuItems[] = { "New mine",

@@ -546,7 +546,7 @@ void close_all_windows(void)
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the robot dialog box
 //-------------------------------------------------------------------------
-int do_robot_dialog()
+int do_robot_dialog(void)
 {
 	int i;
 
@@ -607,7 +607,7 @@ int do_robot_dialog()
 
 }
 
-void robot_close_window()
+void robot_close_window(void)
 {
 	if ( MainWindow!=NULL )	{
 		ui_close_window( MainWindow );
@@ -618,7 +618,7 @@ void robot_close_window()
 
 #define	STRING_LENGTH	8
 
-void do_robot_window()
+void do_robot_window(void)
 {
 	int	i;
 	fix	DeltaTime, Temp;
@@ -814,7 +814,7 @@ void do_robot_window()
 
 static UI_WINDOW 				*MattWindow = NULL;
 
-void object_close_window()
+void object_close_window(void)
 {
 	if ( MattWindow!=NULL )	{
 		ui_close_window( MattWindow );
@@ -829,7 +829,7 @@ UI_GADGET_INPUTBOX	*Xtext, *Ytext, *Ztext;
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the object dialog box
 //-------------------------------------------------------------------------
-int do_object_dialog()
+int do_object_dialog(void)
 {
 	char	Xmessage[MATT_LEN], Ymessage[MATT_LEN], Zmessage[MATT_LEN];
 	object *obj=&Objects[Cur_object_index];
@@ -878,7 +878,7 @@ int do_object_dialog()
 
 }
 
-void do_object_window()
+void do_object_window(void)
 {
 	object *obj=&Objects[Cur_object_index];
 

@@ -110,8 +110,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // joystick was detected, 1 if everything is ok.
 // joy_init() is called.
 
-extern int joy_init();
-extern void joy_close();
+extern int joy_init(void);
+extern void joy_close(void);
 
 extern char joy_installed;
 extern char joy_present;
@@ -127,9 +127,9 @@ extern char joy_present;
 // left position is usually always 0,0 on most joys.  But, the safest
 // bet is to do all three, or let the user choose which ones to set.
 
-extern void joy_set_ul();
-extern void joy_set_lr();
-extern void joy_set_cen();
+extern void joy_set_ul(void);
+extern void joy_set_lr(void);
+extern void joy_set_cen(void);
 
 
 //==========================================================================
@@ -143,7 +143,7 @@ extern void joy_get_pos( int *x, int *y );
 //==========================================================================
 // This just reads the buttons and returns their status.  When bit 0
 // is 1, button 1 is pressed, when bit 1 is 1, button 2 is pressed.
-extern int joy_get_btns();
+extern int joy_get_btns(void);
 
 //==========================================================================
 // This returns the number of times a button went either down or up since
@@ -158,12 +158,12 @@ extern int joy_get_button_down_cnt( int btn );
 // it, and held it down for 6 more ticks. The time returned would be 9.
 extern fix joy_get_button_down_time( int btn );
 
-extern ubyte joy_read_raw_buttons();
+extern ubyte joy_read_raw_buttons(void);
 extern ubyte joystick_read_raw_axis( ubyte mask, int * axis );
-extern void joy_flush();
-extern ubyte joy_get_present_mask();
+extern void joy_flush(void);
+extern ubyte joy_get_present_mask(void);
 extern void joy_set_timer_rate(int max_value );
-extern int joy_get_timer_rate();
+extern int joy_get_timer_rate(void);
 
 extern int joy_get_button_state( int btn );
 extern void joy_set_cen_fake(int channel);

@@ -327,11 +327,11 @@ vms_matrix mine_exit_orient;
 int outside_mine;
 
 // Function Prototypes
-void generate_starfield();
+void generate_starfield(void);
 int find_exit_side(object* obj);
 void start_endlevel_flythrough(int n,object *obj,fix speed);
 void do_endlevel_flythrough(int n);
-void draw_stars();
+void draw_stars(void);
 
 
 grs_bitmap terrain_bm_instance;
@@ -366,7 +366,7 @@ static void free_endlevel_data(void)
 		free(satellite_bm_instance.bm_data);
 }
 
-void init_endlevel()
+void init_endlevel(void)
 {
 	//##satellite_bitmap = bm_load("earth.bbm");
 	//##terrain_bitmap = bm_load("moon.bbm");
@@ -407,7 +407,7 @@ vms_matrix surface_orient;
 
 int endlevel_data_loaded=0;
 
-void start_endlevel_sequence()
+void start_endlevel_sequence(void)
 {
 	int exit_side,tunnel_length;
 #ifndef NDEBUG
@@ -604,7 +604,7 @@ static int chase_angles(vms_angvec *cur_angles,vms_angvec *desired_angles)
 	return mask;
 }
 
-void stop_endlevel_sequence()
+void stop_endlevel_sequence(void)
 {
 	Interpolation_method = 0;
 
@@ -632,7 +632,7 @@ static void get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *c
 	vm_extract_angles_vector(av,&tv);
 }
 
-void do_endlevel_frame()
+void do_endlevel_frame(void)
 {
 	static fix timer;
 	vms_vector save_last_pos;
@@ -1040,7 +1040,7 @@ extern vms_vector Viewer_eye;	//valid during render
 
 void render_mine(int start_seg_num,fix eye_offset);
 
-void draw_exit_model()
+void draw_exit_model(void)
 {
 	vms_vector model_pos;
 	int f=15,u=0;	//21;
@@ -1119,7 +1119,7 @@ void render_external_scene(fix eye_offset)
 
 vms_vector stars[MAX_STARS];
 
-void generate_starfield()
+void generate_starfield(void)
 {
 	int i;
 
@@ -1132,7 +1132,7 @@ void generate_starfield()
 	}
 }
 
-void draw_stars()
+void draw_stars(void)
 {
 	int i;
 	int intensity=31;

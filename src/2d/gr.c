@@ -220,18 +220,18 @@ int gr_installed = 0;
 int gr_show_screen_info = 0;
 
 // There is no text screen to save or restore.
-int gr_save_mode()
+int gr_save_mode(void)
 {
 	return 0;
 }
 
-void gr_restore_mode()
+void gr_restore_mode(void)
 {
 	gr_palette_fade_out( gr_palette, 32, 0 );
 	gr_palette_set_gamma(0);
 }
 
-int gr_close()
+int gr_close(void)
 {
 	if (gr_installed==1)
 	{

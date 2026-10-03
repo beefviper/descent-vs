@@ -191,7 +191,7 @@ void gr_palette_set_gamma( int gamma )
 	}
 }
 
-int gr_palette_get_gamma()
+int gr_palette_get_gamma(void)
 {
 	return gr_palette_gamma_param;
 }
@@ -379,7 +379,7 @@ void gr_palette_step_up( int r, int g, int b )
 	}
 }
 
-void gr_palette_clear()
+void gr_palette_clear(void)
 {
 	int i;
 	outp( 0x3c6, 0xff );

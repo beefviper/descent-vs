@@ -180,7 +180,7 @@ int texmerge_init(int num_cached_textures)
 	return 1;
 }
 
-void texmerge_flush()
+void texmerge_flush(void)
 {
 	int i;
 

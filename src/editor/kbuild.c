@@ -103,7 +103,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "kdefs.h"
 
 //  ---------- Create a bridge segment between current segment/side and marked segment/side ----------
-int CreateBridge()
+int CreateBridge(void)
 {
     if (!med_form_bridge_segment(Cursegp,Curside,Markedsegp,Markedside)) {
 		Update_flags |= UF_WORLD_CHANGED;
@@ -118,7 +118,7 @@ int CreateBridge()
 
 
 // ---------- Form a joint between current segment:side and marked segment:side, modifying marked segment ----------
-int FormJoint()
+int FormJoint(void)
 {
 	if (!Markedsegp)
 		diagnostic_message("Marked segment not set -- unable to form joint.");
@@ -138,7 +138,7 @@ int FormJoint()
 }
 
 //  ---------- Create a bridge segment between current segment:side adjacent segment:side ----------
-int CreateAdjacentJoint()
+int CreateAdjacentJoint(void)
 {
 	int		adj_side;
 	segment	*adj_sp;
@@ -161,7 +161,7 @@ int CreateAdjacentJoint()
 }
 
 //  ---------- Create a bridge segment between current segment:side adjacent segment:side ----------
-int CreateSloppyAdjacentJoint()
+int CreateSloppyAdjacentJoint(void)
 {
 	int		adj_side;
 	segment	*adj_sp;
@@ -190,7 +190,7 @@ int CreateSloppyAdjacentJoint()
 
 
 //  -------------- Create all sloppy joints within CurrentGroup ------------------
-int CreateSloppyAdjacentJointsGroup()
+int CreateSloppyAdjacentJointsGroup(void)
 {
 	int		adj_side;
 	segment	*adj_sp;
@@ -228,7 +228,7 @@ int CreateSloppyAdjacentJointsGroup()
 
 
 //  ---------- Create a bridge segment between current segment and all adjacent segment:side ----------
-int CreateAdjacentJointsSegment()
+int CreateAdjacentJointsSegment(void)
 {
 	int		adj_side,s;
 	segment	*adj_sp;
@@ -253,7 +253,7 @@ int CreateAdjacentJointsSegment()
 }
 
 //  ---------- Create a bridge segment between all segment:side and all adjacent segment:side ----------
-int CreateAdjacentJointsAll()
+int CreateAdjacentJointsAll(void)
 {
 	int		adj_side,seg,s;
 	segment	*adj_sp;

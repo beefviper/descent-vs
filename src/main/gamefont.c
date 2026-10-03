@@ -69,7 +69,7 @@ grs_font *Gamefonts[MAX_FONTS];
 
 int Gamefont_installed=0;
 
-void gamefont_init()
+void gamefont_init(void)
 {
 	int i;
 

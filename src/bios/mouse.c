@@ -454,7 +454,7 @@ void mouse_get_delta( int *dx, int *dy )
 	*dy = (short)outregs.w.dx;
 }
 
-int mouse_get_btns()
+int mouse_get_btns(void)
 {
 	int i;
 	uint flag=1;
@@ -486,7 +486,7 @@ void mouse_set_pos( int x, int y)
 
 }
 
-void mouse_flush()
+void mouse_flush(void)
 {
 	int i;
 	fix CurTime;

@@ -116,7 +116,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 int Num_effects;
 eclip Effects[MAX_EFFECTS];
 
-void init_special_effects()
+void init_special_effects(void)
 {
 	int i;
 
@@ -124,7 +124,7 @@ void init_special_effects()
 		Effects[i].time_left = Effects[i].vc.frame_time;
 }
 
-void reset_special_effects()
+void reset_special_effects(void)
 {
 	int i;
 
@@ -142,7 +142,7 @@ void reset_special_effects()
 	}
 }
 
-void do_special_effects()
+void do_special_effects(void)
 {
 	int i;
 	eclip *ec;
@@ -202,7 +202,7 @@ void do_special_effects()
 	}
 }
 
-void restore_effect_bitmap_icons()
+void restore_effect_bitmap_icons(void)
 {
 	int i;
 

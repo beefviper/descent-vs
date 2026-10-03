@@ -73,9 +73,9 @@ typedef struct bitmap_index {
 	ushort	index;
 } bitmap_index;
 
-int piggy_init();
-void piggy_close();
-void piggy_dump_all();
+int piggy_init(void);
+void piggy_close(void);
+void piggy_dump_all(void);
 bitmap_index piggy_register_bitmap( grs_bitmap * bmp, char * name, int in_file );
 int piggy_register_sound( digi_sound * snd, char * name, int in_file );
 bitmap_index piggy_find_bitmap( char * name );
@@ -93,7 +93,7 @@ do { 																\
 */
 
 	extern void piggy_bitmap_page_in( bitmap_index bmp );
-	extern void piggy_bitmap_page_out_all();
+	extern void piggy_bitmap_page_out_all(void);
 	extern int piggy_page_flushed;
 #else
 	#define PIGGY_PAGE_IN(bmp)
@@ -102,7 +102,7 @@ do { 																\
 void piggy_read_bitmap_data(grs_bitmap * bmp);
 void piggy_read_sound_data(digi_sound	*snd);
 
-void piggy_load_level_data();
+void piggy_load_level_data(void);
 
 #ifdef SHAREWARE
 #define MAX_BITMAP_FILES	1500
@@ -115,7 +115,7 @@ void piggy_load_level_data();
 extern digi_sound GameSounds[MAX_SOUND_FILES];
 extern grs_bitmap GameBitmaps[MAX_BITMAP_FILES];
 
-void piggy_read_sounds();
+void piggy_read_sounds(void);
 
 
 void piggy_get_bitmap_name( int i, char * name );

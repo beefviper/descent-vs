@@ -42,7 +42,7 @@ static int func_size = 0;
 static int initialized = 0;
 static int func_params[MAX_PARAMS];
 
-int func_howmany()
+int func_howmany(void)
 {
 	return func_size;
 }
@@ -59,7 +59,7 @@ void func_init( FUNCTION * funtable, int size )
 }
 
 
-void func_close()
+void func_close(void)
 {
 	if (initialized)
 	{

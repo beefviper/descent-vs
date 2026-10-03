@@ -36,6 +36,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _CREDITS_H
 #define _CREDITS_H
 
-void credits_show();
+void credits_show(void);
 
 #endif

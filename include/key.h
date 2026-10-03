@@ -87,7 +87,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //==========================================================================
 // This installs the int9 vector and initializes the keyboard in buffered
 // ASCII mode. key_close simply undoes that.
-extern void key_init();
+extern void key_init(void);
 extern void key_close(void);
 
 //==========================================================================
@@ -108,12 +108,12 @@ extern volatile int keyd_time_when_last_pressed;
 // These are the "buffered" keypress routines.  Use them by setting the
 // "keyd_buffer_type" variable.
 
-extern void key_flush();    // Clears the 256 char buffer
-extern int key_checkch();   // Returns 1 if a char is waiting
-extern int key_getch();     // Gets key if one waiting other waits for one.
-extern int key_inkey();     // Gets key if one, other returns 0.
+extern void key_flush(void);    // Clears the 256 char buffer
+extern int key_checkch(void);   // Returns 1 if a char is waiting
+extern int key_getch(void);     // Gets key if one waiting other waits for one.
+extern int key_inkey(void);     // Gets key if one, other returns 0.
 extern int key_inkey_time(fix *time);     // Same as inkey, but returns the time the key was pressed down.
-extern int key_peekkey();   // Same as inkey, but doesn't remove key from buffer.
+extern int key_peekkey(void);   // Same as inkey, but doesn't remove key from buffer.
 
 extern char key_to_ascii(int keycode );
 

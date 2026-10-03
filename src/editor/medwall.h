@@ -94,11 +94,11 @@ extern int wall_remove();
 // Removes a specific side.
 int wall_remove_side(segment *seg, short side);
 
-extern int bind_wall_to_control_center();
+extern int bind_wall_to_control_center(void);
 
-extern void close_wall_window();
+extern void close_wall_window(void);
 
-extern void do_wall_window();
+extern void do_wall_window(void);
 
 extern int wall_link_doors(void);
 extern int wall_unlink_door(void);

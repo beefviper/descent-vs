@@ -192,7 +192,7 @@ fix trigger_time_count=F1_0;
 
 //-----------------------------------------------------------------
 // Initializes all the switches.
-void trigger_init()
+void trigger_init(void)
 {
 	int i;
 
@@ -392,7 +392,7 @@ void check_trigger(segment *seg, short side, short objnum)
 	}
 }
 
-void triggers_frame_process()
+void triggers_frame_process(void)
 {
 	int i;
 

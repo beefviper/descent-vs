@@ -145,7 +145,7 @@ static char MacrosHelpText[] = "MED Macros Functions\n\n" \
 "CTRL-PAGEUP      Save Macro\n" \
 "CTRL-PAGEDOWN    Load Macro\n";
 
-int DoHelp()
+int DoHelp(void)
 {
 	int help_key = 2;
     int more_key = 2;

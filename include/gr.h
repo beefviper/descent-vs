@@ -295,11 +295,11 @@ extern void gr_pal_clear();
 extern void gr_pal_setblock( int start, int number, unsigned char * pal );
 extern void gr_pal_getblock( int start, int number, unsigned char * pal );
 
-extern int gr_init_A0000();         // Initializes _A0000. Returns true if failed.
+extern int gr_init_A0000(void);         // Initializes _A0000. Returns true if failed.
 extern unsigned short _A0000;       // Selector for screen segment
 
 //shut down the 2d.  Restore the screen mode.
-int gr_close();
+int gr_close(void);
 
 //  0=Mode set OK
 //  1=No VGA adapter installed
@@ -317,10 +317,10 @@ int gr_close();
 int gr_check_mode(int mode);
 
 
-extern int gr_save_mode();
-extern void gr_restore_mode();
+extern int gr_save_mode(void);
+extern void gr_restore_mode(void);
 
-extern void gr_sync_display();
+extern void gr_sync_display(void);
 
 //=========================================================================
 // Canvas functions:

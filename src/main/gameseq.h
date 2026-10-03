@@ -212,8 +212,8 @@ void StartNewLevel(int level_num);
 // Actually does the work to start new level
 void StartNewLevelSub(int level_num, int page_in_textures);
 
-void InitPlayerObject();				//make sure player's object set up
-void init_player_stats_game();		//clear all stats
+void InitPlayerObject(void);				//make sure player's object set up
+void init_player_stats_game(void);		//clear all stats
 
 //starts a resumed game loaded from disk
 void ResumeSavedGame(int start_level);
@@ -223,16 +223,16 @@ void ResumeSavedGame(int start_level);
 void PlayerFinishedLevel(int secret_flag);
 
 //called when the player has died
-void DoPlayerDead();
+void DoPlayerDead(void);
 
 //load a level off disk. level numbers start at 1.
 //Secret levels are -1,-2,-3
 void LoadLevel(int level_num);
 
-extern void gameseq_remove_unused_players();
+extern void gameseq_remove_unused_players(void);
 
-extern void show_help();
-extern void update_player_stats();
+extern void show_help(void);
+extern void update_player_stats(void);
 
 //from scores.c
 
@@ -241,7 +241,7 @@ extern void draw_high_scores( int place );
 extern int add_player_to_high_scores(player *pp);
 extern void input_name ( int place );
 extern int reset_high_scores();
-extern void init_player_stats_level();
+extern void init_player_stats_level(void);
 
 void open_message_window(void);
 void close_message_window(void);
@@ -253,7 +253,7 @@ extern void create_player_appearance_effect(object *player_obj);
 
 
 //reset stuff so game is semi-normal when playing from editor
-void editor_reset_stuff_on_level();
+void editor_reset_stuff_on_level(void);
 
 //Show endlevel bonus scores
 extern void DoEndLevelScoreGlitz(int network);

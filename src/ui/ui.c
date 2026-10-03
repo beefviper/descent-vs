@@ -73,7 +73,7 @@ unsigned char CBLACK,CGREY,CWHITE,CBRIGHT,CRED;
 
 grs_font * ui_small_font = NULL;
 
-void ui_init()
+void ui_init(void)
 {
 	grs_font * org_font;
 

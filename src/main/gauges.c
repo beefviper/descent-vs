@@ -1243,7 +1243,7 @@ void add_bonus_points_to_score(int points)
 	}
 }
 
-void init_gauge_canvases()
+void init_gauge_canvases(void)
 {
 	Canv_LeftEnergyGauge = gr_create_canvas( LEFT_ENERGY_GAUGE_W, LEFT_ENERGY_GAUGE_H );
 	Canv_SBEnergyGauge = gr_create_canvas( SB_ENERGY_GAUGE_W, SB_ENERGY_GAUGE_H );
@@ -1251,7 +1251,7 @@ void init_gauge_canvases()
 	Canv_NumericalGauge = gr_create_canvas( NUMERICAL_GAUGE_W, NUMERICAL_GAUGE_H );
 }
 
-void close_gauge_canvases()
+void close_gauge_canvases(void)
 {
 	gr_free_canvas( Canv_LeftEnergyGauge );
 	gr_free_canvas( Canv_SBEnergyGauge );
@@ -2061,7 +2061,7 @@ static void hud_show_kill_list()
 #endif
 
 //draw all the things on the HUD
-void draw_hud()
+void draw_hud(void)
 {
 	//	Show score so long as not in rearview
 	if ( !Rear_view && Cockpit_mode!=CM_REAR_VIEW && Cockpit_mode!=CM_STATUS_BAR) {

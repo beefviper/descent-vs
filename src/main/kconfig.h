@@ -137,7 +137,7 @@ typedef struct control_info {
 } control_info;
 
 extern control_info Controls;
-extern void controls_read_all();
+extern void controls_read_all(void);
 extern void kconfig(int n, char * title );
 
 extern ubyte Config_digi_volume;
@@ -164,10 +164,10 @@ extern ubyte default_kconfig_settings[CONTROL_MAX_TYPES][MAX_CONTROLS];
 
 extern char *control_text[CONTROL_MAX_TYPES];
 
-extern void kc_set_controls();
+extern void kc_set_controls(void);
 
 // Tries to use vfx1 head tracking.
-void kconfig_sense_init();
+void kconfig_sense_init(void);
 
 //set the cruise speed to zero
 extern void reset_cruise(void);

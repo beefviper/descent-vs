@@ -76,15 +76,15 @@ int save_player_game(int slot_num,char *text);
 int load_player_game(int slot_num);
 
 //update the player's highest level.  returns errno (0 == no error)
-int update_player_file();
+int update_player_file(void);
 
 //Used to save kconfig values to disk.
-int write_player_file();
+int write_player_file(void);
 
-int new_player_config();
-void init_game_list();
+int new_player_config(void);
+void init_game_list(void);
 
-int read_player_file();
+int read_player_file(void);
 
 //set a new highest level for player for this mission
 void set_highest_level(int levelnum);

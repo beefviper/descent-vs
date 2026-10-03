@@ -1547,7 +1547,7 @@ static void kconfig_read_external_controls()
 	Controls.automap_state |= kc_external_control->automap_state;
 }
 
-void controls_read_all()
+void controls_read_all(void)
 {
 	int i;
 	int slide_on, bank_on;
@@ -2129,7 +2129,7 @@ void reset_cruise(void)
 }
 
 
-void kc_set_controls()
+void kc_set_controls(void)
 {
 	int i;
 
@@ -2260,7 +2260,7 @@ int SenseSetZero( int function, int cls )
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
 
-void kconfig_sense_init()
+void kconfig_sense_init(void)
 {
 	int ret;
 	fix htd_y,htd_p,htd_r;

@@ -205,7 +205,7 @@ void GetMouseRotation( int idx, int idy, vms_matrix * RotMat )
 
 int Gameview_lockstep;		//if set, view is locked to Curseg
 
-int ToggleLockstep()
+int ToggleLockstep(void)
 {
 	Gameview_lockstep = !Gameview_lockstep;
     if (Gameview_lockstep == 0) {
@@ -292,7 +292,7 @@ int ToggleLockViewToCursegp(void)
     return Lock_view_to_cursegp;
 }
 
-int ToggleDrawAllSegments()
+int ToggleDrawAllSegments(void)
 {
 	Draw_all_segments = !Draw_all_segments;
 	Update_flags = UF_ED_STATE_CHANGED;
@@ -330,7 +330,7 @@ int DecreaseDrawDepth(void)
 }
 
 
-int ToggleCoordAxes()
+int ToggleCoordAxes(void)
 {
 			//  Toggle display of coordinate axes.
 	Show_axes_flag = !Show_axes_flag;
@@ -350,19 +350,19 @@ int ToggleCoordAxes()
     return Show_axes_flag;
 }
 
-int med_keypad_goto_prev()
+int med_keypad_goto_prev(void)
 {
 	ui_pad_goto_prev();
 	return 0;
 }
 
-int med_keypad_goto_next()
+int med_keypad_goto_next(void)
 {
 	ui_pad_goto_next();
 	return 0;
 }
 
-int med_keypad_goto()
+int med_keypad_goto(void)
 {
 	ui_pad_goto(func_get_param(0));
 	return 0;
@@ -370,7 +370,7 @@ int med_keypad_goto()
 
 int render_3d_in_big_window=0;
 
-int medlisp_update_screen()
+int medlisp_update_screen(void)
 {
 	int vn;
 
@@ -435,7 +435,7 @@ void draw_world_from_game(void)
 		draw_world(Views[0]->ev_canv,Views[0],Cursegp,Big_depth);
 }
 
-int UndoCommand()
+int UndoCommand(void)
 {   int u;
 
     u = undo();
@@ -457,7 +457,7 @@ int UndoCommand()
 }
 
 
-int ToggleAutosave()
+int ToggleAutosave(void)
 {
 	Autosave_flag = !Autosave_flag;
 	if (Autosave_flag == 1)
@@ -468,7 +468,7 @@ int ToggleAutosave()
 }
 
 
-int AttachSegment()
+int AttachSegment(void)
 {
    if (med_attach_segment(Cursegp, &New_segment, Curside, AttachSide)==4) // Used to be WBACK instead of Curside
         diagnostic_message("Cannot attach segment - already a connection on current side.");
@@ -524,7 +524,7 @@ static int DeleteCurSegment()
     return 1;
 }
 
-int CreateDefaultNewSegment()
+int CreateDefaultNewSegment(void)
 {
 	// Create a default segment for New_segment.
 	vms_vector  tempvec;
@@ -534,7 +534,7 @@ int CreateDefaultNewSegment()
 	return 1;
 }
 
-int CreateDefaultNewSegmentandAttach()
+int CreateDefaultNewSegmentandAttach(void)
 {
 	CreateDefaultNewSegment();
 	AttachSegment();
@@ -542,7 +542,7 @@ int CreateDefaultNewSegmentandAttach()
 	return 1;
 }
 
-int ExchangeMarkAndCurseg()
+int ExchangeMarkAndCurseg(void)
 {
 	// If Markedsegp != Cursegp, and Markedsegp->segnum != -1, exchange Markedsegp and Cursegp
 	if (Markedsegp)
@@ -558,7 +558,7 @@ int ExchangeMarkAndCurseg()
 	return 1;
 }
 
-int medlisp_add_segment()
+int medlisp_add_segment(void)
 {
 	AttachSegment();
 //segment *ocursegp = Cursegp;

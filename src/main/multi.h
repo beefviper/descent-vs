@@ -370,7 +370,7 @@ void multi_send_endlevel_start(int);
 void multi_send_player_explode(char type);
 void multi_send_message(void);
 void multi_send_position(int objnum);
-void multi_send_reappear();
+void multi_send_reappear(void);
 void multi_send_kill(int objnum);
 void multi_send_remobj(int objnum);
 void multi_send_quit(int why);
@@ -457,7 +457,7 @@ extern int multi_quit_game;
 extern int multi_sending_message;
 extern int multi_defining_message;
 extern void multi_message_input_sub( int key );
-extern void multi_send_message_start();
+extern void multi_send_message_start(void);
 
 extern int control_invul_time;
 

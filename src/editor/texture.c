@@ -88,7 +88,7 @@ static void compute_uv_side_center(uvl *uvcenter, segment *segp, int sidenum);
 static void rotate_uv_points_on_side(segment *segp, int sidenum, fix *rotmat, uvl *uvcenter);
 
 //	-----------------------------------------------------------
-int	TexFlipX()
+int	TexFlipX(void)
 {
 	uvl	uvcenter;
 	fix	rotmat[4];
@@ -109,7 +109,7 @@ int	TexFlipX()
 }
 
 //	-----------------------------------------------------------
-int	TexFlipY()
+int	TexFlipY(void)
 {
 	uvl	uvcenter;
 	fix	rotmat[4];
@@ -159,12 +159,12 @@ static int DoTexSlideLeft(int value)
 	return	1;
 }
 
-int TexSlideLeft()
+int TexSlideLeft(void)
 {
 	return DoTexSlideLeft(3);
 }
 
-int TexSlideLeftBig()
+int TexSlideLeftBig(void)
 {
 	return DoTexSlideLeft(1);
 }
@@ -200,12 +200,12 @@ static int DoTexSlideUp(int value)
 	return	1;
 }
 
-int TexSlideUp()
+int TexSlideUp(void)
 {
 	return DoTexSlideUp(3);
 }
 
-int TexSlideUpBig()
+int TexSlideUpBig(void)
 {
 	return DoTexSlideUp(1);
 }
@@ -241,12 +241,12 @@ static int DoTexSlideDown(int value)
 	return	1;
 }
 
-int TexSlideDown()
+int TexSlideDown(void)
 {
 	return DoTexSlideDown(3);
 }
 
-int TexSlideDownBig()
+int TexSlideDownBig(void)
 {
 	return DoTexSlideDown(1);
 }
@@ -328,12 +328,12 @@ static int DoTexRotateLeft(int value)
 	return	1;
 }
 
-int TexRotateLeft()
+int TexRotateLeft(void)
 {
 	return DoTexRotateLeft(192);
 }
 
-int TexRotateLeftBig()
+int TexRotateLeftBig(void)
 {
 	return DoTexRotateLeft(64);
 }
@@ -369,12 +369,12 @@ static int DoTexSlideRight(int value)
 	return	1;
 }
 
-int TexSlideRight()
+int TexSlideRight(void)
 {
 	return DoTexSlideRight(3);
 }
 
-int TexSlideRightBig()
+int TexSlideRightBig(void)
 {
 	return DoTexSlideRight(1);
 }
@@ -397,24 +397,24 @@ static int DoTexRotateRight(int value)
 	return	1;
 }
 
-int TexRotateRight()
+int TexRotateRight(void)
 {
 	return DoTexRotateRight(192);
 }
 
-int TexRotateRightBig()
+int TexRotateRightBig(void)
 {
 	return DoTexRotateRight(64);
 }
 
 //	-----------------------------------------------------------
-int	TexSelectActiveEdge()
+int	TexSelectActiveEdge(void)
 {
 	return	1;
 }
 
 //	-----------------------------------------------------------
-int	TexRotate90Degrees()
+int	TexRotate90Degrees(void)
 {
 	uvl	uvcenter;
 	fix	rotmat[4];
@@ -432,7 +432,7 @@ int	TexRotate90Degrees()
 }
 
 //	-----------------------------------------------------------
-int	TexSetDefault()
+int	TexSetDefault(void)
 {
 	Num_tilings = 1;
 
@@ -446,7 +446,7 @@ int	TexSetDefault()
 }
 
 //	-----------------------------------------------------------
-int	TexIncreaseTiling()
+int	TexIncreaseTiling(void)
 {
 
 	Num_tilings++;
@@ -457,7 +457,7 @@ int	TexIncreaseTiling()
 }
 
 //	-----------------------------------------------------------
-int	TexDecreaseTiling()
+int	TexDecreaseTiling(void)
 {
 
 	if (--Num_tilings < 1)

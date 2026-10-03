@@ -47,7 +47,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 //==========================================================================
 // Open and close the mono screen.  close(0) clears it.
-extern int minit();	//returns true if mono card, else false
+extern int minit(void);	//returns true if mono card, else false
 
 // Use n = 0 to clear the entire screen, any other number just closes the
 // specific window.

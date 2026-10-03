@@ -325,17 +325,17 @@ typedef struct frame_info {
 #endif
 
 
-void network_start_game();
-void network_join_game();
+void network_start_game(void);
+void network_join_game(void);
 void network_rejoin_game();
-void network_leave_game();
+void network_leave_game(void);
 int network_endlevel(int *secret);
 struct newmenu_item;
 void network_endlevel_poll2( int nitems, struct newmenu_item * menus, int * key, int citem );
 
 
-int network_level_sync();
-void network_send_endlevel_packet();
+int network_level_sync(void);
+void network_send_endlevel_packet(void);
 
 int network_delete_extra_objects();
 int network_find_max_net_players();

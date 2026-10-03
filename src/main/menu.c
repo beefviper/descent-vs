@@ -126,8 +126,8 @@ int Menu_draw_copyright = 0;
 
 // Function Prototypes
 void do_option(int select);
-void do_new_game_menu();
-void do_multi_player_menu();
+void do_new_game_menu(void);
+void do_multi_player_menu(void);
 void do_detail_level_menu_custom(void);
 
 
@@ -229,7 +229,7 @@ static void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num
 }
 
 //returns number of item chosen
-int DoMenu()
+int DoMenu(void)
 {
 	int menu_choice[25];
 	newmenu_item m[25];
@@ -586,7 +586,7 @@ void do_detail_level_menu_custom(void)
 	set_custom_detail_vars();
 }
 
-void do_new_game_menu()
+void do_new_game_menu(void)
 {
 	int n_missions,new_level_num,player_highest_level;
 
@@ -777,7 +777,7 @@ static void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int 
 #define	TXT_JOYS_SENSITIVITY "Joystick/Mouse\nSensitivity"
 #endif
 
-void do_options_menu()
+void do_options_menu(void)
 {
 	newmenu_item m[13];
 	int i = 0;
@@ -817,7 +817,7 @@ void do_options_menu()
 	write_player_file();
 }
 
-void do_multi_player_menu()
+void do_multi_player_menu(void)
 {
 	int menu_choice[3];
 	newmenu_item m[3];

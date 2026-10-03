@@ -117,9 +117,9 @@ extern int ipx_init( int socket_number, int show_address );
 extern int ipx_change_default_socket( ushort socket_number );
 
 // Returns a pointer to 6-byte address
-extern ubyte * ipx_get_my_local_address();
+extern ubyte * ipx_get_my_local_address(void);
 // Returns a pointer to 4-byte server
-extern ubyte * ipx_get_my_server_address();
+extern ubyte * ipx_get_my_server_address(void);
 
 // Determines the local address equivalent of an internetwork address.
 void ipx_get_local_target( ubyte * server, ubyte * node, ubyte * local_target );

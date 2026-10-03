@@ -90,13 +90,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static fix         r1scale, r4scale;
 static int         curve;
 
-int InitCurve()
+int InitCurve(void)
 {
 	curve = 0;
     return 1;
 }
 
-int GenerateCurve()
+int GenerateCurve(void)
 {
     if ( (Markedsegp != 0) && !IS_CHILD(Markedsegp->children[Markedside])) {
 		r1scale = r4scale = F1_0*20;
@@ -116,7 +116,7 @@ int GenerateCurve()
 	return 1;
 }
 
-int DecreaseR4()
+int DecreaseR4(void)
 {
 	if (curve) {
 	   Update_flags |= UF_WORLD_CHANGED;
@@ -130,7 +130,7 @@ int DecreaseR4()
 	return 1;
 }
 
-int IncreaseR4()
+int IncreaseR4(void)
 {
 	if (curve) {
 	   Update_flags |= UF_WORLD_CHANGED;
@@ -144,7 +144,7 @@ int IncreaseR4()
 	return 1;
 }
 
-int DecreaseR1()
+int DecreaseR1(void)
 {
 	if (curve) {
 	   Update_flags |= UF_WORLD_CHANGED;
@@ -158,7 +158,7 @@ int DecreaseR1()
 	return 1;
 }
 
-int IncreaseR1()
+int IncreaseR1(void)
 {
 	if (curve) {
 	   Update_flags |= UF_WORLD_CHANGED;
@@ -172,7 +172,7 @@ int IncreaseR1()
 	return 1;
 }
 
-int DeleteCurve()
+int DeleteCurve(void)
 {
 // fix_bogus_uvs_all();
 set_average_light_on_curside();
@@ -188,7 +188,7 @@ set_average_light_on_curside();
 	return 1;
 }
 
-int SetCurve()
+int SetCurve(void)
 {
 	if (curve) curve = 0;
    //autosave_mine( mine_filename );

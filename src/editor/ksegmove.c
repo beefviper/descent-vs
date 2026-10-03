@@ -79,33 +79,33 @@ static int SegOrientCommon(fixang *ang, fix val)
 
 // ---------- segment orientation control ----------
 
-int DecreaseHeading()
+int DecreaseHeading(void)
 {
 	// decrease heading
 	return SegOrientCommon(&Seg_orientation.h,-512);
 }
 
-int IncreaseHeading()
+int IncreaseHeading(void)
 {
 	return SegOrientCommon(&Seg_orientation.h,+512);
 }
 
-int DecreasePitch()
+int DecreasePitch(void)
 {
 	return SegOrientCommon(&Seg_orientation.p,-512);
 }
 
-int IncreasePitch()
+int IncreasePitch(void)
 {
 	return SegOrientCommon(&Seg_orientation.p,+512);
 }
 
-int DecreaseBank()
+int DecreaseBank(void)
 {
 	return SegOrientCommon(&Seg_orientation.b,-512);
 }
 
-int IncreaseBank()
+int IncreaseBank(void)
 {
 	return SegOrientCommon(&Seg_orientation.b,+512);
 }

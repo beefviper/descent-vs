@@ -1968,7 +1968,7 @@ void collide_two_objects( object * A, object * B, vms_vector *collision_point )
 	CollisionResult[type1][type2] = RESULT_NOTHING;	\
 	CollisionResult[type2][type1] = RESULT_NOTHING;
 
-void collide_init()	{
+void collide_init(void)	{
 	int i, j;
 
 	for (i=0; i < MAX_OBJECT_TYPES; i++ )

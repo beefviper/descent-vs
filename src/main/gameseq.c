@@ -350,14 +350,14 @@ extern int last_drawn_cockpit;
 extern int Last_level_path_created;
 
 // Function Prototypes
-void init_player_stats_new_ship();
+void init_player_stats_new_ship(void);
 int AdvanceLevel(int secret_flag);
 void StartLevel(int random);
 extern void init_cockpit();
 void copy_defaults_to_robot_all(void);
 
 
-void HUD_clear_messages(); // From hud.c
+void HUD_clear_messages(void); // From hud.c
 
 
 static void verify_console_object()
@@ -447,7 +447,7 @@ gameseq_init_network_players()
 #endif
 }
 
-void gameseq_remove_unused_players()
+void gameseq_remove_unused_players(void)
 {
 	int i;
 
@@ -481,7 +481,7 @@ void gameseq_remove_unused_players()
 }
 
 // Setup player for new game
-void init_player_stats_game()
+void init_player_stats_game(void)
 {
 	Players[Player_num].score = 0;
 	Players[Player_num].last_score = 0;
@@ -535,7 +535,7 @@ static void init_ammo_and_energy(void)
 }
 
 // Setup player for new level (After completion of previous level)
-void init_player_stats_level()
+void init_player_stats_level(void)
 {
 	// int	i;
 
@@ -582,7 +582,7 @@ void init_player_stats_level()
 }
 
 // Setup player for a brand-new ship
-void init_player_stats_new_ship()
+void init_player_stats_new_ship(void)
 {
 	int	i;
 
@@ -633,7 +633,7 @@ static void reset_network_objects()
 #ifdef EDITOR
 
 //reset stuff so game is semi-normal when playing from editor
-void editor_reset_stuff_on_level()
+void editor_reset_stuff_on_level(void)
 {
 	gameseq_init_network_players();
 	init_player_stats_level();
@@ -688,7 +688,7 @@ static void DoGameOver()
 
 
 //update various information about the player
-void update_player_stats()
+void update_player_stats(void)
 {
 // I took out this 'if' because it was causing the reactor invul time to be
 // off for players that sit in the death screen. -JS jul 6,95
@@ -975,7 +975,7 @@ void LoadLevel(int level_num)
 }
 
 //sets up Player_num & ConsoleObject
-void InitPlayerObject()
+void InitPlayerObject(void)
 {
 	Assert(Player_num>=0 && Player_num<MAX_PLAYERS);
 
@@ -1308,7 +1308,7 @@ died_in_mine_message(void)
 }
 
 //called when the player has died
-void DoPlayerDead()
+void DoPlayerDead(void)
 {
 	reset_palette_add();
 
@@ -1629,7 +1629,7 @@ void copy_defaults_to_robot_all(void)
 int	Do_appearance_effect=0;
 
 extern int Rear_view;
-extern void vr_reset_display();
+extern void vr_reset_display(void);
 
 //	-----------------------------------------------------------------------------------------------------
 //called when the player is starting a level (new game or new ship)

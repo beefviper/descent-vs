@@ -2185,7 +2185,7 @@ int med_find_closest_threshold_segment_side(segment *sp, int side, segment **adj
 }
 
 
-void med_check_all_vertices()
+void med_check_all_vertices(void)
 {
 	int		s,v;
 	segment	*sp;

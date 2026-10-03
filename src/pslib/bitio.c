@@ -73,7 +73,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define PACIFIER_COUNT 2047
 
-BIT_BUF *OpenOutputBitBuf( ) {
+BIT_BUF *OpenOutputBitBuf(void) {
     BIT_BUF *bit_buf;
 
     //MALLOC( bit_buf, BIT_BUF, 1 );//Compile hack again -KRB

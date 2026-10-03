@@ -36,6 +36,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _PAGING_H
 #define _PAGING_H
 
-void paging_touch_all();
+void paging_touch_all(void);
 
 #endif

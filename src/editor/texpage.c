@@ -158,7 +158,7 @@ static void texpage_show_current()
 	texpage_display_name( TmapInfo[CurrentTexture].filename );
 }
 
-int texpage_goto_first()
+int texpage_goto_first(void)
 {
 	TexturePage=0;
 	texpage_redraw();
@@ -270,7 +270,7 @@ void texpage_init( UI_WINDOW * win )
 
 }
 
-void texpage_close()
+void texpage_close(void)
 {
 	gr_free_sub_canvas(TmapnameCanvas);
 }
@@ -287,7 +287,7 @@ typedef struct replacement {
 replacement Replacement_list[MAX_REPLACEMENTS];
 int	Num_replacements=0;
 
-void texpage_do()
+void texpage_do(void)
 {
 	int i;
 

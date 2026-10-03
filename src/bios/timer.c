@@ -104,20 +104,20 @@ static fix pulses_to_fix(uint64_t pulses)
 // The game polls the clock constantly, in its main loop and in every
 // wait loop, so these also give the window a chance to process events.
 // The X version is called while handling key events and must not.
-fix timer_get_fixed_seconds()
+fix timer_get_fixed_seconds(void)
 {
 	plat_pump_events();
 	return pulses_to_fix(timer_get_stamp64());
 }
 
-fix timer_get_fixed_secondsX()
+fix timer_get_fixed_secondsX(void)
 {
 	return pulses_to_fix(timer_get_stamp64());
 }
 
 // Returns the time at the last timer tick (tick_count * _timer_cnt pulses),
 // so it is accurate only to one timer period.
-fix timer_get_approx_seconds()
+fix timer_get_approx_seconds(void)
 {
 	uint64_t pulses = timer_get_stamp64();
 
@@ -128,7 +128,7 @@ fix timer_get_approx_seconds()
 
 // Replacement for the BIOS ticker at 0040:006C (18.2 Hz ticks); see the
 // TICKER macro in timer.h.
-int timer_get_bios_ticker()
+int timer_get_bios_ticker(void)
 {
 	plat_pump_events();
 	return (int)(timer_get_stamp64() >> 16);
@@ -161,7 +161,7 @@ void timer_close(void)
 	TimerData.Installed = 0;
 }
 
-void timer_init()
+void timer_init(void)
 {
 	static int atexit_called = 0;
 

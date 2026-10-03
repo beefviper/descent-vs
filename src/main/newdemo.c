@@ -1453,7 +1453,7 @@ static void nd_write_object(object *obj)
 
 }
 
-void newdemo_record_start_demo()
+void newdemo_record_start_demo(void)
 {
 #ifndef SHAREWARE
 	int i;
@@ -1647,7 +1647,7 @@ void newdemo_record_wall_toggle( int segnum, int side )	{
 	start_time();
 }
 
-void newdemo_record_control_center_destroyed()
+void newdemo_record_control_center_destroyed(void)
 {
 	stop_time();
 	nd_write_byte( ND_EVENT_CONTROL_CENTER_DESTROYED );
@@ -2874,7 +2874,7 @@ static int newdemo_read_frame_information()
 	return done;
 }
 
-void newdemo_goto_beginning()
+void newdemo_goto_beginning(void)
 {
 	if (NewdemoFrameCount == 0)
 		return;
@@ -2933,7 +2933,7 @@ void newdemo_goto_end()
 	return;
 }
 #else
-void newdemo_goto_end()
+void newdemo_goto_end(void)
 {
 	short frame_length, byte_count, bshort;
 	byte level, bbyte, laser_level;
@@ -3200,7 +3200,7 @@ if (mag1 > F1_0/256) {
 	free(cur_objs);
 }
 
-void newdemo_playback_one_frame()
+void newdemo_playback_one_frame(void)
 {
 	int frames_back, i, level;
 	static fix base_interpol_time = 0;
@@ -3384,7 +3384,7 @@ void newdemo_playback_one_frame()
 	}
 }
 
-void newdemo_start_recording()
+void newdemo_start_recording(void)
 {
 	struct diskfree_t dfree;
 	unsigned drive;
@@ -3409,7 +3409,7 @@ void newdemo_start_recording()
 }
 
 char demoname_allowed_chars[] = "azAZ09__--";
-void newdemo_stop_recording()
+void newdemo_stop_recording(void)
 {
 	newmenu_item m[6];
 	int l, exit;
@@ -3665,7 +3665,7 @@ void newdemo_start_playback(char * filename)
 	newdemo_playback_one_frame();		// get all of the objects to renderb game
 }
 
-void newdemo_stop_playback()
+void newdemo_stop_playback(void)
 {
 	fclose( infile );
 	Newdemo_state = ND_STATE_NORMAL;

@@ -161,7 +161,7 @@ void mopen( int n, int row, int col, int width, int height, char * title )
 }
 
 // Returns true (-1) if the debug output is available, as it always is.
-int minit()
+int minit(void)
 {
 	window_open[0] = 1;
 	return -1;

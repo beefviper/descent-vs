@@ -66,7 +66,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "kdefs.h"
 
 // ---------- zoom control on current window ----------
-int ZoomIn()
+int ZoomIn(void)
 {
 	if (!current_view) return 0.0;
 
@@ -75,7 +75,7 @@ int ZoomIn()
 	return 1;
 }
 
-int ZoomOut()
+int ZoomOut(void)
 {
 	if (!current_view) return 0.0;
 
@@ -85,7 +85,7 @@ int ZoomOut()
 }
 
 // ---------- distance-of-viewer control on current window ----------
-int MoveCloser()
+int MoveCloser(void)
 {
 	if (!current_view) return 0.0;
 
@@ -94,7 +94,7 @@ int MoveCloser()
 	return 1;
 }
 
-int MoveAway()
+int MoveAway(void)
 {
 	if (!current_view) return 0.0;
 
@@ -105,7 +105,7 @@ int MoveAway()
 
 // ---------- Toggle chase mode. ----------
 
-int ToggleChaseMode()
+int ToggleChaseMode(void)
 {
 	Funky_chase_mode = !Funky_chase_mode;
 	set_view_target_from_segment(Cursegp);

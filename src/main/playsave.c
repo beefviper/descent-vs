@@ -298,7 +298,7 @@ saved_game saved_games[N_SAVE_SLOTS];
 
 int Default_leveling_on=1;
 
-void init_game_list()
+void init_game_list(void)
 {
 	int i;
 
@@ -306,7 +306,7 @@ void init_game_list()
 		saved_games[i].name[0] = 0;
 }
 
-int new_player_config()
+int new_player_config(void)
 {
 	int i,j,control_choice;
 	newmenu_item m[7];
@@ -359,7 +359,7 @@ RetrySelection:
 }
 
 //read in the player's saved games.  returns errno (0 == no error)
-int read_player_file()
+int read_player_file(void)
 {
 	char filename[13];
 	FILE *file;
@@ -554,7 +554,7 @@ int get_highest_level(void)
 
 
 //write out player's saved games.  returns errno (0 == no error)
-int write_player_file()
+int write_player_file(void)
 {
 	char filename[13];
 	FILE *file;
@@ -723,7 +723,7 @@ int get_game_list(char *game_text[N_SAVE_SLOTS])
 }
 
 //update the player's highest level.  returns errno (0 == no error)
-int update_player_file()
+int update_player_file(void)
 {
 	int ret;
 

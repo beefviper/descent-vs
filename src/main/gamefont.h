@@ -70,7 +70,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern grs_font *Gamefonts[MAX_FONTS];
 
-void gamefont_init();
+void gamefont_init(void);
 void gamefont_close(void);
 
 

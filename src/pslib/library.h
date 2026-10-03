@@ -110,7 +110,7 @@ typedef struct file_header {
 // bitio function prototypes
 
 BIT_BUF *OpenInputBitBuf( ubyte *buffer );
-BIT_BUF *OpenOutputBitBuf();
+BIT_BUF *OpenOutputBitBuf(void);
 void OutputBit( BIT_BUF *bit_file, int bit );
 void OutputBits( BIT_BUF *bit_file, unsigned int code, int count );
 int InputBit( BIT_BUF *bit_file );

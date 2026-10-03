@@ -57,7 +57,7 @@ int div0_init(int mode)
 	return 1;
 }
 
-void div0_close()
+void div0_close(void)
 {
 	Already_Init = 0;
 }

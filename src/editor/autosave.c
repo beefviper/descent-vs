@@ -240,7 +240,7 @@ static void clock_message( int seconds, char *format, ... ) {
 
 struct tm Editor_time_of_day;
 
-void set_editor_time_of_day()
+void set_editor_time_of_day(void)
 {
 	time_t	 ltime;
 

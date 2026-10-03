@@ -475,7 +475,7 @@ static void sosDIGISetPanLocation( WORD hDriver, WORD hSample, uint wLocation )
 #define sosMIDIStopSong(h)			((void)(h))
 #define sosMIDIUnInitSong(h)		((void)(h))
 
-void digi_reset_digi_sounds();
+void digi_reset_digi_sounds(void);
 #ifndef NDEBUG
 int verify_sound_channel_free( int channel );
 #endif
@@ -578,7 +578,7 @@ int digi_sounds_initialized=0;
 void * testLoadFile( char * szFileName, int * length );
 
 VOID _far sosMIDICallback( WORD PassedSongHandle );
-VOID sosEndMIDICallback();
+VOID sosEndMIDICallback(void);
 
 //NOT_MIDI_CHECKushort MIDI_CRC;
 //NOT_MIDI_CHECKubyte MIDI_SAVED_DATA[100*1024];
@@ -840,7 +840,7 @@ static int digi_init_digi()
 	return 0;
 }
 
-int digi_init()
+int digi_init(void)
 {
 	int i;
 
@@ -946,7 +946,7 @@ int digi_init()
 }
 
 // Toggles sound system on/off
-void digi_reset()
+void digi_reset(void)
 {
 	if ( Digi_initialized )	{
 		digi_reset_digi_sounds();
@@ -1000,7 +1000,7 @@ static WORD SampleHandles[32] = { 0xffff, 0xffff, 0xffff,0xffff,0xffff,0xffff,0x
 static int SoundNums[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 static uint SoundVolumes[32] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 
-void digi_reset_digi_sounds()
+void digi_reset_digi_sounds(void)
 {
 	int i;
 
@@ -1059,7 +1059,7 @@ void digi_set_max_channels(int n)
 	digi_reset_digi_sounds();
 }
 
-int digi_get_max_channels()
+int digi_get_max_channels(void)
 {
 	return digi_max_channels;
 
@@ -1377,7 +1377,7 @@ VOID _far sosMIDICallback( WORD PassedSongHandle )
 	return;//KRB comment out
 }
 
-VOID sosEndMIDICallback()		// Used to mark the end of sosMIDICallBack
+VOID sosEndMIDICallback(void)		// Used to mark the end of sosMIDICallBack
 {
 }
 
@@ -1547,7 +1547,7 @@ static void digi_get_sound_loc( vms_matrix * listener, vms_vector * listener_pos
 }
 
 
-void digi_init_sounds()
+void digi_init_sounds(void)
 {
 	int i;
 
@@ -1813,7 +1813,7 @@ void digi_kill_sound_linked_to_object( int objnum )
 //--unused-- 	}
 //--unused-- }
 
-void digi_sync_sounds()
+void digi_sync_sounds(void)
 {
 	int i;
 	int oldvolume, oldpan;
@@ -1905,7 +1905,7 @@ void digi_sync_sounds()
 
 int sound_paused = 0;
 
-void digi_pause_all()
+void digi_pause_all(void)
 {
 	int i;
 
@@ -1937,7 +1937,7 @@ void digi_pause_all()
 	sound_paused++;
 }
 
-void digi_resume_all()
+void digi_resume_all(void)
 {
 	if (!Digi_initialized) return;
 
@@ -1962,7 +1962,7 @@ void digi_resume_all()
 }
 
 
-void digi_stop_all()
+void digi_stop_all(void)
 {
 	int i;
 

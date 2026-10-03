@@ -150,7 +150,7 @@ int SetPlayerPosition(void)
 // Save game
 // returns 1 if successful
 //	returns 0 if unsuccessful
-int SaveGameData()
+int SaveGameData(void)
 {
 	char Message[200];
 
@@ -206,7 +206,7 @@ int SaveGameData()
 
 // returns 1 if successful
 //	returns 0 if unsuccessful
-int LoadGameData()
+int LoadGameData(void)
 {
 if (SafetyCheck())  {
 	if (ui_get_filename( game_filename, "*.LVL", "LOAD GAME" ))
@@ -227,7 +227,7 @@ if (SafetyCheck())  {
 
 //called whenever a new mine is created, so new mine doesn't get name
 //of last saved mine as default
-void ResetFilename()
+void ResetFilename(void)
 {
 	strcpy(game_filename,"*.LVL");
 }

@@ -191,7 +191,7 @@ grs_font * header_font;
 grs_font * title_font;
 grs_font * names_font;
 
-void credits_show()
+void credits_show(void)
 {
 	int i, j, l, done;
 	CFILE * file;

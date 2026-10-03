@@ -42,11 +42,11 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _MED_ROBOT_H
 #define _MED_ROBOT_H
 
-extern void robot_close_window();
-extern void do_robot_window();
+extern void robot_close_window(void);
+extern void do_robot_window(void);
 
-extern void object_close_window();
-extern void do_object_window();
+extern void object_close_window(void);
+extern void do_object_window(void);
 
 
 void set_all_modes_to_hover(void);

@@ -300,7 +300,7 @@ static int bind_matcen_to_trigger() {
 }
 
 
-int bind_wall_to_trigger() {
+int bind_wall_to_trigger(void) {
 
 	int wall_num, trigger_num, link_num;
 	int i;
@@ -394,7 +394,7 @@ static int add_trigger_control()
 	return 1;
 }
 
-int trigger_remove()
+int trigger_remove(void)
 {
 	remove_trigger(Markedsegp, Markedside);
 	Update_flags = UF_WORLD_CHANGED;
@@ -465,7 +465,7 @@ int do_trigger_dialog()
 	return 1;
 }
 
-void close_trigger_window()
+void close_trigger_window(void)
 {
 	if ( MainWindow!=NULL )	{
 		ui_close_window( MainWindow );
@@ -473,7 +473,7 @@ void close_trigger_window()
 	}
 }
 
-void do_trigger_window()
+void do_trigger_window(void)
 {
 	int i;
 	short Markedwall, trigger_num;

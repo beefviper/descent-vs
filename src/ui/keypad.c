@@ -46,12 +46,12 @@ static int HotKey1[17];
 
 #define REMOVE_EOL(s)     (*(strstr( (s), "\n" ))='\0')
 
-int ui_pad_get_current()
+int ui_pad_get_current(void)
 {
 	return active_pad;
 }
 
-void ui_pad_init()
+void ui_pad_init(void)
 {
 	int i;
 
@@ -61,7 +61,7 @@ void ui_pad_init()
 	active_pad = -1;
 }
 
-void ui_pad_close()
+void ui_pad_close(void)
 {
 	int i, j;
 
@@ -206,7 +206,7 @@ void ui_pad_activate( UI_WINDOW * wnd, int x, int y )
 }
 
 
-void ui_pad_deactivate()
+void ui_pad_deactivate(void)
 {
 	int i;
 
@@ -260,7 +260,7 @@ void ui_pad_goto(int n)
 		ui_pad_set_active(n);
 }
 
-void ui_pad_goto_next()
+void ui_pad_goto_next(void)
 {
 	int i, si;
 
@@ -278,7 +278,7 @@ void ui_pad_goto_next()
 	ui_pad_set_active(i);
 }
 
-void ui_pad_goto_prev()
+void ui_pad_goto_prev(void)
 {
 	int i;
 

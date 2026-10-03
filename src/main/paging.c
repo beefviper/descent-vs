@@ -384,7 +384,7 @@ static void paging_touch_walls()
 }
 
 
-void paging_touch_all()
+void paging_touch_all(void)
 {
 	int black_screen;
 	int s;

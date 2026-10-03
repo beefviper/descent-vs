@@ -363,12 +363,12 @@ void got_new_packet( ecb_header * ecb )
 	//ipx_listen_for_packet(&p->ecb);
 }
 
-ubyte * ipx_get_my_local_address()
+ubyte * ipx_get_my_local_address(void)
 {
 	return ipx_my_node.address;
 }
 
-ubyte * ipx_get_my_server_address()
+ubyte * ipx_get_my_server_address(void)
 {
 	return (ubyte *)&ipx_network;
 }

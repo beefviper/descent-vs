@@ -166,7 +166,7 @@ int ui_play_events_fast( int NumberOfEvents, UI_EVENT * buffer )
 }
 
 // Returns:  0=Normal, 1=Recording, 2=Playback normal, 3=Playback fast
-int ui_recorder_status()
+int ui_recorder_status(void)
 {
 	return Record;
 }
@@ -369,7 +369,7 @@ int ui_get_idle_seconds()
 	return (((TICKER - last_event)*10)/182);
 }
 
-void ui_mega_process()
+void ui_mega_process(void)
 {
 	int mx, my;
 	unsigned char k;

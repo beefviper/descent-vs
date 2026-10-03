@@ -514,7 +514,7 @@ fix flash_scale;
 fix flash_rate = FLASH_CYCLE_RATE;
 
 //cycle the flashing light for when mine destroyed
-void flash_frame()
+void flash_frame(void)
 {
 	static fixang flash_ang=0;
 

@@ -441,7 +441,7 @@ void obj_detach_all(object* parent);
 
 #ifndef RELEASE
 //set viewer object to next object in array
-void object_goto_next_viewer()
+void object_goto_next_viewer(void)
 {
 	int i, start_obj = 0;
 
@@ -999,7 +999,7 @@ void reset_player_object()
 
 
 //make object0 the player, setting all relevant fields
-void init_player_object()
+void init_player_object(void)
 {
 	ConsoleObject->type = OBJ_PLAYER;
 	ConsoleObject->id = 0;					//no sub-types for player
@@ -1018,7 +1018,7 @@ void init_player_object()
 }
 
 //sets up the free list & init player & whatever else
-void init_objects()
+void init_objects(void)
 {
 	int i;
 
@@ -1826,7 +1826,7 @@ static void start_player_death_sequence(object *player)
 }
 
 //	------------------------------------------------------------------------------------------------------------------
-void obj_delete_all_that_should_be_dead()
+void obj_delete_all_that_should_be_dead(void)
 {
 	int i;
 	object *objp;
@@ -2031,7 +2031,7 @@ int	Max_used_objects = MAX_OBJECTS - 20;
 
 //--------------------------------------------------------------------
 //move all objects for the current frame
-void object_move_all()
+void object_move_all(void)
 {
 	int i;
 	object *objp;
@@ -2169,7 +2169,7 @@ int update_object_seg(object * obj )
 
 
 //go through all objects and make sure they have the correct segment numbers
-void fix_object_segs()
+void fix_object_segs(void)
 {
 	int i;
 

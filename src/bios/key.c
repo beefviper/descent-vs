@@ -238,7 +238,7 @@ static void key_clear_bios_buffer()
 #endif
 }
 
-void key_flush()
+void key_flush(void)
 {
 	int i;
 	fix CurTime;
@@ -278,7 +278,7 @@ static int add_one( int n )
 }
 
 // Returns 1 if character waiting... 0 otherwise
-int key_checkch()
+int key_checkch(void)
 {
 	int is_one_waiting = 0;
 
@@ -294,7 +294,7 @@ int key_checkch()
 	return is_one_waiting;
 }
 
-int key_inkey()
+int key_inkey(void)
 {
 	int key = 0;
 
@@ -332,7 +332,7 @@ int key_inkey_time(fix * time)
 }
 
 
-int key_peekkey()
+int key_peekkey(void)
 {
 	int key = 0;
 
@@ -351,7 +351,7 @@ int key_peekkey()
 
 // If not installed, uses BIOS and returns getch();
 //	Else returns pending key (or waits for one if none waiting).
-int key_getch()
+int key_getch(void)
 {
 	if (!Installed)
 		return getch();
@@ -517,7 +517,7 @@ static void key_handle_event(unsigned char scancode, int down)
 	}
 }
 
-void key_init()
+void key_init(void)
 {
 	// Initialize queue
 

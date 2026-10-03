@@ -51,13 +51,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern int Game_vfx_flag;
 
-extern void vfx_init_graphics();		// Sets vfx to stereo mode
-extern void vfx_close_graphics();	// Sets vfx to mono mode
+extern void vfx_init_graphics(void);		// Sets vfx to stereo mode
+extern void vfx_close_graphics(void);	// Sets vfx to mono mode
 extern void vfx_set_page(ubyte page);		// 0 or 1
 extern void vfx_init_positioning();
 extern void vfx_close_positioning();
 extern void vfx_read_positions(int *helmet_yaw, int *helment_pitch, int *helment_roll, int *puck_pitch, int *puck_roll, int *puck_buttons );
-extern void vfx_set_palette();		//download palette into VFX
+extern void vfx_set_palette(void);		//download palette into VFX
 extern void vfx_set_palette_sub(ubyte * palette);
 
 void vfx_init(void);

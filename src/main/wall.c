@@ -263,7 +263,7 @@ int wall_is_doorway ( segment * seg, int side )
 #ifdef EDITOR
 //-----------------------------------------------------------------
 // Initializes all the walls (in other words, no special walls)
-void wall_init()
+void wall_init(void)
 {
 	int i;
 
@@ -929,7 +929,7 @@ void wall_toggle(segment *seg, int side)
 
 //-----------------------------------------------------------------
 // Tidy up Walls array for load/save purposes.
-void reset_walls()
+void reset_walls(void)
 {
 	int i;
 
@@ -947,7 +947,7 @@ void reset_walls()
 		}
 }
 
-void wall_frame_process()
+void wall_frame_process(void)
 {
 	int i;
 

@@ -126,7 +126,7 @@ void get_next_segment(int curseg_num, int curside, int *newseg_num, int *newside
 }
 
 // ---------- select current segment ----------
-int SelectCurrentSegForward()
+int SelectCurrentSegForward(void)
 {
 	int	newseg_num,newside;
 
@@ -147,7 +147,7 @@ int SelectCurrentSegForward()
 }
 
 // -------------------------------------------------------------------------------------
-int SelectCurrentSegBackward()
+int SelectCurrentSegBackward(void)
 {
 	int	newseg_num,newside;
 
@@ -167,7 +167,7 @@ int SelectCurrentSegBackward()
 
 
 // ---------- select next/previous side on current segment ----------
-int SelectNextSide()
+int SelectNextSide(void)
 {
 	if (++Curside >= MAX_SIDES_PER_SEGMENT)
 		Curside = 0;
@@ -176,7 +176,7 @@ int SelectNextSide()
 	return 1;
 }
 
-int SelectPrevSide()
+int SelectPrevSide(void)
 {
 	if (--Curside < 0)
 		Curside = MAX_SIDES_PER_SEGMENT-1;
@@ -187,7 +187,7 @@ int SelectPrevSide()
 
 //  ---------- Copy current segment and side to marked segment and side ----------
 
-int CopySegToMarked()
+int CopySegToMarked(void)
 {
    autosave_mine(mine_filename);
    strcpy(undo_status[Autosave_count], "Mark Segment UNDONE.");
@@ -200,7 +200,7 @@ int CopySegToMarked()
 
 // ---------- select absolute face on segment ----------
 
-int SelectBottom()
+int SelectBottom(void)
 {
 	Curside = WBOTTOM;
 	Update_flags |= UF_ED_STATE_CHANGED;
@@ -208,7 +208,7 @@ int SelectBottom()
 	return 1;
 }
 
-int SelectFront()
+int SelectFront(void)
 {
 	Curside = WFRONT;
 	Update_flags |= UF_ED_STATE_CHANGED;
@@ -216,7 +216,7 @@ int SelectFront()
 	return 1;
 }
 
-int SelectTop()
+int SelectTop(void)
 {
 	Curside = WTOP;
 	Update_flags |= UF_ED_STATE_CHANGED;
@@ -224,7 +224,7 @@ int SelectTop()
 	return 1;
 }
 
-int SelectBack()
+int SelectBack(void)
 {
 	Curside = WBACK;
 	Update_flags |= UF_ED_STATE_CHANGED;
@@ -232,7 +232,7 @@ int SelectBack()
 	return 1;
 }
 
-int SelectLeft()
+int SelectLeft(void)
 {
 	Curside = WLEFT;
 	Update_flags |= UF_ED_STATE_CHANGED;
@@ -240,7 +240,7 @@ int SelectLeft()
 	return 1;
 }
 
-int SelectRight()
+int SelectRight(void)
 {
 	Curside = WRIGHT;
 	Update_flags |= UF_ED_STATE_CHANGED;

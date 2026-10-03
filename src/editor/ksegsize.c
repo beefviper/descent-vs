@@ -321,94 +321,94 @@ static int segsize_common(int dimension, fix amount)
 // -----------------------------------------------------------------------------
 // ---------- segment size control ----------
 
-int IncreaseSegLength()
+int IncreaseSegLength(void)
 {
 	return segsize_common(ZDIM,+F1_0);
 }
 
-int DecreaseSegLength()
+int DecreaseSegLength(void)
 {
 	return segsize_common(ZDIM,-F1_0);
 }
 
-int DecreaseSegWidth()
+int DecreaseSegWidth(void)
 {
 	return segsize_common(XDIM,-F1_0);
 }
 
-int IncreaseSegWidth()
+int IncreaseSegWidth(void)
 {
 	return segsize_common(XDIM,+F1_0);
 }
 
-int IncreaseSegHeight()
+int IncreaseSegHeight(void)
 {
 	return segsize_common(YDIM,+F1_0);
 }
 
-int DecreaseSegHeight()
+int DecreaseSegHeight(void)
 {
 	return segsize_common(YDIM,-F1_0);
 }
 
 
-int IncreaseSegLengthBig()
+int IncreaseSegLengthBig(void)
 {
 	return segsize_common(ZDIM,+5 * F1_0);
 }
 
-int DecreaseSegLengthBig()
+int DecreaseSegLengthBig(void)
 {
 	return segsize_common(ZDIM,-5 * F1_0);
 }
 
-int DecreaseSegWidthBig()
+int DecreaseSegWidthBig(void)
 {
 	return segsize_common(XDIM,-5 * F1_0);
 }
 
-int IncreaseSegWidthBig()
+int IncreaseSegWidthBig(void)
 {
 	return segsize_common(XDIM,+5 * F1_0);
 }
 
-int IncreaseSegHeightBig()
+int IncreaseSegHeightBig(void)
 {
 	return segsize_common(YDIM,+5 * F1_0);
 }
 
-int DecreaseSegHeightBig()
+int DecreaseSegHeightBig(void)
 {
 	return segsize_common(YDIM,-5 * F1_0);
 }
 
 
-int IncreaseSegLengthDefault()
+int IncreaseSegLengthDefault(void)
 {
 	return segsize_common(ZDIM,+40 *F1_0);
 }
 
-int DecreaseSegLengthDefault()
+int DecreaseSegLengthDefault(void)
 {
 	return segsize_common(ZDIM,-40*F1_0);
 }
 
-int IncreaseSegWidthDefault()
+int IncreaseSegWidthDefault(void)
 {
 	return segsize_common(XDIM,+40*F1_0);
 }
 
-int DecreaseSegWidthDefault()
+int DecreaseSegWidthDefault(void)
 {
 	return segsize_common(XDIM,-40*F1_0);
 }
 
-int IncreaseSegHeightDefault()
+int IncreaseSegHeightDefault(void)
 {
 	return segsize_common(YDIM,+40 * F1_0);
 }
 
-int DecreaseSegHeightDefault()
+int DecreaseSegHeightDefault(void)
 {
 	return segsize_common(YDIM,-40 * F1_0);
 }

@@ -730,8 +730,8 @@ int Inferno_is_800x600_available = 0;
 //--unused-- int Cyberman_installed=0;			// SWIFT device present
 
 // Function Prototypes
-void check_joystick_calibration();
-void show_order_form();
+void check_joystick_calibration(void);
+void show_order_form(void);
 
 void install_int3_handler(void);
 
@@ -1724,7 +1724,7 @@ int main(int argc,char **argv)
 }
 
 
-void check_joystick_calibration()	{
+void check_joystick_calibration(void)	{
 	int x1, y1, x2, y2, c;
 	fix t1;
 
@@ -1754,7 +1754,7 @@ void check_joystick_calibration()	{
 
 }
 
-void show_order_form()
+void show_order_form(void)
 {
 	int pcx_error;
 	char title_pal[768];

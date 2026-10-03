@@ -44,7 +44,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "texmapl.h"
 #include "scanline.h"
 
-void c_tmap_scanline_flat()
+void c_tmap_scanline_flat(void)
 {
 	ubyte *dest;
 	int x;
@@ -56,7 +56,7 @@ void c_tmap_scanline_flat()
 	}
 }
 
-void c_tmap_scanline_shaded()
+void c_tmap_scanline_shaded(void)
 {
 	int fade;
 	ubyte *dest;
@@ -71,7 +71,7 @@ void c_tmap_scanline_shaded()
 	}
 }
 
-void c_tmap_scanline_lin_nolight()
+void c_tmap_scanline_lin_nolight(void)
 {
 	ubyte *dest;
 	uint c;
@@ -104,7 +104,7 @@ void c_tmap_scanline_lin_nolight()
 }
 
 
-void c_tmap_scanline_lin()
+void c_tmap_scanline_lin(void)
 {
 	ubyte *dest;
 	uint c;
@@ -141,7 +141,7 @@ void c_tmap_scanline_lin()
 }
 
 
-void c_tmap_scanline_per_nolight()
+void c_tmap_scanline_per_nolight(void)
 {
 	ubyte *dest;
 	uint c;
@@ -177,7 +177,7 @@ void c_tmap_scanline_per_nolight()
 	}
 }
 
-void c_tmap_scanline_per()
+void c_tmap_scanline_per(void)
 {
 	ubyte *dest;
 	uint c;

@@ -319,7 +319,7 @@ int hostage_is_vclip_playing()
 #endif
 
 //---------------- Initializes the hostage system ----------------------------------------------------
-void hostage_init()
+void hostage_init(void)
 {
 	Hostage_animation_time=-1;
 }
@@ -450,7 +450,7 @@ int hostage_object_is_valid( int objnum )	{
 }
 
 
-int hostage_get_next_slot()	{
+int hostage_get_next_slot(void)	{
 	int i;
 	for (i=0; i<MAX_HOSTAGES; i++ )	{
 		if (!hostage_is_valid(i))
@@ -473,7 +473,7 @@ void hostage_init_info( int objnum )	{
 	Objects[objnum].id = i;
 }
 
-void hostage_init_all()
+void hostage_init_all(void)
 {
 	int i;
 
@@ -493,7 +493,7 @@ void hostage_init_all()
 
 #ifdef EDITOR
 
-void hostage_compress_all()	{
+void hostage_compress_all(void)	{
 	int i,newslot;
 
 	for (i=0; i<MAX_HOSTAGES; i++ )	{

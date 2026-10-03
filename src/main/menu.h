@@ -143,8 +143,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define _MENU_H
 
 //returns number of item chosen
-extern int DoMenu();
-extern void do_options_menu();
+extern int DoMenu(void);
+extern void do_options_menu(void);
 
 extern void set_detail_level_parameters(int detail_level);
 

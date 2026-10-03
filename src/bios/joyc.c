@@ -272,7 +272,7 @@ void joy_set_cal_vals(int *axis_min, int *axis_center, int *axis_max)
 }
 
 
-ubyte joy_get_present_mask()	{
+ubyte joy_get_present_mask(void)	{
 	return joystick.present_mask;
 }
 
@@ -282,12 +282,12 @@ void joy_set_timer_rate(int max_value )	{
 	_enable();
 }
 
-int joy_get_timer_rate()	{
+int joy_get_timer_rate(void)	{
 	return joystick.max_timer;
 }
 
 
-void joy_flush()	{
+void joy_flush(void)	{
 	int i;
 
 	if (!joy_installed) return;
@@ -367,7 +367,7 @@ static void joy_handler_end()	{		// Dummy function to help calculate size of joy
 
 #pragma off (check_stack)
 
-ubyte joy_read_raw_buttons()	{
+ubyte joy_read_raw_buttons(void)	{
 	if ( joystick.slow_read & JOY_BIOS_READINGS )
 		return joy_read_buttons_bios();
 	else
@@ -475,7 +475,7 @@ ubyte joystick_read_raw_axis( ubyte mask, int * axis )
 
 #include "timer.h"
 
-int joy_init()
+int joy_init(void)
 {
 	int i;
 	int temp_axis[4];
@@ -523,13 +523,13 @@ int joy_init()
 	return joy_present;
 }
 
-void joy_close()
+void joy_close(void)
 {
 	if (!joy_installed) return;
 	joy_installed = 0;
 }
 
-void joy_set_ul()
+void joy_set_ul(void)
 {
 	joystick.present_mask = JOY_ALL_AXIS;		// Assume they're all present
 	do	{
@@ -541,7 +541,7 @@ void joy_set_ul()
 		joy_present = 0;
 }
 
-void joy_set_lr()
+void joy_set_lr(void)
 {
 	joystick.present_mask = JOY_ALL_AXIS;		// Assume they're all present
 	do {
@@ -554,7 +554,7 @@ void joy_set_lr()
 		joy_present = 0;
 }
 
-void joy_set_cen()
+void joy_set_cen(void)
 {
 	joystick.present_mask = JOY_ALL_AXIS;		// Assume they're all present
 	do {
@@ -700,7 +700,7 @@ ubyte joy_read_stick( ubyte masks, int *axis )
 }
 
 
-int joy_get_btns()
+int joy_get_btns(void)
 {
 	if ((!joy_installed)||(!joy_present)) return 0;
 

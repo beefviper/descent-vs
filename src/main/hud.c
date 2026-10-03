@@ -177,7 +177,7 @@ static void clear_background_messages(void)
 
 }
 
-void HUD_clear_messages()
+void HUD_clear_messages(void)
 {
 	int i;
 	HUD_nmessages = 0;
@@ -190,7 +190,7 @@ void HUD_clear_messages()
 
 //	-----------------------------------------------------------------------------
 //	Writes a message on the HUD and checks its timer.
-void HUD_render_message_frame()
+void HUD_render_message_frame(void)
 {
 	int i, y,n;
 	int h,w,aw;

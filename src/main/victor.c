@@ -179,7 +179,7 @@ static void set_mode_atr(VGAatr *vga)
 
 }
 
-void victor_init_graphics()
+void victor_init_graphics(void)
 {
 	if (Victor_mode==0) {
 		Victor_mode = 1;

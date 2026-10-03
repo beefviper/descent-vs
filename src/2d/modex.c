@@ -45,7 +45,7 @@ static const short modex_dims[][2] = {
 
 // Waits for the start of the (emulated) vertical retrace and shows the
 // screen. Palette fades step once per call.
-void gr_sync_display()
+void gr_sync_display(void)
 {
 	plat_video_sync();
 }

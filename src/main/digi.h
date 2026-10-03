@@ -147,8 +147,8 @@ extern int digi_midi_type;
 extern int digi_midi_port;
 
 extern int digi_get_settings();
-extern int digi_init();
-extern void digi_reset();
+extern int digi_init(void);
+extern void digi_reset(void);
 extern void digi_close(void);
 
 // Volume is max at F1_0.
@@ -164,8 +164,8 @@ extern void digi_play_midi_song( char * filename, char * melodic_bank, char * dr
 
 extern void digi_play_sample_3d( int soundno, int angle, int volume, int no_dups ); // Volume from 0-0x7fff
 
-extern void digi_init_sounds();
-extern void digi_sync_sounds();
+extern void digi_init_sounds(void);
+extern void digi_sync_sounds(void);
 extern void digi_kill_sound_linked_to_segment( int segnum, int sidenum, int soundnum );
 extern void digi_kill_sound_linked_to_object( int objnum );
 
@@ -175,12 +175,12 @@ extern void digi_set_volume( int dvolume, int mvolume );
 
 extern int digi_is_sound_playing(int soundno);
 
-extern void digi_pause_all();
-extern void digi_resume_all();
-extern void digi_stop_all();
+extern void digi_pause_all(void);
+extern void digi_resume_all(void);
+extern void digi_stop_all(void);
 
 extern void digi_set_max_channels(int n);
-extern int digi_get_max_channels();
+extern int digi_get_max_channels(void);
 
 extern int digi_lomem;
 

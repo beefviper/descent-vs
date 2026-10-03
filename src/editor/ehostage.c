@@ -400,7 +400,7 @@ static int PlayHostageSound()	{
 //-------------------------------------------------------------------------
 // Called from the editor... does one instance of the hostage dialog box
 //-------------------------------------------------------------------------
-int do_hostage_dialog()
+int do_hostage_dialog(void)
 {
 	int i;
 
@@ -450,7 +450,7 @@ int do_hostage_dialog()
 
 }
 
-void hostage_close_window()
+void hostage_close_window(void)
 {
 	if ( MainWindow!=NULL )	{
 		ui_close_window( MainWindow );
@@ -458,7 +458,7 @@ void hostage_close_window()
 	}
 }
 
-void do_hostage_window()
+void do_hostage_window(void)
 {
 	fix DeltaTime, Temp;
 

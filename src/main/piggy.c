@@ -586,7 +586,7 @@ digi_sound bogus_sound;
 
 extern void bm_read_all(CFILE * fp);
 
-int piggy_init()
+int piggy_init(void)
 {
 	int sbytes = 0;
 	char temp_name_read[16];
@@ -774,7 +774,7 @@ static int piggy_is_needed(int soundnum)
 	return 0;
 }
 
-void piggy_read_sounds()
+void piggy_read_sounds(void)
 {
 	ubyte * ptr;
 	int i, sbytes;
@@ -916,7 +916,7 @@ void piggy_bitmap_page_in( bitmap_index bitmap )
 
 }
 
-void piggy_bitmap_page_out_all()
+void piggy_bitmap_page_out_all(void)
 {
 	int i;
 
@@ -937,7 +937,7 @@ void piggy_bitmap_page_out_all()
 	mprintf(( 0, "Flushing piggy bitmap cache\n" ));
 }
 
-void piggy_load_level_data()
+void piggy_load_level_data(void)
 {
 	piggy_bitmap_page_out_all();
 	paging_touch_all();
@@ -945,7 +945,7 @@ void piggy_load_level_data()
 
 #ifdef EDITOR
 static int piggy_is_substitutable_bitmap( char * name, char * subst_name );
-void piggy_dump_all()
+void piggy_dump_all(void)
 {
 	int i, xlat_offset;
 	FILE * fp;
@@ -1194,7 +1194,7 @@ void piggy_dump_all()
 
 #endif
 
-void piggy_close()
+void piggy_close(void)
 {
 	if (BitmapBits)
 		free(BitmapBits);

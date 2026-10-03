@@ -821,7 +821,7 @@ void menubar_init( char * file )
 	menubar_hid = 1;
 }
 
-void menubar_hide()
+void menubar_hide(void)
 {
 	menubar_hid = 1;
 	state = 0;
@@ -829,13 +829,13 @@ void menubar_hide()
 	menu_hide( &Menu[0] );
 }
 
-void menubar_show()
+void menubar_show(void)
 {
 	menubar_hid = 0;
 	menu_show( &Menu[0] );
 }
 
-void menubar_close()
+void menubar_close(void)
 {
 	int i;
 

@@ -45,7 +45,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "fix.h"
 
 // Sets up the victor card.
-void victor_init_graphics();
+void victor_init_graphics(void);
 
 extern int Victor_headset_installed;		// Set to one if init_tracking has been called successfully
 

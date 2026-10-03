@@ -27,7 +27,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 unsigned short _A0000;		// selector for the A0000h screen segment (unused)
 
 // Allocated a selector for A0000h.  Returns 0 on success.
-int gr_init_A0000()
+int gr_init_A0000(void)
 {
 	_A0000 = 0;
 	return 0;
@@ -66,7 +66,7 @@ static void gr_vesa_setaddress( int address )
 	(void)address;
 }
 
-void gr_vesa_incpage()
+void gr_vesa_incpage(void)
 {
 }
 

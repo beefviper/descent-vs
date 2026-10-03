@@ -1589,7 +1589,7 @@ static void checkforgrpext( char * f )
 //short vertex_list[MAX_VERTICES];
 
 
-int SaveGroup()
+int SaveGroup(void)
 {
 	// Save group
 	int i, s, v;
@@ -1635,7 +1635,7 @@ int SaveGroup()
 }
 
 
-int LoadGroup()
+int LoadGroup(void)
 {
 	int x;
 

@@ -142,14 +142,14 @@ extern hostage_data Hostages[MAX_HOSTAGES];
 
 void draw_hostage(object *obj);
 void hostage_rescue( int hostage_num );
-void hostage_init();
+void hostage_init(void);
 
 //returns true if something drew
 int do_hostage_effects();
 
-void hostage_init_all();
-void hostage_compress_all();
-int hostage_get_next_slot();
+void hostage_init_all(void);
+void hostage_compress_all(void);
+int hostage_get_next_slot(void);
 int hostage_is_valid( int hostage_num );
 int hostage_object_is_valid( int objnum  );
 void hostage_init_info( int objnum );

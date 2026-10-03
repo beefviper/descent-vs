@@ -46,7 +46,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // Returns 1=Installed OK, 0=Failed.  Failed probably means old DPMI host, but
 // I think that as long as we use DOS4GW v1.90 or higher we're ok.
 extern int div0_init(int mode);
-extern void div0_close();           // Closes it.
+extern void div0_close(void);           // Closes it.
 
 //==========================================================================
 // Sets the default handler behavior.  See above constant descriptions.

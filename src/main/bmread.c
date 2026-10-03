@@ -662,7 +662,7 @@ static void verify_textures(void)
 //--unused-- }
 
 
-void bm_close()
+void bm_close(void)
 {
 	if (Installed)
 	{
@@ -671,7 +671,7 @@ void bm_close()
  	}
 }
 
-void set_lighting_flag(byte *bp)
+static void set_lighting_flag(byte *bp)
 {
 	if (vlighting < 0)
 		*bp |= BM_FLAG_NO_LIGHTING;
@@ -679,13 +679,13 @@ void set_lighting_flag(byte *bp)
 		*bp &= (0xff ^ BM_FLAG_NO_LIGHTING);
 }
 
-void set_texture_name(char *name)
+static void set_texture_name(char *name)
 {
 	strcpy ( TmapInfo[texture_count].filename, name );
 	REMOVE_DOTS(TmapInfo[texture_count].filename);
 }
 
-void bm_read_eclip()
+static void bm_read_eclip()
 {
 	bitmap_index bitmap;
 
@@ -809,7 +809,7 @@ void bm_read_eclip()
 }
 
 
-void bm_read_gauges()
+static void bm_read_gauges()
 {
 	bitmap_index bitmap;
 	int i, num_abm_frames;
@@ -831,7 +831,7 @@ void bm_read_gauges()
 	}
 }
 
-void bm_read_wclip()
+static void bm_read_wclip()
 {
 	bitmap_index bitmap;
 	Assert(clip_num < MAX_WALL_ANIMS);
@@ -897,7 +897,7 @@ void bm_read_wclip()
 	}
 }
 
-void bm_read_vclip()
+static void bm_read_vclip()
 {
 	bitmap_index bi;
 	Assert(clip_num < VCLIP_MAXNUM);
@@ -947,7 +947,7 @@ void bm_read_vclip()
 }
 
 // ------------------------------------------------------------------------------
-void get4fix(fix *fixp)
+static void get4fix(fix *fixp)
 {
 	char	*curtext;
 	int	i;
@@ -959,7 +959,7 @@ void get4fix(fix *fixp)
 }
 
 // ------------------------------------------------------------------------------
-void get4byte(byte *bytep)
+static void get4byte(byte *bytep)
 {
 	char	*curtext;
 	int	i;
@@ -972,7 +972,7 @@ void get4byte(byte *bytep)
 
 // ------------------------------------------------------------------------------
 //	Convert field of view from an angle in 0..360 to cosine.
-void adjust_field_of_view(fix *fovp)
+static void adjust_field_of_view(fix *fovp)
 {
 	int		i;
 	fixang	tt;
@@ -991,7 +991,7 @@ void adjust_field_of_view(fix *fovp)
 	}
 }
 
-void clear_to_end_of_line(void)
+static void clear_to_end_of_line(void)
 {
 	arg = strtok( NULL, space );
 	while (arg != NULL)
@@ -1071,7 +1071,7 @@ static void bm_read_robot_ai(void)
 //this will load a bitmap for a polygon models.  it puts the bitmap into
 //the array ObjBitmaps[], and also deals with animating bitmaps
 //returns a pointer to the bitmap
-grs_bitmap *load_polymodel_bitmap(char *name)
+static grs_bitmap *load_polymodel_bitmap(char *name)
 {
 	Assert(N_ObjBitmaps < MAX_OBJ_BITMAPS);
 

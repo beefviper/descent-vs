@@ -114,6 +114,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "eobject.h"
 #include "medwall.h"
 #include "texpage.h"
+#include "kfuncs.h"
 
 // Test function prototypes (replace Test1, 2 and 3 with whatever function
 //										you wish to test.)
@@ -481,7 +482,7 @@ FUNCTION med_functions[] = {
 // The terminating marker
 {   NULL, 0, NULL } };
 
-void init_med_functions()
+void init_med_functions(void)
 {
 	func_init(med_functions, (sizeof(med_functions)/sizeof(FUNCTION))-1 );
 }

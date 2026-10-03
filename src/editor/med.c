@@ -386,7 +386,7 @@ static void editor_sub_status( const char *format, ... )
 	gr_rect( 500+w, 583, 799, 599 );
 }
 
-int DropIntoDebugger()
+int DropIntoDebugger(void)
 {
 	Int3();
 	return 1;
@@ -402,7 +402,7 @@ int CallLisp()
 #endif
 
 
-int ExitEditor()
+int ExitEditor(void)
 {
 	if (SafetyCheck())  {
 		ModeFlag = 1;
@@ -437,12 +437,12 @@ static int	GotoGameCommon(int mode) {
 	return 1;
 }
 
-int GotoGameScreen()
+int GotoGameScreen(void)
 {
 	return GotoGameCommon(3);
 }
 
-int GotoGame()
+int GotoGame(void)
 {
 	return GotoGameCommon(2);
 }
@@ -545,7 +545,7 @@ void init_editor()
 	Clear_window = 1;	//	do full window clear.
 }
 
-int ShowAbout()
+int ShowAbout(void)
 {
 	MessageBox( -2, -2, 1, 	"INFERNO Mine Editor\n\n"		\
 									"Copyright (c) 1993  Parallax Software Corp.",
@@ -555,21 +555,21 @@ int ShowAbout()
 
 void move_player_2_segment(segment *seg,int side);
 
-int SetPlayerFromCurseg()
+int SetPlayerFromCurseg(void)
 {
 	move_player_2_segment(Cursegp,Curside);
 	Update_flags |= UF_ED_STATE_CHANGED | UF_GAME_VIEW_CHANGED;
 	return 1;
 }
 
-int fuelcen_create_from_curseg()
+int fuelcen_create_from_curseg(void)
 {
 	Cursegp->special = SEGMENT_IS_FUELCEN;
 	fuelcen_activate( Cursegp, Cursegp->special);
 	return 1;
 }
 
-int repaircen_create_from_curseg()
+int repaircen_create_from_curseg(void)
 {
 	Int3();	//	-- no longer supported!
 //	Cursegp->special = SEGMENT_IS_REPAIRCEN;
@@ -577,26 +577,26 @@ int repaircen_create_from_curseg()
 	return 1;
 }
 
-int controlcen_create_from_curseg()
+int controlcen_create_from_curseg(void)
 {
 	Cursegp->special = SEGMENT_IS_CONTROLCEN;
 	fuelcen_activate( Cursegp, Cursegp->special);
 	return 1;
 }
 
-int robotmaker_create_from_curseg()
+int robotmaker_create_from_curseg(void)
 {
 	Cursegp->special = SEGMENT_IS_ROBOTMAKER;
 	fuelcen_activate( Cursegp, Cursegp->special);
 	return 1;
 }
 
-int fuelcen_reset_all()	{
+int fuelcen_reset_all(void)	{
 	fuelcen_reset();
 	return 1;
 }
 
-int fuelcen_delete_from_curseg() {
+int fuelcen_delete_from_curseg(void) {
 	fuelcen_delete( Cursegp );
 	return 1;
 }
@@ -649,7 +649,7 @@ static void move_player_2_segment_and_rotate(segment *seg,int side)
 
 }
 
-int SetPlayerFromCursegAndRotate()
+int SetPlayerFromCursegAndRotate(void)
 {
 	move_player_2_segment_and_rotate(Cursegp,Curside);
 	Update_flags |= UF_ED_STATE_CHANGED | UF_GAME_VIEW_CHANGED;
@@ -659,7 +659,7 @@ int SetPlayerFromCursegAndRotate()
 
 //sets the player facing curseg/curside, normal to face0 of curside, and
 //far enough away to see all of curside
-int SetPlayerFromCursegMinusOne()
+int SetPlayerFromCursegMinusOne(void)
 {
 	vms_vector view_vec,view_vec2,side_center;
 	vms_vector corner_v[4];
@@ -746,7 +746,7 @@ static int ToggleLighting(void)
 
 void find_concave_segs();
 
-int FindConcaveSegs()
+int FindConcaveSegs(void)
 {
 	find_concave_segs();
 
@@ -755,7 +755,7 @@ int FindConcaveSegs()
 	return 1;
 }
 
-int DosShell()
+int DosShell(void)
 {
 	int w, h;
 	grs_bitmap * save_bitmap;
@@ -818,14 +818,14 @@ static int ToggleOutlineMode()
 //@@	return 1;
 //@@}
 
-int GameZoomOut()
+int GameZoomOut(void)
 {
 	Render_zoom = fixmul(Render_zoom,68985);
 	Update_flags |= UF_GAME_VIEW_CHANGED;
 	return 1;
 }
 
-int GameZoomIn()
+int GameZoomIn(void)
 {
 	Render_zoom = fixmul(Render_zoom,62259);
 	Update_flags |= UF_GAME_VIEW_CHANGED;
@@ -985,7 +985,7 @@ void close_editor_screen(void)
 
 }
 
-void med_show_warning(char *s)
+static void med_show_warning(char *s)
 {
 	grs_canvas *save_canv=grd_curcanv;
 
@@ -998,7 +998,7 @@ void med_show_warning(char *s)
 }
 
 // Returns 1 if OK to trash current mine.
-int SafetyCheck()
+int SafetyCheck(void)
 {
 	int x;
 
@@ -1033,7 +1033,7 @@ void close_editor() {
 
 // ---------------------------------------------------------------------------------------------------
 //	Subtract all elements in Found_segs from selected list.
-void subtract_found_segments_from_selected_list(void)
+static void subtract_found_segments_from_selected_list(void)
 {
 	int	s,f;
 
@@ -1052,7 +1052,7 @@ void subtract_found_segments_from_selected_list(void)
 
 // ---------------------------------------------------------------------------------------------------
 //	Add all elements in Found_segs to selected list.
-void add_found_segments_to_selected_list(void) {
+static void add_found_segments_to_selected_list(void) {
 	int	s,f;
 
 	for (f=0; f<N_found_segs; f++) {
@@ -1067,7 +1067,7 @@ void add_found_segments_to_selected_list(void) {
 	}
 }
 
-void gamestate_restore_check() {
+static void gamestate_restore_check() {
 	char Message[DIAGNOSTIC_MESSAGE_MAX];
 	obj_position Save_position;
 
@@ -1513,7 +1513,7 @@ void editor(void)
 
 }
 
-void test_fade(void)
+static void test_fade(void)
 {
 	int	i,c;
 
@@ -1530,7 +1530,7 @@ void test_fade(void)
 	}
 }
 
-void dump_stuff(void)
+static void dump_stuff(void)
 {
 	int	i,j,prev_color;
 

@@ -1062,7 +1062,7 @@ multi_send_macro(int key)
 
 
 void
-multi_send_message_start()
+multi_send_message_start(void)
 {
 	if (Game_mode&GM_MULTI)	{
 		multi_sending_message = 1;
@@ -2227,7 +2227,7 @@ multi_send_message(void)
 }
 
 void
-multi_send_reappear()
+multi_send_reappear(void)
 {
 	multibuf[0] = (char)MULTI_REAPPEAR;
 	*(short *)(multibuf+1) = Players[Player_num].objnum;

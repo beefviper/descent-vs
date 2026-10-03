@@ -51,13 +51,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern int Endlevel_sequence;
 
-void start_endlevel_sequence();
+void start_endlevel_sequence(void);
 void render_external_scene(fix eye_offset);
 void render_endlevel_frame(fix eye_offset);
-void do_endlevel_frame();
-void draw_exit_model();
-void init_endlevel();
-void stop_endlevel_sequence();
+void do_endlevel_frame(void);
+void draw_exit_model(void);
+void init_endlevel(void);
+void stop_endlevel_sequence(void);
 
 
 extern vms_vector mine_exit_point;

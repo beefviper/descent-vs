@@ -147,8 +147,8 @@ extern obj_position Player_init[MAX_PLAYERS];
 #define DUMP_LEVEL 6
 
 // Function Prototypes
-void network_flush();
-void network_listen();
+void network_flush(void);
+void network_listen(void);
 void network_send_endlevel_sub(int player_num);
 void network_update_netgame(void);
 void network_dump_player(ubyte* server, ubyte* node, int why);
@@ -2560,7 +2560,7 @@ network_level_sync(void)
 	return(0);
 }
 
-void network_join_game()
+void network_join_game(void)
 {
 	int choice, i;
 	char menu_text[(MAX_ACTIVE_NETGAMES*2)+1][70];
@@ -2673,7 +2673,7 @@ remenu:
 	return;		// look ma, we're in a game!!!
 }
 
-void network_leave_game()
+void network_leave_game(void)
 {
 	network_do_frame(1, 1);
 
@@ -2690,7 +2690,7 @@ void network_leave_game()
 	network_flush();
 }
 
-void network_flush()
+void network_flush(void)
 {
 	ubyte packet[IPX_MAX_DATA_SIZE];
 
@@ -2701,7 +2701,7 @@ void network_flush()
 		;
 }
 
-void network_listen()
+void network_listen(void)
 {
 	int size;
 	ubyte packet[IPX_MAX_DATA_SIZE];

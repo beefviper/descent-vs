@@ -325,7 +325,7 @@ static int joycal_message( char * title, char * text )
 
 extern int WriteConfigFile();
 
-void joydefs_calibrate()
+void joydefs_calibrate(void)
 {
 	ubyte masks;
 	int org_axis_min[4];
@@ -530,7 +530,7 @@ extern ubyte kc_use_external_control;
 extern ubyte kc_enable_external_control;
 extern ubyte *kc_external_name;
 
-void joydefs_config()
+void joydefs_config(void)
 {
 	char xtext[128];
 	int i, old_masks, masks;

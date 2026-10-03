@@ -116,7 +116,7 @@ extern fix g3_get_surface_dotprod(g3s_point **list);
 int terrain_outline=0;
 
 // Function Prototypes
-void build_light_table();
+void build_light_table(void);
 
 void render_mine(int start_seg_num,fix eye_offset);
 
@@ -484,7 +484,7 @@ static void free_light_table(void)
 
 }
 
-void build_light_table()
+void build_light_table(void)
 {
 	int i,j;
 	fix l,l2,min_l=0x7fffffff,max_l=0;

@@ -305,7 +305,7 @@ char	Special_names[MAX_CENTER_TYPES][11] = {
 
 //------------------------------------------------------------
 // Resets all fuel center info
-void fuelcen_reset()
+void fuelcen_reset(void)
 {
 	int i;
 
@@ -852,7 +852,7 @@ static void controlcen_proc( FuelCenter * controlcen )
 
 //-------------------------------------------------------------
 // Called once per frame, replenishes fuel supply.
-void fuelcen_update_all()
+void fuelcen_update_all(void)
 {
 	int i;
 	fix AmountToreplenish;

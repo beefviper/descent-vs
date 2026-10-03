@@ -186,13 +186,13 @@ void vfx_set_palette_sub(ubyte * palette)
 	}
 }
 
-void vfx_set_palette()
+void vfx_set_palette(void)
 {
 	if (!vfx_initialized) return;
 	vfx_set_palette_sub(gr_palette);
 }
 
-void vfx_init_graphics()
+void vfx_init_graphics(void)
 {
 	int overscan, overscan_flag;
 
@@ -222,7 +222,7 @@ void vfx_init_graphics()
 }
 
 
-void vfx_close_graphics()
+void vfx_close_graphics(void)
 {
 	int overscan, overscan_flag;
 

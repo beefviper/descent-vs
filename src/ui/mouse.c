@@ -127,7 +127,7 @@ int ui_mouse_find_gadget(short n)
 }
 */
 
-void ui_mouse_show()
+void ui_mouse_show(void)
 {
 	if (Mouse.hidden==1 )   {
 		Mouse.hidden = 0;
@@ -140,7 +140,7 @@ void ui_mouse_show()
 	}
 }
 
-void ui_mouse_hide()
+void ui_mouse_hide(void)
 {
 	if (Mouse.hidden==0 )   {
 		Mouse.hidden = 1;
@@ -151,7 +151,7 @@ void ui_mouse_hide()
 	}
 }
 
-void ui_mouse_process()
+void ui_mouse_process(void)
 {   int buttons,w,h;
 
 	//if (Mouse.hidden==0)
@@ -261,7 +261,7 @@ void ui_mouse_flip_buttons()
 }
 
 
-void ui_mouse_init()
+void ui_mouse_init(void)
 {
 	int i, w,h;
 
@@ -333,7 +333,7 @@ grs_bitmap * ui_mouse_set_pointer( grs_bitmap * new )
 
 }
 
-void ui_mouse_close()
+void ui_mouse_close(void)
 {
 	gr_free_sub_bitmap(default_pointer);
 

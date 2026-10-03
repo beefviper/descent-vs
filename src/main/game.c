@@ -487,7 +487,7 @@ int Game_simuleyes_flag = 0;
 int svr_black = 0x00;
 int svr_white = 0xFF;
 
-void vr_reset_display();
+void vr_reset_display(void);
 
 fix 	RealFrameTime;
 fix	Auto_fire_fusion_cannon_time = 0;
@@ -782,7 +782,7 @@ void reset_cockpit()
 	last_drawn_cockpit[1] = -1;
 }
 
-void HUD_clear_messages();
+void HUD_clear_messages(void);
 
 static void toggle_cockpit()
 {
@@ -1248,7 +1248,7 @@ void start_time()
 	#endif
 }
 
-void game_flush_inputs()
+void game_flush_inputs(void)
 {
 	int dx,dy;
 	key_flush();
@@ -2066,7 +2066,7 @@ static void advance_sound()
 #include "fvi.h"
 
 //put up the help message
-void do_show_help()
+void do_show_help(void)
 {
 //	if (!((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME)))
 //		stop_time();
@@ -2248,7 +2248,7 @@ void palette_restore(void)
 extern void dead_player_frame(void);
 
 #ifndef RELEASE
-void do_cheat_menu()
+static void do_cheat_menu()
 {
 	int mmn;
 	newmenu_item mm[16];
@@ -2376,7 +2376,7 @@ void show_boxed_message(char *msg)
 
 }
 
-void clear_boxed_message()
+void clear_boxed_message(void)
 {
 
 	if (bg.bmp) {
@@ -2467,7 +2467,7 @@ static int do_game_pause(int allow_menu)
 }
 
 
-void show_help()
+void show_help(void)
 {
 	newmenu_item m[14];
 
@@ -2886,7 +2886,7 @@ void close_game()
 	clear_warn_func(game_show_warning);     //don't use this func anymore
 }
 
-grs_canvas * get_current_game_screen()
+grs_canvas * get_current_game_screen(void)
 {
 	return &VR_screen_pages[VR_current_page];
 }
@@ -3926,7 +3926,7 @@ static void ReadControls()
 }
 
 
-void vr_reset_display()
+void vr_reset_display(void)
 {
 	if (VR_render_mode == VR_NONE ) return;
 
@@ -4283,7 +4283,7 @@ int create_special_path(void)
 int	Max_obj_count_mike = 0;
 
 //	Shows current number of used objects.
-void show_free_objects(void)
+static void show_free_objects(void)
 {
 	if (!(FrameCount & 8)) {
 		int	i;
@@ -4334,7 +4334,7 @@ extern void code_21s(void), code_21e(void);
 
 int	Mem_filled = 0;
 
-void fill_func(char *start, char *end, char value)
+static void fill_func(char *start, char *end, char value)
 {
 	char	*i;
 
@@ -4345,7 +4345,7 @@ void fill_func(char *start, char *end, char value)
 
 }
 
-void check_func(char *start, char *end, char value)
+static void check_func(char *start, char *end, char value)
 {
 	char	*i;
 

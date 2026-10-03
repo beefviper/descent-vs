@@ -69,7 +69,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #define TIMER_FREQUENCY 1193180
 
-extern void timer_init();
+extern void timer_init(void);
 extern void timer_close(void);
 extern void timer_set_rate(int count_val);
 extern void timer_set_function( void _far * function );
@@ -83,9 +83,9 @@ extern void timer_set_joyhandler( void (*joy_handler)() );
 // and microseconds.  They time out after 1000 hrs, 100 hrs, 10 hrs, and
 // 1 hr, respectively.
 
-extern fix timer_get_fixed_seconds();	// Rolls about every 9 hours...
-extern fix timer_get_fixed_secondsX(); // Assume interrupts already disabled
-extern fix timer_get_approx_seconds();		// Returns time since program started... accurate to 1/120th of a second
+extern fix timer_get_fixed_seconds(void);	// Rolls about every 9 hours...
+extern fix timer_get_fixed_secondsX(void); // Assume interrupts already disabled
+extern fix timer_get_approx_seconds(void);		// Returns time since program started... accurate to 1/120th of a second
 
 //NOT_USED extern unsigned int timer_get_microseconds();
 //NOT_USED extern unsigned int timer_get_milliseconds100();
@@ -97,7 +97,7 @@ extern fix timer_get_approx_seconds();		// Returns time since program started...
 // Use to access the BIOS ticker... ie...   i = TICKER
 // (18.2 Hz ticks; the BIOS data area at 0x46C is not accessible, so this
 // is derived from the timer)
-extern int timer_get_bios_ticker();
+extern int timer_get_bios_ticker(void);
 #define TICKER (timer_get_bios_ticker())
 #define USECS_PER_READING( start, stop, frames ) (((stop-start)*54945)/frames)
 

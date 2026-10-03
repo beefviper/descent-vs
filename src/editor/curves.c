@@ -392,7 +392,7 @@ static void generate_banked_curve(fix maxscale, vms_equation coeffs) {
 }
 
 
-void delete_curve() {
+void delete_curve(void) {
     int i;
 
 	for (i=0; i<CurveNumSegs; i++) {

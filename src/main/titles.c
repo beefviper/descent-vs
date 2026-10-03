@@ -220,7 +220,7 @@ int	Current_color = 0;
 int	Erase_color;
 
 // Function Prototypes
-void title_save_game();
+void title_save_game(void);
 
 
 static int local_key_inkey(void)
@@ -651,7 +651,7 @@ static int get_message_num(char **message)
 	return num;
 }
 
-void title_save_game()
+void title_save_game(void)
 {
 	grs_canvas * save_canv;
 	grs_canvas * save_canv_data;

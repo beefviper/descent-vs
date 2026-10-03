@@ -119,11 +119,11 @@ extern trigger Triggers[MAX_TRIGGERS];
 extern int Num_triggers;
 //extern int Num_links;
 
-extern void trigger_init();
+extern void trigger_init(void);
 
 extern void check_trigger(segment *seg, short side, short objnum);
 extern int check_trigger_sub(int trigger_num, int player_num);
 
-extern void triggers_frame_process();
+extern void triggers_frame_process(void);
 
 #endif

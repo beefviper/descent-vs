@@ -142,7 +142,7 @@ int do_centers_dialog()
 	return 1;
 }
 
-void close_centers_window()
+void close_centers_window(void)
 {
 	if ( MainWindow!=NULL )	{
 		ui_close_window( MainWindow );
@@ -150,7 +150,7 @@ void close_centers_window()
 	}
 }
 
-void do_centers_window()
+void do_centers_window(void)
 {
 	int i;
 //	int robot_flags;

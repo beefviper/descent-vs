@@ -564,7 +564,7 @@ int do_wall_dialog()
 	return 1;
 }
 
-void close_wall_window()
+void close_wall_window(void)
 {
 	if ( MainWindow!=NULL )	{
 		ui_close_window( MainWindow );
@@ -572,7 +572,7 @@ void close_wall_window()
 	}
 }
 
-void do_wall_window()
+void do_wall_window(void)
 {
 	int i;
 	byte type;
@@ -1086,7 +1086,7 @@ int wall_remove_door_flag(byte flag)
 }
 
 
-int bind_wall_to_control_center() {
+int bind_wall_to_control_center(void) {
 
 	int link_num;
 	int i;

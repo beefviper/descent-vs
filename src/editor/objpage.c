@@ -288,7 +288,7 @@ static void gr_label_box( int i)
 //	ui_string_centered(  grd_curcanv->cv_bitmap.bm_w/2, grd_curcanv->cv_bitmap.bm_h/2, Description[i] );
 }
 
-int objpage_goto_first()
+int objpage_goto_first(void)
 {
 	int i;
 
@@ -396,7 +396,7 @@ int objpage_grab_current(int n)
 	return 1;
 }
 
-int objpage_goto_next_object()
+int objpage_goto_next_object(void)
 {
 	int n;
 
@@ -545,7 +545,7 @@ void objpage_init( UI_WINDOW *win )
 
 }
 
-void objpage_close()
+void objpage_close(void)
 {
 	//gr_free_sub_canvas(ObjnameCanvas);
 }
@@ -553,7 +553,7 @@ void objpage_close()
 
 // DO TEXTURE STUFF
 
-void objpage_do()
+void objpage_do(void)
 {
 	int i;
 

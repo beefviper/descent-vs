@@ -865,7 +865,7 @@ static void reset_object(short objnum)
 }
 
 
-int ObjectResetObject()
+int ObjectResetObject(void)
 {
 	reset_object(Cur_object_index);
 
@@ -875,7 +875,7 @@ int ObjectResetObject()
 }
 
 
-int ObjectFlipObject()
+int ObjectFlipObject(void)
 {
 	vms_matrix *m=&Objects[Cur_object_index].orient;
 
@@ -887,19 +887,19 @@ int ObjectFlipObject()
 	return 1;
 }
 
-int ObjectDecreaseBank()		{return rotate_object(Cur_object_index, 0, -ROTATION_UNIT, 0);}
-int ObjectIncreaseBank()		{return rotate_object(Cur_object_index, 0, ROTATION_UNIT, 0);}
-int ObjectDecreasePitch()		{return rotate_object(Cur_object_index, -ROTATION_UNIT, 0, 0);}
-int ObjectIncreasePitch()		{return rotate_object(Cur_object_index, ROTATION_UNIT, 0, 0);}
-int ObjectDecreaseHeading()	{return rotate_object(Cur_object_index, 0, 0, -ROTATION_UNIT);}
-int ObjectIncreaseHeading()	{return rotate_object(Cur_object_index, 0, 0, ROTATION_UNIT);}
+int ObjectDecreaseBank(void)		{return rotate_object(Cur_object_index, 0, -ROTATION_UNIT, 0);}
+int ObjectIncreaseBank(void)		{return rotate_object(Cur_object_index, 0, ROTATION_UNIT, 0);}
+int ObjectDecreasePitch(void)		{return rotate_object(Cur_object_index, -ROTATION_UNIT, 0, 0);}
+int ObjectIncreasePitch(void)		{return rotate_object(Cur_object_index, ROTATION_UNIT, 0, 0);}
+int ObjectDecreaseHeading(void)	{return rotate_object(Cur_object_index, 0, 0, -ROTATION_UNIT);}
+int ObjectIncreaseHeading(void)	{return rotate_object(Cur_object_index, 0, 0, ROTATION_UNIT);}
 
-int ObjectDecreaseBankBig()		{return rotate_object(Cur_object_index, 0, -(ROTATION_UNIT*4), 0);}
-int ObjectIncreaseBankBig()		{return rotate_object(Cur_object_index, 0, (ROTATION_UNIT*4), 0);}
-int ObjectDecreasePitchBig()		{return rotate_object(Cur_object_index, -(ROTATION_UNIT*4), 0, 0);}
-int ObjectIncreasePitchBig()		{return rotate_object(Cur_object_index, (ROTATION_UNIT*4), 0, 0);}
-int ObjectDecreaseHeadingBig()	{return rotate_object(Cur_object_index, 0, 0, -(ROTATION_UNIT*4));}
-int ObjectIncreaseHeadingBig()	{return rotate_object(Cur_object_index, 0, 0, (ROTATION_UNIT*4));}
+int ObjectDecreaseBankBig(void)		{return rotate_object(Cur_object_index, 0, -(ROTATION_UNIT*4), 0);}
+int ObjectIncreaseBankBig(void)		{return rotate_object(Cur_object_index, 0, (ROTATION_UNIT*4), 0);}
+int ObjectDecreasePitchBig(void)		{return rotate_object(Cur_object_index, -(ROTATION_UNIT*4), 0, 0);}
+int ObjectIncreasePitchBig(void)		{return rotate_object(Cur_object_index, (ROTATION_UNIT*4), 0, 0);}
+int ObjectDecreaseHeadingBig(void)	{return rotate_object(Cur_object_index, 0, 0, -(ROTATION_UNIT*4));}
+int ObjectIncreaseHeadingBig(void)	{return rotate_object(Cur_object_index, 0, 0, (ROTATION_UNIT*4));}
 
 //	-----------------------------------------------------------------------------------------------------
 //	Move object around based on clicks in 2d screen.

@@ -729,7 +729,7 @@ int load_polygon_model(char *filename,int n_textures,grs_bitmap ***textures)
 }
 
 
-void init_polygon_models()
+void init_polygon_models(void)
 {
 	N_polygon_models = 0;
 
