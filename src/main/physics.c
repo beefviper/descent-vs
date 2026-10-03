@@ -316,7 +316,7 @@ void do_physics_align_object( object * obj )
 	//vms_vector forvec = {0,0,f1_0};
 	vms_matrix temp_matrix;
 	fix d,largest_d=-f1_0;
-	int i,best_side;
+	int i,best_side = 0;
 
 
 	// bank player according to segment orientation

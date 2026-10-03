@@ -379,7 +379,7 @@ map_objnum_local_to_local(int local_objnum)
 void
 multi_endlevel_score(void)
 {
-	int old_connect;
+	int old_connect = 0;
 	int i;
 #ifdef SHAREWARE
 	return; // DEBUG

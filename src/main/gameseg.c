@@ -485,8 +485,8 @@ segmasks get_seg_masks(vms_vector *checkp,int segnum,fix rad)
 {
 	int			sn,facebit,sidebit;
 	segmasks		masks;
-	int			num_faces;
-	int			vertex_list[6];
+	int			num_faces = 0;
+	int			vertex_list[6] = {0};
 	segment		*seg;
 
 	Assert((segnum <= Highest_segment_index) && (segnum >= 0));
@@ -630,8 +630,8 @@ ubyte get_side_dists(vms_vector *checkp,int segnum,fix *side_dists)
 {
 	int			sn,facebit,sidebit;
 	ubyte			mask;
-	int			num_faces;
-	int			vertex_list[6];
+	int			num_faces = 0;
+	int			vertex_list[6] = {0};
 	segment		*seg;
 
 	Assert((segnum <= Highest_segment_index) && (segnum >= 0));

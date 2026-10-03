@@ -689,7 +689,7 @@ void maybe_replace_powerup_with_energy(object *del_obj)
 //	Returns created object number.
 int object_create_egg(object *objp)
 {
-	int		objnum;
+	int		objnum = 0;
 	object	*obj;
 	int		powerup_type, powerup_id, count;
 	vms_vector	new_velocity, new_pos;

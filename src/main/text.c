@@ -174,7 +174,7 @@ void load_text()
 
 		//scan for special chars (like \n)
 		for (p=Text_string[i];p=strchr(p,'\\');) {
-			char newchar;
+			char newchar = 0;
 
 			if (p[1] == 'n') newchar = '\n';
 			else if (p[1] == 't') newchar = '\t';

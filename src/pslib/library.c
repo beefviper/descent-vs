@@ -408,7 +408,7 @@ int file_size( char *name ) {
 
 
 int ReadFileBuf( char *filename, ubyte *buf, int bufsize ) {
-    int i;
+    int i = 0;
     int length;
     ubyte *tempbuf;
 
@@ -451,8 +451,8 @@ int ReadFileBuf( char *filename, ubyte *buf, int bufsize ) {
 
 
 ubyte *ReadFile( char *filename, int *length ) {
-    int i;
-    ubyte *buf_ptr;
+    int i = 0;
+    ubyte *buf_ptr = NULL;
     ubyte *buf;
     ubyte *tempbuf;
 

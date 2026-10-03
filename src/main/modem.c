@@ -1128,7 +1128,7 @@ com_process_input(void)
 
 	static int len = 0;
 	int entry_com_mode = com_process_mode;
-	register	int dat;
+	register	int dat = 0;
 
 	if (!com_port)
 		return;

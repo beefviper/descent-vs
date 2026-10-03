@@ -581,10 +581,10 @@ void ntexture_map_lighted(grs_bitmap *srcb, g3ds_tmap *t)
 	fix	du_dy_left,du_dy_right;
 	fix	dv_dy_left,dv_dy_right;
 	fix	dz_dy_left,dz_dy_right;
-	fix	dl_dy_left,dl_dy_right;
+	fix	dl_dy_left = 0,dl_dy_right = 0;
 	fix	recip_dyl, recip_dyr;
 	int	max_y_vertex;
-	fix	xleft,xright,uleft,vleft,uright,vright,zleft,zright,lleft,lright;
+	fix	xleft,xright,uleft,vleft,uright,vright,zleft,zright,lleft = 0,lright = 0;
 	int	next_break_left, next_break_right;
 
 	g3ds_vertex *v3d;
@@ -850,9 +850,9 @@ void ntexture_map_lighted_linear(grs_bitmap *srcb, g3ds_tmap *t)
 	fix	dx_dy_left,dx_dy_right;
 	fix	du_dy_left,du_dy_right;
 	fix	dv_dy_left,dv_dy_right;
-	fix	dl_dy_left,dl_dy_right;
+	fix	dl_dy_left = 0,dl_dy_right = 0;
 	int	max_y_vertex;
-	fix	xleft,xright,uleft,vleft,uright,vright,lleft,lright;
+	fix	xleft,xright,uleft,vleft,uright,vright,lleft = 0,lright = 0;
 	int	next_break_left, next_break_right;
 	fix	recip_dyl, recip_dyr;
 

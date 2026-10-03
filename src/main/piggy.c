@@ -834,7 +834,7 @@ void piggy_critical_error()
 void piggy_bitmap_page_in( bitmap_index bitmap )
 {
 	grs_bitmap * bmp;
-	int i,org_i,temp;
+	int i,org_i = 0,temp;
 
 	i = bitmap.index;
 	Assert( i >= 0 );

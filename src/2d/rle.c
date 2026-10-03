@@ -149,7 +149,7 @@ void gr_rle_expand_scanline_masked( ubyte *dest, ubyte *src, int x1, int x2  )
 {
 	int i = 0;
 	ubyte count;
-	ubyte color;
+	ubyte color = 0;		// stays unused when x1 == 0 (count is 0)
 
 	if ( x2 < x1 ) return;
 
@@ -209,7 +209,7 @@ void gr_rle_expand_scanline( ubyte *dest, ubyte *src, int x1, int x2  )
 {
 	int i = 0;
 	ubyte count;
-	ubyte color;
+	ubyte color = 0;		// stays unused when x1 == 0 (count is 0)
 
 	if ( x2 < x1 ) return;
 
@@ -510,7 +510,7 @@ void gr_rle_expand_scanline_generic( grs_bitmap * dest, int dx, int dy, ubyte *s
 {
 	int i = 0, j;
 	int count;
-	ubyte color;
+	ubyte color = 0;		// stays unused when x1 == 0 (count is 0)
 
 	if ( x2 < x1 ) return;
 

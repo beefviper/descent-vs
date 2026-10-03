@@ -406,7 +406,7 @@ int parse_bmhd(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 int parse_body(FFILE *ifile,long len,iff_bitmap_header *bmheader)
 {
 	unsigned char  *p=bmheader->raw_data;
-	int width,depth;
+	int width = 0,depth = 0;
 	signed char n;
 	int nn,wid_cnt,end_cnt,plane;
 	char ignore=0;
@@ -1041,7 +1041,7 @@ int write_pal(FILE *ofile,iff_bitmap_header *bitmap_header)
 int rle_span(ubyte *dest,ubyte *src,int len)
 {
 	int n,lit_cnt,rep_cnt;
-	ubyte last,*cnt_ptr,*dptr;
+	ubyte last,*cnt_ptr = NULL,*dptr;
 
 	dptr = dest;
 

@@ -1314,11 +1314,11 @@ void do_endlevel_flythrough(int n)
 	if (flydata->first_time || obj->segnum != old_player_seg) {		//moved into new seg
 		vms_vector curcenter,nextcenter;
 		fix step_size,seg_time;
-		short entry_side,exit_side;	//what sides we entry and leave through
+		short entry_side = 0,exit_side;	//what sides we entry and leave through
 		vms_vector dest_point;		//where we are heading (center of exit_side)
 		vms_angvec dest_angles;		//where we want to be pointing
 		vms_matrix dest_orient;
-		int up_side;
+		int up_side = 0;
 
 		//find new exit side
 
@@ -1525,7 +1525,7 @@ void load_endlevel_data(int level_num)
 	char line[LINE_LEN],*p;
 	CFILE *ifile;
 	int var,segnum,sidenum;
-	int exit_side, i;
+	int exit_side = 0, i;
 	int have_binary = 0;
 
 	endlevel_data_loaded = 0;		//not loaded yet

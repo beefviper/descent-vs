@@ -412,7 +412,7 @@ byte	Door_dir=1, Door_div_count=0, Animating_bitmap_type=0;
 //	-----------------------------------------------------------------------------
 void show_bitmap_frame(void)
 {
-	grs_canvas	*curcanv_save, *bitmap_canv;
+	grs_canvas	*curcanv_save, *bitmap_canv = NULL;
 	grs_bitmap	*bitmap_ptr;
 
 	//	Only plot every nth frame.
